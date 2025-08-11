@@ -30,7 +30,36 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-trying-out-ollama-locally",
+        },{id: "nav-cv",
+          title: "cv",
+          description: "A detailed CV with full publication listings can be found on the PDF download.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "post-one-ring-to-bring-them-all",
+        
+          title: "One Ring to Bring Them All",
+        
+        description: "A common containerized infrastructure across CS courses",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/one-ring/";
+          
+        },
+      },{id: "post-the-software-jobs-aren-39-t-gone-they-have-only-moved",
+        
+          title: "The Software Jobs Aren&#39;t Gone, They Have Only Moved",
+        
+        description: "Where have all the jobs gone?",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/software-jobs/";
+          
+        },
+      },{id: "post-trying-out-ollama-locally",
         
           title: "Trying out Ollama locally",
         
@@ -39,17 +68,6 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2025/tryingout-ollama/";
-          
-        },
-      },{id: "post-a-post-with-image-galleries",
-        
-          title: "a post with image galleries",
-        
-        description: "this is what included image galleries could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/photo-gallery/";
           
         },
       },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
@@ -61,17 +79,6 @@ ninja.data = [{
         handler: () => {
           
             window.open("https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/", "_blank");
-          
-        },
-      },{id: "post-a-post-with-tabs",
-        
-          title: "a post with tabs",
-        
-        description: "this is what included tabs in a post could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/tabs/";
           
         },
       },{id: "post-a-post-with-typograms",
