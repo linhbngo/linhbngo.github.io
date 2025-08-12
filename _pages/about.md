@@ -30,3 +30,5 @@ latest_posts:
 I am an associate professor in the [Computer Science Department](https://www.wcupa.edu/sciences-mathematics/computerScience/) at [West Chester University of Pennsylvania](https://www.wcupa.edu/). This is my academic website, where I provide and update information related to my current research and teaching activities.  
 
 My general research focuses on the areas of distributed systems with emphasis on cloud computing infrastructure, applied machine learning/artificial intelligence, and computer science education.I am interested in research problems that come from real world scenarios and can create learning opportunities to students, particularly undergraduates. I also am interested in interdisciplinary collaborative work where research computing technologies are combined with domain knowledge to address socially relevant research problems.
+
+I have taught a wide range of different courses. The details on these courses can be found at my [course website](https://www.cs.wcupa.edu/LNGO/courses/).
