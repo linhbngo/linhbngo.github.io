@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'jekyll'
+gem "date", "~> 3.4"
+gem "bigdecimal"
 
 # Core plugins that directly affect site building
 group :jekyll_plugins do

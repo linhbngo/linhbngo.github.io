@@ -16,6 +16,6 @@ services:
       - 8080:8080
       - 35729:35729
     volumes:
-      - .:/srv/jekyll
+      - /mnt/e/workspace/linhbngogithubio:/srv/jekyll
     environment:
       - JEKYLL_ENV=development

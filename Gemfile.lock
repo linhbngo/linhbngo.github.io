@@ -287,8 +287,10 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  bigdecimal
   classifier-reborn
   css_parser
+  date (~> 3.4)
   feedjira
   httparty
   jekyll
