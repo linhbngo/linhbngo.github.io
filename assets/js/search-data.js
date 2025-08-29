@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-one-ring-to-bring-them-all",
+        },{id: "post-entry-level-positions-of-the-future",
+        
+          title: "Entry Level Positions of the Future",
+        
+        description: "Another view on entry level positions for CS",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/ai-entry/";
+          
+        },
+      },{id: "post-one-ring-to-bring-them-all",
         
           title: "One Ring to Bring Them All",
         
