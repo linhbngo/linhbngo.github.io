@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-entry-level-positions-of-the-future",
+        },{id: "post-yarrr-yet-another-rejection-resilient-required",
+        
+          title: "YARRR: Yet Another Rejection, Resilient Required",
+        
+        description: "Another career break-in strategy",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/foot-in-door/";
+          
+        },
+      },{id: "post-entry-level-positions-of-the-future",
         
           title: "Entry Level Positions of the Future",
         
