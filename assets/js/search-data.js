@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-yarrr-yet-another-rejection-resilient-required",
+        },{id: "post-being-well-versed-in-ai",
+        
+          title: "Being well-versed in AI",
+        
+        description: "What does it mean to be well-versed in AI",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/well-versed-ai/";
+          
+        },
+      },{id: "post-yarrr-yet-another-rejection-resilient-required",
         
           title: "YARRR: Yet Another Rejection, Resilient Required",
         
@@ -83,17 +94,6 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2025/tryingout-ollama/";
-          
-        },
-      },{id: "post-a-post-with-typograms",
-        
-          title: "a post with typograms",
-        
-        description: "this is what included typograms code could look like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/typograms/";
           
         },
       },{id: "post-a-post-that-can-be-cited",
