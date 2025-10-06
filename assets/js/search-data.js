@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-being-well-versed-in-ai",
+        },{id: "post-richard-sutton-llms-and-the-extended-brain",
+        
+          title: "Richard Sutton, LLMs, and the Extended Brain",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/sutton-llm/";
+          
+        },
+      },{id: "post-being-well-versed-in-ai",
         
           title: "Being well-versed in AI",
         
@@ -94,17 +105,6 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2025/tryingout-ollama/";
-          
-        },
-      },{id: "post-a-post-that-can-be-cited",
-        
-          title: "a post that can be cited",
-        
-        description: "this is what a post that can be cited looks like",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2024/post-citation/";
           
         },
       },{id: "post-a-post-with-pseudo-code",
