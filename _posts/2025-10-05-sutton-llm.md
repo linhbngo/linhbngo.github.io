@@ -108,3 +108,9 @@ If anything, AI is forcing us to confront a deeper question: **What does “thin
 efficient: Thinking *together* with machines is still thinking, just with a larger brain.
 
 But, make sure that you still know how to cook your food with firewood if there is a worldwide electrical blackout!
+
+## Postscript (October 2025):
+
+My reflections in this essay resonate with a [recent piece in Communications of the ACM](https://cacm.acm.org/news/can-ai-expand-the-human-mind/) describing AI as `System 0`, a new cognitive layer that precedes and interacts with human 
+intuitive (`System 1`) and analytical (`System 2`) reasoning. I find it encouraging that this line of thought is converging across fields: what I described as the Extended 
+Brain now has a formal name in cognitive science.
