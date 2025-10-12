@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-richard-sutton-llms-and-the-extended-brain",
+        },{id: "post-relearning-how-to-be-seen-fine-tuning-a-portfolio-that-grows-with-technology",
+        
+          title: "Relearning How to Be Seen: Fine-tuning a Portfolio that Grows with Technology",
+        
+        description: "How can one improve their portfolio&#39;s visibility in this age",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/finetuning-portfolio/";
+          
+        },
+      },{id: "post-richard-sutton-llms-and-the-extended-brain",
         
           title: "Richard Sutton, LLMs, and the Extended Brain",
         
