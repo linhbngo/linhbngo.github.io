@@ -136,5 +136,5 @@ how you grow. Across every stage, recruiter, technical interviewer, or hiring ma
 communicates a unified message: *I build with reliability, reason with clarity, and adapt with intent.* 
 
 In this modern digital world where tools change faster than resumes, this triad becomes your new visibility: 
-**traceable intelligence**. As an educator, I see the same visibility gap in my students that I once saw in industry. I will 
+**traceable intelligence**. As an educator, I see the same visibility gap in my students. I will 
 begin adapting these principles into my course design. Expect something new this Winter for Modern Web Development!
