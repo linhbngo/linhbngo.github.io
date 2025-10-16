@@ -30,7 +30,21 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-relearning-how-to-be-seen-fine-tuning-a-portfolio-that-grows-with-technology",
+        },{id: "dropdown-csc418-587",
+              title: "csc418-587",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc418-587/";
+              },
+            },{id: "dropdown-csc574",
+              title: "csc574",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc574/";
+              },
+            },{id: "post-relearning-how-to-be-seen-fine-tuning-a-portfolio-that-grows-with-technology",
         
           title: "Relearning How to Be Seen: Fine-tuning a Portfolio that Grows with Technology",
         
@@ -398,6 +412,21 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
+            },},{id: "csc418-587-syllabus",
+          title: 'Syllabus',
+          description: "",
+          section: "Csc418-587",handler: () => {
+              window.location.href = "/csc418-587/00-syllabus/";
+            },},{id: "csc418-587-introduction",
+          title: 'Introduction',
+          description: "",
+          section: "Csc418-587",handler: () => {
+              window.location.href = "/csc418-587/01-introduction/";
+            },},{id: "csc574-00-syllabus",
+          title: '00 Syllabus',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/00-syllabus/";
             },},{id: "news-a-simple-inline-announcement",
           title: 'A simple inline announcement.',
           description: "",
