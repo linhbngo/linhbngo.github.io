@@ -1,0 +1,74 @@
+[
+    {
+        "grade": "A",
+        "gpa": "4.00",
+        "numeric": "100-93",
+        "interpretation": "Excellent"
+    },
+    {
+        "grade": "A-",
+        "gpa": "3.67",
+        "numeric": "92-90",
+        "interpretation": ""
+    },
+    {
+        "grade": "B+",
+        "gpa": "3.33",
+        "numeric": "89-87",
+        "interpretation": "Superior"
+    },
+    {
+        "grade": "B",
+        "gpa": "3.00",
+        "numeric": "86-83",
+        "interpretation": ""
+    },
+    {
+        "grade": "B-",
+        "gpa": "2.67",
+        "numeric": "82-80",
+        "interpretation": ""
+    },
+    {
+        "grade": "C+",
+        "gpa": "2.33",
+        "numeric": "79-77",
+        "interpretation": "Average"
+    },
+    {
+        "grade": "C",
+        "gpa": "2.00",
+        "numeric": "76-73",
+        "interpretation": ""
+    },
+    {
+        "grade": "C-",
+        "gpa": "1.67",
+        "numeric": "72-70",
+        "interpretation": ""
+    },
+    {
+        "grade": "D+",
+        "gpa": "1.33",
+        "numeric": "69-63",
+        "interpretation": "Below Average"
+    },
+    {
+        "grade": "D",
+        "gpa": "1.00",
+        "numeric": "66-63",
+        "interpretation": ""
+    },
+    {
+        "grade": "D-",
+        "gpa": "0.67",
+        "numeric": "62-60",
+        "interpretation": ""
+    },
+    {
+        "grade": "F",
+        "gpa": "0",
+        "numeric": "<= 60",
+        "interpretation": "Failure"
+    }
+]

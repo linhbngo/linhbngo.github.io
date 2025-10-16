@@ -138,6 +138,11 @@ newsletter:
 # -----------------------------------------------------------------------------
 
 collections:
+  csc418-587:
+    output: true
+    permalink: /csc418-587/:path/
+  csc574:
+    output: true
   books:
     output: true
   news:

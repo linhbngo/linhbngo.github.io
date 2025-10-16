@@ -1,13 +1,13 @@
 ---
 layout: page
-title: submenus
-nav: false
+title: teaching
+nav: true
 nav_order: 8
 dropdown: true
 children:
-  - title: bookshelf
-    permalink: /books/
+  - title: csc418-587
+    permalink: /csc418-587/
   - title: divider
-  - title: blog
-    permalink: /blog/
+  - title: csc574
+    permalink: /csc574/
 ---
