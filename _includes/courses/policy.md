@@ -1,8 +1,8 @@
 
 
-#### University Policies 
+## University Policies 
 
-##### Academic & Personal Integrity
+### Academic & Personal Integrity
 It is the responsibility of each student to adhere to the university’s standards 
 for academic integrity. Violations of academic integrity include any act that 
 violates the rights of another student in academic work, that involves misrepresentation 
@@ -20,7 +20,7 @@ the [Undergraduate Course Catalog](https://catalog.wcupa.edu/undergraduate/),
 the [Ram’s Eye View](https://www.wcupa.edu/_services/STU/ramsEyeView/), or 
 the [University Website](https://www.wcupa.edu).  
 
-##### Accomodations for Students with Disabilities 
+### Accomodations for Students with Disabilities 
 West Chester University is committed to providing equitable access to the full WCU experience 
 for Golden Rams of all abilities. Students should contact the [Office of Educational Accessibility (OEA)](https://www.wcupa.edu/universityCollege/OEA/) to establish accommodations if they have had accommodations in the past or if they believe they may be eligible for accommodations due to a disability, whether or not it may be readily apparent. There is no deadline for disclosing to OEA or for requesting to use approved accommodations in a given course. However, accommodations can only be applied to future assignments or exams; that is, they can’t be applied retroactively. Please share your letter from OEA as soon as possible so that we can discuss accommodations. If you have concerns related to disability discrimination, please contact the university’s ADA Coordinator in the [Office of Diversity, Equity, and Inclusion](https://www.wcupa.edu/_admin/diversityEquityInclusion/) or 610-436-2433
 
@@ -28,7 +28,7 @@ The [University’s Americans with Disabilities policy](https://www.wcupa.edu/_a
 is available on the website.  If you encounter an area of this course that is not accessible to 
 you, please contact me.  
 
-##### University-Excused Absences Policy 
+### University-Excused Absences Policy 
 
 Students are advised to carefully read and comply with the University-Excused Absences Policy, including 
 absences for university-sanctioned events, contained in the WCU Undergraduate Catalog. 
@@ -37,7 +37,7 @@ with the student**, that this policy does not excuse students from completing re
 work, and that professors can require a **fair alternative** to attendance on those days 
 that students must be absent from class in order to participate in a University-Sanctioned Event.
 
-##### Reporting Incidents of Sexual Violence 
+### Reporting Incidents of Sexual Violence 
 West Chester University and its faculty are committed to assuring a safe and productive 
 educational environment for all students. In order to comply with the requirements of 
 Title IX of the Education Amendments of 1972 and the University’s commitment to offering 
@@ -53,7 +53,7 @@ in the University Protection of Minors Policy. Information regarding the reporti
 sexual violence and the resources that are available to victims of sexual violence is 
 set forth at the [WCUPA Sexual Misconduct website](https://www.wcupa.edu/_admin/diversityEquityInclusion/sexualMisconduct/default.aspx).  
 
-##### Inclusive Learning Environment and Anti-Racist Statement
+### Inclusive Learning Environment and Anti-Racist Statement
 
 Diversity, equity, and inclusion are central to West Chester University’s mission as 
 reflected in our [Mission Statement, Values Statement, Vision Statement](https://www.wcupa.edu/president/valuesAndVision.aspx) 
@@ -85,14 +85,14 @@ and centers on campus committed to doing this work (e.g., [Dowdy Multicultural C
 Guidance on how to report incidents of discrimination and harassment is available at the University’s 
 [Office of Diversity, Equity and Inclusion](https://www.wcupa.edu/_admin/diversityEquityInclusion/).
 
-##### Emergency Preparedness
+### Emergency Preparedness
 
 All students are encouraged to sign up for the University’s free WCU ALERT service, 
 which delivers official WCU emergency text messages directly to your cell phone. 
 For more information, visit https://www.wcupa.edu/wcualert. To report an emergency, 
 call the Department of Public Safety at 610-436-3311.
 
-##### Electronic Mail Policy 
+### Electronic Mail Policy 
 
 It is expected that faculty, staff, and students activate and maintain regular 
 access to University provided e-mail accounts. Official university communications, 

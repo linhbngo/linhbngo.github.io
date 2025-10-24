@@ -1,44 +1,103 @@
 ---
-title: Introduction
 layout: lecture
-pretty-table: true
+pretty_table: true
 order: 2
+title: Introduction
+giscus_comments: true
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
+
+# Optionally, you can add a table of contents to your post.
+# NOTES:
+#   - make sure that TOC names match the actual section names
+#     for hyperlinks within the post to work correctly.
+#   - we may want to automate TOC generation in the future using
+#     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
+toc:
+  - name: Overview
+    # if a section has subsections, you can add them as follows:
+    # subsections:
+    #   - name: Example Child Subsection 1
+    #   - name: Example Child Subsection 2
+  - name: Introduction
+  - name: Required Materials
+  - name: Prerequisites
+  - name: Course Description
+  - name: Learning Objectives
+  - name: Assessmens and Grading
+  - name: Course Topics and Schedules
+  - name: University Policies 
+  - name: Resources for Student Success
+  
+# Below is an example of injecting additional post-specific styles.
+# If you use this post as a template, delete this _styles block.
+_styles: >
+  .fake-img {
+    background: #bbb;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+  }
+  .fake-img p {
+    font-family: monospace;
+    color: white;
+    text-align: left;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 16px;
+  }
 ---
 
-# Introduction
+{% details Learning Objectives %}
 
-!!!abstract "Learning Objectives"
-    - Students will be able to explain the meanings of the content of an HTML file.
-    - Students will be able to describe the definitions of Tags, Attributes, 
-    Elements, and Entities.
-    - Students will be able to describe the meanings of the content of a CSS style 
-    and the three ways to specify CSS styles.
-    - Students will download and install Docker Desktop.
-    - Students will be able to launch two containers with web development components 
-    such as Node.js, Visual Studio Code Server, and MongoDB. 
+- Students will be able to explain the meanings of the content of an HTML file.
+- Students will be able to describe the definitions of Tags, Attributes, 
+Elements, and Entities.
+- Students will be able to describe the meanings of the content of a CSS style 
+and the three ways to specify CSS styles.
+- Students will download and install Docker Desktop.
+- Students will be able to launch two containers with web development components 
+such as Node.js, Visual Studio Code Server, and MongoDB. 
 
-!!!tip "What's Due?"
-    - Students will need to complete the installation of Docker Desktop and be able to 
-    test Node.js and Visual Studio Code Server before moving on to the next module.
-    - Students will need to learn HTML and CSS before moving on to the next module.
+{% enddetails %}
 
-!!!note "Overview"
-    In this course, we will use a hands-on approach for learning Node.js. When we use the 
-    term Node.js, we mean to use JavaScript for the server-side development of web applications. 
-    Although we use the term Node.js, we refer to the architecture that includes MongoDB, 
-    Express.JS (or Express) and Node.js.
+{% details What's Due %}
 
-    We will begin with the concepts of HTML/CSS, and then the introduction to JavaScript programming, 
-    followed by HTTP server development, Express server development. Also, we will use EJS (Embedded 
-    JavaScript) as the View Engine, also known as the Template View Engine for the front-end of a 
-    web application and the Bootstrap for CSS styles.
+- Students will need to complete the installation of Docker Desktop and be able to 
+test Node.js and Visual Studio Code Server before moving on to the next module.
+- Students will need to learn HTML and CSS before moving on to the next module.
 
-    Then we will focus on MongoDB for the purpose of creating NoSQL (Not Only SQL) databases and 
-    the accessing of collections (i.e., tables in a relational database).
+{% enddetails %}
 
-    Finally, we will introduce the concept of RESTful Web Service API and the development of an 
-    End Point and a web client to consume the web services. In the remaining part of this document, 
-    we will also describe detailed learning activities for learning the web development skills.
+
+## Overview
+
+In this course, we will use a hands-on approach for learning Node.js. When we use the 
+term Node.js, we mean to use JavaScript for the server-side development of web applications. 
+Although we use the term Node.js, we refer to the architecture that includes MongoDB, 
+Express.JS (or Express) and Node.js.
+
+We will begin with the concepts of HTML/CSS, and then the introduction to JavaScript programming, 
+followed by HTTP server development, Express server development. Also, we will use EJS (Embedded 
+JavaScript) as the View Engine, also known as the Template View Engine for the front-end of a 
+web application and the Bootstrap for CSS styles.
+
+Then we will focus on MongoDB for the purpose of creating NoSQL (Not Only SQL) databases and 
+the accessing of collections (i.e., tables in a relational database).
+
+Finally, we will introduce the concept of RESTful Web Service API and the development of an 
+End Point and a web client to consume the web services. In the remaining part of this document, 
+we will also describe detailed learning activities for learning the web development skills.
 
 !!!warning "Textbook"
     Note: You need to purchase a copy of the e-book entitled “Get Programming with Node.js,” Manning, 

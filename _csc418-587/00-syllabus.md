@@ -1,30 +1,76 @@
 ---
-title: Syllabus
 layout: lecture
 pretty_table: true
 order: 1
+title: Syllabus
+giscus_comments: true
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
+
+# Optionally, you can add a table of contents to your post.
+# NOTES:
+#   - make sure that TOC names match the actual section names
+#     for hyperlinks within the post to work correctly.
+#   - we may want to automate TOC generation in the future using
+#     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
+toc:
+  - name: Course Information
+    # if a section has subsections, you can add them as follows:
+    # subsections:
+    #   - name: Example Child Subsection 1
+    #   - name: Example Child Subsection 2
+  - name: Required Materials
+  - name: Prerequisites
+  - name: Course Description
+  - name: Learning Objectives
+  - name: Assessments and Grading
+  - name: Course Topics and Schedules
+  - name: University Policies 
+  - name: Resources for Student Success
+  
+# Below is an example of injecting additional post-specific styles.
+# If you use this post as a template, delete this _styles block.
+_styles: >
+  .fake-img {
+    background: #bbb;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+  }
+  .fake-img p {
+    font-family: monospace;
+    color: white;
+    text-align: left;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 16px;
+  }
 ---
 
 # CSC 418/587: Modern Web Applications Using Server-Side Technologies 
 
-- **Instructor**: Linh B. Ngo
-- **Office**: UNA 138
-- **Office Hours**: 
-  - Monday and Wednesday: 1:00PM - 3:00PM
-  - Tuesday and Thursday: 11:00AM - 12:30PM
-- **Email**: lngo AT wcupa DOT edu
-- **Phone**: 610-436-2595
+{% include courses/instructor_info.md %}
 
 ## Course Information
 
 - The course runs from December 16, 2024 until January 19, 2025. It is an 100% online asynchronous course. 
 
-## Required Materials:
+## Required Materials
 
 - Jonathan Wrexler. **Get Programming with NodeJS**. Manning Publications, 2019. 
 - You can get this textbook throuch Inclusive Access or from [the publisher's website](https://www.manning.com/books/get-programming-with-node-js) 
 
-## Prerequisites:
+## Prerequisites
 
 - Permission from the instructor for graduate students.
  
@@ -57,7 +103,7 @@ and reliably in the emerging and future information infrastructure. (CSLO 1, 2)
 science and have the communication skills and quantitative/analytical skills necessary 
 for career advancement. (CSLO 3)
 
-### ABET Objectives (APO):
+### ABET Objectives (AO):
 
 1. ABET 1: Analyze a complex computing problem and to apply principles of computing 
 and other relevant disciplines to identify solutions. 
@@ -66,11 +112,11 @@ set of computing requirements in the context of the program’s discipline.
 6. ABET 6: Apply computer science theory and software development fundamentals 
 to produce computing-based solutions. 
 
-## Assessments and Grading:
+## Assessments and Grading
 
 ### Method of Evaluation
 
-| Assessment             | % of Final Grade | Course Objectives Assessed | Program Objectives Assessed | ABET Objectives Assessed |
+| Assessment             | % of Final Grade | CSLO Assessed | CSPO Assessed | AO Assessed |
 | ---------------------- | ---------------- | -------------------------- | -------------------------- | ------------------------- |
 | Projects               | 50%              | 1, 2, 3                    | 1, 2                       | 1, 2, 6                   |
 | Quizzes                | 50%              | 1, 3                       | 1, 2                       | 1,                        |
@@ -108,11 +154,9 @@ aspects of software development and teamwork.
 Individual assignments that are late are assessed a 10% per day late penalty. Saturday and Sunday 
 are each days. There is no late acceptance for team-based milestones. 
 
-{!assets/text/policy.md!}
-{!assets/text/distance_education.md!}
+## Course Topics and Schedules 
 
-
-## Course Topics and Schedules (subject to modification)
+This is subject to modification.
 
 
 | Week       | Topic                                      | Assessments              |
@@ -129,4 +173,6 @@ are each days. There is no late acceptance for team-based milestones.
 |            |                 | Quiz 3 |
 |     Jan 19 |                 | Project 3 Due |
 
-[workbench]: https://carpentries.github.io/sandpaper-docs
+
+{% include courses/policy.md %}
+{% include courses/distance_education.md %}
