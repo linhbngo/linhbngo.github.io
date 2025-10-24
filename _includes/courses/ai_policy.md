@@ -1,0 +1,10 @@
+## AI Policy
+
+AI is here to stay. It is a significant force multiplier that will greatly improve one's productivity and performance. At the same time, we are here to learn, and while AI can help you learn, it can not replace or help you absorb knowledge into your own mind. To that end, my AI policy is that I permit and even encourage AI usage in my classes with an understanding that you will use AI to assist you in your learning activities.  
+
+All quizzes, labs, and assignments are designed for the purpose of learning. It is the process of carrying out these activities that help you learn, not the end results of these activities. Regarding AI, it should be used sparingly and for the purpose of getting you through minor obstacles along these processes but not to fast-track you to the end goal. 
+
+- Quizzes/Exams: These are meant to test you with in-depth understanding and key concepts. This will be helpful in scenarios that you do not have access to written documentation but you still need to demonstrate your knowledge (e.g., talking casually with interviewers/clients in an elevator, debugging errors in the field). It will even help you how to *phrase the questions to AI*. You should learn to memorize key components so that you can elaborate and reason. 
+- Labs/assignments: These are meant to help you understanding how theoretical concepts are mapped to actual problems and training your own technical skills. It is perfectly ok to ask AI (or the Discord server) about obscure errors or issues arising during labs and assignemnts. Just don't ask AI to complete the lab for you!
+
+While I will not actively attempt to identify unfair AI usage, in the end, if you use AI as a crutch, you might get through the labs or assignments, but you will be unprepared for future challenges. It should be noted that with the rise of AI, companies are increasingly bringing technical interviews back on-site!

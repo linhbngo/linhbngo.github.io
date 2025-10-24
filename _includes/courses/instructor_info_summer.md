@@ -1,0 +1,5 @@
+- **Instructor**: Linh B. Ngo
+- **Office**: UNA 138
+- **Summer Office Hours**: By Appointment Only
+- **Email**: lngo AT wcupa DOT edu
+- **Phone**: 610-436-2595
