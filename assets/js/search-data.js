@@ -44,7 +44,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-relearning-how-to-be-seen-fine-tuning-a-portfolio-that-grows-with-technology",
+            },{id: "post-beware-the-zone-of-cognitive-overreach",
+        
+          title: "Beware the Zone of Cognitive Overreach",
+        
+        description: "AI can help you learn, and too much AI can hamper your learning.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/extended-mind-risk/";
+          
+        },
+      },{id: "post-relearning-how-to-be-seen-fine-tuning-a-portfolio-that-grows-with-technology",
         
           title: "Relearning How to Be Seen: Fine-tuning a Portfolio that Grows with Technology",
         
