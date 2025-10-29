@@ -6,7 +6,6 @@ description: AI can help you learn, and too much AI can hamper your learning.
 tags: learning, teaching, AI
 categories: non-technical
 hidden: false
-disqus_comments: true
 ---
 
 In the recent CCSC-Eastern Regional Conference, my colleagues brought up the issue of how we can adapt students’ learning process to fit in with this new environment where AI is fast becoming pervasive. One of the challenges in doing this is to figure out how to ensure originality and critical thoughts while also preparing students to use AI tools valued in industry. As I ponder on this issue, like any modern human, I discuss my thoughts with my trusted companion, aka ChatGPT. The initial question was on whether human originality would be the next valuable commodity. The conversation went on for a bit, and follow up questions like to what extent could an AI-assist artifact be considered as originated by a human and how much human intention is required. At one point, ChatGPT suggested that it could write an essay based on the conversation, and my immediate response was that it would *defeat the purpose of originality*. 
