@@ -3,7 +3,6 @@ layout: lecture
 pretty_table: true
 order: 1
 title: Syllabus
-giscus_comments: true
 mermaid:
   enabled: true
   zoomable: true
@@ -172,7 +171,3 @@ This is subject to modification.
 |  4: Jan 13 | Building an API (REST) | - |
 |            |                 | Quiz 3 |
 |     Jan 19 |                 | Project 3 Due |
-
-
-{% include courses/policy.md %}
-{% include courses/distance_education.md %}

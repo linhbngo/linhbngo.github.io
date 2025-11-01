@@ -1,23 +1,25 @@
 ---
 layout: default
-permalink: /csc418-587/
-title: "Modern Web Applications Using Server-Side Technologies"
+permalink: /csc-agentic-ai/
+title: "Agentic Artificial Intelligence: Design, Implementation, and Orchestration"
 nav: false
-collection: csc481-587
+collection: csc-agentic-ai
 ---
  
-This course provides training in the area of building web
-applications using Node.js (with Express, and MongoDB) for the backend and EJS for
-the front-end user interface. JavaScript has been a client-side script programming
-language until later in 2009 when Google combined it’s V8 search engine with Node.JS.
-Since then, JavaScript has become a full-stack scripting language from the client-side to
-the server-side. Starting from building a web site without programming, students will be
-guided with hands-on labs and develop a website using Node.JS and EJS for the front-
-end. 
+This course explores the emerging paradigm of Agentic Artificial Intelligence, which 
+are AI systems capable of reasoning, planning, and acting autonomously through structured 
+protocols and external tool integration. Students will learn to design, implement, 
+and deploy Model-Context-Protocol (MCP)-based agent systems, integrate multiple models 
+and APIs, and evaluate their ethical, cognitive, and computational implications.
+
+The course emphasizes applied construction and reflective practice over rote theory. 
+Students will build containerized agent workflows, practice context and protocol design, 
+and engage in iterative *fail-and-survive* learning cycles to develop robust technical 
+and critical thinking skills. 
 
 <div class="post">
   <ul class="post-list">
-    {% assign postlist = site.csc418-587 %}
+    {% assign postlist = site.csc-agentic-ai %}
     {% for post in postlist %}
         {% assign year = post.date | date: "%Y" %}
         {% assign tags = post.tags | join: "" %}

@@ -5,9 +5,12 @@ nav: true
 nav_order: 8
 dropdown: true
 children:
-  - title: csc418-587
+  - title: Agentic AI (under dev)
+    permalink: /csc-agentic-ai/
+  - title: divider
+  - title: CSC 418/587 (under dev)
     permalink: /csc418-587/
   - title: divider
-  - title: csc574
+  - title: CSC 574 (under dev)
     permalink: /csc574/
 ---

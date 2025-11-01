@@ -143,6 +143,10 @@ collections:
     permalink: /csc418-587/:path/
   csc574:
     output: true
+    permalink: /csc574/:path/
+  csc-agentic-ai:
+    output: true
+    permalink: /csc-agentic-ai/:path/
   books:
     output: true
   news:
