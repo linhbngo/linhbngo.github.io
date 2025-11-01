@@ -30,15 +30,22 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "dropdown-csc418-587",
-              title: "csc418-587",
+        },{id: "dropdown-agentic-ai-under-dev",
+              title: "Agentic AI (under dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc-agentic-ai/";
+              },
+            },{id: "dropdown-csc-418-587-under-dev",
+              title: "CSC 418/587 (under dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/csc418-587/";
               },
-            },{id: "dropdown-csc574",
-              title: "csc574",
+            },{id: "dropdown-csc-574-under-dev",
+              title: "CSC 574 (under dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
@@ -423,6 +430,11 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
+            },},{id: "csc-agentic-ai-syllabus",
+          title: 'Syllabus',
+          description: "",
+          section: "Csc-agentic-ai",handler: () => {
+              window.location.href = "/csc-agentic-ai/00-syllabus/";
             },},{id: "csc418-587-syllabus",
           title: 'Syllabus',
           description: "",
