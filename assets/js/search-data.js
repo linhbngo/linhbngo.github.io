@@ -445,6 +445,11 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/01-introduction/";
+            },},{id: "csc418-587-javascript-and-http",
+          title: 'Javascript and HTTP',
+          description: "",
+          section: "Csc418-587",handler: () => {
+              window.location.href = "/csc418-587/02-javascripts/";
             },},{id: "csc574-00-syllabus",
           title: '00 Syllabus',
           description: "",
