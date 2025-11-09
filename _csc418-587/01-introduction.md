@@ -3,7 +3,6 @@ layout: lecture
 pretty_table: true
 order: 2
 title: Introduction
-giscus_comments: true
 mermaid:
   enabled: true
   zoomable: true
