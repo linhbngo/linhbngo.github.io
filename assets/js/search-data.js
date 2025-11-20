@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-beware-the-zone-of-cognitive-overreach",
+            },{id: "post-my-teaching-philosophy",
+        
+          title: "My Teaching Philosophy",
+        
+        description: "The formation of my teaching philosophy.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/teaching-philosophy/";
+          
+        },
+      },{id: "post-beware-the-zone-of-cognitive-overreach",
         
           title: "Beware the Zone of Cognitive Overreach",
         
