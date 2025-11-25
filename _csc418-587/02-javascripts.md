@@ -241,110 +241,112 @@ another JavaScript file.
 
 ### Important notes
 
-    Later, we will begin to rely on reading the textbook more and we only include the 
-    explanations of the code that requires attentions in the lecture notes. It is highly 
-    recommend that you read all lessons in `Unit_0`, `Unit_1`, `Unit_2`, `Unit_3`, 
-    `Unit_4`, and the first two chapters in `Unit_6` by the end of this course. 
-    You may skip `Unit_5`.
+Later, we will begin to rely on reading the textbook more and we only include the 
+explanations of the code that requires attentions in the lecture notes. It is highly 
+recommend that you read all lessons in `Unit_0`, `Unit_1`, `Unit_2`, `Unit_3`, 
+`Unit_4`, and the first two chapters in `Unit_6` by the end of this course. 
+You may skip `Unit_5`.
+
 ### HTTP and Web Servers
 
-    - In this lesson, the use of the module HTTP is demonstrated. As we had explained 
-    previously, the term HTTP represents the protocol used by the client and 
-    the server to achieve web page accessing & displaying. 
-    - We need to install the two modules `http` and `http-status-code` before 
-    executing the web server.
-    - Create a new file main.js using Listing 4.1
-    - Enter the following commands:
-    
-    ```bash
-    npm init --yes
-    npm install http http-status-codes
-    node main.js
-    ```
+- In this lesson, the use of the module HTTP is demonstrated. As we had explained 
+previously, the term HTTP represents the protocol used by the client and 
+the server to achieve web page accessing & displaying. 
+- We need to install the two modules `http` and `http-status-code` before 
+executing the web server.
+- Create a new file main.js using Listing 4.1
+- Enter the following commands:
 
-    - Bring up a web browser and enter “http://127.0.0.1:3000/”
+```bash
+npm init --yes
+npm install http http-status-codes
+node main.js
+```
+
+- Bring up a web browser and enter “http://127.0.0.1:3000/”
 
 ### Lesson 5 - Handling Incoming Requests
 
-    In previous lab experiment, the web browser displays `Hello Universe!` after 
-    a URL `http://127.0.0.1:3000` is entered. If you try `http://127.0.0.1:3000/testing`, 
-    it still displays the same. The reason is because the server does nothing but 
-    displaying the string `Hello Universe`.
+In previous lab experiment, the web browser displays `Hello Universe!` after 
+a URL `http://127.0.0.1:3000` is entered. If you try `http://127.0.0.1:3000/testing`, 
+it still displays the same. The reason is because the server does nothing but 
+displaying the string `Hello Universe`.
 
-    In this lesson, we will begin to learn how to complete some processing 
-    before `rendering` a web page. We use the term `render` to refer to the 
-    activities of formatting a web page into an HTTP reply message and sending 
-    it back to the browser.
+In this lesson, we will begin to learn how to complete some processing 
+before `rendering` a web page. We use the term `render` to refer to the 
+activities of formatting a web page into an HTTP reply message and sending 
+it back to the browser.
 
-    - Lab Exercise 1: Display a string
-        - Use the listing 5.1 to create a main.js.
-        - Enter `npm install http http-status-codes`.
-        - Enter the command `node main.js` and
-        - Bring up a browser and enter `http://127.0.0.1:3000`.
-    - Lab Exercise 2: Displays different messages with respect to different routes, 
-    i.e., the `taps` behind the string `localhost:3000`.
-        - Modify the previous main.js and call it main1.js using Listing 5-4.
-        - Run it with `node main1.js`
-        - Run the following command in the terminal to test the module as follows:
-        
-        ```js
-        curl --data "username=Jon&password=secret" http://127.0.0.1:3000
-        ```
+- Lab Exercise 1: Display a string
+    - Use the listing 5.1 to create a main.js.
+    - Enter `npm install http http-status-codes`.
+    - Enter the command `node main.js` and
+    - Bring up a browser and enter `http://127.0.0.1:3000`.
+- Lab Exercise 2: Displays different messages with respect to different routes, 
+i.e., the `taps` behind the string `localhost:3000`.
+    - Modify the previous main.js and call it main1.js using Listing 5-4.
+    - Run it with `node main1.js`
+    - Run the following command in the terminal to test the module as follows:
+    
+    ```js
+    curl --data "username=Jon&password=secret" http://127.0.0.1:3000
+    ```
 
-        - Observe the outcome. 
+    - Observe the outcome. 
 
 ### Lesson 6 – Better Routes
     
-    In this lesson, we need to add some routes after `localhost:3000`. For example, we 
-    need to enter `localhost:3000/contact` or `localhost:3000/about`, etc. We need to 
-    modify the `main.js` and add some “route handling” code.
+In this lesson, we need to add some routes after `localhost:3000`. For example, we 
+need to enter `localhost:3000/contact` or `localhost:3000/about`, etc. We need to 
+modify the `main.js` and add some “route handling” code.
 
-    Use the following `views/index.html` file (Listing 6.1) in the views folder for 
-    all three labs.
-    
-    - Lab Exercise 1: 
-        - Create `main.js` from Listing 6.2.
-        - Run `node main.js` in the terminal
-        - Bring up a browser and enter `localhost:3000/about` or `localhost:3000/contact`
-    - Lab Exercise 2: 
-        - Create `main.js` from a combination of Listing 6.2 andListing 6.3 (see 
-        textbook instructions).
-        - Run node main.js on the terminal
-        - Bring up a browser and enter `localhost:3000/about` or `localhost:3000/contact`
-    - Lab Exercise 3: 
-        - Create `main.js` from Listing 6.6 
-        - Create `router.js` from Listing 6.5 
-        - Make sure that your folder structure is similar to Figure 6.3
-        - Run `node main.js` in the terminal
-        - Bring up a browser and enter `localhost:3000/about` or `localhost:3000/contact`
+Use the following `views/index.html` file (Listing 6.1) in the views folder for 
+all three labs.
+
+- Lab Exercise 1: 
+    - Create `main.js` from Listing 6.2.
+    - Run `node main.js` in the terminal
+    - Bring up a browser and enter `localhost:3000/about` or `localhost:3000/contact`
+- Lab Exercise 2: 
+    - Create `main.js` from a combination of Listing 6.2 andListing 6.3 (see 
+    textbook instructions).
+    - Run node main.js on the terminal
+    - Bring up a browser and enter `localhost:3000/about` or `localhost:3000/contact`
+- Lab Exercise 3: 
+    - Create `main.js` from Listing 6.6 
+    - Create `router.js` from Listing 6.5 
+    - Make sure that your folder structure is similar to Figure 6.3
+    - Run `node main.js` in the terminal
+    - Bring up a browser and enter `localhost:3000/about` or `localhost:3000/contact`
 
 ### Lesson 7 – Capstone: Create the first web server with HTTP and Node.js
-    Carrying out the following steps to create your first web application project:
 
-    - Step 1: Create a folder my_project. Change into this folder and 
-    run the following commands:
-    
-    ```bash
-    npm init --yes
-    npm install --save
-    ```
+Carrying out the following steps to create your first web application project:
 
-    - Step 2: Create files (currently empty) and folders to form the structure as in Listing 7.2
-        - Creating `main.js` as Listing 7.3
-        - Create `contentTypes.js` as Listing 7.4
-        - Create `utils.js` as Listing 7.5
-        - Create `router.js` as Listing 7.6
-        - Add routes with the router module in main.js as listing 7.8
-    
-    - Step 3: Run `node main.js` and navigate to http://127.0.0.1:3000 to see the 
-    application’s home page.
+- Step 1: Create a folder my_project. Change into this folder and 
+run the following commands:
 
-    This lesson concludes our discussion about using the node.js http module to develop 
-    a web server. It is instructive to know that the activities for registering a route in 
-    a web server include the following:
-    
-    - Whether the request is a GET or a POST request
-    - The URL’s path
-    - The name of the file to return
-    - An HTTP status code
-    - The type of the file being returned (as the content type)
+```bash
+npm init --yes
+npm install --save
+```
+
+- Step 2: Create files (currently empty) and folders to form the structure as in Listing 7.2
+    - Creating `main.js` as Listing 7.3
+    - Create `contentTypes.js` as Listing 7.4
+    - Create `utils.js` as Listing 7.5
+    - Create `router.js` as Listing 7.6
+    - Add routes with the router module in main.js as listing 7.8
+
+- Step 3: Run `node main.js` and navigate to http://127.0.0.1:3000 to see the 
+application’s home page.
+
+This lesson concludes our discussion about using the node.js http module to develop 
+a web server. It is instructive to know that the activities for registering a route in 
+a web server include the following:
+
+- Whether the request is a GET or a POST request
+- The URL’s path
+- The name of the file to return
+- An HTTP status code
+- The type of the file being returned (as the content type)
