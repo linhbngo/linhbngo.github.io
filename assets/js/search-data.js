@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-my-teaching-philosophy",
+            },{id: "post-thankful-for-failures",
+        
+          title: "Thankful for Failures",
+        
+        description: "Catchy title ain&#39;t it?",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/failures-thankful/";
+          
+        },
+      },{id: "post-my-teaching-philosophy",
         
           title: "My Teaching Philosophy",
         
