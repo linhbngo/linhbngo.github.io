@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-thankful-for-failures",
+            },{id: "post-embracing-chaos-lessons-from-three-semesters-of-capstone-projects",
+        
+          title: "Embracing Chaos: Lessons From Three Semesters of Capstone Projects",
+        
+        description: "Learning through the chaos",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/embracing-chaos/";
+          
+        },
+      },{id: "post-thankful-for-failures",
         
           title: "Thankful for Failures",
         
