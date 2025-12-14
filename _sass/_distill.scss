@@ -73,6 +73,11 @@ d-article {
       margin-bottom: 0.5rem;
     }
   }
+ 
+  /* not working yet */
+  d-article details.details--warning { border-left: 4px solid #d9534f; background: rgba(217,83,79,.06); }
+  d-article details.details--note    { border-left: 4px solid var(--global-theme-color); background: rgba(0,0,0,.02); }
+  d-article details.details--tip     { border-left: 4px solid #2b7cff; background: rgba(43,124,255,.06); }
 
   d-contents {
     align-self: start;

@@ -162,22 +162,28 @@ components of modern web applications are likely to be hosted on individual serv
 > You can setup Docker and familiarize youself with the tool via 
 > the [following instructions](https://www.cs.wcupa.edu/LNGO/courses/workshops/intro-docker/).
 
-**Recording: Deploy CSC418 environment on Mac** 
+{% details Deploy CSC418 environment on Mac %}
 
-> <iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ad6f193a-561f-4226-adc4-b244016b5b9a&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="docker-mac" ></iframe>
+<iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ad6f193a-561f-4226-adc4-b244016b5b9a&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="docker-mac" ></iframe>
 
-**Recording: Deploy CSC418 environment on Windows**
+{% enddetails %}
 
-> <iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=104f5663-0146-462e-9304-b2440178d08f&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="install_docker_desktop" ></iframe>
+{% details Deploy CSC418 environment on Windows %}
 
-> <iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ba06651c-cb9e-4ac9-ac99-b2440178dadb&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="docker_windows" ></iframe>
+<iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=104f5663-0146-462e-9304-b2440178d08f&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="install_docker_desktop" ></iframe>
 
-**Recording: More about CSC418 environment**
+<iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=ba06651c-cb9e-4ac9-ac99-b2440178dadb&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="docker_windows" ></iframe>
+
+{% enddetails %}
+
+{% details More about CSC418 environment %}
 
 - [csc418env GitHub](https://github.com/class-master/csc418env/tree/main)
 - [csc418data GitHub](https://github.com/class-master/csc418data)
 
-> <iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e0f48d22-289a-49a9-81b9-b244016eadb6&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="docker-explanation" ></iframe>
+<iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=e0f48d22-289a-49a9-81b9-b244016eadb6&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="docker-explanation" ></iframe>
+
+{% enddetails %}
 
 
 ## 3. Setup Testing Environment
@@ -241,9 +247,12 @@ node server.js
 - We have just developed a web server development environment. Of course, this is just a 
 toy server and a toy HTML file as a web client.
 
-### Recording: Demo
 
-> <iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=8ec6ea27-0c04-46ee-8ac7-b24700fe3a84&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="html-test-environment" ></iframe>
+{% details Demo: Testing Environment %}
+
+<iframe src="https://wcupa.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=8ec6ea27-0c04-46ee-8ac7-b24700fe3a84&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="html-test-environment" ></iframe>
+
+{% enddetails %}
 
 
 ## 4. Introduction to HTML 
@@ -315,41 +324,12 @@ A good online reference for HTML ans CSS can be found at the link http://www.htm
 ## 5. Introduction to CSS
 
 ### Introduction
+
 We will review the definitions of several terms before we move on to discuss about 
 advanced CSS properties. Once you learn the fundamentals of CSS, you can begin to 
 study the remaining CSS properties progressively. You may begin from the HTML 
 Tutorials for learning CSS starting from the [Beginner](https://htmldog.com/guides/css/) 
 to the [Intermediate](https://htmldog.com/guides/css/intermediate/) level. 
-
-In summary, there are some terms related to CSS. They are briefly discussed:
-
-- Import a style sheet: (Try your own exercises). 
-For the whole website using @import CSS directive; from within HTML 
-using `<link>`; or embedded style settings using an attribute “style”. 
-- Style Types: External Style Sheets; Internal Style Sheets; and Inline Styles.
-- nSelectors
-    - The Type Selector: types of HTML tags, e.g., p or h1, etc.
-    - The Decedent Selector: p b { color: red; } or ul li b { color: red;}
-    - The Child Selector: p > b {color: red; } (P. 421)
-    - Direct 
-    - ‘#’ for an ID; “.” for a class: (P. 422, P. 423)
-    - Attribute Selector: P. 423-P.424
-    - The Universal Selector: *
-    - Selecting by Group
-- The CSS Cascade Precedence
-    - Style sheet creators
-    - Style sheet methods
-    - Style sheet selectors
-    - Specificity
-- Positioning Elements: 
-    - Absolute Positioning
-    - Relative Positioning
-    - Fixed Positioning (Think: What is the difference 
-    between an absolute positioning and a fixed positioning?)
-- The Box Model and Layout – Refer to the Box Model at the [link](https://htmldog.com/guides/css/beginner/margins/). 
-The properties of each element in a web page can be described with a padding, a border, and a margin. The margin 
-is the interface with other elements; the padding is the interface surrounding the element; and the border is 
-between a padding and a margin in the middle. 
      
 ### Why is it called the Cascading Style Sheet (CSS)?
 
@@ -379,8 +359,8 @@ We explain what these three ways are.
 {% details internal style %}
     
 If you have many tags that share the same styles, you don’t want 
-to use the ”in-line” stylesheet method to specify styles; you need 
-to add the attribute “style” in ten places with a web page. Instead, 
+to use the `in-line` stylesheet method to specify styles; you need 
+to add the attribute `style` in ten places with a web page. Instead, 
 we can use internal stylesheet.
     
 
@@ -425,19 +405,303 @@ to include all styles in one external file. An example is given below with the `
 
 {% enddetails %}
 
-    
+
+### A brief overview on selectors
+
+{% details Type selector %}
+
+- Select elements by their tag name (e.g., `p` or `h1`, etc.)
+- Apply to **all** elements with the same tag on the page. 
+- Use sparingly
+
+```html
+p {
+  color: blue;
+}
+
+h1 {
+  font-size: 2em;
+}
+```
+
+{% enddetails %}
+
+{% details Descendant selector %}
+
+- Select elements that appear *anywhere inside* another element
+
+```html
+p b { 
+    color: red; 
+}  
+
+ul li b { 
+    color: red;
+}
+```
+
+- `p b`: any `<b>` inside a `<p>` (at any depth)
+- `ul li b`: any `<b>` inside an `<li>` inside a `<ul>` (at any depth)
+- This selector expresses containment, not proximity
+
+{% enddetails %}
+
+{% details Child selector %}
+
+- Select only **direct children**, not deeper descendants
+
+```html
+p > b {
+    color: red; 
+}
+```
+
+{% enddetails %}
+
+{% details ID and Class selectors %}
+
+- ‘#’ for an ID
+    - Matches exactly one element
+    - IDs must be unique per page
+
+```html
+#main-header {
+    background-color: black;
+}
+
+- “.” for a class
+    - Can apply to many elements
+    - Reusable, composable.
+
+```html
+.highlight {
+    color: yellow;
+}
+```
+
+```html
+<p class="highlight"> Hello</p>
+<span class="highlight">World</span>
+```
+
+{% enddetails %}
+
+{% details Attribute selectors %}
+- Select elements based on the presence or value of attributes.
+
+```html
+input[type="text"] {
+  border: 1px solid gray;
+}
+```
+
+- Other common forms:
+
+```html
+a[target] { }                 /* has attribute */
+a[target="_blank"] { }        /* exact match */
+img[src^="https"] { }         /* starts with */
+img[src$=".png"] { }          /* ends with */
+img[src*="logo"] { }          /* contains */
+```
+
+- Help styling elements semantically without extra classes
+- Especially useful in forms and accessibility-aware design.
+
+{% enddetails %}
+
+{% details Universal selector (*) %}
+- Selects everything.
+
+```html
+* {
+  box-sizing: border-box;
+}
+```
+
+- Common use:
+    - CSS resets
+     -Global defaults
+- This selector is computationally expensive if overused.
+
+{% enddetails %}
+
+{% details Grouping selectors %}
+
+- Apply the same rules to multiple selectors.
+
+```html
+h1, h2, h3 {
+  font-family: sans-serif;
+}
+```
+
+{% enddetails %}
+
+
+### The CSS Cascade Precedence
+
+For conflicting rules, the order of cascade precendence is:
+
+- Style sheet creators
+- Style sheet methods
+- Style sheet selectors
+- Specificity
+
+In other words, when two rules conflict, the browser ask the questions in the following order to determine priority (from high to low)
+
+- Who wrote this? (creator)
+- Is it inline, internal, or external? (method)
+- How specific is the selector?
+- Does one have higher specificity?
+- If still tied, who came last?
+
+
+### Elements Positioning
+
+- CSS positioning answers one question:
+    - *Relative to what is this element being placed?*
+
+{% details Relative Positioning %}
+
+```html
+.box {
+  position: relative;
+  top: 10px;
+  left: 20px;
+}
+```
+
+- What it means:
+    - The element is positioned relative to its normal position in the document flow.
+    - The space it originally occupied is still reserved.
+- Key properties:
+    - Stays in the normal flow
+    - Can be nudged with top, left, right, bottom
+    - Often used as a reference point for absolutely positioned children
+
+{% enddetails %}
+
+{% details Absolute Positioning %}
+
+```html
+.box {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+```
+
+- What it means:
+    - The element is removed from the normal document flow.
+    - It is positioned relative to:
+        - The nearest positioned ancestor (relative, absolute, fixed)
+        - The document body if no nearest relative exists. 
+- Key properties:
+    - Does not reserve space
+    - Other elements behave as if it doesn’t exist
+    - Common for overlays, tooltips, dropdowns
+
+{% enddetails %}
+
+{% details Fixed Positioning %}
+
+```html
+.box {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+```
+
+- What it means
+    - The element is positioned relative to the **viewport**, the are of the browser that is visible to users. 
+    - It does not move when the page scrolls
+- Key properties:
+    - Removed from document flow
+    - Always stays in the same screen position
+    - Used for nav bars, chat buttons, cookie notices
+
+{% enddetails %}
+
+### The Box Model and Layout
+
+Every HTML element is a box. CSS just makes that box negotiable.
+
+
+```
+The Box Model Layers (Inside → Outside)
++-----------------------+
+|       Margin          |
+|  +-----------------+  |
+|  |     Border      |  |
+|  |  +-----------+  |  |
+|  |  | Padding   |  |  |
+|  |  | +-------+ |  |  |
+|  |  | |Content| |  |  |
+|  |  | +-------+ |  |  |
+|  |  +-----------+  |  |
+|  +-----------------+  |
++-----------------------+
+```
+
+{% details Content %}
+
+- The actual text, image, or element content
+- Controlled by width and height (by default)
+
+{% enddetails %}
+
+{% details Padding %}
+
+```html
+padding: 10px;
+```
+
+- What it does:
+    - Space inside the element, between content and border
+    - Background color extends into padding
+
+{% enddetails %}
+
+{% details Border %}
+
+```html
+border: 1px solid black;
+```
+
+- What it does:
+    - Wraps padding and content
+    - Visually separates the element from others
+- Borders count toward the element’s total size unless box-sizing is changed.
+
+{% enddetails %}
+
+{% details Margin %}
+
+```html
+margin: 20px;
+```
+
+- What it does:
+    - Space outside the element
+    - Controls distance between elements
+    - Margins can collapse vertically
+
+{% enddetails %}
+
 ## 6. Quiz Information
 
 Open book open note!
 
 - Quiz 1: 
-    - Available on Dec 16, 2024
-    - Due/End on Dec 21, 2024
+    - Available on Dec 16, 2025
+    - Due/End on Dec 21, 2025
 - Quiz 2: 
-    - Available on Jan 05, 2025
-    - Due/End on Jan 11, 2025
+    - Available on Jan 05, 2026
+    - Due/End on Jan 11, 2026
 - Quiz 3: 
-    - Available on Jan 13, 2025
-    - Due/End on Jan 18, 2025    
+    - Available on Jan 13, 2026
+    - Due/End on Jan 18, 2026    
     
     
