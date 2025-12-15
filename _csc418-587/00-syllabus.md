@@ -56,13 +56,13 @@ _styles: >
   }
 ---
 
-# CSC 418/587: Modern Web Applications Using Server-Side Technologies 
+# Modern Web Applications Using Server-Side Technologies 
 
-{% include courses/instructor_info.md %}
+{% include courses/instructor_info_summer.md %}
 
 ## Course Information
 
-- The course runs from December 16, 2024 until January 19, 2025. It is an 100% online asynchronous course. 
+- The course runs from December 15, 2025 until January 18, 2026. It is an 100% online asynchronous course. 
 
 ## Required Materials
 
@@ -115,10 +115,10 @@ to produce computing-based solutions.
 
 ### Method of Evaluation
 
-| Assessment             | % of Final Grade | CSLO Assessed | CSPO Assessed | AO Assessed |
-| ---------------------- | ---------------- | -------------------------- | -------------------------- | ------------------------- |
-| Projects               | 50%              | 1, 2, 3                    | 1, 2                       | 1, 2, 6                   |
-| Quizzes                | 50%              | 1, 3                       | 1, 2                       | 1,                        |
+| Assessment    | % of Final Grade | CSLO Assessed | CSPO Assessed | AO Assessed |
+| ------------- | ---------------- | ------------- | ------------- | ----------- |
+| Projects      | 50%              | 1, 2, 3       | 1, 2          | 1, 2, 6     |
+| Quizzes       | 50%              | 1, 3          | 1, 2          | 1,          |
 
 
 ### Grade Scale:
@@ -160,14 +160,14 @@ This is subject to modification.
 
 | Week       | Topic                                      | Assessments              |
 | ---------- | ------------------------------------------ | ------------------------ |
-|  1: Dec 16 | Install Docker | - |
+|  1: Dec 15 | Install Docker | - |
 |            | Setup Node.JS, VSCode, JavaScript | - |
 |            | Node.js | Project 1 Assigned |
 |            | EJS     | - |
 |            | Express.JS | Quiz 1 | 
-|  2: Dec 30 | MongoDB | Project 1 Due, Project 2 Assigned |
+|  2: Dec 29 | MongoDB | Project 1 Due, Project 2 Assigned |
 |            |                 | Quiz 2 |
-|  3: Jan 06 | Building a user model  | Project 2 Due, Project 3 Assigned |
-|  4: Jan 13 | Building an API (REST) | - |
+|  3: Jan 05 | Building a user model  | Project 2 Due, Project 3 Assigned |
+|  4: Jan 12 | Building an API (REST) | - |
 |            |                 | Quiz 3 |
-|     Jan 19 |                 | Project 3 Due |
+|     Jan 18 |                 | Project 3 Due |

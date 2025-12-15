@@ -10,7 +10,6 @@ code_diff: true
 typograms: true
 
 
-
 # Optionally, you can add a table of contents to your post.
 # NOTES:
 #   - make sure that TOC names match the actual section names
@@ -23,8 +22,8 @@ toc:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: Javascript
   - name: HTTP Protocol
+  - name: Javascript
   - name: NodeJS
   
 # Below is an example of injecting additional post-specific styles.
@@ -77,10 +76,55 @@ We will cover the fundamental JavaScript Programming Language features, and Node
 the HTTP package. Our goal is to develop a Web Server to be running as the back-end of an
 application.
 
+
+## HTTP Protocol
+
+### Overview
+
+Web accessing is known as a service and HTTP is a protocol. A protocol is a set of rules 
+both the client and the server comply to achieve successful communications. An HTTP protocol 
+is used by a Web Client to communicate with a Web Server.
+
+
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/javascripts/http.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
+
+{% details Protocols vs. Applications %}
+
+Application layer protocols and applications are two different concepts. For example,
+file transfer is an application that provides the capability of copying files from one
+machine to another. FTP is a protocol (RFC 959). When web accessing is an application,
+the term HTTP represents the protocol used by the client and the server to achieve web
+page accessing & displaying. In the first part of this semester, we will explore some
+applications and the protocols associated with them.
+{% enddetails %}
+
+{% details Web accessing %}
+
+The Internet started out as a research network mainly used by researchers, university
+students, and national labs to log in remotely, to transfer files, and to receive news, e-
+mail messages. Around 1992, WWW began to draw the attention of almost every
+discipline. It is simply based on one simple protocol, called Hyper-Text Transfer Protocol
+or HTTP as illustrated in Figure 1. 
+
+HTTP is essentially a protocol used for representing message formats between a Web 
+Browser and a Web Server to communicate with each other. The client may send a request 
+of a web page to the server, and the server retrieves the web page and sends the web 
+page back to the client. The Web Browser locating at the client machine displays the 
+web page. 
+
+It is very simple. But it provides the platform for the future web applications. The 
+client and the server usually are executed on different hosts. When a Uniform Resource 
+Locator (URL) is passed onto the Web Browser, the Web Browser will construct an HTTP 
+request, sends the request message to the server via the Internet. The server serves 
+one request at a time without checking the current state of the client.
+
+{% enddetails %}
+
 ## Javascript 
 
-Constants, Variables, Controls, Functions, Asynchronous Programming
-
+### Constants, Variables, Controls, and Functions
 
 {% details LinkedIn Learning activity %}
 
@@ -88,6 +132,49 @@ You should complete the hands-on introduction to Javascript on Linked Learning (
 
 - [Direct course link](https://www.linkedin.com/learning/hands-on-introduction-javascript/hands-on-javascript?u=56745321)
 - You can also login to LinkedIn Learning via [WCUPA's LinkedIn Learning](https://www.wcupa.edu/LinkedInLearning/) and search for the course title: "Hands-On Introduction: JavaScript".
+
+{% enddetails %}
+
+### Asynchronous Programming in JavaScript
+
+{% details Event Loop %}
+
+- JavaScript engine is single-threaded. 
+- Handling multiple concurrent requests using blocking mechanisms (`wait until this is done`) is inefficient. 
+- This is possible by a mechanism called `event loop`, which enable non-blocking operations in JavaScript. 
+- Examples of typically blocking tasks that are to be executed as non-blocking: 
+    - HTTP requests, 
+    - I/O operations, including reading files or waiting for user input
+- Code execution procedure via event loop: 
+    - Execution environment: client-side (e.g., web browser) or server side (e.g., Node.js)
+    - Functions/instructions are executed sequentially on a `call stack` - LIFO (Last In/First Out)
+    - If a blocking operation is encountered
+        - Need to be executed asynchronously by being sent to the Web APIs (browser) or `libuv` library (Node.js)
+        - Once these asynchronous operations complete, they push their callbacks onto either the `callback` queue (macrotasks) or `job` queue (microtasks), depending on their priority. 
+    - Event loop continuously checks
+        - Execute everything in the call stack first, then
+        - Drain microtasks from the job queue and macrotasks from the callback queue. 
+
+{% enddetails %}
+
+
+{% details Queues versus Call Stack %}
+- Call Stack
+    - Is conceptually similar to the concept of the stack in standard programming (recall Computer Systems)
+    - Is a data structure that keeps track of function calls in the JavaScript code. 
+    - When a function is invoked, it is pushed on to the top of the stack. 
+        - The stack follows a LIFO (last-in, first out) mechanism. 
+    - When the function completes, it is popped from the top of the stack. 
+    - If the function calls another function, the new function is pushed on to the top of the stack. 
+    - Asynchronous functions (those that would cause blocking) are pushed on to the stack but then popped off immediately, and registered as a callback in the Callback queue. 
+- Callback Queue and Job Queue
+    - Callback Queue (Macrotask): handles traditional asynchronous tasks like 
+        - Callbacks for timers (`setTimeout`, `setInterval`)
+        - User interaction events (clicks, key presses)
+        - I/O and network events
+        - Operates on a FIFO basis, handling one item per tick of the event loop.
+    - Job Queue (Microtask): hands callbacks for `Promises` (`.then()`, `.catch()`, `.finally()`, and `queueMicrotask()`) calls. 
+        - The event loops will handle the entire Microtask queue until it is empty before the Macrotask queue is processed. 
 
 {% enddetails %}
 
@@ -101,11 +188,12 @@ Read the following article: [Async JavaScript: From Callbacks, to Promises, to A
 
 {% details Recording: Instructions on Hands-on and Exercises %}
 
-TBP
+[Recording Link](https://wcupa.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=1663a997-0444-4432-894a-b3b401830080)
 
 {% enddetails %}
 
-Hands-on: test.js
+
+{% details Hands-on: test.js %}
 
 - Create a directory called `1-javascript` inside the `/apps` directory.
 - Create a Javascript file named `test.js` inside the `1-javascript` directory with the following content:
@@ -129,59 +217,44 @@ node test.js
     - Assignment operators: `+=`, `-=`, `*=`, `/=`, `%=` 
     - Comparison operators and Logic Operators: `==`, `===`, `!=`, `&&`, `||`
 
-## HTTP Protocol
 
-### Overview
-
-Web accessing is known as a service and HTTP is a protocol. A protocol is a set of rules 
-both the client and the server comply to achieve successful communications. An HTTP protocol 
-is used by a Web Client to communicate with a Web Server.
+{% enddetails %}
 
 
-```mermaid
-flowchart TD
+{% details Hands-on: Event Loop %}
 
-A[Web Server] -->|HTTP Request| B[Web server program running on a web server machine];
-B -->|HTTP Reply| A;
+- Create a Javascript file named `event_loop.js` inside the `1-javascript` directory with the following content:
 
+```js
+console.log('Start');
+
+setTimeout(() => {
+  console.log('Timeout callback'); // callback queue - macrotasks
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log('Promise callback'); // job queue - microtasks
+});
+
+console.log('End');
 ```
 
-### Protocols vs. Applications
 
-Application layer protocols and applications are two different concepts. For example,
-file transfer is an application that provides the capability of copying files from one
-machine to another. FTP is a protocol (RFC 959). When web accessing is an application,
-the term HTTP represents the protocol used by the client and the server to achieve web
-page accessing & displaying. In the first part of this semester, we will explore some
-applications and the protocols associated with them.
+- Open a terminal, change into `1-javascript` and run:
 
-### Web accessing
+```bash
+cd 1-javascript
+node event_loop.js
+```
 
-The Internet started out as a research network mainly used by researchers, university
-students, and national labs to log in remotely, to transfer files, and to receive news, e-
-mail messages. Around 1992, WWW began to draw the attention of almost every
-discipline. It is simply based on one simple protocol, called Hyper-Text Transfer Protocol
-or HTTP as illustrated in Figure 1. 
+- Observe the order of the output. 
 
-HTTP is essentially a protocol used for representing message formats between a Web 
-Browser and a Web Server to communicate with each other. The client may send a request 
-of a web page to the server, and the server retrieves the web page and sends the web 
-page back to the client. The Web Browser locating at the client machine displays the 
-web page. 
+{% enddetails %}
 
-It is very simple. But it provides the platform for the future web applications. The 
-client and the server usually are executed on different hosts. When a Uniform Resource 
-Locator (URL) is passed onto the Web Browser, the Web Browser will construct an HTTP 
-request, sends the request message to the server via the Internet. The server serves 
-one request at a time without checking the current state of the client.
-
-[Callback](https://ui.dev/async-javascript-from-callbacks-to-promises-to-async-await)
-
-## NodeJS
-
-Unit 1
+## NodeJS: Unit 1
 
 {% details Overview %}
+
     We just learned about JavaScript and use JavaScript as a server-side technology. Now, 
     we can begin to look into the node.js platform. We will begin our journey about 
     node.js using the HTTP library module in the following lessons from Unit 1 of the 
@@ -197,13 +270,7 @@ Unit 1
 
 {% enddetails %}
 
-{% details Recording: Instructions on Hands-on %}
-
-TBP
-
-{% enddetails %}
-
-### Lesson 3 – Create a Node.js Module
+{% details Lesson 3 – Create a Node.js Module %}
 
 - Lab Exercise 1: Create a Node.js Module and access the variable from another 
 JavaScript file
@@ -236,18 +303,17 @@ JavaScript file
 
     - Create another file `main.js` as in Listing 3.4
     - Enter the command `node main.js`.
+
 - Lab Exercise #3: Use Listing 3.6 to develop a module and call the function from 
 another JavaScript file.
 
+{% enddetails %}
+
 ### Important notes
 
-Later, we will begin to rely on reading the textbook more and we only include the 
-explanations of the code that requires attentions in the lecture notes. It is highly 
-recommend that you read all lessons in `Unit_0`, `Unit_1`, `Unit_2`, `Unit_3`, 
-`Unit_4`, and the first two chapters in `Unit_6` by the end of this course. 
-You may skip `Unit_5`.
+> Later, we will begin to rely on reading the textbook more and we only include the explanations of the code that requires attentions in the lecture notes. It is highly recommend that you read all lessons in `Unit_0`, `Unit_1`, `Unit_2`, `Unit_3`,  `Unit_4`, and the first two chapters in `Unit_6` by the end of this course. You may skip `Unit_5`.
 
-### HTTP and Web Servers
+{% details Lesson 4 - HTTP and Web Servers %}
 
 - In this lesson, the use of the module HTTP is demonstrated. As we had explained 
 previously, the term HTTP represents the protocol used by the client and 
@@ -265,7 +331,9 @@ node main.js
 
 - Bring up a web browser and enter “http://127.0.0.1:3000/”
 
-### Lesson 5 - Handling Incoming Requests
+{% enddetails %}
+
+{% details Lesson 5 - Handling Incoming Requests %}
 
 In previous lab experiment, the web browser displays `Hello Universe!` after 
 a URL `http://127.0.0.1:3000` is entered. If you try `http://127.0.0.1:3000/testing`, 
@@ -294,7 +362,9 @@ i.e., the `taps` behind the string `localhost:3000`.
 
     - Observe the outcome. 
 
-### Lesson 6 – Better Routes
+{% enddetails %}
+
+{% details Lesson 6 – Better Routes %}
     
 In this lesson, we need to add some routes after `localhost:3000`. For example, we 
 need to enter `localhost:3000/contact` or `localhost:3000/about`, etc. We need to 
@@ -319,7 +389,9 @@ all three labs.
     - Run `node main.js` in the terminal
     - Bring up a browser and enter `localhost:3000/about` or `localhost:3000/contact`
 
-### Lesson 7 – Capstone: Create the first web server with HTTP and Node.js
+{% enddetails %}
+
+{% details Lesson 7 – Capstone: Create the first web server with HTTP and Node.js %}
 
 Carrying out the following steps to create your first web application project:
 
@@ -350,3 +422,5 @@ a web server include the following:
 - The name of the file to return
 - An HTTP status code
 - The type of the file being returned (as the content type)
+
+{% enddetails %}
