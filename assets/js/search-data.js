@@ -51,15 +51,15 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-embracing-chaos-lessons-from-three-semesters-of-capstone-projects",
+            },{id: "post-keeping-up-with-the-raising-bar-through-experiential-learning",
         
-          title: "Embracing Chaos: Lessons From Three Semesters of Capstone Projects",
+          title: "Keeping up with the Raising Bar through Experiential Learning",
         
-        description: "Learning through the chaos",
+        description: "Knowledge and Skills, Why Not Both",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2025/embracing-chaos/";
+            window.location.href = "/blog/2025/experiential-learning/";
           
         },
       },{id: "post-thankful-for-failures",
