@@ -51,9 +51,9 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-keeping-up-with-the-raising-bar-through-experiential-learning",
+            },{id: "post-keeping-up-with-the-rising-bar-through-experiential-learning",
         
-          title: "Keeping up with the Raising Bar through Experiential Learning",
+          title: "Keeping up with the Rising Bar through Experiential Learning",
         
         description: "Knowledge and Skills, Why Not Both",
         section: "Posts",
