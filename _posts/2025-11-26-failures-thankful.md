@@ -3,7 +3,7 @@ layout: post
 title: "Thankful for Failures"
 date: 2025-11-26 12:00:00
 description: Catchy title ain't it? 
-tags: philosphy, fails, computer sience education
+tags: philosphy, fails, computer science education
 categories: non-technical
 hidden: false
 ---
@@ -47,7 +47,7 @@ However, developing and applying this mindset is deeply connected to the privile
 
 From the beginning, in early introductory courses, this external pressure manifests in the classroom as an unfounded belief that "good programmers don't fail" or "I must get it right the first time." The belief will cripple the students' learning capability when they inevitably encounter a bug (the necessary learning step) for the first time. Instead of seeing the error as a standard investigative problem, they see it as proof of personal deficiency, and consequently, they experience disproportionate stress and shame. This is the dreaded feeling in highschool when our returned assignment is riddled with red Xs. 
 
-This stress leads to avoidance behavior. The students may stop attempting new problems, give up too early on debugging existing issues, or seek immediate solutions rather than wrestling with the errors. This avoidance prevents the very failures necessary to build the practical skill and resilience required for mastery. They are trapped in a negative feedback loop where the fear of failure prevents the learning that would cure the fear of failure. Expanding this issue further, the avoid behavior will lead to students not trying for other out-of-class activities as well. Actitivies that would have made great entries in one's resume (e.g., hackathon, club projects, research) are now skipped over. 
+This stress leads to avoidance behavior. The students may stop attempting new problems, give up too early on debugging existing issues, or seek immediate solutions rather than wrestling with the errors. This avoidance prevents the very failures necessary to build the practical skill and resilience required for mastery. They are trapped in a negative feedback loop where the fear of failure prevents the learning that would cure the fear of failure. Expanding this issue further, the avoid behavior will lead to students not trying for other out-of-class activities as well. Activities that would have made great entries in one's resume (e.g., hackathon, club projects, research) are now skipped over. 
 
 This is why cultivating the failure expectant mindset in the classroom is not just good pedagogy; it is a critical act of equity. The task is not merely to teach debugging techniques, but to decouple the emotional threat of failure from the necessary instructional value of error messages.
 

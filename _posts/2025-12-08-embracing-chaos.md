@@ -1,16 +1,16 @@
 ---
 layout: post
 title: "Embracing Chaos: Lessons From Three Semesters of Capstone Projects"
-date: 2025-12-08 12:00:00
+date: 2030-12-08 12:00:00
 description: Learning through the chaos 
-tags: capstone, computer sience education
+tags: capstone, cs-education
 categories: non-technical
 hidden: true
 ---
 
- When I designed this capstone for the first time in Fall 2024, the guiding principle was simple: give students as much chance to experience challenges of software engineering in the real world as much as possible. This means to either bringing in projects that either come from real clients' demands or are much larger in scope compraing to typical course projects. Of course, this comes with risks. In an attempt to provide scaffolding for students, I have tried, in theory, to manage and control the inherent uncertainties in these projects. Three semesters later, I have learned something humbling: as the course matures, the level of uncontrollable chaos grows with it. And paradoxically, it is inside this chaos that the students grow the most. Their [final projects](https://www.cs.wcupa.edu/LNGO/courses/csc402/projects/) stand as evidence of their emerging professional maturity. 
+ When I designed this capstone for the first time in Fall 2024, the guiding principle was simple: give students as much chance to experience challenges of software engineering in the real world as much as possible. This means to either bringing in projects that either come from real clients' demands or are much larger in scope comparing to typical course projects. Of course, this comes with risks. In an attempt to provide scaffolding for students, I have tried, in theory, to manage and control the inherent uncertainties in these projects. Three semesters later, I have learned something humbling: as the course matures, the level of uncontrollable chaos grows with it. And paradoxically, it is inside this chaos that the students grow the most. Their [final projects](https://www.cs.wcupa.edu/LNGO/courses/csc402/projects/) stand as evidence of their emerging professional maturity. 
 
- In this essay, I want to trace how I have come to see chaos not as a defect to eliminate but as a necessary condition for learning. I will explore how this instability shapes individiual student experiences, as revealed through their final reflections across Fall 2024, Spring 2025, and Fall 2025. And I want to end with an important question I am strill struggle with myself: How do we sustain and control this chaos at just enough to push students forward but not enough to push them over the edge?
+ In this essay, I want to trace how I have come to see chaos not as a defect to eliminate but as a necessary condition for learning. I will explore how this instability shapes individual student experiences, as revealed through their final reflections across Fall 2024, Spring 2025, and Fall 2025. And I want to end with an important question I am still struggle with myself: How do we sustain and control this chaos at just enough to push students forward but not enough to push them over the edge?
 
 ## Fall 2024: Foundational Chaos (Walk in Uncertainty)
 
@@ -35,7 +35,7 @@ However, a common concluding theme of all these technical learnings was the meta
 
 ### 3. Real Team Collaboration
 
-Adapting from [Cornel University's Software Engineering course](https://www.cs.cornell.edu/courses/cs5150/2025sp/), I have arrange teams to have 4 to 6 students, and the clients were encouraged to scale their projects accordingly. In this setting, students faced genuine interdependence. Their contributions weren't isolated homework assignments but interconnected components of a real system. There were still cases of slacking off, which were pointed out in students' reflection. At the same time, almost all reflections recornized the importance of distributing responsibilities based on skill, interest, or necessity and maintaining internal accountability. Many noted that teamwork required more communication than expected, including communication they assumed would “just happen.”
+Adapting from [Cornel University's Software Engineering course](https://www.cs.cornell.edu/courses/cs5150/2025sp/), I have arrange teams to have 4 to 6 students, and the clients were encouraged to scale their projects accordingly. In this setting, students faced genuine interdependence. Their contributions weren't isolated homework assignments but interconnected components of a real system. There were still cases of slacking off, which were pointed out in students' reflection. At the same time, almost all reflections recognized the importance of distributing responsibilities based on skill, interest, or necessity and maintaining internal accountability. Many noted that teamwork required more communication than expected, including communication they assumed would “just happen.”
 
 ### 4. Exposure to Professional Expectations
 
@@ -43,7 +43,7 @@ Several reflections mention the sobering experience of realizing that their clie
 
 ### 5. The First Glimpse of Chaos
 
-In this first semester, there were definitely uncertainties such as non-technical clients with organizational and financial constraints (regarding technical solutions), delivery presssures, and scope adjustments, integration challenges, and conflicting team schedules. What stands out is that, despite everything, students rarely complained about the chaos. I suspected that they have come to embraced it as part of the learning experience. This was demonstrated in their reflections, as many students wrote that they came into the semester unsure if they could build something for a real organization. By the end, the successful delivery of even a modest product fundamentally changed their self-perception. 
+In this first semester, there were definitely uncertainties such as non-technical clients with organizational and financial constraints (regarding technical solutions), delivery pressures, and scope adjustments, integration challenges, and conflicting team schedules. What stands out is that, despite everything, students rarely complained about the chaos. I suspected that they have come to embraced it as part of the learning experience. This was demonstrated in their reflections, as many students wrote that they came into the semester unsure if they could build something for a real organization. By the end, the successful delivery of even a modest product fundamentally changed their self-perception. 
 
 ## Spring 2025
 
