@@ -35,7 +35,7 @@ In the end, whether it is fast or slow, you have to keep doing the research work
 
 ## Something stuck, now what
 
-Throwing things at the wall is a surprisingly addictive activity. Once something sticks, a whole host of questions arises. Is it because of my throwing techniques? Is it because of the composition of the stuck cakes? Is it the milk, the egg, or the flour? Or is it because this wall is suspiciously porous and it is simply easier to stick things? This is where hypotheses actually begin. Maybe this will lead to a special brand of cake that never falls of a plate onto the floor!
+Throwing things at the wall is a surprisingly addictive activity. Once something sticks, a whole host of questions arises. Is it because of my throwing techniques? Is it because of the composition of the stuck cakes? Is it the milk, the egg, or the flour? Or is it because this wall is suspiciously porous and it is simply easier to stick things? This is where hypotheses actually begin. Maybe this will lead to a special brand of cake that never falls off a plate onto the floor!
 
 Now that you have gotten something stuck to the wall, you might end up pursuing a career specializing in throwing things besides cakes at the wall. But at the very least, your arm and shoulder will have become very strong indeed!
 
