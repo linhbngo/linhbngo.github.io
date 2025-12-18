@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-keeping-up-with-the-rising-bar-through-experiential-learning",
+            },{id: "post-research-the-art-of-throwing-cakes-at-the-wall",
+        
+          title: "Research: The Art of Throwing Cakes at The Wall",
+        
+        description: "Iteration, mess, and the expectation that something will stick",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/throwing-cakes/";
+          
+        },
+      },{id: "post-keeping-up-with-the-rising-bar-through-experiential-learning",
         
           title: "Keeping up with the Rising Bar through Experiential Learning",
         
