@@ -494,41 +494,46 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/02-javascripts/";
+            },},{id: "csc418-587-lab-routing",
+          title: 'Lab: Routing',
+          description: "",
+          section: "Csc418-587",handler: () => {
+              window.location.href = "/csc418-587/03-lab-routes/";
             },},{id: "csc418-587-project-1-dynamic-data-and-form-handling",
           title: 'Project 1: Dynamic Data and Form Handling',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/03-project-1/";
+              window.location.href = "/csc418-587/04-project-1/";
             },},{id: "csc418-587-web-development-with-ejs-embedded-js",
           title: 'Web Development with EJS (Embedded JS)',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/04-express/";
+              window.location.href = "/csc418-587/05-express/";
             },},{id: "csc418-587-mongodb",
           title: 'MongoDB',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/05-mongodb/";
+              window.location.href = "/csc418-587/06-mongodb/";
             },},{id: "csc418-587-mongoose",
           title: 'Mongoose',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/06-mongoose/";
+              window.location.href = "/csc418-587/07-mongoose/";
             },},{id: "csc418-587-project-2-json-and-mongodb",
           title: 'Project 2: JSON and MongoDB',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/07-project-2/";
+              window.location.href = "/csc418-587/08-project-2/";
             },},{id: "csc418-587-restful-api",
           title: 'RESTful API',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/08-restful-api/";
+              window.location.href = "/csc418-587/09-restful-api/";
             },},{id: "csc418-587-endpoints-and-restful-web-service-api",
           title: 'Endpoints and RESTful Web Service API',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/09-project-3/";
+              window.location.href = "/csc418-587/10-project-3/";
             },},{id: "csc574-00-syllabus",
           title: '00 Syllabus',
           description: "",
