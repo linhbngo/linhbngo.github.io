@@ -504,8 +504,8 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/04-project-1/";
-            },},{id: "csc418-587-web-development-with-ejs-embedded-js",
-          title: 'Web Development with EJS (Embedded JS)',
+            },},{id: "csc418-587-modern-server-side-development-with-express-js",
+          title: 'Modern Server-Side Development with Express.js',
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/05-express/";
