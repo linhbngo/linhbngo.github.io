@@ -2,14 +2,9 @@
 layout: lecture
 pretty_table: true
 order: 4
-title: Web Development with EJS (Embedded JS)
-mermaid:
-  enabled: true
-  zoomable: true
+title: Modern Server-Side Development with Express.js
 code_diff: true
 typograms: true
-
-
 
 # Optionally, you can add a table of contents to your post.
 # NOTES:
@@ -23,9 +18,10 @@ toc:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: Javascript
-  - name: HTTP Protocol
-  - name: NodeJS
+  - name: Node HTTP and Node Express
+  - name: "Lesson 8: Setting an app with Express.js"
+  - name: "Lesson 9: Routing in Express.js"
+  - name: "Lesson 10: EJS (Embedded JS) and Layouts"
   
 # Below is an example of injecting additional post-specific styles.
 # If you use this post as a template, delete this _styles block.
@@ -46,6 +42,7 @@ _styles: >
   }
 ---
 
+## Overview
 
 After we discussed about using Node.js with the http module to develop a 
 server, we introduce another Node module, `Express.js` that we will use 
@@ -55,142 +52,195 @@ for the lab activities. We will cover the following lessons in our textbook.
 Before we start, I recommend that you read through this article from Mozilla 
 that provides another [introduction to Node and Express](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction).
 
+> Express.js is not a web server. It is a framework that runs on top of Node's HTTP server. 
+> Under the hood, Express still calls *http.createServer()(...)*
+{: .block-tip}
 
+## 1. Setup Express
 
-## 1. Lesson 8: Setting an app with Express.js
+Express is a downloadable module that can be installed from the command line once with:
 
-???tip "Recording: Web Development with EJS"
-
-- Enter `npm install express –-save`
-- Enter the content for `main.js` from listing 8.1:
-
-```js
-  'use strict';
-  const port = 3000,
-    express = require('express'),
-    app = express();
-  app.get('/', (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
-    console.log(req.url);
-    console.log(req.query);
-    res.send('Hello, Universe!');
-  }).listen(port, function () {
-    console.log(`The Express.js server has started and is listening on port number:
-    ${port}`);
-  });
+```bash
+npm install express --save
 ```
 
+At this point, you should familiarize yourself with the source code from the book, which is [available freely at](https://github.com/JonathanWexler/get-programming-with-nodejs/tree/master). This can be done by:
+
+```bash
+cd /apps
+apt install -y git
+git clone https://github.com/JonathanWexler/get-programming-with-nodejs.git
+```
+
+
+## Node HTTP and Node Express
+
+- Create a directory called `4-express` in `apps`.
+- Create a file called `server-http.js` with the following contents:
+
+```js
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  res.end('Hello from Node HTTP\n');
+});
+
+server.listen(3000, () => {
+  console.log('Node HTTP server listening on port 3000');
+});
+```
+
+{% details HTTP %}
+- The server is manually created (1, 3)
+- The headers are manually written (4)
+- The response is manually handled (5)
+{% enddetails %}
+
+- Create a file called `server-express.js` with the following contents:
+
+```js
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello from Express\n');
+});
+
+app.listen(3000, () => {
+  console.log('Express server listening on port 3000');
+});
+```
+
+- Launch the two JavaScript files and use the curl commands on `127.0.0.1:3000` to observe the outputs. 
+
+{% details Express %}
+
+- Express uses Node’s HTTP server internally
+- Headers and status codes are managed by Express. 
+- Routing (GET /) is handled declaratively. 
+    - The response helper (res.send) handles the boilerplate
+
+{% enddetails %}
+
+## Lesson 8: Setting an app with Express.js
+
+- For this lesson, create the `main.js` using the content from Listing 8.1 in the book (`first_express_project_8_3` in `lesson_8` from the git repo)
 - Check Table 8.2 for the information about `req.params`, `req.body`, `req.url`, and `req.query`.
 
-## 2. Lesson 9: Routing in Express.js
+{% details Expected outcome %}
 
-???tip "Recording: Web Development with EJS"
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/express/lst8-2.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
-- Read through Lesson 9 and examine the codes in the `finish` folder of 
-`lesson_9` to observe how the routes are managed via Express.js
+{% enddetails %}
+
+## Lesson 9: Routing in Express.js
+
+- Read through Lesson 9 and examine the codes in the `finish` folder of `lesson_9` to observe how the routes are managed via Express.js
 - Run `node main.js` to view
 
-## 3. Lesson 10: EJS (Embedded JS) and Layouts
+## Lesson 10: EJS (Embedded JS) and Layouts
 
-???tip "Recording: Web Development with EJS"
+{% details Review %}
+
+First, you are to review the web page at [the official website for EJS](https://ejs.co/#docs). It is strongly recommended that you pause and go through the official website to learn more about EJS. 
+
+If you are interested in learning more about EJS, here is a good tutorial entitled [How To Use EJS to Template Your Node Application](First, you are to read the tutorial on [How to use EJS to Template your Node Application](https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application). 
+
+You can follow this tutorial to develop a complete front-end of a web application with EJS. But it is not required. We will move on and begin to develop our view pages following our textbook in Lesson 10.
+
+{% enddetails %}
 
 
-???note "Review"
-    First, you are to review the web page at [the official website for EJS](https://ejs.co/#docs). 
-    It is strongly recommended that you pause and go through the official website to learn more 
-    about EJS. 
+{% details Webpage structure: layout.js %}
 
-    If you are interested in learning more about EJS, here is a good tutorial entitled [How To
-    Use EJS to Template Your Node Application](First, you are to read the tutorial on [How to use EJS to Template your Node Application](https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application). 
-    You can follow this tutorial to develop a
-    complete front-end of a web application with EJS. But it is not required. We will move
-    on and begin to develop our view pages following our textbook in Lesson 10.
+Use a `layout.js` to specify the structure of a web page in your project. Store the layout.js and view files in the same folder, i.e., the views folder.
 
-???note "Webpage structure: layout.js"
-    Use a `layout.js` to specify the structure of a web page in your project. Store the layout.js
-    and view files in the same folder, i.e., the views folder.
-
-    ```html
-    <!DOCTYPE html>
-    <html>
-    <head>
+```html
+<!DOCTYPE html>
+<html>
+  <head>
     <meta charset="utf-8">
     <title>Recipe App</title>
     <link rel="stylesheet" href="./css/custom.css">
     <style media="screen">
-    body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    color: black;
-    text-align: center;
-    font-family: 'open sans';
-    }
-    #nav {
-    width: 100%;
-    text-align: center;
-    height: 60px;
-    background-color: #7D498D;
-    }
-    #footer {
-    width: 100%;
-    text-align: center;
-    height: 60px;
-    background-color: #9C73A9;
-    position: relative;
-    bottom: 0;
-    }
-    #container {
-    height: 100px;
-    }
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        color: black;
+        text-align: center;
+        font-family: 'open sans';
+      }
+      #nav {
+        width: 100%;
+        text-align: center;
+        height: 60px;
+        background-color: #7D498D;
+      }
+      #footer {
+        width: 100%;
+        text-align: center;
+        height: 60px;
+        background-color: #9C73A9;
+        position: relative;
+        bottom: 0;
+      }
+      #container {
+        height: 100px;
+      }
     </style>
-    </head>
-    <body>
+  </head>
+  <body>
     <% include partials/navigation %>
     <div id="container">
-    <%- body %>
+      <%- body %>
     </div>
     <div id="footer">FOOTER</div>
-    </body>
-    </html>
-    ```
+  </body>
+</html>
+```
 
-???note "Prepare view files and controllers"
-    Third, you are to Prepare view files and controllers.
+{% details Prepare view files and controllers %}
 
-    ```js
-    // homeController.js
-    'use strict';
-    const express = require( 'express' ),
-    layouts = require( 'express-ejs-layouts' ),
-    app = express(),
-    homeController = require( './controllers/homeController' );
-    app.set( 'port', process.env.PORT || 3000 );
-    app.set( 'view engine', 'ejs' );
-    app.use( layouts );
-    app.use( homeController.logRequestPaths );
-    app.get( '/items/:vegetable', homeController.sendReqParam );
-    app.get( '/name/:myName', homeController.respondWithName );
-    app.listen( app.get( 'port' ), () => {
-    console.log( `Server running on port: ${app.get('port')}` );
-    } );
-    ```
+Third, you are to Prepare view files and controllers.
 
-    ```js
-    // view file: index.js
-    <h1> Hello, <%= name %> </h1>
-    //view file in the partials folder: navigation.js
-    <div id="nav">TOP NAVIGATION</div>
-    ```
+```js
+// homeController.js
+'use strict';
+const express = require( 'express' ),
+layouts = require( 'express-ejs-layouts' ),
+app = express(),
+homeController = require( './controllers/homeController' );
+app.set( 'port', process.env.PORT || 3000 );
+app.set( 'view engine', 'ejs' );
+app.use( layouts );
+app.use( homeController.logRequestPaths );
+app.get( '/items/:vegetable', homeController.sendReqParam );
+app.get( '/name/:myName', homeController.respondWithName );
+app.listen( app.get( 'port' ), () => {
+  console.log( `Server running on port: ${app.get('port')}` );
+} );
+```
 
-    Here the EJS tag “<%= name %>” replaces the name by the value of the name into the
-    template while completing the rendering operation.
+```js
+// view file: index.js
+<h1> Hello, <%= name %> </h1>
+//view file in the partials folder: navigation.js
+<div id="nav">TOP NAVIGATION</div>
+```
 
-???note "Testing"
-    - Test your code with the URL: http://127.0.0.1:3000/name/John
-    - Test your code with the URL: http://127.0.0.1:3000/veg/banana
-    - Notice that the format of the ‘include’ statement in a view file is:
-    `<% include partials/navigation %>`
+Here the EJS tag `<%= name %>` replaces the name by the value of the name into the template while completing the rendering operation.
 
+{% enddetails %}
+
+{% details Testing %}
+
+- Test your code with the URL: http://127.0.0.1:3000/name/John
+- Test your code with the URL: http://127.0.0.1:3000/veg/banana
+- Notice that the format of the ‘include’ statement in a view file is: `<% include partials/navigation %>`
+
+{% enddetails %}
 
