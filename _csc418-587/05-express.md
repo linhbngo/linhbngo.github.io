@@ -203,6 +203,8 @@ Use a `layout.js` to specify the structure of a web page in your project. Store 
 </html>
 ```
 
+{% enddetails %}
+
 {% details Prepare view files and controllers %}
 
 Third, you are to Prepare view files and controllers.
