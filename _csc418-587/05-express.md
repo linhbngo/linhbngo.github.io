@@ -242,20 +242,21 @@ exports.sendReqParam = (req, res) => {
     - It reads req.params (filled by Express route matching).
     - It sends a response.
 
-{% details Perspective through MVC %}
-    - MVC: Abbreviation of Model, View, Controller.  
-    - MVC: separation-of-concerns
-        - Model: data + business rules (DB, validation, domain logic)
-        - View: presentation (EJS, Pug, React SSR, templates, etc.)
-        - Controller: translates HTTP requests into actions, returns responses (or chooses a view)
-    - From `9-3`:
-      - `controllers/homeController.js` is the Controller layer:
-          - It handles request input (req.params)
-          = It decides what to send back (res.send(...))
-      - There is currently no View, things are being returned to users via `res.send(...)`.
-      - There is current no Model
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/express/mvc.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
-{% enddetails %}
+- MVC: Abbreviation of Model, View, Controller.  
+- MVC: separation-of-concerns
+    - Model: data + business rules (DB, validation, domain logic)
+    - View: presentation (EJS, Pug, React SSR, templates, etc.)
+    - Controller: translates HTTP requests into actions, returns responses (or chooses a view)
+- From `9-3`:
+  - `controllers/homeController.js` is the Controller layer:
+      - It handles request input (req.params)
+      = It decides what to send back (res.send(...))
+  - There is currently no View, things are being returned to users via `res.send(...)`.
+  - There is current no Model
 
 ## Lesson 10: EJS (Embedded JS) and Layouts
 
@@ -263,7 +264,7 @@ exports.sendReqParam = (req, res) => {
 
 First, you are to review the web page at [the official website for EJS](https://ejs.co/#docs). It is strongly recommended that you pause and go through the official website to learn more about EJS. 
 
-If you are interested in learning more about EJS, here is a good tutorial entitled [How To Use EJS to Template Your Node Application](First, you are to read the tutorial on [How to use EJS to Template your Node Application](https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application). 
+If you are interested in learning more about EJS, here is a good tutorial entitled [How To Use EJS to Template Your Node Application](https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application). 
 
 You can follow this tutorial to develop a complete front-end of a web application with EJS. But it is not required. We will move on and begin to develop our view pages following our textbook in Lesson 10.
 
