@@ -14,6 +14,7 @@ typograms: true
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
   - name: Overview
+  - name: Setup Express
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
@@ -56,7 +57,7 @@ that provides another [introduction to Node and Express](https://developer.mozil
 > Under the hood, Express still calls *http.createServer()(...)*
 {: .block-tip}
 
-## 1. Setup Express
+## Setup Express
 
 Express is a downloadable module that can be installed from the command line once with:
 
@@ -270,6 +271,11 @@ You can follow this tutorial to develop a complete front-end of a web applicatio
 
 {% enddetails %}
 
+> Prior to running, need to run the following in terminal:
+> ```bash
+> npm install express-ejs-layout
+> ```
+{:.block-tip}
 
 {% details Webpage structure: layout.js %}
 
