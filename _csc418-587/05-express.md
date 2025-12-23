@@ -138,8 +138,124 @@ app.listen(3000, () => {
 
 ## Lesson 9: Routing in Express.js
 
-- Read through Lesson 9 and examine the codes in the `finish` folder of `lesson_9` to observe how the routes are managed via Express.js
-- Run `node main.js` to view
+This lesson provides a preliminary view on routing/MVC
+
+{% details Reading %}
+
+>- Read through Lesson 9 and examine the codes in the `finish` folder of `lesson_9` to observe how the routes are managed via Express.js
+>- Run `node main.js` to view
+
+{% enddetails %}
+
+Another way to approach this is to start this lesson from the end, which is the [9-3 example](https://github.com/JonathanWexler/get-programming-with-nodejs/tree/master/unit_2/lesson_9/finish/express_routes_9_3) in GitHub. 
+
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/express/9-3.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
+
+{% details main.js %}
+
+```js
+"use strict";
+
+const port = 3000,
+  express = require("express"),
+  app = express(),
+  homeController = require("./controllers/homeController");
+
+app.use(
+  express.urlencoded({
+    extended: false
+  })
+);
+app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log(`request made to: ${req.url}`);
+  next();
+});
+
+app.post("/", (req, res) => {
+  console.log(req.body);
+  console.log(req.query);
+  res.send("POST Successful!");
+});
+
+app.get("/items/:vegetable", homeController.sendReqParam);
+
+app.listen(port, () => {
+  console.log(`Server running on port: ${port}`);
+});
+```
+
+{% enddetails %}
+
+
+- App bootstrapping (line 3-5)
+    - `express()` creates the app object, which is basically a big request router + middleware pipeline.
+    - `homeController` is a custome Node module we build and import. It contains a function to be passed to Express.
+
+- Body-parsing middleware pipeline, as shown in the figure above, containing multiple stages
+    - Line 8-12: Parses application/x-www-form-urlencoded bodies (classic HTML form posts).
+        - With extended: false, it uses a simpler parser (fine for typical forms).
+    - Line 13: Parses application/json bodies (common for APIs / fetch / axios).
+    - **Important**: middleware order matters. By the time `app.post("/")` runs, req.body is already populated (if the request body matches the expected content-type).
+    - Line 15-18: logging middleware 
+        - This runs for every incoming request because it’s [app.use(...)](https://expressjs.com/en/guide/using-middleware.html) with no path restriction.
+            - `req` = request (incoming data)
+            - `res` = response (how the server replies)
+            - `next()` = *I’m done, let the next middleware/route handler run*
+        - Missing `next()` will cause the request to hangs.
+
+- Line 20-24: `Route: POST /`
+    - This route matches HTTP method = POST and path = / exactly.
+        - `req.body`: Results of the body-parsing middleware. For example, sending JSON { "a": 1 } will activate the parser at line 13 and resulting in  `req.body.a === 1`
+        - `req.query`: Comes from the URL query string. For example, `POST /?debug=true` resulting in `req.query.debug === "true"`
+    - Query parsing does not require body-parser middleware; Express parses it from the URL.
+        - `res.send(...)`: Ends the response immediately (sets headers, writes body, closes).
+
+- Line 26: `Route: GET /items/:vegetable`
+    - Match method GET with a path pattern: `/items/<something>`
+    - Examples:
+        - `/items/carrot`: `req.params.vegetable === "carrot"`
+        - `/items/bokchoy`: `req.params.vegetable === "bokchoy"`
+    - When `GET` is called, the function `sendRequestParam` in `homeController` is activated. 
+  
+- Line 28-30: Listening
+    - This starts the HTTP server and hands all incoming requests into Express’s middleware and routing system.
+
+{% details homeController.js %}
+
+```js
+"use strict";
+
+exports.sendReqParam = (req, res) => {
+  let veg = req.params.vegetable;
+  res.send(`This is the page for ${veg}`);
+};
+```
+
+{% enddetails %}
+
+- Express treats `sendReqParam` as a route handler:
+    - It receives the same (req, res) objects.
+    - It reads req.params (filled by Express route matching).
+    - It sends a response.
+
+{% details Perspective through MVC %}
+    - MVC: Abbreviation of Model, View, Controller.  
+    - MVC: separation-of-concerns
+        - Model: data + business rules (DB, validation, domain logic)
+        - View: presentation (EJS, Pug, React SSR, templates, etc.)
+        - Controller: translates HTTP requests into actions, returns responses (or chooses a view)
+    - From `9-3`:
+      - `controllers/homeController.js` is the Controller layer:
+          - It handles request input (req.params)
+          = It decides what to send back (res.send(...))
+      - There is currently no View, things are being returned to users via `res.send(...)`.
+      - There is current no Model
+
+{% enddetails %}
 
 ## Lesson 10: EJS (Embedded JS) and Layouts
 
