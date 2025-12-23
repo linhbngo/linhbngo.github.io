@@ -4,7 +4,7 @@
       {
             "title": "Modern Server-Side Development with Express.js",
             "description": "",
-            "published": "December 22, 2025",
+            "published": "December 23, 2025",
             "authors": [
               
             ],
@@ -75,7 +75,104 @@ git clone https://github.com/JonathanWexler/get-programming-with-nodejs.git
 <span class="nx">app</span><span class="p">.</span><span class="nf">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Express server listening on port 3000</span><span class="dl">'</span><span class="p">);</span>
 <span class="p">});</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Launch the two JavaScript files and use the curl commands on <code class="language-plaintext highlighter-rouge">127.0.0.1:3000</code> to observe the outputs.</li> </ul> <details class="details details--default" data-variant="default"><summary>Express</summary> <ul> <li>Express uses Node’s HTTP server internally</li> <li>Headers and status codes are managed by Express.</li> <li>Routing (GET /) is handled declaratively. <ul> <li>The response helper (res.send) handles the boilerplate</li> </ul> </li> </ul> </details> <h2 id="lesson-8-setting-an-app-with-expressjs">Lesson 8: Setting an app with Express.js</h2> <ul> <li>For this lesson, create the <code class="language-plaintext highlighter-rouge">main.js</code> using the content from Listing 8.1 in the book (<code class="language-plaintext highlighter-rouge">first_express_project_8_3</code> in <code class="language-plaintext highlighter-rouge">lesson_8</code> from the git repo)</li> <li>Check Table 8.2 for the information about <code class="language-plaintext highlighter-rouge">req.params</code>, <code class="language-plaintext highlighter-rouge">req.body</code>, <code class="language-plaintext highlighter-rouge">req.url</code>, and <code class="language-plaintext highlighter-rouge">req.query</code>.</li> </ul> <details class="details details--default" data-variant="default"><summary>Expected outcome</summary> <div class="row mt-3"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc418/express/lst8-2-480.webp 480w,/assets/img/courses/csc418/express/lst8-2-800.webp 800w,/assets/img/courses/csc418/express/lst8-2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc418/express/lst8-2.png" class="img-fluid z-depth-1" width="100%" height="auto" data-zoomable="" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </details> <h2 id="lesson-9-routing-in-expressjs">Lesson 9: Routing in Express.js</h2> <ul> <li>Read through Lesson 9 and examine the codes in the <code class="language-plaintext highlighter-rouge">finish</code> folder of <code class="language-plaintext highlighter-rouge">lesson_9</code> to observe how the routes are managed via Express.js</li> <li>Run <code class="language-plaintext highlighter-rouge">node main.js</code> to view</li> </ul> <h2 id="lesson-10-ejs-embedded-js-and-layouts">Lesson 10: EJS (Embedded JS) and Layouts</h2> <details class="details details--default" data-variant="default"><summary>Review</summary> <p>First, you are to review the web page at <a href="https://ejs.co/#docs" rel="external nofollow noopener" target="_blank">the official website for EJS</a>. It is strongly recommended that you pause and go through the official website to learn more about EJS.</p> <p>If you are interested in learning more about EJS, here is a good tutorial entitled [How To Use EJS to Template Your Node Application](First, you are to read the tutorial on <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application" rel="external nofollow noopener" target="_blank">How to use EJS to Template your Node Application</a>.</p> <p>You can follow this tutorial to develop a complete front-end of a web application with EJS. But it is not required. We will move on and begin to develop our view pages following our textbook in Lesson 10.</p> </details> <details class="details details--default" data-variant="default"><summary>Webpage structure: layout.js</summary> <p>Use a <code class="language-plaintext highlighter-rouge">layout.js</code> to specify the structure of a web page in your project. Store the layout.js and view files in the same folder, i.e., the views folder.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Launch the two JavaScript files and use the curl commands on <code class="language-plaintext highlighter-rouge">127.0.0.1:3000</code> to observe the outputs.</li> </ul> <details class="details details--default" data-variant="default"><summary>Express</summary> <ul> <li>Express uses Node’s HTTP server internally</li> <li>Headers and status codes are managed by Express.</li> <li>Routing (GET /) is handled declaratively. <ul> <li>The response helper (res.send) handles the boilerplate</li> </ul> </li> </ul> </details> <h2 id="lesson-8-setting-an-app-with-expressjs">Lesson 8: Setting an app with Express.js</h2> <ul> <li>For this lesson, create the <code class="language-plaintext highlighter-rouge">main.js</code> using the content from Listing 8.1 in the book (<code class="language-plaintext highlighter-rouge">first_express_project_8_3</code> in <code class="language-plaintext highlighter-rouge">lesson_8</code> from the git repo)</li> <li>Check Table 8.2 for the information about <code class="language-plaintext highlighter-rouge">req.params</code>, <code class="language-plaintext highlighter-rouge">req.body</code>, <code class="language-plaintext highlighter-rouge">req.url</code>, and <code class="language-plaintext highlighter-rouge">req.query</code>.</li> </ul> <details class="details details--default" data-variant="default"><summary>Expected outcome</summary> <div class="row mt-3"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc418/express/lst8-2-480.webp 480w,/assets/img/courses/csc418/express/lst8-2-800.webp 800w,/assets/img/courses/csc418/express/lst8-2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc418/express/lst8-2.png" class="img-fluid z-depth-1" width="100%" height="auto" data-zoomable="" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> </details> <h2 id="lesson-9-routing-in-expressjs">Lesson 9: Routing in Express.js</h2> <p>This lesson provides a preliminary view on routing/MVC</p> <details class="details details--default" data-variant="default"><summary>Reading</summary> <blockquote> <ul> <li>Read through Lesson 9 and examine the codes in the <code class="language-plaintext highlighter-rouge">finish</code> folder of <code class="language-plaintext highlighter-rouge">lesson_9</code> to observe how the routes are managed via Express.js</li> <li>Run <code class="language-plaintext highlighter-rouge">node main.js</code> to view</li> </ul> </blockquote> </details> <p>Another way to approach this is to start this lesson from the end, which is the <a href="https://github.com/JonathanWexler/get-programming-with-nodejs/tree/master/unit_2/lesson_9/finish/express_routes_9_3" rel="external nofollow noopener" target="_blank">9-3 example</a> in GitHub.</p> <div class="row mt-3"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc418/express/9-3-480.webp 480w,/assets/img/courses/csc418/express/9-3-800.webp 800w,/assets/img/courses/csc418/express/9-3-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc418/express/9-3.png" class="img-fluid z-depth-1" width="100%" height="auto" data-zoomable="" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </div> <details class="details details--default" data-variant="default"><summary>main.js</summary> <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td> <td class="rouge-code"><pre><span class="dl">"</span><span class="s2">use strict</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">port</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">,</span>
+  <span class="nx">express</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">express</span><span class="dl">"</span><span class="p">),</span>
+  <span class="nx">app</span> <span class="o">=</span> <span class="nf">express</span><span class="p">(),</span>
+  <span class="nx">homeController</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">./controllers/homeController</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span>
+  <span class="nx">express</span><span class="p">.</span><span class="nf">urlencoded</span><span class="p">({</span>
+    <span class="na">extended</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">})</span>
+<span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nf">json</span><span class="p">());</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`request made to: </span><span class="p">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="nf">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">/</span><span class="dl">"</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="dl">"</span><span class="s2">POST Successful!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">/items/:vegetable</span><span class="dl">"</span><span class="p">,</span> <span class="nx">homeController</span><span class="p">.</span><span class="nx">sendReqParam</span><span class="p">);</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Server running on port: </span><span class="p">${</span><span class="nx">port</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <ul> <li>App bootstrapping (line 3-5) <ul> <li> <code class="language-plaintext highlighter-rouge">express()</code> creates the app object, which is basically a big request router + middleware pipeline.</li> <li> <code class="language-plaintext highlighter-rouge">homeController</code> is a custome Node module we build and import. It contains a function to be passed to Express.</li> </ul> </li> <li>Body-parsing middleware pipeline, as shown in the figure above, containing multiple stages <ul> <li>Line 8-12: Parses application/x-www-form-urlencoded bodies (classic HTML form posts). <ul> <li>With extended: false, it uses a simpler parser (fine for typical forms).</li> </ul> </li> <li>Line 13: Parses application/json bodies (common for APIs / fetch / axios).</li> <li> <strong>Important</strong>: middleware order matters. By the time <code class="language-plaintext highlighter-rouge">app.post("/")</code> runs, req.body is already populated (if the request body matches the expected content-type).</li> <li>Line 15-18: logging middleware <ul> <li>This runs for every incoming request because it’s <a href="https://expressjs.com/en/guide/using-middleware.html" rel="external nofollow noopener" target="_blank">app.use(…)</a> with no path restriction. <ul> <li> <code class="language-plaintext highlighter-rouge">req</code> = request (incoming data)</li> <li> <code class="language-plaintext highlighter-rouge">res</code> = response (how the server replies)</li> <li> <code class="language-plaintext highlighter-rouge">next()</code> = <em>I’m done, let the next middleware/route handler run</em> </li> </ul> </li> <li>Missing <code class="language-plaintext highlighter-rouge">next()</code> will cause the request to hangs.</li> </ul> </li> </ul> </li> <li>Line 20-24: <code class="language-plaintext highlighter-rouge">Route: POST /</code> <ul> <li>This route matches HTTP method = POST and path = / exactly. <ul> <li> <code class="language-plaintext highlighter-rouge">req.body</code>: Results of the body-parsing middleware. For example, sending JSON { “a”: 1 } will activate the parser at line 13 and resulting in <code class="language-plaintext highlighter-rouge">req.body.a === 1</code> </li> <li> <code class="language-plaintext highlighter-rouge">req.query</code>: Comes from the URL query string. For example, <code class="language-plaintext highlighter-rouge">POST /?debug=true</code> resulting in <code class="language-plaintext highlighter-rouge">req.query.debug === "true"</code> </li> </ul> </li> <li>Query parsing does not require body-parser middleware; Express parses it from the URL. <ul> <li> <code class="language-plaintext highlighter-rouge">res.send(...)</code>: Ends the response immediately (sets headers, writes body, closes).</li> </ul> </li> </ul> </li> <li>Line 26: <code class="language-plaintext highlighter-rouge">Route: GET /items/:vegetable</code> <ul> <li>Match method GET with a path pattern: <code class="language-plaintext highlighter-rouge">/items/&lt;something&gt;</code> </li> <li>Examples: <ul> <li> <code class="language-plaintext highlighter-rouge">/items/carrot</code>: <code class="language-plaintext highlighter-rouge">req.params.vegetable === "carrot"</code> </li> <li> <code class="language-plaintext highlighter-rouge">/items/bokchoy</code>: <code class="language-plaintext highlighter-rouge">req.params.vegetable === "bokchoy"</code> </li> </ul> </li> <li>When <code class="language-plaintext highlighter-rouge">GET</code> is called, the function <code class="language-plaintext highlighter-rouge">sendRequestParam</code> in <code class="language-plaintext highlighter-rouge">homeController</code> is activated.</li> </ul> </li> <li>Line 28-30: Listening <ul> <li>This starts the HTTP server and hands all incoming requests into Express’s middleware and routing system.</li> </ul> </li> </ul> <details class="details details--default" data-variant="default"><summary>homeController.js</summary> <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre><span class="dl">"</span><span class="s2">use strict</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">sendReqParam</span> <span class="o">=</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">veg</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">vegetable</span><span class="p">;</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="s2">`This is the page for </span><span class="p">${</span><span class="nx">veg</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <ul> <li>Express treats <code class="language-plaintext highlighter-rouge">sendReqParam</code> as a route handler: <ul> <li>It receives the same (req, res) objects.</li> <li>It reads req.params (filled by Express route matching).</li> <li>It sends a response.</li> </ul> </li> </ul> <details class="details details--default" data-variant="default"><summary>Perspective through MVC</summary> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre>- MVC: Abbreviation of Model, View, Controller.  
+- MVC: separation-of-concerns
+    - Model: data + business rules (DB, validation, domain logic)
+    - View: presentation (EJS, Pug, React SSR, templates, etc.)
+    - Controller: translates HTTP requests into actions, returns responses (or chooses a view)
+- From `9-3`:
+  - `controllers/homeController.js` is the Controller layer:
+      - It handles request input (req.params)
+      = It decides what to send back (res.send(...))
+  - There is currently no View, things are being returned to users via `res.send(...)`.
+  - There is current no Model
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="lesson-10-ejs-embedded-js-and-layouts">Lesson 10: EJS (Embedded JS) and Layouts</h2> <details class="details details--default" data-variant="default"><summary>Review</summary> <p>First, you are to review the web page at <a href="https://ejs.co/#docs" rel="external nofollow noopener" target="_blank">the official website for EJS</a>. It is strongly recommended that you pause and go through the official website to learn more about EJS.</p> <p>If you are interested in learning more about EJS, here is a good tutorial entitled [How To Use EJS to Template Your Node Application](First, you are to read the tutorial on <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application" rel="external nofollow noopener" target="_blank">How to use EJS to Template your Node Application</a>.</p> <p>You can follow this tutorial to develop a complete front-end of a web application with EJS. But it is not required. We will move on and begin to develop our view pages following our textbook in Lesson 10.</p> </details> <details class="details details--default" data-variant="default"><summary>Webpage structure: layout.js</summary> <p>Use a <code class="language-plaintext highlighter-rouge">layout.js</code> to specify the structure of a web page in your project. Store the layout.js and view files in the same folder, i.e., the views folder.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
