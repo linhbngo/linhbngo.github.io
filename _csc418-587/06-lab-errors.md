@@ -17,13 +17,9 @@ typograms: true
 #   - we may want to automate TOC generation in the future using
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
-  - name: "Step 1: The smallest possible server"
-  - name: "Step 2: Inspect method and URL"
-  - name: "Step 3: First real route: GET"
-  - name: "Step 4: POST"
-  - name: "Step 5: GET vs POST"
-  - name: "Step 6: Read POST Data"
-  - name: "Step 7: Routing Logic"
+  - name: "Step 1: Custom launch"
+  - name: "Step 2: Error handling in Express"
+  - name: "Step 3: Capstone Lab"
   
 # Below is an example of injecting additional post-specific styles.
 # If you use this post as a template, delete this _styles block.
