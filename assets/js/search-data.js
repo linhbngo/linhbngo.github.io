@@ -518,27 +518,27 @@ ninja.data = [{
           title: 'MongoDB',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/06-mongodb/";
+              window.location.href = "/csc418-587/07-mongodb/";
             },},{id: "csc418-587-mongoose",
           title: 'Mongoose',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/07-mongoose/";
+              window.location.href = "/csc418-587/08-mongoose/";
             },},{id: "csc418-587-project-2-json-and-mongodb",
           title: 'Project 2: JSON and MongoDB',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/08-project-2/";
-            },},{id: "csc418-587-restful-api",
-          title: 'RESTful API',
-          description: "",
-          section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/09-restful-api/";
+              window.location.href = "/csc418-587/09-project-2/";
             },},{id: "csc418-587-endpoints-and-restful-web-service-api",
           title: 'Endpoints and RESTful Web Service API',
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/10-project-3/";
+            },},{id: "csc418-587-restful-api",
+          title: 'RESTful API',
+          description: "",
+          section: "Csc418-587",handler: () => {
+              window.location.href = "/csc418-587/11-restful-api/";
             },},{id: "csc574-00-syllabus",
           title: '00 Syllabus',
           description: "",
