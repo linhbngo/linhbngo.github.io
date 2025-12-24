@@ -509,6 +509,11 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/05-express/";
+            },},{id: "csc418-587-lab-error-handling",
+          title: 'Lab: Error Handling',
+          description: "",
+          section: "Csc418-587",handler: () => {
+              window.location.href = "/csc418-587/06-lab-errors/";
             },},{id: "csc418-587-mongodb",
           title: 'MongoDB',
           description: "",
