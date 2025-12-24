@@ -105,6 +105,8 @@ exports.respondInternalError = (error, req, res, next) => {
 };
 ```
 
+{% enddetails %}
+
 - `respondNoResourceFound`: missing resources
 - `respondInternalError`: resource processing caused a server-side error
 
