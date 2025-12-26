@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-research-the-art-of-throwing-cakes-at-the-wall",
+            },{id: "post-learning-from-non-technical-writings",
+        
+          title: "Learning from non-technical writings",
+        
+        description: "Do we really have to start with textbooks?",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/non-technical/";
+          
+        },
+      },{id: "post-research-the-art-of-throwing-cakes-at-the-wall",
         
           title: "Research: The Art of Throwing Cakes at The Wall",
         
