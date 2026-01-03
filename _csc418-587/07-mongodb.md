@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 order: 5
-title: MongoDB
+title: MongoDB and Mongoose
 mermaid:
   enabled: true
   zoomable: true
