@@ -525,16 +525,16 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/06-lab-errors/";
-            },},{id: "csc418-587-mongodb",
-          title: 'MongoDB',
+            },},{id: "csc418-587-mongodb-and-mongoose",
+          title: 'MongoDB and Mongoose',
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/07-mongodb/";
-            },},{id: "csc418-587-mongoose",
-          title: 'Mongoose',
+            },},{id: "csc418-587-lab-mini-rag",
+          title: 'Lab: Mini RAG',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/08-mongoose/";
+              window.location.href = "/csc418-587/08-lab-rag/";
             },},{id: "csc418-587-project-2-json-and-mongodb",
           title: 'Project 2: JSON and MongoDB',
           description: "",
