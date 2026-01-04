@@ -69,11 +69,17 @@ not be lost. You will be able to access the database and list all users, if need
 You need to show the form page, the before, and the after page. On the after page, you will see
 an added user.
 
-![](fig/project_2_1.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_1.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
-![](fig/project_2_2.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_2.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
-![](fig/project_2_3.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_3.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
 You need to show the screenshot of the IDE with the main routing statements shown in the
 editing area, and the process of adding a user is displayed in the Terminal area.
@@ -81,19 +87,30 @@ Of course, we cannot tell if this was indeed retrieved from a database without c
 code in the homecontroller.js. So please show the screenshot of part of the homecontroller.js
 and the code. You may use any IDE to show the code. 
 
-![](fig/project_2_4.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_4.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
-![](fig/project_2_5.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_5.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
-![](fig/project_2_6.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_6.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
 We can tell that the Routing of `/users` and the actual code for accessing the MongoDB
 database. You also need to submit the compressed files including main.js, the homecontroller.js
 files.
 
-![](fig/project_2_7.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_7.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
-![](fig/project_2_8.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_2/project_2_8.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
+
 
 ## 3. Submissions: Use all lower case for the name of all projects.
 

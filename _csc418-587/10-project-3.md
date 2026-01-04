@@ -193,7 +193,10 @@ You need to show:
 list.
 - (2) You need to enter http://localhost:4200/api/users to display the user list.
 
-![](fig/project_3_1.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_3/project_3_1.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
+
 
 You need to submit your source code and screen shots to demonstrate the result. The check
 points include:
@@ -202,13 +205,17 @@ points include:
 - (2) Starting the server Endpoint – must show the list of users in JSON format.
 - (3) Starting the simple Client – Enter the command `node consume_REST_API.js` or `nodeconsumeAPI-new.js`.
 
-![](fig/project_3_2.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_3/project_3_2.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
 - (4) Starting the application client 
     – (1) show the result of entering localhost:4200/users, and
     - (2) show the result of entering localhost:4200/api/users.
 
-![](fig/project_3_3.png)
+<div class="row mt-3">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_3/project_3_3.png" class="img-fluid z-depth-1" zoomable=true %}
+</div>
 
 
 In summary, the procedure to run the client Endpoint includes the following:

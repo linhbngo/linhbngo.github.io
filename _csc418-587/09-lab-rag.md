@@ -17,27 +17,19 @@ typograms: true
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
   - name: Overview
-  - name: Javascript
-  - name: HTTP Protocol
-  - name: NodeJS
-  
-# Below is an example of injecting additional post-specific styles.
-# If you use this post as a template, delete this _styles block.
-_styles: >
-  .fake-img {
-    background: #bbb;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
-  }
-  .fake-img p {
-    font-family: monospace;
-    color: white;
-    text-align: left;
-    margin: 12px 0;
-    text-align: center;
-    font-size: 16px;
-  }
+  - name: "Part 0: Ollama Setup"
+  - name: "Part 1: Create the project structure"
+  - name: "Part 2: Install Dependencies"
+  - name: "Part 3: Environment Configuration"
+  - name: "Part 4: Database Connection"
+  - name: "Part 5: Define the Model"
+  - name: "Part 6: Controllers"
+  - name: "Part 7: Ollama Service"
+  - name: "Part 8: Routes"
+  - name: "Part 9: Views (EJS)"
+  - name: "Part 10: The final puzzle piece"
+  - name: "Part 11: Run and Test"
+  - name: "Part 12: Customization"
 ---
 
 ## Overview
@@ -104,6 +96,8 @@ npm install --save-dev nodemon
 
 Add the following content to `package.json`:
 
+{% details package.json %}
+
 ```json
 {
   "name": "mini-rag",
@@ -125,24 +119,38 @@ Add the following content to `package.json`:
   }
 }
 ```
+{% enddetails %}
 
 ## Part 3: Environment Configuration
 
 - First, create the file called `.env` with the 
 following contents:
 
+{% details .env %}
+
 ```bash
 PORT=3000
 MONGODB_URI=mongodb://webdb:27017/mini_rag
-OLLAMA_URL=http://localhost:11434
+OLLAMA_URL=http://host.docker.internal:11434
 OLLAMA_MODEL=llama3.1:8b
 TOP_K=4
 ```
 
-## Part 4: Database Connection (Model Infrastructure)
+{% enddetails %}
+
+- Using `.env` is a convenient way to separate configuration from deployment. In 
+this case, these are environment parameters that will be used inside the NodeJS 
+app later on. 
+- Since we are using a Docker-based deployment, the app will be running inside 
+the Docker environment. Assuming the Ollama service is being run directly on host, 
+the `OLLAMA_URL` is a way to allow containers inside Docker to communicate with 
+the Ollama service on host. 
+
+## Part 4: Database Connection
 
 - Create the file `config/db.js` with the following contents:
 
+{% details db.js %}
 ```js
 "use strict";
 
@@ -165,6 +173,8 @@ module.exports = async function connectDb() {
 };
 ```
 
+{% enddetails %}
+
 This code will do the followings:
 
 - Import mongoose
@@ -172,7 +182,7 @@ This code will do the followings:
     - This is the `MONGODB_URI` specified in `.env`
 - Exit the process on failure
 
-## Part 5: Define the Model (Mongoose)
+## Part 5: Define the Model
 
 We will create a document model with the following 
 fields:
@@ -183,6 +193,8 @@ fields:
 - `timestamps` enabled
 
 We will create the following contents in `models/Document.js`
+
+{% details Document.js %}
 
 ```js
 "use strict";
@@ -203,8 +215,9 @@ DocumentSchema.index({ title: "text", content: "text" });
 
 module.exports = mongoose.model("Document", DocumentSchema);
 ```
+{% enddetails %}
 
-## Part 6: Controllers (Business Logic)
+## Part 6: Controllers 
 
 {% details Document controller %}
 
@@ -657,3 +670,12 @@ update your document first.
 </div>
 
 {% enddetails %}
+
+## Part 11: Customization
+
+Attempt to perform the following add-ons to your app
+
+- Modify the prompt template inside `ragController.js` and see how that 
+impact the answer. 
+- There might be cases where there is no relevant document yet. Add a new 
+service that provides an alternative non-RAG answer. 
