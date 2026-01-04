@@ -18,32 +18,14 @@ typograms: true
 #   - we may want to automate TOC generation in the future using
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
-  - name: Overview
+  - name: Create a MongoDB/Mongoose Database
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: Javascript
-  - name: HTTP Protocol
-  - name: NodeJS
-  
-# Below is an example of injecting additional post-specific styles.
-# If you use this post as a template, delete this _styles block.
-_styles: >
-  .fake-img {
-    background: #bbb;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
-  }
-  .fake-img p {
-    font-family: monospace;
-    color: white;
-    text-align: left;
-    margin: 12px 0;
-    text-align: center;
-    font-size: 16px;
-  }
+  - name: Access MongoDB Database via JavaScript Code
+  - name: Submissions
+  - name: Grading Rubric
 ---
 
 We will develop a website for a company with tabs including `Home`, `Users`, and `Add
@@ -54,13 +36,13 @@ allow a user to complete `CRUD` operations for the database accessing; CSC418 st
 need to complete `Create` and `Read` operations. For CSC587, you may use an additional tab
 for Edit, Delete.
 
-## 1. Create a MongoDB/Mongoose Database
+## Create a MongoDB/Mongoose Database
 
 In the first part of the project, you will begin with creating a MongoDB database using
 command line commands. You don’t need to write any code to complete this part once you
 install the MongoDB database management system.
 
-## 2. Access MongoDB Database via JavaScript Code
+## Access MongoDB Database via JavaScript Code
 
 In the second part of the project, you will allow a user to enter the name and the gender via a
 form. Then, the newly entered name and gender will be added to the database. If you click the
@@ -112,7 +94,9 @@ files.
 </div>
 
 
-## 3. Submissions: Use all lower case for the name of all projects.
+## Submissions
+
+**Use all lower case for the name of all projects.**
 
 1. You may include the screen shot of a Robo 3T or MongoDB Compass to show that you
 have created a database. You can include this screen shot in your Word document.
@@ -128,7 +112,7 @@ Here abcd is the first four letters of your last name. If I submit my project, I
 yang_project2.zip, and yang_project2.docx. Be sure to check if the project name is changed
 after uncompressing. If so, you will receive a penalty.
 
-## 4. Grading Rubric:
+## Grading Rubric
 
 1. 30% MVC architecture - must separate model, view, and controller. You cannot merge
 model/view/controller in any way. If you use one folder to keep any two in MVC together, it is a

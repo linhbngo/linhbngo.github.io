@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 order: 9
-title: Endpoints and RESTful Web Service API
+title: "Project 3: Endpoints and RESTful Web Service API"
 mermaid:
   enabled: true
   zoomable: true
@@ -18,32 +18,15 @@ typograms: true
 #   - we may want to automate TOC generation in the future using
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
-  - name: Overview
+  - name: "Part 1"
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: Javascript
-  - name: HTTP Protocol
-  - name: NodeJS
-  
-# Below is an example of injecting additional post-specific styles.
-# If you use this post as a template, delete this _styles block.
-_styles: >
-  .fake-img {
-    background: #bbb;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
-  }
-  .fake-img p {
-    font-family: monospace;
-    color: white;
-    text-align: left;
-    margin: 12px 0;
-    text-align: center;
-    font-size: 16px;
-  }
+  - name: "Part 2"
+  - name: "Part 3"
+  - name: Submissions
+  - name: Grading Rubric
 ---
 
 
@@ -74,14 +57,14 @@ via Mongoose Schema and a Model. In this project, you will still allow that in t
 Endpoint. In addition, you will add a RESTful API to access the database. You will change the
 route options to allow the access of the user data via the namespace `/api/users`.
 
-## 1. Change the code to use Mongoose Schem a and a Model to access the database
+## Part 1
 
 In the first part of the project, you will begin with accessing the MongoDB database with a
 Mongoose Schema and a Model (mapping to a collection) if you haven’t used Mongoose in
 Project 2.
 
 Then, you need to change your project#2 to become an Endpoint of a RESTful API. You only
-need to implement the route http://localhost:3000/users with the Read operration in CRUD.
+need to implement the route http://localhost:3000/users with the Read operation in CRUD.
 You don’t need to implement other operations.
 
 For CSC418 students, you need to implement reading user information from your testing
@@ -91,7 +74,7 @@ database using your database tool or change the seed.js to do that. You may use 
 Project#2 to complete that. That is, you may use Robo3T or MongoDB Compass to add user
 data into your database.
 
-For CSC587 studens, you need to implement the REST API client Endpoint without accessing
+For CSC587 students, you need to implement the REST API client Endpoint without accessing
 thee MongoDB database directly.
 
 In the sample screenshots below, not all the CRUD operations are shown with navigation tabs.
@@ -104,7 +87,7 @@ users in JSON format. You do not need to implement the Create, Update, or Delete
 Endpoint application.
 
 
-## 3. Access MongoDB Database via the API from an API Client – a standalone program
+## Part 2
 
 You are going to use a simplified JavaScript code to consume the API. Once the server Endpoint
 is started successfully, you can access the database with the following JavaScript code using the
@@ -168,19 +151,19 @@ command first.
 You must issue the command after (1) starting the database server, (2) starting the server
 Endpoint using port 3000.
 
-CSC418 students stop here. Take the necessary screeshots and move on to prepare the code
+CSC418 students stop here. Take the **necessary screenshots** and move on to prepare the code
 and the Word document for the submission. Make sure your project name won’t change
 BEFORE being compressed, and AFTER being uncompressed.
 CSC587 students continue to Part III.
 
-## 3. Access MongoDB Database via the API from an API Client – an Application
+## Part 3
 
 You will now develop your code to consume the API from another application code, known as a
 `client Endpoint code` here, via port 4200. This part could be confusing. We are about to
 develop a Web Application instead of a JavaScript program, like consume_REST_API.js, to send
 a request to the Web Service server. Now you may recall the picture we used to explain about
 the concept of a web service. The amazon.com server is a Web Service Client that is going to
-send a request to the web service cerver that is listening on port 3000. The difference between
+send a request to the web service server that is listening on port 3000. The difference between
 a Web Service client and the program consume_REST_API.js is that the Web Service client is
 also a (web) server listening to port 4200. We will be able to request for the user data to be
 displayed on a browser if we enter http://localhost:4200/api/users`.
@@ -237,6 +220,8 @@ You will need to start three servers:
 - server Endpoint (port 3000), and 
 - the client Endpoint (port 4200).
 
+## Submissions
+
 Submission rules are similar to that for Project #2. You need to submit two files: 
 
 - one Word document and 
@@ -250,7 +235,7 @@ The compressed file will include the server and the client Endpoints Apps in two
 You need to submit two apps in one compressed folder. You are free to call the server and the client Apps 
 inside the compressed folder.
 
-## 4. Grading Rubric:
+## Grading Rubric
 
 1. 30% MVC architecture - must separate model, view, and controller. You cannot merge
 model/view/controller in any way. If you use one folder to keep any two in MVC together, it is a

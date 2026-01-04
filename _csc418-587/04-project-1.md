@@ -18,32 +18,15 @@ typograms: true
 #   - we may want to automate TOC generation in the future using
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
-  - name: Overview
+  - name: Part 1
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: Javascript
-  - name: HTTP Protocol
-  - name: NodeJS
-  
-# Below is an example of injecting additional post-specific styles.
-# If you use this post as a template, delete this _styles block.
-_styles: >
-  .fake-img {
-    background: #bbb;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
-  }
-  .fake-img p {
-    font-family: monospace;
-    color: white;
-    text-align: left;
-    margin: 12px 0;
-    text-align: center;
-    font-size: 16px;
-  }
+  - name: Part 2
+  - name: Submissions
+  - name: Grading Rubric
+
 --- 
 
 We will develop a website for a company with tabs including `Home`, `Users`, 
@@ -56,7 +39,7 @@ CSC418 students are required to complete the `form` operations which allow a
 user to add a new contact and display the new list of users. CSC587 students 
 need to display the form, add a new user, and delete a user.
 
-## 1. Displaying Date and Time at the Server Side
+## Part 1
 
 In the first part of the project, you will begin with a simple Node & 
 Express project. What you need to do is to set up the Main App, the Route 
@@ -76,7 +59,7 @@ The layout.ejs provides the format of all webpages with `Top Navigation`, `Navig
 `Body`, and the `Footer` divisions.
 
 
-## 2. Form Handling
+## Part 2
 
 In the second part of the project, you will allow a user to enter the name 
 and the gender via a form. Then, the newly entered name and gender will be 
@@ -114,7 +97,7 @@ editing area, and the process of adding a user is displayed in the Terminal area
     {% include figure.liquid loading="eager" path="assets/img/courses/csc418/project_1/project_1_5.png" class="img-fluid z-depth-1" zoomable=true %}
 </div>
 
-## 3. Submissions:
+## Submissions
 
 1. Delete node_modules from your part I project; and compress all files; store all files with
 the name `<ABCD_project1-Part1>.zip`.
@@ -124,7 +107,7 @@ the name `<ABCD_project1-Part1>.zip`.
 Here ABCD is the first four letters of your last name. If I submit my project, I will call it
 `Ngo_project1-Part1.zip`, `Ngo_project2-Part2.zip`, and `Ngo_project1.docx`.
 
-## 4. Grading Rubric:
+## Grading Rubric
 
 1. **30% MVC architecture** - must separate model, view, and controller. You cannot merge
 model/view/controller in any way. If you use one folder to keep any two in MVC together, it is a
