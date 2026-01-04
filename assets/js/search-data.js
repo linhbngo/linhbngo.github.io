@@ -530,16 +530,16 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/07-mongodb/";
-            },},{id: "csc418-587-lab-mini-rag",
-          title: 'Lab: Mini RAG',
-          description: "",
-          section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/08-lab-rag/";
             },},{id: "csc418-587-project-2-json-and-mongodb",
           title: 'Project 2: JSON and MongoDB',
           description: "",
           section: "Csc418-587",handler: () => {
-              window.location.href = "/csc418-587/09-project-2/";
+              window.location.href = "/csc418-587/08-project-2/";
+            },},{id: "csc418-587-lab-mini-rag",
+          title: 'Lab: Mini RAG',
+          description: "",
+          section: "Csc418-587",handler: () => {
+              window.location.href = "/csc418-587/09-lab-rag/";
             },},{id: "csc418-587-endpoints-and-restful-web-service-api",
           title: 'Endpoints and RESTful Web Service API',
           description: "",
