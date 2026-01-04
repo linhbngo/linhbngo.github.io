@@ -540,8 +540,8 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/09-lab-rag/";
-            },},{id: "csc418-587-endpoints-and-restful-web-service-api",
-          title: 'Endpoints and RESTful Web Service API',
+            },},{id: "csc418-587-project-3-endpoints-and-restful-web-service-api",
+          title: 'Project 3: Endpoints and RESTful Web Service API',
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/10-project-3/";
