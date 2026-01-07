@@ -51,7 +51,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-learning-from-non-technical-writings",
+            },{id: "post-new-year-reflection-learning-from-gpt",
+        
+          title: "New Year Reflection: Learning from GPT",
+        
+        description: "How AI usage changes my habits",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/ai-reflection/";
+          
+        },
+      },{id: "post-learning-from-non-technical-writings",
         
           title: "Learning from non-technical writings",
         
