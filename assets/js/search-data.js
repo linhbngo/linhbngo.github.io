@@ -556,8 +556,8 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/10-project-3/";
-            },},{id: "csc418-587-restful-api",
-          title: 'RESTful API',
+            },},{id: "csc418-587-building-a-rest-api",
+          title: 'Building a REST API',
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/11-restful-api/";
