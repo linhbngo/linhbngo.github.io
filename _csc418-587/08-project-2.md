@@ -102,14 +102,13 @@ files.
 have created a database. You can include this screen shot in your Word document.
 
 2. Delete node_modules from part II and compress all files with the name
-<abcd_project2>.zip. You should call your project folder the same as the compressed
+`abcd_project2.zip`. You should call your project folder the same as the compressed
 file after it is uncompressed.
 
-3. Submit a Word document with screen shots using the name <abcd_project2>.docx to
+3. Submit a Word document with screen shots using the name `abcd_project2`.docx to
 show the `Before, action, and after` in this document for Add and for Delete,
-respectively.
-Here abcd is the first four letters of your last name. If I submit my project, I will call it
-yang_project2.zip, and yang_project2.docx. Be sure to check if the project name is changed
+respectively. Here abcd is the first four letters of your last name. If I submit my project, I will call it
+`ngo_project2.zip`, and `ngo_project2.docx`. Be sure to check if the project name is changed
 after uncompressing. If so, you will receive a penalty.
 
 ## Grading Rubric
