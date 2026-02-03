@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Where to Begin: The Garner Hype Cycle"
+title: "Where to Begin: The Gartner Hype Cycle"
 date: 2026-02-03 12:00:00
 description: How to start the learning process
 tags: cs-education, robotic, ai, learning
