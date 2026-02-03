@@ -51,9 +51,9 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-where-to-begin-the-garner-hype-cycle",
+            },{id: "post-where-to-begin-the-gartner-hype-cycle",
         
-          title: "Where to Begin: The Garner Hype Cycle",
+          title: "Where to Begin: The Gartner Hype Cycle",
         
         description: "How to start the learning process",
         section: "Posts",
