@@ -5,7 +5,7 @@ date: 2025-12-16 12:00:00
 description: Knowledge and Skills, Why Not Both 
 tags: experiential-learning, cs-education
 categories: non-technical
-hidden: false
+hidden: true
 ---
 
 I was listening to [Practical AI's](https://practicalai.fm/) *The AI engineering skills gap* podcast this afternoon, which raised two increasingly common themes in today's technology workforce: first, that employees are now evaluating candidates not only by what they know but also by what they can build, and second, that the expectations for entry-level positions now often approach those of mid level roles. These ideas are gaining broad traction. In September of this year, Coursera developed a [Skills Track](https://blog.coursera.org/introducing-coursera-skill-tracks/), a new solution to help learners track their proficiencies through verified skill paths. Similarly, Andrew Ng, founder of deeplearning.ai, argues in [Knowledge Is Great, Skills Are Greater](https://www.deeplearning.ai/the-batch/knowledge-is-great-skills-are-greater) that "for individuals who want to improve their job prospects, shifting the emphasis from gaining knowledge to gaining skills can be very helpful." While these discussions are often framed broadly, they are particularly salient in computer science and AI, where the ability to deploy working systems increasingly defines professional readiness.
