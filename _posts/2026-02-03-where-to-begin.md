@@ -128,7 +128,7 @@ to test the feasibility of direct code upload from terminal, direct control sequ
 and indirect control bytecode sequence sent via Python's `pyserial`. This is where the hardware 
 communication part of my research interest is proven to be feasible. 
 
-3. **LLM communication**: I also generated two Python scripts, one MPC server whose tools include 
+3. **LLM communication**: I also generated two Python scripts, one MCP server whose tools include 
 byte code controlling sequence and one LLM agent that read in a string and potentially translate that 
 (via LLM) into a proper MCP tool calls. The pieces are combined together, and after some tweaking, I have 
 a very basic LLM-controlled car running round. Along the way, I have learned how `pyserial` can be used, 
