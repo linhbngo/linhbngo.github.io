@@ -51,7 +51,29 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-new-year-reflection-learning-from-gpt",
+            },{id: "post-where-to-begin-the-garner-hype-cycle",
+        
+          title: "Where to Begin: The Garner Hype Cycle",
+        
+        description: "How to start the learning process",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/where-to-begin/";
+          
+        },
+      },{id: "post-a-game-evolution-from-arena-to-journey",
+        
+          title: "A Game Evolution: From Arena to Journey",
+        
+        description: "A personal perspective on the evolution of a game",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/afk/";
+          
+        },
+      },{id: "post-new-year-reflection-learning-from-gpt",
         
           title: "New Year Reflection: Learning from GPT",
         
