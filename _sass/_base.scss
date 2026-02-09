@@ -23,6 +23,36 @@ hr {
   border-top: 1px solid var(--global-divider-color);
 }
 
+// Optional hr variants (use <hr class="...">)
+hr.hr-thin {
+  border-top-width: 1px;
+}
+
+hr.hr-medium {
+  border-top-width: 2px;
+}
+
+hr.hr-thick {
+  border-top-width: 4px;
+}
+
+hr.hr-muted {
+  border-top-color: var(--global-divider-color);
+  opacity: 0.6;
+}
+
+hr.hr-theme {
+  border-top-color: var(--global-theme-color);
+}
+
+hr.hr-dashed {
+  border-top-style: dashed;
+}
+
+hr.hr-dotted {
+  border-top-style: dotted;
+}
+
 table {
   td,
   th {

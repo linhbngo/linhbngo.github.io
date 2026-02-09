@@ -1,36 +1,33 @@
 ---
 layout: default
-permalink: /csc418-587/
-title: "Modern Web Applications Using Server-Side Technologies"
+permalink: /cs-big-data-engineering/
+title: "Big Data Engineering"
 nav: false
-collection: csc481-587
+collection: cs-big-data-engineering
 ---
 
-# Modern Web Applications Using Server-Side Technologies
+# Big Data Engineering 
 
 <hr class="hr-medium hr-theme">
 
 ## Course Description
  
->This course provides training in the area of building web
-applications using Node.js (with Express, and MongoDB) for the backend and EJS for
-the front-end user interface. JavaScript has been a client-side script programming
-language until later in 2009 when Google combined it’s V8 search engine with Node.JS.
-Since then, JavaScript has become a full-stack scripting language from the client-side to
-the server-side. Starting from building a web site without programming, students will be
-guided with hands-on labs and develop a website using Node.JS and EJS for the front-
-end. 
+ > This course will investigate engineering approaches in solving challenges in 
+data-intensive and big data computing problems. Course topics include distributed tools 
+and parallel algorithms that help with acquiring, cleaning, and mining very large
+amount of data.
 {: .block-tip}
 
 <hr class="hr-medium hr-theme">
 
-## Courser Topics
+## Course Topics
 
 <hr class="hr-medium hr-theme">
 
+
 <div class="post">
   <ul class="post-list">
-    {% assign postlist = site.csc418-587 %}
+    {% assign postlist = site.cs-big-data-engineering %}
     {% for post in postlist %}
         {% assign year = post.date | date: "%Y" %}
         {% assign tags = post.tags | join: "" %}

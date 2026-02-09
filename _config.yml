@@ -142,6 +142,9 @@ collections:
   csc418-587:
     output: true
     permalink: /csc418-587/:path/
+  cs-big-data-engineering:
+    output: true
+    permalink: /cs-big-data-engineering/:path/
   csc574:
     output: true
     permalink: /csc574/:path/
