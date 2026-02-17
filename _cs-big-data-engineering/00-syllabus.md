@@ -43,7 +43,7 @@ toc:
 ## Course Information
 
 - The course runs from June 30, 2025 until August 03, 2025. It is a fully online course. 
-  - The course is 100% asynchrounous. 
+  - The course is 100% asynchronous. 
   - All class materials and recorded links to the lectures will be provided via D2L. 
 
 ---

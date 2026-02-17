@@ -28,10 +28,6 @@ toc:
   
 ---
 
-# Introduction
-
-*This class is based on Stanford's Mining Massive Datasets course.*
-
 ## Big Data Problems
 
 - Not only the processing power, but the size of the data is also the 
@@ -52,7 +48,7 @@ intermediate data that needs to be analyzed during the process.
     - In the last few decades, we have the **computational** branch
         - simulation of complex phenomena
     - Today, we  have added the **data-enabled/data-intensive** pillar
-        - synthesiztion of theory, experiment, and computation with statistics 
+        - synthesizing of theory, experiment, and computation with statistics 
 
 - Big data analytics in science and engineering for data sets that are:
     - Too big
@@ -61,7 +57,9 @@ intermediate data that needs to be analyzed during the process.
     - Too noisy
     - Too heterogeneous
 
-![](fig/01-intro/big_analytics.png)
+<div class="row mt-3 justify-content-center">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" width="50%" zoomable=true %}
+</div>
 
 ---
 
@@ -127,7 +125,9 @@ intermediate data that needs to be analyzed during the process.
     are beginning to be analyzed to produce business insights.
     - Example general paradigm:
 
-    ![](fig/01-intro/data_parallel_programming.png){alt="Data parallel programming"}
+<div class="row mt-3 justify-content-center">
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" width="50%" zoomable=true alt="data parallel programming"%}
+</div>
 
 - Example difficulties
     - It is difficult to write parallel programs​
