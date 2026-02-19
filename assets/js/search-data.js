@@ -58,7 +58,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-why-should-i-write",
+            },{id: "post-beyond-the-digital-sandbox-why-cs-needs-to-get-physical",
+        
+          title: "Beyond the Digital Sandbox: Why CS Needs to Get Physical",
+        
+        description: "Reflecting on the Unitree gala performance and why regional universities must reintegrate hardware and embodied computing into the CS curriculum.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/robotic/";
+          
+        },
+      },{id: "post-why-should-i-write",
         
           title: "Why Should I Write?",
         
