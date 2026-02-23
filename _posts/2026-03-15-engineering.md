@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Beyond the Digital Sandbox: Why CS Needs to Get Physical"
-date: 2026-02-18 12:00:00
+title: "Introduction to Engineering Thinking in the Cloud"
+date: 2026-03-15 12:00:00
 description: What is engineering
-tags: cs-education, robotic, learning
-categories: non-technical
+tags: cs-education, cloud, learning
+categories: technical
 hidden: true
 ---
 
