@@ -73,17 +73,6 @@ ninja.data = [{
         
           title: "Beyond the Digital Sandbox: Why CS Needs to Get Physical",
         
-        description: "What is engineering",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/engineering/";
-          
-        },
-      },{id: "post-beyond-the-digital-sandbox-why-cs-needs-to-get-physical",
-        
-          title: "Beyond the Digital Sandbox: Why CS Needs to Get Physical",
-        
         description: "Reflecting on the Unitree gala performance and why regional universities must reintegrate hardware and embodied computing into the CS curriculum.",
         section: "Posts",
         handler: () => {
