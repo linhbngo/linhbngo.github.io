@@ -58,7 +58,29 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-beyond-the-digital-sandbox-why-cs-needs-to-get-physical",
+            },{id: "post-the-cats-in-my-life",
+        
+          title: "The cats in my life",
+        
+        description: "This is a special ordered essay by my daughter",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/cat/";
+          
+        },
+      },{id: "post-beyond-the-digital-sandbox-why-cs-needs-to-get-physical",
+        
+          title: "Beyond the Digital Sandbox: Why CS Needs to Get Physical",
+        
+        description: "What is engineering",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/engineering/";
+          
+        },
+      },{id: "post-beyond-the-digital-sandbox-why-cs-needs-to-get-physical",
         
           title: "Beyond the Digital Sandbox: Why CS Needs to Get Physical",
         
