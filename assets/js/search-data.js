@@ -51,6 +51,13 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/cs-big-data-engineering/";
               },
+            },{id: "dropdown-intro-cloud",
+              title: "Intro Cloud",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/cs-intro-cloud/";
+              },
             },{id: "dropdown-csc-574-under-dev",
               title: "CSC 574 (under dev)",
               description: "",
@@ -59,6 +66,17 @@ ninja.data = [{
                 window.location.href = "/csc574/";
               },
             },{id: "post-the-cats-in-my-life",
+        
+          title: "The cats in my life",
+        
+        description: "This is a special ordered essay by my daughter",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/cursor/";
+          
+        },
+      },{id: "post-the-cats-in-my-life",
         
           title: "The cats in my life",
         
@@ -558,6 +576,11 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
+            },},{id: "cs-agentic-ai-syllabus",
+          title: 'Syllabus',
+          description: "",
+          section: "Cs-agentic-ai",handler: () => {
+              window.location.href = "/cs-agentic-ai/00-syllabus/";
             },},{id: "cs-big-data-engineering-syllabus",
           title: 'Syllabus',
           description: "",
@@ -613,11 +636,91 @@ ninja.data = [{
           description: "",
           section: "Cs-big-data-engineering",handler: () => {
               window.location.href = "/cs-big-data-engineering/10-large-scale-machine-learning/";
-            },},{id: "csc-agentic-ai-syllabus",
+            },},{id: "cs-intro-cloud-syllabus",
           title: 'Syllabus',
           description: "",
-          section: "Csc-agentic-ai",handler: () => {
-              window.location.href = "/csc-agentic-ai/00-syllabus/";
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/00-syllabus/";
+            },},{id: "cs-intro-cloud-introduction",
+          title: 'Introduction',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/01-introduction/";
+            },},{id: "cs-intro-cloud-cloudlab",
+          title: 'CloudLab',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/02-cloudlab/";
+            },},{id: "cs-intro-cloud-course-project",
+          title: 'Course Project',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/03-project/";
+            },},{id: "cs-intro-cloud-virtualization-in-cloud-computing",
+          title: 'Virtualization in Cloud Computing',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/04-virtualization/";
+            },},{id: "cs-intro-cloud-advanced-linux-the-building-blocks-of-containers",
+          title: 'Advanced Linux: The Building Blocks of Containers',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/05-linux-container/";
+            },},{id: "cs-intro-cloud-introduction-to-docker-containers",
+          title: 'Introduction to Docker Containers',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/06-docker/";
+            },},{id: "cs-intro-cloud-docker-network",
+          title: 'Docker Network',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/07-docker-network/";
+            },},{id: "cs-intro-cloud-docker-storage",
+          title: 'Docker Storage',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/08-docker-volume/";
+            },},{id: "cs-intro-cloud-dockerfile",
+          title: 'Dockerfile',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/09-Dockerfile/";
+            },},{id: "cs-intro-cloud-docker-compose",
+          title: 'Docker Compose',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/10-docker-compose/";
+            },},{id: "cs-intro-cloud-cd-ci-with-docker-compose",
+          title: 'CD/CI with Docker Compose',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/11-docker-compose-cd-ci/";
+            },},{id: "cs-intro-cloud-docker-container-security-and-host-to-container-security-propagation",
+          title: 'Docker Container Security and Host-to-Container Security Propagation',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/12-container-security/";
+            },},{id: "cs-intro-cloud-docker-swarm",
+          title: 'Docker Swarm',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/13-docker-swarm/";
+            },},{id: "cs-intro-cloud-why-cloud",
+          title: 'Why Cloud',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/14-why-cloud/";
+            },},{id: "cs-intro-cloud-virtualization-for-cloud-computing-kvm-docker-singularity-and-podman",
+          title: 'Virtualization for cloud computing: KVM, docker, singularity, and podman',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/15-kvm-docker-podman-singularity/";
+            },},{id: "cs-intro-cloud-programmatic-deployment-of-infrastructures",
+          title: 'Programmatic Deployment of Infrastructures',
+          description: "",
+          section: "Cs-intro-cloud",handler: () => {
+              window.location.href = "/cs-intro-cloud/16-programmatic-deployment/";
             },},{id: "csc418-587-syllabus",
           title: 'Syllabus',
           description: "",
