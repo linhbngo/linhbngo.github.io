@@ -1,5 +1,7 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
-  {% assign work = data[1] | sort: 'startDate' | reverse %}
+  {% assign current = data[1] | where_exp: "item", "item.endDate == nil" | sort: "startDate" | reverse %}
+  {% assign past = data[1] | where_exp: "item", "item.endDate != nil" | sort: "endDate" | reverse %}
+  {% assign work = current | concat: past %}
   {% for content in work %}
     <li class="list-group-item">
       <div class="row">
