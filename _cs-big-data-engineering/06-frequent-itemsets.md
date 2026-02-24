@@ -187,54 +187,68 @@ fraction of baskets that contain j
     - {b,m}, {b,c}, {c,m}, {c,j}, {m,c,b}
 - Based on these itemsets, we can generate the following rules:
     
-    ???note "$b \rightarrow m$"
-        - Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
-        - Out of these baskets, 4 of them contains $m$: B1, B3, B5, B6
-        - Confidence $C = \frac{4}{6} = 0.6667$
-        - This is below confidence threshold
+    {% details $b \rightarrow m$ %}
 
-    ???note "$m \rightarrow b$"
-        - Item $m$ appears in 5 baskets: B1, B2, B3, B5, B6
-        - Out of these baskets, 4 of them contains $b$: B1, B3, B5, B6
-        - Confidence $C = \frac{4}{5} = 0.8$
-        - Basket fraction of $b$ is $\frac{6}{8} = 0.75$
-        - Interest = $$|0.8-0.75| = 0.05$ (not very interesting!)
+- Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
+- Out of these baskets, 4 of them contains $m$: B1, B3, B5, B6
+- Confidence $C = \frac{4}{6} = 0.6667$
+- This is below confidence threshold
 
-    ???note "$b \rightarrow c$"  
-        - Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
-        - Out of these baskets, 4 of them contains $c$: B1, B6, B7, B8
-        - Confidence $C = \frac{4}{6} = 0.6667$
-        - Basket fraction of $c$ is $\frac{4}{8} = 0.5$
-        - Interest = $$|0.6667-0.5| = 0.1667$ (not very interesting!)
+    {% enddetails %}
+    {% details $m \rightarrow b$ %}
 
-    ???note "$c \rightarrow b$"  
-        - Item $c$ appears in 5 baskets: B1, B4, B6, B7, B8
-        - Out of these baskets, 4 of them contains $b$: B1, B6, B7, B8
-        - Confidence $C = \frac{4}{5} = 0.8$
-        - Basket fraction of $b$ is $\frac{6}{8} = 0.75$
-        - Interest = $$|0.8-0.75| = 0.15$ (not very interesting!)
+- Item $m$ appears in 5 baskets: B1, B2, B3, B5, B6
+- Out of these baskets, 4 of them contains $b$: B1, B3, B5, B6
+- Confidence $C = \frac{4}{5} = 0.8$
+- Basket fraction of $b$ is $\frac{6}{8} = 0.75$
+- Interest = $$|0.8-0.75| = 0.05$ (not very interesting!)
 
-    ???note "$b \rightarrow c,m$"
-        - Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
-        - Out of these baskets, 2 of them contains both $c$ and $m$: B1, B6
-        - Confidence $C = \frac{2}{6} = 0.3333$
-        - Basket fraction of the pair $m$ and $c$ is $\frac{2}{8} = 0.25$
-        - Interest = $$|0.3333-0.25| = 0.08$ (not very interesting!)x
+    {% enddetails %}
+    {% details $b \rightarrow c$ %}
 
-    ???note "$b,c \rightarrow m$"
-        - Pair $b$ and $c$ appears in 4 baskets: B1, B6, B7, B8
-        - Out of these baskets, 2 of them contains $m$: B1, B6
-        - Confidence $C = \frac{2}{4} = 0.5$
-        - Basket fraction of $m$ is $\frac{5}{8} = 0.625$
-        - Interest = $$|0.5-0.625| = 0.125$ (not very interesting!)
+- Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
+- Out of these baskets, 4 of them contains $c$: B1, B6, B7, B8
+- Confidence $C = \frac{4}{6} = 0.6667$
+- Basket fraction of $c$ is $\frac{4}{8} = 0.5$
+- Interest = $$|0.6667-0.5| = 0.1667$ (not very interesting!)
 
-    ???note "$b,m \rightarrow c$"
-        - Item $b$ and $m$ appears in 4 baskets: B1, B3, B5, B6
-        - Out of these baskets, 2 of them contains $m$: B1, B6
-        - Confidence $C = \frac{2}{4} = 0.5$
-        - Basket fraction of $c$ is $\frac{4}{8} = 0.5$
-        - Interest = $$|0.5-0.5| = 0$ (not very interesting!)
+    {% enddetails %}
+    {% details $c \rightarrow b$ %}
 
+- Item $c$ appears in 5 baskets: B1, B4, B6, B7, B8
+- Out of these baskets, 4 of them contains $b$: B1, B6, B7, B8
+- Confidence $C = \frac{4}{5} = 0.8$
+- Basket fraction of $b$ is $\frac{6}{8} = 0.75$
+- Interest = $$|0.8-0.75| = 0.15$ (not very interesting!)
+
+    {% enddetails %}
+    {% details $b \rightarrow c,m$ %}
+
+- Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
+- Out of these baskets, 2 of them contains both $c$ and $m$: B1, B6
+- Confidence $C = \frac{2}{6} = 0.3333$
+- Basket fraction of the pair $m$ and $c$ is $\frac{2}{8} = 0.25$
+- Interest = $$|0.3333-0.25| = 0.08$ (not very interesting!)x
+
+    {% enddetails %}
+    {% details $b,c \rightarrow m$ %}
+
+- Pair $b$ and $c$ appears in 4 baskets: B1, B6, B7, B8
+- Out of these baskets, 2 of them contains $m$: B1, B6
+- Confidence $C = \frac{2}{4} = 0.5$
+- Basket fraction of $m$ is $\frac{5}{8} = 0.625$
+- Interest = $$|0.5-0.625| = 0.125$ (not very interesting!)
+
+    {% enddetails %}
+    {% details $b,m \rightarrow c$ %}
+
+- Item $b$ and $m$ appears in 4 baskets: B1, B3, B5, B6
+- Out of these baskets, 2 of them contains $m$: B1, B6
+- Confidence $C = \frac{2}{4} = 0.5$
+- Basket fraction of $c$ is $\frac{4}{8} = 0.5$
+- Interest = $$|0.5-0.5| = 0$ (not very interesting!)
+
+    {% enddetails %}
 - Exercise: Identify whether the remaining association rules of {c,m}, {c,j}, and {m,c,b} meet the confidence threshold. If they do, identify if they are interesting!
 
 ---
@@ -281,25 +295,29 @@ pairs of items ${i_1, i_2}$.
 
 ### 3.6. Counting pairs in memory
 
-???note "Approach 1: Count all pairs using a matrix"
+{% details Approach 1: Count all pairs using a matrix %}
 
-    - Requires 4 bytes per pair
-    - If n = total number items
-        - Count pair of items {i, j} only if $i \leq j$
-        - Keep pair counts in lexicographic order: 
-            - {1,2}, {1,3},…, {1,n}, {2,3}, {2,4},…,{2,n}, {3,4},…
-        - Pair {i, j} is at position (i –1)(n – i/2) + j –1
-        - Total number of pairs n(n –1)/2; total bytes= $2n^2$
 
-???note "Approach 2: Keep a table of triples [i, j, c]"
+- Requires 4 bytes per pair
+- If n = total number items
+    - Count pair of items {i, j} only if $i \leq j$
+    - Keep pair counts in lexicographic order: 
+        - {1,2}, {1,3},…, {1,n}, {2,3}, {2,4},…,{2,n}, {3,4},…
+    - Pair {i, j} is at position (i –1)(n – i/2) + j –1
+    - Total number of pairs n(n –1)/2; total bytes= $2n^2$
 
-    - The count of the pair of items {i, j} is c.
-    - If integers and item ids are 4 bytes, we need approximately 
-    12 bytes for pairs with count > 0
-    - Plus some additional overhead for the hashtable
-    - **but only for pairs with count > 0**
-    - Beats Approach 1 if less than 1/3 of possible pairs actually occur
+{% enddetails %}
+{% details Approach 2: Keep a table of triples [i, j, c] %}
 
+
+- The count of the pair of items {i, j} is c.
+- If integers and item ids are 4 bytes, we need approximately 
+12 bytes for pairs with count > 0
+- Plus some additional overhead for the hashtable
+- **but only for pairs with count > 0**
+- Beats Approach 1 if less than 1/3 of possible pairs actually occur
+
+{% enddetails %}
 ---
 
 ## 4. A-Priori algorithm. 

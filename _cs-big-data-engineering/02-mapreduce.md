@@ -213,10 +213,12 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
     - Reduce
         - Sum up all values of pairs with the same key $i$
     
-???example "Example Colab Notebook"
-    [Matrix Vector Dot Product](https://colab.research.google.com/drive/1aZVgYJQP6Hd3vUgD0Fc_yZYpHr_uEnTU?usp=sharing)
+{% details Example Colab Notebook %}
+
+[Matrix Vector Dot Product](https://colab.research.google.com/drive/1aZVgYJQP6Hd3vUgD0Fc_yZYpHr_uEnTU?usp=sharing)
 
 
+{% enddetails %}
 - If n does not fit into main memory
     - Divide matrix into vertical stripes of equal width
         - Matrix M becomes $n/w$ matrices, each has the same dimension $(n/w,n)$
@@ -249,9 +251,11 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
         - For each key $(i,k)$, produce sum of the list of values associated with this key/ 
         - Result: $((i,k),v)$ element $p_{ik}$ of resulting matrix P. 
 
-    ???example "Example Colab Notebook"
-        [2-passes MapReduce Matrix Multiplication](https://colab.research.google.com/drive/1-Q26xwX2U5LSQ6YbRZAGKKoAJmAX5gAP?usp=sharing)
+    {% details Example Colab Notebook %}
 
+[2-passes MapReduce Matrix Multiplication](https://colab.research.google.com/drive/1-Q26xwX2U5LSQ6YbRZAGKKoAJmAX5gAP?usp=sharing)
+
+    {% enddetails %}
 - Single MapReduce pass
     - Map
         - $m_{ij}$ of $M \xrightarrow{map} ((i,k), (M, j, m_{ij}))$ up to the number of columns of N (K)

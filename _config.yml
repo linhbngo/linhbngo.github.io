@@ -148,9 +148,12 @@ collections:
   csc574:
     output: true
     permalink: /csc574/:path/
-  csc-agentic-ai:
+  cs-agentic-ai:
     output: true
-    permalink: /csc-agentic-ai/:path/
+    permalink: /cs-agentic-ai/:path/
+  cs-intro-cloud:
+    output: true
+    permalink: /cs-intro-cloud/:path/
   books:
     output: true
   news:

@@ -74,22 +74,26 @@ print(f"Vector N:\n {V}")
 print(f"Dot Product P:\n {P}")
 ```
 
-???note "Output"
-    ```output
-    Matrix M:
-    [[2 4 2 1]
-    [3 2 3 1]
-    [1 0 1 1]
-    [0 0 1 3]]
-    Vector N:
-    [4 0 0 4]
-    Dot Product P:
-    [12 16 8 12]
-    ```
+{% details Output %}
 
-!!!warning "Initial assumption" 
-    Vector V fits into memory
+```output
+Matrix M:
+[[2 4 2 1]
+[3 2 3 1]
+[1 0 1 1]
+[0 0 1 3]]
+Vector N:
+[4 0 0 4]
+Dot Product P:
+[12 16 8 12]
+```
 
+{% enddetails %}
+{% details Initial assumption %}
+
+Vector V fits into memory
+
+{% enddetails %}
 ### 2.2. Moving data from notebook's memory into Spark cluster
 
 - Data can be generated on the driver side, then `parallelize` into 
@@ -100,11 +104,13 @@ mspark = sc.parallelize(M)
 print(mspark.take(4))
 ```
 
-???note "Output"
-    ```output
-    [array([2, 4, 2, 1]), array([3, 2, 3, 1]), array([1, 0, 1, 1]), array([0, 0, 1, 3])]
-    ```
+{% details Output %}
 
+```output
+[array([2, 4, 2, 1]), array([3, 2, 3, 1]), array([1, 0, 1, 1]), array([0, 0, 1, 3])]
+```
+
+{% enddetails %}
 - This will not work well, as we no longer have an indicator of row order. We need to provide some additional information as we parallelize our local data. 
     - [zipWithIndex](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html)
 
@@ -113,12 +119,14 @@ mspark = sc.parallelize(M).zipWithIndex()
 print(mspark.take(4))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(array([2, 4, 2, 1]), 0), (array([3, 2, 3, 1]), 1), (array([1, 0, 1, 1]), 2), (array([0, 0, 1, 3]), 3)]    
-    ```
 
+```output
+[(array([2, 4, 2, 1]), 0), (array([3, 2, 3, 1]), 1), (array([1, 0, 1, 1]), 2), (array([0, 0, 1, 3]), 3)]    
+```
+
+{% enddetails %}
 ### 2.3. Direct multiplication
 
 ```python linenums="1"
@@ -131,18 +139,22 @@ mspark = sc.parallelize(M).zipWithIndex().\
 print(f"MapReduce Dot Product:\n {np.array(mspark.take(4))}")
 print(f"Dot Product P:\n {P}")
 ```
-???note "Output"
+{% details Output %}
 
-    ```output
-    MapReduce Dot Product:
-    [12 16 8 12]
-    Dot Product P:
-    [12 16 8 12]
-    ```
 
-!!!warning "Remove assumption"
-    - Vector V no longer fits into memory
+```output
+MapReduce Dot Product:
+[12 16 8 12]
+Dot Product P:
+[12 16 8 12]
+```
 
+{% enddetails %}
+{% details Remove assumption %}
+
+- Vector V no longer fits into memory
+
+{% enddetails %}
 ### 2.4. Data processing for multiplication
 
 - Both matrix M and vector V are loaded onto Spark
@@ -154,16 +166,18 @@ print(mspark.take(4))
 print(vspark.take(4))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(array([2, 4, 2, 1]), 0), 
-    (array([3, 2, 3, 1]), 1), 
-    (array([1, 0, 1, 1]), 2), 
-    (array([0, 0, 1, 3]), 3)]
-    [(np.int64(4), 0), (np.int64(0), 1), (np.int64(0), 2), (np.int64(4), 3)]
-    ```
 
+```output
+[(array([2, 4, 2, 1]), 0), 
+(array([3, 2, 3, 1]), 1), 
+(array([1, 0, 1, 1]), 2), 
+(array([0, 0, 1, 3]), 3)]
+[(np.int64(4), 0), (np.int64(0), 1), (np.int64(0), 2), (np.int64(4), 3)]
+```
+
+{% enddetails %}
 - We want to use indices as keys
 
 ```python linenums="1"
@@ -173,16 +187,18 @@ print(mspark.take(4))
 print(vspark.take(4))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(0, array([2, 4, 2, 1])), 
-    (1, array([3, 2, 3, 1])), 
-    (2, array([1, 0, 1, 1])), 
-    (3, array([0, 0, 1, 3]))]
-    [(0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
-    ```
 
+```output
+[(0, array([2, 4, 2, 1])), 
+(1, array([3, 2, 3, 1])), 
+(2, array([1, 0, 1, 1])), 
+(3, array([0, 0, 1, 3]))]
+[(0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
+```
+
+{% enddetails %}
 - Let's turn RDDs of M and V into a single RDD
 
 ```python linenums="1"
@@ -190,19 +206,21 @@ pspark = mspark.union(vspark)
 print(pspark.take(8))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(0, array([2, 4, 2, 1])), 
-    (1, array([3, 2, 3, 1])), 
-    (2, array([1, 0, 1, 1])), 
-    (3, array([0, 0, 1, 3])), 
-    (0, np.int64(4)), 
-    (1, np.int64(0)), 
-    (2, np.int64(0)), 
-    (3, np.int64(4))]
-    ```
 
+```output
+[(0, array([2, 4, 2, 1])), 
+(1, array([3, 2, 3, 1])), 
+(2, array([1, 0, 1, 1])), 
+(3, array([0, 0, 1, 3])), 
+(0, np.int64(4)), 
+(1, np.int64(0)), 
+(2, np.int64(0)), 
+(3, np.int64(4))]
+```
+
+{% enddetails %}
 - Each of these numpy array represents one row 
 of the matrix (see `Initial data`).
     - The summation is made on the product of each element of the same column
@@ -222,16 +240,18 @@ pspark = mspark.flatMap(getPos).union(vspark)
 print(pspark.take(20))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(0, (0, np.int64(2))), (1, (0, np.int64(4))), (2, (0, np.int64(2))), (3, (0, np.int64(1))), 
-    (0, (1, np.int64(3))), (1, (1, np.int64(2))), (2, (1, np.int64(3))), (3, (1, np.int64(1))), 
-    (0, (2, np.int64(1))), (1, (2, np.int64(0))), (2, (2, np.int64(1))), (3, (2, np.int64(1))), 
-    (0, (3, np.int64(0))), (1, (3, np.int64(0))), (2, (3, np.int64(1))), (3, (3, np.int64(3))), 
-    (0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
-    ```
 
+```output
+[(0, (0, np.int64(2))), (1, (0, np.int64(4))), (2, (0, np.int64(2))), (3, (0, np.int64(1))), 
+(0, (1, np.int64(3))), (1, (1, np.int64(2))), (2, (1, np.int64(3))), (3, (1, np.int64(1))), 
+(0, (2, np.int64(1))), (1, (2, np.int64(0))), (2, (2, np.int64(1))), (3, (2, np.int64(1))), 
+(0, (3, np.int64(0))), (1, (3, np.int64(0))), (2, (3, np.int64(1))), (3, (3, np.int64(3))), 
+(0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
+```
+
+{% enddetails %}
 - The keys of the above pairs represent the row identifier. 
 - If value is a tuple, first element is the column identifier and second element 
 represent the value of the matrix cell corresponding to the specific row and column. 
@@ -247,15 +267,17 @@ pspark = mspark.flatMap(getPos).union(vspark).groupByKey()
 print(pspark.take(16))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(0, <pyspark.resultiterable.ResultIterable object at 0xffff885f62c0>), 
-    (1, <pyspark.resultiterable.ResultIterable object at 0xffff885f4d30>), 
-    (2, <pyspark.resultiterable.ResultIterable object at 0xffff885f6a70>), 
-    (3, <pyspark.resultiterable.ResultIterable object at 0xffff885f6ec0>)]
-    ```
 
+```output
+[(0, <pyspark.resultiterable.ResultIterable object at 0xffff885f62c0>), 
+(1, <pyspark.resultiterable.ResultIterable object at 0xffff885f4d30>), 
+(2, <pyspark.resultiterable.ResultIterable object at 0xffff885f6a70>), 
+(3, <pyspark.resultiterable.ResultIterable object at 0xffff885f6ec0>)]
+```
+
+{% enddetails %}
 - Convert data into `list` type instead of Spark's `iterables`
 
 ```python linenums="1"
@@ -269,15 +291,17 @@ pspark = mspark.flatMap(getPos).union(vspark).groupByKey().mapValues(list)
 print(pspark.take(16))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(0, [(1, np.int64(3)), (2, np.int64(1)), (3, np.int64(0)), (0, np.int64(2)), np.int64(4)]), 
-    (1, [(3, np.int64(0)), np.int64(0), (0, np.int64(4)), (1, np.int64(2)), (2, np.int64(0))]), 
-    (2, [(0, np.int64(2)), (1, np.int64(3)), (3, np.int64(1)), (2, np.int64(1)), np.int64(0)]), 
-    (3, [(1, np.int64(1)), np.int64(4), (3, np.int64(3)), (0, np.int64(1)), (2, np.int64(1))])]
-    ```
 
+```output
+[(0, [(1, np.int64(3)), (2, np.int64(1)), (3, np.int64(0)), (0, np.int64(2)), np.int64(4)]), 
+(1, [(3, np.int64(0)), np.int64(0), (0, np.int64(4)), (1, np.int64(2)), (2, np.int64(0))]), 
+(2, [(0, np.int64(2)), (1, np.int64(3)), (3, np.int64(1)), (2, np.int64(1)), np.int64(0)]), 
+(3, [(1, np.int64(1)), np.int64(4), (3, np.int64(3)), (0, np.int64(1)), (2, np.int64(1))])]
+```
+
+{% enddetails %}
 - Each element in this `pspark` frame is a key/value pair:
     - The key is the row index 
     - The value is a 5-element array: 
@@ -308,15 +332,17 @@ pspark = mspark.flatMap(getPos).union(vspark).groupByKey().mapValues(list).flatM
 print(pspark.take(16))
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    [(3, np.int64(0)), (2, np.int64(4)), (0, np.int64(8)), (1, np.int64(12)), 
-    (1, np.int64(0)), (2, np.int64(0)), (0, np.int64(0)), (3, np.int64(0)), 
-    (3, np.int64(0)), (2, np.int64(0)), (1, np.int64(0)), (0, np.int64(0)), 
-    (0, np.int64(4)), (2, np.int64(4)), (3, np.int64(12)), (1, np.int64(4))]
-    ```
 
+```output
+[(3, np.int64(0)), (2, np.int64(4)), (0, np.int64(8)), (1, np.int64(12)), 
+(1, np.int64(0)), (2, np.int64(0)), (0, np.int64(0)), (3, np.int64(0)), 
+(3, np.int64(0)), (2, np.int64(0)), (1, np.int64(0)), (0, np.int64(0)), 
+(0, np.int64(4)), (2, np.int64(4)), (3, np.int64(12)), (1, np.int64(4))]
+```
+
+{% enddetails %}
 - Final steps: 
     - groupByKey: Bring the values with same row index together.
     - mapValues: Convert value type `iterables` into `list`.
@@ -328,15 +354,17 @@ print(f"MapReduce Dot Product:\n {np.array(dotspark.take(4))}")
 print(f"Dot Product P:\n {P}")
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    MapReduce Dot Product:
-    [12 16 8 12]
-    Dot Product P:
-    [12 16 8 12]
-    ```
 
+```output
+MapReduce Dot Product:
+[12 16 8 12]
+Dot Product P:
+[12 16 8 12]
+```
+
+{% enddetails %}
 ---
 
 ## 3. Analyzing text data (not using Spark SQL) 
@@ -371,28 +399,32 @@ ratings.cache()
 ratings.count()
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    CPU times: user 252 ms, sys: 28.2 ms, total: 280 ms
-    Wall time: 1min 40s
-    32000205
-    ```
 
+```output
+CPU times: user 252 ms, sys: 28.2 ms, total: 280 ms
+Wall time: 1min 40s
+32000205
+```
+
+{% enddetails %}
 - Second count, preloaded
 
 ```python linenums="1"
 %%time
 ratings.count()
 ```
-???note "Output"
+{% details Output %}
 
-    ```output
-    CPU times: user 147 ms, sys: 19.8 ms, total: 167 ms
-    Wall time: 58.4 s
-    32000205
-    ```
 
+```output
+CPU times: user 147 ms, sys: 19.8 ms, total: 167 ms
+Wall time: 58.4 s
+32000205
+```
+
+{% enddetails %}
 - Third count, preloaded
 
 ```python linenums="1"
@@ -400,27 +432,37 @@ ratings.count()
 ratings.count()
 ```
 
-???note "Output"
+{% details Output %}
 
-    ```output
-    CPU times: user 147 ms, sys: 19.8 ms, total: 167 ms
-    Wall time: 58.4 s
-    32000205
-    ```
 
-???question "Hands-on 1"
-    - What are the average ratings over the years of each movie?    
-    - Note: don't forget to filter!
+```output
+CPU times: user 147 ms, sys: 19.8 ms, total: 167 ms
+Wall time: 58.4 s
+32000205
+```
 
-???question "Hands-on 2"
-    - What are the average ratings over the years of each movie?
-        - Display the results with movie titles instead of movie IDs
-    - Assumption: **movies.csv does not fit in memory**
+{% enddetails %}
+{% details Hands-on 1 %}
 
-???question "Hands-on 3"
-    - Identify movies that can be considered cult-classic?
+- What are the average ratings over the years of each movie?    
+- Note: don't forget to filter!
 
-???question "Hands-on 4"
-    - What are the average ratings over the years of each genre
-    - Assumption: **movies.csv does not fit in memory**
+{% enddetails %}
+{% details Hands-on 2 %}
 
+- What are the average ratings over the years of each movie?
+    - Display the results with movie titles instead of movie IDs
+- Assumption: **movies.csv does not fit in memory**
+
+{% enddetails %}
+{% details Hands-on 3 %}
+
+- Identify movies that can be considered cult-classic?
+
+{% enddetails %}
+{% details Hands-on 4 %}
+
+- What are the average ratings over the years of each genre
+- Assumption: **movies.csv does not fit in memory**
+
+{% enddetails %}

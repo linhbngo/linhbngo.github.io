@@ -163,36 +163,38 @@ k-shingles
     - Each unique shingle is a dimension
     - Vectors represent documents will be sparse, as no document should contain the majority of all k-shingles
 
-???example "Example"
-    - Given the following documents:
-        - D1: practice makes perfect
-        - D2: perfect practice prevents poor performance
-        - D3: persistent practice produces progress
-    - The 1-shingle set for each documents are:
-        - D1: {practice,makes,perfect}
-        - D2: {perfect,practice,prevents,poor,performance}
-        - D3: {persistent,practice,produces,progress}
-    - The 1-shingle space:
-        - {makes, perfect, performance, persistent, poor, practice, prevents, produces, progress}
-    - The corresponding 0/1 vectors for each documents are:
+{% details Example %}
 
-    $$
-    \left[
-    \begin{array}{cccc}
-                & D1 & D2 & D3\\
-    makes       & 1  & 0  & 0 \\
-    perfect     & 1  & 1  & 0 \\
-    performance & 0  & 1  & 0 \\
-    persistent  & 0  & 0  & 1 \\
-    poor        & 0  & 1  & 0 \\
-    practice    & 1  & 1  & 1 \\
-    prevents    & 0  & 1  & 0 \\
-    produces    & 0  & 0  & 1 \\
-    progress    & 0  & 0  & 1 \\
-    \end{array}
-    \right]
-    $$
+- Given the following documents:
+    - D1: practice makes perfect
+    - D2: perfect practice prevents poor performance
+    - D3: persistent practice produces progress
+- The 1-shingle set for each documents are:
+    - D1: {practice,makes,perfect}
+    - D2: {perfect,practice,prevents,poor,performance}
+    - D3: {persistent,practice,produces,progress}
+- The 1-shingle space:
+    - {makes, perfect, performance, persistent, poor, practice, prevents, produces, progress}
+- The corresponding 0/1 vectors for each documents are:
 
+$$
+\left[
+\begin{array}{cccc}
+            & D1 & D2 & D3\\
+makes       & 1  & 0  & 0 \\
+perfect     & 1  & 1  & 0 \\
+performance & 0  & 1  & 0 \\
+persistent  & 0  & 0  & 1 \\
+poor        & 0  & 1  & 0 \\
+practice    & 1  & 1  & 1 \\
+prevents    & 0  & 1  & 0 \\
+produces    & 0  & 0  & 1 \\
+progress    & 0  & 0  & 1 \\
+\end{array}
+\right]
+$$
+
+{% enddetails %}
 - A natural similarity measure is the `Jaccard similarity`
 
 ### 3.4. Motivation for Minhash/LSH
@@ -277,107 +279,113 @@ for each column.
 
     - We permute the index of the row, then start going through the rows using the values in the `Permutation` column as indices.
 
-    ???example "Permutation 1"
-      
-        $$
-        \left[
-        \begin{array}{ccccc}
-        Permutation & C1 & C2 & C3 & C4 \\
-        3 & 1  & 0  & 1  & 0 \\
-        4 & 1  & 0  & 0  & 1 \\
-        7 & 0  & 1  & 0  & 1 \\
-        6 & 0  & 1  & 0  & 1 \\
-        1 & 0  & 1  & 0  & 1 \\
-        2 & 1  & 0  & 1  & 0 \\
-        5 & 1  & 0  & 0  & 0 \\
-        \end{array}
-        \right]
-        $$
-        
-        - For column C1:
-            - row with value 1 in permutation column has a 0
-            - row with value 2 in permutation column has a 1 (first 1)
-                - Resulting signature is 2
-        - For column C2:
-            - row with value 1 in permutation column has a 1 (first 1)
-                - Resulting signature is 1
-        - For column C3:
-            - row with value 1 in permutation column has a 0
-            - row with value 2 in permutation column has a 1 (first 1)
-                - Resulting signature is 2
-        - For column C4:
-            - row with value 1 in permutation column has a 1 (first 1)
-                - Resulting signature is 1
-        - Resulting signature set for this permutation is {2,1,2,1}
+    {% details Permutation 1 %}
 
-    ???example "Permutation 2"
-    
-        $$
-        \left[
-        \begin{array}{ccccc}
-        Permutation & C1 & C2 & C3 & C4 \\
-        4 & 1  & 0  & 1  & 0 \\
-        2 & 1  & 0  & 0  & 1 \\
-        1 & 0  & 1  & 0  & 1 \\
-        3 & 0  & 1  & 0  & 1 \\
-        6 & 0  & 1  & 0  & 1 \\
-        7 & 1  & 0  & 1  & 0 \\
-        5 & 1  & 0  & 0  & 0 \\
-        \end{array}
-        \right]
-        $$
-        
-        - For column C1:
-            - row with value 1 in permutation column has a 0
-            - row with value 2 in permutation column has a 1 (first 1)
-                - Resulting signature is 2
-        - For column C2:
-            - row with value 1 in permutation column has a 1 (first 1)
-                - Resulting signature is 1
-        - For column C3:
-            - row with value 1 in permutation column has a 0
-            - row with value 2 in permutation column has a 0
-            - row with value 3 in permutation column has a 0
-            - row with value 4 in permutation column has a 1 (first 1)
-                - Resulting signature is 4
-        - For column C4:
-            - row with value 1 in permutation column has a 1 (first 1)
-                - Resulting signature is 1
-        - Resulting signature set for this permutation is {2,1,4,1}
 
-    ???example "Permutation 3"
-    
-        $$
-        \left[
-        \begin{array}{ccccc}
-        Permutation & C1 & C2 & C3 & C4 \\
-        1 & 1  & 0  & 1  & 0 \\
-        3 & 1  & 0  & 0  & 1 \\
-        7 & 0  & 1  & 0  & 1 \\
-        6 & 0  & 1  & 0  & 1 \\
-        2 & 0  & 1  & 0  & 1 \\
-        5 & 1  & 0  & 1  & 0 \\
-        4 & 1  & 0  & 0  & 0 \\
-        \end{array}
-        \right]
-        $$
-        
-        - For column C1:
-            - row with value 1 in permutation column has a 1 (first 1)
-                - Resulting signature is 1
-        - For column C2:
-            - row with value 1 in permutation column has a 0
-            - row with value 2 in permutation column has a 1 (first 1)
-                - Resulting signature is 2
-        - For column C3:
-            - row with value 1 in permutation column has a 1 (first 1)
-                - Resulting signature is 1
-        - For column C4:
-            - row with value 1 in permutation column has a 0
-            - row with value 2 in permutation column has a 1 (first 1)
-                - Resulting signature is 2
-        - Resulting signature set for this permutation is {1,2,1,2}
-    
+$$
+\left[
+\begin{array}{ccccc}
+Permutation & C1 & C2 & C3 & C4 \\
+3 & 1  & 0  & 1  & 0 \\
+4 & 1  & 0  & 0  & 1 \\
+7 & 0  & 1  & 0  & 1 \\
+6 & 0  & 1  & 0  & 1 \\
+1 & 0  & 1  & 0  & 1 \\
+2 & 1  & 0  & 1  & 0 \\
+5 & 1  & 0  & 0  & 0 \\
+\end{array}
+\right]
+$$
+
+- For column C1:
+    - row with value 1 in permutation column has a 0
+    - row with value 2 in permutation column has a 1 (first 1)
+        - Resulting signature is 2
+- For column C2:
+    - row with value 1 in permutation column has a 1 (first 1)
+        - Resulting signature is 1
+- For column C3:
+    - row with value 1 in permutation column has a 0
+    - row with value 2 in permutation column has a 1 (first 1)
+        - Resulting signature is 2
+- For column C4:
+    - row with value 1 in permutation column has a 1 (first 1)
+        - Resulting signature is 1
+- Resulting signature set for this permutation is {2,1,2,1}
+
+    {% enddetails %}
+    {% details Permutation 2 %}
+
+
+$$
+\left[
+\begin{array}{ccccc}
+Permutation & C1 & C2 & C3 & C4 \\
+4 & 1  & 0  & 1  & 0 \\
+2 & 1  & 0  & 0  & 1 \\
+1 & 0  & 1  & 0  & 1 \\
+3 & 0  & 1  & 0  & 1 \\
+6 & 0  & 1  & 0  & 1 \\
+7 & 1  & 0  & 1  & 0 \\
+5 & 1  & 0  & 0  & 0 \\
+\end{array}
+\right]
+$$
+
+- For column C1:
+    - row with value 1 in permutation column has a 0
+    - row with value 2 in permutation column has a 1 (first 1)
+        - Resulting signature is 2
+- For column C2:
+    - row with value 1 in permutation column has a 1 (first 1)
+        - Resulting signature is 1
+- For column C3:
+    - row with value 1 in permutation column has a 0
+    - row with value 2 in permutation column has a 0
+    - row with value 3 in permutation column has a 0
+    - row with value 4 in permutation column has a 1 (first 1)
+        - Resulting signature is 4
+- For column C4:
+    - row with value 1 in permutation column has a 1 (first 1)
+        - Resulting signature is 1
+- Resulting signature set for this permutation is {2,1,4,1}
+
+    {% enddetails %}
+    {% details Permutation 3 %}
+
+
+$$
+\left[
+\begin{array}{ccccc}
+Permutation & C1 & C2 & C3 & C4 \\
+1 & 1  & 0  & 1  & 0 \\
+3 & 1  & 0  & 0  & 1 \\
+7 & 0  & 1  & 0  & 1 \\
+6 & 0  & 1  & 0  & 1 \\
+2 & 0  & 1  & 0  & 1 \\
+5 & 1  & 0  & 1  & 0 \\
+4 & 1  & 0  & 0  & 0 \\
+\end{array}
+\right]
+$$
+
+- For column C1:
+    - row with value 1 in permutation column has a 1 (first 1)
+        - Resulting signature is 1
+- For column C2:
+    - row with value 1 in permutation column has a 0
+    - row with value 2 in permutation column has a 1 (first 1)
+        - Resulting signature is 2
+- For column C3:
+    - row with value 1 in permutation column has a 1 (first 1)
+        - Resulting signature is 1
+- For column C4:
+    - row with value 1 in permutation column has a 0
+    - row with value 2 in permutation column has a 1 (first 1)
+        - Resulting signature is 2
+- Resulting signature set for this permutation is {1,2,1,2}
+
+    {% enddetails %}
     - The resulting signature matrix is:
 
     $$

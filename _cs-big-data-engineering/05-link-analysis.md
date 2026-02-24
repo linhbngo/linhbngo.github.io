@@ -189,13 +189,15 @@ flowchart TD
     - Node $m$ receives one incoming link from node $a$:
         - $r_{m} = r_{a}/2$
 
-???tip "General equation for rank calculation"
-    - The above example demonstrates the idea of a general equation for calculating rank $r_{j}$ for page j:
+{% details General equation for rank calculation %}
 
-    $$r_j = \sum\limits_{i\rightarrow j}^{n} \frac{r_i}{d_i}$$
+- The above example demonstrates the idea of a general equation for calculating rank $r_{j}$ for page j:
 
-    - $d_i$ is the number of out-degree (outgoing links) of node $i$
+$$r_j = \sum\limits_{i\rightarrow j}^{n} \frac{r_i}{d_i}$$
 
+- $d_i$ is the number of out-degree (outgoing links) of node $i$
+
+{% enddetails %}
 - From the above link graph, we seem to have three equations and three unknown. 
     - In reality, after some algebraic simplication, we actually onle have two equations. 
     - Therefore, there is no unique solution at this point. 
@@ -228,12 +230,14 @@ $$r_j = \sum\limits_{i=0}^{N-1} M_{ij}r_{j}$$
 
 $$r = M \cdot r$$
 
-???tip "Visualization"
-    - Suppose page *i* has importance $r_{i}$ and has outgoing links
-    to three other pages, including page *j*. 
+{% details Visualization %}
 
-    ![](fig/05-pagerank/09.png)
+- Suppose page *i* has importance $r_{i}$ and has outgoing links
+to three other pages, including page *j*. 
 
+![](fig/05-pagerank/09.png)
+
+{% enddetails %}
 ### 2.4. Example of matrix formulation
 
 - Revisiting our flow equations from [Section 2.2](#22-the-flow-model):
@@ -330,171 +334,181 @@ $$
 
 - Revisiting our flow equations from [Section 2.4](#24-example-of-matrix-formulation):
 
-???example "Iteration 0"
-    - Initial rank vector r at iteration 0: $r^{(0)} = [1/3,1/3,1/3]^{T}$ 
+{% details Iteration 0 %}
 
-    $$
-    \left[
-    \begin{array}{c}
-    y \\
-    a \\
-    m
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    1/3 \\
-    1/3 \\
-    1/3
-    \end{array}
-    \right]
-    $$
+- Initial rank vector r at iteration 0: $r^{(0)} = [1/3,1/3,1/3]^{T}$ 
 
-???example "Iteration 1"
+$$
+\left[
+\begin{array}{c}
+y \\
+a \\
+m
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+1/3 \\
+1/3 \\
+1/3
+\end{array}
+\right]
+$$
 
-    $$
-    \left[
-    \begin{array}{c}
-    y \\
-    a \\
-    m
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{ccc}
-    1/2 & 1/2 & 0 \\
-    1/2 & 0 & 1 \\
-    0 & 1/2 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    1/3 \\
-    1/3 \\
-    1/3
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    1/3 \\
-    3/6 \\
-    1/6
-    \end{array}
-    \right]
-    $$
+{% enddetails %}
+{% details Iteration 1 %}
 
 
-???example "Iteration 2"
-
-    $$
-    \left[
-    \begin{array}{c}
-    y \\
-    a \\
-    m
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{ccc}
-    1/2 & 1/2 & 0 \\
-    1/2 & 0 & 1 \\
-    0 & 1/2 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    1/3 \\
-    3/6 \\
-    1/6
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    5/12 \\
-    1/3 \\
-    3/12
-    \end{array}
-    \right]
-    $$
+$$
+\left[
+\begin{array}{c}
+y \\
+a \\
+m
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc}
+1/2 & 1/2 & 0 \\
+1/2 & 0 & 1 \\
+0 & 1/2 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+1/3 \\
+1/3 \\
+1/3
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+1/3 \\
+3/6 \\
+1/6
+\end{array}
+\right]
+$$
 
 
-???example "Iteration 3"
+{% enddetails %}
+{% details Iteration 2 %}
 
-    $$
-    \left[
-    \begin{array}{c}
-    y \\
-    a \\
-    m
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{ccc}
-    1/2 & 1/2 & 0 \\
-    1/2 & 0 & 1 \\
-    0 & 1/2 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    5/12 \\
-    1/3 \\
-    3/12
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    9/24 \\
-    11/24 \\
-    1/6
-    \end{array}
-    \right]
-    $$
 
+$$
+\left[
+\begin{array}{c}
+y \\
+a \\
+m
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc}
+1/2 & 1/2 & 0 \\
+1/2 & 0 & 1 \\
+0 & 1/2 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+1/3 \\
+3/6 \\
+1/6
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+5/12 \\
+1/3 \\
+3/12
+\end{array}
+\right]
+$$
+
+
+{% enddetails %}
+{% details Iteration 3 %}
+
+
+$$
+\left[
+\begin{array}{c}
+y \\
+a \\
+m
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc}
+1/2 & 1/2 & 0 \\
+1/2 & 0 & 1 \\
+0 & 1/2 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+5/12 \\
+1/3 \\
+3/12
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+9/24 \\
+11/24 \\
+1/6
+\end{array}
+\right]
+$$
+
+{% enddetails %}
 ...
 
-???example "Final iteration"
+{% details Final iteration %}
 
-    $$
-    \left[
-    \begin{array}{c}
-    y \\
-    a \\
-    m
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{ccc}
-    1/2 & 1/2 & 0 \\
-    1/2 & 0 & 1 \\
-    0 & 1/2 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    ... \\
-    ... \\
-    ...
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    6/15 \\
-    6/15 \\
-    3/15
-    \end{array}
-    \right]
-    $$
 
+$$
+\left[
+\begin{array}{c}
+y \\
+a \\
+m
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc}
+1/2 & 1/2 & 0 \\
+1/2 & 0 & 1 \\
+0 & 1/2 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+... \\
+... \\
+...
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+6/15 \\
+6/15 \\
+3/15
+\end{array}
+\right]
+$$
+
+{% enddetails %}
 - The final iteration results is the same as the results from the Gaussian approach in [Section 2.2](#22-the-flow-model)
 
 ---
@@ -523,22 +537,24 @@ graph LR
   B -->A;
 ```
 
-???failure "Solution"
+{% details Solution %}
 
-    $$
-    \left[
-    \begin{array}{c}
-    r_a \\
-    r_b
-    \end{array}
-    \right]
-    =
-    \begin{array}{cccc}
-    1 & 0 & 1 & 0\\
-    0 & 1 & 0 & 1
-    \end{array}
-    $$
 
+$$
+\left[
+\begin{array}{c}
+r_a \\
+r_b
+\end{array}
+\right]
+=
+\begin{array}{cccc}
+1 & 0 & 1 & 0\\
+0 & 1 & 0 & 1
+\end{array}
+$$
+
+{% enddetails %}
 ### 3.3. Does it converge to what we want?
 
 - The `dead end` problem
@@ -551,22 +567,24 @@ graph LR
   A((a)) --> B((b));
 ```
 
-???failure "Solution"
+{% details Solution %}
 
-    $$
-    \left[
-    \begin{array}{c}
-    r_a \\
-    r_b
-    \end{array}
-    \right]
-    =
-    \begin{array}{cccc}
-    1 & 0 & 0 & 0\\
-    0 & 1 & 0 & 0
-    \end{array}
-    $$
 
+$$
+\left[
+\begin{array}{c}
+r_a \\
+r_b
+\end{array}
+\right]
+=
+\begin{array}{cccc}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0
+\end{array}
+$$
+
+{% enddetails %}
 ### 3.4. The solution: random teleport
 
 - At each time step, the random surfer has two options:
@@ -892,239 +910,243 @@ $$
 are small enough. 
 - We demonstrate this procedure using the example from [Section 5.3](#53-example):
 
-???example "Iteration 0"
-    - Initialize $h$:
+{% details Iteration 0 %}
 
-    $$
-    h=
-    \left[
-    \begin{array}{c}
-    1 \\
-    1 \\
-    1 \\
-    1 \\
-    1 
-    \end{array}
-    \right]
-    $$
+- Initialize $h$:
 
-    - Compute $a = L^{T}h$
+$$
+h=
+\left[
+\begin{array}{c}
+1 \\
+1 \\
+1 \\
+1 \\
+1 
+\end{array}
+\right]
+$$
 
-    $$
-    a = 
-    \left[
-    \begin{array}{ccccc}
-    0 & 1 & 0 & 0 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    1 & 1 & 0 & 0 & 0 \\
-    0 & 0 & 1 & 0 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    1 \\
-    1 \\
-    1 \\
-    1 \\
-    1 
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    1 \\
-    2 \\
-    2 \\
-    2 \\
-    1 
-    \end{array}
-    \right]
-    $$
+- Compute $a = L^{T}h$
 
-    - Scale so that the largest component of $a$ is 1
-        - Since max value in $a$ is 2, we divide all values in $a$ by 2.
+$$
+a = 
+\left[
+\begin{array}{ccccc}
+0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 0 \\
+1 & 0 & 0 & 1 & 0 \\
+1 & 1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+1 \\
+1 \\
+1 \\
+1 \\
+1 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+1 \\
+2 \\
+2 \\
+2 \\
+1 
+\end{array}
+\right]
+$$
 
-    $$
-    a=
-    \left[
-    \begin{array}{c}
-    1/2 \\
-    1 \\
-    1 \\
-    1 \\
-    1/2 
-    \end{array}
-    \right]
-    $$
+- Scale so that the largest component of $a$ is 1
+    - Since max value in $a$ is 2, we divide all values in $a$ by 2.
 
-    - Compute $h = La$ 
-    
-    $$
-    h = 
-    \left[
-    \begin{array}{ccccc}
-    0 & 1 & 1 & 1 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    0 & 0 & 0 & 0 & 1 \\
-    0 & 1 & 1 & 0 & 0 \\
-    0 & 0 & 0 & 0 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    1/2 \\
-    1 \\
-    1 \\
-    1 \\
-    1/2
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    3 \\
-    3/2 \\
-    1/2 \\
-    2 \\
-    0 
-    \end{array}
-    \right]
-    $$
+$$
+a=
+\left[
+\begin{array}{c}
+1/2 \\
+1 \\
+1 \\
+1 \\
+1/2 
+\end{array}
+\right]
+$$
 
-    - Scale so that the largest component of $h$ is 1
-        - Since max value in $h$ is 3, we divide all values in $h$ by 3.
+- Compute $h = La$ 
 
-    $$
-    h=
-    \left[
-    \begin{array}{c}
-    1 \\
-    1/2 \\
-    1/6 \\
-    2/3 \\
-    0 
-    \end{array}
-    \right]
-    $$
+$$
+h = 
+\left[
+\begin{array}{ccccc}
+0 & 1 & 1 & 1 & 0 \\
+1 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 1 \\
+0 & 1 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+1/2 \\
+1 \\
+1 \\
+1 \\
+1/2
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+3 \\
+3/2 \\
+1/2 \\
+2 \\
+0 
+\end{array}
+\right]
+$$
+
+- Scale so that the largest component of $h$ is 1
+    - Since max value in $h$ is 3, we divide all values in $h$ by 3.
+
+$$
+h=
+\left[
+\begin{array}{c}
+1 \\
+1/2 \\
+1/6 \\
+2/3 \\
+0 
+\end{array}
+\right]
+$$
 
 
-???example "Iteration 1"
-    - This is $h$ value from previous iteration:
+{% enddetails %}
+{% details Iteration 1 %}
 
-    $$
-    h=
-    \left[
-    \begin{array}{c}
-    1 \\
-    1/2 \\
-    1/6 \\
-    2/3 \\
-    0 
-    \end{array}
-    \right]
-    $$
+- This is $h$ value from previous iteration:
 
-    - Compute $a = L^{T}h$
+$$
+h=
+\left[
+\begin{array}{c}
+1 \\
+1/2 \\
+1/6 \\
+2/3 \\
+0 
+\end{array}
+\right]
+$$
 
-    $$
-    a = 
-    \left[
-    \begin{array}{ccccc}
-    0 & 1 & 0 & 0 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    1 & 1 & 0 & 0 & 0 \\
-    0 & 0 & 1 & 0 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    1 \\
-    1/2 \\
-    1/6 \\
-    2/3 \\
-    0 
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    1/2 \\
-    5/3 \\
-    5/3 \\
-    3/2 \\
-    1/6 
-    \end{array}
-    \right]
-    $$
+- Compute $a = L^{T}h$
 
-    - Scale so that the largest component of $a$ is 1
-        - Since max value in $a$ is $5/3$, we divide all values in $a$ by $5/3$.
+$$
+a = 
+\left[
+\begin{array}{ccccc}
+0 & 1 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 0 \\
+1 & 0 & 0 & 1 & 0 \\
+1 & 1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+1 \\
+1/2 \\
+1/6 \\
+2/3 \\
+0 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+1/2 \\
+5/3 \\
+5/3 \\
+3/2 \\
+1/6 
+\end{array}
+\right]
+$$
 
-    $$
-    a=
-    \left[
-    \begin{array}{c}
-    3/10 \\
-    1 \\
-    1 \\
-    9/10 \\
-    1/10 
-    \end{array}
-    \right]
-    $$
+- Scale so that the largest component of $a$ is 1
+    - Since max value in $a$ is $5/3$, we divide all values in $a$ by $5/3$.
 
-    - Compute $h = La$ 
-    
-    $$
-    h = 
-    \left[
-    \begin{array}{ccccc}
-    0 & 1 & 1 & 1 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    0 & 0 & 0 & 0 & 1 \\
-    0 & 1 & 1 & 0 & 0 \\
-    0 & 0 & 0 & 0 & 0
-    \end{array}
-    \right]
-    \left[
-    \begin{array}{c}
-    3/10 \\
-    1 \\
-    1 \\
-    9/10 \\
-    1/10
-    \end{array}
-    \right]
-    =
-    \left[
-    \begin{array}{c}
-    29/10 \\
-    6/5 \\
-    1/10 \\
-    2 \\
-    0 
-    \end{array}
-    \right]
-    $$
+$$
+a=
+\left[
+\begin{array}{c}
+3/10 \\
+1 \\
+1 \\
+9/10 \\
+1/10 
+\end{array}
+\right]
+$$
 
-    - Scale so that the largest component of $h$ is 1
-        - Since max value in $h$ is $29/10$, we divide all values in $h$ by $29/10$.
+- Compute $h = La$ 
 
-    $$
-    a=
-    \left[
-    \begin{array}{c}
-    1 \\
-    12/29 \\
-    1/29 \\
-    20/29 \\
-    0 
-    \end{array}
-    \right]
-    $$
+$$
+h = 
+\left[
+\begin{array}{ccccc}
+0 & 1 & 1 & 1 & 0 \\
+1 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 1 \\
+0 & 1 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+3/10 \\
+1 \\
+1 \\
+9/10 \\
+1/10
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+29/10 \\
+6/5 \\
+1/10 \\
+2 \\
+0 
+\end{array}
+\right]
+$$
 
+- Scale so that the largest component of $h$ is 1
+    - Since max value in $h$ is $29/10$, we divide all values in $h$ by $29/10$.
+
+$$
+a=
+\left[
+\begin{array}{c}
+1 \\
+12/29 \\
+1/29 \\
+20/29 \\
+0 
+\end{array}
+\right]
+$$
+
+{% enddetails %}
 - Final values:
 
 $$

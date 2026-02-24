@@ -14,6 +14,9 @@ children:
   - title: Big Data Engineering
     permalink: /cs-big-data-engineering/
   - title: divider
+  - title: Intro Cloud
+    permalink: /cs-intro-cloud/
+  - title: divider
   - title: CSC 574 (under dev)
     permalink: /csc574/
 ---

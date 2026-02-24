@@ -70,35 +70,41 @@ toc:
 | Carol  |  0.2    |       | 1       |         | 
 | David  |         |       |         |  0.4    | 
 
-???question "Key Problems"
-    - Gathering `known` ratings for matrix
-        - How to collect the data in the utility matrix
-    - Extrapolate unknown ratings from the known ones
-        - Mainly interested in high unknown ratings
-        - We are not interested in knowing what you don’t like but what you like
-    - Evaluating extrapolation methods
-        - How to measure success/performance of recommendation methods
+{% details Key Problems %}
 
-???info "Gathering ratings"
-    - Explicit
-        - Ask people to rate items
-        - Doesn’t work well in practice: people can’t be bothered
-    - Implicit
-        - Learn ratings from user actions
-            - E.g., purchase implies high rating
-        - What about low ratings?
+- Gathering `known` ratings for matrix
+    - How to collect the data in the utility matrix
+- Extrapolate unknown ratings from the known ones
+    - Mainly interested in high unknown ratings
+    - We are not interested in knowing what you don’t like but what you like
+- Evaluating extrapolation methods
+    - How to measure success/performance of recommendation methods
 
-???info "Extrapolating utilities"
-    - Key problem: Utility matrix U is sparse
-        - Most people have not rated most items
-        - Cold start: 
-            - New items have no ratings
-            - New users have no history
-    - Three approaches to recommender systems:
-        - Content-based
-        - Collaborative
-        - Latent factor based
+{% enddetails %}
+{% details Gathering ratings %}
 
+- Explicit
+    - Ask people to rate items
+    - Doesn’t work well in practice: people can’t be bothered
+- Implicit
+    - Learn ratings from user actions
+        - E.g., purchase implies high rating
+    - What about low ratings?
+
+{% enddetails %}
+{% details Extrapolating utilities %}
+
+- Key problem: Utility matrix U is sparse
+    - Most people have not rated most items
+    - Cold start: 
+        - New items have no ratings
+        - New users have no history
+- Three approaches to recommender systems:
+    - Content-based
+    - Collaborative
+    - Latent factor based
+
+{% enddetails %}
 ---
 
 ## 2. Content-based Recommender Systems
@@ -176,9 +182,11 @@ toc:
 - Jaccard similarity measure
     - $r_x={1,4,5}$ or $r_x={1,0,0,1,1}$
     - $r_y={1,3,4}$ or $r_x={1,0,1,1,0}$
-    ???question "Potential problem?"
-        Ignores the value of the rating
+    {% details Potential problem? %}
 
+Ignores the value of the rating
+
+    {% enddetails %}
 - Cosine similarity measure
     - $r_x={1,0,0,1,3}$ 
     - $r_y={1,0,2,2,0}$ 
@@ -187,9 +195,11 @@ toc:
         sim(x,y)=cos(r_x,r_y)=\frac{r_x \cdot r_y}{||r_x|| \times ||r_y||}
     $$
 
-    ???question "Potential problem?"
-        Treats missing ratings as `negative`
+    {% details Potential problem? %}
 
+Treats missing ratings as `negative`
+
+    {% enddetails %}
 - Person correlation coefficient
     - $r_x={1,0,0,1,3}$ with average rating $\overline{r_x}$
     - $r_y={1,0,2,2,0}$ with average rating $\overline{r_y}$
@@ -214,71 +224,79 @@ toc:
 | C |     |     |     | 2  | 4   | 5   |     |
 | D |     | 3   |     |    |     |     |  3  |
 
-???info "Immediate intuition"
-    A is more similar to B than A is to C
+{% details Immediate intuition %}
 
-???failure "Jaccard similarity"
-    - $r_A={1,0,0,1,1,0,0}$ 
-    - $r_B={1,1,1,0,0,0,0}$ 
-    - $r_C={0,0,0,1,1,1,0}$
-    - $sim(A,B) = \frac{1}{5}$
-    - $sim(A,C) = \frac{2}{4}$
-    - A is more similar to C than to B!!!
+A is more similar to B than A is to C
 
-???warning "Cosine similarity"
-    - $r_A={4,0,0,5,1,0,0}$ 
-    - $r_B={5,5,4,0,0,0,0}$ 
-    - $r_C={0,0,0,2,4,5,0}$
+{% enddetails %}
+{% details Jaccard similarity %}
 
-    $$
-        sim(x,y)=cos(r_x,r_y)=\frac{r_x \cdot r_y}{||r_x|| \cdot ||r_y||}
-    $$
+- $r_A={1,0,0,1,1,0,0}$ 
+- $r_B={1,1,1,0,0,0,0}$ 
+- $r_C={0,0,0,1,1,1,0}$
+- $sim(A,B) = \frac{1}{5}$
+- $sim(A,C) = \frac{2}{4}$
+- A is more similar to C than to B!!!
 
-    $$
-        sim(A,B)=\frac{r_A \cdot r_B}{||r_A|| \cdot ||r_B||}=\frac{4 \times 5 + 0 \times 5 + 0 \times 4 + 5 \times 0 + 1 \times 0 + 0 \times 0 + 0 \times 0 }{\sqrt{4^2+5^2+1^2} \times \sqrt{5^2+5^2+4^2}}=0.380
-    $$
+{% enddetails %}
+{% details Cosine similarity %}
 
-    $$
-        sim(A,C)=\frac{r_A \cdot r_C}{||r_A|| \cdot ||r_C||}=\frac{5 \times 2 + 1 \times 4}{\sqrt{4^2+5^2+1^2} \times \sqrt{2^2+4^2+5^2}}=0.322
-    $$
+- $r_A={4,0,0,5,1,0,0}$ 
+- $r_B={5,5,4,0,0,0,0}$ 
+- $r_C={0,0,0,2,4,5,0}$
 
-    - A is more similar to B than to C!
-    - What else?
+$$
+    sim(x,y)=cos(r_x,r_y)=\frac{r_x \cdot r_y}{||r_x|| \cdot ||r_y||}
+$$
 
-???success "Normalization"
-    - Sutract the row mean
-        - This normalizes data and turns cosine similarity into Pearson correlation
+$$
+    sim(A,B)=\frac{r_A \cdot r_B}{||r_A|| \cdot ||r_B||}=\frac{4 \times 5 + 0 \times 5 + 0 \times 4 + 5 \times 0 + 1 \times 0 + 0 \times 0 + 0 \times 0 }{\sqrt{4^2+5^2+1^2} \times \sqrt{5^2+5^2+4^2}}=0.380
+$$
 
-    $$
-        sim(x,y)=cos(r_x,r_y)=\frac{r_x \cdot r_y}{||r_x|| \cdot ||r_y||}
-    $$
+$$
+    sim(A,C)=\frac{r_A \cdot r_C}{||r_A|| \cdot ||r_C||}=\frac{5 \times 2 + 1 \times 4}{\sqrt{4^2+5^2+1^2} \times \sqrt{2^2+4^2+5^2}}=0.322
+$$
 
-    $$
-        sim(x,y) = \frac{\sum_{s \in S_{xy}}(r_{xs} - \overline{r_x})(r_{ys} - \overline{r_y})}{\sqrt{\sum_{s \in S_{xy}}(r_{xs} - \overline{r_x})^2}\sqrt{\sum_{s \in S_{xy}}(r_{ys} - \overline{r_y})^2}}
-    $$
+- A is more similar to B than to C!
+- What else?
 
-    - $r_A={4,0,0,5,1,0,0}$ and $\overline{r_A}=\frac{10}{3}$
-    - $r_B={5,5,4,0,0,0,0}$ and $\overline{r_B}=\frac{14}{3}$
-    - $r_C={0,0,0,2,4,5,0}$ and $\overline{r_C}=\frac{11}{3}$
-    - $r_D={0,3,0,0,0,0,3}$ and $\overline{r_D}=3$
+{% enddetails %}
+{% details Normalization %}
 
+- Sutract the row mean
+    - This normalizes data and turns cosine similarity into Pearson correlation
 
-    |   | HP1 | HP2 | HP3  | TW   | SW1  | SW2 | SW3 |
-    | - | --- | --- | ---- | ---- | ---- | --- | --- | 
-    | A | 2/3 |     |      | 5/3  | -7/3 |     |     |
-    | B | 1/3 | 1/3 | -2/3 |      |      |     |     |
-    | C |     |     |      | -5/3 | 1/3  | 4/3 |     |
-    | D |     | 0   |      |      |      |     |  0  |
+$$
+    sim(x,y)=cos(r_x,r_y)=\frac{r_x \cdot r_y}{||r_x|| \cdot ||r_y||}
+$$
 
-    - sim(A,B)=0.092
-    - sim(A,C)=-0.559
+$$
+    sim(x,y) = \frac{\sum_{s \in S_{xy}}(r_{xs} - \overline{r_x})(r_{ys} - \overline{r_y})}{\sqrt{\sum_{s \in S_{xy}}(r_{xs} - \overline{r_x})^2}\sqrt{\sum_{s \in S_{xy}}(r_{ys} - \overline{r_y})^2}}
+$$
 
-    - A is more similar to B than to C!
-    - Because the value is also the correlation value:
-        - A is very similar to B
-        - A is very different from C
+- $r_A={4,0,0,5,1,0,0}$ and $\overline{r_A}=\frac{10}{3}$
+- $r_B={5,5,4,0,0,0,0}$ and $\overline{r_B}=\frac{14}{3}$
+- $r_C={0,0,0,2,4,5,0}$ and $\overline{r_C}=\frac{11}{3}$
+- $r_D={0,3,0,0,0,0,3}$ and $\overline{r_D}=3$
 
 
+|   | HP1 | HP2 | HP3  | TW   | SW1  | SW2 | SW3 |
+| - | --- | --- | ---- | ---- | ---- | --- | --- | 
+| A | 2/3 |     |      | 5/3  | -7/3 |     |     |
+| B | 1/3 | 1/3 | -2/3 |      |      |     |     |
+| C |     |     |      | -5/3 | 1/3  | 4/3 |     |
+| D |     | 0   |      |      |      |     |  0  |
+
+- sim(A,B)=0.092
+- sim(A,C)=-0.559
+
+- A is more similar to B than to C!
+- Because the value is also the correlation value:
+    - A is very similar to B
+    - A is very different from C
+
+
+{% enddetails %}
 ### 3.4. Rating Predictions
 - From similarity metric to recommendations:
     - Let $r_x$ be the vector of user x’s ratings
@@ -320,59 +338,67 @@ $$
 | $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    |
 | $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          | 
 
-???info "Estimate rating of movie 1 by user 5"
-
-    |       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | 
-    | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | 
-    | $m_1$ |   1   |       |   3   |       |   ??? |   5   |       |       |   5   |          |     4    |          |
-    | $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |
-    | $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          | 
-    | $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |
-    | $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    | 
-    | $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |
+{% details Estimate rating of movie 1 by user 5 %}
 
 
-???info "Identify movies similar to movie 1, rated by user 5"
-    - Pearson correlation for similarity calculation:
-        - Movie 3
-        - Movie 5
+|       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | 
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | 
+| $m_1$ |   1   |       |   3   |       |   ??? |   5   |       |       |   5   |          |     4    |          |
+| $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |
+| $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          | 
+| $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |
+| $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    | 
+| $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |
 
-    |       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | $sim(1,m_i)$ |
-    | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | ------------ |
-    | $m_1$ |   1   |       |   3   |       |   ??? |   5   |       |       |   5   |          |     4    |          |       1.0    |
-    | $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |     -0.18    |
-    | $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          |      0.41    |  
-    | $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |     -0.10    |
-    | $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    |     -0.31    |
-    | $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |      0.59    |
 
-???info "Similarity weights"
-    - $s_{1,3} = 0.41$
-    - $s_{1,6} = 0.59$
+{% enddetails %}
+{% details Identify movies similar to movie 1, rated by user 5 %}
 
-    |       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | $sim(1,m_i)$ |
-    | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | ------------ |
-    | $m_1$ |   1   |       |   3   |       |   ??? |   5   |       |       |   5   |          |     4    |          |       1.0    |
-    | $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |     -0.18    |
-    | $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          |      0.41    |  
-    | $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |     -0.10    |
-    | $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    |     -0.31    |
-    | $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |      0.59    |
+- Pearson correlation for similarity calculation:
+    - Movie 3
+    - Movie 5
 
-???info "Predict rating"
-    - $s_{1,3} = 0.41$
-    - $s_{1,6} = 0.59$
-    - $r_{1,5} = \frac{0.41 * 2 + 0.59 * 3}{0.41 + 0.59} = 2.6$
+|       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | $sim(1,m_i)$ |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | ------------ |
+| $m_1$ |   1   |       |   3   |       |   ??? |   5   |       |       |   5   |          |     4    |          |       1.0    |
+| $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |     -0.18    |
+| $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          |      0.41    |  
+| $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |     -0.10    |
+| $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    |     -0.31    |
+| $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |      0.59    |
 
-    |       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | $sim(1,m_i)$ |
-    | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | ------------ |
-    | $m_1$ |   1   |       |   3   |       |   2.6 |   5   |       |       |   5   |          |     4    |          |       1.0    |
-    | $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |     -0.18    |
-    | $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          |      0.41    |  
-    | $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |     -0.10    |
-    | $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    |     -0.31    |
-    | $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |      0.59    |
+{% enddetails %}
+{% details Similarity weights %}
 
+- $s_{1,3} = 0.41$
+- $s_{1,6} = 0.59$
+
+|       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | $sim(1,m_i)$ |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | ------------ |
+| $m_1$ |   1   |       |   3   |       |   ??? |   5   |       |       |   5   |          |     4    |          |       1.0    |
+| $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |     -0.18    |
+| $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          |      0.41    |  
+| $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |     -0.10    |
+| $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    |     -0.31    |
+| $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |      0.59    |
+
+{% enddetails %}
+{% details Predict rating %}
+
+- $s_{1,3} = 0.41$
+- $s_{1,6} = 0.59$
+- $r_{1,5} = \frac{0.41 * 2 + 0.59 * 3}{0.41 + 0.59} = 2.6$
+
+|       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | $sim(1,m_i)$ |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | ------------ |
+| $m_1$ |   1   |       |   3   |       |   2.6 |   5   |       |       |   5   |          |     4    |          |       1.0    |
+| $m_2$ |       |       |   5   |    4  |       |       |   4   |       |       |     2    |     1    |     3    |     -0.18    |
+| $m_3$ |   2   |   4   |       |    1  |   2   |       |   3   |       |   4   |     3    |     5    |          |      0.41    |  
+| $m_4$ |       |   2   |   4   |       |   5   |       |       |   4   |       |          |     2    |          |     -0.10    |
+| $m_5$ |       |       |   4   |    3  |   4   |   2   |       |       |       |          |     2    |     5    |     -0.31    |
+| $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |      0.59    |
+
+{% enddetails %}
 ### 3.7. CF: Common Practice
 - Define similarity $s_{ij}$ of items $i$ and $j$
 - Select k nearest neighbors $N(i; x)$
@@ -430,16 +456,18 @@ $$
 - Rank Correlation: 
     - Spearman’s correlation between system’s and user’s complete rankings
 
-???tip "Add data"
-    - Leverage all the data
-        - Don’t try to reduce data size in an effort to make fancy algorithms work
-        - Simple methods on large data do best
+{% details Add data %}
 
-    - Add more data
-        - e.g., add IMDB data on genres
+- Leverage all the data
+    - Don’t try to reduce data size in an effort to make fancy algorithms work
+    - Simple methods on large data do best
 
-    - [More data beats better algorithms](http://anand.typepad.com/datawocky/2008/03/more-data-usual.html)
+- Add more data
+    - e.g., add IMDB data on genres
 
+- [More data beats better algorithms](http://anand.typepad.com/datawocky/2008/03/more-data-usual.html)
+
+{% enddetails %}
 ---
 
 ## 4. The Netflix Prize
@@ -468,41 +496,47 @@ $$
 - Collaborative filtering: 
     - Extract local patterns
 
-???example "Example: modeling local and global effects"
-    - Global:
-        - Mean movie rating: 3.7 stars
-        - The Sixth Sense is 0.5 stars above avg.
-        - Joe rates 0.2 stars below avg. 
-        - Baseline estimation: Joe will rate The Sixth Sense 4 stars
-    - Local neighborhood (CF/NN):
-        - Joe didn’t like related movie Signs
-        - Final estimate: Joe will rate The Sixth Sense 3.8 stars
+{% details Example: modeling local and global effects %}
 
+- Global:
+    - Mean movie rating: 3.7 stars
+    - The Sixth Sense is 0.5 stars above avg.
+    - Joe rates 0.2 stars below avg. 
+    - Baseline estimation: Joe will rate The Sixth Sense 4 stars
+- Local neighborhood (CF/NN):
+    - Joe didn’t like related movie Signs
+    - Final estimate: Joe will rate The Sixth Sense 3.8 stars
+
+{% enddetails %}
 ### 4.3. Interpolation weights
 $$
 r_{xi} = b_{xi} + \frac{\sum_{j \in N(i;x)}s_{ij} \cdot (r_{xj} - b_{xj})}{\sum_{j \in N(i;x)}s_{ij}}
 $$
 
-???question "Problems"
-    - Similarity measures are “arbitrary”
-    - Pairwise similarities neglect interdependencies among users 
-    - aking a weighted average can be restricting
-    
-???success "Solution" 
-    Instead of $s_{ij}$ use $w_{ij}$ that we estimate directly from data
-    
-    $$
-    r_{xi} = b_{xi} + \sum_{j \in N(i;x)}w_{ij}(r_{xj} - b_{xj})
-    $$
+{% details Problems %}
 
-    - $N(i;x)$ is set of movies rated by user x that are similar to movie i
-    - $w_{ij}$ is the interpolation weight (some real number)
-    - $w_{ij}$ models interaction between pairs of movies (it does not depend on user $x$)
-    - Goals:
-        - Find $w_{ij}$ that minimize SSE (sum of squared errors) on training data!
-            - Models relationships between item i and its neighbors j
-        - $w_{ij}$ can be learned/estimated based on x and all other users that rated i
-        
+- Similarity measures are “arbitrary”
+- Pairwise similarities neglect interdependencies among users 
+- aking a weighted average can be restricting
+
+{% enddetails %}
+{% details Solution %}
+
+Instead of $s_{ij}$ use $w_{ij}$ that we estimate directly from data
+
+$$
+r_{xi} = b_{xi} + \sum_{j \in N(i;x)}w_{ij}(r_{xj} - b_{xj})
+$$
+
+- $N(i;x)$ is set of movies rated by user x that are similar to movie i
+- $w_{ij}$ is the interpolation weight (some real number)
+- $w_{ij}$ models interaction between pairs of movies (it does not depend on user $x$)
+- Goals:
+    - Find $w_{ij}$ that minimize SSE (sum of squared errors) on training data!
+        - Models relationships between item i and its neighbors j
+    - $w_{ij}$ can be learned/estimated based on x and all other users that rated i
+
+{% enddetails %}
 ### 4.4. Recommendations via Optimization
 - Idea: Let’s set values w such that they work well on known (user, item) ratings
 - How to find such values w?

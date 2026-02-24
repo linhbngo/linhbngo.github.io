@@ -1,0 +1,43 @@
+Week,Date,Topic,Assessment
+1,01/19,Introduction to Cloud Computing,-
+-,-,Introduction to CloudLab,-
+-,-,Project Overview,-
+2,01/26,Virtualization,-
+-,-,Linux Containers,-
+3,02/02,-,-
+-,-,Introduction to Docker,-
+-,-,Docker on Linux,-
+4,02/09,Docker Network,-
+-,-,Project Deliverable 1 discussion,-
+5,02/16,Docker Network Lab,-
+-,-,Docker Volume,-
+-,-,Docker Volume Lab,-
+6,02/23,Dockerfile,-
+-,-,Dockerfile Lab,-
+7,03/02,Midterm review,-
+-,-,Midterm Exam,-
+-,-,In-class project work,-
+8,03/09,SPRING BREAK,-
+-,-,SPRING BREAK,-
+9,03/16,Docker Compose,-
+-,-,-,-
+-,-,-,-
+10,03/23,Infrastructure as Code,-
+-,-,-,-
+-,-,-,-
+11,03/30,Container Engine,-
+-,-,-,-
+-,-,-,-
+12,04/06,,-
+-,-,,-
+-,-,-,-
+13,04/13,,-
+-,-,-,-
+-,-,-,-
+14,04/20,,-
+-,-,-,-
+-,-,-,-
+15,04/27,,-
+-,-,,-
+-,-,Why Cloud,-
+16,05/04,Final Exam Review,-

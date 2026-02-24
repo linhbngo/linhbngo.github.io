@@ -1,0 +1,52 @@
+---
+layout: default
+permalink: /cs-intro-cloud/
+title: "Introduction to Cloud Computing"
+nav: false
+collection: cs-intro-cloud
+---
+
+# Introduction to Cloud Computing
+
+<hr class="hr-medium hr-theme">
+
+## Course Description
+ 
+ > This course provides an introductory overview to the technologies that enable cloud 
+computing. Topics covered include basic concepts about cloud computing, and advanced 
+technical concepts regarding virtualization and containerization.
+{: .block-tip}
+
+<hr class="hr-medium hr-theme">
+
+## Course Topics
+
+<hr class="hr-medium hr-theme">
+
+
+<div class="post">
+  <ul class="post-list">
+    {% assign postlist = site.cs-intro-cloud %}
+    {% for post in postlist %}
+        {% assign year = post.date | date: "%Y" %}
+        {% assign tags = post.tags | join: "" %}
+        {% assign categories = post.categories | join: "" %}
+
+        <li>
+            <h3>
+                {% if post.redirect == blank %}
+                    <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                {% elsif post.redirect contains '://' %}
+                    <a class="post-title" href="{{ post.redirect }}" target="_blank">{{ post.title }}</a>
+                    <svg width="2rem" height="2rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                {% else %}
+                    <a class="post-title" href="{{ post.redirect | relative_url }}">{{ post.title }}</a>
+                {% endif %}
+            </h3>
+            <p>{{ post.description }}</p>
+        </li>
+    {% endfor %}
+  </ul>
+</div>

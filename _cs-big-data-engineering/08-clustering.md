@@ -52,40 +52,50 @@ toc:
     - Many applications involve not 2, but 10 or 10,000 dimensions. 
     - High-dimensional spaces look different. 
 
-???example "Clustering Sky Objects"
-    - A catalog of 2 billion **sky objects** represents objects by their radiation in 7 dimensions (frequency bands)
-    - Problem: cluster into similar objects, e.g., galaxies, stars, quasars, etc.
+{% details Clustering Sky Objects %}
 
-    <figure markdown="span">
-        ![](fig/08-clustering/sn_gallery24.jpg)
-        <figcaption>36 of the 500+ Type Ia supernovae discovered by the Sloan Supernova Survey</figcaption>
-    </figure>
+- A catalog of 2 billion **sky objects** represents objects by their radiation in 7 dimensions (frequency bands)
+- Problem: cluster into similar objects, e.g., galaxies, stars, quasars, etc.
 
-???example "Clustering music albums"
-    - Music divides into **categories**, and customer prefer a few categories
-        - Are **categories** simply genres?
-    - Represent an album by a set of customers who bought it
-        - Similar albums have similar sets of customers, and vice-versa
-    - Space of all albums:
-        - Think of a space with one dimension for each customer
-        - Values in a dimension may be 0 or 1 only
-    ???abstract "Data representation"
-        - An album is a point in this space $(x_1, x_2, ...,x_k)$ where $x_i = 1$ `if 
-        and only if` the $i^{th}$ customer bought the CD.
-        - For Amazon, the dimension is tens of millions
-    - Find clusters of similar CDs
-    
+<figure markdown="span">
+    ![](fig/08-clustering/sn_gallery24.jpg)
+    <figcaption>36 of the 500+ Type Ia supernovae discovered by the Sloan Supernova Survey</figcaption>
+</figure>
 
-???example "Clustering documents"
-    - Finding topics
-        - Group together documents on the same topic. 
-        - Documents with similar sets of words maybe about the same topic. 
-        - Dual formulation: a topic is a group of words that co-occur in many documents. 
-    ???abstract "Data representation"
-        - Represent a document by a vector $(x_1, x_2, ...,x_k)$ where $x_i = 1$ `if 
-        and only if` the $i^{th}$ word (in some order) appears in the document.
-        - Document with similar sets of words may be about the same topic. 
-    
+{% enddetails %}
+{% details Clustering music albums %}
+
+- Music divides into **categories**, and customer prefer a few categories
+    - Are **categories** simply genres?
+- Represent an album by a set of customers who bought it
+    - Similar albums have similar sets of customers, and vice-versa
+- Space of all albums:
+    - Think of a space with one dimension for each customer
+    - Values in a dimension may be 0 or 1 only
+{% details Data representation %}
+
+- An album is a point in this space $(x_1, x_2, ...,x_k)$ where $x_i = 1$ `if 
+and only if` the $i^{th}$ customer bought the CD.
+- For Amazon, the dimension is tens of millions
+{% enddetails %}
+- Find clusters of similar CDs
+
+
+{% enddetails %}
+{% details Clustering documents %}
+
+- Finding topics
+    - Group together documents on the same topic. 
+    - Documents with similar sets of words maybe about the same topic. 
+    - Dual formulation: a topic is a group of words that co-occur in many documents. 
+{% details Data representation %}
+
+- Represent a document by a vector $(x_1, x_2, ...,x_k)$ where $x_i = 1$ `if 
+and only if` the $i^{th}$ word (in some order) appears in the document.
+- Document with similar sets of words may be about the same topic. 
+
+{% enddetails %}
+{% enddetails %}
 ### 1.3. Distance Measurements: Cosine, Jaccard, Euclidean
 
 - Different ways of representing documents or music albums 
@@ -120,32 +130,38 @@ lead to different distance measures.
 
 - Three important questions:
 
-    ???info "1. How do you represent a cluster of more than one point?"
-        - Key problem: As you merge clusters, how do you represent the 
-        “location” of each cluster, to tell which pair of clusters is closest?
-        - Euclidean case: 
-            - Each cluster has a `centroid` = average of its (data)points
-        - Non-Euclidean case: 
-            - The only “locations” we can talk about are the points themselves
-            i.e., there is no “average” of two points
-            - `clustroid`  = (data)point **closest** to other points
-                - Smallest maximum distance to other points
-                - Smallest average distance to other points
-                - Smallest sum of squares of distances to other points
+    {% details 1. How do you represent a cluster of more than one point? %}
 
-    ???info "2. How do you determine the “nearness” of clusters?"
-        - Measure cluster distances by distances of `centroids`, `clustroid`
-        - Define Intercluster distance = minimum of the distances between any two points, 
-        one from each cluster
-        - Pick a notion of “cohesion” of clusters, e.g., maximum distance from the 
-        clustroid
-            - Merge clusters whose union is most cohesive
-        
-    ???info "3. When to stop combining clusters?"
-        - Minimal differences between iteration
-        - Native iteration: $O(N^3)$
-        - Priority queue: $O(N^2logN)$
+- Key problem: As you merge clusters, how do you represent the 
+“location” of each cluster, to tell which pair of clusters is closest?
+- Euclidean case: 
+    - Each cluster has a `centroid` = average of its (data)points
+- Non-Euclidean case: 
+    - The only “locations” we can talk about are the points themselves
+    i.e., there is no “average” of two points
+    - `clustroid`  = (data)point **closest** to other points
+        - Smallest maximum distance to other points
+        - Smallest average distance to other points
+        - Smallest sum of squares of distances to other points
 
+    {% enddetails %}
+    {% details 2. How do you determine the “nearness” of clusters? %}
+
+- Measure cluster distances by distances of `centroids`, `clustroid`
+- Define Intercluster distance = minimum of the distances between any two points, 
+one from each cluster
+- Pick a notion of “cohesion” of clusters, e.g., maximum distance from the 
+clustroid
+    - Merge clusters whose union is most cohesive
+
+    {% enddetails %}
+    {% details 3. When to stop combining clusters? %}
+
+- Minimal differences between iteration
+- Native iteration: $O(N^3)$
+- Priority queue: $O(N^2logN)$
+
+    {% enddetails %}
 ---
 
 ## 2. K-means clustering
@@ -181,26 +197,34 @@ to centroid, as `k` increases.
     - Pick the next point to be the one whose minimum distance from the selected points is as large as possible. 
     - Repeat until we have `k` points. 
 
-???example "Visual example"
+{% details Visual example %}
 
-    ???warning "Too few"
 
-        ![Too few](fig/08-clustering/kmean_few.png)
+{% details Too few %}
 
-        - Many long distances to centroid
 
-    ???success "Just right"
+![Too few](fig/08-clustering/kmean_few.png)
 
-        ![Just right](fig/08-clustering/kmean_right.png)
+- Many long distances to centroid
 
-        - Distances are relatively short
+{% enddetails %}
+{% details Just right %}
 
-    ???warning "Too many"
-    
-        ![Too many](fig/08-clustering/kmean_many.png)
 
-        - Little improvement in avaerage distance
+![Just right](fig/08-clustering/kmean_right.png)
 
+- Distances are relatively short
+
+{% enddetails %}
+{% details Too many %}
+
+
+![Too many](fig/08-clustering/kmean_many.png)
+
+- Little improvement in avaerage distance
+
+{% enddetails %}
+{% enddetails %}
 ---
 
 ## 3. K-means on big data: BFR (Bradley-Fayyad-Reina)
@@ -216,30 +240,38 @@ a Euclidean space
     - Clusters are axis-aligned ellipses
 - Efficient way to summarize clusters (want memory required O(clusters) and not O(data))
 
-???abstract "BFR"
-    - Points are read from disk one main-memory-full at a time
-    - Most points from previous memory loads are summarized by simple statistics
-    - To begin, from the initial load we select the initial k centroids by 
-    some sensible approach:
-        - Take k random points
-        - Take a small random sample and cluster optimally
-        - Take a sample; pick a random point, and then k-1 more points, each as far from the 
-        previously selected points as possible
-    
+{% details BFR %}
+
+- Points are read from disk one main-memory-full at a time
+- Most points from previous memory loads are summarized by simple statistics
+- To begin, from the initial load we select the initial k centroids by 
+some sensible approach:
+    - Take k random points
+    - Take a small random sample and cluster optimally
+    - Take a sample; pick a random point, and then k-1 more points, each as far from the 
+    previously selected points as possible
+
+{% enddetails %}
 ### 3.2. Three classes of points
 
 ![Point classes](fig/08-clustering/kmean_point_class.png)
 
-???info "Discard set (DS)"
-    - Points close enough to a centroid to be summarized
+{% details Discard set (DS) %}
 
-???info "Compression set (CS)"
-    - Groups of points that are close together but not close to any existing centroid
-    - These points are summarized, but not assigned to a cluster
+- Points close enough to a centroid to be summarized
 
-???info "Retained set (RS)"
-    - Isolated points waiting to be assigned to a compression set
+{% enddetails %}
+{% details Compression set (CS) %}
 
+- Groups of points that are close together but not close to any existing centroid
+- These points are summarized, but not assigned to a cluster
+
+{% enddetails %}
+{% details Retained set (RS) %}
+
+- Isolated points waiting to be assigned to a compression set
+
+{% enddetails %}
 ### 3.3. Discard set (DS)
 - Represented by:
     - The number of points, N
@@ -273,25 +305,29 @@ for the new points
 5. If this is the last round, merge all compressed sets in the CS 
 and all RS points into their nearest cluster
 
-???tip "1. How do we decide if a point is “close enough” to a cluster that we will add the point to that cluster?"
-    BFR suggests two approaches
+{% details 1. How do we decide if a point is “close enough” to a cluster that we will add the point to that cluster? %}
 
-    - The Mahalanobis distance is less than a threshold
-        - Normalized Euclidean distance from centroid
-        - For point $(x_1,x_2,...,x_d)$ and centroid $(c_1,c_2,...,c_d)$
-            - Normalize in each dimension: $y_i = \frac{x_i - c_i}{\sigma_i}$
-            - ${\sigma_i}$: standard deviation of points in the cluster in the $i^{th}$ dimension
-            - Take sum of the squares of the $y_i$
-            - Take the square root
-    - High likelihood of the point belonging to currently nearest centroid
-    
+BFR suggests two approaches
 
-???tip "2. How do we decide whether two compressed sets (CS) deserve to be combined into one?"
-    - Compute the variance of the combined subcluster
-        - `N`, `SUM`, and `SUMSQ` allow us to make that calculation quickly
-    - Combine if the combined variance is below some threshold
-    - Many alternatives: Treat dimensions differently, consider density
-    
+- The Mahalanobis distance is less than a threshold
+    - Normalized Euclidean distance from centroid
+    - For point $(x_1,x_2,...,x_d)$ and centroid $(c_1,c_2,...,c_d)$
+        - Normalize in each dimension: $y_i = \frac{x_i - c_i}{\sigma_i}$
+        - ${\sigma_i}$: standard deviation of points in the cluster in the $i^{th}$ dimension
+        - Take sum of the squares of the $y_i$
+        - Take the square root
+- High likelihood of the point belonging to currently nearest centroid
+
+
+{% enddetails %}
+{% details 2. How do we decide whether two compressed sets (CS) deserve to be combined into one? %}
+
+- Compute the variance of the combined subcluster
+    - `N`, `SUM`, and `SUMSQ` allow us to make that calculation quickly
+- Combine if the combined variance is below some threshold
+- Many alternatives: Treat dimensions differently, consider density
+
+{% enddetails %}
 ---
  
 ## 4. Improvement on BFR: CURE

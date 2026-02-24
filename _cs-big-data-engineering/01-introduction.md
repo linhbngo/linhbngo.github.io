@@ -184,27 +184,29 @@ intermediate data that needs to be analyzed during the process.
     places for interesting patterns than your amount of data will support, you are 
     bound to find crap.
 
-!!!example "Example of Bonferroni's principle"
-    - We want to find (unrelated) people who at least twice have stayed 
-    at the same hotel on the same day
-        - $10^9$ people being tracked
-        - $10^5$ hotels
-        - Each person stays in a hotel 1% of time (p = 0.01)
-        - Hotels hold 100 people 
-        - 1,000 days
-        - `Suspicious activity`: Two random people, on two different days, 
-        are both at the same hotel. 
-        - If everyone behaves randomly (i.e., no terrorists) will the data mining detect 
-        anything suspicious?
-        - Expected number of `suspicious` pairs of people:
-            - Probability of two people visit a hotel on any given day: $0.01\times0.01=0.0001$
-            - The probability that each person select a specific hotel: $0.0001/10^5=10^{-9}$
-            - The probability that **both* select the same specific hotel: $10^{-9}\times10^{-9}=10^{-18}$  
-        - `Suspicious activity to be monitored`: number of pairs of people ($5\times10^17$) 
-        multiplied by the number of pairs of days ($5\times10^5$) multiplied by the probability that 
-        **both** select the same hotel on the same date: 250,000
-        - Too many to observe ...
+{% details Example of Bonferroni's principle %}
 
+- We want to find (unrelated) people who at least twice have stayed 
+at the same hotel on the same day
+    - $10^9$ people being tracked
+    - $10^5$ hotels
+    - Each person stays in a hotel 1% of time (p = 0.01)
+    - Hotels hold 100 people 
+    - 1,000 days
+    - `Suspicious activity`: Two random people, on two different days, 
+    are both at the same hotel. 
+    - If everyone behaves randomly (i.e., no terrorists) will the data mining detect 
+    anything suspicious?
+    - Expected number of `suspicious` pairs of people:
+        - Probability of two people visit a hotel on any given day: $0.01\times0.01=0.0001$
+        - The probability that each person select a specific hotel: $0.0001/10^5=10^{-9}$
+        - The probability that **both* select the same specific hotel: $10^{-9}\times10^{-9}=10^{-18}$  
+    - `Suspicious activity to be monitored`: number of pairs of people ($5\times10^17$) 
+    multiplied by the number of pairs of days ($5\times10^5$) multiplied by the probability that 
+    **both** select the same hotel on the same date: 250,000
+    - Too many to observe ...
+
+{% enddetails %}
 ---
 
 ## Things Useful to Know
