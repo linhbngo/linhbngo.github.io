@@ -149,11 +149,11 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-the-cats-in-my-life",
+            },{id: "post-experiencing-productivity-scaling-up",
         
-          title: "The cats in my life",
+          title: "Experiencing Productivity Scaling Up",
         
-        description: "This is a special ordered essay by my daughter",
+        description: "Using AI support to scale up actions",
         section: "Posts",
         handler: () => {
           
