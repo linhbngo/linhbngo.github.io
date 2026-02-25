@@ -1,0 +1,797 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="introduction-to-competitive-programming">Introduction to competitive programming</h1> <h2 id="overview">Overview</h2> <ul> <li><strong>Given well-known Computer Science (CS) problems, solve them as quickly as possible</strong></li> <li> <code class="language-plaintext highlighter-rouge">well-known CS problems</code>: We are dealing with <strong>solved</strong> problems and not new ones.</li> <li> <code class="language-plaintext highlighter-rouge">solve</code>: produce working code.</li> <li> <p><code class="language-plaintext highlighter-rouge">quickly</code>: time limitation.</p> </li> <li>Uncompetitive programmer A: becomes confused, try something, anything.</li> <li>Uncompetitive programmer B: realizes the simple general type of the problem, give up and select a different problem.</li> <li>Uncompetitive programmer C: realizes the complex type of the problem, attempts implementation using a non-optimized approach, finishes after a very long time.</li> <li>Competitive programmer D: does everything C did in less than 30 minutes.</li> <li>Very competitive programmer E: does everything D did in less than 10 minutes, maybe using untraditional approaches.</li> <li> <strong>Class assumption</strong>: everyone starts out at A and B.</li> <li> <strong>Class goal</strong>: everyone reaches at least C by the end of the class.</li> <li> <p>Hopefully, if everyone keeps up practice and compete after the class ended, you will become D or E prior to going for technical interviews.</p> </li> <li>Most SDE (software development engineering) entry positions will involve some forms of coding/algorithms questions.</li> <li>While these questions are unlikely to be at the level of ICPC (not even divisional), the abilities to quickly recall data structures (DS) and algorithms (AL) under pressue (just like competitive programming!) will give you a significant advantage in these interviews.</li> <li>Caveats: <ul> <li>Competitive programming will not train you in writing clean codes, designing software systems, following Scrum/Agile methodologies …</li> <li>However, those things are probably not asked in interviews anyway, and you will have time to develop those skills <strong>after you passed the technical interview and get hired!</strong>.</li> <li>Also, the problem-solving skill of competitive programming is going to be usable everywhere.</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre></td> <td class="rouge-code"><pre>
+## First set of tips to be competitive
+
+
+- Take the [typing test](https://www.typingtest.com).
+- Dr. Ngo's typing speed is 70wpm.
+- A graduated Master student (formerly a concert pianist) was 85wpm.
+- CSC 141 students in Fall 2019 averaged between 20-30 wpm. 
+- The book's authors' speeds are: 85-95, 55-65, and 70-80. 
+- What's yours?
+- Typing faster and more accurately means you don't have to *think* 
+about typing, and therefore have more time/efforts to focus on 
+problem solving.
+
+
+
+- This is important in ICPC competition: divide work among team members. 
+- Helps with recalling DS/AL. 
+
+
+- Competition problems often come with time/space limits
+- You need to know what are the limits of your solutions. 
+
+
+
+- Also helps with interviews!
+- C/C++, Java, Python:
+ - C/C++: faster, good bitwise-operations, 
+ - Java/Python: extensive support libraries, easy to implement some simpler problems. 
+
+
+
+
+- Be comfortable in Linux!
+- Setup automated test scripts. 
+ - Include all sample test cases. 
+ - Run same test cases several times (to test for variable initialization/cleanup)
+ - Test for corner cases: extreme max/min values, negative, very big values, empty values ...
+ - Check for input format cases (rarely an issue in modern competitive programming contests)
+
+
+
+- Teamwork!
+- Practice, practice, and more practice!
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="getting-started">Getting started</h2> <ul> <li>We will utilize a number of online judging platform to evaluate the correctness of practice problems and also to have you participate in online training competitions.</li> <li>You are to create accounts on the following platforms: <ul> <li><a href="https://onlinejudge.org/" rel="external nofollow noopener" target="_blank">UVa Online Judge</a></li> <li><a href="https://open.kattis.com/" rel="external nofollow noopener" target="_blank">Kattis</a></li> <li><a href="https://leetcode.com/" rel="external nofollow noopener" target="_blank">Leetcode</a></li> </ul> </li> </ul> <p>A programming contest problem usually contains the following components.</p> <ul> <li>Background story/problem descriptions: intended to <code class="language-plaintext highlighter-rouge">deceive</code> and <code class="language-plaintext highlighter-rouge">confuse</code>. <ul> <li>It is important to be able to <code class="language-plaintext highlighter-rouge">filter</code> out unimportant details.</li> </ul> </li> <li>Input and output description: details on how input is formatted and you should format your output. <ul> <li>Pay attention to input constraints.</li> </ul> </li> <li>Sample input and sample output: trivial test cases for contestants, to test basic understanding and verify the code’s ability to parse input and display output properly.</li> <li>Hints or Footnotes: additional details to help contestants.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+</pre></td> <td class="rouge-code"><pre>
+
+## Typical input/output routines
+
+
+There are a number of common input/output formats:
+1. The number of test cases is given in the first line of the input
+2. The multiple test cases are terminated by special values (0s or 1s)
+3. The multiple test cases are terminated by the EOF signal. 
+4. Variable number of inputs (type 1)
+5. Variable number of inputs (type 2)
+
+
+
+The authors provide the code templates for input/output routines 
+and other examples online at [CP-book Code](https://github.com/stevenhalim/cpbook-code.git)
+
+
+
+
+We will look at our very first problem from Kattis: 
+[Moscow Dream](https://open.kattis.com/problems/moscowdream)
+
+:::::{tab-set}
+::::{tab-item} Core descriptions
+
+- Need to take away all the bells and whistles!
+
+Given 4 integers a, b, c, and n (0 ≤ a, b, c ≤ 10, 1 ≤ n ≤ 20), output `YES` if
+ a ≥ 1, b ≥ 1, c ≥ 1, and a + b + c ≥ n, or output `NO` otherwise. 
+
+::::
+::::{tab-item} Sol. 1
+
+- Can we get an Accepted (AC) verdict?
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=kattis_moscowdream.java"&gt;&lt;/script&gt;
+
+::::
+::::{tab-item} Sol. 2
+
+- If a, b, and c are greater than 1, what is the minimum value that n could possibly be?
+- Correct and resubmit. 
+
+::::
+:::::
+
+
+
+
+[Problem's link](https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=12&amp;page=show_problem&amp;problem=1012)
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+- `Initial velocity and acceleration`: bells and whistle
+- Actual information: Given velocity `v`, how far can the particle go after `2 * t`.  
+
+::::
+::::{tab-item} IO format
+
+- Type 3: The multiple test cases are terminated by the EOF signal.
+- Needs modification from the book's template code: it seems to be 
+reading in from command line (using the `&lt;` redirect rather than 
+a specific filename)
+
+::::
+::::{tab-item} Solution
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=10071.java"&gt;&lt;/script&gt;
+ 
+- Correct and resubmit. 
+
+::::
+:::::
+
+
+
+
+
+[Problem's link](https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=78&amp;page=show_problem&amp;problem=2661)
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+- *In the first row, there is only one warrior; then, 
+the second row contains two warriors; the third row contains three warriors, 
+and so on. In general, each row i contains i warriors.*: `1+2+3+...`
+- Naive implementation: `for` loop until the sum is greater than the total number of warriors. 
+
+::::
+::::{tab-item} IO format
+
+- Type 1: The number of test cases is given on the first line.
+- Needs modification from the book's template code: it seems to be 
+reading in from command line (using the `&lt;` redirect rather than 
+a specific filename)
+
+::::
+::::{tab-item} Naive 1
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=11614_1.java"&gt;&lt;/script&gt;
+ 
+- [Runtime Error](https://onlinejudge.org/index.php?option=com_content&amp;task=view&amp;id=16&amp;Itemid=31).
+  - What is the range of `n`?
+  - What is the range of `int`? 
+  - The word `integer` in the input description tricked us into not 
+  checking the range. 
+
+::::
+::::{tab-item} Naive 2
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=11614_2.java"&gt;&lt;/script&gt;
+- [Time Limit Exceeded](https://onlinejudge.org/index.php?option=com_content&amp;task=view&amp;id=16&amp;Itemid=31).
+
+- Revisiting the thinking process
+  - `1+2+3+...`: Arithmetic sum
+  - `S`: the number of warriors (input)
+  - `n`: number of terms in the arithmetic sum (expected output)
+
+$$
+S = \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+
+- Simplification of the arithmetic sum equation brings up a different perspective:
+ 
+$$
+n^{2}+n-2S = 0
+$$
+
+- The problem becomes `estimating the solution of a quadratic equation`. 
+
+$$
+Ax^{2} + Bx + C = 0 \\
+x = \frac{-B \pm \sqrt{B^{2} - 4AC}}{2A} \\
+A = 1;\ B = 1;\ C = -2S \\
+x = \frac{-1 \pm \sqrt{1 + 8S}}{2}
+$$
+
+::::
+::::{tab-item} AC
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=11614_3.java"&gt;&lt;/script&gt;
+
+::::
+:::::
+
+- Similar challenges
+  - Kattis: [Solving for carrots](https://open.kattis.com/problems/carrots)
+  - Kattis: [R2](https://open.kattis.com/problems/r2) 
+
+
+
+
+[Problem's link](https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=3402)
+
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+ - *You will be given one of the six words mentioned above or any other 
+ word and you will have to try and detect the language it is from.*
+ - Looks too simple to be true? 
+
+::::
+::::{tab-item} IO format
+
+ - Type 2: The multiple test cases are terminated by special values (0s or 1s)
+ - Needs modification from the book's template code: it seems to be reading in 
+ from command line (using the `&lt;` redirect rather than a specific filename)
+ - Output needs to be formatted with `Case i:` with `i` is the line number of input. 
+ - More details came out after viewing the input/output examples.
+
+::::
+::::{tab-item} Sol 1
+
+- Does this work?
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=12250_1.java"&gt;&lt;/script&gt;
+
+::::
+::::{tab-item} AC
+
+ &lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=12250.java"&gt;&lt;/script&gt;
+
+::::
+:::::
+
+- Similar challenges
+  - Kattis: [Eligibility](https://open.kattis.com/problems/eligibility)
+  - Kattis: [Leftbeehind](https://open.kattis.com/problems/leftbeehind) 
+
+
+
+
+[Problem's link](https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=117&amp;page=show_problem&amp;problem=2864)
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+- You will be given the heights of N walls from left to right.
+- Mario is currently standing on the first wall.
+- He has to jump to the adjacent walls one after another until he reaches the last one.
+- That means, he will make (N − 1) jumps.
+  - A high jump is one where Mario has to jump to a taller wall
+  - a low jump is one where Mario has to jump to a shorter wall. 
+- Can you find out the total number of high jumps and low jumps Mario has to make?
+
+::::
+::::{tab-item} IO format
+
+- Type 2: The multiple test cases are terminated by special values (0s or 1s)
+- The first line of input is an integer T (T &lt; 30) that indicates the number of test cases. 
+  - Each case starts with an integer N (0 &lt; N &lt; 50) that determines the number of walls. 
+  - The next line gives the height of the N walls from left to right. 
+  - Each height is a positive integer not exceeding 10.
+- Output needs to be formatted with `Case i:` with `i` is the line number of input. 
+
+::::
+::::{tab-item} Thought Process
+
+- Read first line for case number, setup for loop. 
+  - Why for loop? So that we can use the case number. 
+- Each iteration has two lines. 
+  - one `nextInt` to grab the number of walls. 
+  - another loop to start jumping from wall to wall.  
+  - initializes high jump (`hj`) and low jump (`lj`) to 0 
+  - increment the jumps accordingly  
+- Output needs to be formatted with `Case i:` with `i` is the line number of input. 
+
+::::
+::::{tab-item} AC
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=11764.java"&gt;&lt;/script&gt;
+
+::::
+:::::
+
+- Similar challenges
+  - Kattis: [FizzBuzz](https://open.kattis.com/problems/fizzbuzz)
+    - This is the generalized form of the famous FizzBuzz problem
+  - Kattis: [Thanos](https://open.kattis.com/problems/thanos) 
+
+
+
+[Problem's link](https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=1365)
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+- You will be given two names (**String**).
+- The strings can contain any character. But only **a-z** and **A-Z** count.
+- Numeric range **1-26** for both **a-z** and **A-Z**.  
+- For each string, convert alphabet to numbers.
+  - First add numbers together. 
+  - Then add digits of results together **until it comes in one digit**. 
+- Result cannot be more than 100%
+  - This means the smaller value is divided by the bigger value
+
+::::
+::::{tab-item} IO format
+
+- Type 3: The multiple test cases are terminated by EOF.
+- Each test case requires two lines of inputs.  
+- Output needs to be formatted with two decimal points and a `%` sign. 
+
+::::
+::::{tab-item} Thought Process
+
+- Read every two lines. We can have the following approaches:   
+  - Read each character and compare characters with a preset array.
+  - Read each character and check their ASCII value (what are the value 
+  ranges for a-z and A-Z?) 
+  - Remove all non-alphabet characters: adapted from [this guide](https://www.geeksforgeeks.org/how-to-remove-all-non-alphanumeric-characters-from-a-string-in-java/). 
+- With the last approach, could also compare with a `toUpperCase` or 
+`toLowerCase` call. 
+- Still need to remember the ASCII value of characters. 
+  - What if I don't remember? 
+  - Write a quick program to check. 
+- Write a function to get sum of all digits of a number.
+
+::::
+::::{tab-item} Solution
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=10424_1.java"&gt;&lt;/script&gt;
+
+- Edge cases:
+  - Two empty names; 
+  - One empty name, one valid name (at least one alphabet);
+  - One empty name, one invalid name (no alphabet);
+  - Two invalid names; 
+- Extreme edge case:
+  - "E" and "EE", or "A" and "AAA"
+
+:::: 
+::::{tab-item} AC
+
+ &lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=10424.java"&gt;&lt;/script&gt;
+
+::::
+:::::
+
+- Similar challenges
+  - Kattis: [Filip](https://open.kattis.com/problems/filip)
+  - Kattis: [Treasure Hunt](https://open.kattis.com/problems/treasurehunt) 
+
+
+
+[Problem's link](https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=602&amp;page=show_problem&amp;problem=4391)
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+- Number of players are a power of two: guaranteed binary tree? 
+- Identify the round where two seeds will meet:
+  - Assume always win
+- What is the patterns?
+
+ &lt;div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&amp;quot;highlight&amp;quot;:&amp;quot;#0000ff&amp;quot;,&amp;quot;nav&amp;quot;:true,&amp;quot;resize&amp;quot;:true,&amp;quot;toolbar&amp;quot;:&amp;quot;zoom layers tags lightbox&amp;quot;,&amp;quot;edit&amp;quot;:&amp;quot;_blank&amp;quot;,&amp;quot;xml&amp;quot;:&amp;quot;&amp;lt;mxfile host=\&amp;quot;app.diagrams.net\&amp;quot; modified=\&amp;quot;2021-12-20T17:33:23.209Z\&amp;quot; agent=\&amp;quot;5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36\&amp;quot; etag=\&amp;quot;dvZ68OP2vhn3E6_HVSwH\&amp;quot; version=\&amp;quot;16.0.0\&amp;quot; type=\&amp;quot;google\&amp;quot;&amp;gt;&amp;lt;diagram id=\&amp;quot;pkFxKJHYkNPQ7IBuaBae\&amp;quot; name=\&amp;quot;Page-1\&amp;quot;&amp;gt;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&amp;lt;/diagram&amp;gt;&amp;lt;/mxfile&amp;gt;&amp;quot;}"&gt;&lt;/div&gt;&lt;script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"&gt;&lt;/script&gt;
+
+- Example cases to identify pattern (N=8):
+  - 8 2 5
+  - 8 1 5
+  - 8 3 13
+  - 8 8 15
+
+::::
+::::{tab-item} IO format
+
+- Type 4: Variables number of inputs.
+- Each line has three numbers: The power value of $2^N$, and two initial seeds. 
+- Output: single value indicates the round. 
+
+::::
+::::{tab-item} Thought Process
+
+- Read each line and parse the integers for seed.    
+- The question: 
+  - What is the new seed after each round?
+  - How do we know when the two seeds are in the same round?
+
+::::
+::::{tab-item} AC
+
+ &lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=12643.java"&gt;&lt;/script&gt;
+
+::::
+:::::
+
+- Similar challenges
+  - Kattis: [Battle Simulation](https://open.kattis.com/problems/battlesimulation)
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="basic-string-processing-tasks">Basic String Processing Tasks</h2> <p>Review the following operations and make sure that you know how to (either manually or via a library) do the followings:</p> <ul> <li>Store a string.</li> <li>Read a given text input line by line.</li> <li>Concatenate two strings.</li> <li>Check if a string starts with a specific phrase.</li> <li>Find first occurrence of a substring in a string.</li> <li>Find all occurrences of a substring in a string.</li> <li>Upper/lower case transformation.</li> <li>Consonants/vowels/digits separation.</li> <li>Break string into array of substrings using tokens.</li> <li>Sort array of substrings.</li> </ul> <p>```</p> <h2 id="ad-hoc-problems">Ad Hoc problems</h2> <ul> <li>Problems that cannot be classified into anywhere. Their descriptions and solutions are unique. <ul> <li>Require quick thinkings, does not require advanced data structures/algorithms.</li> </ul> </li> <li>Ad Hoc problems are typically easy ones, but sometimes could be time waster/harder. <ul> <li>If a team can only do ad hoc problems, that team is guaranteed to rank in the lower half.</li> </ul> </li> <li>Ad Hoc problem categories: <ul> <li>Game (Card)</li> <li>Game (Chess)</li> <li>Game (Others: Tic Tac Toe, Rock Paper Scissors, BINGO …)</li> <li>Real life problems</li> <li>Time</li> <li>Roman Numerals</li> <li>Cipher/Encode/Encrypt/Decode/Decrypt</li> <li>Input Parsing (Iterative)</li> <li>Output Formatting</li> <li>Time Waster</li> </ul> </li> </ul> <h2 id="challenges">Challenges</h2> <ul> <li>Game (Card): <a href="https://open.kattis.com/problems/bela" rel="external nofollow noopener" target="_blank">Bela</a> <ul> <li>Input parsing and adding.</li> </ul> </li> <li>Game (Chess): <a href="https://open.kattis.com/problems/helpme" rel="external nofollow noopener" target="_blank">Help Me</a> <ul> <li>Input parsing, array of strings sorting, output formatting.</li> </ul> </li> <li>Game (Others): <a href="https://open.kattis.com/problems/connectthedots" rel="external nofollow noopener" target="_blank">Connect the Dots</a> <ul> <li>Input parsing, output formatting.</li> </ul> </li> <li>Real life: <a href="https://open.kattis.com/problems/chopin" rel="external nofollow noopener" target="_blank">Chopin</a> </li> <li>Roman Numerals: <a href="https://open.kattis.com/problems/romanholidays" rel="external nofollow noopener" target="_blank">Roman Holidays</a> <ul> <li>Time wasting!</li> </ul> </li> <li>Cipher: <a href="https://open.kattis.com/problems/conundrum" rel="external nofollow noopener" target="_blank">Conumdrum</a> </li> <li>Input Parsing: <a href="https://open.kattis.com/problems/autori" rel="external nofollow noopener" target="_blank">Autori</a> </li> <li>Output Formatting: <a href="https://open.kattis.com/problems/display" rel="external nofollow noopener" target="_blank">Display</a> <ul> <li>What are the patterns?</li> </ul> </li> <li>Time Waster: <a href="https://open.kattis.com/problems/froggie" rel="external nofollow noopener" target="_blank">Froggie</a> </li> </ul> </body></html>

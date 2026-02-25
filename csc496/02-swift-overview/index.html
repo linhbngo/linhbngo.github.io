@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="swift-language">Swift Language</h1> <h2 id="overview-about-the-swift-language">Overview about the Swift Language</h2> <details class="details details--info" data-variant="info"><summary>Details</summary> <ul> <li>On Xcode, go to <code class="language-plaintext highlighter-rouge">File</code>&gt;<code class="language-plaintext highlighter-rouge">New</code>&gt;<code class="language-plaintext highlighter-rouge">Playground</code>.</li> <li>Choose <code class="language-plaintext highlighter-rouge">iOS</code> platform and the Blank template.</li> <li>In this section, we can use the Playground to test out snippet of codes.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Constants, Variables, and Data Types</summary> <ul> <li>Constants and variables must be declared before they’re used. You declare constants with the let keyword and variables with the var keyword.</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">maximumNumberOfLoginAttemps</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">var</span> <span class="nv">currentLoginAttempt</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>You can declare multiple constants or multiple variables on a single line, separated by commas:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Type annotations</summary> <ul> <li>You can provide a type annotation when you declare a constant or variable, to be clear about the kind of values the constant or variable can store.</li> <li>Write a type annotation by placing a colon after the constant or variable name, followed by a space, followed by the name of the type to use.</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">welcomeMessage</span><span class="p">:</span> <span class="kt">String</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Printing constants and variables</summary> <ul> <li>Swift uses string interpolation to include the name of a constant or variable as a placeholder in a longer string, and to prompt Swift to replace it with the current value of that constant or variable.</li> <li>Wrap the name in parentheses and escape it with a backslash before the opening parenthesis:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">friendlyWelcome</span> <span class="o">=</span> <span class="s">"Bonjour"</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">"The current value of friendlyWelcome is </span><span class="se">\(</span><span class="n">friendlyWelcome</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/01-introduction/printVar-480.webp 480w,/assets/img/courses/csc496/01-introduction/printVar-800.webp 800w,/assets/img/courses/csc496/01-introduction/printVar-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/01-introduction/printVar.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Semicolons</summary> <ul> <li>Unlike many other languages, Swift doesn’t require you to write a semicolon (;) after each statement in your code, although you can do so if you wish.</li> <li>However, semicolons are required if you want to write multiple separate statements on a single line.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Most common types in Swift</summary> <ul> <li>Types: <ul> <li>Integer</li> <li>Double</li> <li>Boolean (<code class="language-plaintext highlighter-rouge">true</code>, <code class="language-plaintext highlighter-rouge">false</code>)</li> <li>String</li> <li>Swift</li> </ul> </li> <li>You may have noticed that you don’t have to specify the type of value when you declare a constant or variable. This is called type inference.</li> <li>Swift uses type inference to make assumptions about the type based on the value assigned to the constant or variable.</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">pi</span> <span class="o">=</span> <span class="mf">3.1415</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>or</p> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">pi</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">3.1414</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Create your own type</summary> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">UIKit</span>
+
+<span class="kd">struct</span> <span class="kt">Car</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">make</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">var</span> <span class="nv">model</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">var</span> <span class="nv">Year</span><span class="p">:</span> <span class="kt">Int</span>
+<span class="p">}</span>
+
+<span class="k">var</span> <span class="nv">c</span> <span class="o">=</span> <span class="kt">Car</span><span class="p">(</span><span class="nv">make</span><span class="p">:</span> <span class="s">"BMW"</span><span class="p">,</span> <span class="nv">model</span><span class="p">:</span> <span class="s">"X3"</span><span class="p">,</span> <span class="nv">year</span><span class="p">:</span> <span class="mi">2022</span><span class="p">)</span>
+<span class="nf">print</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">make</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/01-introduction/custom_types-480.webp 480w,/assets/img/courses/csc496/01-introduction/custom_types-800.webp 800w,/assets/img/courses/csc496/01-introduction/custom_types-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/01-introduction/custom_types.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Operators</summary> <ul> <li>Assignment:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">jedi</span> <span class="o">=</span> <span class="s">"Luke"</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Basic arithmetic</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">opponentScore</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">8</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">opponentscore</span><span class="p">)</span>
+<span class="k">var</span> <span class="nv">myScore</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">myScore</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Compound assignment</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="n">myScore</span> <span class="o">+=</span> <span class="mi">3</span>
+<span class="n">myScore</span> <span class="o">-=</span> <span class="mi">5</span>
+<span class="n">myScore</span> <span class="o">*=</span> <span class="mi">2</span>
+<span class="n">myScore</span> <span class="o">/=</span><span class="mi">2</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Numeric type conversion</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">let</span> <span class="nv">y</span> <span class="o">=</span> <span class="mf">0.1415</span>
+<span class="k">let</span> <span class="nv">pi</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="cm">/* not work */</span>
+<span class="k">let</span> <span class="nv">pi</span> <span class="o">=</span> <span class="kt">Double</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="control-flow">Control Flow</h2> <details class="details details--default" data-variant="default"><summary>Logical and comparison operators</summary> <ul> <li><code class="language-plaintext highlighter-rouge">==</code></li> <li><code class="language-plaintext highlighter-rouge">!=</code></li> <li><code class="language-plaintext highlighter-rouge">&gt;</code></li> <li><code class="language-plaintext highlighter-rouge">&gt;=</code></li> <li><code class="language-plaintext highlighter-rouge">&lt;</code></li> <li><code class="language-plaintext highlighter-rouge">&lt;=</code></li> <li><code class="language-plaintext highlighter-rouge">&amp;&amp;</code></li> <li><code class="language-plaintext highlighter-rouge">||</code></li> <li><code class="language-plaintext highlighter-rouge">!</code></li> </ul> </details> <details class="details details--default" data-variant="default"><summary>if and if/else</summary> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">temperature</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">if</span> <span class="n">temperature</span> <span class="o">&gt;=</span> <span class="mi">100</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"The water is boiling"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">finished</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">if</span> <span class="n">finished</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"First place!"</span><span class="p">)</span> 
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">finished</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Second place!"</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Third place!"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Boolean values</summary> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">isSnowing</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="k">if</span> <span class="o">!</span><span class="n">ifSnowing</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"It is not snowing"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Switch statement</summary> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">numberOfWheels</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">switch</span> <span class="n">numberOfWheels</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Missing wheels!"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Unicycle"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Bicycle"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Tricycle"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">()</span><span class="s">"Cars!"</span><span class="p">)</span>
+    <span class="k">default</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Too many wheels!"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">character</span> <span class="o">=</span> <span class="s">"z"</span>
+<span class="k">switch</span> <span class="n">character</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s">"a"</span><span class="p">,</span> <span class="s">"e"</span><span class="p">,</span> <span class="s">"i"</span><span class="p">,</span> <span class="s">"o"</span><span class="p">,</span> <span class="s">"u"</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Vowels"</span><span class="p">)</span>
+    <span class="k">default</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"consonant"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre><span class="k">switch</span> <span class="n">distance</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="o">...</span><span class="mi">9</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"It is close"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">10</span><span class="o">...</span><span class="mi">99</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"A bit further"</span><span class="p">)</span>
+    <span class="k">case</span> <span class="mi">100</span><span class="o">..</span><span class="mi">999</span><span class="p">:</span> 
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Quite far out"</span><span class="p">)</span>
+    <span class="k">default</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Let's call a cab"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="exercises">Exercises</h2> <details class="details details--default" data-variant="default"><summary>Grade calculation using if-else</summary> <p>Write a Swift program that takes a student’s numerical grade (0 to 100) as input and outputs the corresponding letter grade based on the following criteria:</p> <ul> <li>A: 90-100</li> <li>B: 80-89</li> <li>C: 70-79</li> <li>D: 60-69</li> <li>F: Below 60</li> </ul> <p>Template playground code:</p> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">grade</span> <span class="o">=</span> <span class="mi">95</span>
+
+<span class="c1">//implement if-else logic here</span>
+
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Grade calculation using switch</summary> <p>Write a Swift program that takes a student’s numerical grade (0 to 100) as input and outputs the corresponding letter grade based on the following criteria:</p> <ul> <li>A: 90-100</li> <li>B: 80-89</li> <li>C: 70-79</li> <li>D: 60-69</li> <li>F: Below 60</li> </ul> <p>Template playground code:</p> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">grade</span> <span class="o">=</span> <span class="mi">95</span>
+
+<span class="c1">//implement switch logic here</span>
+
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Grade calculation on app</summary> <ul> <li>Create a new app using the pokemon app from the introduction lecture as template</li> <li>Modify it such as as a user enter the numeric grade, the corresponding letter grade is displayed</li> <li>Bonus: display the letter grade using images!</li> </ul> </details> </body></html>

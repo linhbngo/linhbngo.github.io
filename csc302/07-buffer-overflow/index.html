@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="buffer-overflow">Buffer Overflow</h1> <h2 id="program-memory">Program Memory</h2> <ul> <li>When a program runs, it is loaded into memory.</li> <li> <p>A running program is called a process.</p> </li> <li>Text segment (also known as code segment): stores the executable code of the program (usually read-only).</li> <li>Data segment: stores static/global variables initialized in the program.</li> <li>BSS (block started by symbol) segment: stores uninitialized static/global variables. These variables will be initialized with zeros.</li> <li>Heap: provides space for dynamic memory allocation (caused by malloc, calloc, realloc, free, etc).</li> <li> <p>Stack: is simple data structure with a LIFO (last-in-first-out access policy). Stack stores local variables defined inside functions, and data related to function calls (return address, arguments, etc)</p> </li> <li>Sizes of text, data, and BSS segment are known as soon as compilation or assembly is completed.</li> <li>Stack and heap segments will grow and shrink during program execution.</li> <li>Therefore, they tend to be configured such that they grow toward each other.</li> <li>The boundary between them is flexible.</li> <li>Both can grow until all available memory is used.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/buffer-overflow/segment-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/segment-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/segment-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/buffer-overflow/segment.png" width="50%" height="auto" alt="Memory segment allocations" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Create a file called <code class="language-plaintext highlighter-rouge">mem_layout.c</code> </li> </ul> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=mem_layout.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> gcc-multilib g++-multilib
+gcc <span class="nt">-m32</span> <span class="nt">-W</span> <span class="nt">-c</span> mem_layout.c
+gcc <span class="nt">-m32</span> <span class="nt">-o</span> mem_layout mem_layout.o
+size mem_layout mem_layout.o
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>Why don’t we see the stack and heap information?</p> </li> <li> <p>Create a file called <code class="language-plaintext highlighter-rouge">mem_layout_print.c</code></p> <ul> <li>You can make a copy from <code class="language-plaintext highlighter-rouge">mem_layout.c</code> and edit.</li> </ul> </li> </ul> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=mem_layout_print.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>gcc <span class="nt">-m32</span> <span class="nt">-o</span> mem_layout_print mem_layout_print.o
+./mem_layout_print
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Can you relate the variables’ position in memory to their respective position in a program’s memory layout?</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/buffer-overflow/print_mem_layout-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/print_mem_layout-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/print_mem_layout-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/buffer-overflow/print_mem_layout.png" width="50%" height="auto" alt="Mapping process memory to memory layout" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+</pre></td> <td class="rouge-code"><pre>
+## Stack Memory
+
+
+- When a function is called, a block of memory called stack frame will 
+be pushed onto the top of stack. 
+- A stack frame contains four regions:
+  - Arguments that are passed to the function (if they don't fit on the 
+  general purpose registers)
+  - Return address (the address of the instructions right after 
+  the function call
+  - Previous frame pointer
+  - Local variables of the function
+- When the program first starts, the stack contains only one frame, 
+that of the main function.
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc302/buffer-overflow/stack_mem_layout-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/stack_mem_layout-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/stack_mem_layout-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc302/buffer-overflow/stack_mem_layout.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Stack memory layout"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+
+
+- We can call a function from inside a function. 
+- Any time we enter a function, a stack from is allocated on top of the stack. 
+  - When the function returns, the allocated space is released. 
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc302/buffer-overflow/call_chain-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/call_chain-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/call_chain-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc302/buffer-overflow/call_chain.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Chain of function calls"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="buffer-overflow-attack">Buffer overflow attack</h2> <ul> <li>Memory copy happens in programming when data from one place (source) is duplicated to another place (destination).</li> <li>Before copying can happen, memory needs to be allocated at the destination.</li> <li>If the allocation fails to be sufficient, it will result in an overflow.</li> <li> <p>One of the oldest and most well-known attacks.</p> </li> <li>Can still be found buried in legacy or glue code from third party libraries as web sites get more complex and evolved.</li> <li>An important point of learning as you work through the theory and practice of this exploit: <ul> <li>C programming</li> <li>C Assembler</li> <li>Linux debugger using gdb</li> <li>Engage in mathematics to understand the breaking points and the hex contents in memory in order to place an attack</li> </ul> </li> <li>Create <code class="language-plaintext highlighter-rouge">strcpy_overflow.c</code> </li> </ul> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=strcpy_overflow.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>gcc <span class="nt">-m32</span> <span class="nt">-o</span> strcpy_overflow strcpy_overflow.c
+./strcpy_overflow
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>What happens?</li> <li>The region above the buffer includes critical values, including the return address and the previous frame pointer.</li> <li>The consequences of a modified return address (due to buffer overflow) include: <ul> <li>The new address (virtual address) might not be mapped to any physical address, leading to an invalid return instruction and a crashed program.</li> <li>The address might be mapped to a physical address in protected system space, leading to a failed jump and a crashed program.</li> <li>The address might be mapped to a physical address that does not contain any valid instruction, leading to a failed return and a crashed program.</li> <li>The address might be mapped to a physical address that happens to contain valid machine instructions, leading to a continuing program with logic different from the original program.</li> </ul> </li> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>git clone https://github.com/longld/peda.git
+<span class="nb">echo</span> <span class="s2">"source </span><span class="nv">$HOME</span><span class="s2">/peda/peda.py"</span> <span class="o">&gt;</span> <span class="nv">$HOME</span>/.gdbinit
+gcc <span class="nt">-m32</span> <span class="nt">-g</span> <span class="nt">-o</span> gdb_strcpy_overflow strcpy_overflow.c
+gdb gdb_strcpy_overflow
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Setup gdb with a breakpoint at main (<code class="language-plaintext highlighter-rouge">b main</code>) and start running (<code class="language-plaintext highlighter-rouge">run</code>).</li> <li>A new GDB command is <code class="language-plaintext highlighter-rouge">si</code>: executing the next instruction (machine or code instruction). <ul> <li>It will execute the highlighted (greened and arrowed) instruction in the code section.</li> <li>If the Assembly instruction is calling another function, we need to use <code class="language-plaintext highlighter-rouge">ni</code> if we don’t want to step into that instruction.</li> </ul> </li> <li>Create <code class="language-plaintext highlighter-rouge">stack.c</code> </li> </ul> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=stack.c"></script> <ul> <li>This file has a clear buffer overflow issue. <ul> <li>How can we exploit this?</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/buffer-overflow/design_exploit-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/design_exploit-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/design_exploit-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/buffer-overflow/design_exploit.png" width="50%" height="auto" alt="Design a buffer overflow exploit" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Rerun <code class="language-plaintext highlighter-rouge">mem_layout_print</code> several times</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>./mem_layout_print
+./mem_layout_print
+./mem_layout_print
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>You will notice the addresses printed out change each time. This is one of the system protection against buffer overflow attacks.</li> <li>First, we need to disable the countermeasures</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo </span>0 | <span class="nb">sudo tee</span> /proc/sys/kernel/randomize_va_space
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Rerun mem_layout_print several time to confirm that addresses are not changing</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>./mem_layout_print
+./mem_layout_print
+./mem_layout_print
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>We need to include the following flags in compiling <ul> <li><code class="language-plaintext highlighter-rouge">-z execstack</code></li> <li><code class="language-plaintext highlighter-rouge">-fno-stack-protector</code></li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>gcc <span class="nt">-m32</span> <span class="nt">-o</span> stack <span class="nt">-z</span> execstack <span class="nt">-fno-stack-protector</span> stack.c
+<span class="nb">sudo chown </span>root stack
+<span class="nb">sudo chmod </span>4755 stack
+<span class="nb">echo</span> <span class="s2">"aaaa"</span> <span class="o">&gt;</span> badfile
+./stack
+<span class="nb">echo</span> <span class="s2">"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"</span> <span class="o">&gt;</span> badfile
+./stack
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>Why segmentation fault?</p> </li> <li>How do we know (guess) where the stack frame of <code class="language-plaintext highlighter-rouge">foo()</code> will be for us to find out where the malicious code is located (and hence set the relevant jump address)? <ul> <li>Fixed starting address of the stack (before countermeasure).</li> <li>The stack is shallow (good programming practice don’t use deeply nested functions).</li> </ul> </li> <li>To make a (much more) educated guess</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>gcc <span class="nt">-m32</span> <span class="nt">-g</span> <span class="nt">-o</span> gdb_stack <span class="nt">-z</span> execstack <span class="nt">-fno-stack-protector</span> stack.c
+<span class="nb">rm </span>badfile
+<span class="nb">touch </span>badfile
+gdb gdb_stack
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Run the following GDB command inside gdb (gdb-peda)</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre><span class="nb">break </span>foo
+run
+print <span class="nv">$ebp</span>
+print &amp;buffer
+print &lt;hex address of ebp&gt; - &lt;hex address of buffer&gt;
+quit
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Take notes of your $ebp</li> <li>What is the result of the subtraction? <ul> <li>Either <code class="language-plaintext highlighter-rouge">108</code> (decimal) or <code class="language-plaintext highlighter-rouge">0x6C</code> (hex)?</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/buffer-overflow/why_108-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/why_108-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/why_108-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/buffer-overflow/why_108.png" width="50%" height="auto" alt="Why 108" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Payload: A shellcode containing the <code class="language-plaintext highlighter-rouge">/bin/sh</code> command</li> <li>Use Assembly’s NOP to improve the attack chance</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/buffer-overflow/nop-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/nop-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/nop-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/buffer-overflow/nop.png" width="50%" height="auto" alt="NOP to improve attach chance" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Create and run exploit.c</li> </ul> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=exploit.c"></script> <ul> <li>Does it work <ul> <li>Unlikely to work the first time.</li> <li>If hang, Ctrl-C to quit out of the hanging stack program.</li> <li>Need to modify added hex value (increment multiples of 4 at a time)</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/buffer-overflow/buffer_overflow-480.webp 480w,/assets/img/courses/csc302/buffer-overflow/buffer_overflow-800.webp 800w,/assets/img/courses/csc302/buffer-overflow/buffer_overflow-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/buffer-overflow/buffer_overflow.png" width="50%" height="auto" alt="NOP to improve attach chance" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Safer functions: specification of maximum data length to be copied</li> <li>Safer dynamic link library: dynamic link to safer libraries (as opposed to calling unsafe functions)</li> <li>Program static analyzer: warn of code patterns that could lead to buffer overflow</li> <li>Programming language: self-check against buffer overflow in the language</li> <li>Compiler: <code class="language-plaintext highlighter-rouge">-fno-stack-protector</code> </li> <li>Operating system: <code class="language-plaintext highlighter-rouge">kernel.randomize_va_space</code> </li> </ul> <p>```</p> </body></html>

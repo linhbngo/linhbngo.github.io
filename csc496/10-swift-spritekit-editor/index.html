@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="spritekit-scene-editor">SpriteKit: Scene Editor</h1> <h2 id="preparation">Preparation</h2> <details class="details details--default" data-variant="default"><summary>Download assets</summary> <ul> <li>Download and unzip the following files <ul> <li><a href="codes/10-sprite-editor/Pokemon2D_Assets_1.zip">Pokemon2D Assets 1</a></li> <li><a href="codes/10-sprite-editor/Pokemon2D_Assets_2.zip">Pokemon2D Assets 2</a></li> </ul> </li> <li>Unzip</li> <li>We will drag the assets into XCode as needed.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>SpriteKit Scene Editor</summary> <ul> <li>A built-in feature of Xcode that allows us to create SpriteKit nodes and assign values to them.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Create a New Project</summary> <ul> <li>Start up XCode <ul> <li>Select <code class="language-plaintext highlighter-rouge">File\New\Project\...</code>, or</li> <li>Select <code class="language-plaintext highlighter-rouge">New Project</code> </li> </ul> </li> <li>Choose <code class="language-plaintext highlighter-rouge">iOS/Game</code> template and click <code class="language-plaintext highlighter-rouge">Next</code> <ul> <li><strong>Do not choose Multiplatform</strong></li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/01-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/01-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Enter <code class="language-plaintext highlighter-rouge">Pokemon2D</code> for <code class="language-plaintext highlighter-rouge">Product Name</code> </li> <li>Enter <code class="language-plaintext highlighter-rouge">Swift</code> for <code class="language-plaintext highlighter-rouge">Language</code>,</li> <li> <code class="language-plaintext highlighter-rouge">SpriteKit</code> for <code class="language-plaintext highlighter-rouge">Game Technology</code>.</li> <li>Select <code class="language-plaintext highlighter-rouge">None</code> for <code class="language-plaintext highlighter-rouge">Testing System</code> </li> <li>Make sure the option for Integrate GameplayKit is checked.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/02-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/02-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/02.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Clean up default template</summary> <ul> <li>Delete <code class="language-plaintext highlighter-rouge">Actions.sks</code> </li> <li>Make sure that <code class="language-plaintext highlighter-rouge">GameScene.swift</code> has only the followings:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">SpriteKit</span>
+<span class="kd">import</span> <span class="kt">GameplayKit</span>
+
+<span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span> <span class="p">{</span>
+
+    <span class="k">var</span> <span class="nv">entities</span> <span class="o">=</span> <span class="p">[</span><span class="kt">GKEntity</span><span class="p">]()</span>
+    <span class="k">var</span> <span class="nv">graphs</span> <span class="o">=</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">GKGraph</span><span class="p">]()</span>
+
+    <span class="kd">private</span> <span class="k">var</span> <span class="nv">lastUpdateTime</span> <span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">sceneDidLoad</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">self</span><span class="o">.</span><span class="n">lastUpdateTime</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">touchDown</span><span class="p">(</span><span class="n">atPoint</span> <span class="nv">pos</span> <span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">touchMoved</span><span class="p">(</span><span class="n">toPoint</span> <span class="nv">pos</span> <span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">touchUp</span><span class="p">(</span><span class="n">atPoint</span> <span class="nv">pos</span> <span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="k">in</span> <span class="n">touches</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="nf">touchDown</span><span class="p">(</span><span class="nv">atPoint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="nf">location</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="p">))</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesMoved</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="k">in</span> <span class="n">touches</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="nf">touchMoved</span><span class="p">(</span><span class="nv">toPoint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="nf">location</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="p">))</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesEnded</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="k">in</span> <span class="n">touches</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="nf">touchUp</span><span class="p">(</span><span class="nv">atPoint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="nf">location</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="p">))</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesCancelled</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="k">in</span> <span class="n">touches</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="nf">touchUp</span><span class="p">(</span><span class="nv">atPoint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="nf">location</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="p">))</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Adding Assets</summary> <ul> <li>Unzip <code class="language-plaintext highlighter-rouge">Pokemon2D_Assets_1.zip</code> and drag the <strong>files</strong> into <code class="language-plaintext highlighter-rouge">Assets</code> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/add_assets_01-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/add_assets_01-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/add_assets_01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/add_assets_01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <h2 id="using-scene-editor-to-add-nodes">Using Scene Editor to Add Nodes</h2> <details class="details details--default" data-variant="default"><summary>Set deployment environment</summary> <ul> <li> <code class="language-plaintext highlighter-rouge">Scene</code>: Size is iPad 12.9”</li> <li>Portrait Mode</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Adding your first node</summary> <ul> <li>Select <code class="language-plaintext highlighter-rouge">GameScene.sks</code> </li> <li>Remove the existing node, <code class="language-plaintext highlighter-rouge">helloLabel</code> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/removeHello-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/removeHello-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/removeHello-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/removeHello.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Click the “+” sign</li> <li>Drag and drop the “Color Sprite” to the Scene</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/addSprite-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/addSprite-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/addSprite-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/addSprite.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Modifying your node</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/newSprite_default_background-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/newSprite_default_background-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/newSprite_default_background-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/newSprite_default_background.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Click on <code class="language-plaintext highlighter-rouge">Textture</code> and select <code class="language-plaintext highlighter-rouge">background_grass</code> <ul> <li>Set X and Y positions to 0 and 0</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/newSprite_grass-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/newSprite_grass-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/newSprite_grass-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/newSprite_grass.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Run the simulator to test</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Locking your node</summary> <ul> <li>Right click the SKSpriteNode (background) and lock it.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/lockSprite-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/lockSprite-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/lockSprite-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/lockSprite.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Adding control buttons</summary> <ul> <li>Add an Empty node <ul> <li>Make sure you set the zPosition to 1 (above zPosition 0 of the background_grass)</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/nodeEmpty-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/nodeEmpty-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/nodeEmpty-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/nodeEmpty.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Add for more “Color Sprite” to the Scene and drag them under the SKNode <ul> <li>This is to group the up.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/groupNodes-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/groupNodes-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/groupNodes-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/groupNodes.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Change the texture of all four Color Sprite Nodes to <code class="language-plaintext highlighter-rouge">arrow</code> <ul> <li>adjust the size and rotation to make it like an on-screen controller (directional pad, aka D-Pad)</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/dpad-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/dpad-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/dpad-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/dpad.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Add another color sprite node, place it in the middle of the dpad and change the texture <code class="language-plaintext highlighter-rouge">player_back</code>.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/controller_stop-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/controller_stop-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/controller_stop-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/controller_stop.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Add player node</summary> <ul> <li>Add another Color Sprite Node (the player) and change the texture to <code class="language-plaintext highlighter-rouge">player_up</code>. You can adjust the size if you want. <ul> <li>Make sure you set the zPosition to 1 (above zPosition 0 of the background_grass)</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/playerNode-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/playerNode-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/playerNode-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/playerNode.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Change the <code class="language-plaintext highlighter-rouge">name</code> of the dpad buttons to <code class="language-plaintext highlighter-rouge">controller_up</code>, <code class="language-plaintext highlighter-rouge">controller_down</code>, <code class="language-plaintext highlighter-rouge">controller_left</code>, and <code class="language-plaintext highlighter-rouge">controller_right</code> accordingly.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/dpad_names-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/dpad_names-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/dpad_names-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/dpad_names.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Click the Player node, change the <code class="language-plaintext highlighter-rouge">Body Type</code> to Bounding Circle, select <code class="language-plaintext highlighter-rouge">Dynamic</code> and deselect the allows rotation and affected by gravity options.</li> <li>Change Fraction, restitution, Lin. Damping and Ang. damping to 0.</li> <li>Set Category mask to 1, collision mask to 0, the field mask to 0 and the contact mask to 0</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/nodePlayer_2-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/nodePlayer_2-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/nodePlayer_2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/nodePlayer_2.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Run the game once to test/confirm</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/test_ipad-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/test_ipad-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/test_ipad-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/test_ipad.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Create a Player class (<code class="language-plaintext highlighter-rouge">Player.swift</code>) with the following codes</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">SpriteKit</span>
+
+<span class="kd">enum</span> <span class="kt">Direction</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">stop</span>
+    <span class="k">case</span> <span class="k">left</span>
+    <span class="k">case</span> <span class="k">right</span>
+    <span class="k">case</span> <span class="n">up</span>
+    <span class="k">case</span> <span class="n">down</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Player</span><span class="p">:</span> <span class="kt">SKSpriteNode</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">move</span><span class="p">(</span><span class="n">_</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt">Direction</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"player move: </span><span class="se">\(</span><span class="n">direction</span><span class="o">.</span><span class="n">rawValue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">stop</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Stop"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Assign Player node to Player class using Custom Class</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Test player movement</summary> <ul> <li>Modify this section of <code class="language-plaintext highlighter-rouge">GameScene.swift</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td> <td class="rouge-code"><pre><span class="o">...</span>
+<span class="kd">private</span> <span class="k">var</span> <span class="nv">lastUpdateTime</span> <span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kd">private</span> <span class="k">var</span> <span class="nv">player</span><span class="p">:</span> <span class="kt">Player</span><span class="p">?</span>
+
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">sceneDidLoad</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">lastUpdateTime</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">}</span>
+
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="nf">childNode</span><span class="p">(</span><span class="nv">withName</span><span class="p">:</span> <span class="s">"player"</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">Player</span>
+    <span class="n">player</span><span class="p">?</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">touchDown</span><span class="p">(</span><span class="n">atPoint</span> <span class="nv">pos</span> <span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"touch down"</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">nodeAtPoint</span> <span class="o">=</span> <span class="nf">atPoint</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">touchedNode</span> <span class="o">=</span> <span class="n">nodeAtPoint</span> <span class="k">as?</span> <span class="kt">SKSpriteNode</span><span class="p">{</span>
+        <span class="k">if</span> <span class="n">touchedNode</span><span class="o">.</span><span class="n">name</span><span class="p">?</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"controller_"</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span><span class="p">{</span>
+            <span class="k">let</span> <span class="nv">direction</span> <span class="o">=</span> <span class="n">touchedNode</span><span class="o">.</span><span class="n">name</span><span class="p">?</span><span class="o">.</span><span class="nf">replacingOccurrences</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"controller_"</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="s">""</span><span class="p">)</span>
+            <span class="n">player</span><span class="p">?</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="kt">Direction</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="n">direction</span> <span class="p">??</span> <span class="s">"stop"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="o">...</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Run and test movement (based on the print statement)</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/testMovement-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/testMovement-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/testMovement-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/testMovement.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Modify functions <code class="language-plaintext highlighter-rouge">move</code> and <code class="language-plaintext highlighter-rouge">stop</code> inside class <code class="language-plaintext highlighter-rouge">Player</code> with the following contents.</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">move</span><span class="p">(</span><span class="n">_</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt">Direction</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"player move: </span><span class="se">\(</span><span class="n">direction</span><span class="o">.</span><span class="n">rawValue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">switch</span> <span class="n">direction</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">up</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">down</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="o">-</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">left</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">right</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">stop</span><span class="p">:</span>
+        <span class="nf">stop</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">stop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Stop"</span><span class="p">)</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Rerun the simulation and observe the movements of the player node.</li> </ul> </details> <h2 id="hands-on-exercise">Hands-on Exercise</h2> <details class="details details--default" data-variant="default"><summary>Preparation</summary> <ul> <li>Unzip <code class="language-plaintext highlighter-rouge">Pokemon2D_Assets_2.zip</code> and drag the <strong>files</strong> into <code class="language-plaintext highlighter-rouge">Assets</code> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Tasks</summary> <ul> <li>Add a new node, <code class="language-plaintext highlighter-rouge">tree</code>, to the game (from the assets).</li> <li>Use multiple tree nodes to create a maze that the player cannot pass through. <ul> <li>Hint: Set the Category Mask and Collision Mask for both the player and the tree node.</li> </ul> </li> <li> <p>Add a Pokémon node (node name: <code class="language-plaintext highlighter-rouge">pokemon</code>), and when the player hits the Pokémon, it will print “Player hit the Pokémon” in the console.</p> </li> <li>You will need to set up <code class="language-plaintext highlighter-rouge">contactDelegate</code> and <code class="language-plaintext highlighter-rouge">SKPhysicsContactDelegate</code> </li> </ul> </details> </body></html>

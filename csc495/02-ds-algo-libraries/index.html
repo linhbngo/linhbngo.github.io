@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="data-structures-and-supporting-libraries">Data structures and supporting libraries</h1> <h2 id="overview-and-motivation">Overview and motivation</h2> <ul> <li>Data Structures: a mean to store and organize data.</li> <li>Pick an appropriate DS that support efficient insertions, searches/queries, deletions, and updates.</li> <li>Assumption: familiarity with the data structures discussed in the remainder of this episode.</li> <li>You only need to <strong>know enough</strong> so that you can <strong>select</strong> and <strong>use</strong> the <strong>correct data structures</strong>. <ul> <li>Understand the strengths, weaknesses, and time/space complexities.</li> </ul> </li> </ul> <h2 id="linear-data-structure-array">Linear Data Structure: Array</h2> <ul> <li>Many builtin support for Java/C++. We focus on Java for this class.</li> <li>Static Array: <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Arrays.html" rel="external nofollow noopener" target="_blank">Builtin supports in Java</a> </li> <li>Dynamic Array: <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html" rel="external nofollow noopener" target="_blank">ArrayList</a> </li> <li>Sorting: <ul> <li>Java Array has builtin sort.</li> <li>ArrayList: inherits <code class="language-plaintext highlighter-rouge">sort</code> from <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collections.html" rel="external nofollow noopener" target="_blank">Java Collections</a> </li> <li> <code class="language-plaintext highlighter-rouge">O(n^2)</code>: Bubble, Selection, Insertion</li> <li> <code class="language-plaintext highlighter-rouge">O(nlog(n))</code>: Merge, Quick, Heap</li> <li> <code class="language-plaintext highlighter-rouge">O(n)</code>: Counting, Radix, Bucket</li> </ul> </li> <li>Searching (on a sorted linear data structure): <ul> <li> <code class="language-plaintext highlighter-rouge">O(n)</code>: linear search</li> <li> <code class="language-plaintext highlighter-rouge">O(log(n))</code>: binary search (<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collections.html" rel="external nofollow noopener" target="_blank">Java Collections</a>)</li> </ul> </li> <li>Array of Booleans: <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/BitSet.html" rel="external nofollow noopener" target="_blank">Java BitSet</a> </li> </ul> <p><a href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=243&amp;page=show_problem&amp;problem=3302" rel="external nofollow noopener" target="_blank">Problem’s link</a></p> <p>:::::{tab-set} ::::{tab-item} Descriptions</p> <ul> <li>Initial array: car number at each index.</li> <li>Subsequent array: car numbers and their relative displacement.</li> </ul> <p>:::: ::::{tab-item} IO format</p> <ul> <li>First value is the <code class="language-plaintext highlighter-rouge">N</code> number of cars. <ul> <li>Next <code class="language-plaintext highlighter-rouge">N</code> pairs are the cars and their relative displacement.</li> <li>Repeat with a new <code class="language-plaintext highlighter-rouge">N</code> until <code class="language-plaintext highlighter-rouge">N</code> == 0.</li> </ul> </li> <li>N between 2 and 1000</li> <li>C between 1 and 10000</li> <li>P between -1000000 and 1000000</li> </ul> <p>:::: ::::{tab-item} Thought Process</p> <ul> <li>Initial visualization: <ul> <li>2-dimensional array, 1 column for car number and 1 column for relative positions.</li> <li>Imagine the starting position, the entire second column would be 0s.</li> </ul> </li> <li>Input data contain the cars at <strong>new index position</strong> (first column), and <strong>displacement</strong> from initital positions. <ul> <li>Current index <strong>plus</strong> (or <strong>minus</strong>?) displacement will provide initial position.</li> </ul> </li> <li>Do we actually need a 2-dimensional array?</li> <li>What are the possible edge cases for invalid starting positions?</li> </ul> <p>:::: ::::{tab-item} AC</p> <script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=12150.java"></script> <p>:::: :::::</p> <ul> <li>Kattis: <a href="https://open.kattis.com/problems/baloni" rel="external nofollow noopener" target="_blank">Baloni</a> </li> <li>Kattis: <a href="https://open.kattis.com/problems/greedilyincreasing" rel="external nofollow noopener" target="_blank">Greedily Increasing Subsequence</a> </li> <li>Kattis: <a href="https://open.kattis.com/problems/mastermind" rel="external nofollow noopener" target="_blank">Mastermind</a> </li> <li>Kattis: <a href="https://open.kattis.com/problems/nineknights" rel="external nofollow noopener" target="_blank">Nine Knights</a> </li> <li>LeetCode: <a href="https://leetcode.com/problems/valid-sudoku/" rel="external nofollow noopener" target="_blank">Valid Sudoku</a> </li> <li>LeetCode: <a href="https://leetcode.com/problems/container-with-most-water/" rel="external nofollow noopener" target="_blank">Container With Most Water</a> </li> <li>LeetCode: <a href="https://leetcode.com/problems/jump-game/" rel="external nofollow noopener" target="_blank">Jump Game</a> </li> <li>Kattis: <a href="https://open.kattis.com/problems/epigdanceoff" rel="external nofollow noopener" target="_blank">Epig Dance Off</a> </li> <li>Kattis: <a href="https://open.kattis.com/problems/flowshop" rel="external nofollow noopener" target="_blank">Flowshop</a> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+</pre></td> <td class="rouge-code"><pre>
+
+## Special Sorting Problems
+
+
+- Inversion Index: count the number of swap to make a list into a sorted order
+  - `O(n^2)`: actual runs bubble sort. 
+  - `O(nlog(n))`:
+    - Modification of Merge Sort: increment count by one when the `front right` is selected in the merging process before the `front left`. 
+- Sorting in linear time:
+  - Depending on data type
+  - `O(n + k)` Counting Sort
+  - `O(d * (n + k))` Radix Sort
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc495/02-ds-algo/inversion_index-480.webp 480w,/assets/img/courses/csc495/02-ds-algo/inversion_index-800.webp 800w,/assets/img/courses/csc495/02-ds-algo/inversion_index-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc495/02-ds-algo/inversion_index.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Inversion Index Example"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+
+
+
+[Problem's link](https://open.kattis.com/problems/height)
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+- Students placement: Insertion Sort. 
+- Count number of displacements due to insertion. 
+  
+::::
+::::{tab-item} IO format
+
+- First value is the `P` number of cases
+- Each subsequent `21` integers:
+  - First integer is case number (to be used in output)
+  - Next twenty integers are the students' heights. 
+
+::::
+::::{tab-item} Thought Process
+
+- Read each line and place 20 integers into array
+- Perform insertion sort
+  - Increase count if a swap is done. 
+  
+::::
+::::{tab-item} AC
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=kattis_height.java"&gt;&lt;/script&gt;
+
+::::
+:::::
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="linear-data-structure-bitmask">Linear Data Structure: Bitmask</h2> <ul> <li>Use an signed interger to represent a <code class="language-plaintext highlighter-rouge">lightweight</code> small set of Boolean values.</li> <li>This is faster than the <code class="language-plaintext highlighter-rouge">BitSet</code> class of Java.</li> <li>Limitation: up to 64 items only.</li> <li>Example: S = 34 <ul> <li>Binary: <code class="language-plaintext highlighter-rouge">1 0 0 0 1 0</code> </li> <li>Index: <code class="language-plaintext highlighter-rouge">5 4 3 2 1 0</code> </li> <li>Power of 2: <code class="language-plaintext highlighter-rouge">32 16 8 4 2 1</code> </li> <li>Alphabet: <code class="language-plaintext highlighter-rouge">F E D C B A</code>.</li> <li>S can represent <code class="language-plaintext highlighter-rouge">{1, 5}</code> or <code class="language-plaintext highlighter-rouge">{F, B}</code> or <code class="language-plaintext highlighter-rouge">{32, 2}</code>.</li> </ul> </li> <li>To multiply/divide by 2, shift all bit left/right one: <ul> <li> <code class="language-plaintext highlighter-rouge">&lt;&lt; 1</code>: multiply by 2/shift left 1</li> <li> <code class="language-plaintext highlighter-rouge">&lt;&lt; 2</code>: multiple by 4/shift left 2</li> <li> <code class="language-plaintext highlighter-rouge">&gt;&gt; 1</code>: divide by 2/shift right 1.</li> </ul> </li> <li>To set (turn on) the bit at position <code class="language-plaintext highlighter-rouge">j</code>, use bitwise OR: <code class="language-plaintext highlighter-rouge">S = S | (1 &lt;&lt; j)</code> <ul> <li> <code class="language-plaintext highlighter-rouge">1 &lt;&lt; j</code> will shift 1 forward <code class="language-plaintext highlighter-rouge">j</code> position, every other bits remain 0.</li> <li>A bitwise OR of the above result with S will set the bit value of S at position <code class="language-plaintext highlighter-rouge">j</code> to 1.</li> </ul> </li> <li>To check if the bit at position <code class="language-plaintext highlighter-rouge">j</code> is on, use bitwise AND: <code class="language-plaintext highlighter-rouge">T = S &amp; (1 &lt;&lt; j)</code>. <ul> <li> <code class="language-plaintext highlighter-rouge">T == 0</code>: <code class="language-plaintext highlighter-rouge">j</code> bit is 0</li> <li> <code class="language-plaintext highlighter-rouge">T != 0</code>: <code class="language-plaintext highlighter-rouge">j</code> bit is 1</li> </ul> </li> <li>To clear/turn off the bit at position <code class="language-plaintext highlighter-rouge">j</code>: <code class="language-plaintext highlighter-rouge">S = S &amp; ~(1 &lt;&lt; j)</code> </li> <li>To flip the bit at position <code class="language-plaintext highlighter-rouge">j</code>: <code class="language-plaintext highlighter-rouge">S = S ^ (1 &lt;&lt; j)</code> </li> <li>To get the value of the least significant bit of S that is on: <code class="language-plaintext highlighter-rouge">T = ((S) &amp; -(S))</code> <ul> <li>Negative S, not flipped bits of S.</li> </ul> </li> <li>To turn on all bits in a set of size <code class="language-plaintext highlighter-rouge">n</code>: <code class="language-plaintext highlighter-rouge">S = (1 &lt;&lt; n) - 1</code> </li> </ul> <p><a href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=23&amp;page=show_problem&amp;problem=2114" rel="external nofollow noopener" target="_blank">Problem’s link</a></p> <p>:::::{tab-set} ::::{tab-item} Descriptions</p> <ul> <li>You will be given total number of cases: <code class="language-plaintext highlighter-rouge">N &lt;= 250000</code> </li> <li>For each case: <ul> <li>You will be given number of bits: <code class="language-plaintext highlighter-rouge">1 &lt;= n &lt;= 30</code> </li> <li>You will be given the <code class="language-plaintext highlighter-rouge">k</code> position of the <code class="language-plaintext highlighter-rouge">n-bit</code> Reflected Gray Code: <code class="language-plaintext highlighter-rouge">0 &lt;= k &lt;= 2^n</code>.</li> </ul> </li> <li>Run time is most likely an issue to be considered here.</li> </ul> <p>:::: ::::{tab-item} IO format</p> <ul> <li>Type 1: The number of cases is given in the first line</li> <li>Each case involves parsing two integers.</li> <li>Nothing special for output.</li> </ul> <p>:::: ::::{tab-item} Thought Process</p> <ul> <li>Bit operations would be fastest. <ul> <li>Textbook suggestion: one-liner bit manipulation expression.</li> <li>What is the pattern here? <ul> <li>Do not look at the value of the bits, it is the output, not the pattern.</li> </ul> </li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc495/02-ds-algo/11173-480.webp 480w,/assets/img/courses/csc495/02-ds-algo/11173-800.webp 800w,/assets/img/courses/csc495/02-ds-algo/11173-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc495/02-ds-algo/11173.png" width="50%" height="auto" alt="Bits patterns for 11173" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>If an even bit is set, the flip the next bit? <ul> <li>Not good enough.</li> </ul> </li> <li>XOR patterns, can you see it?</li> </ul> <p>:::: ::::{tab-item} AC</p> <script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=11173.java"></script> <p>:::: :::::</p> <p><a href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=27&amp;page=show_problem&amp;problem=2628" rel="external nofollow noopener" target="_blank">Problem’s link</a></p> <p>:::::{tab-set} ::::{tab-item} Descriptions</p> <ul> <li>3x3 grid, each cell containings 0 or 1</li> <li>Function <code class="language-plaintext highlighter-rouge">f</code> is the standard cell-based transformation that is similar to the <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" rel="external nofollow noopener" target="_blank">Game of Life</a>’s principle: <ul> <li>Each cell’s transformation depends on the adjacent cells. <ul> <li>Sum of adjacent cells modulo 2: resulting values will be 0 or 1.</li> <li>Needs to pay attention to border cells.</li> </ul> </li> <li>The recursive function starts from the original grid, and there is a chance that over time, it will transform one of the subseqeuent grid back to the original grid.</li> <li>The value i = k<sub>g</sub>(h) such that h=f<sup>(i)</sup>(g) <ul> <li>Therefore: $k_{g}(f^{i}(g))$ means the number of steps <code class="language-plaintext highlighter-rouge">i</code> so that function <code class="language-plaintext highlighter-rouge">f</code> transforms <code class="language-plaintext highlighter-rouge">g</code> back to itself.</li> </ul> </li> </ul> </li> </ul> <p>:::: ::::{tab-item} IO format</p> <ul> <li>First value is the <code class="language-plaintext highlighter-rouge">N</code> number of grids.</li> <li>Each group of subsequent four lines: <ul> <li>One empty line.</li> <li>Three lines, each of which is a string of three characters, either <code class="language-plaintext highlighter-rouge">0</code> or <code class="language-plaintext highlighter-rouge">1</code>.</li> </ul> </li> </ul> <p>:::: ::::{tab-item} Thought Process</p> <ul> <li>Should have a separate method for <code class="language-plaintext highlighter-rouge">f</code>. <ul> <li>To know when <code class="language-plaintext highlighter-rouge">g</code> is transformed back to itself, this means we need to keep track of the past data structures.</li> <li>Identify the finiteness of <code class="language-plaintext highlighter-rouge">i</code> is easy: we only need to know when the current grid matches the original grid.</li> <li>Identify the infinite case (ouptut of -1) is the question. <ul> <li>Going back to the finite case, if the grid is transformed back to itself after <code class="language-plaintext highlighter-rouge">i</code> steps, this means there is another circular tranformation back to itself after an additional <code class="language-plaintext highlighter-rouge">i</code> steps.</li> <li>If there exists a <code class="language-plaintext highlighter-rouge">circular transformation</code> that does not contain the original grid, this means we have hit the infinite case.</li> </ul> </li> <li>Implication: we need to know if the current grid matches <strong>any</strong> of the previous grid arrangement.</li> <li>The question: is the number of possible grid arrangement finite or infinite? <ul> <li>Recall: Bitmask and Array</li> </ul> </li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc495/02-ds-algo/11581-480.webp 480w,/assets/img/courses/csc495/02-ds-algo/11581-800.webp 800w,/assets/img/courses/csc495/02-ds-algo/11581-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc495/02-ds-algo/11581.png" width="50%" height="auto" alt="Bits patterns for 11581" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>With 9 bits, maximum possible grid arrangements = $2^9$ = 512</li> </ul> <p>:::: ::::{tab-item} AC</p> <script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=11581.java"></script> <p>:::: :::::</p> <ul> <li>Kattis: <a href="https://open.kattis.com/problems/snapperhard" rel="external nofollow noopener" target="_blank">Snapper Hard</a> </li> <li>Kattis: <a href="https://open.kattis.com/problems/bits" rel="external nofollow noopener" target="_blank">Bits</a> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td> <td class="rouge-code"><pre>
+
+
+
+## Big Integer
+
+
+- Use [Java's BigInteger](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigInteger.html) for this purpose
+
+
+
+- Kattis: [Simple Addition](https://open.kattis.com/problems/simpleaddition)
+- Kattis: [Wizardsof Odds](https://open.kattis.com/problems/wizardofodds)
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="linked-data-structures">Linked Data Structures</h2> <ul> <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/LinkedList.html" rel="external nofollow noopener" target="_blank">Java LinkedList</a></li> <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Stack.html" rel="external nofollow noopener" target="_blank">Java Stack</a></li> <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Queue.html" rel="external nofollow noopener" target="_blank">Java Queue</a></li> <li> <p><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Deque.html" rel="external nofollow noopener" target="_blank">Java Double-ended Queue</a></p> </li> <li><a href="https://leetcode.com/problems/valid-parentheses/" rel="external nofollow noopener" target="_blank">Valid parentheses</a></li> <li><a href="https://leetcode.com/problems/check-if-a-parentheses-string-can-be-valid/" rel="external nofollow noopener" target="_blank">Check if a parentheses string can be valid</a></li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+</pre></td> <td class="rouge-code"><pre>
+
+
+## Non-linear Data Structures: Binary Heap (Priority Queue)
+
+
+- [Java PriorityQueue](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/PriorityQueue.html).
+  - From node `i`:
+    - To parent: `floor(i)` or `i&gt;&gt;1`
+    - To left child: `2 * i` or `i&lt;&lt;1`
+    - To right child: `2 * i + 1` or `(i&lt;&lt;1) + 1`
+- Heap property:
+  - Items on left and right subtree of root `x` are always smaller than `x`. 
+  - The root is always the max-value item. 
+- Highest value-item can be dequeued in `log(n)` time. 
+- New item can be enqueue in `log(n)` time. 
+- Important components for:
+  - Prim's and Kruskal's algorithms for minimum spanning tree. 
+  - Dijkstra's Single Source Shortest Path. 
+
+
+
+
+[Problem's link](https://open.kattis.com/problems/knigsoftheforest)
+
+
+:::::{tab-set}
+::::{tab-item} Descriptions
+
+
+
+::::
+::::{tab-item} Thought Process
+
+- PriorityQueue
+  - Two queues
+  - Rewrite comparator to custom compare. 
+  - [Writing custom comparator](https://www.callicoder.com/java-priority-queue/)
+  - [More description on comparator - how do they compare?](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html)
+
+::::
+::::{tab-item} AC
+
+&lt;script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=kattis_knigsoftheforest.java"&gt;&lt;/script&gt;
+
+::::
+:::::
+
+
+
+
+- Kattis: [Stock Prices](https://open.kattis.com/problems/stockprices)
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="hash-table">Hash Table</h2> <ul> <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/HashMap.html" rel="external nofollow noopener" target="_blank">Java HashMap</a></li> <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/HashSet.html" rel="external nofollow noopener" target="_blank">Java HashSet</a></li> <li>What we did in JollyJumper, TreasureHunt, … could be considered a simple naive form of hashing called <code class="language-plaintext highlighter-rouge">Direct Addressing Table</code>.</li> </ul> <p><a href="https://open.kattis.com/problems/quickbrownfox" rel="external nofollow noopener" target="_blank">Problem’s link</a></p> <p>:::::{tab-set} ::::{tab-item} Descriptions</p> <p>:::: ::::{tab-item} Thought Process</p> <ul> <li>Direct Access Table <ul> <li>1 if 0, no action otherwise.</li> <li>Check sum and reset.</li> </ul> </li> <li>Accepted solution</li> </ul> <p>:::: ::::{tab-item} AC</p> <script src="https://gist.github.com/linhbngo/3529c879f8375d9e7eb29f355805bc0c.js?file=kattis_quickbrownfox.java"></script> <p>:::: :::::</p> <ul> <li>Kattis: <a href="https://open.kattis.com/problems/whatdoesthefoxsay" rel="external nofollow noopener" target="_blank">What does the fox say?</a> </li> </ul> <p>```</p> <h2 id="balanced-binary-search-tree-bbst">Balanced Binary Search Tree (bBST)</h2> <ul> <li>Binary Search Tree implemented using ADL (Adelson-Velskii Landis) or Red-Black implementation.</li> <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/TreeMap.html" rel="external nofollow noopener" target="_blank">Java TreeMap</a></li> <li><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/TreeSet.html" rel="external nofollow noopener" target="_blank">Java TreeSet</a></li> <li>Insertion/search/removal: <code class="language-plaintext highlighter-rouge">log(n)</code> time.</li> <li>use bBST as a PriorityQueue ADT: <code class="language-plaintext highlighter-rouge">lastKey</code> for max value, <code class="language-plaintext highlighter-rouge">firstKey</code> for smallest value.</li> </ul> <h2 id="order-statistics-tree">Order Statistics Tree</h2> <ul> <li>Selection: Find the k<sup>th</sup> smallest element of an array of n element.</li> <li>Ranking: If the k<sup>th</sup> smallest element is <code class="language-plaintext highlighter-rouge">v</code>, then ranking of <code class="language-plaintext highlighter-rouge">v</code> is <code class="language-plaintext highlighter-rouge">k</code>.</li> <li>Selection problem, static data: <ul> <li> <code class="language-plaintext highlighter-rouge">k=1</code> and <code class="language-plaintext highlighter-rouge">k=n</code>: manual comparison, best run time is <code class="language-plaintext highlighter-rouge">n</code>.</li> <li>For other cases: sort then compare, run time <code class="language-plaintext highlighter-rouge">nlog(n)</code>.</li> <li>Best <code class="language-plaintext highlighter-rouge">n</code> algorithm: Utilize <code class="language-plaintext highlighter-rouge">RandPartition</code> of <a href="https://docs.google.com/presentation/d/1oO-d_NrVzSvZ1cvoKvbrL3wHQJSeHGOpTdTud2FjCb0/edit#slide=id.p" rel="external nofollow noopener" target="_blank">QuickSort</a>: <ul> <li> <code class="language-plaintext highlighter-rouge">q = RandPartition(A, 0, n-1)</code>, all element <code class="language-plaintext highlighter-rouge">&lt;=</code> A[q] will be placed before the pivot, so A[q] will be in its correct order statistics, which is <code class="language-plaintext highlighter-rouge">q+1</code>.</li> </ul> </li> </ul> </li> <li>Selection problem, dynamic data: <ul> <li>Construct a bBST</li> <li>Preprocessing: <code class="language-plaintext highlighter-rouge">nlog(n)</code> </li> <li>Actual answer: <code class="language-plaintext highlighter-rouge">log(n)</code> by traversing down the tree.</li> </ul> </li> </ul> </body></html>

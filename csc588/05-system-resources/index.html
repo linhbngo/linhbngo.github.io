@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="system-resources">System Resources</h1> <h2 id="overview">Overview</h2> <ul> <li>How fine-grained should it be? <ul> <li>One cluster of computers</li> <li>One computer</li> <li>One socket</li> <li>One core</li> <li>Portion of times on one core</li> <li>…</li> </ul> </li> <li>In a nutshell: <ul> <li>What resources do you see: <code class="language-plaintext highlighter-rouge">namespace</code> </li> <li>What resources can you use: <code class="language-plaintext highlighter-rouge">cgroup</code> </li> </ul> </li> <li>Partitions of kernel resources such that one partition is <code class="language-plaintext highlighter-rouge">viewable</code> by one set of processes but not by another set.</li> <li>Namespace kinds: <ul> <li>Mount (mnt): Powerful and flexible tool for creating per-user and per-container filesystem trees</li> <li>Process ID (pid): <a href="https://manpages.ubuntu.com/manpages/xenial/man7/pid_namespaces.7.html" rel="external nofollow noopener" target="_blank">Processes in different pid namespaces can have the same pid</a> </li> <li>Network (net): <a href="https://man7.org/linux/man-pages/man7/network_namespaces.7.html" rel="external nofollow noopener" target="_blank">Provide isolation of system resources associated with networking</a> </li> <li>IPC (ipc): <a href="https://man7.org/linux/man-pages/man7/ipc_namespaces.7.html" rel="external nofollow noopener" target="_blank">Isolate certain IPC resources and POSIX message queues</a> </li> <li>UTS (uts): UTS namespaces allow a single system to appear to have different host and domain names to different processes.</li> <li>User ID (user): <a href="https://man7.org/linux/man-pages/man7/user_namespaces.7.html" rel="external nofollow noopener" target="_blank">Isolate security-related identifiers and attributes, in particular, user IDs and group IDs, the root directory, keys, and capabilities</a> </li> <li>Control group (cgroup): Will talk about in cgroup.</li> <li>Time: Allow processes to see different system times.</li> </ul> </li> <li>Control groups, usually referred to as cgroups, are a Linux kernel feature which allow processes to be organized into hierarchical groups whose usage of various types of resources can then be limited and monitored.</li> <li><a href="https://man7.org/linux/man-pages/man7/cgroups.7.html" rel="external nofollow noopener" target="_blank">Man page</a></li> <li><a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/diff/Documentation/cgroup-v2.txt?id=v4.5&amp;id2=v4.4" rel="external nofollow noopener" target="_blank">Authoritative document on the design, interface, and convention of cgroupv2</a></li> <li>Features: <ul> <li>Resource limiting: memory limit, I/O bandwidth limit, CPU quota limit, or CPU set limit.</li> <li>Prioritization: some groups may get a larger share of CPU utilization or disk I/O throughput.</li> <li>Accounting: measures a group’s resource usage.</li> <li>Control: freezing groups of processes, their checkpointing and restarting</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+</pre></td> <td class="rouge-code"><pre>
+## Hands-on
+
+
+- Instantiate the Docker branch
+- Run the following commands
+
+~~~bash
+$ sudo apt install -y cgroup-tools
+$ sudo cgcreate -g cpu:/cpulimit
+~~~
+
+- `cpu.cfs_period_us` and `cpu.cfs_quota.us`: how tasks in a cgroup should 
+be able to access a single CPU for `quota` out of `period` microseconds (`us`). 
+
+~~~bash
+$ sudo cgset -r cpu.cfs_period_us=1000000 cpulimit
+$ sudo cgset -r cpu.cfs_quota_us=10000 cpulimit
+$ sudo cgget -g cpu:cpulimit
+~~~
+
+- In the above example, tasks in the `cpulimit` group can access 10000 microseconds 
+out of 1000000 microseconds of a single CPU time. 
+- Create a two-horizontal panes tmux session. Keep the bottom pane running the `top` 
+command. 
+- For the top pane, run the following commands one by one and observe the CPU usage 
+from the `top` pane. 
+
+~~~bash
+$ dd if=/dev/zero of=out bs=1M
+~~~
+
+and 
+
+~~~bash
+$ sudo cgexec -g cpu:cpulimit dd if=/dev/zero of=out bs=1M
+~~~
+
+:::{image} ../fig/csc603/06-system-resources/cgroup-cpu-1.png
+:alt: Running dd without cgroup
+:class: bg-primary mb-1
+:height: 300px
+:align: center
+:::
+
+:::{image} ../fig/csc603/06-system-resources/cgroup-cpu-2.png
+:alt: Running dd with cgroup
+:class: bg-primary mb-1
+:height: 300px
+:align: center
+:::
+
+
+
+- Check the content of the initial memory cgroup
+
+~~~bash
+$ sudo ls /sys/fs/cgroup/memory/
+~~~
+
+- Create a new memory cgroup called `blue`
+
+~~~bash
+$ sudo mkdir /sys/fs/cgroup/memory/blue
+$ sudo ls /sys/fs/cgroup/memory/blue
+~~~
+
+- Check the initial memory limit
+
+~~~bash
+$ cat /sys/fs/cgroup/memory/blue/memory.limit_in_bytes
+~~~
+
+- Set the amount of memory for tasks in the `blue` group
+
+~~~bash
+$ echo 104857600 | sudo tee /sys/fs/cgroup/memory/blue/memory.limit_in_bytes
+$ cat /sys/fs/cgroup/memory/blue/memory.limit_in_bytes
+~~~
+
+- Check on `OOM killer` (out-of-memory)
+
+~~~bash
+$ sudo su
+$ cd /sys/fs/cgroup/memory/blue/
+$ cat memory.oom_control
+~~~
+
+- Create a memory hog file:
+
+~~~bash
+$ nano -l /tmp/memhog.c
+~~~
+
+with the following contents:
+
+~~~c
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+
+#define KB (1024)
+#define MB (1024 * KB)
+#define GB (1024 * MB)
+
+int main(int argc, char *argv[]) {
+ char *p;
+
+again:
+  while ((p = (char *)malloc(GB)))
+    memset(p, 0, GB);
+  while ((p = (char *)malloc(MB)))
+    memset(p, 0, MB);
+  while ((p = (char *)malloc(KB)))
+    memset(p, 0, KB);
+  sleep(1);
+  goto again;
+
+  return 0;
+}
+~~~
+
+- Move the shell into the tasks group of cgroup `blue`: 
+
+~~~bash
+$ cat tasks
+$ echo $$ &gt; tasks
+$ cat tasks
+~~~
+
+- Compile and run `memhog` and observe how it is killed:
+
+~~~bash
+$ gcc -o /tmp/memhog /tmp/memhog.c
+$ /tmp/memhog
+~~~
+
+- Turn off the OOM and see how `memhog` hang. 
+
+~~~bash
+$ echo 1 &gt; memory.oom_control
+$ /tmp/memhog
+~~~
+
+- Open a new windows, 
+SSH into the CloudLab node, and try to turn the shell into `blue` cgroup. 
+You will see that the shell hanged (out of memory)
+
+~~~bash
+$ sudo su
+$ cd /sys/fs/cgroup/memory/blue/
+$ echo $$ &gt;&gt; tasks
+~~~
+
+- Open yet another shell and change the `OOM` flag to enable OOM killed. 
+You will see that `memhog` is immediately killed once the flag is turned back on.
+
+~~~bash
+$ cd /sys/fs/cgroup/memory/blue/
+$ cat memory.oom_control
+$ echo 0 &gt; memory.oom_control 
+~~~
+
+</pre></td> </tr></tbody></table></code></pre></div></div> </body></html>

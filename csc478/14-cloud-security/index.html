@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="cloud-security">Cloud Security</h1> <h2 id="cloud-native-security">Cloud Native Security</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <ul> <li>Followed a layered approach that is based on <a href="https://inldigitallibrary.inl.gov/sites/sti/sti/3375141.pdf" rel="external nofollow noopener" target="_blank">defense in depth</a> approach.</li> <li>The 4C layers of Cloud Native Security <ul> <li>Cloud Datacenter</li> <li>Cluster (Kubernetes)</li> <li>Container</li> <li>Code</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Cloud Data Center</summary> <ul> <li>Cloud Provider: Their hardware their policy</li> <li>In-house infrastructures <ul> <li>Physical security</li> <li>Network access</li> <li>Database access (<code class="language-plaintext highlighter-rouge">etcd</code> for Kubernetes)</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Cluster (Kubernetes)</summary> <ul> <li><strong>RBAC Authorization</strong></li> <li><strong>Authentication</strong></li> <li>Encryption</li> <li>Network Policies</li> <li><strong>TLS for Kubernetes Ingress</strong></li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Container</summary> <ul> <li>Vulnerability Scanner/OS Dependencsy Security</li> <li>Privilege Control/Disabling</li> <li>Container runtime isolation</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Code</summary> <ul> <li>Secure communication over TLS</li> <li>Port range limitation</li> <li>Security of external library dependency</li> <li>Static code analysis</li> <li>Dynamic code security (SQL injection, cross-site scripting, …)</li> </ul> </details> <hr> <h2 id="cluster-security-kubernetes">Cluster Security: Kubernetes</h2> <details class="details details--default" data-variant="default"><summary>Authentication</summary> <ul> <li>Users: <ul> <li>Normal users (managed by host system/remote management like LDAP)</li> <li>Service accounts (internal to K8s)</li> </ul> </li> <li>Users can present a valid certificate signed by the cluster’s CA (Certificate Authority) are considered authenticated.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Authentication hands-on</summary> <details class="details details--info" data-variant="info"><summary>Confirms that Rancher setup is up and ready</summary> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get nodes
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/cloud-security/get-nodes-480.webp 480w,/assets/img/courses/csc478/cloud-security/get-nodes-800.webp 800w,/assets/img/courses/csc478/cloud-security/get-nodes-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/cloud-security/get-nodes.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--info" data-variant="info"><summary>Extract configuration information</summary> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">cat</span> ~/.kube/config
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Keep a record of the following fields (or do this in separate terminals) <ul> <li><code class="language-plaintext highlighter-rouge">certificate-authority-data</code></li> <li><code class="language-plaintext highlighter-rouge">server</code></li> <li><code class="language-plaintext highlighter-rouge">client-certificate-data</code></li> <li><code class="language-plaintext highlighter-rouge">client-key-data</code></li> </ul> </li> </ul> </details> <details class="details details--info" data-variant="info"><summary>Create a new user account</summary> <ul> <li>New user account is called <code class="language-plaintext highlighter-rouge">student</code>:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>useradd <span class="nt">-s</span> /bin/bash <span class="nt">-d</span> /home/student <span class="nt">-m</span> <span class="nt">-G</span> docker student
+<span class="nb">sudo </span>su - student
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Try running <code class="language-plaintext highlighter-rouge">kubectl</code> commands now:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get nodes
+kubectl get svc
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/cloud-security/student-not-auth-480.webp 480w,/assets/img/courses/csc478/cloud-security/student-not-auth-800.webp 800w,/assets/img/courses/csc478/cloud-security/student-not-auth-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/cloud-security/student-not-auth.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--info" data-variant="info"><summary>Setup authorization to access K8S</summary> <ul> <li>As <code class="language-plaintext highlighter-rouge">student</code>, run the following command:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">mkdir</span> .kube
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Next, create a file called <code class="language-plaintext highlighter-rouge">config</code> inside <code class="language-plaintext highlighter-rouge">.kube</code> with the following contents: <ul> <li>Replace <code class="language-plaintext highlighter-rouge">COPY_FROM_ABOVE</code> with the corresponding values of the corresponding fields above.</li> </ul> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">clusters</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">cluster</span><span class="pi">:</span>
+    <span class="na">certificate-authority-data</span><span class="pi">:</span> <span class="s">COPY_FROM_ABOVE</span>
+    <span class="na">server</span><span class="pi">:</span> <span class="s">COPY_FROM_ABOVE</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes</span>
+<span class="na">contexts</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">context</span><span class="pi">:</span>
+    <span class="na">cluster</span><span class="pi">:</span> <span class="s">kubernetes</span>
+    <span class="na">user</span><span class="pi">:</span> <span class="s">student</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">student@kubernetes</span>
+<span class="na">current-context</span><span class="pi">:</span> <span class="s">student@kubernetes</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Config</span>
+<span class="na">preferences</span><span class="pi">:</span> <span class="pi">{}</span>
+<span class="na">users</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">student</span>
+<span class="na">user</span><span class="pi">:</span>
+    <span class="na">client-certificate-data</span><span class="pi">:</span> <span class="s">COPY_FROM_ABOVE</span>
+    <span class="na">client-key-data</span><span class="pi">:</span> <span class="s">COPY_FROM_ABOVE</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Try running <code class="language-plaintext highlighter-rouge">kubectl</code> commands now:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get nodes
+kubectl get svc
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/cloud-security/student-auth-480.webp 480w,/assets/img/courses/csc478/cloud-security/student-auth-800.webp 800w,/assets/img/courses/csc478/cloud-security/student-auth-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/cloud-security/student-auth.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> </details> <details class="details details--default" data-variant="default"><summary>Challenge</summary> <p>Adding at least another Kubernetes cluster from one of your classmates’ experiment to your <code class="language-plaintext highlighter-rouge">student</code> account. In other words, one account can have access to multiple K8S cluster.</p> </details> <details class="details details--default" data-variant="default"><summary>RBAC Authorization</summary> <ul> <li>Kubernetes uses the <code class="language-plaintext highlighter-rouge">rbac.authorization.k8s.io</code> API group to drive RBAC-based authorization decisions,</li> <li>By default, Kubernetes clusters are often launched with RBAC:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl describe pods kube-apiserver <span class="nt">-n</span> kube-system | <span class="nb">grep </span>authorization
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>RBAC API: Role, ClusterRole, RoleBinding, ClusterRoleBinding.</li> <li>Role: sets permissions within a particular namespace</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get role <span class="nt">--all-namespaces</span>
+kubectl describe role system::leader-locking-kube-controller-manager <span class="nt">-n</span> kube-system
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>ClusterRole: set permission for non-namespaced resources</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get clusterrole <span class="nt">--all-namespaces</span>
+kubectl describe clusterrole cluster-admin
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>RoleBinding binding grants the permissions defined in a role to a user or set of users.</li> <li>ClusterRoleBinding grants that access cluster-wide.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get RoleBinding <span class="nt">--all-namespaces</span>
+kubectl get ClusterRoleBinding
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>What <code class="language-plaintext highlighter-rouge">resources</code> are available and what <code class="language-plaintext highlighter-rouge">verbs</code> are applicable?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl api-resources <span class="nt">--sort-by</span> name <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Kubernetes Ingress</summary> <ul> <li>Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster.</li> <li>Traffic routing is controlled by rules defined on the Ingress resource.</li> <li>Ingress is managed by Ingress Controllers.</li> <li>There are many diffferent Ingress Controllers</li> </ul> </details> <hr> <h2 id="container-security">Container Security</h2> <details class="details details--default" data-variant="default"><summary>Pod Security Standards</summary> <ul> <li>Pod security will influence container security.</li> <li>Three policies: <ul> <li>Privileged</li> <li>Baseline</li> <li>Restricted</li> </ul> </li> <li>Cummulative and range from highly permissive to highly restrictive</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Privileged</summary> <ul> <li>Purposely open, entirely unrestricted</li> <li>Enable system- and infrastructure-level workloads <ul> <li>Implied understanding that these workloads are run as privileged/trusted users.</li> </ul> </li> <li>Absence of restrictions and allow-by-default mechanism</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Baseline</summary> <ul> <li>Streamline adoption for common containerized workloads</li> <li>Prevent known privilege escalations</li> <li>Example capabilities (Linux capabilities) enabled in baseline <ul> <li>AUDIT_WRITE</li> <li>CHOWN</li> <li>DAC_OVERRIDE</li> <li>FOWNER</li> <li>FSETID</li> <li>KILL</li> <li>MKNOD</li> <li>NET_BIND_SERVICE</li> <li>SETFCAP</li> <li>SETGID</li> <li>SETPCAP</li> <li>SETUID</li> <li>SYS_CHROOT</li> </ul> </li> <li><a href="https://man7.org/linux/man-pages/man7/capabilities.7.html" rel="external nofollow noopener" target="_blank">Linux full capability list</a></li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Restricted</summary> <ul> <li>Enforce Pod hardening best practices at the expense of compatibility</li> <li>Target security-critical applications and lower-trust users</li> <li>Example policy: <ul> <li>Disable privilege escalation</li> <li>Containers must run as non-root</li> <li>Drop <strong>ALL</strong> capabilities and only allow <code class="language-plaintext highlighter-rouge">NET_BIND_SERVICE</code>.</li> </ul> </li> </ul> </details> </body></html>

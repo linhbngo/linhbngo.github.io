@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="introduction-to-concurrency-using-threads">Introduction to concurrency using threads</h1> <hr> <h2 id="review-process-calls-fork">Review: process calls fork()</h2> <ul> <li>New PCB (process control block) and address space.</li> <li>New address space is a copy of the entire contents of the parent’s address space (up to fork).</li> <li>Resources (file pointers) that point to parent’s resources.</li> <li><strong>In general, time consuming.</strong></li> </ul> <hr> <h2 id="review-process-context-switch">Review: process context switch</h2> <ul> <li>Save A’s registers to A’s kernel stack.</li> <li>Save A’s registers to A’s PCB.</li> <li>Restore B’s registers from B’s PCB.</li> <li>Switch to B’s kernel stack.</li> <li>Restore B’s registers from B’s kernel stack.</li> <li><strong>In general, time consuming.</strong></li> </ul> <hr> <h2 id="example-web-server">Example: web server</h2> <ul> <li>A process listens to requests.</li> <li>When a new request comes in, a child process is created to handle this request.</li> <li>Multiple requests can be handled at the same time by different child processes.</li> <li>What is the problem?</li> </ul> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+	  <span class="kt">int</span> <span class="n">sock</span> <span class="o">=</span> <span class="n">accept</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="n">fork</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">handle_request</span><span class="p">();</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="thread-a-new-abstraction-for-running-processes">Thread: a new abstraction for running processes</h2> <ul> <li>A normal process is a running program with a single point of execution, i.e, a single PC (program counter).</li> <li>A <strong>multi-threaded</strong> program has <strong>multiple points of execution</strong>, i.e., multiple PCs.</li> <li>Each thread is very much like a separate process, except for one difference: <ul> <li>All threads of the same process share the same address space and thus can access the same data.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc331/10-concurrency/01-480.webp 480w,/assets/img/courses/csc331/10-concurrency/01-800.webp 800w,/assets/img/courses/csc331/10-concurrency/01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc331/10-concurrency/01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <hr> <h2 id="thread-state-of-a-single-thread">Thread: state of a single thread</h2> <ul> <li>Each thread has its own PC.</li> <li>Each thread has its own private set of registers for computation.</li> <li>Context switching is still needed.</li> <li>Threads use Thread Control Blocks (TCP) to store their execution states.</li> <li>Context switching is similar to that of processes, except for: <ul> <li>Thread context-switching keep the same address space (i.e., no need to switch out the page table).</li> </ul> </li> </ul> <hr> <h2 id="example-web-server-using-thread">Example: web server using thread</h2> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre><span class="kt">int</span> <span class="n">global_counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">web_server</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sock</span> <span class="o">=</span> <span class="n">accept</span><span class="p">();</span>
+    <span class="n">thread_create</span><span class="p">(</span><span class="n">handle_request</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">handle_request</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">process</span> <span class="n">request</span><span class="p">;</span>
+  <span class="o">++</span><span class="n">global_counter</span><span class="p">;</span>
+  <span class="n">close</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="api-posix-threads-pthreads">API: POSIX threads (pthreads)</h2> <ul> <li>Standardized C language thread programming API.</li> <li> <code class="language-plaintext highlighter-rouge">pthreads</code> specifies the interface of using threads, but not how threads are implemented in OS.</li> <li>Different implementations include: <ul> <li>kernel-level threads,</li> <li>user-level threads, or</li> <li>hybrid</li> </ul> </li> <li><a href="http://man7.org/linux/man-pages/man3/pthread_create.3.html" rel="external nofollow noopener" target="_blank">pthread_create</a></li> <li><a href="http://man7.org/linux/man-pages/man3/pthread_join.3.html" rel="external nofollow noopener" target="_blank">pthread_join</a></li> </ul> <hr> <h2 id="hands-on-say-hello-to-my-little-threads-">Hands on: say hello to my little threads …</h2> <ul> <li>Create a directory named <code class="language-plaintext highlighter-rouge">concurrency</code> change to this directory</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">mkdir</span> ~/concurrency
+<span class="nb">cd</span> ~/concurrency
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Create <code class="language-plaintext highlighter-rouge">thread_hello.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d2f3a0b28b73a3f48c751410c6c91fd6.js?file=thread_hello.c"> </script> <ul> <li>Compile and run <code class="language-plaintext highlighter-rouge">thread_hello.c</code>:</li> </ul> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="n">gcc</span> <span class="o">-</span><span class="n">o</span> <span class="n">thread_hello</span> <span class="n">thread_hello</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">lpthread</span>
+<span class="p">.</span><span class="o">/</span><span class="n">thread_hello</span> <span class="mi">1</span>
+<span class="p">.</span><span class="o">/</span><span class="n">thread_hello</span> <span class="mi">2</span> 
+<span class="p">.</span><span class="o">/</span><span class="n">thread_hello</span> <span class="mi">4</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc331/10-concurrency/02-480.webp 480w,/assets/img/courses/csc331/10-concurrency/02-800.webp 800w,/assets/img/courses/csc331/10-concurrency/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc331/10-concurrency/02.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <hr> <h2 id="the-problem-with-threads">The problem with threads</h2> <details class="details details--default" data-variant="default"><summary>Edward Lee (2006). The Problem with Threads. Computer 39(5).</summary> <p>From a fundamental perspective, threads are seriously flawed as a computation model because they are wildly nondeterministic… The programmer’s job is to prune away that nondeterminism. We have developed tools to assist in the pruning: semaphores, monitors, and more modern overlays on threads offer the programmer ever more effective pruning. But pruning a wild mass of brambles rarely yields a satisfactory hedge. To offer another analogy, a folk definition of insanity is to do the same thing over and over again and expect the results to be different. By this definition, we in fact require that programmers of multithreaded systems be insane. Were they sane, they could not understand their programs.</p> </details> <hr> <h2 id="challenge">Challenge</h2> <ul> <li>Inside <code class="language-plaintext highlighter-rouge">concurrency</code>, change to this directory, and create <code class="language-plaintext highlighter-rouge">thread_matrix.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d2f3a0b28b73a3f48c751410c6c91fd6.js?file=thread_matrix.c"></script> <ul> <li>Find out how to enhance this implementation in the followings way: <ul> <li>Identify thread numbers and which sections of which matrices (A, B, and C) each thread is working on.</li> <li>How do you avoid random threads picking up specific work assignments over times?</li> </ul> </li> </ul> </body></html>

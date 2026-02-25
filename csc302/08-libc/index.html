@@ -1,0 +1,493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="return-to-libc">Return to libc</h1> <h2 id="overview">Overview</h2> <ul> <li>Malicious data are used to overflow a function’s return address in order to get the program to jump to a different location on the stack which stores malicious code.</li> <li>Existing counter-measures: <ul> <li>Random address in virtual address space: <code class="language-plaintext highlighter-rouge">echo 0 | sudo tee /proc/sys/kernel/randomize_va_space</code> <ul> <li>Making code on stack non-executable: <code class="language-plaintext highlighter-rouge">-z execstack</code> </li> <li>Prevent modification to the stack: <code class="language-plaintext highlighter-rouge">-fno-stack-protector</code> </li> </ul> </li> </ul> </li> <li>Create the following file, <code class="language-plaintext highlighter-rouge">shellcode.c</code>:</li> </ul> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=shellcode.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>seed@instructor:~<span class="nv">$ </span>gcc <span class="nt">-m32</span> <span class="nt">-z</span> execstack <span class="nt">-o</span> shellcode shellcode.c
+seed@instructor:~<span class="nv">$ </span>./shellcode
+seed@instructor:~<span class="nv">$ </span>gcc <span class="nt">-m32</span> <span class="nt">-o</span> shellcode shellcode.c
+seed@instructor:~<span class="nv">$ </span>./shellcode
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+</pre></td> <td class="rouge-code"><pre>
+## Attack design
+
+
+- Good countermeasure, but not enough.
+- If the stack is not executable, an alternative solution is to make 
+the program jump to where there are executable codes.
+- Enter the region for standard C library on Linux, called `libc`.
+
+
+
+
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc302/libc/libc_design-480.webp 480w,/assets/img/courses/csc302/libc/libc_design-800.webp 800w,/assets/img/courses/csc302/libc/libc_design-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc302/libc/libc_design.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Overview of libc attack"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+
+
+- Create a file named `stack.c`
+
+&lt;script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=stack_libc.c"&gt;&lt;/script&gt;
+
+- Compile stack with specific flags
+
+~~~bash
+gcc -m32 -fno-stack-protector -z noexecstack -o stack stack.c
+sudo sysctl -w kernel.randomize_va_space=0
+sudo chown root stack
+sudo chmod 4755 stack
+~~~
+
+- Flag meanings
+  - `fno-stack-protector`: disable protection against changes in stack
+  - `-z noexecstack`: actually turn on protection against executable stack
+  - `kernel.randomize_va_space=0`: disable address space layout randomization
+  - Afterward, turn the program into a root-owned set-UID program
+
+
+
+- Task A: find where in memory is `system()` located.
+- Task B: find the address of the `/bin/sh` string.
+- Task C: where to place the address of `/bin/sh` in the 
+stack so that system() can get to it.
+
+
+
+- Anytime a program runs, the `libc` library will be loaded into memory. 
+- Using `gdb`, we can find out the location of `system()` with the 
+following commands:
+
+~~~bash
+gdb stack
+~~~
+
+- This is to bring up `gdb-peda`. We don't need a `-g` enabled version 
+for the followings: 
+
+~~~bash
+(gdb-peda)$ run
+(gdb-peda)$ p system
+(gdb-peda)$ p exit
+(gdb-peda)$ quit
+~~~
+
+- Rerun the entire process. several time to ensure that 
+the addresses doesn’t change, and **record the values**.
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>We want <code class="language-plaintext highlighter-rouge">system()</code> to execute <code class="language-plaintext highlighter-rouge">/bin/sh</code>.</li> <li>Therefore, <code class="language-plaintext highlighter-rouge">/bin/sh</code> must be in memory, and its address should be passed to <code class="language-plaintext highlighter-rouge">system()</code> as an argument.</li> <li>We cannot embed this in the source code (no access to source code of vulnerable program).</li> <li>Solution: <ul> <li>Utilize environment variables</li> </ul> </li> <li>Create a file named <code class="language-plaintext highlighter-rouge">find_myshell.c</code> </li> </ul> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=find_myshell.c"></script> <ul> <li>Create the EV, then compile and run find_myshell.c</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="nb">export </span><span class="nv">MYSHELL</span><span class="o">=</span><span class="s2">"/bin/sh"</span>
+gcc <span class="nt">-m32</span> <span class="nt">-o</span> myshell find_myshell.c
+./myshell
+gcc <span class="nt">-m32</span> <span class="nt">-o</span> myshell0 find_myshell.c
+./myshell0
+gcc <span class="nt">-m32</span> <span class="nt">-o</span> myshell1 find_myshell.c
+./myshell1
+gcc <span class="nt">-m32</span> <span class="nt">-o</span> myshell22 find_myshell.c
+./myshell22
+gcc <span class="nt">-m32</span> <span class="nt">-o</span> myshell222 find_myshell.c
+./myshell222
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>What is your observation regarding memory position of environment variables?</p> </li> <li>In buffer overflow, we manually place both <code class="language-plaintext highlighter-rouge">system()</code> and its corresponding arguments on the stack for execution.</li> <li>In <code class="language-plaintext highlighter-rouge">return-to-libc</code>, we invoke <code class="language-plaintext highlighter-rouge">system()</code> remotely.</li> <li>How can we place the corresponding arguments onto the stack? <ul> <li> <code class="language-plaintext highlighter-rouge">$esp</code>: Stack register</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/function_prologue_1-480.webp 480w,/assets/img/courses/csc302/libc/function_prologue_1-800.webp 800w,/assets/img/courses/csc302/libc/function_prologue_1-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/function_prologue_1.png" width="50%" height="auto" alt="Function prologue 1" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>What happens just before a function is called?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>pushl %ebp
+movl %esp, %ebp
+subl <span class="nv">$N</span>, %esp
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Return address (RA) is pushed onto the stack.</li> <li>Save (push) the caller function’s frame pointer (ebp)</li> <li>Set frame pointer to the stack pointer (esp) ’s current position</li> <li>Move the stack pointer by several bytes, leaving spaces for the local variables of the function.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/function_prologue_2-480.webp 480w,/assets/img/courses/csc302/libc/function_prologue_2-800.webp 800w,/assets/img/courses/csc302/libc/function_prologue_2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/function_prologue_2.png" width="50%" height="auto" alt="Function prologue 2" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>What happens just before a function is completed?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>movl %ebp, %esp
+popl %ebp
+ret
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Move <code class="language-plaintext highlighter-rouge">%esp</code> to where the frame pointer points to (releasing the stack space for variables).</li> <li>Most most recent value of <code class="language-plaintext highlighter-rouge">%ebp</code>, return it to point to the previous frame pointer.</li> <li>Pops the return address from the stack, then jump to it, and move <code class="language-plaintext highlighter-rouge">%esp</code> to the top of the previous stack frame</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/function_epilogue-480.webp 480w,/assets/img/courses/csc302/libc/function_epilogue-800.webp 800w,/assets/img/courses/csc302/libc/function_epilogue-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/function_epilogue.png" width="50%" height="auto" alt="Function epilogue" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The malicious function did finish properly. <ul> <li>Its function epilogue was called.</li> <li>We know the location of $esp.</li> </ul> </li> <li>The malicious call redirect RA (next instruction) to a new function. <ul> <li>Activate this new function prologue</li> <li>But this new function will rely on values in <code class="language-plaintext highlighter-rouge">$esp</code> for execution</li> <li>We need to manipulate <code class="language-plaintext highlighter-rouge">$esp</code> </li> </ul> </li> <li>Observation <ul> <li> <code class="language-plaintext highlighter-rouge">$esp</code> and <code class="language-plaintext highlighter-rouge">$ebp</code> are values from vul_func(), but they are changed due to the procedural execution of vul_func()’s epilogue and system()’s prologue.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/vul_func-480.webp 480w,/assets/img/courses/csc302/libc/vul_func-800.webp 800w,/assets/img/courses/csc302/libc/vul_func-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/vul_func.png" width="50%" height="auto" alt="How changes are made" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+</pre></td> <td class="rouge-code"><pre>
+## Attack
+
+
+- Compile `gdb_stack` 
+
+~~~bash
+gcc -m32 -fno-stack-protector -z noexecstack -g -o gdb_stack stack.c
+gdb gdb_stack
+~~~
+
+- Run `gdb_stack` with the following steps
+
+~~~bash
+gdb-peda$ break vul_func
+gdb-peda$ run
+gdb-peda$ n
+gdb-peda$ p $ebp
+gdb-peda$ p &amp;buffer
+gdb-peda$ p hex_value_from_ebp - hex_value_from_buffer
+gdb-peda$ quit
+~~~
+
+- The distance should be `0x3e` (`62`)
+- Offsets
+  - Offset of 3 is distance + 4: address of `system()`
+  - Offset of 2 is distance + 8: address of `exit()`
+  - Offset of 1 is distance plus 12: address of `/bin/sh`
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc302/libc/distance-480.webp 480w,/assets/img/courses/csc302/libc/distance-800.webp 800w,/assets/img/courses/csc302/libc/distance-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc302/libc/distance.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Distance and offsets"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+
+
+&lt;script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=ret_to_libc_exploit.c"&gt;&lt;/script&gt;
+
+~~~bash
+gcc -o kcats find_myshell.c
+./kcats
+~~~
+
+- Keep track of the `/bin/sh` address. 
+- Use the recorded address from `system` and `exit`, and 
+the `/bin/sh` address to modify `ret_to_libc_exploit.c`. 
+
+
+
+~~~bash
+gcc -m32 -o exploit ret_to_libc_exploit.c; ./exploit; ./stack
+~~~
+
+</pre></td> </tr></tbody></table></code></pre></div></div> </body></html>

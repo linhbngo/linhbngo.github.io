@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="kubernetes-pvpvc-hands-on-lab-with-nfs">Kubernetes PV/PVC Hands-On Lab with NFS</h1> <p>This lab demonstrates how to replace an <code class="language-plaintext highlighter-rouge">emptyDir</code> volume with a <strong>PersistentVolume</strong> (PV) and <strong>PersistentVolumeClaim</strong> (PVC) backed by an NFS export.</p> <p>We will use the cluster’s NFS server (<code class="language-plaintext highlighter-rouge">192.168.1.1</code>) with exports under <code class="language-plaintext highlighter-rouge">/opt/{home,software,scratch}</code>. In this lab, we use <code class="language-plaintext highlighter-rouge">/opt/scratch</code>.</p> <hr> <h2 id="pre-check">Pre-Check</h2> <p>On the <strong>head node</strong>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>showmount <span class="nt">-e</span> 192.168.1.1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>On <strong>each Kubernetes node</strong>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>mount | egrep <span class="s1">'/opt/(home|software|scratch)'</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="create-a-namespace">Create a Namespace</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl create ns pv-lab <span class="o">||</span> <span class="nb">true</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="persistentvolume-pv">PersistentVolume (PV)</h2> <p>Save the following manifest as <strong>pv-nfs-scratch.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolume</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">pv-nfs-scratch</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">capacity</span><span class="pi">:</span>
+    <span class="na">storage</span><span class="pi">:</span> <span class="s">1Gi</span>
+  <span class="na">accessModes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">ReadWriteMany</span>
+  <span class="na">persistentVolumeReclaimPolicy</span><span class="pi">:</span> <span class="s">Retain</span>
+  <span class="na">mountOptions</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">nfsvers=4.2</span>
+    <span class="pi">-</span> <span class="s">nolock</span>
+  <span class="na">nfs</span><span class="pi">:</span>
+    <span class="na">server</span><span class="pi">:</span> <span class="s">192.168.1.1</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">/opt/scratch</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply and check</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pv-nfs-scratch.yaml
+kubectl get pv pv-nfs-scratch <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="persistentvolumeclaim-pvc">PersistentVolumeClaim (PVC)</h2> <p>Save the following manifest as <strong>pvc-scratch.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolumeClaim</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">scratch-pvc</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">accessModes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">ReadWriteMany</span>
+  <span class="na">resources</span><span class="pi">:</span>
+    <span class="na">requests</span><span class="pi">:</span>
+      <span class="na">storage</span><span class="pi">:</span> <span class="s">512Mi</span>
+  <span class="na">volumeName</span><span class="pi">:</span> <span class="s">pv-nfs-scratch</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply and test:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pvc-scratch.yaml
+kubectl <span class="nt">-n</span> pv-lab get pvc scratch-pvc <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="pod-with-pvc">Pod with PVC</h2> <p>This pod has two containers sharing the same PVC, just like the <code class="language-plaintext highlighter-rouge">emptyDir</code> example.</p> <p>Save as <strong>pod-pvc.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">pvc-pod</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">securityContext</span><span class="pi">:</span>
+    <span class="na">fsGroup</span><span class="pi">:</span> <span class="m">2000</span>
+  <span class="na">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-app-container</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/data</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-sidecar-container</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">echo</span><span class="nv"> </span><span class="s">'hello</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">sidecar'</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">/shared/file.txt</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">3600"</span><span class="pi">]</span>
+    <span class="na">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/shared</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+    <span class="na">persistentVolumeClaim</span><span class="pi">:</span>
+      <span class="na">claimName</span><span class="pi">:</span> <span class="s">scratch-pvc</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pod-pvc.yaml
+kubectl <span class="nt">-n</span> pv-lab get pod pvc-pod <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>pvc-pod <span class="nt">-c</span> my-sidecar-container <span class="nt">--</span> <span class="nb">cat</span> /shared/file.txt
+kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>pvc-pod <span class="nt">-c</span> my-app-container <span class="nt">--</span> <span class="nb">ls</span> <span class="nt">-l</span> /var/data
+<span class="nb">ls</span> /opt/scratch
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="multi-pod-rwx-proof">Multi-Pod RWX Proof</h2> <p>Deploy a second pod that appends to the same file.</p> <p>Save as <strong>pod-pvc-reader.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">pvc-pod-reader</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">tailer</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span><span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span><span class="s2">"</span><span class="s">while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">date</span><span class="nv"> </span><span class="s">&gt;&gt;</span><span class="nv"> </span><span class="s">/mnt/file.txt;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">2;</span><span class="nv"> </span><span class="s">done"</span><span class="pi">]</span>
+    <span class="na">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/mnt</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+    <span class="na">persistentVolumeClaim</span><span class="pi">:</span>
+      <span class="na">claimName</span><span class="pi">:</span> <span class="s">scratch-pvc</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pod-pvc-reader.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Check from the first pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>pvc-pod <span class="nt">-c</span> my-sidecar-container <span class="nt">--</span> <span class="nb">tail</span> <span class="nt">-f</span> /shared/file.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>You should see timestamps being appended by the second pod.</p> <hr> <h2 id="reclaim-policy-demo">Reclaim Policy Demo</h2> <p>Delete the PVC:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab delete pvc scratch-pvc
+kubectl get pv pv-nfs-scratch <span class="nt">-o</span> yaml | egrep <span class="s1">'phase:|claimRef'</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The PV enters <code class="language-plaintext highlighter-rouge">Released</code> phase, but the data <strong>remains</strong> on NFS (<code class="language-plaintext highlighter-rouge">/opt/scratch</code>).</p> <p>Clear the claim reference if you want to reuse the PV:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl patch pv pv-nfs-scratch <span class="nt">--type</span><span class="o">=</span>json <span class="nt">-p</span><span class="o">=</span><span class="s1">'[{"op":"remove","path":"/spec/claimRef"}]'</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="cleanup">Cleanup</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab delete pod pvc-pod pvc-pod-reader <span class="nt">--ignore-not-found</span>
+kubectl <span class="nt">-n</span> pv-lab delete pvc scratch-pvc <span class="nt">--ignore-not-found</span>
+kubectl delete pv pv-nfs-scratch <span class="nt">--ignore-not-found</span>
+kubectl delete ns pv-lab <span class="nt">--ignore-not-found</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </body></html>

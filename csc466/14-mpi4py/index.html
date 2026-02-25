@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="mpi-in-python-mpi4py">MPI in Python: mpi4py</h1> <details class="details details--default" data-variant="default"><summary>Final Exam</summary> <ul> <li>Final Exam: May 7, 1:00PM - 3:00PM</li> </ul> </details> <h2 id="overview">Overview</h2> <details class="details details--default" data-variant="default"><summary>Similarity</summary> <ul> <li>Workflow similar to C’s interface</li> <li>Slightly different naming scheme (e.g. MPI.COMM_WORLD instead of MPI_COMM_WORLD)</li> <li><a href="https://mpi4py.readthedocs.io/en/stable/" rel="external nofollow noopener" target="_blank">Documentation</a></li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Example</summary> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">first.py</code> </li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="c1">#!/usr/bin/env /opt/env/python3/bin/python
+</span><span class="kn">from</span> <span class="n">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+
+<span class="n">comm</span> <span class="o">=</span> <span class="n">MPI</span><span class="p">.</span><span class="n">COMM_WORLD</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_rank</span><span class="p">()</span>
+<span class="n">size</span> <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_size</span><span class="p">()</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">MPI</span><span class="p">.</span><span class="nc">Get_processor_name</span><span class="p">()</span>
+
+<span class="nf">print </span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Hello world from process </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s"> running on host </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> out of </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s"> processes</span><span class="sh">"</span><span class="p">)</span> 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>To run:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">chmod </span>755 first.py
+mpirun <span class="nt">--host</span> compute01:2,compute02:2 ./first.py
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="hands-on">Hands-on</h2> <ul> <li>For all communication, the core MPI interface requires data to be written into a buffer.</li> <li>This can be done via numpy.</li> </ul> <table> <thead> <tr> <th>Array-protocol</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td>’?’</td> <td>boolean</td> </tr> <tr> <td>‘b’</td> <td>(signed) byte</td> </tr> <tr> <td>‘B’</td> <td>unsigned byte</td> </tr> <tr> <td>‘i’</td> <td>(signed) integer</td> </tr> <tr> <td>‘u’</td> <td>unsigned integer</td> </tr> <tr> <td>‘f’</td> <td>floating-point</td> </tr> <tr> <td>‘c’</td> <td>complex-floating point</td> </tr> <tr> <td>‘m’</td> <td>timedelta</td> </tr> <tr> <td>‘M’</td> <td>datetime</td> </tr> <tr> <td>‘O’</td> <td>(Python) objects</td> </tr> <tr> <td>‘U’</td> <td>Unicode string</td> </tr> <tr> <td>‘V’</td> <td>raw data (void)</td> </tr> </tbody> </table> <ul> <li>Example:</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td> <td class="rouge-code"><pre><span class="kn">from</span> <span class="n">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">comm</span> <span class="o">=</span> <span class="n">MPI</span><span class="p">.</span><span class="n">COMM_WORLD</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_rank</span><span class="p">()</span>
+<span class="n">size</span> <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_size</span><span class="p">()</span>
+
+<span class="n">buf</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">d</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rank</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Process </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s"> has original value </span><span class="si">{</span><span class="n">buf</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">comm</span><span class="p">.</span><span class="nc">Send</span><span class="p">([</span><span class="n">buf</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">DOUBLE</span><span class="p">],</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">comm</span><span class="p">.</span><span class="nc">Recv</span><span class="p">([</span><span class="n">buf</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">DOUBLE</span><span class="p">],</span><span class="mi">1</span><span class="p">)</span>
+  
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">comm</span><span class="p">.</span><span class="nc">Recv</span><span class="p">([</span><span class="n">buf</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">DOUBLE</span><span class="p">],</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">comm</span><span class="p">.</span><span class="nc">Send</span><span class="p">([</span><span class="n">buf</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">DOUBLE</span><span class="p">],</span><span class="mi">0</span><span class="p">)</span>  
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Process </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s"> now has value </span><span class="si">{</span><span class="n">buf</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li><a href="https://github.com/linhbngo/cpsc-3620/blob/master/05-intro-to-mpi.ipynb" rel="external nofollow noopener" target="_blank">Point-to-point</a></li> <li><a href="https://github.com/linhbngo/cpsc-3620/blob/master/06-pleasantly-parallel.ipynb" rel="external nofollow noopener" target="_blank">Pleasantly parallel</a></li> </ul> <details class="details details--default" data-variant="default"><summary>Scatterv</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td> <td class="rouge-code"><pre><span class="c1"># scatterv_demo.py
+</span><span class="kn">from</span> <span class="n">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">comm</span>  <span class="o">=</span> <span class="n">MPI</span><span class="p">.</span><span class="n">COMM_WORLD</span>
+<span class="n">rank</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_rank</span><span class="p">()</span>
+<span class="n">size</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_size</span><span class="p">()</span>
+
+<span class="c1"># ----- set-up on the root -----
+</span><span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">counts</span>  <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>          <span class="c1"># [1,2,3,...]
+</span>    <span class="n">displs</span>  <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">cumsum</span><span class="p">(</span><span class="n">counts</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>    <span class="c1"># starting offsets
+</span>    <span class="n">sendbuf</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="n">counts</span><span class="p">.</span><span class="nf">sum</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>         <span class="c1"># [0,1,2,…,N-1]
+</span><span class="k">else</span><span class="p">:</span>                                    <span class="c1"># other ranks allocate nothing yet
+</span>    <span class="n">counts</span> <span class="o">=</span> <span class="n">displs</span> <span class="o">=</span> <span class="n">sendbuf</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c1"># everyone needs counts/displs to size their receive buffer
+</span><span class="n">counts</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nf">bcast</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span>  <span class="n">root</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">displs</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nf">bcast</span><span class="p">(</span><span class="n">displs</span><span class="p">,</span>  <span class="n">root</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">recvbuf</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">empty</span><span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">rank</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">comm</span><span class="p">.</span><span class="nc">Scatterv</span><span class="p">([</span><span class="n">sendbuf</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">displs</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">INT</span><span class="p">],</span> <span class="n">recvbuf</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># :contentReference[oaicite:0]{index=0}
+</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Rank </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s"> received </span><span class="si">{</span><span class="n">recvbuf</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Gatherv</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td> <td class="rouge-code"><pre><span class="kn">from</span> <span class="n">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">comm</span>  <span class="o">=</span> <span class="n">MPI</span><span class="p">.</span><span class="n">COMM_WORLD</span>
+<span class="n">rank</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_rank</span><span class="p">()</span>
+<span class="n">size</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_size</span><span class="p">()</span>
+
+<span class="c1"># each rank prepares different-size data
+</span><span class="n">sendbuf</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">full</span><span class="p">(</span><span class="n">rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>   <span class="c1"># length = rank+1
+</span><span class="n">sendcnt</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">sendbuf</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># root gathers the individual counts
+</span><span class="n">recvcounts</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">recvcounts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">empty</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">comm</span><span class="p">.</span><span class="nc">Gather</span><span class="p">(</span><span class="n">sendcnt</span><span class="p">,</span> <span class="n">recvcounts</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">displs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">cumsum</span><span class="p">(</span><span class="n">recvcounts</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">recvbuf</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">empty</span><span class="p">(</span><span class="n">recvcounts</span><span class="p">.</span><span class="nf">sum</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">displs</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">recvbuf</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="n">comm</span><span class="p">.</span><span class="nc">Gatherv</span><span class="p">(</span><span class="n">sendbuf</span><span class="p">,[</span><span class="n">recvbuf</span><span class="p">,</span> <span class="n">recvcounts</span><span class="p">,</span> <span class="n">displs</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">INT</span><span class="p">]</span> <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span><span class="n">root</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>                                                
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Root collected:</span><span class="sh">"</span><span class="p">,</span> <span class="n">recvbuf</span><span class="p">,</span> <span class="sh">"</span><span class="s">(counts</span><span class="sh">"</span><span class="p">,</span> <span class="n">recvcounts</span><span class="p">.</span><span class="nf">tolist</span><span class="p">(),</span> <span class="sh">"</span><span class="s">)</span><span class="sh">"</span><span class="p">)</span>
+
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Alltoallv</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> <td class="rouge-code"><pre><span class="kn">from</span> <span class="n">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">comm</span>  <span class="o">=</span> <span class="n">MPI</span><span class="p">.</span><span class="n">COMM_WORLD</span>
+<span class="n">rank</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_rank</span><span class="p">()</span>
+<span class="n">size</span>  <span class="o">=</span> <span class="n">comm</span><span class="p">.</span><span class="nc">Get_size</span><span class="p">()</span>
+
+<span class="c1"># send (rank+1) ints to *each* peer → total send count = (rank+1)*size
+</span><span class="n">sendcounts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">full</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">senddispls</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sendbuf</span>    <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">full</span><span class="p">(</span><span class="n">sendcounts</span><span class="p">.</span><span class="nf">sum</span><span class="p">(),</span> <span class="n">rank</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>   <span class="c1"># filled with my rank ID
+</span>
+<span class="c1"># expect j+1 ints from sender j
+</span><span class="n">recvcounts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">recvdispls</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">insert</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">cumsum</span><span class="p">(</span><span class="n">recvcounts</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">recvbuf</span>    <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">empty</span><span class="p">(</span><span class="n">recvcounts</span><span class="p">.</span><span class="nf">sum</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">i</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">comm</span><span class="p">.</span><span class="nc">Alltoallv</span><span class="p">([</span><span class="n">sendbuf</span><span class="p">,</span> <span class="n">sendcounts</span><span class="p">,</span> <span class="n">senddispls</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">INT</span><span class="p">],[</span><span class="n">recvbuf</span><span class="p">,</span> <span class="n">recvcounts</span><span class="p">,</span> <span class="n">recvdispls</span><span class="p">,</span> <span class="n">MPI</span><span class="p">.</span><span class="n">INT</span><span class="p">])</span>        
+
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Rank </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s"> received </span><span class="si">{</span><span class="n">recvbuf</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <ul> <li><a href="https://github.com/linhbngo/cpsc-3620/blob/master/07-divide-and-conquer.ipynb" rel="external nofollow noopener" target="_blank">Divide and conquer</a></li> </ul> </body></html>

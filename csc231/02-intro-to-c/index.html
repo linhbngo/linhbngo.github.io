@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="introduction-to-c">Introduction to C</h1> <p>:class: tip</p> <p>This lecture will cover contents from <a href="https://diveintosystems.org/book/Appendix1/index.html" rel="external nofollow noopener" target="_blank">Chapter 1 - Appendix version</a> of the book.</p> <p>```</p> <h2 id="what-is-c">What is C?</h2> <h3 id="overview">Overview</h3> <ul> <li>Developed by Dennis Ritchie at Bell Labs</li> <li>First public released in 1972.</li> <li> <strong>The</strong> book: *The C programming languange” by Dennis M. Ritchie and Brian W. Kernighan. Prentice Hall 1988.</li> </ul> <p>:::{dropdown} How to learn C (now that you already know Java)?</p> <ul> <li><a href="https://www.cs.rochester.edu/u/ferguson/csc/c/c-for-java-programmers.pdf" rel="external nofollow noopener" target="_blank">C for Java programmers</a></li> <li><a href="https://introcs.cs.princeton.edu/java/faq/c2java.html" rel="external nofollow noopener" target="_blank">C programming vs. Java programming</a></li> </ul> <p>:::</p> <h3 id="scary-stuff-ahead-">Scary stuff ahead …</h3> <ul> <li>C is much less supportive for programmers than Java.</li> <li>(Much) easier to make mistake, and (much) harder to fix.</li> </ul> <h3 id="but-it-is-exciting-">But it is exciting …</h3> <ul> <li>C requires less memory resources than Java.</li> <li>C, in many instances, runs faster than Java.</li> <li>Knowing C will make you a better programmer overall.</li> </ul> <h2 id="c-and-java">C and Java</h2> <p>:::::{tab-set} ::::{tab-item} hello.c</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="cm">/* main function definition: */</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello World</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"sqrt(4) is %f</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// main returns value 0</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::::</p> <p>::::{tab-item} hello.java</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">java.lang.Math</span><span class="o">;</span>
+
+<span class="cm">/* define a HelloWorld class */</span>
+<span class="kd">class</span> <span class="nc">Hello</span> <span class="o">{</span>
+
+  <span class="cm">/* main method definition: */</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Hello World"</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"sqrt(4) is "</span> <span class="o">+</span> <span class="nc">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="mi">4</span><span class="o">));</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: :::::</p> <h3 id="similarities">Similarities</h3> <ul> <li>Values, types, literals, expressions</li> <li>Variables</li> <li>Control flow (if, switch, while, for, do-while)</li> <li>Call-return: parameters, arguments, return values</li> <li>Arrays (mostly)</li> <li>Primitive and reference types</li> <li>Type casting.</li> <li>Library usage.</li> </ul> <h3 id="differences">Differences</h3> <ul> <li>C has no classes or objects (but something similar)</li> <li>C is not object-oriented.</li> <li>C arrays are simpler: <ul> <li>No boundary checking.</li> <li>No knowledge of array’s own size.</li> </ul> </li> <li>String operations are limited.</li> <li>No collections, exceptions, or generics.</li> <li>No automatic memory management.</li> <li><strong>Pointers!!!</strong></li> </ul> <p>:::::{tab-set} ::::{tab-item} Running Java</p> <p>:::{image} fig/02-c/java.png :alt: Java compilation and execution :class: bg-primary mb-1 :align: center :::</p> <p>:::: ::::{tab-item} Running C</p> <p>:::{image} fig/02-c/c.png :alt: C compilation and execution :class: bg-primary mb-1 :align: center :::</p> <p>:::: :::::</p> <h2 id="hands-on-getting-started">Hands-on: Getting started</h2> <ul> <li>SSH to <code class="language-plaintext highlighter-rouge">molly</code>. Refer to the Setup page if you need a refresher on how to do so.</li> <li>Change into <code class="language-plaintext highlighter-rouge">csc231</code> from inside your home directory. <ul> <li>Your home directory is represented by the <code class="language-plaintext highlighter-rouge">~</code> sign.</li> </ul> </li> <li>Create a directory named <code class="language-plaintext highlighter-rouge">intro-c</code> inside <code class="language-plaintext highlighter-rouge">csc231</code>, then change into that directory.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>cd ~/csc231
+pwd
+mkdir intro-c
+ls
+cd intro-c
+pwd
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{image} fig/02-c/02.png :alt: create intro-c directory :class: bg-primary mb-1 :align: center :::</p> <h3 id="create-helloc">Create hello.c</h3> <ul> <li>Inside the terminal, make sure that you are still inside <code class="language-plaintext highlighter-rouge">intro-c</code>, then use <code class="language-plaintext highlighter-rouge">nano</code> to create <code class="language-plaintext highlighter-rouge">hello.c</code>with the source code below.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>pwd
+nano -l hello.c
+</pre></td> </tr></tbody></table></code></pre></div></div> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=hello.c"></script> <ul> <li>Once finished editing in <code class="language-plaintext highlighter-rouge">nano</code>: <ul> <li>first hit <code class="language-plaintext highlighter-rouge">Ctrl-X</code> (same for both Windows and Mac).</li> <li>Next hit <code class="language-plaintext highlighter-rouge">Y</code> to save modified buffer (new contents).</li> <li>Hit <code class="language-plaintext highlighter-rouge">Enter</code> to save to the same file name as what you opened with.</li> </ul> </li> <li> <strong>Memorize your key-combos!</strong>.</li> </ul> <p>:::{image} fig/02-c/03.png :alt: Create hello.c using nano :class: bg-primary mb-1 :align: center :::</p> <h3 id="whats-in-the-code">What’s in the code?</h3> <ul> <li>Line 1: Standard C library for I/O, similar to Java’s <code class="language-plaintext highlighter-rouge">import</code>.</li> <li>Line 2-4: Function declaration/definition for <code class="language-plaintext highlighter-rouge">main</code>: <ul> <li>Line 2: <ul> <li>return type: <code class="language-plaintext highlighter-rouge">int</code> </li> <li>function name: <code class="language-plaintext highlighter-rouge">main</code> </li> <li>parameter list: <ul> <li> <code class="language-plaintext highlighter-rouge">argc</code>: number of command line arguments.</li> <li> <code class="language-plaintext highlighter-rouge">*argv[]</code>: pointers to array of command line argument strings.</li> </ul> </li> </ul> </li> <li>Line 3: Invoke builtin function <code class="language-plaintext highlighter-rouge">printf</code> to print out string <code class="language-plaintext highlighter-rouge">Hello world!</code> with an end-of-line character <code class="language-plaintext highlighter-rouge">\n</code>. This is similar to <code class="language-plaintext highlighter-rouge">System.out.printf</code>.</li> <li>Line 4: Exit a successfully executed program with a return value of 0.</li> </ul> </li> </ul> <h4 id="hands-on-simple-compile-and-run">Hands-on: Simple compile and run</h4> <ul> <li>Similar to <code class="language-plaintext highlighter-rouge">javac</code>, we use <code class="language-plaintext highlighter-rouge">gcc</code> to compile C code.</li> <li>Before compile, make sure that you are still inside <code class="language-plaintext highlighter-rouge">intro-c</code> in the terminal.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>ls
+pwd
+gcc -o hello hello.c
+ls
+./hello
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{image} fig/02-c/04.png :alt: Creating hello.c using nano :class: bg-primary mb-1 :align: center :::</p> <h3 id="hands-on-compile-and-show-everything">Hands-on: Compile and show everything</h3> <ul> <li>There are a number of steps from C codes to executable binaries.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>ls -l
+gcc -save-temps -o hello2 hello.c
+ls -l
+./hello2
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{image} fig/02-c/05.png :alt: compile and run hello.c, keeping intermediate files :class: bg-primary mb-1 :align: center :::</p> <h3 id="what-are-those">What are those?</h3> <ul> <li> <code class="language-plaintext highlighter-rouge">hello.i</code>: generated by pre-processor</li> <li> <code class="language-plaintext highlighter-rouge">hello.s</code>: generated by compiler.</li> <li> <code class="language-plaintext highlighter-rouge">hello.o</code>: generated by assembler.</li> <li> <code class="language-plaintext highlighter-rouge">hello</code> (or <code class="language-plaintext highlighter-rouge">hello2</code>): executable, generated by linker.</li> </ul> <p>:::{image} fig/02-c/06.png :alt: hello.c compilation process :class: bg-primary mb-1 :align: center :::</p> <h3 id="hands-on-view-files">Hands-on: View files</h3> <ul> <li>For <code class="language-plaintext highlighter-rouge">hello.i</code> and <code class="language-plaintext highlighter-rouge">hello.s</code>, they can be view on the editor.</li> <li>Run the following command to view <code class="language-plaintext highlighter-rouge">hello.i</code> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>cat -n hello.i
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Run the following command to view <code class="language-plaintext highlighter-rouge">hello.s</code> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>cat -n hello.s
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>For <code class="language-plaintext highlighter-rouge">hello.o</code> and <code class="language-plaintext highlighter-rouge">hello</code>, we need to dump the binary contents first.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>xxd -b hello.o hello.o.txt
+xxd -b hello hello.txt
+ls -l
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{image} fig/02-c/07.png :alt: hexdumping hello.c and hello :class: bg-primary mb-1 :align: center :::</p> <ul> <li>Run the following command to view <code class="language-plaintext highlighter-rouge">hello.o.txt</code> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>cat -n hello.o.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Run the following command to view <code class="language-plaintext highlighter-rouge">hello.txt</code> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>cat -n hello.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="challenge-output">Challenge: output</h2> <p>The usage of C’s <code class="language-plaintext highlighter-rouge">printf</code> is similar to Java’s <code class="language-plaintext highlighter-rouge">System.out.printf</code>. Find out how to modify <code class="language-plaintext highlighter-rouge">hello.c</code> so that the program prints out <code class="language-plaintext highlighter-rouge">Hello Golden Rams!</code> with each word on a single line. The program should use exactly one <code class="language-plaintext highlighter-rouge">printf</code> statement.</p> <p>:::{dropdown} Answer</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=hello-3.c"></script> <p>:::</p> <h2 id="input-scanf">Input: scanf</h2> <p>C formatting placeholders: (similar to Java)</p> <ul> <li> <code class="language-plaintext highlighter-rouge">%g</code>: placeholder for a float (or double) value</li> <li> <code class="language-plaintext highlighter-rouge">%d</code>: placeholder for a decimal value (int, short, char)</li> <li> <code class="language-plaintext highlighter-rouge">%s</code>: placeholder for a string value</li> <li> <code class="language-plaintext highlighter-rouge">%c</code>: placeholder for a char value</li> </ul> <p>:::::{tab-set} ::::{tab-item} readInput.c</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">;</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Enter a number: "</span><span class="p">);</span>
+  <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num1</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Enter another: "</span><span class="p">);</span>
+  <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num2</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"%d + %d = %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">,</span> <span class="p">(</span><span class="n">num1</span><span class="o">+</span><span class="n">num2</span><span class="p">)</span> <span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::::</p> <p>::::{tab-item} InputReader.java</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">InputReader</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">num1</span><span class="o">,</span> <span class="n">num2</span><span class="o">;</span>
+    <span class="nc">Scanner</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"Enter a number: "</span><span class="o">);</span>
+    <span class="n">num1</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"Enter another: "</span><span class="o">);</span>
+    <span class="n">num2</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span> <span class="s">"%d + %d = %d\n"</span><span class="o">,</span>
+          <span class="n">num1</span><span class="o">,</span> <span class="n">num2</span><span class="o">,</span> <span class="o">(</span><span class="n">num1</span><span class="o">+</span><span class="n">num2</span><span class="o">)</span> <span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: :::::</p> <h2 id="challenge">Challenge</h2> <p>Create a file called <strong>mixedInput.c</strong> that is modified from <strong>readInput.c</strong>. The file should do the followings:</p> <ul> <li>Ask user to provide three input of type <strong>float</strong> </li> <li>Print out the multiplication statement with all the multiplicants and results as done in <strong>readInput.c</strong>.</li> </ul> <p>:::{dropdown} Answer</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">float</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">,</span> <span class="n">num3</span><span class="p">;</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Enter a number: "</span><span class="p">);</span>
+  <span class="n">scanf</span><span class="p">(</span><span class="s">"%g"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num1</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Enter another: "</span><span class="p">);</span>
+  <span class="n">scanf</span><span class="p">(</span><span class="s">"%g"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num2</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Enter another: "</span><span class="p">);</span>
+  <span class="n">scanf</span><span class="p">(</span><span class="s">"%g"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num3</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"%g * %g * %g = %g</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">,</span> <span class="n">num3</span><span class="p">,</span> <span class="p">(</span><span class="n">num1</span><span class="o">*</span><span class="n">num2</span><span class="o">*</span><span class="n">num3</span><span class="p">)</span> <span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::</p> <h2 id="conditionals-and-loops">Conditionals and Loops</h2> <p>Similar to Java.</p> <ul> <li>Conditionals: <strong>compare.c</strong> </li> </ul> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Enter the 1st number: "</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num1</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Enter the 2nd number: "</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num2</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">num1</span> <span class="o">&gt;</span> <span class="n">num2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%d is biggest</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">num1</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">num1</span> <span class="o">==</span> <span class="n">num2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%d and %d are the same</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%d is biggest</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">num2</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Loops</li> </ul> <p>:::::{tab-set} ::::{tab-item} forLoop.c</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Enter a value: "</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">);</span>
+    <span class="c1">// make sure num is not negative</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="o">-</span><span class="n">num</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::::</p> <p>::::{tab-item} whileLoop.c</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="n">val</span><span class="p">;</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Enter a value: "</span><span class="p">);</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">);</span>
+    <span class="c1">// make sure num is not negative</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="o">-</span><span class="n">num</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">val</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: :::::</p> <h2 id="function-in-c">Function in C</h2> <ul> <li>Almost the same as methods in Java, except for one small difference.</li> <li>They need to either be declared, or must be defined prior to being called (relative to written code position).</li> </ul> <p>::::{dropdown} Hands-on: Functions in C - definition and declaration</p> <ul> <li>Create three C files, <code class="language-plaintext highlighter-rouge">function-1.c</code>, <code class="language-plaintext highlighter-rouge">function-2.c</code>, and <code class="language-plaintext highlighter-rouge">function-3.c</code>, with the source codes below:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=function-1.c"></script> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=function-2.c"></script> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=function-3.c"></script> <ul> <li>Compile and run these files.</li> </ul> <p>:::{image} fig/02-c/23.png :alt: Compile and run function-1.c, function-2.c, function-3.c :class: bg-primary mb-1 :height: 250px :align: center ::: ::::</p> <h2 id="arrays">Arrays</h2> <ul> <li>Statically declared arrays</li> <li>Multiple data values of the same types</li> <li>Adjancent locations in memory (we will talk about this in the future)</li> <li>Inside the terminal, make suse that you are still inside <code class="language-plaintext highlighter-rouge">intro-c</code>, then use <code class="language-plaintext highlighter-rouge">nano</code> to create <code class="language-plaintext highlighter-rouge">array-1.c</code>with the source code below.</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=array-1.c"></script> <ul> <li>What is the distance between addresses? Why?</li> <li>Compile and run <code class="language-plaintext highlighter-rouge">array-1.c</code> </li> </ul> <p>:::::{dropdown} Exercise</p> <ul> <li>Create a copy of <code class="language-plaintext highlighter-rouge">array-1.c</code> called <code class="language-plaintext highlighter-rouge">array-2.c</code>.</li> <li>Change the type of <code class="language-plaintext highlighter-rouge">numbers</code> to <code class="language-plaintext highlighter-rouge">double</code>.</li> <li>What is the address step now?</li> </ul> <p>::::{dropdown} Answer</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=array-2.c"></script> <p>:::: :::::</p> <p>::::{dropdown} An array variable</p> <ul> <li>… is in fact pointing to an address containing a value.</li> <li>… without the bracket notation and an index points to the corresponding address of the value at the index.</li> <li>… is quite similar to a pointer! ::::</li> </ul> </body></html>

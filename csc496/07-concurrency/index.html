@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="concurrency-and-threading-asynchronous-programming">Concurrency and Threading, Asynchronous Programming</h1> <h2 id="overview">Overview</h2> <details class="details details--default" data-variant="default"><summary>What is concurrency?</summary> <ul> <li>Doing multiple tasks at the same time. <ul> <li>The tasks can be completely different from one another in term of instructions, datasets, durations, etc.</li> </ul> </li> <li>Apple’s processors have multiple cores</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/07-concurrency/a17bionic-480.webp 480w,/assets/img/courses/csc496/07-concurrency/a17bionic-800.webp 800w,/assets/img/courses/csc496/07-concurrency/a17bionic-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/07-concurrency/a17bionic.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/07-concurrency/a17stats-480.webp 480w,/assets/img/courses/csc496/07-concurrency/a17stats-800.webp 800w,/assets/img/courses/csc496/07-concurrency/a17stats-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/07-concurrency/a17stats.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Apple A-series chips</summary> <ul> <li>Apple’s A-series chips are custom-designed chips for the iPhone, iPad, and other Apple devices. Starting from certain versions, these chips contain two different types of cores: efficiency cores (E-cores) and performance cores (P-cores).</li> <li>Efficiency (E) cores: <ul> <li>Design Objective: These are designed for energy conservation, capable of running consistently even under high loads.</li> <li>Usage: For handling background tasks, tasks with low computational demands, or task that run continuously.</li> <li>Characteristics: They have relatively lower processing power, but they’re more energy-efficient.</li> </ul> </li> <li>Performance (P) cores: <ul> <li>Design Objective: Designed for handling high-load tasks, such as complex graphics rendering or computation-intensive tasks.</li> <li>Usage: For tasks that demand a high computational capability within a short time.</li> <li>Characteristics: They process tasks faster but also consume more power.</li> </ul> </li> </ul> </details> <h2 id="threads">Threads</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <ul> <li>Every iOS application has a main thread, which is there to display your user interface and listen for events</li> <li>Complex computations may slow down the main thread and freeze the app. <ul> <li>There is where multithreading comes into play</li> <li>Move all the heavy computations to background threads and then move the result back to the main thread once done.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/07-concurrency/multithreads-480.webp 480w,/assets/img/courses/csc496/07-concurrency/multithreads-800.webp 800w,/assets/img/courses/csc496/07-concurrency/multithreads-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/07-concurrency/multithreads.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Analogy</summary> <ul> <li> <p>Main Thread (Waiter): Imagine a waiter serving customers at a restaurant. They interact directly with customers, take orders, deliver food, and handle payments. They must remain responsive and attentive at all times—just like the main thread, which updates the user interface and handles user interactions. If the waiter stops or slows down, customers become frustrated.</p> </li> <li> <p>Background Thread (Kitchen Staff): The kitchen staff prepares the food. They work behind the scenes, independently preparing orders, washing dishes, and organizing supplies. Their tasks might be time-consuming, but they do not directly interact with customers. These are like background threads, handling tasks that could take time or block the main thread without directly affecting the immediate responsiveness.</p> </li> </ul> </details> <h2 id="concurrency-and-threads-in-apple-ecosystem">Concurrency and Threads in Apple Ecosystem</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <ul> <li>In iOS, threads can be used to achieve concurrency and multitasking.</li> <li>However, Apple recommends using more advanced concurrency models, such as <code class="language-plaintext highlighter-rouge">Grand Central Dispatch (GCD)</code> and <code class="language-plaintext highlighter-rouge">Operation Queues</code>, because they are easier to manage and have a smaller overhead.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Queues</summary> <ul> <li>A queue is just a bunch of code blocks, lined or queued up, waiting for a thread to execute them.</li> <li>You don’t need to worry about threads in Swift, only queues. – The iOS system takes care of providing/allocating threads to execute code off the queues</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="k">async</span> <span class="p">{</span>
+    <span class="nf">completionHandler</span><span class="p">(</span><span class="n">pokemonData</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Grand Central Dispatch</summary> <ul> <li>Programmer’s responsibility <ul> <li>Create a queue</li> <li>Put blocks of code on a queue</li> </ul> </li> <li>Grand Central Dispatch (GCD) is a powerful framework provided by Apple that manages concurrent execution of code, simplifying multithreading and asynchronous programming in Swift and Objective-C. <ul> <li>GCD abstracts the complexity of threads, managing thread pools efficiently and automatically, without needing manual thread management.</li> <li>GCD uses Dispatch Queues to organize tasks: <ul> <li>Main Queue (DispatchQueue.main): Handles UI-related tasks and user interactions. <ul> <li>This is the queue where all blocks of code that affect the UI must be run on.</li> </ul> </li> <li>Background Queues (DispatchQueue.global()): Perform time-consuming or intensive tasks asynchronously. <ul> <li>Used to queue up any long-lived, non UI tasks</li> <li>Often runs simultaneously and in parallel with the main UI queue.</li> </ul> </li> <li>Enables tasks to run concurrently without blocking the main thread, keeping the UI responsive. <ul> <li>Through the A-series multiple cores</li> </ul> </li> <li>Provides easy-to-use synchronization mechanisms (like Dispatch Groups, Semaphores, and Barriers) to coordinate execution between multiple tasks and prevent data races.</li> <li>Prioritizes tasks based on importance and urgency, optimizing performance and resource usage: <ul> <li>.userInteractive: highest priority</li> <li>.userInitiated: second only to userInteractive</li> <li>.utility: lower priority, for tasks that do not prevent user from continuing to use your app.</li> <li>.background: lowest priority, for work that needs to be performed while the app is running (e.g. maintenance tasks or cleanup tasks)</li> </ul> </li> </ul> </li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Example of GCD in Playground</summary> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">PlaygroundSupport</span>
+<span class="kd">import</span> <span class="kt">UIKit</span>
+
+<span class="c1">// Necessary to keep the playground running</span>
+<span class="kt">PlaygroundPage</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">needsIndefiniteExecution</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="c1">// Simulate a heavy task on a background queue</span>
+<span class="kt">DispatchQueue</span><span class="o">.</span><span class="nf">global</span><span class="p">(</span><span class="nv">qos</span><span class="p">:</span> <span class="o">.</span><span class="n">background</span><span class="p">)</span><span class="o">.</span><span class="k">async</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"🚀 Heavy task started on background thread."</span><span class="p">)</span>
+
+    <span class="c1">// Simulate heavy computation or network task</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">...</span><span class="mi">5</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Processing item </span><span class="se">\(</span><span class="n">i</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="nf">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">// Simulate a time-consuming task</span>
+    <span class="p">}</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="s">"✅ Heavy task completed!"</span><span class="p">)</span>
+
+    <span class="c1">// Update UI or execute main-thread task after background work</span>
+    <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="k">async</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"🎉 Updating UI on main thread."</span><span class="p">)</span>
+        <span class="c1">// e.g., update labels, images, etc.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="s">"⏳ Main thread continues executing without waiting..."</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/07-concurrency/gcd1-480.webp 480w,/assets/img/courses/csc496/07-concurrency/gcd1-800.webp 800w,/assets/img/courses/csc496/07-concurrency/gcd1-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/07-concurrency/gcd1.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Drawback of GCD: callback hell</summary> <ul> <li>Callback Hell, also called the <code class="language-plaintext highlighter-rouge">Pyramid of Doom</code>, occurs when asynchronous operations are nested deeply within callbacks, making code increasingly unreadable, difficult to debug, and maintain.</li> <li>Even though GCD is powerful, heavily nested calls can become problematic.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Example</summary> <pre><code class="language-Swift">import PlaygroundSupport
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+func fetchUser(completion: @escaping (String) -&gt; Void) {
+    DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
+        completion("User123")
+    }
+}
+
+func fetchOrders(for user: String, completion: @escaping ([String]) -&gt; Void) {
+    DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
+        completion(["Order1", "Order2", "Order3"])
+    }
+}
+
+func fetchOrderDetails(order: String, completion: @escaping (String) -&gt; Void) {
+    DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
+        completion("Details for \(order)")
+    }
+}
+
+// Callback Hell Example
+fetchUser { user in
+    print("User fetched: \(user)")
+
+    fetchOrders(for: user) { orders in
+        print("Orders fetched: \(orders)")
+
+        fetchOrderDetails(order: orders[0]) { details in
+            print("First order details fetched: \(details)")
+
+            fetchOrderDetails(order: orders[1]) { details in
+                print("Second order details fetched: \(details)")
+
+                fetchOrderDetails(order: orders[2]) { details in
+                    print("Third order details fetched: \(details)")
+
+                    DispatchQueue.main.async {
+                        print("✅ Finally done updating UI.")
+                    }
+                }
+            }
+        }
+    }
+}
+
+</code></pre> <ul> <li>Why was this necessary? <ul> <li>When tasks must be performed one after another asynchronously, each subsequent task depends on the previous task’s result. <ul> <li>Fetch User</li> <li>Then Fetch Orders (requires User)</li> <li>Then Fetch Order Details (requires Orders)</li> <li>Then Update UI after all previous tasks</li> </ul> </li> <li>To maintain this sequence clearly, you must place each next call inside the completion handler of the previous one:</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Solution for callback hell: async/await</summary> <ul> <li>async/await introduced in Swift 5.5</li> <li>In Swift, the async/await feature enables you to write cleaner asynchronous code. It’s like saying, “Hey, you go do this task, but let me know when you’re finished so I can use the result.”</li> </ul> <pre><code class="language-Swift">import PlaygroundSupport
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+// Async functions using Swift concurrency
+func fetchUser() async -&gt; String {
+    try? await Task.sleep(nanoseconds: 1_000_000_000)
+    return "User123"
+}
+
+func fetchOrders(for user: String) async -&gt; [String] {
+    try? await Task.sleep(nanoseconds: 1_000_000_000)
+    return ["Order1", "Order2", "Order3"]
+}
+
+func fetchOrderDetails(order: String) async -&gt; String {
+    try? await Task.sleep(nanoseconds: 1_000_000_000)
+    return "Details for \(order)"
+}
+
+Task {
+    let user = await fetchUser()
+    print("User fetched: \(user)")
+
+    let orders = await fetchOrders(for: user)
+    print("Orders fetched: \(orders)")
+
+    for order in orders {
+        let details = await fetchOrderDetails(order: order)
+        print("Order details fetched: \(details)")
+    }
+
+    DispatchQueue.main.async {
+        print("✅ Finally done updating UI.")
+    }
+}
+
+</code></pre> </details> </body></html>

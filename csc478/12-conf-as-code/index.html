@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="configuration-as-code-cac-helms">Configuration as Code (CaC): Helms</h1> <h2 id="configuration-as-code-in-the-cloud-stack">Configuration as Code in the Cloud Stack</h2> <ul> <li>IaC: clusters, networks, VMs (Terraform, Crossplan)</li> <li>CaC: runtime app/platform configuration (Helm, Kustomize, YAML overlays)</li> <li>Why CaC: <ul> <li>Reproducibility</li> <li>Reviewability</li> <li>“Diff-able” ops</li> <li>Promotion across environments</li> </ul> </li> </ul> <hr> <h2 id="helm-fundamentals">Helm Fundamentals</h2> <details class="details details--default" data-variant="default"><summary>What Helm does?</summary> <ul> <li>packaging (charts),</li> <li>templating (Go templates),</li> <li>release management (history/rollback)</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Helm as a Packaging System</summary> <ul> <li>Helm packages Kubernetes manifests into reusable bundles called <code class="language-plaintext highlighter-rouge">charts</code>.</li> <li>Charts contains <ul> <li>Metadata</li> <li>Templates</li> <li>Default Configurations</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Key objects of a Chart</summary> <ul> <li>Chart.yaml</li> <li>templates/</li> <li>values.yaml</li> <li>values.schema.json</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Release lifecycle</summary> <ul> <li>Install</li> <li>Upgrade –reuse-values</li> <li>Rollback</li> <li>Uninstall</li> </ul> </details> <hr> <h2 id="nginx-chart-components">Nginx Chart Components</h2> <p>Chart: <a href="https://github.com/bitnami/charts/tree/main/bitnami/nginx" rel="external nofollow noopener" target="_blank">Bitnami Secure Images Helm chart for NGINX Open Source</a></p> <details class="details details--default" data-variant="default"><summary>Chart.yaml</summary> <p>The Helm manifest defining the chart (identity, version, dependencies, and metadata)</p> <details class="details details--note" data-variant="note"><summary>annotations</summary> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre><span class="na">annotations</span><span class="pi">:</span>
+  <span class="na">images</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">- name: git</span>
+      <span class="s">image: docker.io/bitnami/git:2.51.0-debian-12-r0</span>
+    <span class="s">- name: nginx</span>
+      <span class="s">image: docker.io/bitnami/nginx:1.29.1-debian-12-r0</span>
+    <span class="s">- name: nginx-exporter</span>
+      <span class="s">image: docker.io/bitnami/nginx-exporter:1.4.2-debian-12-r9</span>
+  <span class="na">licenses</span><span class="pi">:</span> <span class="s">Apache-2.0</span>
+  <span class="na">tanzuCategory</span><span class="pi">:</span> <span class="s">clusterUtility</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">images</code>: a list of container images used by this chart</li> <li> <code class="language-plaintext highlighter-rouge">licenses</code>: declares the chart’s open-source license.</li> <li> <code class="language-plaintext highlighter-rouge">tanzuCategory</code>: a VMware Tanzu-specific tag grouping the chart (here: cluster utilities).</li> </ul> </details> <details class="details details--note" data-variant="note"><summary>apiVersion</summary> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v2</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Helm chart API version (v2 for Helm 3+)</li> </ul> </details> <details class="details details--note" data-variant="note"><summary>appVersion</summary> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="na">appVersion</span><span class="pi">:</span> <span class="s">1.29.1</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Version of the application (in this case NGINX) being deployed.</li> </ul> </details> <details class="details details--note" data-variant="note"><summary>dependencies</summary> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre><span class="na">dependencies</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">common</span>
+  <span class="na">repository</span><span class="pi">:</span> <span class="s">oci://registry-1.docker.io/bitnamicharts</span>
+  <span class="na">tags</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">bitnami-common</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s">2.x.x</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>This means the NGINX chart depends on another chart called <a href="https://github.com/bitnami/charts/tree/main/bitnami/common" rel="external nofollow noopener" target="_blank">common</a> from Bitnami.</li> <li>This is not an application, but it is a library chart, which defines a collection of reusable template helpers, functions, and YAML snippets.</li> <li>This is for Bitnami only, and is not applicable for charts created by others.</li> </ul> </details> <ul> <li>Other items in <code class="language-plaintext highlighter-rouge">Chart.yaml</code>, <code class="language-plaintext highlighter-rouge">description</code>, <code class="language-plaintext highlighter-rouge">home</code>, <code class="language-plaintext highlighter-rouge">icon</code>, <code class="language-plaintext highlighter-rouge">keywords</code> are more for descriptive/categorical purposes.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>templates/</summary> <ul> <li>Helm templates are the <strong>parameterized YAML manifests</strong> that define Kubernetes objects (like Deployments, Services, ConfigMaps, etc.) for your application.</li> <li>They live under the templates/ directory inside a Helm chart and use Go’s templating language (``) to inject dynamic values.</li> </ul> <details class="details details--default" data-variant="default"><summary>Rendering final manifests from templates</summary> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>helm template my-nginx oci://registry-1.docker.io/bitnamicharts/nginx
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <ul> <li>The structure inside the <code class="language-plaintext highlighter-rouge">templates</code> directory depends on how the application needs to be deployed.</li> <li><a href="https://github.com/bitnami/charts/tree/main/bitnami/nginx/templates" rel="external nofollow noopener" target="_blank">Structure for Bitname’s NGINX templates</a></li> </ul> <details class="details details--default" data-variant="default"><summary>Portion of templates/deployment.yaml</summary> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre>
+<span class="na">apiVersion</span><span class="pi">:</span> 
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> 
+  <span class="na">namespace</span><span class="pi">:</span> 
+  <span class="na">labels</span><span class="pi">:</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">labels:</code>: Standard YAML key, indicating that the following lines will define <code class="language-plaintext highlighter-rouge">labels</code>.</li> <li>``: Go template syntax for an action or function call. <ul> <li> <code class="language-plaintext highlighter-rouge">-</code>: tells the template engine to remove any extra white space (like blank lines or spaces) immediately before or after this command to keep the final output clean.</li> <li> <code class="language-plaintext highlighter-rouge">include "common.labels.standard"</code>: fetches pre-defined text from another part (a “partial template”) of the Helm chart named “common.labels.standard”. This is a way to reuse the same set of labels across many different files. <ul> <li>This is how Bitnami’s <code class="language-plaintext highlighter-rouge">common</code> chart is used.</li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">( dict "customLabels" .Values.commonLabels "context" $ )</code>: Creates a new, specific package of data (a dictionary or map) for that template to use. This package contains two items: <ul> <li> <code class="language-plaintext highlighter-rouge">"customLabels" .Values.commonLabels</code>: Creates a field named “customLabels” and fills it with values found in the main configuration under <code class="language-plaintext highlighter-rouge">.Values.commonLabels</code> (See <code class="language-plaintext highlighter-rouge">values.yaml</code>).</li> <li> <code class="language-plaintext highlighter-rouge">"context" $</code>: Creates a field named “context” and assigns it the value of <code class="language-plaintext highlighter-rouge">$</code>. In Helm, the dollar sign ($) is a special variable that always refers to the main, top-level set of all data in the chart (the “root context”). This ensures the included template can still access global information like the Chart name or Release name, even though we are primarily passing it a limited dictionary.</li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">| nindent 4</code>: Is a “pipe” command that takes the output of the include function and applies an operation to it. <ul> <li>The <code class="language-plaintext highlighter-rouge">nindent 4</code> function adds a new line before the included text and indents every single line of that text by 4 spaces.</li> <li>This is crucial for making sure the output is valid YAML, as indentation matters in YAML</li> </ul> </li> </ul> </li> </ul> </details> </details> <details class="details details--default" data-variant="default"><summary>values.yaml</summary> <ul> <li>Configuration file that provides default values for the chart’s templates.</li> <li>Help customizting how the application should be deployed.</li> <li>Steps: <ul> <li>Create a custom yaml file,</li> <li>Specify this file when launching Helm using <code class="language-plaintext highlighter-rouge">--values</code> flag.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>values.schema.json</summary> <ul> <li>Optional</li> <li>Containing schematic of <code class="language-plaintext highlighter-rouge">values.yaml</code>.</li> <li>Ensuring the custom yaml file match the keys in <code class="language-plaintext highlighter-rouge">values.yaml</code> prior to deployment.</li> </ul> </details> <hr> <h2 id="hands-on">Hands-on</h2> <details class="details details--info" data-variant="info"><summary>Details</summary> <p>Helm is already installed in CloudLab’s class profile. The installation script is located in <code class="language-plaintext highlighter-rouge">install_helm.sh</code>. This script needs to be run as <code class="language-plaintext highlighter-rouge">root</code>.</p> </details> <details class="details details--default" data-variant="default"><summary>Check Helm version</summary> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>helm version
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Deploy Nginx from Helm as-is</summary> <ul> <li>Update repo</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Create a namespace</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl create namespace web
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Preview the chart template (no installation yet) <ul> <li>Examine manifests for deployment and service</li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="nb">mkdir </span>my-nginx
+<span class="nb">cd </span>my-nginx
+helm template my-nginx bitnami/nginx <span class="nt">-n</span> web <span class="o">&gt;</span> nginx-template.yaml
+<span class="nb">cat </span>nginx-template.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Install chart</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>helm <span class="nb">install </span>my-nginx bitnami/nginx <span class="nt">-n</span> web
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Check chart status</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>helm status my-nginx <span class="nt">-n</span> web
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Read the status message and find out how to test the my-nginx server from a browser.</li> <li>Check Kubernetes Services and Pods</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-n</span> web
+kubectl get svc <span class="nt">-n</span> web
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Uninstall Helm chart</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>helm uninstall my-nginx <span class="nt">-n</span> web
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Deploy customed Nginx from Helm</summary> <ul> <li>Inside <code class="language-plaintext highlighter-rouge">my-nginx</code> directory, create a file called <code class="language-plaintext highlighter-rouge">my-values.yaml</code> with the following content</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> <td class="rouge-code"><pre>image:
+  registry: docker.io
+  repository: nginx
+  tag: <span class="s2">"1.25.5"</span>
+  pullPolicy: IfNotPresent
+
+containerPorts:
+  http: 80
+
+service:
+  <span class="nb">type</span>: NodePort
+  ports:
+    http: 8080        <span class="c"># Service port inside cluster (arbitrary)</span>
+  nodePorts:
+    http: 32080       <span class="c"># External NodePort (within default range)</span>
+
+containerSecurityContext:
+  enabled: <span class="nb">true
+  </span>runAsNonRoot: <span class="nb">false
+  </span>runAsUser: 0
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Regenerate template file</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>helm template my-nginx bitnami/nginx <span class="nt">-n</span> web <span class="nt">-f</span> my-values.yaml <span class="o">&gt;</span> nginx-rendered.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Compare the differences between the two templates</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>diff nginx-template.yaml nginx-rendered.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Install the new nginx with the customized environment</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>helm <span class="nb">install </span>my-nginx bitnami/nginx <span class="nt">-n</span> web <span class="nt">-f</span> my-values.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Confirm that the new nginx is accessible via a custom predefined port 32080</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get svc my-nginx <span class="nt">-n</span> web
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> </body></html>

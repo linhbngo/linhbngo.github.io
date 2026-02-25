@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="one-way-hash-functions">One-Way Hash Functions</h1> <h2 id="overview-of-one-way-hash-functions">Overview of One-way Hash Functions</h2> <h3 id="overview">Overview</h3> <ul> <li>Essential building block in cryptography</li> <li>Need to satisfy some cryptographic properties: <ul> <li>One-way</li> <li>Collision resistant</li> </ul> </li> <li>Usage example: <ul> <li>Password authentication</li> <li>Integrity preservation</li> <li>Blockchain</li> </ul> </li> <li>Possible Attacks: <ul> <li>Length extension attack</li> <li>Collision attack</li> </ul> </li> </ul> <h3 id="properties-of-one-way-hash-function">Properties of One-way Hash Function</h3> <ul> <li>Difference from Hash Function <ul> <li>Hash function: maps arbitrary size data to data of fixed size</li> <li>Example: <code class="language-plaintext highlighter-rouge">f(x) = x mod 1000</code> </li> </ul> </li> <li>One-way Hash Properties: <ul> <li>One-way: hash(m) = h, difficult to find m</li> <li>Collision resistant: Difficult to find <code class="language-plaintext highlighter-rouge">m1</code> and <code class="language-plaintext highlighter-rouge">m2</code> such that <code class="language-plaintext highlighter-rouge">hash(m1) = hash(m2)</code> </li> </ul> </li> <li>Common One-way Hash Functions: <ul> <li>MD series</li> <li>SHA series</li> </ul> </li> </ul> <h2 id="common-one-way-hash-functions">Common One-way Hash Functions</h2> <h3 id="md-message-digest">MD: Message Digest</h3> <ul> <li>Developed by Ron Rivest</li> <li>Includes MD2, MD4, MD5,and MD6</li> <li>Status of Algorithms: <ul> <li>MD2, MD4 - severely broken (obsolete)</li> <li>MD5 - collision resistance property broken, one-way property not broken</li> <li>MD6 - developed in response to proposal by NIST</li> </ul> </li> </ul> <h3 id="sha-secure-hash-algorithm">SHA: Secure Hash Algorithm</h3> <ul> <li>Published by NIST</li> <li>Includes SHA-0, SHA-1, SHA-2, and SHA-3</li> <li>Status of Algorithms: <ul> <li>SHA-0: withdrawn due to flaw</li> <li>SHA-1: Designed by NSA; Collision attack found in 2017</li> <li>SHA-2: Designed by NSA; Includes SHA-256 and SHA-512; Other truncated versions; No significant attack found yet</li> <li>SHA-3: Released in 2015; Has different construction structure (compared to SHA-1 and SHA-2)</li> </ul> </li> </ul> <h3 id="how-one-way-hash-algorithm-works">How One-Way Hash Algorithm Works</h3> <ul> <li>Construction method called Merkle–Damgard</li> <li>Used by algorithms like MD5, SHA-1, and SHA-2</li> <li>Block of messages are chain-compresed with an IV to generate a final hashed value</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/hash/merkle-damgard-480.webp 480w,/assets/img/courses/csc302/hash/merkle-damgard-800.webp 800w,/assets/img/courses/csc302/hash/merkle-damgard-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/hash/merkle-damgard.png" width="50%" height="auto" alt="Merkle-Damgard" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <h3 id="one-way-hash-commands">One-Way Hash Commands</h3> <ul> <li>Aavilable via Linux utility programs</li> <li>Example: <code class="language-plaintext highlighter-rouge">md5sum</code>, <code class="language-plaintext highlighter-rouge">sha224sum</code>, <code class="language-plaintext highlighter-rouge">sha256sum</code>, <code class="language-plaintext highlighter-rouge">sha384sum</code> and <code class="language-plaintext highlighter-rouge">sha512sum</code> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Golden Rams"</span> <span class="o">&gt;</span> file.txt
+<span class="nb">md5sum </span>file.txt
+<span class="nb">sha256sum </span>file.txt
+openssl dgst <span class="nt">-sha256</span> file.txt
+openssl sha256 file.txt
+openssl md5 file.txt
+openssl dgst <span class="nt">-md5</span> file.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="computing-one-way-hash-in-programs">Computing One-Way Hash in Programs</h3> <ul> <li>Different languages including C/C++, Python, SQL, PHP provide support</li> <li>Language specific: <ul> <li>MySQL - SHA2 function</li> <li>Python - Use <code class="language-plaintext highlighter-rouge">hashlib</code> package</li> <li>C - Use functions from openssl/sha.h header</li> </ul> </li> <li>Python example:</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="n">python3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="n">hashlib</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="nf">sha256</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="sa">b</span><span class="sh">"</span><span class="s">Golden Rams</span><span class="sh">"</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>C example: <code class="language-plaintext highlighter-rouge">calculate_sha256.c</code> </li> </ul> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;openssl/sha.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">SHA256_CTX</span> <span class="n">ctx</span><span class="p">;</span>
+  <span class="n">u_int8_t</span> <span class="n">results</span><span class="p">[</span><span class="n">SHA256_DIGEST_LENGTH</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">msg_part1</span> <span class="o">=</span> <span class="s">"Golden "</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">msg_part2</span> <span class="o">=</span> <span class="s">"Rams"</span><span class="p">;</span>
+
+  <span class="n">SHA256_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+  <span class="n">SHA256_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">msg_part1</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">msg_part1</span><span class="p">));</span>
+  <span class="n">SHA256_Update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span> <span class="n">msg_part2</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">msg_part2</span><span class="p">));</span>
+  <span class="n">SHA256_Final</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ctx</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"%s%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">msg_part1</span><span class="p">,</span> <span class="n">msg_part2</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SHA256_DIGEST_LENGTH</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%02x"</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Confirm that the hash matches</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>gcc <span class="nt">-o</span> calculate_sha256 calculate_sha256.c <span class="nt">-lcrypto</span>
+./calculate_sha256 
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="applications-of-one-way-hash-functions">Applications of One-Way Hash Functions</h2> <h3 id="integrity-verification">Integrity Verification</h3> <ul> <li>Changing one bit of the original data changes hash value</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"Golden Rams"</span> | <span class="nb">sha256sum
+echo</span> <span class="nt">-n</span> <span class="s2">"G0lden Rams"</span> | <span class="nb">sha256sum</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Usage examples: <ul> <li>Detect change in system files</li> <li>Detect if file downloaded from website is corrupted</li> </ul> </li> </ul> <h3 id="committing-a-secret-without-telling-it">Committing a Secret Without Telling It</h3> <ul> <li>One-way property <ul> <li>Disclosing the hash does not disclose the original message</li> <li>Useful to commit secret without disclosing the secret itself</li> </ul> </li> <li>Usage Example - Stock Market <ul> <li>Need to make prediction about the stock market about a certain day</li> <li>Publish the hash of the secret on your website</li> <li>On the particular day, release the secret</li> </ul> </li> <li>Your audience can verify it against the hash</li> </ul> <h3 id="password-verification">Password Verification</h3> <ul> <li>To login into account, user needs to tell a secret (password)</li> <li>Cannot store the secrets in their plaintext</li> <li>Need for: <ul> <li>Password storage where nobody can know what the password is</li> <li>If provided with a password, it verified against the stored password</li> </ul> </li> <li>Solution: one-way hash function</li> <li>Example: Linux stores passwords in the /etc/shadow file</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>sudo cat /etc/shadow | grep root
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Case Study: Linux Shadow File <ul> <li>Password field has 3 parts, separated by the <code class="language-plaintext highlighter-rouge">$</code> sign: <ul> <li> <code class="language-plaintext highlighter-rouge">$</code>ALGORITHM_USED<code class="language-plaintext highlighter-rouge">$</code>SALT<code class="language-plaintext highlighter-rouge">$</code>PASSWORD_HASH</li> </ul> </li> <li>Salt and password hash are encoded into printable characters</li> <li>Multiple rounds of hash function (slow down brute-force attack)</li> </ul> </li> <li>Purpose of Salt <ul> <li>Using salt, same input can result in different hashes</li> <li> <table> <tbody> <tr> <td>Password hash = one-way hash rounds (password</td> <td> </td> <td>random string)</td> </tr> </tbody> </table> </li> <li>Random string is the salt</li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>useradd <span class="nt">-m</span> <span class="nt">-s</span> /bin/bash seed
+<span class="nb">echo</span> <span class="s2">"seed:dees"</span> | chpasswd
+useradd <span class="nt">-m</span> <span class="nt">-s</span> /bin/bash seed2
+<span class="nb">echo</span> <span class="s2">"seed2:dees"</span> | chpasswd
+<span class="nb">cat</span> /etc/shadow | <span class="nb">grep </span>seed
+<span class="nb">cat</span> /etc/shadow | <span class="nb">grep </span>seed
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>In my case, the outcomes of the final two <code class="language-plaintext highlighter-rouge">cat</code> commands are:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>seed:<span class="nv">$6$6m4jvilqG3xbXlNa$xHCTxjkWN0Agbo5jBl8xl1EkEN7kyakIHr87Mw2oG1vwV2y2fllXiY5pspZfcu6orQuclyo530S</span>/okBMk2oTy/:19480:0:99999:7:::
+seed2:<span class="nv">$6$CbEbHBQYnmoyZtw6$EgS8kC6qZXbgJ9tRsucryLKarHRg4NZcXZJ7zAkBoeZ8otrkwx4E3IjjRkrMJmQh9YrP0osbno9RyETkvwDye0</span>:19480:0:99999:7:::
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Both accounts <code class="language-plaintext highlighter-rouge">seed</code> and <code class="language-plaintext highlighter-rouge">seed2</code> have the same password, but are salted differently in the hash</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="n">python3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="n">crypt</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">print</span><span class="p">(</span><span class="n">crypt</span><span class="p">.</span><span class="nf">crypt</span><span class="p">(</span><span class="sh">"</span><span class="s">dees</span><span class="sh">"</span><span class="p">,</span><span class="sh">"</span><span class="s">$6$6m4jvilqG3xbXlNa</span><span class="sh">"</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">print</span><span class="p">(</span><span class="n">crypt</span><span class="p">.</span><span class="nf">crypt</span><span class="p">(</span><span class="sh">"</span><span class="s">dees</span><span class="sh">"</span><span class="p">,</span><span class="sh">"</span><span class="s">$6$CbEbHBQYnmoyZtw6</span><span class="sh">"</span><span class="p">))</span> 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Attacks Prevented by Salt <ul> <li>Dictionary Attack <ul> <li>Put candidate words in a dictionary</li> <li>Try each against the targeted password hash to find a match</li> </ul> </li> <li>Rainbow Table Attack <ul> <li>Precomputed table for reversing cryptographic hash functions</li> </ul> </li> <li>Why Salt Prevents them ? <ul> <li>If target password is same as precomputed data, the hash will be the same</li> <li>If this property does not hold, all the precomputed data are useless</li> </ul> </li> <li>Salt destroys that property</li> </ul> </li> </ul> <h3 id="trusted-timestamping">Trusted Timestamping</h3> <ul> <li>Need: How to prove that a document existed prior to certain date ?</li> <li>Timestamping Approaches: <ul> <li>Approach # 1: Publish one-way hash (instead of document) in a newspaper or a magazine</li> <li>Approach # 2: Time Stamping Authority (TSA) can sign the document hash using private key</li> <li>Approach # 3: <ul> <li>Use Blockchain i.e. a growing list of record (blocks)</li> <li>Publish document hash in a block</li> <li>Blockchain depends on one-way hash</li> </ul> </li> </ul> </li> </ul> </body></html>

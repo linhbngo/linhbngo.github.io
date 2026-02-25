@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="storage-volumes-in-kubernetes">Storage Volumes in Kubernetes</h1> <hr> <h2 id="motivation--problem-setup">Motivation &amp; Problem Setup</h2> <p><strong>Containers are ephemeral:</strong> when a pod dies, its local storage is lost.</p> <details class="details details--default" data-variant="default"><summary>There is a need for persistence</summary> <ul> <li>Database workloads (MongoDB, MySQL, PostgreSQL).</li> <li>Logs that must outlive a pod.</li> <li>Shared storage between pods.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>The Kubernetes approach</summary> <ul> <li>Abstract away underlying storage to achieve portability across clusters (on-prem, cloud, hybrid).</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Design Emphasis</summary> <ul> <li>Separation of compute resources (pods) and storage resources (volumes).</li> <li>Lifecycle mismatch: pod vs. volume. <ul> <li>Pods are more ephemeral and can have shorter lifecycle (node failure, maintenance, etc)</li> <li>Volumes need to be more persistent for long-term reliable storage of data</li> </ul> </li> <li>Tension between flexibility (dynamic provisioning) and control (security, quotas).</li> </ul> </details> <hr> <h2 id="kubernetes-volumes-the-basics">Kubernetes Volumes: The Basics</h2> <details class="details details--default" data-variant="default"><summary>Ephemeral volumes: emptyDir</summary> <ul> <li>Degree of ephemeral is tied to the pod. <ul> <li>Persistence across container restarts within the same Pod.</li> <li>First created when a Pod is assigned to a node.</li> <li>Exists as long as the Pod remains on the same node.</li> </ul> </li> <li>Useful for scratch space. <ul> <li>Temporary storage</li> <li>Shared workspace among containers</li> <li>Temporary log aggregation location</li> </ul> </li> <li>Create the following deployment manifest called <code class="language-plaintext highlighter-rouge">emptyDir.yaml</code>.</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">emptydirpod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-app-container</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/data</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-sidecar-container</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">echo</span><span class="nv"> </span><span class="s">'hello</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">sidecar'</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">/shared/file.txt</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">60"</span><span class="pi">]</span>
+    <span class="na">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/shared</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
+    <span class="na">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Deploy the pod using <code class="language-plaintext highlighter-rouge">kubectl apply -f</code>.</li> <li>Use <code class="language-plaintext highlighter-rouge">kubectl get pods</code>to identify the pod name</li> <li>Use <code class="language-plaintext highlighter-rouge">kubectl describe pod</code> to identify the container names.</li> <li>Use <code class="language-plaintext highlighter-rouge">kubectl exec</code> with additional <code class="language-plaintext highlighter-rouge">-c</code> flag to get into the <code class="language-plaintext highlighter-rouge">my-app-container</code> container.</li> <li>Confirm the content inside <code class="language-plaintext highlighter-rouge">/var/data/file.txt</code>.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Persistent volumes: hostPath</summary> <ul> <li>Direct mounting from the host node filesystem to the pod <ul> <li>Not recommended for production.</li> </ul> </li> <li>Node-specific</li> <li>Breaks abstraction: Physical to Container</li> <li>Security implications</li> <li> <p>Persistence</p> </li> <li>Create the following deployment manifest called <code class="language-plaintext highlighter-rouge">hostpath.yaml</code>.</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">hostpathpod</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-container</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">echo</span><span class="nv"> </span><span class="s">'hello</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">other</span><span class="nv"> </span><span class="s">side'</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">/mnt/hostpath/file.txt</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">3600"</span><span class="pi">]</span>
+    <span class="na">volumeMounts</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">host-volume</span>
+      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/mnt/hostpath</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">host-volume</span>
+    <span class="na">hostPath</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s">/home/YOUR_USER_NAME_HERE/hostpath</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">DirectoryOrCreate</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Deploy the pod using <code class="language-plaintext highlighter-rouge">kubectl apply -f</code>.</li> <li>One the pod is ready, check the content inside <code class="language-plaintext highlighter-rouge">~/hostpath/</code> directory.</li> <li>Create another file inside <code class="language-plaintext highlighter-rouge">~/hostpath/</code> directory.</li> <li>Use <code class="language-plaintext highlighter-rouge">kubectl exec</code> to get into the pod and check the content of <code class="language-plaintext highlighter-rouge">/mnt/hostpath/</code> directory.</li> </ul> </details> <hr> <h2 id="persistent-volumes-and-claims">Persistent Volumes and Claims</h2> <details class="details details--default" data-variant="default"><summary>Persistent Volume (PV)</summary> <ul> <li>Abstract representation of a peice of storage in a Kubernetes cluster.</li> <li>Provisioned by administrator or dynamically through <code class="language-plaintext highlighter-rouge">StorageClass</code>.</li> <li>Independent of a Pod’s lifecycle</li> <li>Represents different types of <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/" rel="external nofollow noopener" target="_blank">StorageClass</a> <ul> <li>Local storage</li> <li>NSF shares</li> <li>Other types of storage.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Persistent Volume Claim (PVC)</summary> <ul> <li>User request for storage.</li> <li>Namespace-scoped resource that defines the desired charactersistics of the storage <ul> <li>Size</li> <li>Access modes <ul> <li>ReadWriteOnce (RWO): one node mounted read/write.</li> <li>ReadOnlyMany (ROX): multiple nodes, read-only.</li> <li>ReadWriteMany (RWX)L multiple nodes, read/write.</li> </ul> </li> <li>Storage Class (optional)</li> </ul> </li> <li>Kubernetes attempts to bind a PVC to an available PV that satisfies its requirements.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Workflow</summary> <ul> <li>Administartors provisions PVs or defines Storage Classes</li> <li>Users/applications create PVC</li> <li>Kubernetes binds PVC to PV</li> <li>Pods mounts PVC as per manifest.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Reclaim Policies</summary> <ul> <li>Retain <ul> <li>PV is not deleted; data remains intact.</li> <li>Storage asset is orphaned until an admin manually reclaims it (by wiping or reassigning).</li> <li>Best for sensitive data (databases, regulated workloads).</li> <li>Example Use Case: Production database volumes (Postgres, MySQL, MongoDB) where accidental data loss must be avoided.</li> </ul> </li> <li>Delete <ul> <li>Both the PV object and the underlying storage asset (e.g., AWS EBS volume, GCP PD, Ceph RBD) are deleted.</li> <li>Fully automated cleanup. <ul> <li><strong>Data is lost once PVC is deleted.</strong></li> </ul> </li> <li>Example Use Case: Scratch workloads, CI/CD environments, development namespaces, or any scenario where ephemeral but persistent-like storage is needed.admin manually reclaims.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Diagram</summary> <pre><code class="language-mermaid">flowchart TD
+    subgraph NodeLocal["Node-local Storage"]
+        A["emptyDir (ephemeral)"]
+        B["hostPath (node filesystem)"]
+    end
+
+    subgraph ClusterStorage["Cluster / External Storage"]
+        C["Physical backend (NFS, EBS, Ceph, Longhorn, etc.)"]
+        D["PersistentVolume (PV)"]
+    end
+
+    E["PersistentVolumeClaim (PVC)"]
+    F["Pod"]
+
+    %% relationships
+    A --&gt; F
+    B --&gt; F
+    C --&gt; D
+    D --&gt; E
+    E --&gt; F
+</code></pre> </details> <details class="details details--default" data-variant="default"><summary>Key Point</summary> <ul> <li>Volumes are not tied to containers, but to pods</li> <li>Data is preserved across container restarts but not across pod rescheduling, unless backed by PV/PVC.</li> </ul> </details> <hr> <h2 id="pv-on-multi-node-cluster">PV on multi-node cluster</h2> <details class="details details--warning" data-variant="warning"><summary>Details</summary> <ul> <li>A Persistent Volume (PV) is a <code class="language-plaintext highlighter-rouge">cluster-wide</code> resource.</li> <li> <strong>However</strong>, the actual storage backend dictates whether a pod scheduled on another node can still access that PV.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>hostPath-backed PV</summary> <ul> <li>hostPath ties the PV to a directory on a specific node.</li> <li>If the pod is scheduled elsewhere, the mount fails.</li> <li>The pod may go ContainerCreating with volume mount errors.</li> <li><em>hostPath is not recommended for production or multi-node clusters.</em></li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Local Path provisioner (per-node local disks)</summary> <ul> <li>Same limitation: bound to the node where it was created.</li> <li>The provisioner usually pins the pod to the node with the volume (via node affinity).</li> <li>Good for dev/test clusters, but limited for failover.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Networked / Remote Storage (NFS, Ceph, EBS, Longhorn, etc.)</summary> <ul> <li>PV points to shared storage that all nodes can reach over the network.</li> <li>A pod rescheduled on Node 2 or Node 4, then volume is reattached automatically.</li> <li>This is the production pattern: <ul> <li>PVs abstract away location, Kubernetes handles re-mounting on whichever node the pod lands.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Access Modes matter</summary> <ul> <li>ReadWriteOnce (RWO): only one node can mount read/write at a time (e.g., AWS EBS). <ul> <li>Pod rescheduling detaches from Node 1, attaches to Node 2.</li> </ul> </li> <li>ReadWriteMany (RWX): multiple pods/nodes can read/write concurrently (e.g., NFS, CephFS, Longhorn). <ul> <li>Needed for shared workloads (like WordPress + PHP pods writing to the same files).</li> </ul> </li> <li>ReadOnlyMany (ROX): multiple pods/nodes can read concurrently, but no writes.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Scheduling awareness</summary> <ul> <li>When a pod requests a PVC <ul> <li>Kubernetes binds PVC to PV.</li> </ul> </li> <li>If the PV backend is node-local, the scheduler will add node affinity so the pod only runs on that node.</li> <li>If the PV backend is networked, the pod can run on any node and the volume follows.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Diagram</summary> <pre><code class="language-mermaid">flowchart TD
+    subgraph Cluster["Kubernetes Cluster"]
+        N1["Node 1"]
+        N2["Node 2"]
+        N3["Node 3"]
+        N4["Node 4"]
+    end
+
+    subgraph Storage["Storage Backend"]
+        H["hostPath (Node-local)"]
+        E["EBS / NFS / Ceph / Longhorn (Networked)"]
+    end
+
+    PV1["PV (hostPath)"] --&gt; H
+    PV2["PV (Networked)"] --&gt; E
+
+    N1 -. can use .-&gt; PV1
+    N2 -. cannot use .-&gt; PV1
+    N3 -. cannot use .-&gt; PV1
+    N4 -. cannot use .-&gt; PV1
+
+    N1 -- can mount --&gt; PV2
+    N2 -- can mount --&gt; PV2
+    N3 -- can mount --&gt; PV2
+    N4 -- can mount --&gt; PV2
+</code></pre> </details> </body></html>

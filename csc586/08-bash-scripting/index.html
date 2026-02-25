@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="bash-scripting">Bash Scripting</h1> <p>Based on previous materials by Dr. Robert Kline</p> <hr> <h2 id="overview-of-bash-script">Overview of Bash Script</h2> <ul> <li>Just like the script for a movie that tells the actors what they should say and do, a script for a computer tells the computer what is should do or say.</li> <li>A bash script is a plain text file which contains a series of commands.</li> <li>Anything you can run normally on the command line can be put into a script and it will do exactly the same thing. Similarly, anything you can put into a script can also be run normally on the command and it will do exactly the same thing.</li> </ul> <hr> <h2 id="setup">Setup</h2> <ul> <li>In your CloudLab experiment, run the following:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>wget <span class="nt">--no-check-certificate</span> https://cs.wcupa.edu/lngo/assets/src/bash_basics.zip
+unzip bash_basics.zip
+<span class="nb">cd </span>bash_basics
+<span class="nb">ls</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>These scripts will be used to illustrate concepts in the remainder of this slide deck.</li> <li>There is far too much content in the Bash language to be covered in any single document like this one, a tutorial, or even an introductory textbook. Inevitably, if you need to write programs in Bash, you will have to consult the online manual: <a href="https://linux.die.net/man/1/bash" rel="external nofollow noopener" target="_blank">https://linux.die.net/man/1/bash</a> </li> </ul> <hr> <h2 id="executing-a-bash-script">Executing a bash script</h2> <ul> <li>Bash script files can be named as you like. Unlike Windows systems, the extension is not an essential feature which determines the usage. The <code class="language-plaintext highlighter-rouge">.sh</code> extension is merely a convention which can assist editor recognition. All scripts can be executed explicitly using the bash executable:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>bash SOME-SCRIPT.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">hello.sh</code> with the following content:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="s2">"hello world"</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Execute the file using the following command:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>bash hello.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="self-executing-bash-script">Self-executing bash script</h2> <ul> <li>The file itself must be executable by you.</li> <li>If you are the owner of the script you can add that permission with statements like:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">chmod</span> +x SOME-SCRIPT.sh          
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>or</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">chmod </span>700 SOME-SCRIPT.sh       
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The file must either be locatable by its path prefix or have its containing directory in the PATH variable. A full path to the script might be: <code class="language-plaintext highlighter-rouge">/usr/local/bin/SOME-SCRIPT.sh</code> </li> <li>If the script is in the shell’s current directory, this is also a full path: <code class="language-plaintext highlighter-rouge">./SOME-SCRIPT.sh</code> </li> <li>The file must identify itself as self-executing.</li> <li> <p>If the first two characters are <code class="language-plaintext highlighter-rouge">#!</code>, this indicates that the file is a text-based script file, and that the remaining portion of the first line provides the program to run the script. Thus, a Bash script begins with this first line: <code class="language-plaintext highlighter-rouge">#!/bin/bash</code></p> </li> <li>Edit and add <code class="language-plaintext highlighter-rouge">#!/bin/bash</code> to the first line of <code class="language-plaintext highlighter-rouge">hello.sh</code> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">chmod</span> +x hello.sh
+./hello.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="the-bash-language">The Bash Language</h2> <ul> <li>The Bash language has three main functions: <ul> <li>execute commands interactively</li> <li>extend the set of commands via scripts</li> <li>build up, via sourcing, the user environment with variables, aliases, functions</li> </ul> </li> <li>In particular, Bash, per se, is not a general purpose programming script language like, say, Perl, Python or TCL. <ul> <li>Its main orientation is towards executing the standard UNIX command set and Bash scripts rely heavily on the standard UNIX commands.</li> </ul> </li> </ul> <hr> <h2 id="interactive-execution">Interactive Execution</h2> <ul> <li>When a shell is run interactively the lines of a bash program a re created one-by-one.</li> <li>Shell code usually is considers the script to be interactive if the prompt variable, PS1 is defined, since all statements receive this prompt before entry.</li> <li>In interactive execution, Bash will source each statement, which is a form of execution in which all variable settings are retained.</li> <li>Interactive execution also permits many user-friendly control features not necessary in script execution such as: <ul> <li>line repeat control with up and down arrows</li> <li>line editing and extension features</li> <li>tab-based command and filename completion</li> </ul> </li> </ul> <hr> <h2 id="variables-and-values">Variables and Values</h2> <ul> <li> <p>The program <code class="language-plaintext highlighter-rouge">scalars.sh</code> illustrates basic principles of Bash variables and values. In particular, the only scalar data type is a string. Values are created in several ways:</p> </li> <li>within uninterpolated quotes: ‘ ‘</li> <li>within interpolated quotes: “ “</li> <li>the output of a command within shell evaluated back quotes $<code class="language-plaintext highlighter-rouge">\_</code>$ or within <code class="language-plaintext highlighter-rouge">$( )</code> </li> <li>a bareword which is not a Bash reserved word and contains no special operator characters</li> </ul> <hr> <h2 id="string-operations">String operations</h2> <ul> <li>The most basic operation on strings is concatenation, which, in Bash, is simply juxtaposition. In general, whitespace sequences are collapsed into a single blank; whitespace sequences at the ends of strings are truncated (i.e., trimmed).</li> <li>Variables are defined using the assign operator <code class="language-plaintext highlighter-rouge">=</code> in a very strict sort of way.</li> <li>Once a variable, <code class="language-plaintext highlighter-rouge">v</code>, is defined, its value is automatically used with the expression <code class="language-plaintext highlighter-rouge">$v</code>.</li> <li>A double-quoted variable’s value, like <code class="language-plaintext highlighter-rouge">"$y"</code>, can behave differently from <code class="language-plaintext highlighter-rouge">$y</code> when the value has internal whitespace. If there is any doubt, it is recommended to always use <strong>double quotes</strong>.</li> <li>A newline is interpreted as a statement terminator. A semicolon (<code class="language-plaintext highlighter-rouge">;</code>) can also be used as a statement terminator if you want two or more statements on the same line.</li> <li>View, then execute scalars.h</li> <li>Observe the corresponding outcomes versus the codes</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more scalars.sh
+./scalars.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Type something and hit Enter to exit this script.</li> </ul> <hr> <h2 id="echo-and-printf">echo and printf</h2> <ul> <li>Although echo is the most common output statement, Bash also supports the C-style printf statement, e.g.,</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">printf</span> <span class="s2">"num=%05d</span><span class="se">\n</span><span class="s2">"</span> 27
+<span class="nb">echo </span>AFTER
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>There is an equivalent to sprintf (printf to a variable) in the form of</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">printf</span> <span class="nt">-v</span> num <span class="s2">"%05d"</span> 27
+<span class="nb">echo</span> <span class="nv">$num</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>For most situations, echo is more common. It is easy to use and, for the most part does what you want in a simple manner. One <ul> <li> <em>problem</em> spot is printing control characters like <code class="language-plaintext highlighter-rouge">\t</code> for tab.</li> <li>The bash syntax for this control character has the cumbersome form: $’\t’</li> </ul> </li> <li>For example, these two statements generate the same output:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span>   <span class="s1">$'</span><span class="se">\t</span><span class="s1">'</span>foo
+<span class="nb">printf</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">foo</span><span class="se">\n</span><span class="s2">"</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>As you can imagine the <code class="language-plaintext highlighter-rouge">printf</code> version is more memorable. On feature available to echo which is not available to printf is colorization. When used with the <code class="language-plaintext highlighter-rouge">-e</code> flag, echo interprets certain special convoluted escape sequences as indication to change the color of the output. For example this prints “HELLO” in bold red followed by “THERE” in (normal) black</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\0</span><span class="s2">33[01;31m HELLO </span><span class="se">\0</span><span class="s2">33[0m THERE"</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The output need not be separated like this, we are simply making it easier to see</li> </ul> <hr> <h2 id="other-types-and-declarations">Other types and declarations</h2> <ul> <li>Bash, just as other languages, does support additional structured data types in the form of lists and maps (associative lists).</li> <li>It also provides a way of assigning a type to a variable through a the declare statement. View and execute the following script for observation</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more scalar-declares.sh
+./scalar-declares.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="command-line-arguments">Command-line arguments</h2> <ul> <li>One of the primary purpose of the bash language is to extend the set of commands. For this reason Bash provides simple access to the command-line parameters. Bash uses the variables <code class="language-plaintext highlighter-rouge">$1</code>, <code class="language-plaintext highlighter-rouge">$2</code>, etc. The expression <code class="language-plaintext highlighter-rouge">$0</code> is the command name itself. They should be double-quoted. Use these test-runs:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>more args.sh
+<span class="nv">$ </span>./args.sh 
+<span class="nv">$ </span>./args.sh  a     b    c
+<span class="nv">$ </span>./args.sh <span class="s2">"a     b"</span>   c
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="if-else-statements">if-else statements</h2> <ul> <li>The bash if-else syntax is unusual compared to other languages. The format looks like this:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="k">if</span> ...
+<span class="k">then
+  </span>some statements
+<span class="k">elif</span> ...
+  some statements
+<span class="k">else
+  </span>some statements
+<span class="k">fi</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The “…” sections represent boolean “tests”. The chained <code class="language-plaintext highlighter-rouge">elif</code> and the <code class="language-plaintext highlighter-rouge">else</code> parts are optional. The “then” syntax is often written on the same line as the if portion like this: <code class="language-plaintext highlighter-rouge">if ...; then</code></p> <hr> <h2 id="program-exit-status">Program exit status</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>more pingtest.sh
+./pingtest.sh 
+./pingtest.sh 8.8.8.8
+./pingtest.sh 2.2.2.2
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>What is happening is that the ping operation with the options used is a single ping which can either succeed or fail within 2 seconds with these two possible outcomes:</li> <li>it succeeds with exit status is 0, the test is true and the if part is executed.</li> <li>it fails with non-zero exit status, the test is false and the else part is executed.</li> <li>The notion of true and false in these bash tests can be counter-intuitive: an exit status of 0 means true, non-zero means false. The <code class="language-plaintext highlighter-rouge">$?</code> construct used in <code class="language-plaintext highlighter-rouge">echo status=$?</code> is a Bash special variable which gives the exit status of a previous command (and so it has to come before the second echo statement).</li> </ul> <hr> <h2 id="the--and--operators">The &amp;&amp; and || operators</h2> <ul> <li>The <code class="language-plaintext highlighter-rouge">&amp;&amp;</code> and <code class="language-plaintext highlighter-rouge">||</code> operators are much the same sense as other languages using short-circuit execution.</li> <li>In Bash they are often used to express the chaining of operations based on success or failure. A good example is: <code class="language-plaintext highlighter-rouge">c++ myprog.cc &amp;&amp; a.out</code>, in which we only run the compiled program if the compilation succeeds.</li> </ul> <hr> <h2 id="boolean-expressions-in-test-statements">Boolean expressions in test statements</h2> <ul> <li>What is considered as boolean expression in an if test uses this syntax:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="k">if</span> <span class="o">[</span> BOOLEAN-EXPRESSION <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span>statements ...
+<span class="k">fi</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The only value regarded as false is the empty string. Bash does not recognize any numerical types per se, only strings used in a numerical context. An undefined value is, in every way, equivalent to the empty string in Bash.</li> <li>You have to be careful about using an undefined variable in a script since it may be an exported variable and, thereby, implicitly defined. You can always explicitly undefined a variable <code class="language-plaintext highlighter-rouge">x</code> by <code class="language-plaintext highlighter-rouge">unset x</code>.</li> <li>You can verify the values of false by viewing and running this sample script: <code class="language-plaintext highlighter-rouge">falsetest.sh</code> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more falsetest.sh
+./falsetest.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>An example usage is this line in <code class="language-plaintext highlighter-rouge">pingtest.sh</code>:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="o">[</span> <span class="s2">"</span><span class="nv">$host</span><span class="s2">"</span> <span class="o">]</span> <span class="o">||</span> <span class="o">{</span> <span class="nb">echo </span>usage: <span class="si">$(</span><span class="nb">basename</span> <span class="nv">$0</span><span class="si">)</span> <span class="s2">"&lt;host or ip&gt;"</span><span class="p">;</span> <span class="nb">exit </span>1<span class="p">;</span> <span class="o">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>In this example host is the first parameter; if undefined, give a “usage” message.</li> </ul> <hr> <h2 id="unary-file-information-operators">Unary file information operators</h2> <ul> <li>A number of common Bash constructions use the unary “–” prefix file test operators, e.g., <ul> <li> <code class="language-plaintext highlighter-rouge">-e</code> NAME: NAME exists as a file (of some type)</li> <li> <code class="language-plaintext highlighter-rouge">-f</code> NAME: NAME exists as a regular file</li> <li> <code class="language-plaintext highlighter-rouge">-d</code> NAME: NAME exists as a directory</li> </ul> </li> <li>An example of this appears in the <code class="language-plaintext highlighter-rouge">~/.bashrc</code> startup script:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> ~/.bash_aliases <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">.</span> ~/.bash_aliases
+<span class="k">fi</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="binary-test-operators">Binary test operators</h2> <ul> <li>The <code class="language-plaintext highlighter-rouge">if</code> operator (and other tests) can be used with boolean expressions using appropriate syntax.</li> <li>The test expressions are normally within single brackets [ .. ]. <ul> <li>There is a single space after <code class="language-plaintext highlighter-rouge">[</code> and before <code class="language-plaintext highlighter-rouge">]</code>.</li> </ul> </li> <li>Within these we have these operator usages: <ul> <li> <code class="language-plaintext highlighter-rouge">=</code>, <code class="language-plaintext highlighter-rouge">!=</code>: lexicographic comparison</li> <li> <code class="language-plaintext highlighter-rouge">-eq</code>, <code class="language-plaintext highlighter-rouge">-ne</code>, <code class="language-plaintext highlighter-rouge">-lt</code>, <code class="language-plaintext highlighter-rouge">-le</code>, <code class="language-plaintext highlighter-rouge">-gt</code>, <code class="language-plaintext highlighter-rouge">-ge</code>: numerical comparison</li> </ul> </li> <li>However both double brackets <code class="language-plaintext highlighter-rouge">[[ .. ]]</code> and double parentheses <code class="language-plaintext highlighter-rouge">(( .. ))</code> can serve as delimiters.</li> <li>The operators <code class="language-plaintext highlighter-rouge">&lt;</code> and <code class="language-plaintext highlighter-rouge">&gt;</code> normally represent <em>file redirection</em>, but can be used for lexicographic comparison, within <code class="language-plaintext highlighter-rouge">[[ .. ]]</code> and numerical comparison within <code class="language-plaintext highlighter-rouge">(( .. ))</code>.</li> <li>You can view and observe some examples from: <code class="language-plaintext highlighter-rouge">test-values.sh</code> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more test-values.sh
+./test-values.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="subtle-syntax-issues">Subtle syntax issues</h2> <ul> <li>The way Bash deals with strings has certain unexpected consequences. Consider the program <code class="language-plaintext highlighter-rouge">errors.sh</code>:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more errors.sh
+./errors.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>When executed, the 3 out of 4 test lines are flagged as errors: <ul> <li>line 4: <code class="language-plaintext highlighter-rouge">[a: command not found</code> </li> <li>line 5: <code class="language-plaintext highlighter-rouge">[: missing </code>]’`</li> <li>line 7: <code class="language-plaintext highlighter-rouge">[: a: unary operator expected</code> </li> </ul> </li> <li>The first two mistakes were caused by having the expression <code class="language-plaintext highlighter-rouge">$x</code> touch a bracket.</li> <li>The last was caused by the missing quotes around the <code class="language-plaintext highlighter-rouge">$y</code> expression in which case it interpreted the inserted expression <code class="language-plaintext highlighter-rouge">"a b"</code> as the operator <code class="language-plaintext highlighter-rouge">a</code> with argument <code class="language-plaintext highlighter-rouge">b</code>.</li> </ul> <hr> <h2 id="string-patterns-and-the-case-statement">String patterns and the case statement</h2> <ul> <li>Bash uses primitive globbing patterns for various matching operations.</li> <li>The most common is the usage of <code class="language-plaintext highlighter-rouge">*</code> which matches any sequence of characters.</li> <li>Less common is <code class="language-plaintext highlighter-rouge">?</code> which matches any single character and even less common are character sets, such as <code class="language-plaintext highlighter-rouge">[A-Z]</code> and <code class="language-plaintext highlighter-rouge">[^0-9]</code>.</li> <li>These type of expressions stand in contrast to more powerful regular expression pattern generators which, in Bash, are only available through auxiliary commands.</li> <li>Glob patterns are simple, familiar patterns such as those used commonly in file listing: <ul> <li> <code class="language-plaintext highlighter-rouge">ls *.html</code> # all HTML files (not starting with “.”)</li> <li> <code class="language-plaintext highlighter-rouge">ls .??*</code> # all dot files except “.” and “..”</li> <li> <code class="language-plaintext highlighter-rouge">ls test[0-3]</code> # “test0”, “test1”, “test2”, “test3”</li> </ul> </li> <li>The Bash <code class="language-plaintext highlighter-rouge">case</code> statement distinguishes itself from an <code class="language-plaintext highlighter-rouge">if/else</code> constructions primarily by its ability to test its cases by matching the argument against glob patterns. The syntax is like this:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="k">case</span> <span class="s2">"</span><span class="nv">$file</span><span class="s2">"</span> <span class="k">in</span>
+  <span class="k">*</span>.txt<span class="p">)</span>  <span class="c"># treat "$file" like a text file</span>
+          <span class="p">;;</span>
+  <span class="k">*</span>.gif<span class="p">)</span>  <span class="c"># treat it like a GIF file</span>
+          <span class="p">;;</span>
+  <span class="k">*</span><span class="p">)</span> <span class="c"># catch-all</span>
+     <span class="p">;;</span>
+<span class="k">esac</span> 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Unlike C++ or Java syntax, the break exits an enclosing loop, not exit the particular case.</li> </ul> <hr> <h2 id="loops">Loops</h2> <p>Bash has both for and while loops. However, the type of control for these is typically not numerical. The most common looping structure in Bash is the for/in structure like this:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">for </span>x <span class="k">in</span> ...
+<span class="k">do
+  </span>statements involving <span class="nv">$x</span>
+<span class="k">done</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The “…” is a list of things generated in a number of ways. The x is the loop variable which iterates through each item in the list. For example, try running this program in the current directory:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more fileinfo.sh
+./fileinfo.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>In this case the things iterated are the files in the current directory. Loops One can use numerical-like looping with the double-parentheses like those in for numerical comparison:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>1<span class="p">;</span> i&lt;<span class="o">=</span>10<span class="p">;</span> ++i<span class="o">))</span><span class="p">;</span> <span class="k">do
+  </span><span class="nb">echo</span> <span class="nv">$i</span>
+<span class="k">done</span> 
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="reading-lines-in-bash">Reading lines in Bash</h2> <ul> <li>The while loop also has an advantage in its ability to read live input. For example, this simple program reads and echos input lines:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="k">while </span><span class="nb">read </span>line<span class="p">;</span> <span class="k">do
+  </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$line</span><span class="s2">"</span>
+<span class="k">done</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>In a programmatic setting, it is often useful to process lines generated from the output of some command.</li> <li>Say we want to process all words starting with <code class="language-plaintext highlighter-rouge">my</code> in the system dictionary (<code class="language-plaintext highlighter-rouge">/usr/share/dict/words</code>) by removing - the initial <code class="language-plaintext highlighter-rouge">my</code> part.</li> <li>The following two scripts represent two possible ways of doing so:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more process-lines-1.sh
+more process-lines-2.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The command <code class="language-plaintext highlighter-rouge">grep ^my /usr/share/dict/words</code> is used to generate the target information.</li> <li>The two respective approaches to processing this are: <ul> <li>input redirection into the <code class="language-plaintext highlighter-rouge">while ... done</code> loop using the manufactured “input device” <code class="language-plaintext highlighter-rouge">&lt; (grep ^my /usr/share/dict/words)</code> </li> <li>piping (i.e., <code class="language-plaintext highlighter-rouge">|</code>) the command into the “while … done” loop.</li> </ul> </li> <li>It turns out that only the former method works as we want it to. The problem with the latter method is that the <code class="language-plaintext highlighter-rouge">count</code> variable is being manipulated in a subshell created by the pipe operation and so its value cannot be used upon exiting the while loop. <ul> <li>In contrast, the former method with the odd syntax “&lt;(..)” turns out to be more useful.</li> </ul> </li> </ul> <hr> <h2 id="command-line-options">Command-line options</h2> <ul> <li>Command-line arguments commonly consist of option arguments beginning with a “-“. Consider, for example, the follow <code class="language-plaintext highlighter-rouge">unzip</code> command which extracts <code class="language-plaintext highlighter-rouge">FILE.zip</code> into <code class="language-plaintext highlighter-rouge">/usr/local</code>, <ul> <li>doing so with no output (-q) and</li> <li>overriding existing files (-o).</li> <li>The FILE.zip portion is the argument and others are options.</li> <li>Some options, like -d, take an argument themselves.</li> </ul> </li> <li>The unzip command takes many more options (mostly prior to the argument).</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>unzip <span class="nt">-q</span> <span class="nt">-o</span> FILE.zip <span class="nt">-d</span> /usr/local
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The options can be “compressed” under certain circumstances. For example, this is an equivalent call:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>unzip <span class="nt">-qo</span> FILE.zip <span class="nt">-d</span> /usr/local
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The bash built-in operation <code class="language-plaintext highlighter-rouge">getopts</code> is meant to assist in extracting these options from the command line.</li> <li>Consider the program getopts-test.sh:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more getopts-test.sh
+./getopts-test.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Running this command</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>./getopts-test.sh <span class="nt">-q</span> <span class="nt">-o</span> FILE.zip <span class="nt">-d</span> /usr/local
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>yields the output:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>q 2
+o 3
+? 3
+FILE.zip
+d 3 /usr/local
+? 3
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The while loop <code class="language-plaintext highlighter-rouge">while getopts</code> runs through the arguments looking for <code class="language-plaintext highlighter-rouge">-n</code>, <code class="language-plaintext highlighter-rouge">-o</code>, <code class="language-plaintext highlighter-rouge">-q</code>, <code class="language-plaintext highlighter-rouge">-s</code> options. <ul> <li>OPTIND gives the position of the option (1-based).</li> <li>When a non-option argument is encountered the while loop terminates with flag set to ?. We can keep on going by shifting everything out and resetting OPTIND back to 1.</li> </ul> </li> <li>The second part of the option search uses: <code class="language-plaintext highlighter-rouge">while getopts "d:" flag</code> <ul> <li>The “d:” syntax indicates that the d option also takes an argument. In this case, the $OPTARG expression captures that value.</li> </ul> </li> <li>A useful style of option sensing is to set <code class="language-plaintext highlighter-rouge">option flag</code> variables as shown in <code class="language-plaintext highlighter-rouge">optflags.sh</code>. Try the followings:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>./optflags.sh
+./optflags.sh <span class="nt">-abc</span> foo <span class="nt">-d</span> bar foobar barfoo
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>What is happening is that the variables <code class="language-plaintext highlighter-rouge">opt_a</code>, <code class="language-plaintext highlighter-rouge">opt_b</code>, and <code class="language-plaintext highlighter-rouge">opt_c</code> are being created through deferred evaluation using the Bash eval function.</li> <li>The actual <code class="language-plaintext highlighter-rouge">$flag</code>, say “b”, subtitutes into the evaluated expression eval “opt_$flag=1” thus defining <code class="language-plaintext highlighter-rouge">opt_b</code> and setting it. We can later test for the presence of the “b” flag by: <code class="language-plaintext highlighter-rouge">if [ "$opt_b" ]; then ...</code> </li> </ul> <hr> <h2 id="built-in-string-processing-operations">Built-in string processing operations</h2> <ul> <li>The Bash language itself has very unintuitive string-processing operations. Later we’ll see how to use UNIX commands to do string processing.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more string-processing.sh
+./string-processing.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="functions">Functions</h2> <ul> <li>Functions offer an improvement of aliases. They must be defined before being used. In practice, they are often grouped into Bash files which are sourced within the script which uses them.</li> <li>Functions are supposed to emulate the way commands work. They do not return values in the usual way; any value sent back by the return statement must be an integer which acts like the exit code of an executable.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more functions.sh
+./functions.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="system-command-string-processing">System command string processing</h2> <ul> <li>The Bash language relies heavily on the UNIX-like environment in which it resides in order to create utility scripts. This environment includes many standard UNIX string processing operations such as these:</li> <li> <code class="language-plaintext highlighter-rouge">sed</code>: (stream editor) for regular-expression substitution</li> <li> <code class="language-plaintext highlighter-rouge">grep</code>: can be used to perform match testing with -c (count) option; the -e option uses regular expression instead of glob patterns</li> <li> <code class="language-plaintext highlighter-rouge">awk</code>: captures the fields of a line (separated by whitespace) and does operations on these fields;</li> <li> <code class="language-plaintext highlighter-rouge">tr</code>: translate from one list of characters to another; often used to convert case of a string</li> <li> <code class="language-plaintext highlighter-rouge">sed</code>, <code class="language-plaintext highlighter-rouge">grep</code>, <code class="language-plaintext highlighter-rouge">awk</code>, and <code class="language-plaintext highlighter-rouge">tr</code> are used in Bash via standard I/O. All above operations act on text files when given file name as a parameter, or act from standard input with no arguments.</li> <li>A common bash expression which uses an external OPERATION to compute some internal value looks something like this: <code class="language-plaintext highlighter-rouge">result="$(echo "input string" | OPERATION)"</code> </li> <li>The pipe operator “|” is crucial for passing the input string to OPERATION via echo. The following program illustrates some of these external operations.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>more string-operations.sh
+./string-operations.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> </body></html>

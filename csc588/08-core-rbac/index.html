@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="rbac-model-taxonomy">RBAC Model Taxonomy</h1> <h2 id="overview">Overview</h2> <ul> <li>Core RBAC</li> <li>Hierarchical RBAC</li> <li>Static constrained RBAC</li> <li> <p>Dynamic constrained RBAC</p> </li> <li>ACL (access control list) <ul> <li>a lower-level mechinism that contains names of subjects that are authorized to access the object to which it refers.</li> <li>specific permissions that are granted to each authorized subject</li> </ul> </li> <li>Roles <ul> <li>at a basic level, could be equivalent to the concept of groups <ul> <li>collection of users</li> <li>users can have multiple roles (belong to multiple groups)</li> </ul> </li> <li>semantically different from group <ul> <li>groups are implementation-specific and characteristics can change.</li> <li>roles are defined in term of properties with fixed characteristics.</li> </ul> </li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+</pre></td> <td class="rouge-code"><pre>
+## Core RBAC
+
+
+
+- Consists of `users`, `roles`, and `permissions`, which are `operations` applied to `objects`.
+- Permissions are associated with roles. 
+- Users are members of roles. 
+
+
+
+- Permissions are assigned to roles
+- Simplifying the understanding and management of permissions. 	
+- Access requirements to resources are performed at the same level 
+of abstractions as typical business processes in an enterprise:
+  - role: teller, loan officer, doctor, nurse ...
+  - operation: withdraw cash, deposit cash, write prescription, draw blood test
+
+
+
+- Reflect higher-level organizational policy	
+- Mutually exclusive roles
+- Cardinality: maximum numbers with respect to role	
+- Pre-requisite:
+  - can	assign	role	only if	already	assigned	prerequisite	role
+  - Not hierarchical 
+
+
+
+- Properties and mappings in RBAC can be divided into static 
+and dynamic components. 
+- Dynamic components of RBAC includes role activation and subject access. 
+  - Dynamic mapping of subject to user
+  - Dynamic mapping of user to active role set. 
+
+
+
+- Privileges are system-specific and permissions are mapped into privileges. 
+- Uses and roles can have common meaning across multiple systems. 
+
+:::{image} ../fig/csc603/09-core-rbac/privilege-association.png
+:alt: User-roles and role-privilege associations
+:class: bg-primary mb-1
+:height: 500px
+:align: center
+:::
+
+- The relationship between roles and permissions depends on the scope on which 
+RBAC is implemented. 
+  - RBAC implemented within an operating system: integration with users/groups/operations 
+  and resources of the computer system. 
+  - For distributed systems: RBAC needs to be implemented at the LDAP/server level to support 
+  SSO/Shibboleth Authentication. 
+
+:::{image} ../fig/csc603/09-core-rbac/global-local-mapping.png
+:alt: Mapping global users and roles to local user accounts, groups, and privileges
+:class: bg-primary mb-1
+:height: 500px
+:align: center
+:::
+
+- First step for enterprise-level RBAC
+  - Create and maintain direct associations between RBAC users and local user IDs. 
+  - Local resources are protected via local users IDs and groups. 
+- Operations and resources are created as abstractions.   
+
+:::{image} ../fig/csc603/09-core-rbac/system-level-mapping.png
+:alt: Mapping abstract permissions
+:class: bg-primary mb-1
+:height: 500px
+:align: center
+:::
+
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="hierarchical-rbac">Hierarchical RBAC</h2> <ul> <li>Permissions that are assigned to the role are known to contain, or be contained by, other roles in hierarchy.</li> <li>A inherits B means all B’s permissions are available to A.</li> <li> <p>Additional complexity cost in planning and construction but achieve improved adminitrative productivity.</p> </li> <li>Motivation: individual roles have overlapping functions.</li> <li>With role hierarchy, collections of permissions can be defined using multiple subordinate roles.</li> <li>Example: <ul> <li>Physician inherits from Resident</li> <li>Cardiologist inherits from Physician</li> <li>Oncologist inherits from Physician</li> <li>Accounts receivable clerk does not inherit from or is inherited by any of the above roles.</li> </ul> </li> </ul> <p>:::{image} ../fig/csc603/09-core-rbac/example-hierarchy.png :alt: Example of functional role hierarchy :class: bg-primary mb-1 :height: 300px :align: center :::</p> <ul> <li>Direct privilege inheritance <ul> <li>Closed management systems where there is only a single class of resources and operations.</li> </ul> </li> <li>Permission and user membership inheritance <ul> <li>Role represents both collections of permissions and users.</li> <li>Top of graph represents more powerful roles</li> <li>Greater opportutinies for redundant authorization of permissions to a user exist.</li> </ul> </li> </ul> <p>:::{image} ../fig/csc603/09-core-rbac/privilege-graph.png :alt: Baldwin’s privilege graph :class: bg-primary mb-1 :height: 500px :align: center :::</p> <ul> <li>User containment and indirect privilege inheritance <ul> <li>Used in distributed RBAC implementations</li> <li>Permissions are assigned to groups and groups are mapped to roles.</li> <li>Users belong to groups</li> <li>Examples: Supercomputing infrastructures</li> </ul> </li> <li>Role hierarchies can also support <ul> <li>line of authority</li> <li>functional delineation</li> <li>geographic responsibilities</li> </ul> </li> <li>Connector roles <ul> <li>not typicall assigned to users</li> <li>define collection of permisisons to be inherited by higher-order roles.</li> <li>Example: <ul> <li>Physician inherits from Resident</li> <li> <code class="language-plaintext highlighter-rouge">Specialist</code> inherits from Physician</li> <li>Cardiologist inherits from Specialist</li> <li>Oncologist inherits from Specialist</li> <li>Accounts receivable clerk does not inherit from or is inherited by any of the above roles.</li> </ul> </li> </ul> </li> </ul> <p>:::{image} ../fig/csc603/09-core-rbac/example-hierarchy-connector.png :alt: Example with connector roles :class: bg-primary mb-1 :height: 400px :align: center :::</p> <ul> <li>Typical enterprises are structured and managed along organizational boundaries <ul> <li>departments, divisions, groups, and teams.</li> <li>OU: organizational units.</li> </ul> </li> </ul> <p>:::{image} ../fig/csc603/09-core-rbac/example-ou.png :alt: Example organizational chart :class: bg-primary mb-1 :height: 400px :align: center :::</p> <ul> <li>Means of precisely describe (delineate) <ul> <li>line of authority</li> <li>resource ownership</li> <li>areas of responsibility</li> </ul> </li> <li>OUs do not <ul> <li>define complete sets of jobs positions or roles</li> <li>prescribe privilege inheritance relations</li> </ul> </li> <li>OUs do <ul> <li>assist in defining roles</li> <li>represent collection of functions and users</li> <li>define business processes and workflows</li> </ul> </li> <li>General hierarchies <ul> <li>support multiple inheritances of permissions and user membership among roles</li> <li>allow a role to have more than one immediate ascendants (inheriting user membership from multiple sources) and more than one immediate descendents (inheriting permissions from multiple sources).</li> <li>Example: student worker</li> </ul> </li> <li>Limited role hierarchies impose restrictions on the above characteristics: <ul> <li>single immediate descendent only.</li> <li>remain the norm in popular commercial authorization management products</li> </ul> </li> <li>Stanford model: <ul> <li>Object-oriented approach to management enterprise’s distribution of permissions.</li> <li>recognizes various layers of abstractions: entitlements, tasks, functions, roles</li> </ul> </li> </ul> <p>:::{image} ../fig/csc603/09-core-rbac/stanford-model-2.png :alt: Stanford abstractions :class: bg-primary mb-1 :height: 400px :align: center :::</p> <p>:::{image} ../fig/csc603/09-core-rbac/stanford-model.png :alt: Example Stanford model :class: bg-primary mb-1 :height: 400px :align: center :::</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+</pre></td> <td class="rouge-code"><pre>
+
+## Separation of Duty and RBAC Constraints
+
+
+- Separation of Duty (SoD) is a fundamental principle in security systems. 
+- Critical operations are divided among two or more people, so that no single
+individual can compromise security. 
+
+
+
+- Two broad categories: static and dynamic
+  - Distinguish by the time at which the role constraints are applied. 
+  - Static SoD places constraints at the time users are authorized for roles. 
+  - Dynamic SoD constraints are applied when users are using the system. 
+
+
+
+- Enforce assignment of users to roles. 
+  - If a user is assigned to one role, they cannot be member of another role. 
+  - In the presence of a hierarchy, inherited roles are also considered when enforcing constraints. 
+  - For example, a billing clerk role cannot also be a account receivable clerk role. 
+
+:::{image} ../fig/csc603/09-core-rbac/static-sod.png
+:alt: Example Stanford model
+:class: bg-primary mb-1
+:height: 400px
+:align: center
+:::
+
+
+
+
+- Users maybe authorized for roles with conflict, but limitations are imposed when the user is logged on to 
+the system. 
+  - Timely revocation of trust. 
+  - Can still create policy concerns. 
+  - Need extensive system support. 
+
+
+
+
+- Most RBAC systems available today support role hierarchies
+  - Property 1: Two roles $R_i$ and $R_j$ can be mutually exclusive only if neither
+  one inherits the other, either directly or indirectly. 
+  - Property 2: If there are two roles $R_i$ and $R_j$ that are mutually exclusive, 
+  then there can be no third role that inherits both of them. As with property 1, this 
+  property must be handled properly by role management tools to allow administrators 
+  to set up role hierarchies that do not violate SoD constraints. 
+  - Property 3: If static SoD holds, then DSD is maintained. Clearly, if a user 
+  is only authorized for one of two roles, then he or she can never be 
+  active in both. 
+  - Property 4: If there are any two roles $R_i$ and $R_j$ that are mutually 
+  exclusive, then there can be no `root` or `superuser` role active on the 
+  system. 
+- Mutual exclusion is used to enforce SoD policies. 
+  - Exclusion specified by sets (membership in one set preclude membership in others)
+  - Exclusion specified by role-pair (potentially computationally intensive)
+- Assigning roles to users
+  - Roles must be assigned in such away that no user can violate SoD rules through 
+  a combination of roles. 
+    - No single user posesses all privileges needed to accomplish a task controled 
+    under SoD. 
+    - Govem a set of roles and relationships, what is the minimal number of users 
+    required to ensure SoD?
+
+
+
+- Incorporate the notion of time in specifying access control requirements
+  - To limit resource usage in workflow environment
+  - To limit role availability and activation capability
+- Taxonomy
+  - Temporal constraints on roles
+  - Temporal constraints on user-role assignments
+  - Temporal constraints on role-permission assignments
+- Time-related concepts
+  - Periodicity
+  - Duration
+- Constraints
+  - Role-enabling and disabling constraints (e.g. enable role doctor-on-call for specific doctors)
+  - Role-activation and deactivation constraints (e.g. duration available for download)
+  - Role-permission assignments constraints (e.g., hire John Smith as contractor between Sep and Dec)
+- Supporting requirements must also be enabled to support temporal constraints. 
+</pre></td> </tr></tbody></table></code></pre></div></div> </body></html>

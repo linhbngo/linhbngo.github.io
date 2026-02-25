@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="software-installation-and-configuration">Software Installation and Configuration</h1> <h2 id="launch-your-cloudlab-experiment">Launch your CloudLab experiment</h2> <ul> <li>Instantiate an experiment from the CloudLab profile created last week</li> <li>SSH into the experiment once it is ready.</li> </ul> <hr> <h2 id="overview">Overview</h2> <ul> <li>The purpose of this document is to create a LAMP (Linux/Apache/MySQL/Php) installation on your experiment.</li> <li>With this in place, we’ll also install two common LAMP applications: <ul> <li> <code class="language-plaintext highlighter-rouge">phpMyAdmin</code>: a web app for managing MySQL databases</li> <li> <code class="language-plaintext highlighter-rouge">Drupal</code>: a content management system.</li> </ul> </li> <li>More passwords: <ul> <li>The <code class="language-plaintext highlighter-rouge">MySQL</code> installation needs an administrative (root) password to get started. This is an important one, but we will make it so that you, with machine root access, do not have to remember it.</li> <li> <code class="language-plaintext highlighter-rouge">phpMyAdmin</code> has its own administrative database/user/password; fortunately you do not need to remember this password.</li> <li> <code class="language-plaintext highlighter-rouge">Drupal</code> also has its own administrative database/user/password which you don’t have to remember. Drupal also requires a site administrator login/password, which you <strong>do</strong> have to remember.</li> </ul> </li> </ul> <hr> <h2 id="mysql">MySQL</h2> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+</pre></td> <td class="rouge-code"><pre>bash
+wget <span class="nt">--no-check-certificate</span> https:/www.cs.wcupa.edu/lngo/data2/mysql-apt-config_0.8.17-1_all.deb
+<span class="nb">sudo </span>dpkg <span class="nt">-i</span> mysql-apt-config_0.8.17-1_all.deb
+
+&lt;details <span class="nv">class</span><span class="o">=</span><span class="s2">"details details--default"</span> data-variant<span class="o">=</span><span class="s2">"default"</span><span class="o">&gt;</span>&lt;summary&gt;Configuring mysql-apt-config&lt;/summary&gt;
+&lt;ul&gt;
+  &lt;li&gt;Press the &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Tab&lt;/code&gt; key to go to &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Ok&lt;/code&gt;, <span class="k">then </span>press &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Enter&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+  &lt;picture&gt;
+    &lt;<span class="o">!</span><span class="nt">--</span> Auto scaling with imagemagick <span class="nt">--</span><span class="o">&gt;</span>
+    &lt;<span class="o">!</span><span class="nt">--</span>
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images <span class="k">for </span>info on defining <span class="s1">'sizes'</span> <span class="k">for </span>responsive images
+    <span class="nt">--</span><span class="o">&gt;</span>
+    
+      
+        &lt;<span class="nb">source </span><span class="nv">class</span><span class="o">=</span><span class="s2">"responsive-img-srcset"</span> <span class="nv">srcset</span><span class="o">=</span><span class="s2">"/assets/img/courses/csc586/08-software/mysql-01-480.webp 480w,/assets/img/courses/csc586/08-software/mysql-01-800.webp 800w,/assets/img/courses/csc586/08-software/mysql-01-1400.webp 1400w,"</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"image/webp"</span> <span class="nv">sizes</span><span class="o">=</span><span class="s2">"95vw"</span> /&gt;
+      
+    
+    &lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">"/assets/img/courses/csc586/08-software/mysql-01.png"</span> <span class="nv">width</span><span class="o">=</span><span class="s2">"50%"</span> <span class="nv">height</span><span class="o">=</span><span class="s2">"auto"</span> data-zoomable<span class="o">=</span><span class="s2">""</span> <span class="nv">loading</span><span class="o">=</span><span class="s2">"lazy"</span> <span class="nv">onerror</span><span class="o">=</span><span class="s2">"this.onerror=null; </span><span class="si">$(</span><span class="s1">'.responsive-img-srcset'</span><span class="si">)</span><span class="s2">.remove();"</span> /&gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+&lt;div <span class="nv">class</span><span class="o">=</span><span class="s2">"language-bash highlighter-rouge"</span><span class="o">&gt;</span>&lt;div <span class="nv">class</span><span class="o">=</span><span class="s2">"highlight"</span><span class="o">&gt;</span>&lt;pre <span class="nv">class</span><span class="o">=</span><span class="s2">"highlight"</span><span class="o">&gt;</span>&lt;code&gt;&lt;table <span class="nv">class</span><span class="o">=</span><span class="s2">"rouge-table"</span><span class="o">&gt;</span>&lt;tbody&gt;&lt;<span class="nb">tr</span><span class="o">&gt;</span>&lt;td <span class="nv">class</span><span class="o">=</span><span class="s2">"rouge-gutter gl"</span><span class="o">&gt;</span>&lt;pre <span class="nv">class</span><span class="o">=</span><span class="s2">"lineno"</span><span class="o">&gt;</span>1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td <span class="nv">class</span><span class="o">=</span><span class="s2">"rouge-code"</span><span class="o">&gt;</span>&lt;pre&gt;&lt;span <span class="nv">class</span><span class="o">=</span><span class="s2">"nb"</span><span class="o">&gt;</span><span class="nb">sudo</span> &lt;/span&gt;apt-key adv &lt;span <span class="nv">class</span><span class="o">=</span><span class="s2">"nt"</span><span class="o">&gt;</span><span class="nt">--keyserver</span>&lt;/span&gt; keyserver.ubuntu.com &lt;span <span class="nv">class</span><span class="o">=</span><span class="s2">"nt"</span><span class="o">&gt;</span><span class="nt">--recv-keys</span>&lt;/span&gt; 467B942D3A79BD29
+&lt;span <span class="nv">class</span><span class="o">=</span><span class="s2">"nb"</span><span class="o">&gt;</span><span class="nb">sudo</span> &lt;/span&gt;apt-get update
+&lt;span <span class="nv">class</span><span class="o">=</span><span class="s2">"nb"</span><span class="o">&gt;</span><span class="nb">sudo</span> &lt;/span&gt;apt &lt;span <span class="nv">class</span><span class="o">=</span><span class="s2">"nb"</span><span class="o">&gt;</span><span class="nb">install</span>&lt;/span&gt; &lt;span <span class="nv">class</span><span class="o">=</span><span class="s2">"nt"</span><span class="o">&gt;</span><span class="nt">-y</span>&lt;/span&gt; mysql-community-server
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;/details&gt;
+&lt;details <span class="nv">class</span><span class="o">=</span><span class="s2">"details details--default"</span> data-variant<span class="o">=</span><span class="s2">"default"</span><span class="o">&gt;</span>&lt;summary&gt;Configuring mysql-community-server&lt;/summary&gt;
+&lt;ul&gt;
+  &lt;li&gt;Select and enter a root password&lt;/li&gt;
+  &lt;li&gt;Press the &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Tab&lt;/code&gt; key to go to &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Ok&lt;/code&gt;, <span class="k">then </span>press &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Enter&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Re-enter the above password when asked again, <span class="k">then</span> &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Tab&lt;/code&gt; to &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Ok&lt;/code&gt; and &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>Enter&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+  &lt;picture&gt;
+    &lt;<span class="o">!</span><span class="nt">--</span> Auto scaling with imagemagick <span class="nt">--</span><span class="o">&gt;</span>
+    &lt;<span class="o">!</span><span class="nt">--</span>
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images <span class="k">for </span>info on defining <span class="s1">'sizes'</span> <span class="k">for </span>responsive images
+    <span class="nt">--</span><span class="o">&gt;</span>
+    
+      
+        &lt;<span class="nb">source </span><span class="nv">class</span><span class="o">=</span><span class="s2">"responsive-img-srcset"</span> <span class="nv">srcset</span><span class="o">=</span><span class="s2">"/assets/img/courses/csc586/08-software/mysql-02-480.webp 480w,/assets/img/courses/csc586/08-software/mysql-02-800.webp 800w,/assets/img/courses/csc586/08-software/mysql-02-1400.webp 1400w,"</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"image/webp"</span> <span class="nv">sizes</span><span class="o">=</span><span class="s2">"95vw"</span> /&gt;
+      
+    
+    &lt;img <span class="nv">src</span><span class="o">=</span><span class="s2">"/assets/img/courses/csc586/08-software/mysql-02.png"</span> <span class="nv">width</span><span class="o">=</span><span class="s2">"50%"</span> <span class="nv">height</span><span class="o">=</span><span class="s2">"auto"</span> data-zoomable<span class="o">=</span><span class="s2">""</span> <span class="nv">loading</span><span class="o">=</span><span class="s2">"lazy"</span> <span class="nv">onerror</span><span class="o">=</span><span class="s2">"this.onerror=null; </span><span class="si">$(</span><span class="s1">'.responsive-img-srcset'</span><span class="si">)</span><span class="s2">.remove();"</span> /&gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;code <span class="nv">class</span><span class="o">=</span><span class="s2">"language-plaintext highlighter-rouge"</span><span class="o">&gt;</span>User Strong Password Encryption <span class="o">(</span>RECOMMENDED<span class="s2">" width="</span>50%<span class="s2">" zoomable=true %}&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Press the &lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;Tab&lt;/code&gt; key to go to &lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;Ok&lt;/code&gt;, then press &lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;Enter&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source class="</span>responsive-img-srcset<span class="s2">" srcset="</span>/assets/img/courses/csc586/08-software/mysql-03-480.webp 480w,/assets/img/courses/csc586/08-software/mysql-03-800.webp 800w,/assets/img/courses/csc586/08-software/mysql-03-1400.webp 1400w,<span class="s2">" type="</span>image/webp<span class="s2">" sizes="</span>95vw<span class="s2">" /&gt;
+      
+    
+    &lt;img src="</span>/assets/img/courses/csc586/08-software/mysql-03.png<span class="s2">" width="</span>50%<span class="s2">" height="</span>auto<span class="s2">" data-zoomable="" loading="</span>lazy<span class="s2">" onerror="</span>this.onerror<span class="o">=</span>null<span class="p">;</span> <span class="si">$(</span><span class="s1">'.responsive-img-srcset'</span><span class="si">)</span>.remove<span class="o">()</span><span class="p">;</span><span class="s2">" /&gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Run the following command and provide the password to test the MySQL server:&lt;/li&gt;
+  &lt;li&gt;&lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;mysql -u root -p&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;To quit MySQL, type &lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;</span><span class="se">\q</span><span class="s2">&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source class="</span>responsive-img-srcset<span class="s2">" srcset="</span>/assets/img/courses/csc586/08-software/mysql-04-480.webp 480w,/assets/img/courses/csc586/08-software/mysql-04-800.webp 800w,/assets/img/courses/csc586/08-software/mysql-04-1400.webp 1400w,<span class="s2">" type="</span>image/webp<span class="s2">" sizes="</span>95vw<span class="s2">" /&gt;
+      
+    
+    &lt;img src="</span>/assets/img/courses/csc586/08-software/mysql-04.png<span class="s2">" width="</span>50%<span class="s2">" height="</span>auto<span class="s2">" data-zoomable="" loading="</span>lazy<span class="s2">" onerror="</span>this.onerror<span class="o">=</span>null<span class="p">;</span> <span class="si">$(</span><span class="s1">'.responsive-img-srcset'</span><span class="si">)</span>.remove<span class="o">()</span><span class="p">;</span><span class="s2">" /&gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create a file named &lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;.my.cnf&lt;/code&gt; (run &lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;sudo nano /root/.my.cnf&lt;/code&gt;)directly inside &lt;code class="</span>language-plaintext highlighter-rouge<span class="s2">"&gt;/root&lt;/code&gt; with the following content:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="</span>language-bash highlighter-rouge<span class="s2">"&gt;&lt;div class="</span>highlight<span class="s2">"&gt;&lt;pre class="</span>highlight<span class="s2">"&gt;&lt;code&gt;&lt;table class="</span>rouge-table<span class="s2">"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class="</span>rouge-gutter gl<span class="s2">"&gt;&lt;pre class="</span>lineno<span class="s2">"&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class="</span>rouge-code<span class="s2">"&gt;&lt;pre&gt;&lt;span class="</span>o<span class="s2">"&gt;[&lt;/span&gt;client]
+&lt;span class="</span>nv<span class="s2">"&gt;user&lt;/span&gt;&lt;span class="</span>o<span class="s2">"&gt;=&lt;/span&gt;root
+&lt;span class="</span>nv<span class="s2">"&gt;password&lt;/span&gt;&lt;span class="</span>o<span class="s2">"&gt;=&lt;/span&gt;”MYSQL_ROOT_PASS”
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Test the effectiveness of this passwordless setup&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class="</span>language-bash highlighter-rouge<span class="s2">"&gt;&lt;div class="</span>highlight<span class="s2">"&gt;&lt;pre class="</span>highlight<span class="s2">"&gt;&lt;code&gt;&lt;table class="</span>rouge-table<span class="s2">"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class="</span>rouge-gutter gl<span class="s2">"&gt;&lt;pre class="</span>lineno<span class="s2">"&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class="</span>rouge-code<span class="s2">"&gt;&lt;pre&gt;&lt;span class="</span>nb<span class="s2">"&gt;sudo &lt;/span&gt;su
+mysql
+&lt;span class="</span>o<span class="s2">"&gt;&amp;gt;&lt;/span&gt; &lt;span class="</span>se<span class="s2">"&gt;</span><span class="se">\q</span><span class="s2">&lt;/span&gt;
+&lt;span class="</span>nb<span class="s2">"&gt;exit
+sudo&lt;/span&gt; &lt;span class="</span>nt<span class="s2">"&gt;-H&lt;/span&gt; mysql
+&lt;span class="</span>o<span class="s2">"&gt;&amp;gt;&lt;/span&gt; &lt;span class="</span>se<span class="s2">"&gt;</span><span class="se">\q</span><span class="s2">&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;figure&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source class="</span>responsive-img-srcset<span class="s2">" srcset="</span>/assets/img/courses/csc586/08-software/mysql-05-480.webp 480w,/assets/img/courses/csc586/08-software/mysql-05-800.webp 800w,/assets/img/courses/csc586/08-software/mysql-05-1400.webp 1400w,<span class="s2">" type="</span>image/webp<span class="s2">" sizes="</span>95vw<span class="s2">" /&gt;
+      
+    
+    &lt;img src="</span>/assets/img/courses/csc586/08-software/mysql-05.png<span class="s2">" width="</span>50%<span class="s2">" height="</span>auto<span class="s2">" data-zoomable="" loading="</span>lazy<span class="s2">" onerror="</span>this.onerror<span class="o">=</span>null<span class="p">;</span> <span class="si">$(</span><span class="s1">'.responsive-img-srcset'</span><span class="si">)</span>.remove<span class="o">()</span><span class="p">;</span><span class="s2">" /&gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+&lt;/details&gt;
+---
+
+## Apache
+
+- Run the following commands
+
+~~~bash
+sudo apt install -y apache2 php libapache2-mod-php php-cli php-mysql php-cgi php-curl php-json php-apcu php-gd php-xml php-mbstring
+</span></pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Test the installation once it is completed by open a web browser and go to your CloudLab experiment’s host name (the same one that you SSH to)</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/apache-01-480.webp 480w,/assets/img/courses/csc586/08-software/apache-01-800.webp 800w,/assets/img/courses/csc586/08-software/apache-01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/apache-01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The Apache service is one which needs to be <code class="language-plaintext highlighter-rouge">reset</code> often because of configuration changes. Control the Apache server is done as a SysV service which is based on the <code class="language-plaintext highlighter-rouge">systemctl</code> command:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>systemctl  COMMAND  apache2.service
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>or, more simply:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>systemctl  COMMAND  apache2
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>where COMMAND can be: <code class="language-plaintext highlighter-rouge">status</code>, <code class="language-plaintext highlighter-rouge">start</code>, <code class="language-plaintext highlighter-rouge">stop</code>, <code class="language-plaintext highlighter-rouge">restart</code>, <code class="language-plaintext highlighter-rouge">reload</code>.</p> <ul> <li>If something goes wrong, the first place to look is usually this log file: <code class="language-plaintext highlighter-rouge">/var/log/apache2/error_log</code> </li> <li>This error log file is readable by you, a system admin, without invoking <code class="language-plaintext highlighter-rouge">sudo</code>. Often a useful thing to do is to <code class="language-plaintext highlighter-rouge">follow the tail</code> of this file as messages are generated with using the <code class="language-plaintext highlighter-rouge">tail -f</code> command:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">tail</span> <span class="nt">-f</span> /var/log/apache2/error_log
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>If you make a configuration change, you can test its effectiveness by running this prior to attempting to reset the service.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>apachectl configtest
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Apache understands user sites as the automatic association of a special directory owned by you (by default, <code class="language-plaintext highlighter-rouge">~/public_html</code>) to the URL <code class="language-plaintext highlighter-rouge">http:/hostname/~LOGIN</code> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">mkdir</span> ~/public_html
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>User directories are not enabled by default. To enable the Apache userdir module by:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>a2enmod userdir
+<span class="nb">sudo </span>systemctl reload apache2
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The first command simply creates a symbolic link. Check it yourself:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>ll /etc/apache2/mods-enabled/userdir.<span class="k">*</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Visit <code class="language-plaintext highlighter-rouge">http:/hostname/~LOGIN</code> </li> <li>Does it work?</li> <li> <p>Why?</p> </li> <li>Run <code class="language-plaintext highlighter-rouge">$ sudo nano /etc/apache2/mods-available/userdir.conf</code> </li> <li>Make the appropriate changes or additions</li> <li>Save and reload</li> <li>Try visiting the site again</li> </ul> <hr> <h2 id="php">PHP</h2> <ul> <li>To enable PHP, edit the file <code class="language-plaintext highlighter-rouge">/etc/apache2/mods-enabled/php7.4.conf</code> </li> <li>Comment out the last five lines as per the instructions in the comments</li> <li>Restart apache2</li> <li>Create a file named <code class="language-plaintext highlighter-rouge">hello.php</code> in your <code class="language-plaintext highlighter-rouge">public_html</code> directory with the following contents:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>&lt;?php
+<span class="nb">echo</span> <span class="s2">"Hello from PHP"</span><span class="p">;</span>
+?&gt;
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Refresh your home page and view this file.</li> </ul> <hr> <h2 id="phpphpmyadmin">PHP/phpmyadmin</h2> <ul> <li>Run the following command to install <code class="language-plaintext highlighter-rouge">phpmyadmin</code> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> phpmyadmin
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Press the <code class="language-plaintext highlighter-rouge">Space</code> button to check <code class="language-plaintext highlighter-rouge">apache2</code>, then <code class="language-plaintext highlighter-rouge">Tab</code> to move to <code class="language-plaintext highlighter-rouge">Ok</code> and press <code class="language-plaintext highlighter-rouge">Enter</code>.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/phpmyadmin-01-480.webp 480w,/assets/img/courses/csc586/08-software/phpmyadmin-01-800.webp 800w,/assets/img/courses/csc586/08-software/phpmyadmin-01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/phpmyadmin-01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Accept default <code class="language-plaintext highlighter-rouge">Yes</code> answer on <code class="language-plaintext highlighter-rouge">Configuring database for phpadmin with dbconfig-common</code>.</li> <li>Select and enter a password for <code class="language-plaintext highlighter-rouge">phpmyadmin</code>.</li> <li>Press the <code class="language-plaintext highlighter-rouge">Tab</code> key to go to <code class="language-plaintext highlighter-rouge">Ok</code>, then press <code class="language-plaintext highlighter-rouge">Enter</code> </li> <li>Re-enter the above password for confirmation, then <code class="language-plaintext highlighter-rouge">Tab</code> to <code class="language-plaintext highlighter-rouge">Ok</code> and <code class="language-plaintext highlighter-rouge">Enter</code>.</li> <li>Provide the password of account <code class="language-plaintext highlighter-rouge">root</code> for MySQL (from the MySQL installation).</li> <li>Press the <code class="language-plaintext highlighter-rouge">Tab</code> key to go to <code class="language-plaintext highlighter-rouge">Ok</code>, then press <code class="language-plaintext highlighter-rouge">Enter</code> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/phpmyadmin-02-480.webp 480w,/assets/img/courses/csc586/08-software/phpmyadmin-02-800.webp 800w,/assets/img/courses/csc586/08-software/phpmyadmin-02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/phpmyadmin-02.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/phpmyadmin-03-480.webp 480w,/assets/img/courses/csc586/08-software/phpmyadmin-03-800.webp 800w,/assets/img/courses/csc586/08-software/phpmyadmin-03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/phpmyadmin-03.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <hr> <h2 id="drupal">Drupal</h2> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>su
+<span class="nb">cd
+</span>wget https:/ftp.drupal.org/files/projects/drupal-9.4.2.tar.gz
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Find your machine simple hostname</li> <li>Going forward, <code class="language-plaintext highlighter-rouge">MACHINE</code> will refer to the outcome of this command. <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>$ hostname -f | awk -F\. '{print $1}'
+</pre></td> </tr></tbody></table></code></pre></div> </div> </li> <li>Find your machine full hostname</li> <li>Going forward, <code class="language-plaintext highlighter-rouge">HOSTNAME</code> will refer to the outcome of this command. <div class="language-plaintext highlighter-rouge"> <div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>$ hostname -f
+</pre></td> </tr></tbody></table></code></pre></div> </div> </li> <li>Think of a password for your drupal database.</li> <li>Going forward, <code class="language-plaintext highlighter-rouge">DRUPAL_DB_PASS</code> will refer to this value.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>$ mysql
+mysql&gt; create database drupal;
+mysql&gt; create user drupal@localhost identified by "DRUPAL_DB_PASS";
+mysql&gt; grant all on drupal.* to drupal@localhost;
+mysql&gt; quit;
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Install drupal</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>$ tar xzf drupal-9.4.2.tar.gz
+$ mv drupal-9.4.2 /var/www/html/$(hostname -f | awk -F\. '{print $1}')_drupal
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>Visit <code class="language-plaintext highlighter-rouge">http:/HOSTNAME/MACHINE_drupal</code> to start the browser-based configuration process for Drupal.</p> </li> <li>On first windows, select language <code class="language-plaintext highlighter-rouge">English</code> and click <code class="language-plaintext highlighter-rouge">Save and Continue</code>.</li> <li>Next, select <code class="language-plaintext highlighter-rouge">Standard</code> then click <code class="language-plaintext highlighter-rouge">Save and Continue</code>.</li> <li>We need to address two errors and one warnings.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/drupal-01-480.webp 480w,/assets/img/courses/csc586/08-software/drupal-01-800.webp 800w,/assets/img/courses/csc586/08-software/drupal-01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/drupal-01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <details class="details details--default" data-variant="default"><summary>Error: File system</summary> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>$ clear
+$ cd /var/www/html/$(hostname -f | awk -F\. '{print $1}')_drupal
+$ pwd
+$ apt install -y acl
+$ mkdir sites/default/files
+$ setfacl -m g:www-data:rwx sites/default/files
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Scroll to bottom of page, click <code class="language-plaintext highlighter-rouge">try again</code> to confirm that the <code class="language-plaintext highlighter-rouge">File system</code> error message is gone.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/drupal-02-480.webp 480w,/assets/img/courses/csc586/08-software/drupal-02-800.webp 800w,/assets/img/courses/csc586/08-software/drupal-02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/drupal-02.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Error: Settings File</summary> <ul> <li>Confirm that you are still inside the drupal directory.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>$ pwd
+$ cp sites/default/default.settings.php sites/default/settings.php
+$ setfacl -m g:www-data:rw sites/default/settings.php
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Scroll to bottom of page, click <code class="language-plaintext highlighter-rouge">try again</code> to confirm that the <code class="language-plaintext highlighter-rouge">Settings File</code> error message is gone.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/drupal-03-480.webp 480w,/assets/img/courses/csc586/08-software/drupal-03-800.webp 800w,/assets/img/courses/csc586/08-software/drupal-03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/drupal-03.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Warnings: Clean URLS</summary> <ul> <li>Confirm that you are still inside the drupal directory.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>$ pwd
+$ a2enmod rewrite
+$ mv .htaccess /etc/apache2/conf-available/drupal.conf
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Edit <code class="language-plaintext highlighter-rouge">/etc/apache2/conf-available/drupal.conf</code> and add <code class="language-plaintext highlighter-rouge">&lt;Directory /var/www/html/MACHINE_drupal&gt;</code> as first line and <code class="language-plaintext highlighter-rouge">&lt;/Directory&gt;</code> as last line.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>$ a2enconf drupal
+$ systemctl reload apache2
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Scroll to bottom of page, click <code class="language-plaintext highlighter-rouge">try again</code> to confirm that the warning error message is gone and the configuration has moved on to the next step.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc586/08-software/drupal-04-480.webp 480w,/assets/img/courses/csc586/08-software/drupal-04-800.webp 800w,/assets/img/courses/csc586/08-software/drupal-04-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc586/08-software/drupal-04.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Provide the authentication for the <code class="language-plaintext highlighter-rouge">drupal</code> username and database table as created earlier.</li> <li>Wait for the installation to complete.</li> <li>For configuration:</li> <li> <code class="language-plaintext highlighter-rouge">Site name</code>: MACHINE</li> <li> <code class="language-plaintext highlighter-rouge">Site email address</code>: your email address.</li> <li> <p>Other options can be selected as you see fit.</p> </li> <li> <strong>Challenge</strong>: Create a first page via Drupal and display the content.</li> </ul> </details> <hr> <h2 id="challenge-automating-the-process">Challenge: Automating the process</h2> <ul> <li> <a href="https:/www.ansible.com/">Ansible</a> is one of the more well-known configuration management tools at the disposal of sys admins.</li> <li>This is to help facilitate the automatic installation and configuration of various software.</li> <li>Tasks:</li> <li>Install Ansible on CloudLab experiment</li> <li>Follow instructions at <a href="https:/www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-lamp-on-ubuntu-18-04">Digital Ocean</a> to setup and create a LAMP stack using Ansible playbooks.</li> <li>Integrate everything into the CloudLab experiment so that all is automated!</li> </ul> </body></html>

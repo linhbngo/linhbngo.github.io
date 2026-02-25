@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="pod-service-and-deployment">Pod, Service, and Deployment</h1> <h2 id="big-picture">Big Picture</h2> <ul> <li>In Docker, you run containers directly. <ul> <li>Docker Swarm manages containers</li> </ul> </li> <li>In Kubernetes, you run <strong>pods</strong>, which wrap account containers. <ul> <li>A <strong>node</strong> is a machine (physical or virtual) where <strong>pods</strong> live.</li> </ul> </li> </ul> <hr> <h2 id="pods-containers-and-node-abstraction">Pods: Containers and Node Abstraction</h2> <details class="details details--default" data-variant="default"><summary>What is a Pod?</summary> <ul> <li>A pod includes one or more containers plus additional share resources. <ul> <li>Shared resources include, but are not limited to, shared IP (internal/external) and storage volumes.</li> <li>Example pod: one <code class="language-plaintext highlighter-rouge">nginx</code> webserver container plus one <code class="language-plaintext highlighter-rouge">log-shipper</code> sidecar container plus shared volume for log data.</li> </ul> </li> <li>Pods are scheduled onto <code class="language-plaintext highlighter-rouge">nodes</code> by the kube-scheduler.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Pod and physical (virtual) node</summary> <ul> <li>Each node runs a kubelet agent.</li> <li>Kubelet talks to the container runtime (containerd in Rancher Desktop).</li> <li>When a pod is deployed, kubelet pulls the associated container image(s) and runs it(them).</li> </ul> <pre><code class="language-mermaid">    graph TD
+        subgraph Node1["Node (VM)"]
+            Kubelet1["kubelet + runtime"]
+            subgraph Pod1["Pod"]
+                Nginx["Container: Nginx"]
+            end
+        end
+
+        subgraph Node2["Node (VM)"]
+            Kubelet2["kubelet + runtime"]
+            subgraph Pod2["Pod"]
+                Redis["Container: Redis"]
+            end
+        end
+
+        Kubelet1 --&gt; Pod1
+        Kubelet2 --&gt; Pod2
+</code></pre> </details> <details class="details details--default" data-variant="default"><summary>Hands-on with Rancher Desktop</summary> <ul> <li>Verify that your Rancher Desktop is up and running</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get nodes <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Create a file called <code class="language-plaintext highlighter-rouge">nginx-pod.yaml</code> with the following content</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="na">spec</span><span class="pi">:</span>
+    <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:latest</span>   <span class="c1"># pulls Docker/OCI image</span>
+      <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Run <code class="language-plaintext highlighter-rouge">kubectl</code> and provide path to your <code class="language-plaintext highlighter-rouge">nginx-pod.yaml</code>. In the example below, I am in the same directory as my file.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> nginx-pod.yaml
+kubectl get pods <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/pod-service-deployment/nginx-pod-480.webp 480w,/assets/img/courses/csc478/pod-service-deployment/nginx-pod-800.webp 800w,/assets/img/courses/csc478/pod-service-deployment/nginx-pod-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/pod-service-deployment/nginx-pod.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <hr> <h2 id="services-stable-access-to-pods">Services: Stable Access to Pods</h2> <p>At this point, if we try to access the above pod using the <code class="language-plaintext highlighter-rouge">containerPort</code> 80, it will fail.</p> <details class="details details--default" data-variant="default"><summary>Problem</summary> <ul> <li>Pods are <code class="language-plaintext highlighter-rouge">ephemeral</code> <ul> <li>Pods can restart and be rescheduled onto different nodes.</li> <li>Each pod gets a random IP inside the cluster.</li> <li>How does a client reliably connect to <code class="language-plaintext highlighter-rouge">nginx</code> if its internal IP changes?</li> </ul> </li> <li>Docker: <code class="language-plaintext highlighter-rouge">-P</code> and <code class="language-plaintext highlighter-rouge">-p</code> is not adequate for this.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Solution</summary> <ul> <li>Kubernetes Service</li> <li>A <code class="language-plaintext highlighter-rouge">Service</code> provides <code class="language-plaintext highlighter-rouge">Pods</code> with a <code class="language-plaintext highlighter-rouge">stable virtual IP</code> and <code class="language-plaintext highlighter-rouge">DNS name</code>.</li> <li> <code class="language-plaintext highlighter-rouge">Service</code> load-balances traffic to all matching Pods via <code class="language-plaintext highlighter-rouge">label</code>.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Connection to Physical Node</summary> <ul> <li>A <code class="language-plaintext highlighter-rouge">ClusterIP</code> service gives access only inside the cluster.</li> <li>A <code class="language-plaintext highlighter-rouge">NodePort</code> service opens a port on every node’s IP.</li> <li>A <code class="language-plaintext highlighter-rouge">LoadBalancer</code> (on cloud) provisions an external IP (if available).</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get nodes
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Hands-on with Rancher Desktop: Adding service to pod</summary> <ul> <li>Create a file called <code class="language-plaintext highlighter-rouge">nginx-svc.yaml</code> with the following content</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="na">spec</span><span class="pi">:</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+    <span class="na">selector</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30007</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <hr> <h2 id="deployment">Deployment</h2> <details class="details details--note" data-variant="note"><summary>Details</summary> <ul> <li>Pods creation using <code class="language-plaintext highlighter-rouge">kubectl</code> and Pods-only YAML files is a manual process. <ul> <li>Pod IP addresses will be ephemeral and changed when a Pod crashes/is deleted/is rescheduled.</li> </ul> </li> <li>Best practice: <ul> <li>Avoid creating bare Pods in production</li> <li>Use <code class="language-plaintext highlighter-rouge">Deployment</code> (or <code class="language-plaintext highlighter-rouge">StatefulSets</code>, <code class="language-plaintext highlighter-rouge">DaemonSets</code>) to manage Pods</li> <li>Combine with <code class="language-plaintext highlighter-rouge">Service</code> to maintain stable networking access.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Example: Details</summary> <ul> <li>Assuming that you have been working on this lecture continuously, you will have one <code class="language-plaintext highlighter-rouge">nginx</code> pod and one <code class="language-plaintext highlighter-rouge">nginx</code> service running. Use the following commmands to check the existence of the pod and service, then to delete the pod and service. After deletion, check again to confirm that the pod and service are gone.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-o</span> wide
+kubectl get svc <span class="nt">-o</span> wide
+kubectl delete pod nginx
+kubectl delete svc nginx
+kubectl get pods <span class="nt">-o</span> wide
+kubectl get svc <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc-480.webp 480w,/assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc-800.webp 800w,/assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>&lt;details class="details details--default" data-variant="default"&gt;&lt;summary&gt;Step 2: Create deployment&lt;/summary&gt;
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>In Kubernetes, <code class="language-plaintext highlighter-rouge">Deployment</code> and <code class="language-plaintext highlighter-rouge">Service</code> are distinct objects, usually defined in separate YAML files. <ul> <li> <code class="language-plaintext highlighter-rouge">Deployment</code>: workload management (replicas, rolling updates, Pod templates).</li> <li> <code class="language-plaintext highlighter-rouge">Service</code>: network exposure (ClusterIP, NodePort, LoadBalancer).</li> </ul> </li> <li>However, it is common practice for examples and small apps to combine them into a single YAML file, using <code class="language-plaintext highlighter-rouge">---</code> as a separator.</li> <li>Create a file called <code class="language-plaintext highlighter-rouge">nginx-deployment.yaml</code> with the following content</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">nginx-deployment</span>
+<span class="na">spec</span><span class="pi">:</span>
+<span class="na">replicas</span><span class="pi">:</span> <span class="m">2</span>
+<span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+    <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">spec</span><span class="pi">:</span>
+    <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:latest</span>
+      <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">nginx-service</span>
+<span class="na">spec</span><span class="pi">:</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+<span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="na">ports</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+  <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+  <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+  <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30007</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>&lt;/details&gt; <details class="details details--default" data-variant="default">&lt;summary&gt;Step 3: Deployment&lt;/summary&gt;</details></p> <details class="details details--info" data-variant="info"><summary>How does this work?</summary> <ul> <li>Deployment <ul> <li>Ensures 2 replics of <code class="language-plaintext highlighter-rouge">nginx</code> Pods always run</li> <li>Each Pod get a random IP inside the cluster.</li> </ul> </li> <li>Service <ul> <li>Select all Pods with <code class="language-plaintext highlighter-rouge">app: nginx</code>.</li> <li>Provide a stable virual IP and DNS name (<code class="language-plaintext highlighter-rouge">nginx-service</code>)</li> <li>Expose port <code class="language-plaintext highlighter-rouge">30007</code> on every node.</li> </ul> </li> </ul> </details> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> nginx-deployment.yaml
+kubectl get deployments
+kubectl get pods <span class="nt">-o</span> wide
+kubectl get svc
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/pod-service-deployment/nginx-deployment-480.webp 480w,/assets/img/courses/csc478/pod-service-deployment/nginx-deployment-800.webp 800w,/assets/img/courses/csc478/pod-service-deployment/nginx-deployment-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/pod-service-deployment/nginx-deployment.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>&lt;/details&gt; <details class="details details--default" data-variant="default">&lt;summary&gt;Step 4: Test recovery&lt;/summary&gt;</details></p> <ul> <li>From the outcomes of <code class="language-plaintext highlighter-rouge">kubectl get pods -o wide</code>, delete one pod.</li> <li>Check again and observe how <code class="language-plaintext highlighter-rouge">nginx-deployment</code> immediately create a replacement pod.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod-480.webp 480w,/assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod-800.webp 800w,/assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>&lt;/details&gt;</p> </body></html>

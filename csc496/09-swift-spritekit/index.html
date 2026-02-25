@@ -1,0 +1,826 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="spritekit">SpriteKit</h1> <h2 id="spritekit-1">SpriteKit</h2> <details class="details details--default" data-variant="default"><summary>SpriteKit Framework</summary> <ul> <li>Add a high-performance 2D content with smooth animtions to your app, or create a game with a high-levle set of 2D game-based tools</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/09-sprite/01-480.webp 480w,/assets/img/courses/csc496/09-sprite/01-800.webp 800w,/assets/img/courses/csc496/09-sprite/01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/09-sprite/01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Create a New Project</summary> <ul> <li>Start up XCode <ul> <li>Select <code class="language-plaintext highlighter-rouge">File\New\Project\...</code>, or</li> <li>Select <code class="language-plaintext highlighter-rouge">New Project</code> </li> </ul> </li> <li>Choose <code class="language-plaintext highlighter-rouge">iOS/Game</code> template and click <code class="language-plaintext highlighter-rouge">Next</code> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/09-sprite/02-480.webp 480w,/assets/img/courses/csc496/09-sprite/02-800.webp 800w,/assets/img/courses/csc496/09-sprite/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/09-sprite/02.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Enter <code class="language-plaintext highlighter-rouge">Pikachu</code> for <code class="language-plaintext highlighter-rouge">Product Name</code> </li> <li>Enter <code class="language-plaintext highlighter-rouge">Swift</code> for <code class="language-plaintext highlighter-rouge">Language</code>,</li> <li> <code class="language-plaintext highlighter-rouge">SpriteKit</code> for <code class="language-plaintext highlighter-rouge">Game Technology</code>.</li> <li>Select <code class="language-plaintext highlighter-rouge">None</code> for <code class="language-plaintext highlighter-rouge">Testing System</code> </li> <li>Make sure the option for Integrate GameplayKit is checked.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/09-sprite/03-480.webp 480w,/assets/img/courses/csc496/09-sprite/03-800.webp 800w,/assets/img/courses/csc496/09-sprite/03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/09-sprite/03.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Select <code class="language-plaintext highlighter-rouge">iPhone 16</code> and start the simulation</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/09-sprite/04-480.webp 480w,/assets/img/courses/csc496/09-sprite/04-800.webp 800w,/assets/img/courses/csc496/09-sprite/04-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/09-sprite/04.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <h2 id="create-a-new-example-game">Create A New Example Game</h2> <details class="details details--default" data-variant="default"><summary>Setup</summary> <ul> <li>Delete <code class="language-plaintext highlighter-rouge">GameScene.sks</code> and <code class="language-plaintext highlighter-rouge">Actions.sks</code> </li> <li>Make sure that <code class="language-plaintext highlighter-rouge">GameScene.swift</code> has only the followings:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">SpriteKit</span>
+<span class="kd">import</span> <span class="kt">GameplayKit</span>
+
+<span class="kd">class</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKScene</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Make sure that <code class="language-plaintext highlighter-rouge">GameViewController.swift</code> has the following contents: <ul> <li>This will force a landscape view when you launch your simulation.</li> </ul> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">UIKit</span>
+<span class="kd">import</span> <span class="kt">SpriteKit</span>
+<span class="kd">import</span> <span class="kt">GameplayKit</span>
+
+<span class="kd">class</span> <span class="kt">GameViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">var</span> <span class="nv">supportedInterfaceOrientations</span><span class="p">:</span> <span class="kt">UIInterfaceOrientationMask</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">.</span><span class="n">landscape</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="k">var</span> <span class="nv">prefersStatusBarHidden</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>View, Node, and Scene</summary> <ul> <li>View (SKView) <ul> <li>The view is a bridge between SpriteKit and UIKit/AppKit.</li> <li>It’s a subclass of UIView (iOS) or NSView (macOS) that renders SpriteKit content.</li> <li>You use it to present scenes and to embed SpriteKit inside regular apps.</li> </ul> </li> <li>Scene (SKScene) <ul> <li>A scene represents a self-contained 2D world or environment in your game.</li> <li>It acts as the root node (container) for all visual content (sprites, labels, shapes, etc.).</li> <li>You can think of a scene as a level or screen (e.g., main menu scene, gameplay scene, game over scene).</li> <li>It handles input (like touches), updates (via update(_:)), and game logic.</li> </ul> </li> <li>Node (SKNode) <ul> <li>A node is the basic building block for all elements in a scene.</li> <li>Nodes can represent sprites (SKSpriteNode), labels (SKLabelNode), shapes, sounds, etc.</li> <li>Nodes form a tree structure (scene graph), where each node can have children and a parent.</li> <li>This structure makes it easy to move or transform groups of related nodes together.</li> </ul> </li> <li>Analogy: <ul> <li>View: TV screen</li> <li>Scene: The movie/episode playing on TV</li> <li>Node: Actors and prop</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Create your first scene</summary> <ul> <li>Inside <code class="language-plaintext highlighter-rouge">GameViewController.swift</code>/<code class="language-plaintext highlighter-rouge">viewDidLoad()</code>, edit the function with the followings:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td> <td class="rouge-code"><pre><span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+    <span class="c1">//create the view</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span> <span class="k">as!</span> <span class="kt">SKView</span><span class="p">?</span> <span class="p">{</span>
+        <span class="c1">//create the scene</span>
+        <span class="k">let</span> <span class="nv">scene</span> <span class="o">=</span> <span class="kt">GameScene</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">1336</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">1024</span><span class="p">))</span>
+
+        <span class="c1">//set the scale mode to scale to fill the view window</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">scaleMode</span> <span class="o">=</span> <span class="o">.</span><span class="n">aspectFill</span>
+
+        <span class="c1">//set the background colo</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="kt">UIColor</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="mi">105</span><span class="sr">/255, green: 157/255, blue: 181/</span><span class="mi">255</span><span class="p">,</span> <span class="nv">alpha</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="c1">//present the scene</span>
+        <span class="n">view</span><span class="o">.</span><span class="nf">presentScene</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+
+        <span class="c1">//set the view options</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">ignoresSiblingOrder</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">showsPhysics</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">showsFPS</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="n">view</span><span class="o">.</span><span class="n">showsNodeCount</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Creating your first visual node</summary> <ul> <li>Recall: the SKNode class doesn’t render (draw) any visual content – it is considered the building block of SpriteKit because every node in a SpriteKit scene is a subclass of SKNode.</li> <li>To draw content, you need to use a visual node, such as: – SKSpriteNode: this node draws a rectangle texture, image or color. – SKShapeNode: Used along with a core graphics path to draw custom shapes. – SKLableNode: When you need text, this type of node is used to draw a text label – SKVideoNode: Display video content – SKReferenceNode: create reusable content</li> <li>Although the SKNode class does not allow for visual content, it does provide some standard properties that its subclasses inherit. – Position: - Frame - Position - zPosition – Scale and Rotation: - xScale - yScale - zRotation</li> <li>Download the following figures into your asset <ul> <li><a href="fig/09-sprite/foreground.png">foreground</a></li> <li><a href="fig/09-sprite/background.jpg">background</a></li> </ul> </li> <li>Edit function <code class="language-plaintext highlighter-rouge">didMove</code> in <code class="language-plaintext highlighter-rouge">GameScene.swift</code> to have the following contents</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">background</span> <span class="o">=</span> <span class="kt">SKSpriteNode</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"background"</span><span class="p">)</span>
+    <span class="n">background</span><span class="o">.</span><span class="n">anchorPoint</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">background</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span><span class="mi">330</span><span class="p">)</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">background</span><span class="p">)</span>
+
+    <span class="k">let</span> <span class="nv">foreground</span> <span class="o">=</span> <span class="kt">SKSpriteNode</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"foreground"</span><span class="p">)</span>
+    <span class="n">foreground</span><span class="o">.</span><span class="n">anchorPoint</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">foreground</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">158</span><span class="p">)</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">foreground</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/09-sprite/05-480.webp 480w,/assets/img/courses/csc496/09-sprite/05-800.webp 800w,/assets/img/courses/csc496/09-sprite/05-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/09-sprite/05.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Add a player</summary> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">SpriteKitHelper.swift</code> to set Z Position</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">SpriteKit</span>
+
+<span class="kd">enum</span> <span class="kt">Layer</span><span class="p">:</span><span class="kt">CGFloat</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">background</span>
+    <span class="k">case</span> <span class="n">foreground</span>
+    <span class="k">case</span> <span class="n">player</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Download and unzip the Pikachu image (<a href="codes/09-sprite/frame_0.zip">frame_0</a>) and add it to the project’s Asset.</li> <li>Create a new file called <code class="language-plaintext highlighter-rouge">Player.swift</code> with the following content:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">SpriteKit</span>
+
+<span class="kd">class</span> <span class="kt">Player</span><span class="p">:</span><span class="kt">SKSpriteNode</span> <span class="p">{</span>
+    <span class="c1">// MARK: - PROPERTIES</span>
+
+    <span class="c1">// MARK: - INT</span>
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// set default textture</span>
+        <span class="k">let</span> <span class="nv">texture</span> <span class="o">=</span> <span class="kt">SKTexture</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"frame_0"</span><span class="p">)</span>
+
+        <span class="c1">// call to super.init</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">texture</span><span class="p">:</span> <span class="n">texture</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">clear</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="n">texture</span><span class="o">.</span><span class="nf">size</span><span class="p">())</span>
+
+        <span class="k">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"player"</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">setScale</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">anchorPoint</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">zPosition</span> <span class="o">=</span> <span class="kt">Layer</span><span class="o">.</span><span class="n">player</span><span class="o">.</span><span class="n">rawValue</span>
+    <span class="p">}</span>
+
+    <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">fatalError</span><span class="p">(</span><span class="s">"init(coder:) has not been implemented"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Ad player to the scene via <code class="language-plaintext highlighter-rouge">didMove</code> function in <code class="language-plaintext highlighter-rouge">GameScene</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">player</span> <span class="o">=</span> <span class="kt">Player</span><span class="p">()</span>
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">background</span> <span class="o">=</span> <span class="kt">SKSpriteNode</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"background"</span><span class="p">)</span>
+    <span class="n">background</span><span class="o">.</span><span class="n">anchorPoint</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">background</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span><span class="mi">330</span><span class="p">)</span>
+    <span class="n">background</span><span class="o">.</span><span class="n">zPosition</span> <span class="o">=</span> <span class="kt">Layer</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">rawValue</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">background</span><span class="p">)</span>
+
+    <span class="k">let</span> <span class="nv">foreground</span> <span class="o">=</span> <span class="kt">SKSpriteNode</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"foreground"</span><span class="p">)</span>
+    <span class="n">foreground</span><span class="o">.</span><span class="n">anchorPoint</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">foreground</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">158</span><span class="p">)</span>
+    <span class="n">foreground</span><span class="o">.</span><span class="n">zPosition</span> <span class="o">=</span> <span class="kt">Layer</span><span class="o">.</span><span class="n">foreground</span><span class="o">.</span><span class="n">rawValue</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">foreground</span><span class="p">)</span>
+
+    <span class="n">player</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="n">foreground</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">maxY</span><span class="p">)</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Add player movement</summary> <ul> <li>Add the following function to <code class="language-plaintext highlighter-rouge">Player.swift</code>:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">moveToPosition</span><span class="p">(</span><span class="nv">pos</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">,</span> <span class="nv">speed</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">moveAction</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">pos</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="n">speed</span><span class="p">)</span>
+    <span class="nf">run</span><span class="p">(</span><span class="n">moveAction</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add the following functions and declaration to <code class="language-plaintext highlighter-rouge">GameScene.swift</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="k">let</span> <span class="nv">player</span> <span class="o">=</span> <span class="kt">Player</span><span class="p">()</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">touchDown</span> <span class="p">(</span><span class="n">atPoint</span> <span class="nv">pos</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">player</span><span class="o">.</span><span class="nf">moveToPosition</span><span class="p">(</span><span class="nv">pos</span><span class="p">:</span> <span class="n">pos</span><span class="p">,</span> <span class="nv">speed</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="k">in</span> <span class="n">touches</span><span class="p">{</span><span class="k">self</span><span class="o">.</span><span class="nf">touchDown</span><span class="p">(</span><span class="nv">atPoint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="nf">location</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="p">))}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Attempt to use the mouse to move Pikachu along the way.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Limit movement</summary> <ul> <li>Add the following to Player.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">setupConstraints</span><span class="p">(</span><span class="nv">floor</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">range</span> <span class="o">=</span> <span class="kt">SKRange</span><span class="p">(</span><span class="nv">lowerLimit</span><span class="p">:</span> <span class="n">floor</span><span class="p">,</span> <span class="nv">upperLimit</span><span class="p">:</span> <span class="n">floor</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">lockToPlatform</span> <span class="o">=</span> <span class="kt">SKConstraint</span><span class="o">.</span><span class="nf">positionY</span><span class="p">(</span><span class="n">range</span><span class="p">)</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">lockToPlatform</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add the following to GameScene.swift below player.position statement</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="n">player</span><span class="o">.</span><span class="nf">setupConstraints</span><span class="p">(</span><span class="nv">floor</span><span class="p">:</span> <span class="n">foreground</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">maxY</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Test the movement of Pikachu now.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Set movement direction</summary> <ul> <li>Update <code class="language-plaintext highlighter-rouge">moveToPosition()</code> in Player.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">moveToPosition</span><span class="p">(</span><span class="nv">pos</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">,</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">speed</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="n">direction</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s">"L"</span><span class="p">:</span>
+            <span class="n">xScale</span> <span class="o">=</span> <span class="o">-</span><span class="nf">abs</span><span class="p">(</span><span class="n">xScale</span><span class="p">)</span>
+        <span class="k">default</span><span class="p">:</span>
+            <span class="n">xScale</span> <span class="o">=</span> <span class="nf">abs</span><span class="p">(</span><span class="n">xScale</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">let</span> <span class="nv">moveAction</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">pos</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="n">speed</span><span class="p">)</span>
+    <span class="nf">run</span><span class="p">(</span><span class="n">moveAction</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Update <code class="language-plaintext highlighter-rouge">touchDown()</code> in GameScene.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">touchDown</span> <span class="p">(</span><span class="n">atPoint</span> <span class="nv">pos</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="p">{</span>
+        <span class="n">player</span><span class="o">.</span><span class="nf">moveToPosition</span><span class="p">(</span><span class="nv">pos</span><span class="p">:</span> <span class="n">pos</span><span class="p">,</span> <span class="nv">direction</span><span class="p">:</span> <span class="s">"L"</span><span class="p">,</span> <span class="nv">speed</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">player</span><span class="o">.</span><span class="nf">moveToPosition</span><span class="p">(</span><span class="nv">pos</span><span class="p">:</span> <span class="n">pos</span><span class="p">,</span> <span class="nv">direction</span><span class="p">:</span> <span class="s">"R"</span><span class="p">,</span> <span class="nv">speed</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="augment-your-game">Augment Your Game</h2> <details class="details details--default" data-variant="default"><summary>Add collectible item</summary> <ul> <li>Download <a href="codes/09-sprite/fruit.png">fruit.png</a> and drag the image into Assets.</li> <li>Update <code class="language-plaintext highlighter-rouge">SpriteKitHelper.swift</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre><span class="kd">enum</span> <span class="kt">Layer</span><span class="p">:</span><span class="kt">CGFloat</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">background</span>
+    <span class="k">case</span> <span class="n">foreground</span>
+    <span class="k">case</span> <span class="n">player</span>
+    <span class="k">case</span> <span class="n">collectible</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Create a file called <code class="language-plaintext highlighter-rouge">Collectible.swift</code> with the following contents</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">SpriteKit</span>
+
+<span class="kd">enum</span> <span class="kt">CollectibleType</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="k">none</span>
+    <span class="k">case</span> <span class="n">fruit</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Collectible</span><span class="p">:</span> <span class="kt">SKSpriteNode</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="k">var</span> <span class="nv">collectibleType</span><span class="p">:</span> <span class="kt">CollectibleType</span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span>
+
+    <span class="nf">init</span><span class="p">(</span><span class="nv">collectibleType</span><span class="p">:</span> <span class="kt">CollectibleType</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">texture</span><span class="p">:</span> <span class="kt">SKTexture</span><span class="o">!</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">collectibleType</span> <span class="o">=</span> <span class="n">collectibleType</span>
+
+        <span class="c1">//set the texture based on the Type</span>
+        <span class="k">switch</span> <span class="k">self</span><span class="o">.</span><span class="n">collectibleType</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">fruit</span><span class="p">:</span>
+            <span class="n">texture</span> <span class="o">=</span> <span class="kt">SKTexture</span><span class="p">(</span><span class="nv">imageNamed</span><span class="p">:</span> <span class="s">"fruit"</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">none</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">texture</span><span class="p">:</span> <span class="n">texture</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">SKColor</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="n">texture</span><span class="o">.</span><span class="nf">size</span><span class="p">())</span>
+
+        <span class="c1">//set up the collectible</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"co_</span><span class="se">\(</span><span class="n">collectibleType</span><span class="se">)</span><span class="s">"</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">anchorPoint</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">setScale</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">zPosition</span> <span class="o">=</span> <span class="kt">Layer</span><span class="o">.</span><span class="n">collectible</span><span class="o">.</span><span class="n">rawValue</span>
+    <span class="p">}</span>
+
+    <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">){</span>
+        <span class="nf">fatalError</span><span class="p">(</span><span class="s">"init(coder:) has not been implemented"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add the following function below <code class="language-plaintext highlighter-rouge">didMove()</code> inside GameScene.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">spawnFruit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">collectible</span> <span class="o">=</span> <span class="kt">Collectible</span><span class="p">(</span><span class="nv">collectibleType</span><span class="p">:</span> <span class="kt">CollectibleType</span><span class="o">.</span><span class="n">fruit</span><span class="p">)</span>
+    <span class="n">collectible</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span><span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="mf">2.5</span><span class="p">)</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">collectible</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add a call to spawnFruit() add the bottom of <code class="language-plaintext highlighter-rouge">didMove()</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>    <span class="o">...</span>
+    <span class="nf">spawnFruit</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Test that the fruit is visible in your game</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Drop collectible item</summary> <ul> <li>Add the following function to Collectible.swift below the initialization method</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">drop</span><span class="p">(</span><span class="nv">dropSpeed</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">floorLevel</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">pos</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="n">floorLevel</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">scaleX</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">scaleX</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">scaleY</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">scaleY</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">scale</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">group</span><span class="p">([</span><span class="n">scaleX</span><span class="p">,</span> <span class="n">scaleY</span><span class="p">])</span>
+
+    <span class="k">let</span> <span class="nv">appear</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">fadeAlpha</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">moveAction</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="n">pos</span><span class="p">,</span> <span class="nv">duration</span><span class="p">:</span> <span class="n">dropSpeed</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">actionSequence</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">sequence</span><span class="p">([</span><span class="n">appear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">moveAction</span><span class="p">])</span>
+
+    <span class="k">self</span><span class="o">.</span><span class="nf">scale</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">))</span>
+    <span class="k">self</span><span class="o">.</span><span class="nf">run</span><span class="p">(</span><span class="n">actionSequence</span><span class="p">,</span> <span class="nv">withKey</span><span class="p">:</span> <span class="s">"drop"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add the following line to the end of the <code class="language-plaintext highlighter-rouge">spawnFruit()</code> function inside GameScene.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="n">collectible</span><span class="o">.</span><span class="nf">drop</span><span class="p">(</span><span class="nv">dropSpeed</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="nv">floorLevel</span><span class="p">:</span> <span class="n">player</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">minY</span><span class="p">)</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Test your game</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Spawning fruits at random position</summary> <ul> <li>Modify <code class="language-plaintext highlighter-rouge">spawnFruit()</code> function in GameScene.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">spawnFruit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">collectible</span> <span class="o">=</span> <span class="kt">Collectible</span><span class="p">(</span><span class="nv">collectibleType</span><span class="p">:</span> <span class="kt">CollectibleType</span><span class="o">.</span><span class="n">fruit</span><span class="p">)</span>
+
+    <span class="c1">//set random position</span>
+    <span class="k">let</span> <span class="nv">margin</span> <span class="o">=</span> <span class="n">collectible</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">let</span> <span class="nv">dropRange</span> <span class="o">=</span> <span class="kt">SKRange</span><span class="p">(</span><span class="nv">lowerLimit</span><span class="p">:</span> <span class="n">frame</span><span class="o">.</span><span class="n">minX</span> <span class="o">+</span> <span class="n">margin</span><span class="p">,</span> <span class="nv">upperLimit</span><span class="p">:</span> <span class="n">frame</span><span class="o">.</span><span class="n">maxX</span> <span class="o">-</span> <span class="n">margin</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">randomX</span> <span class="o">=</span> <span class="kt">CGFloat</span><span class="o">.</span><span class="nf">random</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="n">dropRange</span><span class="o">.</span><span class="n">lowerLimit</span><span class="o">...</span><span class="n">dropRange</span><span class="o">.</span><span class="n">upperLimit</span><span class="p">)</span>
+    <span class="n">collectible</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">randomX</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span><span class="n">player</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="mf">2.5</span><span class="p">)</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">collectible</span><span class="p">)</span>
+    <span class="n">collectible</span><span class="o">.</span><span class="nf">drop</span><span class="p">(</span><span class="nv">dropSpeed</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span> <span class="nv">floorLevel</span><span class="p">:</span> <span class="n">player</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">minY</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Run the game several times to test the random spawning.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Spawning multiple fruits</summary> <ul> <li>Add <code class="language-plaintext highlighter-rouge">spawnMultipleFruits()</code> in GameScene below <code class="language-plaintext highlighter-rouge">spawnFruit()</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">spawnMultipleFruits</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">wait</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">wait</span><span class="p">(</span><span class="nv">forDuration</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="k">let</span> <span class="nv">spawn</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="n">run</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">spawnFruit</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="k">let</span> <span class="nv">sequence</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">sequence</span><span class="p">([</span><span class="n">wait</span><span class="p">,</span> <span class="n">spawn</span><span class="p">])</span>
+    <span class="k">let</span> <span class="nv">repeatAction</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">repeat</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="nf">run</span><span class="p">(</span><span class="n">repeatAction</span><span class="p">,</span> <span class="nv">withKey</span><span class="p">:</span> <span class="s">"fruit"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Change <code class="language-plaintext highlighter-rouge">spawnFruit()</code> call in <code class="language-plaintext highlighter-rouge">didMove()</code> to <code class="language-plaintext highlighter-rouge">spawnMultipleFruits()</code> </li> </ul> </details> <h2 id="physics-and-collision-detection">Physics and Collision Detection</h2> <details class="details details--default" data-variant="default"><summary>Add physics body</summary> <ul> <li>Add the following to <ul> <li>the end of the <code class="language-plaintext highlighter-rouge">init()</code> function of Player.swift</li> <li>the end of the <code class="language-plaintext highlighter-rouge">init()</code> function of Collectible.swift</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>    ...
+    // add physics body
+    self.physicsBody = SKPhysicsBody(rectangleOf: self.size, center: CGPoint(x:0.0, y: self.size.height/2))
+    self.physicsBody?.affectedByGravity = false
+}
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add physics to the foreground node (<code class="language-plaintext highlighter-rouge">didMove()</code> in GameScience.swift)</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre><span class="o">...</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">zPosition</span> <span class="o">=</span> <span class="kt">Layer</span><span class="o">.</span><span class="n">foreground</span><span class="o">.</span><span class="n">rawValue</span>
+<span class="c1">//add physics body</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span> <span class="o">=</span> <span class="kt">SKPhysicsBody</span><span class="p">(</span><span class="nv">edgeLoopFrom</span><span class="p">:</span> <span class="n">foreground</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">affectedByGravity</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">foreground</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">contactTestBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">collisionBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="k">none</span>
+<span class="nf">addChild</span><span class="p">(</span><span class="n">foreground</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add the following to SpriteKitHelper.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre><span class="kd">enum</span> <span class="kt">PhysicsCategory</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">let</span> <span class="nv">none</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// a body that does not belong to any physics category</span>
+    <span class="kd">static</span> <span class="k">let</span> <span class="nv">player</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="o">=</span> <span class="mb">0b1</span> <span class="c1">// 1: player objects</span>
+    <span class="kd">static</span> <span class="k">let</span> <span class="nv">collectible</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="o">=</span> <span class="mb">0b10</span> <span class="c1">// 2: collectible objects</span>
+    <span class="kd">static</span> <span class="k">let</span> <span class="nv">foreground</span><span class="p">:</span> <span class="kt">UInt32</span> <span class="o">=</span> <span class="mb">0b100</span> <span class="c1">// 4: ground platforms or scenery that affects physics</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">PhysicsCategory</code> enumeration is a common pattern used in SpriteKit to define bitmask categories for physics bodies.</li> <li>These bitmasks help managing <ul> <li>collision detection,</li> <li>contact notifications, and</li> <li>physics interactions between different types of objects in a game.</li> </ul> </li> <li>Using binary (<code class="language-plaintext highlighter-rouge">0b...</code>) makes it visually clear that we are assigning non-overlapping bits. <ul> <li>Each category should have its own unique bit so they can be combined using bitwise operations</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Physics categories for foreground</summary> <ul> <li>Add the following to the foreground section in <code class="language-plaintext highlighter-rouge">didMove()</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre><span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">foreground</span> <span class="c1">// set category</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">contactTestBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="c1">//test collision with collectible</span>
+<span class="n">foreground</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">collisionBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="k">none</span>
+<span class="nf">addChild</span><span class="p">(</span><span class="n">foreground</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Physics categories for player</summary> <ul> <li>Add the following to <code class="language-plaintext highlighter-rouge">init()</code> of Player.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">player</span> <span class="c1">// set category</span>
+<span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">contactTestBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="c1">//test collision with collectible</span>
+<span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">collisionBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="k">none</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Physics categories for collectible</summary> <ul> <li>Add the following to <code class="language-plaintext highlighter-rouge">init()</code> of Collectible.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="c1">// set category</span>
+<span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">contactTestBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">player</span> <span class="o">|</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">foreground</span> <span class="c1">//test collision with collectible</span>
+<span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">collisionBitMask</span> <span class="o">=</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="k">none</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Detecting physical collision</summary> <ul> <li>Add the following line to the beginning of the <code class="language-plaintext highlighter-rouge">didMove()</code> function in GameScene.swift <ul> <li>This declares that the GameScene class can act as a delegate for SKPhysicsContact Delegate and will respond to physics contact events.</li> </ul> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="n">physicsWorld</span><span class="o">.</span><span class="n">contactDelegate</span> <span class="o">=</span> <span class="k">self</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add an extension to handle colltions detection at the end of GameScene.swift (Outside of GameScence class)</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre><span class="kd">extension</span> <span class="kt">GameScene</span><span class="p">:</span> <span class="kt">SKPhysicsContactDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">didBegin</span><span class="p">(</span><span class="n">_</span> <span class="nv">contact</span><span class="p">:</span> <span class="kt">SKPhysicsContact</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">collision</span> <span class="o">=</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">|</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyB</span><span class="o">.</span><span class="n">categoryBitMask</span>
+
+        <span class="k">if</span> <span class="n">collision</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">player</span> <span class="o">|</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">{</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"player hit collectible"</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">collision</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">foreground</span> <span class="o">|</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">{</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"collectible hit foreground"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Test the game by checking the printed messages</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Handling physical collision</summary> <ul> <li>Add the following functions to Collectible.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">collected</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="nf">run</span><span class="p">(</span><span class="kt">SKAction</span><span class="o">.</span><span class="nf">removeFromParent</span><span class="p">())</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">missed</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="nf">run</span><span class="p">(</span><span class="kt">SKAction</span><span class="o">.</span><span class="nf">removeFromParent</span><span class="p">())</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Modify the extension in GameScene.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">didBegin</span><span class="p">(</span><span class="n">_</span> <span class="nv">contact</span><span class="p">:</span> <span class="kt">SKPhysicsContact</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">collision</span> <span class="o">=</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">|</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyB</span><span class="o">.</span><span class="n">categoryBitMask</span>
+
+    <span class="k">if</span> <span class="n">collision</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">player</span> <span class="o">|</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"player hit collectible"</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">body</span> <span class="o">=</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">?</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="nv">node</span> <span class="p">:</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyB</span><span class="o">.</span><span class="n">node</span>
+
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">sprite</span> <span class="o">=</span> <span class="n">body</span> <span class="k">as?</span> <span class="kt">Collectible</span> <span class="p">{</span>
+            <span class="n">sprite</span><span class="o">.</span><span class="nf">collected</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">collision</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">foreground</span> <span class="o">|</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"collectible hit foreground"</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">body</span> <span class="o">=</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">?</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="nv">node</span> <span class="p">:</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyB</span><span class="o">.</span><span class="n">node</span>
+
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">sprite</span> <span class="o">=</span> <span class="n">body</span> <span class="k">as?</span> <span class="kt">Collectible</span> <span class="p">{</span>
+            <span class="n">sprite</span><span class="o">.</span><span class="nf">missed</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add scoreLevel to class GameScene</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">scoreLevel</span><span class="p">:</span> <span class="kt">SKLabelNode</span> <span class="o">=</span> <span class="kt">SKLabelNode</span><span class="p">()</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add <code class="language-plaintext highlighter-rouge">case ui</code> to <code class="language-plaintext highlighter-rouge">enum Layer</code> in SpriteKitHelper.swift</li> <li>Add a new method called <code class="language-plaintext highlighter-rouge">setupLabels()</code> to GameScene.swift</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">setupLabels</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"score"</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">fontColor</span> <span class="o">=</span> <span class="o">.</span><span class="n">black</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">fontSize</span> <span class="o">=</span> <span class="mf">55.0</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">horizontalAlignmentMode</span> <span class="o">=</span> <span class="o">.</span><span class="k">right</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">verticalAlignmentMode</span> <span class="o">=</span> <span class="o">.</span><span class="n">center</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">zPosition</span> <span class="o">=</span> <span class="kt">Layer</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rawValue</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">frame</span><span class="o">.</span><span class="n">maxX</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">700</span><span class="p">)</span>
+    <span class="n">scoreLevel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Score: 0"</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">scoreLevel</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Call <code class="language-plaintext highlighter-rouge">setupLabels()</code> after <code class="language-plaintext highlighter-rouge">spawnMultipleFruits()</code> </li> <li>Add a score variable to GameScene class to keep score</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">score</span> <span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">{</span>
+    <span class="k">didSet</span> <span class="p">{</span>
+        <span class="n">scoreLevel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Score: </span><span class="se">\(</span><span class="n">score</span><span class="se">)</span><span class="s">"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Update score when player <code class="language-plaintext highlighter-rouge">collides</code> with collectible <ul> <li>Where do you think this should be placed?</li> </ul> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="n">score</span> <span class="o">+=</span> <span class="mi">10</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="properly-end-the-game">Properly end the game</h2> <details class="details details--default" data-variant="default"><summary>Game Over</summary> <ul> <li>Add a <code class="language-plaintext highlighter-rouge">gameOver()</code> function to GameScene</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">gameOver</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">removeAction</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"fruit"</span><span class="p">)</span>
+
+    <span class="c1">// loop through child nodes and stop actions on collectibles</span>
+    <span class="nf">enumerateChildNodes</span><span class="p">(</span><span class="nv">withName</span><span class="p">:</span> <span class="s">"//co_*"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span> <span class="k">in</span>
+        <span class="n">node</span><span class="o">.</span><span class="nf">removeAction</span><span class="p">(</span><span class="nv">forKey</span><span class="p">:</span> <span class="s">"drop"</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">physicsBody</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="p">}</span>
+
+    <span class="k">let</span> <span class="nv">restartButton</span> <span class="o">=</span> <span class="kt">SKSpriteNode</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="o">.</span><span class="n">blue</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span><span class="mi">60</span><span class="p">))</span>
+    <span class="n">restartButton</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"restartButton"</span>
+    <span class="n">restartButton</span><span class="o">.</span><span class="n">zPosition</span> <span class="o">=</span> <span class="kt">Layer</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rawValue</span>
+    <span class="nf">addChild</span><span class="p">(</span><span class="n">restartButton</span><span class="p">)</span>
+
+    <span class="k">let</span> <span class="nv">buttonText</span> <span class="o">=</span> <span class="kt">SKLabelNode</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="s">"Restart"</span><span class="p">)</span>
+    <span class="n">buttonText</span><span class="o">.</span><span class="n">fontColor</span> <span class="o">=</span> <span class="o">.</span><span class="n">white</span>
+    <span class="n">buttonText</span><span class="o">.</span><span class="n">fontSize</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">buttonText</span><span class="o">.</span><span class="n">verticalAlignmentMode</span> <span class="o">=</span> <span class="o">.</span><span class="n">center</span>
+    <span class="n">restartButton</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="n">buttonText</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add variables <code class="language-plaintext highlighter-rouge">missedCount</code> and <code class="language-plaintext highlighter-rouge">maxAllowedMisses</code> to GameScene class <ul> <li>Where to add?</li> </ul> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">missedCount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">var</span> <span class="nv">maxAllowedMisses</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Update function <code class="language-plaintext highlighter-rouge">didBegin()</code> in extension GameScene:SKPhysicsContactDelegate</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> <td class="rouge-code"><pre><span class="k">if</span> <span class="n">collision</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">foreground</span> <span class="o">|</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"collectible hit foreground"</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">body</span> <span class="o">=</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="n">categoryBitMask</span> <span class="o">==</span> <span class="kt">PhysicsCategory</span><span class="o">.</span><span class="n">collectible</span> <span class="p">?</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyA</span><span class="o">.</span><span class="nv">node</span> <span class="p">:</span> <span class="n">contact</span><span class="o">.</span><span class="n">bodyB</span><span class="o">.</span><span class="n">node</span>
+
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">sprite</span> <span class="o">=</span> <span class="n">body</span> <span class="k">as?</span> <span class="kt">Collectible</span> <span class="p">{</span>
+        <span class="n">sprite</span><span class="o">.</span><span class="nf">missed</span><span class="p">()</span>
+        <span class="n">missedCount</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">missedCount</span> <span class="o">&gt;=</span> <span class="n">maxAllowedMisses</span> <span class="p">{</span>
+            <span class="nf">gameOver</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>    
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Add function <code class="language-plaintext highlighter-rouge">restartGame()</code> to GameScene</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">restartGame</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">missedCount</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nf">enumerateChildNodes</span><span class="p">(</span><span class="nv">withName</span><span class="p">:</span> <span class="s">"//co_*"</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">in</span> <span class="n">node</span><span class="o">.</span><span class="nf">removeFromParent</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="nf">enumerateChildNodes</span><span class="p">(</span><span class="nv">withName</span><span class="p">:</span> <span class="s">"restartButton"</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">in</span>
+        <span class="n">node</span><span class="o">.</span><span class="nf">removeFromParent</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Update `touchesBegin() function in GameScene to support button press</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre><span class="k">override</span> <span class="kd">func</span> <span class="nf">touchesBegan</span><span class="p">(</span><span class="n">_</span> <span class="nv">touches</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">UITouch</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">with</span> <span class="nv">event</span><span class="p">:</span> <span class="kt">UIEvent</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="k">in</span> <span class="n">touches</span><span class="p">{</span>
+        <span class="k">let</span> <span class="nv">location</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="nf">location</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">nodes</span> <span class="o">=</span> <span class="nf">nodes</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="n">location</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nodes</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">"restartButton"</span><span class="p">})</span> <span class="p">{</span>
+            <span class="c1">//restart game</span>
+            <span class="nf">restartGame</span><span class="p">()</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="nf">touchDown</span><span class="p">(</span><span class="nv">atPoint</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="nf">location</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="k">self</span><span class="p">))</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Modify <code class="language-plaintext highlighter-rouge">spawnMultipleFruits</code> to support restart after a game successfully ended. <ul> <li><strong>This is not working properly yet, no need to implement</strong></li> </ul> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">spawnMultipleFruits</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">wait</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">wait</span><span class="p">(</span><span class="nv">forDuration</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="k">let</span> <span class="nv">spawn</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="n">run</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">spawnFruit</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="k">let</span> <span class="nv">sequence</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">sequence</span><span class="p">([</span><span class="n">wait</span><span class="p">,</span> <span class="n">spawn</span><span class="p">])</span>
+    <span class="k">let</span> <span class="nv">repeatAction</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">repeat</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">gameOverAction</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="n">run</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="nf">gameOver</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="k">let</span> <span class="nv">fullSequence</span> <span class="o">=</span> <span class="kt">SKAction</span><span class="o">.</span><span class="nf">sequence</span><span class="p">([</span><span class="n">repeatAction</span><span class="p">,</span> <span class="n">gameOverAction</span><span class="p">])</span>
+    <span class="nf">run</span><span class="p">(</span><span class="n">fullSequence</span><span class="p">,</span> <span class="nv">withKey</span><span class="p">:</span> <span class="s">"fruit"</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> </body></html>

@@ -30,36 +30,120 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "dropdown-agentic-ai-under-dev",
-              title: "Agentic AI (under dev)",
+        },{id: "dropdown-agentic-ai-dev",
+              title: "Agentic AI (dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "dropdown-csc-418-587-under-dev",
-              title: "CSC 418/587 (under dev)",
+            },{id: "dropdown-csc-418-587-dev",
+              title: "CSC 418/587 (dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/csc418-587/";
               },
-            },{id: "dropdown-big-data-engineering",
-              title: "Big Data Engineering",
+            },{id: "dropdown-big-data-engineering-dev",
+              title: "Big Data Engineering (dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/cs-big-data-engineering/";
               },
-            },{id: "dropdown-intro-cloud",
-              title: "Intro Cloud",
+            },{id: "dropdown-introduction-to-cloud",
+              title: "Introduction to Cloud",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/cs-intro-cloud/";
+                window.location.href = "/csc468/";
               },
-            },{id: "dropdown-csc-574-under-dev",
-              title: "CSC 574 (under dev)",
+            },{id: "dropdown-computer-systems-dev",
+              title: "Computer Systems (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc231/";
+              },
+            },{id: "dropdown-computer-security-ii-dev",
+              title: "Computer Security II (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc302/";
+              },
+            },{id: "dropdown-operating-systems-dev",
+              title: "Operating Systems (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc331/";
+              },
+            },{id: "dropdown-software-engineering-dev",
+              title: "Software Engineering. (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc402/";
+              },
+            },{id: "dropdown-distributed-and-parallel-computing-dev",
+              title: "Distributed and Parallel Computing (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc466/";
+              },
+            },{id: "dropdown-cloud-engineering-dev",
+              title: "Cloud Engineering (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc478/";
+              },
+            },{id: "dropdown-ios-app-development-dev",
+              title: "iOS App Development (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc496/";
+              },
+            },{id: "dropdown-advanced-data-structures-dev",
+              title: "Advanced Data Structures (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc530/";
+              },
+            },{id: "dropdown-cloud-computing-fundamentals-dev",
+              title: "Cloud Computing Fundamentals (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc568/";
+              },
+            },{id: "dropdown-cloud-systems-engineering-dev",
+              title: "Cloud Systems Engineering (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc578/";
+              },
+            },{id: "dropdown-linux-system-administration-and-security-dev",
+              title: "Linux System Administration and Security (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc586/";
+              },
+            },{id: "dropdown-access-control-in-the-cloud-dev",
+              title: "Access Control in the Cloud (dev)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc588/";
+              },
+            },{id: "dropdown-machine-learning-on-mcu-dev",
+              title: "Machine Learning on MCU(dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
@@ -636,91 +720,341 @@ ninja.data = [{
           description: "",
           section: "Cs-big-data-engineering",handler: () => {
               window.location.href = "/cs-big-data-engineering/10-large-scale-machine-learning/";
-            },},{id: "cs-intro-cloud-syllabus",
-          title: 'Syllabus',
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/00-syllabus/";
-            },},{id: "cs-intro-cloud-introduction",
-          title: 'Introduction',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/00-syllabus/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/01-introduction/";
-            },},{id: "cs-intro-cloud-cloudlab",
-          title: 'CloudLab',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/01-introduction/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/02-cloudlab/";
-            },},{id: "cs-intro-cloud-course-project",
-          title: 'Course Project',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/02-intro-to-c/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/03-project/";
-            },},{id: "cs-intro-cloud-virtualization-in-cloud-computing",
-          title: 'Virtualization in Cloud Computing',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/03-data-representation/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/04-virtualization/";
-            },},{id: "cs-intro-cloud-advanced-linux-the-building-blocks-of-containers",
-          title: 'Advanced Linux: The Building Blocks of Containers',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/04-gate-circuit/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/05-linux-container/";
-            },},{id: "cs-intro-cloud-introduction-to-docker-containers",
-          title: 'Introduction to Docker Containers',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/05-more-c/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/06-docker/";
-            },},{id: "cs-intro-cloud-docker-network",
-          title: 'Docker Network',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/06-architecture/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/07-docker-network/";
-            },},{id: "cs-intro-cloud-docker-storage",
-          title: 'Docker Storage',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/07-machine-language/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/08-docker-volume/";
-            },},{id: "cs-intro-cloud-dockerfile",
-          title: 'Dockerfile',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/08-memory-cache/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/09-Dockerfile/";
-            },},{id: "cs-intro-cloud-docker-compose",
-          title: 'Docker Compose',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/09-code-optimization/";
+            },},{id: "csc231-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/10-docker-compose/";
-            },},{id: "cs-intro-cloud-cd-ci-with-docker-compose",
-          title: 'CD/CI with Docker Compose',
+          section: "Csc231",handler: () => {
+              window.location.href = "/csc231/index/";
+            },},{id: "csc302-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/11-docker-compose-cd-ci/";
-            },},{id: "cs-intro-cloud-docker-container-security-and-host-to-container-security-propagation",
-          title: 'Docker Container Security and Host-to-Container Security Propagation',
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/00-syllabus/";
+            },},{id: "csc302-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/12-container-security/";
-            },},{id: "cs-intro-cloud-docker-swarm",
-          title: 'Docker Swarm',
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/01-fundamental-concepts/";
+            },},{id: "csc302-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/13-docker-swarm/";
-            },},{id: "cs-intro-cloud-why-cloud",
-          title: 'Why Cloud',
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/03-os-reviews/";
+            },},{id: "csc302-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/14-why-cloud/";
-            },},{id: "cs-intro-cloud-virtualization-for-cloud-computing-kvm-docker-singularity-and-podman",
-          title: 'Virtualization for cloud computing: KVM, docker, singularity, and podman',
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/04-intro-seed/";
+            },},{id: "csc302-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/15-kvm-docker-podman-singularity/";
-            },},{id: "cs-intro-cloud-programmatic-deployment-of-infrastructures",
-          title: 'Programmatic Deployment of Infrastructures',
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/05-os-security/";
+            },},{id: "csc302-",
+          title: '',
           description: "",
-          section: "Cs-intro-cloud",handler: () => {
-              window.location.href = "/cs-intro-cloud/16-programmatic-deployment/";
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/06-env/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/07-buffer-overflow/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/08-libc/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/09-network-security-concepts/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/10-network-vulnerability/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/11-intro-crypto/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/12-hash/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/16-integrity/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/17-key-generation/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/18-key-exchange/";
+            },},{id: "csc302-",
+          title: '',
+          description: "",
+          section: "Csc302",handler: () => {
+              window.location.href = "/csc302/index/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/00-syllabus/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/01-introduction/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/02-introduction-xv6/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/03-process/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/04-process-xv6/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/05-limited-direct-execution/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/06-cpu-scheduling/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/07-memory-virtualization/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/08-address-translation/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/09-paging/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/10-concurrency/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/11-lock-condition-variables/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/12-semaphores/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/13-io-disk-scheduling/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/14-file-systems/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/15-crash-consistency-fsck-journaling/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/16-minix/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/17-ros/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/index/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/notes/";
+            },},{id: "csc331-",
+          title: '',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/setup/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/00-client/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/00-syllabus/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/01-introduction/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/02-team/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/03-client-interactions/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/04-projects-process/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/05-planning/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/06-requirements-I/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/07-requirements-II/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/08-reflections/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/09-presentation/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/10-legal/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/11-testing/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/12-architectures/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/13-architectures-2/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/14-ux/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/15-models/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/index/";
+            },},{id: "csc402-",
+          title: '',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/projects/";
             },},{id: "csc418-587-syllabus",
           title: 'Syllabus',
           description: "",
@@ -781,11 +1115,551 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/11-restful-api/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/00-syllabus/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/01-computational-demand/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/02-parallel-computing/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/03-computing-environment/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/04-threads-programming/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/05-intro-openmp/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/06-loop-parallelism/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/07-works-sharing/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/08-reduction/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/09-intro-mpi/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/10-point-to-point/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/11-functional-collectives/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/12-pleasantly-parallel/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/13-divide-conquer/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/14-mpi4py/";
+            },},{id: "csc466-",
+          title: '',
+          description: "",
+          section: "Csc466",handler: () => {
+              window.location.href = "/csc466/index/";
+            },},{id: "csc468-syllabus",
+          title: 'Syllabus',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/00-syllabus/";
+            },},{id: "csc468-introduction",
+          title: 'Introduction',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/01-introduction/";
+            },},{id: "csc468-introduction-to-cloudlab",
+          title: 'Introduction to CloudLab',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/02-cloudlab/";
+            },},{id: "csc468-course-project",
+          title: 'Course Project',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/03-project/";
+            },},{id: "csc468-virtualization-in-cloud-computing",
+          title: 'Virtualization in Cloud Computing',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/04-virtualization/";
+            },},{id: "csc468-the-building-blocks-of-containers",
+          title: 'The Building Blocks of Containers',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/05-linux-container/";
+            },},{id: "csc468-introduction-to-docker-containers",
+          title: 'Introduction to Docker Containers',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/06-docker/";
+            },},{id: "csc468-docker-network",
+          title: 'Docker Network',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/07-docker-network/";
+            },},{id: "csc468-docker-storage",
+          title: 'Docker Storage',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/08-docker-volume/";
+            },},{id: "csc468-dockerfile",
+          title: 'Dockerfile',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/09-Dockerfile/";
+            },},{id: "csc468-docker-compose",
+          title: 'Docker Compose',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/10-docker-compose/";
+            },},{id: "csc468-cd-ci-with-docker-compose",
+          title: 'CD/CI with Docker Compose',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/11-docker-compose-cd-ci/";
+            },},{id: "csc468-container-security",
+          title: 'Container Security',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/12-container-security/";
+            },},{id: "csc468-docker-swarm",
+          title: 'Docker Swarm',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/13-docker-swarm/";
+            },},{id: "csc468-why-cloud",
+          title: 'Why Cloud',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/14-why-cloud/";
+            },},{id: "csc468-container-engines-and-platforms",
+          title: 'Container Engines and Platforms',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/15-kvm-docker-podman-singularity/";
+            },},{id: "csc468-programmatic-deployment-of-infrastructures",
+          title: 'Programmatic Deployment of Infrastructures',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/16-programmatic-deployment/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/00-syllabus/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/01-introduction/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/02-rancher/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/03-pod-service-deployment/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/04-project/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/05-rancher-cloudlab/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/06-clusterip/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/07-volumes/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/08-pv-lab/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/09-resource-management/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/10-load-balancer/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/11-infrastructure-as-code/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/12-conf-as-code/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/13-core-rbac/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/14-cloud-security/";
+            },},{id: "csc478-",
+          title: '',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/index/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/00-preparation/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/01-introduction/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/02-ds-algo-libraries/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/03-problem-solving-paradigms/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/04-graph/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/05-mathematics/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/05-string-processing/";
+            },},{id: "csc495-",
+          title: '',
+          description: "",
+          section: "Csc495",handler: () => {
+              window.location.href = "/csc495/index/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/00-syllabus/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/01-introduction/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/02-swift-overview/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/03-mvc-array-function/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/04-swift-fund/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/05-string-processing/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/05-swift-struct/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/06-swift-class/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/07-concurrency/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/08-swift-views/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/09-swift-spritekit/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/10-swift-spritekit-editor/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/11-entity-component/";
+            },},{id: "csc496-",
+          title: '',
+          description: "",
+          section: "Csc496",handler: () => {
+              window.location.href = "/csc496/index/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/00-syllabus/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/01-review/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/02-rmq/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/03-b-tree/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/04-suffix/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/05-heap/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/06-fibonacci-graph/";
+            },},{id: "csc530-",
+          title: '',
+          description: "",
+          section: "Csc530",handler: () => {
+              window.location.href = "/csc530/index/";
+            },},{id: "csc568-",
+          title: '',
+          description: "",
+          section: "Csc568",handler: () => {
+              window.location.href = "/csc568/00-syllabus/";
+            },},{id: "csc568-",
+          title: '',
+          description: "",
+          section: "Csc568",handler: () => {
+              window.location.href = "/csc568/index/";
             },},{id: "csc574-00-syllabus",
           title: '00 Syllabus',
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/00-syllabus/";
+            },},{id: "csc578-",
+          title: '',
+          description: "",
+          section: "Csc578",handler: () => {
+              window.location.href = "/csc578/00-syllabus/";
+            },},{id: "csc578-",
+          title: '',
+          description: "",
+          section: "Csc578",handler: () => {
+              window.location.href = "/csc578/index/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/00-syllabus/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/01-introduction/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/02-sys-admin/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/03-access-control/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/04-process-control/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/05-file-system/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/06-user-management/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/07-software-installation/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/08-bash-scripting/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/09-more-bash/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/10-nfs/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/11-sso/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/12-practice/";
+            },},{id: "csc586-",
+          title: '',
+          description: "",
+          section: "Csc586",handler: () => {
+              window.location.href = "/csc586/index/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/00-syllabus/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/01-introduction/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/02-cloud/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/03-access-control/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/04-rbac/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/05-system-resources/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/06-kubernetes/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/07-cloud-security/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/08-core-rbac/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/09-kubernetes-registry/";
+            },},{id: "csc588-",
+          title: '',
+          description: "",
+          section: "Csc588",handler: () => {
+              window.location.href = "/csc588/index/";
             },},{id: "news-a-simple-inline-announcement",
           title: 'A simple inline announcement.',
           description: "",

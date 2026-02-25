@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="minimum-range-query">Minimum Range Query</h1> <h2 id="minimum-range-queries">Minimum Range Queries</h2> <p><a href="data/slide00_rmq.pdf">Presentation</a></p> <h2 id="most-beautiful-item-for-each-query">Most Beautiful Item for Each Query</h2> <details class="details details--default" data-variant="default"><summary>Problem description</summary> <p><a href="https://leetcode.com/problems/most-beautiful-item-for-each-query/description/" rel="external nofollow noopener" target="_blank">Most Beautiful Item for Each Query</a></p> </details> <details class="details details--default" data-variant="default"><summary>Initial processing</summary> <ul> <li>Sort items array</li> <li>Extract price and beauty into two arrays but maintain relative indices</li> </ul> <p>```java linenums=”1” import java.util.Arrays; class Solution { public int[] maximumBeauty(int[][] items, int[] queries) { Arrays.sort(items, (a, b) -&gt; Integer.compare(a[0], b[0]));</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td> <td class="rouge-code"><pre>    // get the unique prices and max beauty for each unique price
+    int[] tmpPrices = new int[items.length];
+    int[] tmpBeauty = new int[items.length];
+    tmpPrices[0] = items[0][0];
+    tmpBeauty[0] = items[0][1];
+    int pCount = 0;
+    for (int i = 1; i &lt; items.length; i++ ) {
+        if (items[i][0] == tmpPrices[pCount]) {
+            if (items[i][1] &gt; tmpBeauty[pCount]) {
+                tmpBeauty[pCount] = items[i][1];
+            }
+        }
+        else {
+            pCount++;
+            tmpPrices[pCount] = items[i][0];
+            tmpBeauty[pCount] = items[i][1];
+        }
+    }
+
+    // Perform RMQ
+    int nq = queries.length;
+    return res;
+} } ```
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Block decomposition</summary> <p>```java linenums=”1” import java.util.Arrays;</p> <p>class Solution { public int[] maximumBeauty(int[][] items, int[] queries) { Arrays.sort(items, (a, b) -&gt; Integer.compare(a[0], b[0]));</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+</pre></td> <td class="rouge-code"><pre>    // get the unique prices and max beauty for each unique price
+    int[] tmpPrices = new int[items.length];
+    int[] tmpBeauty = new int[items.length];
+    tmpPrices[0] = items[0][0];
+    tmpBeauty[0] = items[0][1];
+    int pCount = 0;
+    for (int i = 1; i &lt; items.length; i++ ) {
+        if (items[i][0] == tmpPrices[pCount]) {
+            if (items[i][1] &gt; tmpBeauty[pCount]) {
+                tmpBeauty[pCount] = items[i][1];
+            }
+        }
+        else {
+            pCount++;
+            tmpPrices[pCount] = items[i][0];
+            tmpBeauty[pCount] = items[i][1];
+        }
+    }
+    // refine data
+    int[] prices = new int[pCount + 1];
+    int[] beauty = new int[pCount + 1];
+    for (int i = 0; i &lt; prices.length; i++ ) {
+        prices[i] = tmpPrices[i];
+        beauty[i] = tmpBeauty[i];
+    }
+
+    // block approach
+    int n = pCount + 1;
+    int b = (int)Math.ceil(Math.sqrt(n));
+    int nBlocks = (int)Math.ceil(1.0 * n/b);
+    int[] maxBlock = new int[nBlocks];
+
+    // find max at each block
+    for (int i = 0; i &lt; nBlocks; i++) {
+        int maxBeauty = 0;
+        for (int j = 0; j &lt; b; j++) {
+            int pos = i * nBlocks + j;
+            if (pos &gt;= n) break;
+            if (beauty[pos] &gt; maxBeauty)
+                maxBeauty = beauty[pos];
+        }
+        maxBlock[i] = maxBeauty;
+    } 
+
+    // Perform RMQ
+    int nq = queries.length;
+    int[] res = new int[nq];
+    for (int i = 0; i &lt; nq; i++) {
+        res[i] = 0;
+        for (int j = 0; j &lt; n; j++) {
+            if (prices[j] &gt; queries[i]) break;
+            int bIndex = j / b;
+            for (int localB = 0; localB &lt; bIndex; localB++) {
+                if (res[i] &lt; maxBlock[localB]) res[i] = maxBlock[localB];
+            }
+            int maxBlockIndex = (bIndex + 1) * b;
+            for (int localB = bIndex * b; localB &lt; maxBlockIndex &amp;&amp; localB &lt; n; localB ++) {
+                if (prices[localB] &gt; queries[i]) break;
+                if (res[i] &lt; beauty[localB]) res[i] = beauty[localB];
+            }
+        }
+    }
+
+    return res;
+} } ```
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="hybrid-strategies">Hybrid Strategies</h2> <details class="details details--default" data-variant="default"><summary>Hybrid strategies</summary> <ul> <li>Split the input into blocks of size b.</li> <li>Form an array of the block minima.</li> <li>Construct a “summary” RMQ structure over the block minima.</li> <li>Construct “block” RMQ structures for each block.</li> <li>Aggregate the results together.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc530/rmq/hybrid-1-480.webp 480w,/assets/img/courses/csc530/rmq/hybrid-1-800.webp 800w,/assets/img/courses/csc530/rmq/hybrid-1-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc530/rmq/hybrid-1.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc530/rmq/hybrid-2-480.webp 480w,/assets/img/courses/csc530/rmq/hybrid-2-800.webp 800w,/assets/img/courses/csc530/rmq/hybrid-2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc530/rmq/hybrid-2.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Runtime analysis</summary> <ul> <li>Suppose <ul> <li>Summary RMQ: $&lt;p_{1}(n), q_{1}(n)&gt;$</li> <li>Block RMQ: $&lt;p_{2}(n), q_{2}(n)&gt;$</li> <li>Total size: n</li> <li>Block size: b</li> </ul> </li> <li>Preprocessing time <ul> <li>$\bigO(n)$ time to compute the minima for each block.</li> <li>$\bigO(p_{1}(n/b))$ time to construct the summary RMQ on the minima</li> <li>$\bigO((n/b)p_{2}(b))$ tim to construct the block RMQs</li> <li>Total: $\bigO(n) + \bigO(p_{1}(n/b)) + \bigO((n/b)p_{2}(b))$</li> </ul> </li> <li>Query time <ul> <li>$\bigO(q_{1}(n/b))$ time to query the summary RMQ</li> <li>$\bigO(q_{2}(b))$ tim to query the block RMQs</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Block decomposition and precomputed table</summary> <p>```java linenums=”1” import java.util.Arrays;</p> <p>class Solution { public int[] maximumBeauty(int[][] items, int[] queries) { Arrays.sort(items, (a, b) -&gt; Integer.compare(a[0], b[0]));</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+</pre></td> <td class="rouge-code"><pre>    // get the unique prices and max beauty for each unique price
+    int[] tmpPrices = new int[items.length];
+    int[] tmpBeauty = new int[items.length];
+    tmpPrices[0] = items[0][0];
+    tmpBeauty[0] = items[0][1];
+    int pCount = 0;
+    for (int i = 1; i &lt; items.length; i++ ) {
+        if (items[i][0] == tmpPrices[pCount]) {
+            if (items[i][1] &gt; tmpBeauty[pCount]) {
+                tmpBeauty[pCount] = items[i][1];
+            }
+        }
+        else {
+            pCount++;
+            tmpPrices[pCount] = items[i][0];
+            tmpBeauty[pCount] = items[i][1];
+        }
+    }
+    // refine data
+    int[] prices = new int[pCount + 1];
+    int[] beauty = new int[pCount + 1];
+    for (int i = 0; i &lt; prices.length; i++ ) {
+        prices[i] = tmpPrices[i];
+        beauty[i] = tmpBeauty[i];
+    }
+
+    // block approach
+    int n = pCount + 1;
+    int b = (int)Math.ceil(Math.sqrt(n));
+
+    int nBlocks = (int)Math.ceil(1.0 * n/b);
+    int[] maxBlock = new int[nBlocks];
+
+    // find max at each block
+    for (int i = 0; i &lt; nBlocks; i++) {
+        int maxBeauty = 0;
+        for (int j = 0; j &lt; b; j++) {
+            int pos = i * nBlocks + j;
+            if (pos &gt;= n) break;
+            if (beauty[pos] &gt; maxBeauty)
+                maxBeauty = beauty[pos];
+        }
+        maxBlock[i] = maxBeauty;
+    } 
+
+    // Perform RMQ
+    int nq = queries.length;
+    int[] sorted = queries.clone();
+    Arrays.sort(sorted);
+    HashMap&lt;Integer, Integer&gt; beautyMap = new HashMap&lt;Integer, Integer&gt;();
+    int[] sortedRes = new int[nq];
+    int prevMaxIndex = 0;
+    int maxPrev = 0;
+    for (int i = 0; i &lt; nq; i++) {
+        sortedRes[i] = 0;
+        for (int j = prevMaxIndex; j &lt; n; j++) {
+            if (prices[j] &gt; sorted[i]) {
+                prevMaxIndex = j;
+                break;
+            }
+            int bIndex = j / b;
+            for (int localB = 0; localB &lt; bIndex; localB++) {
+                if (sortedRes[i] &lt; maxBlock[localB]) sortedRes[i] = maxBlock[localB];
+            }
+            int startLocalIndex = bIndex * b;
+            int endLocalIndex = (bIndex + 1) * b;
+            for (int localB = startLocalIndex; localB &lt; endLocalIndex &amp;&amp; localB &lt; n; localB ++) {
+                if (prices[localB] &gt; sorted[i]) break;
+                if (sortedRes[i] &lt; beauty[localB]) sortedRes[i] = beauty[localB];
+            }
+        }
+        if (sortedRes[i] &lt; maxPrev) {
+            sortedRes[i] = maxPrev;
+        } else maxPrev = sortedRes[i];
+        beautyMap.put(sorted[i],sortedRes[i]);
+    }
+    int[] res = new int[nq];
+    for (int i = 0; i &lt; nq; i++) {
+        res[i] = beautyMap.get(queries[i]);
+    }
+
+    return res;
+} } ```
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Challenge: Implement Sparse Table solution</summary> <p><code class="language-plaintext highlighter-rouge">java linenums="1" // create a HashMap, using a String format for combining // i and j: "i-j" as key // Preprocessing: // for each index i in the range // for each index j starting from i, increment by 1, 2, 4, ..., 2^k // Calculate minimum value using linear method, add to HashMap using "i-j" as key // Queries: // for each index i in queries // Access the minimum values from range [0,2^k-1] and [i - 2^k + 1, i] using the HashMap // Update values in the result queries. </code></p> </details> <h2 id="find-the-scope-of-all-prefixes-of-an-array">Find the Scope of All Prefixes of an Array</h2> <details class="details details--default" data-variant="default"><summary>Problem description</summary> <p><a href="https://leetcode.com/problems/find-the-score-of-all-prefixes-of-an-array/description/" rel="external nofollow noopener" target="_blank">Find the Scope of All Prefixes of an Array</a></p> </details> <details class="details details--default" data-variant="default"><summary>Questions</summary> <ul> <li>Is this an RMQ problem?</li> <li>How do we apply a technique from RMQ</li> </ul> </details> <h2 id="extras-on-block-decomposition">Extras on Block Decomposition</h2> <details class="details details--default" data-variant="default"><summary>Better but not good enough - as per Dan’s suggestion</summary> <ul> <li>Improved: 34/35 correct</li> <li>Still encounter time limit</li> </ul> <p>```java linenums=”1” import java.util.Arrays;</p> <p>class Solution { public int[] maximumBeauty(int[][] items, int[] queries) { Arrays.sort(items, (a, b) -&gt; Integer.compare(a[0], b[0]));</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+</pre></td> <td class="rouge-code"><pre>    // get the unique prices and max beauty for each unique price
+    int[] tmpPrices = new int[items.length];
+    int[] tmpBeauty = new int[items.length];
+    tmpPrices[0] = items[0][0];
+    tmpBeauty[0] = items[0][1];
+    int pCount = 0;
+    for (int i = 1; i &lt; items.length; i++ ) {
+        if (items[i][0] == tmpPrices[pCount]) {
+            if (items[i][1] &gt; tmpBeauty[pCount]) {
+                tmpBeauty[pCount] = items[i][1];
+            }
+        }
+        else {
+            pCount++;
+            tmpPrices[pCount] = items[i][0];
+            tmpBeauty[pCount] = items[i][1];
+        }
+    }
+    // refine data
+    int[] prices = new int[pCount + 1];
+    int[] beauty = new int[pCount + 1];
+    for (int i = 0; i &lt; prices.length; i++ ) {
+        prices[i] = tmpPrices[i];
+        beauty[i] = tmpBeauty[i];
+    }
+
+    // block approach
+    int n = pCount + 1;
+    int b = (int)Math.ceil(Math.sqrt(n));
+    System.out.println("N and B: " + n + " " + b);
+
+    int nBlocks = (int)Math.ceil(1.0 * n/b);
+    int[] maxBlock = new int[nBlocks];
+
+    // find max at each block
+    int pos = 0;
+    for (int i = 0; i &lt; nBlocks; i++) {
+        int maxBeauty = 0;
+        for (int j = 0; j &lt; b; j++) {
+            //int pos = i * nBlocks + j;
+            if (pos &gt;= n) break;
+            if (beauty[pos] &gt; maxBeauty)
+                maxBeauty = beauty[pos];
+            //System.out.println(i + "-" + j + " " + pos + "-" + maxBeauty + "-" + beauty[pos]);
+            pos++;
+        }
+        maxBlock[i] = maxBeauty;
+    } 
+
+    // Perform RMQ
+    int nq = queries.length;
+    int[] res = new int[nq];
+    for (int i = 0; i &lt; nq; i++) {
+        System.out.println("=========");
+        res[i] = 0;
+        int stopIndex = 0;
+        for (int j = 0; j &lt; n; j++) {
+            if (prices[j] &gt; queries[i]) {
+                break;
+            }
+            stopIndex = j;
+        }
+
+        int bIndex = stopIndex / b;
+        for (int localB = 0; localB &lt; bIndex; localB++) {
+            if (res[i] &lt; maxBlock[localB]) res[i] = maxBlock[localB];
+        }
+        int maxBlockIndex = (bIndex + 1) * b;
+        for (int localB = bIndex * b; localB &lt;= stopIndex; localB ++) {
+            if (prices[localB] &gt; queries[i]) break;
+            if (res[i] &lt; beauty[localB]) res[i] = beauty[localB];
+        }
+    }
+
+    return res;
+} } ```
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Accepted, but not as good as hybrid</summary> <ul> <li>Accepted</li> <li>Only better than 5.36%</li> </ul> <p>```java linenums=”1” import java.util.Arrays;</p> <p>class Solution { public int[] maximumBeauty(int[][] items, int[] queries) { Arrays.sort(items, (a, b) -&gt; Integer.compare(a[0], b[0]));</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+</pre></td> <td class="rouge-code"><pre>    // get the unique prices and max beauty for each unique price
+    int[] tmpPrices = new int[items.length];
+    int[] tmpBeauty = new int[items.length];
+    tmpPrices[0] = items[0][0];
+    tmpBeauty[0] = items[0][1];
+    int pCount = 0;
+    for (int i = 1; i &lt; items.length; i++ ) {
+        if (items[i][0] == tmpPrices[pCount]) {
+            if (items[i][1] &gt; tmpBeauty[pCount]) {
+                tmpBeauty[pCount] = items[i][1];
+            }
+        }
+        else {
+            pCount++;
+            tmpPrices[pCount] = items[i][0];
+            tmpBeauty[pCount] = items[i][1];
+        }
+    }
+    // refine data
+    int[] prices = new int[pCount + 1];
+    int[] beauty = new int[pCount + 1];
+    for (int i = 0; i &lt; prices.length; i++ ) {
+        prices[i] = tmpPrices[i];
+        beauty[i] = tmpBeauty[i];
+    }
+
+    // block approach
+    int n = pCount + 1;
+    int b = (int)Math.ceil(Math.sqrt(n));
+    System.out.println("N and B: " + n + " " + b);
+
+    int nBlocks = (int)Math.ceil(1.0 * n/b);
+    int[][] maxBlock = new int[nBlocks][2];
+
+    // find max at each block
+    int pos = 0;
+    for (int i = 0; i &lt; nBlocks; i++) {
+        int maxBeauty = 0;
+        int maxPrice = 0;
+        for (int j = 0; j &lt; b; j++) {
+            if (pos &gt;= n) break;
+            if (beauty[pos] &gt; maxBeauty)
+                maxBeauty = beauty[pos];
+            if (prices[pos] &gt; maxPrice)
+                maxPrice = prices[pos];
+            pos++;
+        }
+        maxBlock[i][0] = maxBeauty;
+        maxBlock[i][1] = maxPrice;
+    } 
+
+    // Perform RMQ
+    int nq = queries.length;
+    int[] res = new int[nq];
+    for (int i = 0; i &lt; nq; i++) {
+        System.out.println("=========");
+        res[i] = 0;
+        int bIndex = nBlocks - 1;
+        for (int j = 0; j &lt; nBlocks; j++) {
+            if (maxBlock[j][1] &gt; queries[i]) {
+                bIndex = j;
+                break;
+            }
+        }
+        for (int localB = 0; localB &lt; bIndex; localB++) {
+            if (res[i] &lt; maxBlock[localB][0]) res[i] = maxBlock[localB][0];
+        }
+        int maxBlockIndex = (bIndex + 1) * b;
+        for (int localB = bIndex * b; localB &lt;= maxBlockIndex &amp;&amp; localB &lt; n; localB ++) {
+            if (prices[localB] &gt; queries[i]) break;
+            if (res[i] &lt; beauty[localB]) res[i] = beauty[localB];
+        }
+    }
+    return res;
+} }      ```
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> </body></html>

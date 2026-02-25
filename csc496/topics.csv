@@ -1,0 +1,32 @@
+Week,Date,Topic,Assessment
+1,01/20,Introduction,-
+-,-,"Swift Fundamentals: Operators, Control Flow, Xcode",-
+2,01/27,Introduction to SwiftUI - Pokedex version 1,-
+-,-,"Swift Fundamentals: Arrays, Loops, Strings, Optional Type",-
+3,02/03,"Swift Fundamentals: Functions",-
+-,-,"Swift Fundamentals: Structs, Computed Property",-
+4,02/10,"Pokedex version 2 and Lab 1: Pokemon Fight Game in SwiftUI",-
+-,-,"Lab 1: Pokemon Fight Game in Swift UI",-
+5,02/17,"Lab 1: Assignment Session",-
+-,-,"Swift Fundamentals: Classes (1)",-
+6,02/24,"Swift Fundamentals: Classes (2) - Inheritance and Polymorphism",-
+-,-,"Swift Fundamentals: Enums",-
+7,03/03,"Swift Fundamentals: Closures",-
+-,-,"Fetching data from APIs",-
+8,03/10,SPRING BREAK,-
+-,-,SPRING BREAK,-
+9,03/17,"Lab 2: Pokedex version 3",-
+-,-,"Lab 2: Assignment Session",-
+10,03/24,"Concurrency and Threading, Asynchronous Programming",-
+-,-,"Beyond the Standard Library",-
+11,03/31,"Lab 3: Build an app with API and third-party library",-
+-,-,"View in SwiftUI and Lab 3: Assignment Session",-
+12,04/07,"SpriteKit (1): Create Basic Scene and Player",-
+-,-,"SpriteKit (2): Create Collectable Items",-
+13,04/14,"SpriteKit (3): Work with Physics and Collision Detection",-
+-,-,"Lab 4: Create a Mini-Game using SpriteKit",-
+14,04/21,"Lab 4: Assignment Session & PokemonChat Demo (WebSocket)",-
+-,-,"SpriteKit (4): Use of Scene Editor",-
+15,04/28,"SpriteKit (5) Handling Collisions and Contact Events",-
+-,-,SpriteKit (6) Collectible and Physics COmponent,-
+16,05/05,"Final Project: A 2D RPG Pokemon Game",-

@@ -1,0 +1,43 @@
+Week,Date,Topic,Assessment
+1,01/20,Introduction to Cloud Computing,Survey Quiz
+-,-,Introduction to CloudLab,-
+-,-,Project Overview,-
+2,01/27,Why Cloud,Quiz 02
+-,-,Virtualization,Assignment 01 due
+3,02/03,-,-
+-,-,Introduction to Docker,Quiz 03
+-,-,Docker on Linux,
+4,02/10,Docker Network,Quiz 04
+-,-,Project Deliverable 1 discussion,Project Part 1 due
+5,02/17,Docker Network Lab,Quiz 05
+-,-,Docker Volume,Assignment 02 due
+-,-,Docker Volume Lab,
+6,02/24,Dockerfile,
+-,-,Dockerfile Lab,-
+7,03/03,Midterm review,-
+-,-,Midterm Exam,-
+-,-,In-class project work,-
+8,03/10,SPRING BREAK,-
+-,-,SPRING BREAK,-
+9,03/17,Docker Compose,-
+-,-,-,Assignment 3 due
+-,-,-,-
+10,03/24,Infrastructure as Code,Quiz 06
+-,-,-,-
+-,-,-,-
+11,03/31,Container Engine,Quiz 07
+-,-,-,Project Part 2 due
+-,-,-,-
+12,04/07,Programmatic Deployment,Quiz 08
+-,-,Programmatic Deployment Lab,Assignment 4 due
+-,-,-,-
+13,04/14,In-class Project,Quiz 09
+-,-,-,-
+-,-,-,-
+14,04/21,In-class Project,Quiz 10
+-,-,-,-
+-,-,-,-
+15,04/28,Final Project Presentations,-
+-,-,Final Project Presentations,-
+-,-,Final Project Presentations,-
+16,05/05,Final Exam Review,Project Part 3 due

@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="loadbalancer-and-ingress">LoadBalancer and Ingress</h1> <h2 id="loadbalancer">LoadBalancer</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <p>Load balancing is the method of distributing network traffic equally across a pool of resources that support an application.</p> </details> <details class="details details--default" data-variant="default"><summary>Benefits</summary> <p>Load balancers improves an application’s availability, scalability, security, and performance.</p> <details class="details details--note" data-variant="note"><summary>Application availability</summary> <p>Increase the fault tolerance of systems by automatically detecting server problems and redirecting client traffic to available servers.</p> <ul> <li>Run application server maintenance or upgrades without application downtime (rolling actions)</li> <li>Provide automatic disaster recovery to backup sites</li> <li>Perform health checks and prevent issues that can cause downtime</li> </ul> </details> <details class="details details--note" data-variant="note"><summary>Application scalability</summary> <p>Direct network traffic intelligently among multiple servers</p> <ul> <li>Prevents traffic bottlenecks at any one server</li> <li>Predicts application traffic so that servers can be added or removed if needed</li> <li>Adds redundancy to support dynamic scaling</li> </ul> </details> <details class="details details--note" data-variant="note"><summary>Application security</summary> <p>Can contain built-in security features to add another layer of security to Internet applications.</p> <ul> <li>Monitor traffic and block malicious content</li> <li>Automatically redirect attack traffic to multiple backend servers to minimize impact</li> <li>Route traffic through a group of network firewalls for additional security</li> </ul> </details> <details class="details details--note" data-variant="note"><summary>Application performance</summary> <p>Improve application performance by increasing response time and reducing network latency.</p> <ul> <li>Distribute the load evenly between servers to improve application performance</li> <li>Redirect client requests to a geographically closer server to reduce latency</li> <li>Ensure the reliability and performance of physical and virtual computing resources</li> </ul> </details> </details> <h2 id="load-balancing-algorithms">Load Balancing Algorithms</h2> <details class="details details--default" data-variant="default"><summary>Static load balancing</summary> <p>Static load balancing algorithms follow fixed rules and are independent of the current server state.</p> <details class="details details--note" data-variant="note"><summary>Round-robin method</summary> <p>In the round-robin method, an authoritative name server does the load balancing by returning the IP addresses of different servers in the server farm turn by turn or in a round-robin fashion.</p> </details> <details class="details details--note" data-variant="note"><summary>Weighted round-robin method</summary> <p>In weighted round-robin load balancing, administrators can assign different weights to each server based on their priority or capacity. Servers with higher weights will receive more incoming application traffic from the name server.</p> </details> <details class="details details--note" data-variant="note"><summary>IP hash method</summary> <p>In the IP hash method, the load balancer performs a mathematical computation, called hashing, on the client IP address. It converts the client IP address to a number, which is then mapped to individual servers.</p> </details> </details> <details class="details details--default" data-variant="default"><summary>Dynamic load balancing</summary> <p>Dynamic load balancing algorithms examine the current state of the servers before distributing traffic.</p> <details class="details details--note" data-variant="note"><summary>Least connection method</summary> <p>A connection is an open communication channel between a client and a server. When the client sends the first request to the server, they authenticate and establish an active connection between each other. In the least connection method, the load balancer checks which servers have the fewest active connections and sends traffic to those servers. This method assumes that all connections require equal processing power for all servers.</p> </details> <details class="details details--note" data-variant="note"><summary>Weighted least connection method</summary> <p>Weighted least connection algorithms assume that some servers can handle more active connections than others. Therefore, different weights can be assigned to each server, and the load balancer sends the new client requests to the server with the least connections by capacity.</p> </details> <details class="details details--note" data-variant="note"><summary>Least response time method</summary> <p>The response time is the total time that the server takes to process the incoming requests and send a response. The least response time method combines the server response time and the active connections to determine the best server. Load balancers use this algorithm to ensure faster service for all users.</p> </details> <details class="details details--note" data-variant="note"><summary>Resource-based method</summary> <p>In the resource-based method, load balancers distribute traffic by analyzing the current server load. Specialized software called an agent runs on each server and calculates usage of server resources, such as its computing capacity and memory. Then, the load balancer checks the agent for sufficient free resources before distributing traffic to that server.</p> </details> </details> <details class="details details--default" data-variant="default"><summary>Kubernetes scheduling</summary> <ul> <li>Done via kube control plane using <code class="language-plaintext highlighter-rouge">ipvs</code>.</li> <li><a href="https://kubernetes.io/docs/reference/networking/virtual-ips/#proxy-mode-ipvs" rel="external nofollow noopener" target="_blank">IPVS proxy mode</a></li> </ul> </details> <h2 id="load-balancing-aws-gcp-and-kubernetes">Load Balancing: AWS, GCP, and Kubernetes</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <table> <thead> <tr> <th>Cloud / System</th> <th>Component</th> <th>Purpose</th> <th>Kubernetes Equivalent</th> <th>Where It Runs</th> </tr> </thead> <tbody> <tr> <td><strong>AWS</strong></td> <td><strong>Listener</strong></td> <td>Accepts external connections on port 80/443 and forwards to a target group</td> <td> <code class="language-plaintext highlighter-rouge">Service</code> port definition</td> <td>Inside cluster via <strong>kube-proxy</strong> </td> </tr> <tr> <td><strong>GCP</strong></td> <td><strong>Forwarding Rule</strong></td> <td>Maps an external IP and port to a backend service (similar to AWS Listener)</td> <td> <code class="language-plaintext highlighter-rouge">Service</code> port definition</td> <td>Managed by <strong>GCP load-balancer control plane</strong> </td> </tr> <tr> <td><strong>AWS</strong></td> <td><strong>Target Group</strong></td> <td>Defines backend EC2 instances or Pods (via EKS integration)</td> <td>Service <strong>endpoints</strong> (Pod IPs)</td> <td>Managed by <strong>kube-controller-manager</strong> </td> </tr> <tr> <td><strong>GCP</strong></td> <td><strong>Backend Service</strong></td> <td>Defines backends (VMs, MIGs, or GKE Pods) and load balancing behavior</td> <td>Service <strong>endpoints</strong> (Pod IPs)</td> <td>Managed by <strong>GKE controller</strong> </td> </tr> <tr> <td><strong>AWS</strong></td> <td><strong>Health Check</strong></td> <td>Checks targets’ health via HTTP/TCP pings</td> <td>Pod <strong>readiness/liveness probes</strong> </td> <td>Runs inside Pods</td> </tr> <tr> <td><strong>GCP</strong></td> <td><strong>Health Check Probe</strong></td> <td>Similar to AWS, integrated with backend service</td> <td>Pod <strong>readiness/liveness probes</strong> </td> <td>Runs inside Pods</td> </tr> <tr> <td><strong>AWS</strong></td> <td><strong>Elastic Load Balancer (NLB / ALB)</strong></td> <td>Front-end L4/L7 routing to healthy targets</td> <td> <code class="language-plaintext highlighter-rouge">Service</code> type=<code class="language-plaintext highlighter-rouge">LoadBalancer</code> (via <strong>AWS Cloud Controller Manager</strong>)</td> <td>In AWS Cloud</td> </tr> <tr> <td><strong>GCP</strong></td> <td><strong>Network / HTTP(S) Load Balancer</strong></td> <td>Front-end L4 (Network) or L7 (HTTP(S)) routing</td> <td> <code class="language-plaintext highlighter-rouge">Service</code> type=<code class="language-plaintext highlighter-rouge">LoadBalancer</code> (via <strong>GCP Cloud Controller Manager</strong>)</td> <td>In GCP Cloud</td> </tr> <tr> <td><strong>AWS</strong></td> <td><strong>Failover / Auto Scaling</strong></td> <td>Replaces unhealthy nodes using EC2 Auto Scaling groups</td> <td>K8s control plane (<strong>scheduler</strong>, <strong>replicasets</strong>)</td> <td>Cluster-wide</td> </tr> <tr> <td><strong>GCP</strong></td> <td><strong>Managed Instance Group + Autoscaler</strong></td> <td>Replaces failed nodes / Pods using GCE or GKE autoscaling</td> <td>K8s control plane (<strong>Horizontal Pod Autoscaler</strong>, <strong>replicasets</strong>)</td> <td>Cluster-wide</td> </tr> </tbody> </table> <ul> <li>AWS and GCP LBs both act at the edge of the VPC.</li> <li>Kubernetes load balancing happens inside the cluster, so these are complementary, not redundant. <ul> <li>AWS Listener ≈ GCP Forwarding Rule ≈ K8s Service Port.</li> <li>AWS Target Group ≈ GCP Backend Service ≈ K8s Endpoints.</li> <li>AWS NLB/ALB ≈ GCP Network/HTTP(S) LB ≈ K8s LoadBalancer Service.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>NodePort: The Proto-LoadBalancer</summary> <p>NodePort has load-balancing behavior, but with important caveats. - DIY Load Balancing</p> <details class="details details--success" data-variant="success"><summary>What it does</summary> <ul> <li>Opens the same TCP/UDP port (e.g., 30080) on every node.</li> <li> <code class="language-plaintext highlighter-rouge">kube-proxy</code> evenly distributes incoming connections across all ready Pods, regardless of which node the traffic lands on.</li> <li>From a client’s point of view, any node’s <code class="language-plaintext highlighter-rouge">IP:NodePort</code> works as a gateway to all Pods.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>What it does not do</summary> <ul> <li>No built-in external IP or DNS endpoint (you must choose a node manually).</li> <li>No health checks on nodes (only Pods).</li> <li>No HA routing if an entire node fails — clients must retry a different node.</li> </ul> </details> </details> <h2 id="hands-on">Hands-on</h2> <p>This should be done on a Kubernetes cluster with two worker nodes (3 in total at least for CloudLab)</p> <details class="details details--default" data-variant="default"><summary>NodePort with per-node failure visibility</summary> <ul> <li>We set <code class="language-plaintext highlighter-rouge">externalTrafficPolicy</code> to local for NodePort so that a node only serves traffic if it has a ready pod for the Service</li> <li>Create a manifest called <code class="language-plaintext highlighter-rouge">nodeport.yaml</code> with the following contents:</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+</pre></td> <td class="rouge-code"><pre><span class="c1"># A1) Namespace</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Namespace</span>
+<span class="na">metadata</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">lb-nodeport</span>
+
+<span class="nn">---</span>
+
+<span class="c1"># A2) NGINX Deployment with 2 replicas and hard anti-affinity to split nodes</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">namespace</span><span class="pi">:</span> <span class="s">lb-nodeport</span>
+    <span class="na">labels</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">app</span><span class="pi">:</span> <span class="nv">web</span> <span class="pi">}</span> <span class="c1"># We can do this on single line with curly bracket</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">2</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">app</span><span class="pi">:</span> <span class="nv">web</span> <span class="pi">}</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">app</span><span class="pi">:</span> <span class="nv">web</span> <span class="pi">}</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">affinity</span><span class="pi">:</span>
+        <span class="na">podAntiAffinity</span><span class="pi">:</span>
+          <span class="na">requiredDuringSchedulingIgnoredDuringExecution</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">labelSelector</span><span class="pi">:</span>
+                <span class="na">matchLabels</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">app</span><span class="pi">:</span> <span class="nv">web</span> <span class="pi">}</span>
+              <span class="na">topologyKey</span><span class="pi">:</span> <span class="s2">"</span><span class="s">kubernetes.io/hostname"</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">nginx:1.27-alpine</span>
+          <span class="na">ports</span><span class="pi">:</span> <span class="pi">[{</span> <span class="nv">containerPort</span><span class="pi">:</span> <span class="nv">80</span> <span class="pi">}]</span>
+          <span class="c1"># Make the default page show which node/hostname served it</span>
+          <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span><span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span><span class="s2">"</span><span class="s">echo</span><span class="nv"> </span><span class="se">\"</span><span class="s">Node:</span><span class="nv"> </span><span class="s">$(NODE_NAME)</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">Pod:</span><span class="nv"> </span><span class="s">$(hostname)</span><span class="se">\"</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">/usr/share/nginx/html/index.html</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">nginx</span><span class="nv"> </span><span class="s">-g</span><span class="nv"> </span><span class="s">'daemon</span><span class="nv"> </span><span class="s">off;'"</span><span class="pi">]</span>
+          <span class="na">env</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">NODE_NAME</span>
+              <span class="na">valueFrom</span><span class="pi">:</span>
+                <span class="na">fieldRef</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">fieldPath</span><span class="pi">:</span> <span class="nv">spec.nodeName</span> <span class="pi">}</span>
+          <span class="na">readinessProbe</span><span class="pi">:</span>
+            <span class="na">httpGet</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/"</span><span class="pi">,</span> <span class="nv">port</span><span class="pi">:</span> <span class="nv">80</span> <span class="pi">}</span>
+            <span class="na">initialDelaySeconds</span><span class="pi">:</span> <span class="m">2</span>
+            <span class="na">periodSeconds</span><span class="pi">:</span> <span class="m">3</span>
+          <span class="na">livenessProbe</span><span class="pi">:</span>
+            <span class="na">httpGet</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/"</span><span class="pi">,</span> <span class="nv">port</span><span class="pi">:</span> <span class="nv">80</span> <span class="pi">}</span>
+            <span class="na">initialDelaySeconds</span><span class="pi">:</span> <span class="m">10</span>
+            <span class="na">periodSeconds</span><span class="pi">:</span> <span class="m">10</span>
+
+<span class="nn">---</span>
+<span class="c1"># A3) NodePort Service (L4), externalTrafficPolicy=Local to bind traffic to local pod only</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">web-np</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">lb-nodeport</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+  <span class="na">externalTrafficPolicy</span><span class="pi">:</span> <span class="s">Local</span>
+  <span class="na">selector</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">app</span><span class="pi">:</span> <span class="nv">web</span> <span class="pi">}</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">http</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30080</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>First, apply the manifest</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> nodeport.yaml<span class="sb">`</span>
+kubectl <span class="nt">-n</span> lb-nodeport get pods <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Confirm that the two pod are on different nodes by checking the <code class="language-plaintext highlighter-rouge">NODE</code> column.</li> <li>Hit each node directly:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="c"># Replace with your node IPs (not the pod IPs)</span>
+curl <span class="nt">-s</span> http://&lt;NODE1_IP&gt;:30080/
+curl <span class="nt">-s</span> http://&lt;NODE2_IP&gt;:30080/
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>You should see which node served the page: Node: <node> | Pod: <podname></podname></node> </li> <li>Simulate a replica failure on NODE1:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="c"># Find the pod that sits on NODE1</span>
+kubectl <span class="nt">-n</span> lb-nodeport get pods <span class="nt">-o</span> wide
+kubectl <span class="nt">-n</span> lb-nodeport delete pod &lt;pod-on-NODE1&gt;
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Kubernetes will eventually reschedule a new pod (possibly on NODE2 first). During that window,</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-s</span> <span class="nt">--max-time</span> 2 http://&lt;NODE1_IP&gt;:30080/   <span class="c"># likely times out / connection refused</span>
+curl <span class="nt">-s</span> <span class="nt">--max-time</span> 2 http://&lt;NODE2_IP&gt;:30080/   <span class="c"># still serves traffic</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Because <code class="language-plaintext highlighter-rouge">externalTrafficPolicy: Local</code>, NODE1 no longer has a ready endpoint, therefore its NodePort fails. NODE2 still works.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Challenge</summary> <p>Attempt to recreate the above example in a different namespace, this time without <code class="language-plaintext highlighter-rouge">externalTrafficPolicy: Local</code> and observe what happens when a pod replica fails.</p> </details> <h2 id="references">References</h2> <ul> <li><a href="https://aws.amazon.com/what-is/load-balancing/" rel="external nofollow noopener" target="_blank">AWS: What is LoadBalancing</a></li> </ul> </body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="code-optimization">Code optimization</h1> <p>:class: tip</p> <p>This lecture will cover contents from <a href="https://diveintosystems.org/book/C12-CodeOpt/index.html" rel="external nofollow noopener" target="_blank">Chapter 12</a> of the book.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+</pre></td> <td class="rouge-code"><pre>
+
+## Debugging
+
+
+- A systematic approach to debugging. 
+  - The programmer creates a defect 
+  - The defect causes an infection 
+  - The infection propagates 
+  - The infection causes a failure
+- Not every defect causes a failure!
+- Testing can only show the presence of errors - not their absence. 
+  - In other words, if you pass every tests, it means that your program has yet to fail. 
+  It does not mean that your program is correct. 
+
+
+
+- Stating the problem
+  - Describe the problem aloud or in writing
+  - A.k.a. `Rubber duck` or `teddy bear` method
+- Often a comprehensive problem description is sufficient to solve the failure
+
+
+
+:::::{tab-set} 
+::::{tab-item} Bad Fib
+
+- A bad implementation of Fibonacci sequence
+
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=bad_fib.c"&gt;&lt;/script&gt;
+
+- Specification defined the first Fibonacci number as 1. 
+- Compile and run the following `bad_fib.c` program:
+- `fib(1)` returns an incorrect result. Why?
+
+~~~bash
+$ gcc -o bad_fib bad_fib.c
+$ ./bad_fib
+~~~
+ 
+::::
+::::{tab-item} Scientific debugging
+
+- Before debugging, you need to construct a hypothesis as to the defect.
+  - Propose a possible defect and why it explains the failure conditions
+- `Ockham’s Razor`: given several hypotheses, pick the simplest/closest to current work
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/06-optimization/01-480.webp 480w,/assets/img/courses/csc231/06-optimization/01-800.webp 800w,/assets/img/courses/csc231/06-optimization/01-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc231/06-optimization/01.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Scientific debugging"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+- Make predictions based on your hypothesis
+  - What do you expect to happen under new conditions
+  - What data could confirm or refute your hypothesis
+- How can I collect that data?
+  - What experiments?
+  - What collection mechanism?
+- Does the data refute the hypothesis?
+  - Refine the hypothesis based on the new inputs
+::::
+::::{tab-item} SD: Bad Fib!
+- Constructing a hypothesis: 
+  - `while (n 1)`: did we mess up the loop in fib?
+  - `int f`: did we forget to initialize `f`?
+- Propose a new condition or conditions
+  - What will logically happen if your hypothesis is correct?
+  - What data can be 
+  - fib(1) failed		// Hypothesis
+    - Loop check is incorrect: Change to n &gt;= 1 and run again.
+    - f is uninitialized: Change to int f = 1;
+- Experiment
+  - Only change one condition at a time. 
+  - fib(1) failed		// Hypothesis
+    - Change to `n &gt;= 1`: ???
+    - Change to `int f = 1`: Works.  Sometimes a prediction can be a fix.
+::::
+::::{tab-item} Brute force
+
+- Strict compilation flags: `-Wall`, `-Werror`. 
+- Include optimization flags (**capital letter o**): `-O3` or `-O0`. 
+
+~~~bash
+$ gcc -Wall -Werror -O3 -o bad_fib bad_fib.c
+~~~
+ 
+- Use `valgrind`, memory analyzer. 
+
+~~~bash
+$ gcc -Wall -Werror -o bad_fib bad_fib.c
+$ valgrind ./bad_fib
+~~~
+::::
+::::{tab-item} Observation
+
+- What is the observed result?
+  - Factual observation, such as `Calling fib(1) will return 1.`
+  - The conclusion will interpret the observation(s)
+- Don’t interfere.
+  - Sometimes `printf()` can interfere
+  - Like quantum physics, sometimes observations are part of the experiment
+- Proceed systematically.
+  - Update the conditions incrementally so each observation relates to a specific change
+- Do NOT ever proceed past first bug.
+::::
+:::::
+
+
+
+
+- Common failures and insights
+  - Why did the code fail?
+  - What are my common defects?
+- Assertions and invariants
+  - Add checks for expected behavior
+  - Extend checks to detect the fixed failure
+- Testing
+  - Every successful set of conditions is added to the test suite
+
+
+- Not every problem needs scientific debugging
+- Set a time limit: (for example)
+  - 0 minutes – -Wall, valgrind
+  - 1 – 10 minutes – Informal Debugging
+  - 10 – 60 minutes – Scientific Debugging
+  - 60 minutes – Take a break / Ask for help
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="performance-realities">Performance realities</h2> <ul> <li>There’s more to performance than asymptotic complexity.</li> <li>Constant factors matter too! <ul> <li>Easily see 10:1 performance range depending on how code is written</li> <li>Must optimize at multiple levels: algorithm, data representations, procedures, and loops</li> </ul> </li> <li>Must understand system to optimize performance <ul> <li>How programs are compiled and executed</li> <li>How modern processors + memory systems operate</li> <li>How to measure program performance and identify bottlenecks</li> <li>How to improve performance without destroying code modularity and generality.</li> </ul> </li> <li>Create the following two files called <code class="language-plaintext highlighter-rouge">matrix_mult.c</code> and <code class="language-plaintext highlighter-rouge">block_matrix_mult.c</code> </li> </ul> <p>:::::{tab-set} ::::{tab-item} matrix_mult.c</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=matrix_mult.c"></script> <p>:::: ::::{tab-item} block_matrix_mult.c</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=block_matrix_mult.c"></script> <p>:::: :::::</p> <ul> <li>The difference between <code class="language-plaintext highlighter-rouge">matrix_mult.c</code> and <code class="language-plaintext highlighter-rouge">block_matrix_mult.c</code>lays with how the loops are broken up to align with cache size.</li> </ul> <p>:::::{tab-set} ::::{tab-item} Cache blocks</p> <ul> <li>Check the size of cache blocks</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>getconf <span class="nt">-a</span> | <span class="nb">grep </span>CACHE
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/02-480.webp 480w,/assets/img/courses/csc231/06-optimization/02-800.webp 800w,/assets/img/courses/csc231/06-optimization/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/02.png" width="50%" height="auto" alt="Cache size" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>We focus on cache blocks for optimization: <ul> <li>If calculations can be performed using smaller matrices of A, B, and C (blocks) that all fit in cache, we can further minimize the amount of cache misses per calculation.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/03-480.webp 480w,/assets/img/courses/csc231/06-optimization/03-800.webp 800w,/assets/img/courses/csc231/06-optimization/03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/03.png" width="50%" height="auto" alt="Block division" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>3 blocks are needed (for A, B, and C).</li> <li>Each block has dimension B, so the total block size is $B^2$</li> <li>Therefore: $3B^{2} &lt; cache_size$</li> <li>Based on the information above: B = 8 (so that <code class="language-plaintext highlighter-rouge">8 * 8 = 64</code> fits in cache line).</li> <li> <p><code class="language-plaintext highlighter-rouge">3 * 8 * 8 &lt; 32768</code>. :::: ::::{tab-item} Without cache</p> </li> <li>Compile and run <code class="language-plaintext highlighter-rouge">matrix_mult.c</code>.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>gcc <span class="nt">-o</span> mm matrix_mult.c
+<span class="nv">$ </span>./mm 512
+<span class="nv">$ </span>./mm 1024
+<span class="nv">$ </span>./mm 2048
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/04-480.webp 480w,/assets/img/courses/csc231/06-optimization/04-800.webp 800w,/assets/img/courses/csc231/06-optimization/04-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/04.png" width="50%" height="auto" alt="Matrix with block optimization" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} With cache</p> <ul> <li>Compile and run <code class="language-plaintext highlighter-rouge">block_matrix_mult.c</code>.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>gcc <span class="nt">-o</span> bmm block_matrix_mult.c
+<span class="nv">$ </span>./bmm 512
+<span class="nv">$ </span>./bmm 1024
+<span class="nv">$ </span>./bmm 2048
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/05-480.webp 480w,/assets/img/courses/csc231/06-optimization/05-800.webp 800w,/assets/img/courses/csc231/06-optimization/05-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/05.png" width="50%" height="auto" alt="Matrix with block and compiler optimization" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: :::::</p> <ul> <li>Reduce code motion</li> <li>Reduction in strength</li> </ul> <p>:::::{tab-set} ::::{tab-item} Reduce code motion</p> <ul> <li>Reduce frequency with which computation performed <ul> <li>Need to produce same results</li> <li>Move code out of loop.</li> </ul> </li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=block_matrix_mult_2.c"></script> <p>:::: ::::{tab-item} Reduction in strength</p> <ul> <li>Replace costly operation with simpler ones (multiply to addition).</li> <li>Recognize sequence of products.</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=block_matrix_mult_3.c"></script> <p>:::: ::::{tab-item} Scripting</p> <ul> <li>Create the following file to automate the installations.</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=eval.sh"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span><span class="nb">chmod </span>755 eval.sh
+<span class="nv">$ </span>./eval.sh block_matrix_mult
+<span class="nv">$ </span>./eval.sh block_matrix_mult_2
+<span class="nv">$ </span>./eval.sh block_matrix_mult_3
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: ::::{tab-item} Outcome</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/06-480.webp 480w,/assets/img/courses/csc231/06-optimization/06-800.webp 800w,/assets/img/courses/csc231/06-optimization/06-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/06.png" width="50%" height="auto" alt="Other optimizations" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: :::::</p> <ul> <li>A function whose implementation is handled specially by the compiler.</li> <li>Languages: C, C++, Rust <ul> <li>HotSpot JVM for Java’s JRE also has some intrinsic built-in (no direct access from programmers)</li> </ul> </li> <li>Compilers for C/C++, Intel, and GCC implement intrinsics mapping directly to x86_64’s single instructions, multiple data (SIMD) instructions. <ul> <li>Streaming SIMD Extensions (SSE), SSE2, SSE3, AVX, AVX2, …</li> <li><a href="https://cvw.cac.cornell.edu/vector/hw_registers" rel="external nofollow noopener" target="_blank">Vectorization: registers</a></li> </ul> </li> </ul> <p>:::::{tab-set} ::::{tab-item} Example: AVX/AVX2</p> <ul> <li>Addition 16 YMM registers to perform a single instruction on multiple data elements (SIMD).</li> <li>Each YMM register can hold and carry out the math operations on: <ul> <li>8 32-bit single-precision floating point numbers (or integer), or</li> <li>4 64-bit double-precision floating point numbers (or long).</li> </ul> </li> </ul> <p>:::: ::::{tab-item} Intrinsic Code</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=intrinsic_sum.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>gcc <span class="nt">-mavx2</span> <span class="nt">-o</span> imm intrinsic_sum.c 
+<span class="nv">$ </span>./imm 1024
+<span class="nv">$ </span>./imm 2048
+<span class="nv">$ </span>./imm 4096
+<span class="nv">$ </span>./imm 8192
+<span class="nv">$ </span>./imm 16384
+<span class="nv">$ </span>./imm 32678
+<span class="nv">$ </span>./imm 33554432
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: ::::{tab-item} Outcome</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/intrinsic_sum-480.webp 480w,/assets/img/courses/csc231/06-optimization/intrinsic_sum-800.webp 800w,/assets/img/courses/csc231/06-optimization/intrinsic_sum-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/intrinsic_sum.png" width="50%" height="auto" alt="Other optimizations" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: :::::</p> <ul> <li>Operate under fundamental constraint</li> <li>Must not cause any change in program behavior</li> <li>Often prevents optimizations that affect only “edge case” behavior</li> <li>Behavior obvious to the programmer is not obvious to compiler <ul> <li>e.g., Data range may be more limited than types suggest (short vs. int)</li> </ul> </li> <li>Most analysis is only within a procedure <ul> <li>Whole-program analysis is usually too expensive</li> <li>Sometimes compiler does inter-procedural analysis within a file (new GCC)</li> </ul> </li> <li>Most analysis is based only on static information <ul> <li>Compiler has difficulty anticipating run-time inputs</li> </ul> </li> <li>When in doubt, the compiler must be conservative</li> </ul> <p>```</p> </body></html>

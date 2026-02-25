@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="threads-programming">Threads programming</h1> <h2 id="thread-overview">Thread overview</h2> <details class="details details--default" data-variant="default"><summary>Target hardware</summary> <ul> <li> <p>Single computing node, multiple sockets, multiple cores.</p> <ul> <li>Dell PowerEdge M600 Blade Server.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/04-threads/01-480.webp 480w,/assets/img/courses/csc466/04-threads/01-800.webp 800w,/assets/img/courses/csc466/04-threads/01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/04-threads/01.jpg" width="50%" height="auto" alt="Multi-socket motherboards" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>- Intel Sandy Bridge CPU. 
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/04-threads/02-480.webp 480w,/assets/img/courses/csc466/04-threads/02-800.webp 800w,/assets/img/courses/csc466/04-threads/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/04-threads/02.jpg" width="50%" height="auto" alt="Intel Sandy Bridge CPU" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>In summary <ul> <li>Node with multiple sockets.</li> <li>Each socker support CPUs with multiple cores.</li> <li>Each core is an independent CPU.</li> <li>Each core has access to all the memory on the node.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Thread: An abstraction for running multiple processes</summary> <ul> <li>A normal process is a running program with a single point of execution, i.e, a single PC (program counter).</li> <li>A multi-threaded program has multiple points of execution, i.e., multiple PCs.</li> <li>Each thread is very much like a separate process, except for one difference: <ul> <li>All threads of the same process share the same address space and thus can access the same data.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/04-threads/threads-480.webp 480w,/assets/img/courses/csc466/04-threads/threads-800.webp 800w,/assets/img/courses/csc466/04-threads/threads-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/04-threads/threads.png" width="50%" height="auto" alt="Threads memory model" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>POXIS threads (pthreads)</summary> <ul> <li>Standardized C language thread programming API.</li> <li> <code class="language-plaintext highlighter-rouge">pthreads</code> specifies the interface of using threads, but not how threads are implemented in OS.</li> <li>Different implementations include: <ul> <li>kernel-level threads,</li> <li>user-level threads, or</li> <li>hybrid</li> </ul> </li> <li><a href="http://man7.org/linux/man-pages/man3/pthread_create.3.html" rel="external nofollow noopener" target="_blank">pthread_create</a></li> <li><a href="http://man7.org/linux/man-pages/man3/pthread_join.3.html" rel="external nofollow noopener" target="_blank">pthread_join</a></li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Say hello to my little threads …</summary> <ul> <li> <p>Launch your <code class="language-plaintext highlighter-rouge">csc466env</code> environment and go to <code class="language-plaintext highlighter-rouge">127.0.0.1:18088</code></p> <ul> <li>You only need to launch the head node for this topic for thread programming.</li> </ul> <div class="language-bash highlighter-rouge"> <div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>  docker compose up <span class="nt">-d</span> <span class="nb">head</span>
+</pre></td> </tr></tbody></table></code></pre></div> </div> </li> <li> <p>Click on the top-left three dashes, select <code class="language-plaintext highlighter-rouge">File</code> then <code class="language-plaintext highlighter-rouge">Open Folder</code></p> </li> </ul> <details class="details details--info" data-variant="info"><summary>File/Open Folder</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/04-threads/code-server-01-480.webp 480w,/assets/img/courses/csc466/04-threads/code-server-01-800.webp 800w,/assets/img/courses/csc466/04-threads/code-server-01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/04-threads/code-server-01.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <ul> <li>Make sure that you have <code class="language-plaintext highlighter-rouge">/home/student</code> in the box then press <code class="language-plaintext highlighter-rouge">OK</code> </li> </ul> <details class="details details--info" data-variant="info"><summary>/home/student</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/04-threads/code-server-02-480.webp 480w,/assets/img/courses/csc466/04-threads/code-server-02-800.webp 800w,/assets/img/courses/csc466/04-threads/code-server-02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/04-threads/code-server-02.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <ul> <li>Use the terminal or the icons (see the red box) to create a new folder and new files (in the future)</li> </ul> <details class="details details--info" data-variant="info"><summary>Create new folder/file</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/04-threads/code-server-03-480.webp 480w,/assets/img/courses/csc466/04-threads/code-server-03-800.webp 800w,/assets/img/courses/csc466/04-threads/code-server-03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/04-threads/code-server-03.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <ul> <li>Create <code class="language-plaintext highlighter-rouge">thread_hello.c</code> with the following contents:</li> </ul> <p>```c linenums=”1” –8&lt;– “docs/csc466/lectures/data/thread/hello_thread.c”</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre>
+- Compile and run `thread_hello.c`:
+
+```bash
+gcc -o thread_hello thread_hello.c -lpthread
+./thread_hello 1
+./thread_hello 2 
+./thread_hello 4
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="thread-parallelization">Thread parallelization</h2> <details class="details details--default" data-variant="default"><summary>Sum of values in an array</summary> <ul> <li>Create <code class="language-plaintext highlighter-rouge">thread_sum.c</code> with the following contents:</li> </ul> <p>```c linenums=”1” –8&lt;– “docs/csc466/lectures/data/thread/thread_sum.c”</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre>
+- Compile and run `thread_sum.c`:
+
+```bash
+gcc -o thread_sum thread_sum.c -lpthread
+./thread_sum 16 4
+./thread_sum 256 4
+./thread_sum 1000000 4
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Global variable: does it work?</summary> <ul> <li>Create <code class="language-plaintext highlighter-rouge">thread_global_nolock.c</code> with the following contents:</li> </ul> <p>```c linenums=”1” –8&lt;– “docs/csc466/lectures/data/thread/thread_global_nolock.c”</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre>
+- Compile and run `thread_global_nolock.c`:
+  - Compare the outcome with `thread_sum`
+
+```bash
+gcc -o thread_global_nolock thread_global_nolock.c -lpthread
+./thread_global_nolock 16 4
+./thread_global_nolock 2000 4
+./thread_global_nolock 90000 4
+./thread_sum 90000 4
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>What is the problem?</summary> <ul> <li>Two concurrent threads manipulated a shared resource (the <code class="language-plaintext highlighter-rouge">sum</code> variable) without any synchronization. <ul> <li>Outcome depends on the order in which accesses take place – this is called a <strong>race condition</strong>.</li> </ul> </li> <li>We need to ensure that only one thread at a time can manipulate the shared resource so that we can reason about program behavior, in a sane way <ul> <li>We need <strong>synchronization</strong>.</li> </ul> </li> <li>What is shared/not shared in a multithreaded program?</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/04-threads/shared-not-shared-480.webp 480w,/assets/img/courses/csc466/04-threads/shared-not-shared-800.webp 800w,/assets/img/courses/csc466/04-threads/shared-not-shared-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/04-threads/shared-not-shared.png" width="50%" height="auto" alt="Multi-socket motherboards" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Key definitions</summary> <ul> <li>A <strong>critical section</strong> (CS) is a segment of code that accesses a shared resource, usually a variable or data structure.</li> <li>A <strong>race condition</strong> (<strong>data race</strong>) arises if multiple threads of execution enter the critical section at roughly the same time; both attempt to update the shared data structure, leading to a surprising and undesirable outcome.</li> <li>An <strong>indeterminate</strong> program consists of one or more race conditions. The outcome is thus not deterministic.</li> <li>To avoid these problem, threads should use some kind of mutual exclusion primitives. Doing so guarantees that only a single thread ever enters a critical section, thus avoiding races and resulting in deterministic program outputs.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Requirements for critical section handling</summary> <ul> <li> <code class="language-plaintext highlighter-rouge">Mutual Exclusion</code>: if one thread is in the CS, then no other is</li> <li> <code class="language-plaintext highlighter-rouge">Progress</code>: threads waiting for access to CS are not prevented from entering by threads not in the CS; threads do not wait indefinitely.</li> <li> <code class="language-plaintext highlighter-rouge">Bounded Waiting</code> (no starvation): all waiting threads are guaranteed to eventually get access to the CS.</li> <li> <code class="language-plaintext highlighter-rouge">Performance</code>: The overhead of entering and exiting the CS is small compared to the work done within it.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Lock: Definition</summary> <ul> <li> <code class="language-plaintext highlighter-rouge">Atomic instruction</code>: A machine instruction that can be executed in a single clock cycle.</li> <li>Programmers annotate source code with <strong>locks</strong> around a critical section, ensuring that it behaves like a single atomic instruction.</li> <li>What is a <strong>lock</strong>? <ul> <li>Is declared as a lock variable.</li> <li>The lock variable holds the state of the lock.</li> <li>The states are either: <ul> <li>Available (unlocked or free): No thread holds the lock</li> <li>Acquired (locked or held): Exactly one thread holds the lock and presumably is in a critical section.</li> </ul> </li> <li>The lock variable can also hold additional information (often hidden from users): <ul> <li>Which thread is holding the lock</li> <li>A queue for ordering lock acquisition …</li> </ul> </li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Semantic of locking: lock() and unlock()</summary> <ul> <li>A thread calls <code class="language-plaintext highlighter-rouge">lock()</code> when it tries to acquire the lock: <ul> <li>If no other thread is holding the lock, the thread will acquire the lock and enter the critical section (becomes owner of the lock).</li> <li>If another thread is holding the lock, the call will not return.</li> </ul> </li> <li>Once the lock owner is finished, it calls unlock() and the lock becomes available. <ul> <li>If there is no waiting thread, the lock becomes free.</li> <li>If there are some waiting threads, one of them will acquire the lock and enter the critical section.</li> </ul> </li> <li>Lock in <code class="language-plaintext highlighter-rouge">pthread</code>: https://linux.die.net/man/3/pthread_mutex_lock</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Global variable: correction at a cost</summary> <ul> <li>Create <code class="language-plaintext highlighter-rouge">thread_global_lock.c</code> with the following contents:</li> </ul> <p>```c linenums=”1” –8&lt;– “docs/csc466/lectures/data/thread/thread_global_lock.c”</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre>
+- Compile and run `thread_global_lock.c`:
+  - Compare the outcome with `thread_sum`
+  - Compare the runtime with `thread_sum` and `thread_global_nolock` with a lower input value
+
+```bash
+gcc -o thread_global_lock thread_global_lock.c -lpthread
+./thread_global_lock 90000 4
+./thread_global_nolock 90000 4
+./thread_sum 90000 4
+./thread_global_lock 2000 4
+./thread_global_nolock 2000 4
+./thread_sum 2000 4
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> </body></html>

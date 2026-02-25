@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="views-and-3rd-party-library">Views and 3rd Party Library</h1> <h2 id="views">Views</h2> <details class="details details--default" data-variant="default"><summary>New SwiftUI View</summary> <ul> <li>To create a new view in SwiftUI, you start by importing the SwiftUI package and then defining a new struct that conforms to the <strong>View</strong> protocol.</li> <li>Inside the struct, you’ll implement the body computed property, which describes the view’s content and layout.</li> <li>Here’s a basic example to demonstrate creating a new view in SwiftUI:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">SwiftUI</span>
+<span class="kd">struct</span> <span class="kt">MyNewView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Text</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">)</span>
+            <span class="o">.</span><span class="nf">padding</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Breakdown of New SwiftUI View</summary> <ul> <li>Define a New Struct: Create a new Swift struct and make it conform to the View protocol.</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">SwiftUI</span>
+<span class="kd">struct</span> <span class="kt">MyNewView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Implement the Body: Within the struct, you’ll need to implement a body computed property. This is where you define what your view looks like.</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kt">Text</span><span class="p">(</span><span class="s">"Hello, world!"</span><span class="p">)</span>
+        <span class="o">.</span><span class="nf">padding</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>To use MyNewView inside another view, you would do the followings:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre><span class="kd">struct</span> <span class="kt">ContentView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">MyNewView</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Structuring Views</summary> <ul> <li>In SwiftUI, it’s a good practice to structure your views by breaking them down into smaller, reusable components.</li> <li>For example, suppose you have a view that displays user information. This view could consist of smaller views: <ul> <li>one for the user’s avatar,</li> <li>one for the username,</li> <li>and one for the user’s bio.</li> </ul> </li> <li>Create a new project called <code class="language-plaintext highlighter-rouge">views</code> that implements the above example with the following contents. <ul> <li><code class="language-plaintext highlighter-rouge">viewsApp</code></li> </ul> <div class="language-swift highlighter-rouge"> <div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre>  <span class="kd">import</span> <span class="kt">SwiftUI</span>
+
+  <span class="kd">@main</span>
+  <span class="kd">struct</span> <span class="nv">viewsApp</span><span class="p">:</span> <span class="kt">App</span> <span class="p">{</span>
+      <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">Scene</span> <span class="p">{</span>
+          <span class="kt">WindowGroup</span> <span class="p">{</span>
+              <span class="kt">ContentView</span><span class="p">()</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div> </div> <ul> <li><code class="language-plaintext highlighter-rouge">ContentView</code></li> </ul> <div class="language-swift highlighter-rouge"> <div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td> <td class="rouge-code"><pre>  <span class="kd">import</span> <span class="kt">SwiftUI</span>
+
+  <span class="kd">struct</span> <span class="kt">ContentView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+      <span class="kd">@State</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">showProfile</span> <span class="o">=</span> <span class="kc">false</span>
+
+      <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="n">showProfile</span> <span class="p">{</span>
+              <span class="kt">UserProfileView</span><span class="p">()</span>
+              <span class="kt">Button</span><span class="p">(</span><span class="s">"Back"</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="n">showProfile</span> <span class="o">=</span> <span class="kc">false</span>
+              <span class="p">}</span>
+          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+              <span class="kt">Button</span><span class="p">(</span><span class="s">"Profile"</span><span class="p">)</span> <span class="p">{</span>
+                  <span class="n">showProfile</span> <span class="o">=</span> <span class="kc">true</span>
+              <span class="p">}</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="cp">#Preview {</span>
+      <span class="kt">ContentView</span><span class="p">()</span>
+  <span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div> </div> <ul> <li><code class="language-plaintext highlighter-rouge">Views</code></li> </ul> <div class="language-swift highlighter-rouge"> <div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td> <td class="rouge-code"><pre>  <span class="kd">import</span> <span class="kt">SwiftUI</span>
+
+  <span class="kd">struct</span> <span class="kt">UserProfileView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+      <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+          <span class="kt">VStack</span> <span class="p">{</span>
+              <span class="kt">UserAvatarView</span><span class="p">()</span>
+              <span class="kt">UserNameView</span><span class="p">()</span>
+              <span class="kt">UserBioView</span><span class="p">()</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">struct</span> <span class="kt">UserAvatarView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+      <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+          <span class="kt">Image</span><span class="p">(</span><span class="nv">systemName</span><span class="p">:</span> <span class="s">"person.circle.fill"</span><span class="p">)</span>
+              <span class="o">.</span><span class="nf">resizable</span><span class="p">()</span>
+              <span class="o">.</span><span class="nf">frame</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">struct</span> <span class="kt">UserNameView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+      <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+          <span class="kt">Text</span><span class="p">(</span><span class="s">"Golden Rams"</span><span class="p">)</span>
+              <span class="o">.</span><span class="nf">font</span><span class="p">(</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">struct</span> <span class="kt">UserBioView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+      <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+          <span class="kt">Text</span><span class="p">(</span><span class="s">"I love SwiftUI!"</span><span class="p">)</span>
+              <span class="o">.</span><span class="nf">font</span><span class="p">(</span><span class="o">.</span><span class="n">subheadline</span><span class="p">)</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div> </div> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>NavigationView</summary> <ul> <li>You can wrap your views in other framework, for example, <code class="language-plaintext highlighter-rouge">NavigationView</code>.</li> <li>Try modifying <code class="language-plaintext highlighter-rouge">ContentView</code> with the following:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td> <td class="rouge-code"><pre><span class="kd">struct</span> <span class="kt">ContentView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@State</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">showProfile</span> <span class="o">=</span> <span class="kc">false</span>
+
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">NavigationView</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">showProfile</span> <span class="p">{</span>
+                <span class="kt">UserProfileView</span><span class="p">()</span>
+                    <span class="o">.</span><span class="nf">navigationBarTitle</span><span class="p">(</span><span class="s">"User Profile"</span><span class="p">,</span> <span class="nv">displayMode</span><span class="p">:</span> <span class="o">.</span><span class="n">inline</span><span class="p">)</span>
+                    <span class="o">.</span><span class="nf">navigationBarItems</span><span class="p">(</span><span class="nv">trailing</span><span class="p">:</span> <span class="kt">Button</span><span class="p">(</span><span class="s">"Back"</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">showProfile</span> <span class="o">=</span> <span class="kc">false</span>
+                    <span class="p">})</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="kt">Button</span><span class="p">(</span><span class="s">"Profile"</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">showProfile</span> <span class="o">=</span> <span class="kc">true</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="third-party-library">Third Party Library</h2> <details class="details details--default" data-variant="default"><summary>Adding third party packages</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/08-views/addpkg-480.webp 480w,/assets/img/courses/csc496/08-views/addpkg-800.webp 800w,/assets/img/courses/csc496/08-views/addpkg-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/08-views/addpkg.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Enter the GitHub URL of the 3rd party library into the search box</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/08-views/addpkg2-480.webp 480w,/assets/img/courses/csc496/08-views/addpkg2-800.webp 800w,/assets/img/courses/csc496/08-views/addpkg2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/08-views/addpkg2.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Press <code class="language-plaintext highlighter-rouge">Add Package</code> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Example: Kingfisher</summary> <ul> <li><a href="https://github.com/onevcat/Kingfisher" rel="external nofollow noopener" target="_blank">https://github.com/onevcat/Kingfisher</a></li> <li>Modify <code class="language-plaintext highlighter-rouge">Views</code>:</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Kingfisher</span>
+
+<span class="kd">struct</span> <span class="kt">UserAvatarView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">KFImage</span><span class="p">(</span><span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"https://www.wcupa.edu/communications/images/goldenRamLogo.png"</span><span class="p">))</span>
+            <span class="o">.</span><span class="nf">resizable</span><span class="p">()</span>
+            <span class="o">.</span><span class="nf">frame</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Example: ConfettiSwiftUI</summary> <ul> <li> <p><a href="https://github.com/simibac/ConfettiSwiftUI" rel="external nofollow noopener" target="_blank">https://github.com/simibac/ConfettiSwiftUI</a></p> </li> <li> <p>Modify <code class="language-plaintext highlighter-rouge">Views</code>:</p> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">ConfettiSwiftUI</span>
+
+<span class="kd">struct</span> <span class="kt">UserAvatarView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@State</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">trigger</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">KFImage</span><span class="p">(</span><span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"https://www.wcupa.edu/communications/images/goldenRamLogo.png"</span><span class="p">))</span>
+            <span class="o">.</span><span class="nf">resizable</span><span class="p">()</span>
+            <span class="o">.</span><span class="nf">frame</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="kt">Button</span><span class="p">(</span><span class="s">"Cheers!!!"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">trigger</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="p">}</span>
+        <span class="o">.</span><span class="nf">confettiCannon</span><span class="p">(</span><span class="nv">trigger</span><span class="p">:</span> <span class="n">$trigger</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Hands-on: Subsonic</summary> <ul> <li><a href="https://github.com/twostraws/Subsonic" rel="external nofollow noopener" target="_blank">https://github.com/twostraws/Subsonic</a></li> <li>Add the ability to play a sound when clicking the <code class="language-plaintext highlighter-rouge">Profile</code> button <ul> <li><a href="https://citizen-dj.labs.loc.gov/loc-fma/use/" rel="external nofollow noopener" target="_blank">Library of free sample mp3 sounds</a></li> <li><a href="https://sonniss.com/gameaudiogdc/#:~:text=Royalty%20Free%20Sound%20Effects%20Archive,same%20files%20as%20we%20sell." rel="external nofollow noopener" target="_blank">Royalty Free Sounds Effects Archive</a></li> <li><a href="https://freesound.org/" rel="external nofollow noopener" target="_blank">https://freesound.org/</a></li> <li><a href="https://blog.felgo.com/game-resources/free-music-for-games#:~:text=ZapSplat%20offers%20an%20easy%2Dto%2Dbrowse%20library%20of%20royalty,free%20sound%20effects%20for%20you%20to%20use." rel="external nofollow noopener" target="_blank">Other resources</a></li> </ul> </li> <li>Add the ability to automatically play a theme when the Golden Ram profile appears!</li> </ul> </details> </body></html>

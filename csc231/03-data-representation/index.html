@@ -1,0 +1,1146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="representing-and-manipulating-information">Representing and manipulating information</h1> <p>:class: tip</p> <p>This lecture will cover contents from <a href="https://diveintosystems.org/book/C4-Binary/index.html" rel="external nofollow noopener" target="_blank">Chapter 4</a> of the book.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+</pre></td> <td class="rouge-code"><pre>
+## How do we "see" things?
+
+### 1.2 Everything is a bit
+ 
+- Each bit is `0` or `1`
+- By encoding/interpreting sets of bits in various ways
+  - Computers determine what to do (instructions)
+  - … and represent and manipulate numbers, sets, strings, etc…
+- Why bits?  Electronic Implementation
+  - Easy to store with bistable elements.
+  - Reliably transmitted on noisy and inaccurate wires. 
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/03-data-representation/data_01-480.webp 480w,/assets/img/courses/csc231/03-data-representation/data_01-800.webp 800w,/assets/img/courses/csc231/03-data-representation/data_01-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc231/03-data-representation/data_01.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Electronic representation of bits"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+### 1.3 Encoding byte values 
+
+- Byte = 8 bits
+- Binary: `0000 0000` to `1111 1111`. 
+- Decimal: `0` to `255`. 
+- Hexadecimal: `00` to `FF`. 
+  - Base 16 number representation
+  - Use character `0` to `9` and `A` to `F`. 
+- Example: 15213 (decimal) = 0011 1011 0110 1101 (binary) = 3B6D (hex)
+
+| Hex | Decimal | Binary |         Binary to Decimal Calculation         |
+| --- | ------- | ------ | --------------------------------------------- |
+|  0  |    0    |  0000  | 0 * $2^3$ + 0 * $2^2$ + 0 * $2^1$ + 0 * $2^0$ |
+|  1  |    1    |  0001  | 0 * $2^3$ + 0 * $2^2$ + 0 * $2^1$ + 1 * $2^0$ |
+|  2  |    2    |  0010  | 0 * $2^3$ + 0 * $2^2$ + 1 * $2^1$ + 0 * $2^0$ |
+|  3  |    3    |  0011  | 0 * $2^3$ + 0 * $2^2$ + 1 * $2^1$ + 1 * $2^0$ |
+|  4  |    4    |  0100  | 0 * $2^3$ + 1 * $2^2$ + 0 * $2^1$ + 0 * $2^0$ |
+|  5  |    5    |  0101  | 0 * $2^3$ + 1 * $2^2$ + 0 * $2^1$ + 1 * $2^0$ |
+|  6  |    6    |  0110  | 0 * $2^3$ + 1 * $2^2$ + 1 * $2^1$ + 0 * $2^0$ |
+|  7  |    7    |  0111  | 0 * $2^3$ + 1 * $2^2$ + 1 * $2^1$ + 1 * $2^0$ |
+|  8  |    8    |  1000  | 1 * $2^3$ + 0 * $2^2$ + 0 * $2^1$ + 0 * $2^0$ |
+|  9  |    9    |  1001  | 1 * $2^3$ + 0 * $2^2$ + 0 * $2^1$ + 1 * $2^0$ |
+|  A  |   10    |  1010  | 1 * $2^3$ + 0 * $2^2$ + 1 * $2^1$ + 0 * $2^0$ |
+|  B  |   11    |  1011  | 1 * $2^3$ + 0 * $2^2$ + 1 * $2^1$ + 1 * $2^0$ |
+|  C  |   12    |  1100  | 1 * $2^3$ + 1 * $2^2$ + 0 * $2^1$ + 0 * $2^0$ |
+|  D  |   13    |  1101  | 1 * $2^3$ + 1 * $2^2$ + 0 * $2^1$ + 1 * $2^0$ |
+|  E  |   14    |  1110  | 1 * $2^3$ + 1 * $2^2$ + 1 * $2^1$ + 0 * $2^0$ |
+|  F  |   15    |  1111  | 1 * $2^3$ + 1 * $2^2$ + 1 * $2^1$ + 1 * $2^0$ |
+
+
+- [Google Spreadsheet demonstrating conversion process](https://docs.google.com/spreadsheets/d/16yW8yDfDTxBiH-PkIddm1Cg4kYE4k-56GLTa6xDD_WU/edit?usp=sharing)
+
+### 1.4 How are data represented? 
+
+| C data type | typical 32-bit | typical 64-bit | x86_64  |  
+| ----------- | -------------- | -------------- | ------- |  
+| char        | 1              | 1              | 1       |  
+| short       | 2              | 2              | 2       |  
+| int         | 4              | 4              | 4       |  
+| long        | 4              | 8              | 8       |  
+| float       | 4              | 4              | 4       |  
+| double      | 8              | 8              | 8       |  
+| pointer     | 4              | 8              | 8       |  
+
+## Bit-level operations in  C
+
+- Boolean algebra developed by George Boole in 19th century
+- Algebraic representation of logic: encode `True` as `1` and `False` as `0`. 
+- Operations: `AND` (`&amp;`), `OR` (`|`), `XOR` (`^`), `NOT` (`~`).
+
+| A | B | A&amp;B  | A\|B  | A^B | ~A |
+| - | - | ---- | ---- | --- | -- | 
+| 0 | 0 | 0    | 0    | 0   | 1  |
+| 0 | 1 | 0    | 1    | 1   | 1  |
+| 1 | 0 | 0    | 1    | 1   | 0  |
+| 1 | 1 | 1    | 1    | 0   | 0  |  
+
+- General Boolean algebra
+  - Operate on bit vectors
+  - Operation applied bitwise. 
+  - All properties of boolean algebra apply.  
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/03-data-representation/data_02-480.webp 480w,/assets/img/courses/csc231/03-data-representation/data_02-800.webp 800w,/assets/img/courses/csc231/03-data-representation/data_02-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc231/03-data-representation/data_02.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="bitwise boolean operations"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+- Operation and notation  
+  - Boolean operations: `&amp;`, `|`, `^`, `~`.
+  - Shift operations:
+    - Left Shift: 	x &lt;&lt; y
+      - Shift bit-vector x left y positions
+      - Throw away extra bits on left
+      - Fill with 0’s on right
+    - Right Shift: 	x &gt;y
+      - Shift bit-vector x right y positions
+      - Throw away extra bits on right
+      - Logical shift (for unsigned values)
+        - Fill with 0’s on left
+      - Arithmetic shift (for signed values)
+        - Replicate most significant bit on left
+    - Undefined Behavior
+      - Shift amount &lt; 0 or ≥ word size
+  - Apply to any "integral" data type: long, int, short, char, unsigned
+  - View arguments as bit vectors. 
+  - Arguments applied bit-wise. 
+  - Mathematical operations:
+    - Bit-wise with carry
+    - $0 + 0 = 0$
+    - $0 + 1 = 1$
+    - $1 + 0 = 1$
+    - $1 + 1 = 0$ and carry $1$ to the next bit operation 
+    (or add 1 to left of the most significant bit position)
+
+
+- Inside your `csc231`, create another directory called `03-data` and change 
+into this directory.
+- Create a file named `bitwise_demo.c` with the following contents:
+
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=bitwise_demo.c"&gt;&lt;/script&gt;
+
+- Compile and run `bitwise_demo.c`.
+- Confirm that the binary printouts match the corresponding decimal printouts and the expected bitwise operations. 
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="encoding-integers">Encoding integers</h2> <h3 id="31-mathematical-equation">3.1 Mathematical equation</h3> <ul> <li>Assumption: <ul> <li>$X$ is a decimal number</li> <li>$X$ can be represented using $w$ bits under the form $x_{w-1}x_{w-2}…x_{i}…x_{1}x_{0}$.</li> <li>$x_i$ is a binary value at bit position $i$ with $0\leq i \leq (w - 1)$</li> </ul> </li> <li>The mathematical equation governing the encoding from an unsigned value of $X$ into a sequence of binary values $x_{w-1}x_{w-2}…x_{i}…x_{1}x_{0}$ is:</li> </ul> <p>$X=\sum_{i=0}^{w-1}x_{i}*2^{i}$</p> <h3 id="32-what-about-negative-numbers">3.2 What about negative numbers?</h3> <ul> <li>Approaches: <ul> <li>Reserve first bit as sign bit</li> <li>One’s complement: The addition of a negative number and its corresponding positive value (<code class="language-plaintext highlighter-rouge">complement</code>) in an <code class="language-plaintext highlighter-rouge">N-bit</code> binary representation will result in a binary representation that has <code class="language-plaintext highlighter-rouge">N ones</code>. <ul> <li>For example: in a 3-bit representation, $2$ is represented as <code class="language-plaintext highlighter-rouge">010</code>, and $-2$ is represented as <code class="language-plaintext highlighter-rouge">101</code>. Then, $2+(-2)$ becomes $010+101=111$.</li> </ul> </li> <li>Two’s complement: The addition of a negative number and its corresponding positive value (‘complement<code class="language-plaintext highlighter-rouge">) in an </code>N-bit` binary representation will a binary representation of to $2^N$. <ul> <li>For example: in a 3-bit representation, $3$ is represented as <code class="language-plaintext highlighter-rouge">011</code> and $-3$ is represented as <code class="language-plaintext highlighter-rouge">101</code>. The sum of these two binary representations is <code class="language-plaintext highlighter-rouge">1000</code>, which is the binary representation of $2^3$.</li> </ul> </li> </ul> </li> <li>Two’s complement is preferred in modern computing design as it supports fundamental arithmetic operations of addition, subtraction, and multiplication of integer numbers as if these numbers were positive.</li> <li>The mathematical equation governing the encoding from a signed value of $X$ into a 2’s complement sequence of binary values $x_{w-1}x_{w-2}…x_{i}…x_{1}x_{0}$ is:</li> </ul> <p>$X=-x_{w-1} * 2^{w-1} + \sum_{i=0}^{w-2}x_{i}*2^{i}$</p> <ul> <li>For 2’s complement, most significant bit indicates sign. <ul> <li>0 for nonnegative</li> <li>1 for negative</li> </ul> </li> </ul> <table> <thead> <tr> <th>Unsigned</th> <th>Binary</th> <th>2’s complement</th> <th>1’s complement</th> </tr> </thead> <tbody> <tr> <td>0</td> <td>0000</td> <td>0</td> <td>0</td> </tr> <tr> <td>1</td> <td>0001</td> <td>1</td> <td>1</td> </tr> <tr> <td>2</td> <td>0010</td> <td>2</td> <td>2</td> </tr> <tr> <td>3</td> <td>0011</td> <td>3</td> <td>3</td> </tr> <tr> <td>4</td> <td>0100</td> <td>4</td> <td>4</td> </tr> <tr> <td>5</td> <td>0101</td> <td>5</td> <td>5</td> </tr> <tr> <td>6</td> <td>0110</td> <td>6</td> <td>6</td> </tr> <tr> <td>7</td> <td>0111</td> <td>7</td> <td>7</td> </tr> <tr> <td>8</td> <td>1000</td> <td>8</td> <td>-7</td> </tr> <tr> <td>9</td> <td>1001</td> <td>-7</td> <td>-6</td> </tr> <tr> <td>10</td> <td>1010</td> <td>-6</td> <td>-5</td> </tr> <tr> <td>11</td> <td>1011</td> <td>-5</td> <td>-4</td> </tr> <tr> <td>12</td> <td>1100</td> <td>-4</td> <td>-3</td> </tr> <tr> <td>13</td> <td>1101</td> <td>-3</td> <td>-2</td> </tr> <tr> <td>14</td> <td>1110</td> <td>-2</td> <td>-1</td> </tr> <tr> <td>15</td> <td>1111</td> <td>-1</td> <td>0</td> </tr> </tbody> </table> <ul> <li>C does not mandate using 2’s complement. <ul> <li>But, most machines do, and we will assume so.</li> </ul> </li> </ul> <table> <thead> <tr> <th> </th> <th>Decimal</th> <th>Hex</th> <th>Binary</th> </tr> </thead> <tbody> <tr> <td>short int x</td> <td>15213</td> <td>3B 6D</td> <td>00111011 01101101</td> </tr> <tr> <td>short int y</td> <td>-15213</td> <td>C4 93</td> <td>11000100 10010011</td> </tr> </tbody> </table> <ul> <li><strong>2’s complement representation depends on the number of bits.</strong></li> <li>Technical trick: A binary representation of the absolute value of negative 2 to the power of the number of bits minus the absolute value of the negative number.</li> <li>Simple example for 5-bit representation</li> </ul> <table> <thead> <tr> <th> </th> <th>-16</th> <th>8</th> <th>4</th> <th>2</th> <th>1</th> <th> </th> </tr> </thead> <tbody> <tr> <td>10</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>8 + 2 = 10</td> </tr> <tr> <td>-10</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>-16 + 4 + 2 = -10</td> </tr> </tbody> </table> <ul> <li>Simple example for 6-bit representation</li> </ul> <table> <thead> <tr> <th> </th> <th>-32</th> <th>16</th> <th>8</th> <th>4</th> <th>2</th> <th>1</th> <th> </th> </tr> </thead> <tbody> <tr> <td>10</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>8 + 2 = 10</td> </tr> <tr> <td>-10</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>-32 + 16 + 4 + 2 = -10</td> </tr> </tbody> </table> <ul> <li>Complex example</li> </ul> <table> <thead> <tr> <th> </th> <th>Decimal</th> <th>Hex</th> <th>Binary</th> </tr> </thead> <tbody> <tr> <td>short int x</td> <td>15213</td> <td>3B 6D</td> <td>00111011 01101101</td> </tr> <tr> <td>short int y</td> <td>-15213</td> <td>C4 93</td> <td>11000100 10010011</td> </tr> </tbody> </table> <table> <thead> <tr> <th>Weight</th> <th>15213</th> <th> </th> <th>-15213</th> <th> </th> </tr> </thead> <tbody> <tr> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> </tr> <tr> <td>2</td> <td>0</td> <td>0</td> <td>1</td> <td>2</td> </tr> <tr> <td>4</td> <td>1</td> <td>4</td> <td>0</td> <td>0</td> </tr> <tr> <td>8</td> <td>1</td> <td>8</td> <td>0</td> <td>0</td> </tr> <tr> <td>16</td> <td>0</td> <td>0</td> <td>1</td> <td>16</td> </tr> <tr> <td>32</td> <td>1</td> <td>32</td> <td>0</td> <td>0</td> </tr> <tr> <td>64</td> <td>1</td> <td>64</td> <td>0</td> <td>0</td> </tr> <tr> <td>128</td> <td>0</td> <td>0</td> <td>1</td> <td>128</td> </tr> <tr> <td>256</td> <td>1</td> <td>256</td> <td>0</td> <td>0</td> </tr> <tr> <td>512</td> <td>1</td> <td>512</td> <td>0</td> <td>0</td> </tr> <tr> <td>1024</td> <td>0</td> <td>0</td> <td>1</td> <td>1024</td> </tr> <tr> <td>2048</td> <td>1</td> <td>2048</td> <td>0</td> <td>0</td> </tr> <tr> <td>4096</td> <td>1</td> <td>4096</td> <td>0</td> <td>0</td> </tr> <tr> <td>8192</td> <td>1</td> <td>8192</td> <td>0</td> <td>0</td> </tr> <tr> <td>16384</td> <td>0</td> <td>0</td> <td>1</td> <td>16384</td> </tr> <tr> <td>-32768</td> <td>0</td> <td>0</td> <td>1</td> <td>-32768</td> </tr> </tbody> <tbody> <tr> <td>Sum</td> <td> </td> <td>15213</td> <td> </td> <td>-15213</td> </tr> </tbody> </table> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre></td> <td class="rouge-code"><pre>
+### 3.3 Numeric ranges
+
+- Unsigned values for `w-bit` word
+  - UMin = 0
+  - UMax = $2^{w} - 1$
+- 2's complement values for `w-bit` word
+  - TMin = $-2^{w-1}$
+  - TMax = $2^{w-1} - 1$
+  - -1: 111..1
+
+- Values for different word sizes:
+
+|      | 8 (1 byte)    | 16 (2 bytes)      | 32 (4 bytes)             | 64 (8 bytes)                         |
+| ---- | ---- | ------- | -------------- | -------------------------- |
+| UMax | 255  | 65,535  | 4,294,967,295  | 18,446,744,073,709,551,615 |
+| TMax | 127  | 32,767  | 2,147,483,647  | 9,223,372,036,854,775,807  |
+| TMin | -128 | -32,768 | -2,147,483,648 | -9,223,372,036,854,775,808 | 
+
+- Observations
+  - abs(TMin) = TMax + 1
+    - Asymetric range
+  - UMax = 2 * TMax + 1
+
+ - C programming
+   - `#include &lt;limits.h&gt;`
+   - Declares constants: `ULONG_MAX`, `LONG_MAX`, `LONG_MIN`
+   - Platform specific
+
+
+
+- Write a C program called `numeric_ranges.c` that prints out the 
+value of `ULONG_MAX`, `LONG_MAX`, `LONG_MIN`. Also answer the following 
+question: If we multiply `LONG_MIN` by -1, what do we get?
+- Note: You need to search for the correct format string specifiers. 
+
+:::{dropdown} Solution
+`-p` allows the creation of all directories
+on the specified path, regardless whether any directory on 
+that path exists. 
+
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=numeric_ranges.c"&gt;&lt;/script&gt;
+&gt;
+:::
+ 
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="conversions-casting">Conversions (casting)</h2> <ul> <li>C allows casting between different numeric data types.</li> <li>What should be the effect/impact?</li> <li>Notations: <ul> <li>B2T: Binary to 2’s complement</li> <li>B2U: Binary to unsigned</li> <li>U2B: Unsigned to binary</li> <li>U2T: Unsigned to 2’s complement</li> <li>T2B: 2’s complement to binary</li> <li>T2U: 2’s complement to unsigned</li> </ul> </li> </ul> <p>:::{image} fig/03-data-representation/data_04.png :alt: 2’s complement to unsigned :class: bg-primary mb-1 :height: 200px :align: center :::</p> <ul> <li>$T2U_{w}(x) = x + 2^{w} \ if \ x &lt; 0$</li> <li>$T2U_{w}(x) = x \ if \ x \geq 0$</li> </ul> <p>:::{image} fig/03-data-representation/data_05.png :alt: unsigned to 2’s :class: bg-primary mb-1 :height: 200px :align: center :::</p> <ul> <li>$U2T_{w}(x) = x - 2^{w} \ if x &gt; TMax_{w}$</li> <li> <p>$U2T_{w}(x) = x \ if \ x \leq TMax_{w}$</p> </li> <li>Summary <ul> <li>Bit pattern is maintained but reinterpreted</li> <li>Can have unexpected effects: adding or subtracting 2<sup>w</sup> </li> <li>When expressions contain both signed and unsigned int values, int values will be casted to unsigned.</li> </ul> </li> <li>Create a file named <code class="language-plaintext highlighter-rouge">casting.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=casting.c"></script> <ul> <li>Compile and run <code class="language-plaintext highlighter-rouge">casting.c</code>.</li> <li> <p>Confirm that converted values are correct.</p> </li> <li>What is wrong with the following program?</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=for_loop.c"></script> <ul> <li>How can this program be corrected?</li> </ul> <p>:::{dropdown} Solution</p> <ul> <li>Change the range to 11-1</li> <li> <p>Why don’t we change the type of i? that path exists. :::</p> </li> <li>Expanding (e.g., short int to int) <ul> <li>Unsigned: zeros added</li> <li>Signed: sign extension</li> <li>Both yield expected result</li> </ul> </li> </ul> <p>:::{image} fig/03-data-representation/data_06.png :alt: expanding :class: bg-primary mb-1 :height: 200px :align: center :::</p> <ul> <li>Truncating (e.g., unsigned to unsigned short) <ul> <li>Unsigned/signed: bits are truncated</li> <li>Result reinterpreted</li> <li>Unsigned: mod operation</li> <li>Signed: similar to mod</li> <li>For small (in magnitude) numbers yields expected behavior</li> </ul> </li> </ul> <p>:::{image} fig/03-data-representation/data_07.png :alt: truncating :class: bg-primary mb-1 :height: 200px :align: center :::</p> <iframe width="560" height="315" src="https://www.youtube.com/embed/m7bv_YcZzn0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> <ul> <li> <a href="https://en.wikipedia.org/wiki/Thule_Site_J" rel="external nofollow noopener" target="_blank">Thule Site J</a>: USAF radar station for missile warning and spacecraft tracking.</li> <li>“There are many examples of errors arising from incorrect or incomplete specifications. One such example is a false alert in the early days of the nuclear age, when on October 5, 1960, the warning system at NORAD indicated that the United States was under massive attack by Soviet missiles with a certainty of 99.9 percent. It turned out that the Ballistic Missile Early Warning System (BMEWS) radar in Thule, Greenland, had spotted the rising moon. Nobody had thought about the moon when specifying how the system should act.” (Computer System Reliability and Nuclear War, CACM 1987).</li> <li>Moon’s large size: 1000s of objects reported.</li> <li>Moon’s distance: .25 million miles <ul> <li>Thule’s BMEWS max distance: 3000 miles.</li> <li>Truncated distance to the moon: <code class="language-plaintext highlighter-rouge">% sizeof(distance)</code> = 2200 miles.</li> </ul> </li> <li>Remember assignment 1: The computer does not “see”, it only interprets. <ul> <li> <strong>Thousands of objects on the sky within missile detection range!</strong>.</li> </ul> </li> <li>Human control: <ul> <li>Kruschev was in New York on October 5, 1960.</li> <li>Someone at Thule said, “why not go check outside?”</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+</pre></td> <td class="rouge-code"><pre>
+## Addition, multiplication, and negation (of integers)
+
+
+- Mathematical operations:
+  - Bit-wise with carry
+  - $0 + 0 = 0$
+  - $0 + 1 = 1$
+  - $1 + 0 = 1$
+  - $1 + 1 = 0$ and carry $1$ to the next bit operation (or add 1 to left of the most significant bit position)
+- This works for both unsigned and 2's complement notation
+- Example 1: 4-bit unsigned $2+6=8$
+
+$$
+\ 0010 \\
++\ 0110 \\
+\hline
+\ 1000
+$$  
+
+- Example 2: 4-bit unsigned $11+12=23$
+
+$$
+\ 1011 \\
++\ 1100 \\
+\hline
+\ 10111
+$$
+
+- Example 3: 4-bit signed $5-7=5+(-7)=(-2)$
+  - Positive to negative conversion in 2's complement: flipped bit and add 1. 
+  - $7$: $0111$
+  - $-7$: $1000 + 1=1001$
+
+$$
+\ 0101 \\
++\ 1001 \\
+\hline
+\ 1110
+$$
+
+$1110=(-1)*(1)*(8)+(1)*(4)+(1)*(2)+(0)*1)=(-8)+4+2=(-2)$
+
+
+- Given `w` bits operands
+ - True sum can have `w + 1` bits (carry bit). 
+ - Carry bit is discarded. 
+- Implementation:
+ - s = (u + v) mod 2&lt;sup&gt;w&lt;/sup&gt;
+
+
+
+- Create a file named `unsigned_addition.c` with the following contents:
+
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=unsigned_addition.c"&gt;&lt;/script&gt;
+
+- Compile and run `unsigned_addition.c`.
+- Confirm that calculated values are correct. 
+
+
+
+- Almost similar bit-level behavior as unsigned addition
+  - True sum of `w`-bit operands will have `w+1`-bit, but
+  - Carry bit is discarded. 
+  - Remainding bits are treated as 2's complement integers. 
+-  Overflow behavior is different
+  - $TAdd_{w}(u, v) = u + v + 2^{w}$ if $u + v &lt; TMin_{w}$ (**Negative Overflow**)
+  - $TAdd_{w}(u, v) = u + v$ if $TMin_{w} \leq u + v \leq TMax_{w}$
+  - $TAdd_{w}(u, v) = u + v - 2^{w}$ if $u + v TMax_{w}$ (**Positive Overflow**)
+
+
+
+- Create a file named `signed_addition.c` with the following contents:
+
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=signed_addition.c"&gt;&lt;/script&gt;
+
+- Compile and run `signed_addition.c`.
+- Confirm that calculated values are correct. 
+
+
+
+- Compute product of `w`-bit numbers x and y. 
+- Exact results can be bigger than `w` bits. 
+  - Unsigned: up to `2w` bits: $0 \leq x * y \leq (2^{w} - 1)^{2}$
+  - 2's complement (negative): up to `2w - 1` bits: $x * y \geq (-2)^{2w-2} + 2^{2w-1}$
+  - 2's complement (positive): up to `2w` bits: $x * y \leq 2^{2w-2}$
+- To maintain exact results:
+  - Need to keep expanding word size with each product computed. 
+  - Is done by software if needed ([arbitrary precision arithmetic packages](https://en.wikipedia.org/wiki/List_of_arbitrary-precision_arithmetic_software)).
+- **Trust your compiler**: Modern CPUs and OSes will most likely know to select the optimal method
+to multiply. 
+
+
+
+- Power-of-2 multiply with left shift
+  - $u &lt;&lt; k$ gives $u * 2^{k}$
+  - True product has `w + k` bits: discard `k` bits. 
+- Unsigned power-of-2 divide with right shift
+  - $u &gt;&gt; k$ gives $floor(u / 2^{k})$
+  - Use logical shift.
+- Signed power-of-2 divide with shift
+  - x &gt; 0: $x &gt;&gt; k$ gives $floor(u / 2^{k})$
+  - x &lt; 0: $(x + (1 &lt;&lt; k) - 1) &gt;&gt; k$ gives ceiling $u / 2^{k}$
+  - C statement: `(x &lt; 0 ? x + (1 &lt;&lt; k) - 1: x) &gt;k`
+
+
+
+- Negate through complement and increment:
+  - `~x + 1 == -x`
+
+
+
+- Implement a C program called `negation.c` that implements and validates
+the equation in slide 24. The program should take in a command line argument
+that takes in a number of type `short` to be negated. 
+- What happens if you try to negate `-32768`?
+
+:::{dropdown} Solution
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=negation.c"&gt;&lt;/script&gt;
+:::
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="byte-oriented-memory-organization">Byte-oriented memory organization</h2> <ul> <li>Programs refer to data by address <ul> <li>Conceptually, envision it as a very large array of bytes <ul> <li>In reality, it’s not, but can think of it that way</li> </ul> </li> <li>An address is like an index into that array <ul> <li>and, a pointer variable stores an address</li> </ul> </li> </ul> </li> <li>Note: system provides private address spaces to each “process” <ul> <li>Think of a process as a program being executed</li> <li>So, a program can clobber its own data, but not that of others</li> </ul> </li> <li>Any given computer has a “Word Size”</li> <li>`word size”: Nominal size of integer-valued data and of addresses</li> <li>Until recently, most machines used 32 bits (4 bytes) as word size <ul> <li>Limits addresses to 4GB (232 bytes)</li> </ul> </li> <li>Increasingly, machines have 64-bit word size <ul> <li>Potentially, could have 18 EB (exabytes) of addressable memory</li> <li>That’s 18.4 X 1018</li> </ul> </li> <li>Machines still support multiple data formats <ul> <li>Fractions or multiples of word size</li> <li>Always integral number of bytes</li> </ul> </li> <li>Addresses specific byte locations <ul> <li>Address of first byte in word.</li> <li>Address of successive words differ by 4 (32-bit) or 8 (64-bit).</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/03-data-representation/data_08-480.webp 480w,/assets/img/courses/csc231/03-data-representation/data_08-800.webp 800w,/assets/img/courses/csc231/03-data-representation/data_08-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/03-data-representation/data_08.png" width="50%" height="auto" alt="word-oriented memory organization" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Machine-dependent</li> <li>Big Endian: Sun (Oracle SPARC), PPC Mac, Internet (network data transfer) <ul> <li>Least significant byte has the highest address.</li> </ul> </li> <li>Little Endian: x86, ARM processors running Android, iOS, and Linux <ul> <li>Least significant byte has lowest address.</li> </ul> </li> <li>Example <ul> <li>Variable x has 4-byte value of 0x01234567</li> <li>Address given by <code class="language-plaintext highlighter-rouge">&amp;x</code> is 0x100</li> </ul> </li> </ul> <p>:::{image} fig/03-data-representation/data_09.png :alt: byte ordering example :class: bg-primary mb-1 :height: 100px :align: center :::</p> <ul> <li>Make sure that you are inside <code class="language-plaintext highlighter-rouge">03-data</code> directory.</li> <li>Create a file named <code class="language-plaintext highlighter-rouge">byte_ordering.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=byte_ordering.c"></script> <ul> <li>Compile and run <code class="language-plaintext highlighter-rouge">byte_ordering.c</code>.</li> <li>Confirm that calculated values are correct.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+</pre></td> <td class="rouge-code"><pre>
+## Fractional binary numbers (float and double)
+
+
+- What is 1011.101&lt;sub&gt;2&lt;/sub&gt;?
+  - 8 + 0 + 2 + 1 + 1/2 + 0 + 1/4
+- Can only exactly represent numbers of the form x/2&lt;sup&gt;k&lt;/sup&gt;
+- Limited range of numbers within the `w`-bit word size. 
+
+
+
+- [IEEE Standard 754](https://standards.ieee.org/standard/754-2019.html)
+  - Established in 1985 as uniform standard for floating point arithmetic
+  - Supported by all major CPUs
+  - Some CPUs don’t implement IEEE 754 in full, for example, early GPUs, Cell BE processor
+- Driven by numerical concerns
+  - Nice standards for rounding, overflow, underflow
+  - Hard to make fast in hardware (Numerical analysts predominated over hardware 
+designers in defining standard).
+
+
+
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/5tJPXYA0Nec" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+
+- Ariane 5 explordes on maiden voyage: $500 million dollars lost. 
+  - [64-bit floating point number assigned to 16-bit integer](http://sunnyday.mit.edu/nasa-class/Ariane5-report.html)
+  - Cause rocket to get incorrect value of horizontal velocity and crash. 
+
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/_Dbd3z8t9qc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+
+- Patriot Missle defense system misses Scud: 28 dead
+  - [Velocity is a real number that can be expressed as a whole number and a decimal 
+  (e.g., 3750.2563...miles per hour). Time is kept continuously by the system’s internal clock 
+  in tenths of seconds but is expressed as an integer or whole number (e.g., 32,33, 34...). 
+  The longer the system has been running, the larger the number representing time. To predict 
+  where the Scud will next appear, both time and velocity must be expressed as real numbers. 
+  Because of the way the Patriot computer performs its calculations and the fact that its 
+  registers are only 24 bits long, the conversion of time from an integer to a real number 
+  cannot be any more precise than 24 bits. This conversion results in a loss of precision 
+  causing a less accurate time calculation. The effect of this inaccuracy on the range gate’s 
+  calculation is directly proportional to the target’s velocity and the length of time 
+  the system has been running. Consequently, performing the conversion after the Patriot has 
+  been running continuously for extended periods causes the range gate to shift away from 
+  the center of the target, making it less likely that the target, in this case a Scud, 
+  will be successfully intercepted.](https://www.gao.gov/assets/220/215614.pdf)
+
+
+
+- Numerical form: (-1)&lt;sup&gt;s&lt;/sup&gt;M2&lt;sup&gt;E&lt;/sup&gt;
+  - Sign bit `s` determins whether the number is negative or positive. 
+  - Significant `M` normalizes a fractional value in range [1.0, 2.0).
+  - Exponent `E` weights value by power of two. 
+- Encoding
+  - Most significant bit is sign bit `s`. 
+  - `exp` field encodes `E` (but is not equal to `E`)
+  - `frac` field encodes `M` (but is not equalt to `M`)
+
+:::{image} fig/03-data-representation/data_10.png
+:alt: floating encoding
+:class: bg-primary mb-1
+:height: 100px
+:align: center
+:::
+
+- Single precision: 32 bits
+
+:::{image} fig/03-data-representation/data_11.png
+:alt: 32-bit encoding
+:class: bg-primary mb-1
+:height: 100px
+:align: center
+:::
+
+- Double precision: 64 bits
+
+:::{image} fig/03-data-representation/data_12.png
+:alt: 64-bit encoding
+:class: bg-primary mb-1
+:height: 100px
+:align: center
+:::
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Depends on the <code class="language-plaintext highlighter-rouge">exp</code> field (<code class="language-plaintext highlighter-rouge">E</code>).</li> <li>Denormalized: <code class="language-plaintext highlighter-rouge">exp</code> contains all 0s.</li> <li>Special: <code class="language-plaintext highlighter-rouge">exp</code> contains all 1s.</li> <li> <p>Normalized: <code class="language-plaintext highlighter-rouge">exp</code> contains a mix of 0s and 1s.</p> </li> <li>When: exp != 000…0 and exp != 111…1</li> <li>Exponent coded as a biased value: E = exp – Bias <ul> <li>exp: unsigned value of <code class="language-plaintext highlighter-rouge">exp</code> field</li> <li>$Bias = 2^{k-1} - 1$, where <code class="language-plaintext highlighter-rouge">k</code> is number of exponent bits <ul> <li>Single precision: 127 (exp: 1…254, E: -126…127)</li> <li>Double precision: 1023 (exp: 1…2046, E: -1022…1023)</li> </ul> </li> </ul> </li> <li>Significand coded with implied leading 1: M = 1.xxx…x<sub>2</sub> <ul> <li>xxx…x: bits of <code class="language-plaintext highlighter-rouge">frac</code> field</li> <li>Minimum when frac=000…0 (M = 1.0)</li> <li>Maximum when frac=111…1 (M = 2.0 – ε)</li> <li>Get extra leading bit for “free” (hence the range: <code class="language-plaintext highlighter-rouge">[1.0, 2.0)</code>)</li> </ul> </li> <li>Value: float F = 15213.0; <ul> <li>15213<sub>10</sub>= 11101101101101<sub>2</sub>= 1.1101101101101<sub>2</sub>* 2<sup>13</sup> </li> </ul> </li> <li>Significand: <ul> <li>M = 1.1101101101101<sub>2</sub> </li> <li> <code class="language-plaintext highlighter-rouge">frac</code> = 11011011011010000000000<sub>2</sub> </li> </ul> </li> <li>Exponent: <ul> <li>E = 13</li> <li>Bias = 127</li> <li> <code class="language-plaintext highlighter-rouge">exp</code> = 140 = 10001100<sub>2</sub> </li> </ul> </li> <li> <table> <tbody> <tr> <td>Result: <code class="language-plaintext highlighter-rouge">0</code> </td> <td><code class="language-plaintext highlighter-rouge">10001100</code></td> <td><code class="language-plaintext highlighter-rouge">11011011011010000000000</code></td> </tr> </tbody> </table> </li> <li>Make sure that you are inside <code class="language-plaintext highlighter-rouge">03-data</code> directory.</li> <li>Create a file named <code class="language-plaintext highlighter-rouge">show_fp.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=show_fp.c"></script> <ul> <li>Compile and run <code class="language-plaintext highlighter-rouge">show_fp.c</code>.</li> <li> <p>Confirm that calculated values in the previous example are correct.</p> </li> <li>Condition: exp = 000…0</li> <li>Exponent value: E = 1 – Bias</li> <li>Significand coded with implied leading 0: M = 0.xxx…x<sub>2</sub> <ul> <li>xxx…x: bits of frac</li> </ul> </li> <li>Cases <ul> <li>exp = 000…0, frac = 000…0 <ul> <li>Represents zero value</li> <li>Note distinct values: +0 and –0</li> </ul> </li> <li>exp = 000…0, frac ≠ 000…0 <ul> <li>Numbers closest to 0.0</li> <li>Equispaced</li> </ul> </li> </ul> </li> <li>Condition: exp = 111…1</li> <li>Case: exp = 111…1, frac = 000…0 <ul> <li>Represents value infinity</li> <li>Operation that overflows</li> <li>Both positive and negative</li> </ul> </li> <li>Case: exp = 111…1, frac != 000…0 <ul> <li>Not-a-Number (NaN)</li> <li>Represents case when no numeric value can be determined</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+</pre></td> <td class="rouge-code"><pre>
+## Floating operations
+
+
+- Compute exact result. 
+- Make it fit into desired precision. 
+  - Possible overflow if exponent too large
+  - Possible round to fit into `frac`
+
+- Rounding modes
+
+|                        | 1.40 | 1.60 | 1.50 | 2.50 | -1.50 |
+| ---------------------- | ---- | ---- | ---- | ---- | ----- |
+| Towards zero           | 1    | 1    | 1    | 2    | -1    |
+| Round down             | 1    | 1    | 1    | 2    | -2    |
+| Round up               | 2    | 1    | 1    | 3    | -1    |
+| Nearest even (default) | 1    | 2    | 2    | 2    | -2    |
+
+- Nearest even
+  - Hard to get any other mode without dropping into assembly. 
+  - C99 has support for rounding mode management
+- All others are statistically based
+  - Sum of set of positive numbers will consistently be over- or under-estimated. 
+
+
+
+- $(-1)^{s_1}M_{1}2^{E_1} * (-1)^{s_2}M_{2}2^{E_2}$  
+- Exact result: $(-1)^{s}M2^{E}$
+  - $s = s_{1} XOR s_{2}$
+  - $M = M_{1}*M_{2}$
+  - $E = E_{1}+E_{2}$
+- Correction
+  - If M &gt;= 2, shift M right, increment E. 
+  - If E out of range, overflow. 
+  - Round M to fit `frac` precision
+- Implementation: Biggest chore is multiplying significands.  
+
+
+
+- $(-1)^{s_1}M_{1}2^{E_1} + (-1)^{s_2}M_{2}2^{E_2}$ 
+- Exact result: $(-1)^{s}M2^E$1
+  - Sign s, significand M: result of signed align and add
+  - E = E&lt;sub&gt;1&lt;/sub&gt;
+- Correction
+  - If M &gt;= 2, shift M right, increment E. 
+  - If M &lt; 1, shift M left k positions, decrement E by k. 
+  - Overflow if E out of range
+  - Round M to fit `frac` precision
+- Implementation: Biggest chore is multiplying significands.  
+
+
+
+- Compare to those of [Abelian group](https://en.wikipedia.org/wiki/Abelian_group) 
+(a group in which the result of applying the group operation to two group elements 
+does not depend on the order in which they are written):
+  - Closed under addition? **Yes** (but may generate infinity or NaN)
+  - Communicative? **Yes**
+  - Associative? **No**
+    - Overflow and inexactness of rounding
+    - (3.14+1e10)-1e10 = 0, 3.14+(1e10-1e10) = 3.14
+  - 0 is additive identity? **Yes**
+  - Every element has additive inverse? **Almost**
+    - Except for infinities and NaN
+- Monotonicity?
+  - **Almost**
+  - Except for infinities and NaN
+
+
+
+- Compare to those of [Abelian group](https://en.wikipedia.org/wiki/Abelian_group) 
+(a group in which the result of applying the group operation to two group elements 
+does not depend on the order in which they are written):
+  - Closed under addition? **Yes** (but may generate infinity or NaN)
+  - Communicative? **Yes**
+  - Associative? **No**
+    - Overflow and inexactness of rounding
+    - (1e20 * 1e20) * 1e-20= inf, 1e20 * (1e20 * 1e-20)= 1e20
+  - 1 is multiplicative identity? **Yes**
+  - Multiplication distributes over addition? **No**
+    - Overflow and inexactness of rounding
+    - 1e20 * (1e20-1e20)= 0.0,  1e20 * 1e20 – 1e20 * 1e20 = NaN
+- Monotonicity?
+  - **Almost**
+  - Except for infinities and NaN
+
+
+
+- C guarantees two levels
+  - `float`: single precision
+  - `double`: double precision
+- Conversion/casting
+  - Casting between int, float, and double changes bit representation
+  - double/float to int
+    - Truncates fractional part
+    - Like rounding toward zero
+    - Not defined when out of range or NaN: Generally sets to TMin
+  - int to double
+    - Exact conversion, as long as int has ≤ 53 bit word size
+  - int to float
+    - Will round according to rounding mode
+
+</pre></td> </tr></tbody></table></code></pre></div></div> </body></html>

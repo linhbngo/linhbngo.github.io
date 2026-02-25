@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="spritekit-scene-editor">SpriteKit: Scene Editor</h1> <h2 id="preparation">Preparation</h2> <details class="details details--default" data-variant="default"><summary>Download assets</summary> <ul> <li>Download and unzip the following files <ul> <li><a href="codes/10-sprite-editor/Pokemon2D_Assets_1.zip">Pokemon2D Assets 1</a></li> <li><a href="codes/10-sprite-editor/Pokemon2D_Assets_2.zip">Pokemon2D Assets 2</a></li> </ul> </li> <li>Unzip</li> <li>We will drag the assets into XCode as needed.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Create Health Component</summary> <ul> <li>Create a new file called <code class="language-plaintext highlighter-rouge">HPComponent.swift</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">SpriteKit</span>
+<span class="kd">import</span> <span class="kt">GameplayKit</span>
+
+<span class="kd">class</span> <span class="kt">HPComponent</span><span class="p">:</span> <span class="kt">GKComponent</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">didAddToEntity</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">node</span> <span class="o">=</span> <span class="n">entity</span><span class="p">?</span><span class="o">.</span><span class="nf">component</span><span class="p">(</span><span class="nv">ofType</span><span class="p">:</span> <span class="kt">GKSKNodeComponent</span><span class="o">.</span><span class="k">self</span><span class="p">)?</span><span class="o">.</span><span class="n">node</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">HPMeter</span> <span class="o">=</span> <span class="kt">SKReferenceNode</span><span class="p">(</span><span class="nv">fileNamed</span><span class="p">:</span> <span class="s">"HealthMeter"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">HPMeter</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="kt">CGPoint</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span><span class="mi">50</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="nf">addChild</span><span class="p">(</span><span class="kt">HPMeter</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">willRemoveFromEntity</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">deltaTime</span> <span class="nv">seconds</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="k">override</span> <span class="kd">class</span> <span class="k">var</span> <span class="nv">supportsSecureCoding</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>In GameScene.sks, select the player node. Click the button to show the inspectors and then switch to the Component Inspector.</li> <li>Click the <code class="language-plaintext highlighter-rouge">+</code> button to reveal the list of available components. Add the HealthComponent</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/11-entity-component/health1-480.webp 480w,/assets/img/courses/csc496/11-entity-component/health1-800.webp 800w,/assets/img/courses/csc496/11-entity-component/health1-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/11-entity-component/health1.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Test the build. You should see the health bar attached to your player and move with the player.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/11-entity-component/health2-480.webp 480w,/assets/img/courses/csc496/11-entity-component/health2-800.webp 800w,/assets/img/courses/csc496/11-entity-component/health2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/11-entity-component/health2.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> <td class="rouge-code"><pre><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">SpriteKit</span>
+
+<span class="kd">enum</span> <span class="kt">Direction</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">stop</span>
+    <span class="k">case</span> <span class="k">left</span>
+    <span class="k">case</span> <span class="k">right</span>
+    <span class="k">case</span> <span class="n">up</span>
+    <span class="k">case</span> <span class="n">down</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">Player</span><span class="p">:</span> <span class="kt">SKSpriteNode</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">move</span><span class="p">(</span><span class="n">_</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt">Direction</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"player move: </span><span class="se">\(</span><span class="n">direction</span><span class="o">.</span><span class="n">rawValue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">stop</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Stop"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Assign Player node to Player class using Custom Class</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Test player movement</summary> <ul> <li>Modify this section of <code class="language-plaintext highlighter-rouge">GameScene.swift</code> </li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td> <td class="rouge-code"><pre><span class="o">...</span>
+<span class="kd">private</span> <span class="k">var</span> <span class="nv">lastUpdateTime</span> <span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kd">private</span> <span class="k">var</span> <span class="nv">player</span><span class="p">:</span> <span class="kt">Player</span><span class="p">?</span>
+
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">sceneDidLoad</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">lastUpdateTime</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">}</span>
+
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">didMove</span><span class="p">(</span><span class="n">to</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">SKView</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="nf">childNode</span><span class="p">(</span><span class="nv">withName</span><span class="p">:</span> <span class="s">"player"</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">Player</span>
+    <span class="n">player</span><span class="p">?</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">touchDown</span><span class="p">(</span><span class="n">atPoint</span> <span class="nv">pos</span> <span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"touch down"</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">nodeAtPoint</span> <span class="o">=</span> <span class="nf">atPoint</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">touchedNode</span> <span class="o">=</span> <span class="n">nodeAtPoint</span> <span class="k">as?</span> <span class="kt">SKSpriteNode</span><span class="p">{</span>
+        <span class="k">if</span> <span class="n">touchedNode</span><span class="o">.</span><span class="n">name</span><span class="p">?</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"controller_"</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span><span class="p">{</span>
+            <span class="k">let</span> <span class="nv">direction</span> <span class="o">=</span> <span class="n">touchedNode</span><span class="o">.</span><span class="n">name</span><span class="p">?</span><span class="o">.</span><span class="nf">replacingOccurrences</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"controller_"</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="s">""</span><span class="p">)</span>
+            <span class="n">player</span><span class="p">?</span><span class="o">.</span><span class="nf">move</span><span class="p">(</span><span class="kt">Direction</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="n">direction</span> <span class="p">??</span> <span class="s">"stop"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="o">...</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Run and test movement (based on the print statement)</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc496/10-sprite-editor/testMovement-480.webp 480w,/assets/img/courses/csc496/10-sprite-editor/testMovement-800.webp 800w,/assets/img/courses/csc496/10-sprite-editor/testMovement-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc496/10-sprite-editor/testMovement.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Modify functions <code class="language-plaintext highlighter-rouge">move</code> and <code class="language-plaintext highlighter-rouge">stop</code> inside class <code class="language-plaintext highlighter-rouge">Player</code> with the following contents.</li> </ul> <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> <td class="rouge-code"><pre><span class="kd">func</span> <span class="nf">move</span><span class="p">(</span><span class="n">_</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt">Direction</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"player move: </span><span class="se">\(</span><span class="n">direction</span><span class="o">.</span><span class="n">rawValue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">switch</span> <span class="n">direction</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">up</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">down</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="o">-</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">left</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">right</span><span class="p">:</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">stop</span><span class="p">:</span>
+        <span class="nf">stop</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">stop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Stop"</span><span class="p">)</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">physicsBody</span><span class="p">?</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="kt">CGVector</span><span class="p">(</span><span class="nv">dx</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">dy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Rerun the simulation and observe the movements of the player node.</li> </ul> </details> <h2 id="hands-on-exercise">Hands-on Exercise</h2> <details class="details details--default" data-variant="default"><summary>Preparation</summary> <ul> <li>Unzip <code class="language-plaintext highlighter-rouge">Pokemon2D_Assets_2.zip</code> and drag the <strong>files</strong> into <code class="language-plaintext highlighter-rouge">Assets</code> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Tasks</summary> <ul> <li>Add a new node, <code class="language-plaintext highlighter-rouge">tree</code>, to the game (from the assets).</li> <li>Use multiple tree nodes to create a maze that the player cannot pass through. <ul> <li>Hint: Set the Category Mask and Collision Mask for both the player and the tree node.</li> </ul> </li> <li> <p>Add a Pokémon node (node name: <code class="language-plaintext highlighter-rouge">pokemon</code>), and when the player hits the Pokémon, it will print “Player hit the Pokémon” in the console.</p> </li> <li>You will need to set up <code class="language-plaintext highlighter-rouge">contactDelegate</code> and <code class="language-plaintext highlighter-rouge">SKPhysicsContactDelegate</code> </li> </ul> </details> </body></html>

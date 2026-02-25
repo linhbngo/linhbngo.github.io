@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="introduction-to-cryptography---secret-key-encryption">Introduction to Cryptography - Secret-Key Encryption</h1> <h2 id="introduction">Introduction</h2> <ul> <li>Encryption is the process of encoding a message in such a way that only authorized parties can read the content of the original message</li> <li>History of encryption dates back to 1900 BC</li> <li>Two types of encryption <ul> <li>Secret-key encryption : same key for encryption and decryption</li> <li>Pubic-key encryption : different keys for encryption and decryption</li> </ul> </li> <li>We focus on secret-key encryption in this chapter</li> </ul> <h2 id="substitution-cipher">Substitution Cipher</h2> <ul> <li>Encryption is done by replacing <code class="language-plaintext highlighter-rouge">units</code> of plaintext with ciphertext, according to a fixed system.</li> <li> <code class="language-plaintext highlighter-rouge">Units</code> may be single letters, pairs of letters, triplets of letters, mixtures of the above, and so forth.</li> <li>Decryption simply performs the inverse substitution.</li> <li>Two typical substitution ciphers: <ul> <li>Monoalphabetic - fixed substitution over the entire message</li> <li>Polyalphabetic - a number of substitutions at different positions in the message</li> </ul> </li> </ul> <h3 id="21-monoalphabetic-substitution-cipher">2.1. Monoalphabetic Substitution Cipher</h3> <ul> <li>Encryption and decryption</li> <li>Setup environment</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>wget https://seedsecuritylabs.org/Labs_20.04/Files/Crypto_Encryption/Labsetup.zip
+unzip Lapsetup
+<span class="nb">cd </span>Lapsetup
+docker-compose up <span class="nt">-d</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Check the <code class="language-plaintext highlighter-rouge">tr</code> command</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>wget <span class="nt">--no-check-certificate</span> https://cs.wcupa.edu/lngo/data/enigma.txt
+<span class="nb">cat </span>enigma.txt
+<span class="nb">tr</span> <span class="o">[</span>:upper:] <span class="o">[</span>:lower:] &lt; enigma.txt <span class="o">&gt;</span> lowercase.txt
+<span class="nb">cat </span>lowercase.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Encryption and decryption process</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="nb">tr</span> <span class="s1">'a-z'</span> <span class="s1">'vgapnbrtmosicuxejhqyzflkdw'</span> &lt; enigma.txt <span class="o">&gt;</span> cipher.txt
+<span class="nb">cat </span>cipher.txt
+<span class="nb">tr</span> <span class="s1">'vgapnbrtmosicuxejhqyzflkdw'</span> <span class="s1">'a-z'</span> &lt; cipher.txt <span class="o">&gt;</span> plaintext.txt
+<span class="nb">cat </span>plaintext.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="22-breaking-monoalphabetic-substitution-cipher">2.2. Breaking Monoalphabetic Substitution Cipher</h3> <ul> <li>Frequency analysis is the study of the frequency of letters or groups of letters in a ciphertext. <ul> <li>Common letters : <code class="language-plaintext highlighter-rouge">T</code>, <code class="language-plaintext highlighter-rouge">A</code>, <code class="language-plaintext highlighter-rouge">E</code>, <code class="language-plaintext highlighter-rouge">I</code>, <code class="language-plaintext highlighter-rouge">O</code> </li> <li>Common 2-letter combinations (bigrams): <code class="language-plaintext highlighter-rouge">TH</code>, <code class="language-plaintext highlighter-rouge">HE</code>, <code class="language-plaintext highlighter-rouge">IN</code>, <code class="language-plaintext highlighter-rouge">ER</code> </li> <li>Common 3-letter combinations (trigrams): <code class="language-plaintext highlighter-rouge">THE</code>, <code class="language-plaintext highlighter-rouge">AND</code>, and <code class="language-plaintext highlighter-rouge">ING</code> </li> </ul> </li> <li>Perform frequency analysis on cipher text to guess frequency!</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/cryptography/frequency-480.webp 480w,/assets/img/courses/csc302/cryptography/frequency-800.webp 800w,/assets/img/courses/csc302/cryptography/frequency-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/cryptography/frequency.png" width="50%" height="auto" alt="Frequency analysis" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Create the following python script</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td> <td class="rouge-code"><pre><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="n">re</span>
+
+<span class="n">TOP_K</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">N_GRAM</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># generate all the n-grams for value n
+</span><span class="k">def</span> <span class="nf">ngrams</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="sa">r</span><span class="sh">'</span><span class="s">\s</span><span class="sh">'</span><span class="p">,</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">n</span><span class="p">]):</span>
+      <span class="k">yield</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">n</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">cipher.txt</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+  <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">read</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N_GRAM</span><span class="p">):</span>
+  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">-----------------------------------</span><span class="sh">"</span><span class="p">)</span>
+  <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">{}-ngram (top {}):</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">TOP_K</span><span class="p">))</span>
+  <span class="n">counts</span> <span class="o">=</span> <span class="nc">Counter</span><span class="p">(</span><span class="nf">ngrams</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+  <span class="n">sorted_counts</span> <span class="o">=</span> <span class="n">counts</span><span class="p">.</span><span class="nf">most_common</span><span class="p">(</span><span class="n">TOP_K</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">ngram</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">sorted_counts</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">{}: {}</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">ngram</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="23-frequency-analysis-results">2.3. Frequency Analysis results</h3> <ul> <li><a href="https://www3.nd.edu/~busiforc/handouts/cryptography/Letter%20Frequencies.html" rel="external nofollow noopener" target="_blank">English frequencies</a></li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>python3 freq.py
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="nb">tr </span>n E &lt; cipher.txt
+<span class="nb">tr </span>nt EH &lt; cipher.txt
+<span class="nb">tr </span>nty EHT &lt; cipher.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Continue guessing …</li> </ul> <h3 id="24-exercise">2.4. Exercise</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>wget <span class="nt">--no-check-certificate</span> https://www.cs.wcupa.edu/lngo/data/cipher_speech.txt
+<span class="nb">mv </span>cipher_speech.txt cipher.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Try to decode this text!</li> </ul> <h2 id="encryption-standard">Encryption Standard</h2> <h3 id="31-data-encryption-standard-des">3.1. Data Encryption Standard (DES)</h3> <ul> <li>DES is a block cipher - can only encrypt a block of data</li> <li>Block size for DES is 64 bits</li> <li>DES uses 56-bit keys although a 64-bit key is fed into the algorithm</li> <li>Theoretical attacks were identified. None was practical enough to cause major concerns.</li> <li>Triple DES can solve DES’s key size problem</li> </ul> <h3 id="32-advanced-encryption-standard-aes">3.2. Advanced Encryption Standard (AES)</h3> <ul> <li>AES is a block cipher</li> <li>128-bit block size.</li> <li>Three different key sizes: 128, 192, and 256 bits</li> </ul> <h2 id="encryption-modes">Encryption Modes</h2> <ul> <li> <p>Encryption mode or mode of operation refers to the many ways to make the input of an encryption algorithm different.</p> </li> <li> <p>Examples include:</p> <ul> <li>Electronic Codebook (ECB)</li> <li>Cipher Block Chaining (CBC)</li> <li>Propagating CBC (PCBC)</li> <li>Cipher Feedback (CFB)</li> <li>Output Feedback (OFB)</li> <li>Counter (CTR)</li> </ul> </li> </ul> <h3 id="41-electronic-codebook-ecb-mode">4.1. Electronic Codebook (ECB) Mode</h3> <ul> <li>Blocks are encrypted separatedly</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/cryptography/ecb-480.webp 480w,/assets/img/courses/csc302/cryptography/ecb-800.webp 800w,/assets/img/courses/csc302/cryptography/ecb-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/cryptography/ecb.png" width="50%" height="auto" alt="ECB" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="s2">"Hello Golden Rams!"</span> <span class="o">&gt;</span> plain.txt
+openssl enc <span class="nt">-aes-128-ecb</span> <span class="nt">-e</span> <span class="nt">-in</span> plain.txt <span class="nt">-out</span> cipher.txt <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF
+<span class="nb">cat </span>cipher.txt
+openssl enc <span class="nt">-aes-128-ecb</span> <span class="nt">-d</span> <span class="nt">-in</span> cipher.txt <span class="nt">-out</span> plain2.txt <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF
+<span class="nb">cat </span>plain2.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>We use the 128-bit (key size) AES algorithm <ul> <li>The -aes-128-ecb option specifies ECB mode</li> <li>The -e option indicates encryption</li> <li>The -d option indicate decryption</li> <li>The -K option is used to specify the encryption/decryption key</li> </ul> </li> <li>Naive and unsafe method</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/cryptography/encryption_modes-480.webp 480w,/assets/img/courses/csc302/cryptography/encryption_modes-800.webp 800w,/assets/img/courses/csc302/cryptography/encryption_modes-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/cryptography/encryption_modes.png" width="50%" height="auto" alt="Encryption modes" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <h3 id="42-cipher-block-chaining-cbc-mode">4.2. Cipher Block Chaining (CBC) Mode</h3> <ul> <li>The main purpose of <code class="language-plaintext highlighter-rouge">IV</code> is to ensure that even if two plaintexts are identical, their ciphertexts are still different, because different IVs will be used. <ul> <li>Decryption can be parallelized</li> <li>Encryption cannot be parallelized</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/cryptography/cbc-480.webp 480w,/assets/img/courses/csc302/cryptography/cbc-800.webp 800w,/assets/img/courses/csc302/cryptography/cbc-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/cryptography/cbc.png" width="50%" height="auto" alt="CBC" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>openssl enc <span class="nt">-aes-128-cbc</span> <span class="nt">-e</span> <span class="nt">-in</span> plain.txt <span class="nt">-out</span> cipher1.txt <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF <span class="nt">-iv</span> 000102030405060708090a0b0c0d0e0f
+openssl enc <span class="nt">-aes-128-ecb</span> <span class="nt">-e</span> <span class="nt">-in</span> plain.txt <span class="nt">-out</span> cipher2.txt <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF <span class="nt">-iv</span> 000102030405060708090a0b0c0d0e0e
+<span class="nb">cat </span>cipher1.txt
+<span class="nb">cat </span>cipher2.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>We use the 128-bit (key size) AES algorithm <ul> <li>The -aes-128-cbc option specifies CBC mode</li> <li>The -e option indicates encryption</li> <li>The -K option is used to specify the encryption/decryption key</li> <li>The -iv option is used to specify the initialization vector (IV)</li> </ul> </li> </ul> <h3 id="43-cipher-feedback-cfb-mode">4.3. Cipher Feedback (CFB) Mode</h3> <ul> <li>A block cipher is turned into a stream cipher.</li> <li>Ideal for encrypting real-time data.</li> <li>Padding not required for the last block.</li> <li>Decryption using the CFB mode can be parallelized, while encryption can only be conducted sequentially</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/cryptography/cfb-480.webp 480w,/assets/img/courses/csc302/cryptography/cfb-800.webp 800w,/assets/img/courses/csc302/cryptography/cfb-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/cryptography/cfb.png" width="50%" height="auto" alt="CFB" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>openssl enc <span class="nt">-aes-128-cbc</span> <span class="nt">-e</span> <span class="nt">-in</span> plain.txt <span class="nt">-out</span> cipher1.txt <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF <span class="nt">-iv</span> 000102030405060708090a0b0c0d0e0f
+openssl enc <span class="nt">-aes-128-cfb</span> <span class="nt">-e</span> <span class="nt">-in</span> plain.txt <span class="nt">-out</span> cipher2.txt <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF <span class="nt">-iv</span> 000102030405060708090a0b0c0d0e0f
+<span class="nb">cat </span>cipher1.txt
+<span class="nb">cat </span>cipher2.txt
+<span class="nb">ls</span> <span class="nt">-l</span> plain.txt cipher1.txt cipher2.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="44-output-feedback-ofb-mode">4.4. Output Feedback (OFB) Mode</h3> <ul> <li>Similar to CFB <ul> <li>Used as stream cipher</li> <li>Does not need padding</li> <li>Decryption can parallelized</li> </ul> </li> <li>Encryption in the OFB mode can be parallelized</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/cryptography/ofb-480.webp 480w,/assets/img/courses/csc302/cryptography/ofb-800.webp 800w,/assets/img/courses/csc302/cryptography/ofb-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/cryptography/ofb.png" width="50%" height="auto" alt="OFB" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <h3 id="45-counter-ctr-mode">4.5. Counter (CTR) Mode</h3> <ul> <li>It basically uses a counter to generate the key streams</li> <li>No key stream can be reused, hence the counter value for each block is prepended with a randomly generated value called nonce</li> <li>This nonce serves the same role as the IV does to the other encryption modes.</li> <li>Both encryption and decryption can be parallelized the key stream in the CTR mode can be calculated in parallel during the encryption</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/cryptography/ctr-480.webp 480w,/assets/img/courses/csc302/cryptography/ctr-800.webp 800w,/assets/img/courses/csc302/cryptography/ctr-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/cryptography/ctr.png" width="50%" height="auto" alt="CTR" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <h2 id="modes-for-authenticated-encryption">Modes for Authenticated Encryption</h2> <ul> <li>None of the Encryption modes discussed so far cannot be used to achieve message authentication</li> <li>A number of modes of operation have been designed to combine message authentication and encryption.</li> <li>Examples include <ul> <li>GCM (Galois/Counter Mode)</li> <li>CCM (Counter with CBC-MAC)</li> <li>OCB mode (Offset Codebook Mode)</li> </ul> </li> </ul> <h3 id="51-padding">5.1. Padding</h3> <ul> <li>Block cipher encryption modes divide plaintext into blocks and the size of each block should match the cipher’s block size.</li> <li>No guarantee that the size of the last block matches the cipher’s block size.</li> <li>Last block of the plaintext needs padding i.e. before encryption, extra data needs to be added to the last block of the plaintext, so its size equals to the cipher’s block size.</li> <li>Padding schemes need to clearly mark where the padding starts, so decryption can remove the padded data.</li> <li>Commonly used padding scheme is PKCS#5</li> </ul> <h3 id="52-initial-vector-and-common-mistakes">5.2. Initial Vector and Common Mistakes</h3> <ul> <li>Initial vectors have the following requirements: <ul> <li>IV is supposed to be stored or transmitted in plaintext</li> <li>IV should not repeat (uniqueness).</li> <li>IV should not be predictable.</li> </ul> </li> </ul> <h3 id="53-experiment">5.3. Experiment</h3> <ul> <li>Initial IV for Bob: <code class="language-plaintext highlighter-rouge">4ae71336e44bf9bf79d2752e234818a5</code> </li> <li>Let’s encrypt Bob’s vote</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"John Smith......"</span> <span class="o">&gt;</span> P1
+openssl enc <span class="nt">-aes-128-cbc</span> <span class="nt">-e</span> <span class="nt">-in</span> P1 <span class="nt">-out</span> C1 <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF <span class="nt">-iv</span> 4ae71336e44bf9bf79d2752e234818a5
+<span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"4ae71336e44bf9bf79d2752e234818a5"</span> | xxd <span class="nt">-r</span> <span class="nt">-p</span> <span class="o">&gt;</span> tmp_iv 
+<span class="nb">md5sum </span>tmp_iv
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>The next iv is <code class="language-plaintext highlighter-rouge">398d01fdf7934d1292c263d374778e1a</code></p> </li> <li> <p>Since there is a limited number of candidates, let’s assume Even guesses that Bob voted for Mr. Ram, she creates P1_guessed and XOR it with the first and second iv values, and finally constructs the name for a write-in candidate.</p> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"John Smith......"</span> <span class="o">&gt;</span> P1_guessed
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Create a python program called <code class="language-plaintext highlighter-rouge">xor.py</code> to do exclusive or</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre><span class="c1">#!/usr/bin/env python3
+</span><span class="kn">from</span> <span class="n">sys</span> <span class="kn">import</span> <span class="n">argv</span>
+<span class="n">script</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="n">argv</span>
+<span class="n">aa</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">.</span><span class="nf">fromhex</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+<span class="n">bb</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">.</span><span class="nf">fromhex</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+<span class="n">xord</span> <span class="o">=</span> <span class="nf">bytearray</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span> <span class="n">bb</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">xord</span><span class="p">.</span><span class="nf">hex</span><span class="p">())</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Convert the guessed text to hex <ul> <li>In my case, I have the result as <code class="language-plaintext highlighter-rouge">4a6f686e20536d6974682e2e2e2e2e2e</code>.</li> <li>The results might differ on individual machines.</li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>xxd <span class="nt">-p</span> P1_guessed
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>XOR the hex outcome with the initial iv value</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">chmod</span> +x xor.py
+./xor.py 4a6f686e20536d6974682e2e2e2e2e2e 4ae71336e44bf9bf79d2752e234818a5
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Take the result and XOR again with the second iv value</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>./xor.py 00887b58c41894d60dba5b000d66368b 398d01fdf7934d1292c263d374778e1a 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Conver the above result to binary and save to P2</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">echo</span> <span class="nt">-n</span> <span class="s2">"39057aa5338bd9c49f7838d37911b891"</span> | xxd <span class="nt">-r</span> <span class="nt">-p</span> <span class="o">&gt;</span> P2
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Eve gives her write-in candidate’s name (stored in P2) to the voting machine, which encrypts the name using second IV. The result is stored in C2. If C1 (Bob’s encrypted vote) == C2, then Eve knows for sure that Bob has voted for Mr. Ram!</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>openssl enc <span class="nt">-aes-128-cbc</span> <span class="nt">-e</span> <span class="nt">-in</span> P2 <span class="nt">-out</span> C2 <span class="nt">-K</span> 00112233445566778899AABBCCDDEEFF <span class="nt">-iv</span> 398d01fdf7934d1292c263d374778e1a
+xxd <span class="nt">-p</span> C1
+xxd <span class="nt">-p</span> C2
+</pre></td> </tr></tbody></table></code></pre></div></div> </body></html>

@@ -1,0 +1,33 @@
+Week,Date,Topic,Assessment
+1,08/26,Introduction,-
+-,-,Introduction to xv6,Lab 01
+2,09/02,Process and Process API,Quiz 01
+-,-,Process in xv6,-
+3,09/09,Limited Direct Execution,-
+-,-,-,Lab 02
+4,09/16,CPU Scheduling,-
+-,-,-,Lab 03
+5,09/23,Memory Virtualization,-
+]-,-,-,-
+6,09/30,Address Translation,-
+-,-,-,-
+7,10/07,Paging,-
+-,-,Midterm Review,-
+8,10/14,FALL BREAK,-
+-,-,Midterm Exam,-
+9,10/21,Concurrency,-
+-,-,-,-
+10,10/28,Lock and Condition Variables,-
+-,-,-,-
+11,11/04,Semaphores,-
+-,-,-,-
+12,11/11,Disk Scheduling,-
+-,-,-,-
+13,11/18,File Systems,-
+-,-,-,-
+14,11/25,-,-
+-,-,THANKSGIVING BREAK,-
+-,-,-,-
+15,12/02,Crash Consistency,-
+-,-,-,-
+16,12/09,Minix,-

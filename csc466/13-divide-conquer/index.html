@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"> <html><body> <h1 id="partitioning-divide-and-conquer">Partitioning: Divide and Conquer</h1> <details class="details details--default" data-variant="default"><summary>Final Exam</summary> <ul> <li>Final Exam: May 7, 1:00PM - 3:00PM</li> </ul> </details> <h2 id="overview">Overview</h2> <details class="details details--default" data-variant="default"><summary>Partitioning</summary> <p>Partitioning simply divides the problem into parts and then compute the parts and combine results.</p> <ul> <li>The basis of all parallel programming, in one form or another.</li> <li>Pleasantly parallel used partitioning without any interaction between the parts.</li> <li>Most partitioning formulation require the results of the parts to be combined to obtain the desired results.</li> <li>Partitioning can be applied to the program data. <ul> <li>This is call data partitioning or domain decomposition.</li> </ul> </li> <li>Partitioning can also be applied to the functions of a program. <ul> <li>This is called functional decomposition.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Divide and Conquer</summary> <ul> <li>Characterized by dividing problem into sub-problems of same form as larger problem. Further divisions into still smaller sub-problems, usually done by recursion.</li> <li>Recursive divide and conquer amenable to parallelization because separate processes can be used for divided pairs. Also usually data is naturally localized.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/dc01-480.webp 480w,/assets/img/courses/csc466/divide-conquer/dc01-800.webp 800w,/assets/img/courses/csc466/divide-conquer/dc01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/dc01.png" width="50%" height="auto" alt="Divide process" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/divide-480.webp 480w,/assets/img/courses/csc466/divide-conquer/divide-800.webp 800w,/assets/img/courses/csc466/divide-conquer/divide-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/divide.png" width="50%" height="auto" alt="Divide process with process ID" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Divide</summary> <p>Create a file called <code class="language-plaintext highlighter-rouge">divide.c</code></p> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=divide.c"></script> <ul> <li>Compile and run</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-lm</span> <span class="nt">-o</span> divide divide.c
+mpirun <span class="nt">-np</span> 8 divide
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/divide_mpi-480.webp 480w,/assets/img/courses/csc466/divide-conquer/divide_mpi-800.webp 800w,/assets/img/courses/csc466/divide-conquer/divide_mpi-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/divide_mpi.png" width="50%" height="auto" alt="Run divide" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Conquer</summary> <ul> <li>Create a file called <code class="language-plaintext highlighter-rouge">conquer.c</code> </li> </ul> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=conquer.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-lm</span> <span class="nt">-o</span> conquer conquer.c
+mpirun <span class="nt">-np</span> 8 conquer
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/conquer_mpi-480.webp 480w,/assets/img/courses/csc466/divide-conquer/conquer_mpi-800.webp 800w,/assets/img/courses/csc466/divide-conquer/conquer_mpi-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/conquer_mpi.png" width="50%" height="auto" alt="Run conquer" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p><strong>Many sorting algorithms can be parallelized by partitioning using divide and conquer</strong></p> </details> <h2 id="bucket-sort">Bucket Sort</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/bucketsort1-480.webp 480w,/assets/img/courses/csc466/divide-conquer/bucketsort1-800.webp 800w,/assets/img/courses/csc466/divide-conquer/bucketsort1-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/bucketsort1.png" width="50%" height="auto" alt="Overview of Bucket Sort" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Simple approach</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/bucketsort2-480.webp 480w,/assets/img/courses/csc466/divide-conquer/bucketsort2-800.webp 800w,/assets/img/courses/csc466/divide-conquer/bucketsort2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/bucketsort2.png" width="50%" height="auto" alt="A simple approach to Bucket Sort" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Broadcast data</li> <li>Sort only those elements that fit in local interval bucket (determined by rank)</li> <li>Gather sorted bucket</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Scatter and Scatterv Syntax</summary> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="kt">int</span> <span class="nf">MPI_Scatter</span><span class="p">(</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">sendbuf</span><span class="p">,</span> 
+    <span class="kt">int</span> <span class="n">sendcount</span><span class="p">,</span> 
+    <span class="n">MPI_Datatype</span> <span class="n">sendtype</span><span class="p">,</span> 
+    <span class="kt">void</span> <span class="o">*</span><span class="n">recvbuf</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">recvcnt</span><span class="p">,</span>
+    <span class="n">MPI_Datatype</span> <span class="n">recvtype</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">root</span><span class="p">,</span> 
+    <span class="n">MPI_Comm</span> <span class="n">comm</span><span class="p">);</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="kt">int</span> <span class="nf">MPI_Scatterv</span><span class="p">(</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">sendbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">sendcount</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">displs</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">sendtype</span><span class="p">,</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">recvbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">recvcnt</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">recvtype</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">root</span><span class="p">,</span>
+  <span class="n">MPI_Comm</span> <span class="n">comm</span>
+<span class="p">);</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">sendbuf</code>: address of send buffer (choice, significant only at root)</li> <li> <code class="language-plaintext highlighter-rouge">sendcount</code>: integer array (of length group size) specifying the number of elements to send to each processor</li> <li> <code class="language-plaintext highlighter-rouge">displs</code>: integer array (of length group size). Entry i specifies the displacement (relative to sendbuf from which to take the outgoing data to process i</li> <li> <code class="language-plaintext highlighter-rouge">sendtype</code>: data type of send buffer elements</li> <li> <code class="language-plaintext highlighter-rouge">recvbuf</code>: address of receive buffer (choice)</li> <li> <code class="language-plaintext highlighter-rouge">recvcnt</code>: number of elements in receive buffer (integer)</li> <li> <code class="language-plaintext highlighter-rouge">recvtype</code>: data type of receive buffer elements</li> <li> <code class="language-plaintext highlighter-rouge">root</code>: rank of sending process (integer)</li> <li> <code class="language-plaintext highlighter-rouge">comm</code>: communicator</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Hands-on: Scatterv</summary> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=scatterv.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-o</span> scatterv scatterv.c
+mpirun <span class="nt">-np</span> 4 scatterv
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/scatterv-480.webp 480w,/assets/img/courses/csc466/divide-conquer/scatterv-800.webp 800w,/assets/img/courses/csc466/divide-conquer/scatterv-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/scatterv.png" width="50%" height="auto" alt="Run Scatterv" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Gather and Gatherv Syntax</summary> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="kt">int</span> <span class="nf">MPI_Gather</span><span class="p">(</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">sendbuff</span><span class="p">,</span> 
+    <span class="kt">int</span> <span class="n">sendcount</span><span class="p">,</span> 
+    <span class="n">MPI_Datatype</span> <span class="n">sendtype</span><span class="p">,</span> 
+    <span class="kt">void</span> <span class="o">*</span><span class="n">recvbuff</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">recvcnt</span><span class="p">,</span>
+    <span class="n">MPI_Datatype</span> <span class="n">recvtype</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">root</span><span class="p">,</span> 
+    <span class="n">MPI_Comm</span> <span class="n">comm</span><span class="p">);</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="kt">int</span> <span class="nf">MPI_Gatherv</span><span class="p">(</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">sendbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">sendcount</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">sendtype</span><span class="p">,</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">recvbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">recvcnts</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">displs</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">recvtype</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">root</span><span class="p">,</span>
+  <span class="n">MPI_Comm</span> <span class="n">comm</span>
+<span class="p">);</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">sendbuf</code>: starting address of send buffer (choice)</li> <li> <code class="language-plaintext highlighter-rouge">sendcount</code>: number of elements in send buffer (integer)</li> <li> <code class="language-plaintext highlighter-rouge">sendtype</code>: data type of send buffer elements</li> <li> <code class="language-plaintext highlighter-rouge">recvbuf</code>: address of receive buffer (choice, significant only at root)</li> <li> <code class="language-plaintext highlighter-rouge">recvcnts</code>: integer array (of length group size) containing the number of elements that are received from each process (significant only at root)</li> <li> <code class="language-plaintext highlighter-rouge">displs</code>: integer array (of length group size). Entry i specifies the displacement relative to recvbuf at which to place the incoming data from process i (significant only at root)</li> <li> <code class="language-plaintext highlighter-rouge">recvtype</code>: data type of recv buffer elements (significant only at root)</li> <li> <code class="language-plaintext highlighter-rouge">root</code>: rank of receiving process (integer)</li> <li> <code class="language-plaintext highlighter-rouge">comm</code>: communicator</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Hands-on: Gatherv</summary> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=gatherv.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-o</span> gatherv gatherv.c
+mpirun <span class="nt">-np</span> 4 gatherv
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/gatherv-480.webp 480w,/assets/img/courses/csc466/divide-conquer/gatherv-800.webp 800w,/assets/img/courses/csc466/divide-conquer/gatherv-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/gatherv.png" width="50%" height="auto" alt="Run Gatherv" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Simple approach implementation</summary> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=bucket1.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-o</span> bucket1 bucket1.c
+mpirun <span class="nt">-np</span> 8 bucket1
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="complex-parallel-bucket-sort">Complex Parallel Bucket Sort</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <ul> <li>The data might be too large to be distributed via MPI_Bcast</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/bucketsort3-480.webp 480w,/assets/img/courses/csc466/divide-conquer/bucketsort3-800.webp 800w,/assets/img/courses/csc466/divide-conquer/bucketsort3-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/bucketsort3.png" width="50%" height="auto" alt="Complex approach to Bucket Sort" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The necessary communication pattern: all to all</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/all2all-480.webp 480w,/assets/img/courses/csc466/divide-conquer/all2all-800.webp 800w,/assets/img/courses/csc466/divide-conquer/all2all-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/all2all.png" width="50%" height="auto" alt="All to all" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/all2all_2-480.webp 480w,/assets/img/courses/csc466/divide-conquer/all2all_2-800.webp 800w,/assets/img/courses/csc466/divide-conquer/all2all_2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/all2all_2.png" width="50%" height="auto" alt="All to all explanation" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Alltoall</summary> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre><span class="kt">int</span> <span class="nf">MPI_Alltoall</span><span class="p">(</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">sendbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">sendcount</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">sendtype</span><span class="p">,</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">recvbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">recvcount</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">recvtype</span><span class="p">,</span>
+  <span class="n">MPI_Comm</span> <span class="n">comm</span>
+<span class="p">);</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">sendbuf</code>: starting address of send buffer (choice)</li> <li> <code class="language-plaintext highlighter-rouge">sendcount</code>: number of elements to send to each process (integer)</li> <li> <code class="language-plaintext highlighter-rouge">sendtype</code>: data type of send buffer elements</li> <li> <code class="language-plaintext highlighter-rouge">recvbuf</code>: address of receive buffer (choice)</li> <li> <code class="language-plaintext highlighter-rouge">recvcount</code>: number of elements received from any process (integer)</li> <li> <code class="language-plaintext highlighter-rouge">recvtype</code>: data type of receive buffer elements</li> <li> <code class="language-plaintext highlighter-rouge">comm</code>: communicator</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Hands-on: Alltoall</summary> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=alltoall.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-o</span> alltoall alltoall.c 
+mpirun <span class="nt">-np</span> 4 alltoall
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/all2all_mpi-480.webp 480w,/assets/img/courses/csc466/divide-conquer/all2all_mpi-800.webp 800w,/assets/img/courses/csc466/divide-conquer/all2all_mpi-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/all2all_mpi.png" width="50%" height="auto" alt="Run All to all" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Alltoallv</summary> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> <td class="rouge-code"><pre><span class="kt">int</span> <span class="nf">MPI_Alltoallv</span><span class="p">(</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">sendbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">sendcounts</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">sdispls</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">sendtype</span><span class="p">,</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">recvbuf</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">recvcounts</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">rdispls</span><span class="p">,</span>
+  <span class="n">MPI_Datatype</span> <span class="n">recvtype</span><span class="p">,</span>
+  <span class="n">MPI_Comm</span> <span class="n">comm</span>
+<span class="p">);</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">sendbuf</code>: starting address of send buffer (choice)</li> <li> <code class="language-plaintext highlighter-rouge">sendcounts</code>: integer array equal to the group size specifying the number of elements to send to each processor</li> <li> <code class="language-plaintext highlighter-rouge">sdispls</code>: integer array (of length group size). Entry j specifies the displacement (relative to sendbuf from which to take the outgoing data destined for process j</li> <li> <code class="language-plaintext highlighter-rouge">sendtype</code>: data type of send buffer elements</li> <li> <code class="language-plaintext highlighter-rouge">recvbuf</code>: address of receive buffer (choice)</li> <li> <code class="language-plaintext highlighter-rouge">recvcounts</code>: integer array equal to the group size specifying the maximum number of elements that can be received from each processor</li> <li> <code class="language-plaintext highlighter-rouge">rdispls</code>: integer array (of length group size). Entry i specifies the displacement (relative to recvbuf at which to place the incoming data from process i</li> <li> <code class="language-plaintext highlighter-rouge">recvtype</code>: data type of receive buffer elements</li> <li> <code class="language-plaintext highlighter-rouge">comm</code>: communicator</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Hands-on: Alltoallv</summary> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=alltoallv.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-o</span> alltoallv alltoallv.c 
+mpirun <span class="nt">-np</span> 4 alltoallv
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/all2allv_mpi-480.webp 480w,/assets/img/courses/csc466/divide-conquer/all2allv_mpi-800.webp 800w,/assets/img/courses/csc466/divide-conquer/all2allv_mpi-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/all2allv_mpi.png" width="50%" height="auto" alt="Run All to allv" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Complex approach implementation</summary> <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=bucket2.c"></script> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>mpicc <span class="nt">-o</span> bucket2 bucket2.c
+mpirun <span class="nt">-np</span> 8 bucket2
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="n-body-problem">N-Body Problem</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <p><strong>Fundamental settings for most, if not all, of computational simulation problems:</strong></p> <ul> <li>Given a space</li> <li>Given a group of entities whose activities are (often) bounded within this space</li> <li>Given a set of equation that governs how these entities react to one another and to attributes of the containing space</li> <li> <p>Simulate how these reactions impact all entities and the entire space overtime</p> </li> <li>Computation requires parallelization</li> <li>Experimental spaces are simulated at massive scale (millions of entities)</li> <li>Individual time steps are significantly smaller than the total simulation time.</li> <li>Time complexity can be reduced by approximating a cluster of distant bodies as a single distant body with mass sited at the center of the mass of the cluster</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/mass-bodies-480.webp 480w,/assets/img/courses/csc466/divide-conquer/mass-bodies-800.webp 800w,/assets/img/courses/csc466/divide-conquer/mass-bodies-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/mass-bodies.png" width="50%" height="auto" alt="Mass of multiple bodies" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Barnes-Hut Algorithm (2-D)</summary> <p>Start with whole region in which one square contains the bodies (or particles).</p> <ul> <li>First, this cube is divided into four subregions.</li> <li>If a subregion contains no particles, it is deleted from further consideration.</li> <li>If a subregion contains one body, it is retained.</li> <li>If a subregion contains more than one body, it is recursively divided until every subregion contains one body.</li> <li>Create an quadtree – a tree with up to four edges from each node</li> <li>The leaves represent cells each containing one body.</li> <li>After the tree has been constructed, the total mass and center of mass of the subregion is stored at each node.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/barnes-hut-480.webp 480w,/assets/img/courses/csc466/divide-conquer/barnes-hut-800.webp 800w,/assets/img/courses/csc466/divide-conquer/barnes-hut-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/barnes-hut.png" width="50%" height="auto" alt="Barnes-Hut algorithm" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Orthogonal Recursive Bisection</summary> <ul> <li>First, a vertical line found that divides area into two areas each with equal number of bodies.</li> <li>For each area, a horizontal line found that divides it into two areas, each with equal number of bodies.</li> <li>Repeated as required.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc466/divide-conquer/orthogonal-480.webp 480w,/assets/img/courses/csc466/divide-conquer/orthogonal-800.webp 800w,/assets/img/courses/csc466/divide-conquer/orthogonal-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc466/divide-conquer/orthogonal.png" width="50%" height="auto" alt="Orthogonal bisection" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> </body></html>
