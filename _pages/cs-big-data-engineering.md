@@ -26,7 +26,7 @@ amount of data.
 
 
 <div class="post">
-  <ul class="post-list">
+  <ul class="post-list post-list-compact">
     {% assign postlist = site.cs-big-data-engineering %}
     {% for post in postlist %}
         {% assign year = post.date | date: "%Y" %}
@@ -34,7 +34,7 @@ amount of data.
         {% assign categories = post.categories | join: "" %}
 
         <li>
-            <h3>
+            <h4>
                 {% if post.redirect == blank %}
                     <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
                 {% elsif post.redirect contains '://' %}
@@ -45,7 +45,7 @@ amount of data.
                 {% else %}
                     <a class="post-title" href="{{ post.redirect | relative_url }}">{{ post.title }}</a>
                 {% endif %}
-            </h3>
+            </h4>
             <p>{{ post.description }}</p>
         </li>
     {% endfor %}

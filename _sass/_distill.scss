@@ -74,10 +74,31 @@ d-article {
     }
   }
  
-  /* not working yet */
-  d-article details.details--warning { border-left: 4px solid #d9534f; background: rgba(217,83,79,.06); }
-  d-article details.details--note    { border-left: 4px solid var(--global-theme-color); background: rgba(0,0,0,.02); }
-  d-article details.details--tip     { border-left: 4px solid #2b7cff; background: rgba(43,124,255,.06); }
+  details.details--warning {
+    border-left: 4px solid #f1c40f;
+    background: rgba(241, 196, 15, 0.12);
+    summary { color: #b07d00; }
+  }
+  details.details--info {
+    border-left: 4px solid #2b7cff;
+    background: rgba(43, 124, 255, 0.10);
+    summary { color: #1f5fbf; }
+  }
+  details.details--success {
+    border-left: 4px solid #00c853;
+    background: rgba(0, 200, 83, 0.12);
+    summary { color: #008b3d; }
+  }
+  details.details--danger {
+    border-left: 4px solid #d9534f;
+    background: rgba(217, 83, 79, 0.12);
+    summary { color: #b52b27; }
+  }
+  details.details--tip {
+    border-left: 4px solid #00bcd4;
+    background: rgba(0, 188, 212, 0.12);
+    summary { color: #008fa1; }
+  }
 
   d-contents {
     align-self: start;

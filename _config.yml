@@ -151,9 +151,48 @@ collections:
   cs-agentic-ai:
     output: true
     permalink: /cs-agentic-ai/:path/
-  cs-intro-cloud:
+  csc468:
     output: true
-    permalink: /cs-intro-cloud/:path/
+    permalink: /csc468/:path/
+  csc231:
+    output: true
+    permalink: /csc231/:path/
+  csc302:
+    output: true
+    permalink: /csc302/:path/
+  csc331:
+    output: true
+    permalink: /csc331/:path/
+  csc402:
+    output: true
+    permalink: /csc402/:path/
+  csc466:
+    output: true
+    permalink: /csc466/:path/
+  csc478:
+    output: true
+    permalink: /csc478/:path/
+  csc495:
+    output: true
+    permalink: /csc495/:path/
+  csc496:
+    output: true
+    permalink: /csc496/:path/
+  csc530:
+    output: true
+    permalink: /csc530/:path/
+  csc568:
+    output: true
+    permalink: /csc568/:path/
+  csc578:
+    output: true
+    permalink: /csc578/:path/
+  csc586:
+    output: true
+    permalink: /csc586/:path/
+  csc588:
+    output: true
+    permalink: /csc588/:path/
   books:
     output: true
   news:

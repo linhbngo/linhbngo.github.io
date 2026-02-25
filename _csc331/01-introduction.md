@@ -1,0 +1,259 @@
+---
+layout: lecture
+pretty_table: true
+collection: csc331
+course: CSC 331: Operating Systems
+title: "Introduction to Operating Systems"
+toc:
+  - name: What happens when a computer program run?
+  - name: Why do we need OS?
+  - name: How do the OS help (1)?
+  - name: How do the OS help (2)?
+  - name: Hands-on: Getting started
+  - name: Hands-on: CPU Virtualization
+  - name: Hands-on: Memory Virtualization
+  - name: Concurrency
+  - name: Persistency
+  - name: A brief history of operating system research and development
+---
+# Introduction to Operating Systems
+
+---
+
+## What happens when a computer program run?
+
+- The process
+    - **fetches** an instruction from memory,
+    - **decodes** the instruction, and
+    - **executes** the instruction.
+- This is the fundamental **Von Neumann** model of computing. 
+
+---
+
+## Why do we need OS?
+
+{% include figure.liquid path="assets/img/courses/csc331/01-intro/01.png" width="50%" zoomable=true %}
+
+- What a programmer see is all code, lines of codes.
+- Underneath, there is a complex ecosystem of hardware components. 
+- How do we hide this complexity away from the programmers?
+
+---
+
+## How do the OS help (1)?
+
+This is possible due to **virtualization**.
+
+- Virtualization: presents general, powerful, and easy-to-use **virtual** forms of 
+**physical** computing resources to users (*programmers*). 
+- The linkage between virtual interfaces and physical components are enabled through
+the OS' **system calls** (or **standard library**).  
+
+---
+
+## How do the OS help (2)?
+
+- Each physical component in a computing system is considered a resource. 
+- The OS **manages** these resources so that multiple programs can access
+these resources (through the corresponding virtual interface) at the same time.  
+- This is called **concurrency**. 
+---
+
+## Hands-on: Getting started
+
+- Launch your `csc331` container. 
+- Visit the VSCode server `http://localhost:18088/` in a web browser, open a terminal. 
+
+~~~bash
+cd ~/ostep-code/intro
+make
+~~~
+
+{% include figure.liquid path="assets/img/courses/csc331/01-intro/02.png" width="50%" zoomable=true %}
+
+---
+
+## Hands-on: CPU Virtualization
+
+- Use Code server browser to view the source code of `cpu.c`.
+
+{% details CPU limit %}
+
+In [docker-compose.yml](https://github.com/ngo-classes/the-one-ring/blob/main/docker-compose.yml), the amount of cpus made available to the containers are only 2:
+
+~~~bash
+deploy:
+  resources:
+    limits:
+      cpus: 2.0
+~~~
+
+{% enddetails %}
+- From the in-browser terminal, setup the dual terminal using the `Split Terminal` icon (top right corner of the 
+terminal panel). 
+
+{% include figure.liquid path="assets/img/courses/csc331/01-intro/03.png" width="50%" zoomable=true %}
+
+- In the left terminal pane, run the following command. 
+
+~~~bash
+./cpu A & ./cpu B & ./cpu C &./cpu D 
+~~~
+
+{% include figure.liquid path="assets/img/courses/csc331/01-intro/04.png" width="50%" zoomable=true %}
+
+- To stop the running processes on the left pane, move to the right pane and running the
+following commands:
+
+~~~bash
+ps aux | grep cpu
+~~~
+
+- Identify the process ID (the second columns), then use the `kill` to kill all the process IDs 
+(see figure below). 
+
+{% include figure.liquid path="assets/img/courses/csc331/01-intro/05.png" width="50%" zoomable=true %}
+
+{% details The illusion of infinite CPU resources %}
+
+
+- A limited number of physical CPUs can still be represented as infinite number of CPUs through 
+**virtualization**.  
+- The OS will **manage** the scheduling and allocation of the actual run on physical resources. 
+
+{% enddetails %}
+---
+
+## Hands-on: Memory Virtualization
+
+- In the left terminal pane, run the following commands:
+  - `-R` will disable randomization of virtual memory address space for shells. 
+
+~~~bash
+clear
+sudo setarch `uname -m` -R /bin/bash
+./mem 100 &./mem 200
+~~~
+
+- In the right pane, use the same procedure as above to kill the two running programs 
+after a few iterations. 
+
+{% include figure.liquid path="assets/img/courses/csc331/01-intro/06.png" width="50%" zoomable=true %}
+
+{% details Do programs running concurrently occupy the same memory locations (addresses)? %}
+
+**No**
+
+{% enddetails %}
+{% details The illusion of dedicated memory resources %}
+
+- Many running program share the physical memory space. 
+- Each runnning program is presented with the illusion that they have access to their own private
+memory. This is called **virtual address space**, which is mapped to physical memory space
+by the OS.  
+- Making memory references within one running program (within one's own virtual address space) 
+does not affect the private virtual address space of others. 
+- Without the `setarch` command, the location of variable `p` will be 
+randomize within the virtual address space of a process. This is a security mechanism to 
+prevent others from guessing and applying direct manipulation techniques to the physical 
+memory location that acually contains `p`. 
+
+{% enddetails %}
+---
+
+## Concurrency
+
+- As shown in **CPU Virtualization** and **Memory Virtualization** examples, the OS 
+wants to manage many running programs at the same time.
+- This is called **concurrency**, and it leads to a number of interesting challenges 
+in designing and implementing various management mechanisms within the OS.
+- This can be observed through the following hands-on exercise. 
+
+- Type exit to close one of the two terminal panes. 
+- Run the following commands in the remaining terminal:
+
+~~~bash
+./threads 50
+./threads 100
+./threads 200
+~~~
+
+- `threads.c` creates two functions running at the same time, within the same memory 
+space of the  main program.
+- A single global variable named counter is being increased by both functions, thus 
+the final value of counter should be twice that of the command line argument.
+- Now run with bigger values.
+
+~~~bash
+./threads 20000
+./threads 30000
+./threads 30000
+./threads 30000
+~~~
+
+{% include figure.liquid path="assets/img/courses/csc331/01-intro/07.png" width="50%" zoomable=true %}
+
+{% details Problem with concurrency %}
+
+
+- Naive concurrency gives you wrong results.  
+- Naive concurrency gives you wrong and inconsistent results. 
+
+{% enddetails %}
+{% details Why does this happen? %}
+
+
+- At machine level, incrementing counter involves three steps:
+  - Load value of counter from memory into register,
+  - Increment this value in the register, and
+  - Write the value of counter back to memory.
+- What should have happened:
+  - One thread increments counter (all three steps), then the other thread increments
+  counter, now with the updated value.
+- What really happened:
+  - One thread increments counter.
+  - While this thread has not done with all three steps, the other thread 
+  steps in and attempts to increment the stale content of counter in memory.
+
+{% enddetails %}
+---
+
+## Persistency
+
+- When the programs stop, everything in memory goes away: counter, p, str.
+- Physical components to store information persistently are needed.
+- Input/output or I/O devices:
+    - Hard drives
+    - Solid-state drives
+- Software managing these storage devices is called the file system.
+- Examples of system calls/standard libraries supporting the file system:
+    - `open()`
+    - `write()`
+    - `close()`
+
+---
+
+## A brief history of operating system research and development
+
+A good paper to read: [Hanser, Per Brinch. "The evolution of oeprating systems" 2001](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.104.1524&rep=rep1&type=pdf)
+
+
+- Early operating systems: just libraries
+    - Include only library for commonly used functions.
+    - One program runs at a time.
+    - Manual loading of programs by human operator.
+- Beyond libraries: protection
+    - System calls
+    - Hardware privilege level
+    - User mode/kernel mode
+    - **trap**: the initiation of a system call to raise privilege from user mode to kernel mode. 
+- The era of multiprogramming
+    - Minicomputer
+    - **multiprogramming**: multiple programs being run with the OS switching among them. 
+    - Memory protection
+    - Concurrency
+- The modern era
+    - Personal computer
+    - DOS: the Disk Operating System
+    - Mac OS
+    - Multics (MIT) -> UNIX (Bell Labs) -> BSD (Berkeley) -> Sun OS/Linux

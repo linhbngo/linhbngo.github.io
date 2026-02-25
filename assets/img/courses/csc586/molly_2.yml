@@ -1,0 +1,205 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /mnt/c/Users/linhb/OneDrive/Documents/GitHub/courses/csc586/fig
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 114
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 29
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 100
+    content: "\e[?2004h(base) \e]0;lngo@LinhSurface: /mnt/c/Users/linhb/OneDrive/Documents/GitHub/courses/csc586/fig\a\e[01;32mlngo@LinhSurface\e[00m:\e[01;34m/mnt/c/Users/linhb/OneDrive/Documents/GitHub/courses/csc586/fig\e[00m$ "
+  - delay: 100
+    content: s
+  - delay: 156
+    content: s
+  - delay: 80
+    content: h
+  - delay: 97
+    content: ' '
+  - delay: 100
+    content: l
+  - delay: 81
+    content: 'n'
+  - delay: 155
+    content: g
+  - delay: 245
+    content: o
+  - delay: 540
+    content: '@'
+  - delay: 100
+    content: m
+  - delay: 57
+    content: o
+  - delay: 209
+    content: l
+  - delay: 115
+    content: l
+  - delay: 208
+    content: 'y'
+  - delay: 100
+    content: .
+  - delay: 266
+    content: c
+  - delay: 46
+    content: s
+  - delay: 124
+    content: .
+  - delay: 176
+    content: w
+  - delay: 63
+    content: c
+  - delay: 123
+    content: u
+  - delay: 80
+    content: p
+  - delay: 93
+    content: a
+  - delay: 208
+    content: .
+  - delay: 171
+    content: "e \r"
+  - delay: 206
+    content: d
+  - delay: 152
+    content: u
+  - delay: 418
+    content: "\r\n\e[?2004l\r"
+  - delay: 121
+    content: "\rThe authenticity of host 'molly.cs.wcupa.edu (144.26.62.185)' can't be established.\r\nED25519 key fingerprint is SHA256:TAUo+1SXYD7cbRkTdoFOQxELP5UxDtAP5sq5Rm4NFMY.\r\nThis key is not known by any other names\r\nAre you sure you want to continue connecting (yes/no/[fingerprint])? "
+  - delay: 1082
+    content: 'y'
+  - delay: 252
+    content: e
+  - delay: 82
+    content: s
+  - delay: 299
+    content: "\r\nWarning: Permanently added 'molly.cs.wcupa.edu' (ED25519) to the list of known hosts.\r\r\n"
+  - delay: 458
+    content: "\r(lngo@molly.cs.wcupa.edu) Duo two-factor login for lngo@wcupa.edu\r\n\r\nEnter a passcode or select one of the following options:\r\n\r\n 1. Duo Push to XXX-XXX-7138\r\n 2. Phone call to XXX-XXX-7138\r\n 3. SMS passcodes to XXX-XXX-7138\r\n\r\nPasscode or option (1-3): "
+  - delay: 774
+    content: '1'
+  - delay: 457
+    content: "\r\n"
+  - delay: 200
+    content: "Success. Logging you in...\r\n"
+  - delay: 128
+    content: "Success. Logging you in...\r\nWelcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.19.0-38-generic x86_64)\r\n\r\n * Documentation:  https://help.ubuntu.com\r\n * Management:     https://landscape.canonical.com\r\n * Support:        https://ubuntu.com/advantage\r\n\r\nExpanded Security Maintenance for Applications is not enabled.\r\n\r\n8 updates can be applied immediately.\r\n6 of these updates are standard security updates.\r\nTo see these additional updates run: apt list --upgradable\r\n\r\n1 additional security update can be applied with ESM Apps.\r\nLearn more about enabling ESM Apps service at https://ubuntu.com/esm\r\n\r\n\r\n20 updates could not be installed automatically. For more details,\r\nsee /var/log/unattended-upgrades/unattended-upgrades.log\r\n*** System restart required ***\r\nLast login: Wed May  3 20:10:20 2023 from 73.13.125.242\r\r\n"
+  - delay: 37
+    content: "\e[?2004h\e]0;lngo@molly: ~\a\e[01;32mlngo@molly\e[00m:\e[01;34m~\e[00m$ "
+  - delay: 200
+    content: e
+  - delay: 293
+    content: x
+  - delay: 250
+    content: i
+  - delay: 187
+    content: t
+  - delay: 593
+    content: "\r\n\e[?2004l\rlogout\r\nConnection to molly.cs.wcupa.edu closed.\r\r\n\e[?2004h(base) \e]0;lngo@LinhSurface: /mnt/c/Users/linhb/OneDrive/Documents/GitHub/courses/csc586/fig\a\e[01;32mlngo@LinhSurface\e[00m:\e[01;34m/mnt/c/Users/linhb/OneDrive/Documents/GitHub/courses/csc586/fig\e[00m$ "
+  - delay: 3399
+    content: "\e[?2004l\r\r\nlogout\r\n"

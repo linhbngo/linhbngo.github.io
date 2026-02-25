@@ -18,7 +18,7 @@ and engage in iterative *fail-and-survive* learning cycles to develop robust tec
 and critical thinking skills. 
 
 <div class="post">
-  <ul class="post-list">
+  <ul class="post-list post-list-compact">
     {% assign postlist = site.csc-agentic-ai %}
     {% for post in postlist %}
         {% assign year = post.date | date: "%Y" %}
@@ -26,7 +26,7 @@ and critical thinking skills.
         {% assign categories = post.categories | join: "" %}
 
         <li>
-            <h3>
+            <h4>
                 {% if post.redirect == blank %}
                     <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
                 {% elsif post.redirect contains '://' %}
@@ -37,7 +37,7 @@ and critical thinking skills.
                 {% else %}
                     <a class="post-title" href="{{ post.redirect | relative_url }}">{{ post.title }}</a>
                 {% endif %}
-            </h3>
+            </h4>
             <p>{{ post.description }}</p>
         </li>
     {% endfor %}

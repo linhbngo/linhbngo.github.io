@@ -5,18 +5,54 @@ nav: true
 nav_order: 8
 dropdown: true
 children:
-  - title: Agentic AI (under dev)
+  - title: Agentic AI (dev)
     permalink: /csc-agentic-ai/
   - title: divider
-  - title: CSC 418/587 (under dev)
+  - title: CSC 418/587 (dev)
     permalink: /csc418-587/
   - title: divider
-  - title: Big Data Engineering
+  - title: Big Data Engineering (dev)
     permalink: /cs-big-data-engineering/
   - title: divider
-  - title: Intro Cloud
-    permalink: /cs-intro-cloud/
+  - title: Introduction to Cloud
+    permalink: /csc468/
   - title: divider
-  - title: CSC 574 (under dev)
+  - title: Computer Systems (dev)
+    permalink: /csc231/
+  - title: divider
+  - title: Computer Security II (dev)
+    permalink: /csc302/
+  - title: divider
+  - title: Operating Systems (dev)
+    permalink: /csc331/
+  - title: divider
+  - title: Software Engineering. (dev)
+    permalink: /csc402/
+  - title: divider
+  - title: Distributed and Parallel Computing (dev)
+    permalink: /csc466/
+  - title: divider
+  - title: Cloud Engineering (dev)
+    permalink: /csc478/
+  - title: divider
+  - title: iOS App Development (dev)
+    permalink: /csc496/
+  - title: divider
+  - title: Advanced Data Structures (dev)
+    permalink: /csc530/
+  - title: divider
+  - title: Cloud Computing Fundamentals (dev)
+    permalink: /csc568/
+  - title: divider
+  - title: Cloud Systems Engineering (dev)
+    permalink: /csc578/
+  - title: divider
+  - title: Linux System Administration and Security (dev)
+    permalink: /csc586/
+  - title: divider
+  - title: Access Control in the Cloud (dev)
+    permalink: /csc588/
+  - title: divider
+  - title: Machine Learning on MCU(dev)
     permalink: /csc574/
 ---

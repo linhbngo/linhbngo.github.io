@@ -1,0 +1,32 @@
+Week,Date,Topic,Assessment
+1,01/20,Demand for computational speed,-
+-,-,Setting up learning environments,-
+2,01/27,Introduction to parallel and distributed computing,-
+-,-,C programming review,-
+3,02/03,Introduction to Docker learning environment,-
+-,-,Hands on: Setting up Docker environment,-
+4,02/10,Thread programming,-
+-,-,Hands on: thread programming,-
+5,02/17,Introduction to OpenMP,-
+-,-,OpenMP: Parallel regions and loop parallelism,-
+6,02/24,OpenMP: Work sharing and controlling thread data,-
+-,-,-,-
+7,03/03,-,-
+-,-,-,-
+8,03/10,SPRING BREAK,-
+-,-,SPRING BREAK,-
+9,03/17,Introduction to MPI,-
+-,-,"MPI: point-to-point, data types, and communicators",-
+10,03/24,MPI: functional parallelism and collectives,-
+-,-,MPI: pleasantly parallel and workload allocation,-
+11,03/31,MPI: partitioning and divide and conquer,-
+-,-,MPI on Python: mpi4py,-
+12,04/07,-,-
+-,-,-,-
+13,04/14,-,-
+-,-,-,-
+14,04/21,-,-
+-,-,-,-
+15,04/28,-,-
+-,-,-,-
+16,05/05,-,-

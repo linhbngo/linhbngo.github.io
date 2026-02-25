@@ -283,6 +283,8 @@ ul.task-list input[type="checkbox"] {
 .navbar .dropdown-menu {
   background-color: var(--global-bg-color);
   border: 1px solid var(--global-divider-color);
+  max-height: 70vh;
+  overflow-y: auto;
 
   a:not(.active) {
     color: var(--global-text-color);
@@ -649,6 +651,13 @@ footer.sticky-bottom {
     mjx-container[jax="CHTML"][display="true"] {
       display: unset;
     }
+  }
+}
+
+.post-list.post-list-compact {
+  li {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 }
 
