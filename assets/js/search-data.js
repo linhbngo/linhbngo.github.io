@@ -1255,31 +1255,41 @@ ninja.data = [{
           description: "",
           section: "Csc468",handler: () => {
               window.location.href = "/csc468/11-docker-compose-cd-ci/";
-            },},{id: "csc468-container-security",
-          title: 'Container Security',
+            },},{id: "csc468-introduction-to-fabrics",
+          title: 'Introduction to FABRICS',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/12-container-security/";
+              window.location.href = "/csc468/12-fabrics/";
+            },},{id: "csc468-declarative-provisioning",
+          title: 'Declarative Provisioning',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/13-terraform/";
+            },},{id: "csc468-declarative-configuration-management",
+          title: 'Declarative Configuration Management',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/14-ansible/";
             },},{id: "csc468-docker-swarm",
           title: 'Docker Swarm',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/13-docker-swarm/";
+              window.location.href = "/csc468/15-docker-swarm/";
+            },},{id: "csc468-container-security",
+          title: 'Container Security',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/16-container-security/";
             },},{id: "csc468-why-cloud",
           title: 'Why Cloud',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/14-why-cloud/";
+              window.location.href = "/csc468/17-why-cloud/";
             },},{id: "csc468-container-engines-and-platforms",
           title: 'Container Engines and Platforms',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/15-kvm-docker-podman-singularity/";
-            },},{id: "csc468-programmatic-deployment-of-infrastructures",
-          title: 'Programmatic Deployment of Infrastructures',
-          description: "",
-          section: "Csc468",handler: () => {
-              window.location.href = "/csc468/16-programmatic-deployment/";
+              window.location.href = "/csc468/18-docker-podman-singularity/";
             },},{id: "csc478-",
           title: '',
           description: "",
@@ -1355,6 +1365,11 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/14-cloud-security/";
+            },},{id: "csc478-programmatic-deployment-of-infrastructures",
+          title: 'Programmatic Deployment of Infrastructures',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/16-programmatic-deployment/";
             },},{id: "csc478-",
           title: '',
           description: "",
@@ -1520,11 +1535,51 @@ ninja.data = [{
           description: "",
           section: "Csc568",handler: () => {
               window.location.href = "/csc568/index/";
-            },},{id: "csc574-00-syllabus",
-          title: '00 Syllabus',
+            },},{id: "csc574-syllabus",
+          title: 'Syllabus',
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/00-syllabus/";
+            },},{id: "csc574-introduction-to-tinyml",
+          title: 'Introduction to tinyML',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/01-introduction/";
+            },},{id: "csc574-machine-learning-paradigm",
+          title: 'Machine Learning Paradigm',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/02-ml-paradigm/";
+            },},{id: "csc574-building-blocks-of-deep-learning",
+          title: 'Building Blocks of Deep Learning',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/03-deep-learning/";
+            },},{id: "csc574-hardware-setup",
+          title: 'Hardware Setup',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/04-hardware/";
+            },},{id: "csc574-tensorflow-lite-micro",
+          title: 'Tensorflow Lite Micro',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/17-tf-lite-micro/";
+            },},{id: "csc574-deployment-of-kws",
+          title: 'Deployment of KWS',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/18-kws-deploy/";
+            },},{id: "csc574-data-engineering",
+          title: 'Data Engineering',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/19-data-engineering/";
+            },},{id: "csc574-visual-wake-word-vww",
+          title: 'Visual Wake Word (VWW)',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/20-visual-wake-word/";
             },},{id: "csc578-",
           title: '',
           description: "",
