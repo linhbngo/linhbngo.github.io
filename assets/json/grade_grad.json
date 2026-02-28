@@ -1,0 +1,50 @@
+[
+    {
+        "grade": "A",
+        "gpa": "4.00",
+        "numeric": "-",
+        "interpretation": "Superior graduate attainment"
+    },
+    {
+        "grade": "A-",
+        "gpa": "3.67",
+        "numeric": "-",
+        "interpretation": "-"
+    },
+    {
+        "grade": "B+",
+        "gpa": "3.33",
+        "numeric": "-",
+        "interpretation": "Satisfactory graduate attainment"
+    },
+    {
+        "grade": "B",
+        "gpa": "3.00",
+        "numeric": "-",
+        "interpretation": "-"
+    },
+    {
+        "grade": "B-",
+        "gpa": "2.67",
+        "numeric": "-",
+        "Interpretation": "-"
+    },
+    {
+        "grade": "C+",
+        "gpa": "2.33",
+        "numeric": "-",
+        "interpretation": "Attainment below graduate expectations"
+    },
+    {
+        "grade": "C",
+        "gpa": "2.00",
+        "numeric": "-",
+        "interpretation": "-"
+    },
+    {
+        "grade": "C-",
+        "gpa": "1.67",
+        "numeric": "Below 70%",
+        "interpretation": "Failure"
+    }
+]

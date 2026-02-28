@@ -99,7 +99,18 @@ There is no required text for this class.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_undergrad.csv") }}
+<table
+  data-toggle="table"
+  data-url="{{ '/assets/json/grade_undergrad.json' | relative_url }}">
+  <thead>
+    <tr>
+      <th data-field="grade">Grade</th>
+      <th data-field="gpa">Quality Points</th>
+      <th data-field="numeric">Numeric</th>
+      <th data-field="interpretation">Interpretation</th>
+    </tr>
+  </thead>
+</table>
 
 ### Assessments:
 

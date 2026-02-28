@@ -21,13 +21,15 @@ toc:
   - name: Required Learning Materials
   - name: Assessments and Grading
   - name: Course Topics and Schedules (subject to change)
+  - name: University Policies
+  - name: Resources for Student Success
 ---
 
 ## General Information
 
 - **Semester**: Summer 2026
 
-{% include courses/instructor_info.md %}
+{% include courses/instructor_info_summer.md %}
 
 ## Course Description
 
@@ -38,7 +40,6 @@ specifically, students will follow a hands-on learning approach with training an
 in such ways that they are deployable onto tiny microcontrollers. The course will involve work with 
 an [Nano 33BLE sense microcontroller](https://docs.arduino.cc/hardware/nano-33-ble-sense/). 
 
----
 
 ## Learning Objectives
 
@@ -52,7 +53,6 @@ an [Nano 33BLE sense microcontroller](https://docs.arduino.cc/hardware/nano-33-b
   1. Be well prepared to enter a career.
   2. Be exposed to the latest, cutting-edge technology.
 
----
 
 ## Required Learning Materials
 
@@ -60,9 +60,25 @@ There is no textbook requirement for this class. However, students are required 
 [Arduino Tiny Machine Learning Kit](https://store-usa.arduino.cc/collections/edu-family/products/arduino-tiny-machine-learning-kit). 
 The cost of the kit is $60. If you get this from Amazon, you might be able to get it via free shipping. 
 
----
 
 ## Assessments and Grading
+
+### Grade Scale
+
+<table
+  data-toggle="table"
+  data-url="{{ '/assets/json/grade_grad.json' | relative_url }}">
+  <thead>
+    <tr>
+      <th data-field="grade">Grade</th>
+      <th data-field="gpa">Quality Points</th>
+      <th data-field="numeric">Percentage</th>
+      <th data-field="interpretation">Equivalent Interpretation</th>
+    </tr>
+  </thead>
+</table>
+
+D grades are not used. Refer to the Graduate Catalog for description of NG (No Grade), W, & other grades.
 
 ### Method of Evaluation
 
@@ -70,31 +86,19 @@ The cost of the kit is $60. If you get this from Amazon, you might be able to ge
 | ------------------- | ----------------- | ------- | ---- | 
 | Quizzes             |       30%         | 1,2     | 1,2  |
 | Labs                |       30%         | 1,2,3,4 | 1,2  |
-| Project             |       30%         | 1,2,3,4 | 1,2  |
-| Class Participation |       10%         | 1,2,3,4 |  1   |
-
-### Grade Scale
-
-{{ read_csv("docs/assets/data/grade_grad.csv") }}
-
-
-D grades are not used. Refer to the Graduate Catalog for description of NG (No Grade), W, & other grades.
+| Project             |       40%         | 1,2,3,4 | 1,2  |
 
 ### Assessments
 
 - Quizzes: Be able to recall key theoretical and technical concepts.
-- Labs: Be able to work on in-class programming practices. 
-- Projects: Be able to carry out an end-to-end development and deployment of a 
-tinyML application on a microcontroller. 
+- Labs: Be able to work on complex lab problems with partial instruction.
+- Projects: Be able to carry out an end-to-end development and deployment of a ML application on a microcontroller. 
 
 ### Lateness Policy
 
 Labs/Project milestones that are late are assessed a 10% per day late penalty. 
 Saturday and Sunday are each days.
 
-{!assets/text/policy.md!}
-
----
 
 ## Course Topics and Schedules (subject to change)
 
@@ -128,3 +132,8 @@ Saturday and Sunday are each days.
 |            | History of TinyML                    | - |
 |            | ML Hardware Acceleration             | - |
 
+
+{% include courses/policy.md %}
+
+
+{% include courses/distance_education.md %}

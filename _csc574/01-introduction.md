@@ -15,7 +15,7 @@ toc:
 {% details note Course Overview %}
 
 
-{% details Question: Embedded Systems %}
+{% details Embedded Systems %}
 
 - Small, or tiny, 
 - Low power, extremely low power.
@@ -23,12 +23,14 @@ toc:
 - tinyML: Machine learning on embedded systems
 
 {% enddetails %}
-{% details Question: Machine Learning %}
+
+{% details Machine Learning %}
 
 - is a subfield of artificial intelligence, 
 - uses a lot of data infer interesting patterns about new data
 
 {% enddetails %}
+
 {% details success tinyML %}
 
 - is at the intersection of embedded systems and machine learning
@@ -38,6 +40,7 @@ are capable of performing on-device sensor data analytics at extremely low power
 - enables always-on machine learning use cases on battery-powered devices.
 
 {% enddetails %}
+
 {% details Failure: Examples of tinyML applications? %}
 
 - Siri, Alexa, Google
@@ -56,6 +59,7 @@ are capable of performing on-device sensor data analytics at extremely low power
 
 {% enddetails %}
 {% enddetails %}
+
 {% details note Course Structure %}
 
 - Based on Harvard's tinyML course
@@ -65,6 +69,8 @@ are capable of performing on-device sensor data analytics at extremely low power
 
 
 {% enddetails %}
+
+
 ## Why tinyML?
 
 {% details note Machine Learning %}
@@ -261,6 +267,5 @@ computational power to train/inference: giant data centers
 - MobileNet is still not good enough: MCU has a few KB of memory
 - Solutions:
     - Compression through optimization and pruning
-
 
 {% enddetails %}
