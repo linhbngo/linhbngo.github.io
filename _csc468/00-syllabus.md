@@ -25,8 +25,6 @@ toc:
   - name: Course Schedules
 ---
 
-# CSC 468 - Introduction to Cloud Computing
-
 ## General Information
 
 - **Semester**: Spring 2026

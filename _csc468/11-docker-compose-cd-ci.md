@@ -17,11 +17,12 @@ typograms: true
 last_updated: 2026-02-24
 
 toc:
-  - name: Set up environment
-  - name: Prepare the service
+  - name: Set Up Environment
+  - name: Prepare the Service
+  - name: Good Things Does Not Last
 ---
 
-## Set up environment 
+## Set Up Environment 
 
 {% details CloudLab %}
 
@@ -84,7 +85,7 @@ toc:
 {% enddetails %}
 ---
 
-## Prepare the service
+## Prepare The Service
 
 {% details Making edit %}
 
@@ -116,3 +117,7 @@ docker compose up -d
 - Observe the Action workflow being carried out, and that the browser display the content 
 of the web app being changed by refreshing. 
 {% enddetails %}
+
+## Good Things Does Not Last
+
+And it has drawback too!
