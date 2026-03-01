@@ -1,21 +1,19 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc574
 title: Introduction to tinyML
 toc:
   - name: Overview
   - name: Why tinyML?
   - name: Enable tinyML
   - name: Challenges of tinyML
+  - name: Course Hardware
 ---
 
 ## Overview
 
-{% details note Course Overview %}
 
-
-{% details Embedded Systems %}
+{% details info Embedded Systems %}
 
 - Small, or tiny, 
 - Low power, extremely low power.
@@ -24,7 +22,7 @@ toc:
 
 {% enddetails %}
 
-{% details Machine Learning %}
+{% details info Machine Learning %}
 
 - is a subfield of artificial intelligence, 
 - uses a lot of data infer interesting patterns about new data
@@ -41,14 +39,11 @@ are capable of performing on-device sensor data analytics at extremely low power
 
 {% enddetails %}
 
-{% details Failure: Examples of tinyML applications? %}
 
-- Siri, Alexa, Google
-- Still requires wall power/big battery
+{% details Examples of tinyML applications %}
 
-{% enddetails %}
-{% details Example: Examples of tinyML applications %}
-
+- Siri, Alexa, Google?
+    - Still requires wall power/big battery
 - Smart drones
     - video surveillance 
     - go where humans cannot go
@@ -58,7 +53,6 @@ are capable of performing on-device sensor data analytics at extremely low power
     - Smart guidance
 
 {% enddetails %}
-{% enddetails %}
 
 {% details note Course Structure %}
 
@@ -66,7 +60,6 @@ are capable of performing on-device sensor data analytics at extremely low power
 - Part 1: Machine Learning
 - Part 2: Typical applications of tinyML
 - Part 3: Physical deployment of tinyML
-
 
 {% enddetails %}
 
@@ -143,6 +136,7 @@ computational power to train/inference: giant data centers
 
 {% enddetails %}
 {% enddetails %}
+
 {% details note Step 1: data input %}
 
 - Coming from sensors on device
@@ -154,6 +148,7 @@ computational power to train/inference: giant data centers
     - Force sensors, lots and lots of different kinds of sensors.
 
 {% enddetails %}
+
 {% details note Step 2: Data processing %}
 
 - Typically require `big` processors.
@@ -178,6 +173,7 @@ computational power to train/inference: giant data centers
     {% include figure.liquid path="assets/img/courses/csc574/01-introduction/north-america-microcontroller-market.png" width="50%" zoomable=true %} 
 
 {% enddetails %}
+
 {% details note Step 3: Output %}
 
 - Physical actuators
@@ -267,5 +263,26 @@ computational power to train/inference: giant data centers
 - MobileNet is still not good enough: MCU has a few KB of memory
 - Solutions:
     - Compression through optimization and pruning
+
+{% enddetails %}
+
+## Course Hardware
+
+{% details note Arduino Nano 33 BLE Sense (Rev1)  %}
+
+- [Specification Sheet](https://docs.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf)
+    - Arm® Cortex®-M4F @ **64 MHz**, **1 MB flash**, **256 KB RAM**.
+    - **MCU / radio module:** u-blox **NINA-B306** (Nordic **nRF52840**)
+- Various [built-in sensors](https://docs.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf#page=7.12) and enough headroom for small TensorFlow Lite Micro models, 
+    - Optimization matters given limited CPU/memory.
+    - IMU (motion): LSM9DS1 (9-axis) 
+    - Pressure and temperature: LPS22HB
+    - Gesture, light, and proximity: APDS-9960
+    - Microphone: MP34DT05 
+- **Important Reality Check:**
+    - If purchased as part of the [Arduino Tiny Machine Learning Kit](https://store.arduino.cc/products/arduino-tiny-machine-learning-kit?srsltid=AfmBOoqoxmN3Tw2wdOp0CQ-ZtMw_QtIXWBsyEdtgN3DsehfZmGVaFBor0)
+        - Carry the original **Nano 33 BLE Sense**
+        - There is no humidity sensor (No HTS221)
+    - Can only tolerate **3.3V** power (not 5V tolerant). 
 
 {% enddetails %}
