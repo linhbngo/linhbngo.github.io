@@ -1,8 +1,20 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc574
 title: "Machine Learning Paradigm"
+
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
 toc:
   - name: Overview and motivation
   - name: Measure accuracy
@@ -20,7 +32,7 @@ toc:
 
 - It is how we do it since the beginning of time!
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/pong.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/pong.png" width="25%" zoomable=true %}
 
 - The ball moves along a path
     - Angle/velocity
@@ -39,6 +51,7 @@ toc:
 - Powerful but can be limited
 
 {% enddetails %}
+
 {% details Example: Explicit coding: activity detection %}
 
 - Write an app that uses sensors on a phone or a watch or something else to 
@@ -120,6 +133,7 @@ else
 
 {% enddetails %}
 {% enddetails %}
+
 {% details note Machine Learning Paradigm %}
 
 - In a nutshell:
@@ -151,6 +165,7 @@ else
     - Expected: Y: $-3,-1,1,3,5,7$
 
 {% enddetails %}
+
 {% details Question: Second guess %}
 
 - $x_1=-1$ and $y_1=-3$
@@ -162,6 +177,7 @@ else
     - Expected: Y: $-3,-1,1,3,5,7$
 
 {% enddetails %}
+
 {% details success Third guess %}
 
 - $x_1=-1$ and $y_1=-3$
@@ -176,18 +192,20 @@ else
 
 {% enddetails %}
 {% enddetails %}
+
+---
+
 ## Measure accuracy
 
 {% details note Setting up conda environment %}
 
-
-```python linenums="1"
+~~~python
 conda create -n tf python=3.12
 conda activate tf
 pip install --upgrade pip
 pip install tensorflow
 pip install opencv-python scipy pooch matplotlib jupyter ipykernel
-```
+~~~
 
 {% enddetails %}
 {% details Example: Coding hands on %}
@@ -195,9 +213,47 @@ pip install opencv-python scipy pooch matplotlib jupyter ipykernel
 - Bring up a Jupyter notebook
 - Run the following code segment in a cell and monitor different combinations of `w` and `b` to observe the loss value
 
-```python linenums="1"
---8<-- "docs/csc581/lectures/codes/02-ml-paradigm/exploring_loss.py"
-```
+~~~python
+import math
+import matplotlib.pyplot as plt
+import numpy as np
+
+w = 3
+b = -1
+
+x = [-1, 0, 1, 2, 3, 4]
+y = [-3, -1, 1, 3, 5, 7]
+myY = []
+
+for thisX in x:
+  thisY = (w*thisX)+b
+  myY.append(thisY)
+
+print(f"Real Y is {str(y)}")
+print(f"My Y is   {str(myY)}")
+
+# Sample data
+x = np.array(x)
+y = np.array(y)
+myY = np.array(myY)
+
+plt.plot(x, y, 'o')  # Plot points as circles
+plt.plot(x, myY, 'o')  # Plot points as circles
+
+# Add vertical lines
+for i in range(len(x)):
+    plt.vlines(x[i], y[i], myY[i], linestyles='dashed')
+    length = y[i] - myY[i]
+    plt.text(x[i], (y[i] + myY[i]) / 2, f"{length:.2f}", ha='center', va='center')
+
+# Add gridlines
+plt.grid(True)
+
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('Points with Vertical Lines')
+plt.show()
+~~~
 
 {% enddetails %}
 {% details note How good (or bad) are your guesses? %}
