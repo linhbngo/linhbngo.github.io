@@ -120,4 +120,5 @@ of the web app being changed by refreshing.
 
 ## Good Things Does Not Last
 
-And it has drawback too!
+- Community project `containerr/Towerwatch` is no longer supported as of this year. 
+- Everything can be fully controll via GitHub Actions. 
