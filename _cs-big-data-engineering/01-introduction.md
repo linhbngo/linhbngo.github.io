@@ -57,11 +57,8 @@ intermediate data that needs to be analyzed during the process.
     - Too noisy
     - Too heterogeneous
 
-<div class="row mt-3 justify-content-center">
-    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" width="50%" zoomable=true %}
-</div>
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
----
 
 ## Big Data in Industry
 
@@ -125,9 +122,7 @@ intermediate data that needs to be analyzed during the process.
     are beginning to be analyzed to produce business insights.
     - Example general paradigm:
 
-<div class="row mt-3 justify-content-center">
-    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" width="50%" zoomable=true alt="data parallel programming"%}
-</div>
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="data parallel programming"%}
 
 - Example difficulties
     - It is difficult to write parallel programs​
@@ -138,8 +133,6 @@ intermediate data that needs to be analyzed during the process.
         - Same set of errors, but scale up with size​.
     - It is even more difficult to debug large scale parallel programs​
         - What if the program doesn’t fail but only produce incorrect results?
-
----
 
 ## Data Intensive Approach
 

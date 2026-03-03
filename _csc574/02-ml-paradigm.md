@@ -193,7 +193,6 @@ else
 {% enddetails %}
 {% enddetails %}
 
----
 
 ## Measure accuracy
 
@@ -319,6 +318,8 @@ $J = \frac{1}{n}\sum(actual-predicted)^2$
 - Change the learning rate and observe how that change the loss values
 
 {% enddetails %}
+
+
 ## Introductory Neural Network
 
 {% details note Preparation %}
