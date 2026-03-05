@@ -21,7 +21,6 @@ toc:
   - name: Big Data in Industry
   - name: The Vs of Big Data
   - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
   - name: Data Mining
   - name: Meaningfulness of Analytic Answers
   - name: Things Useful to Know
@@ -36,21 +35,25 @@ limiting factor in being able to find a timely solution.
 - Input data may or may not be big data​ but computational process produces massive and complex 
 intermediate data that needs to be analyzed during the process.
 
----
 
 ## Big Data in Science
 
-- The four pillars of scientific process:
-    - Thousands of years ago, science was **empirical**. 
-        - describing natural phenomena
-    - In the last few hundred years, the **theoretical** branch is developed. 
-        - models, generalizations
-    - In the last few decades, we have the **computational** branch
-        - simulation of complex phenomena
-    - Today, we  have added the **data-enabled/data-intensive** pillar
-        - synthesizing of theory, experiment, and computation with statistics 
+{% details The four pillars of scientific process %}
 
-- Big data analytics in science and engineering for data sets that are:
+- Thousands of years ago, science was **empirical**. 
+    - describing natural phenomena
+- In the last few hundred years, the **theoretical** branch is developed. 
+    - models, generalizations
+- In the last few decades, we have the **computational** branch
+    - Simulation of complex phenomena
+- Today, we  have added the **data-enabled/data-intensive** pillar
+    - synthesizing of theory, experiment, and computation with statistics 
+
+{% enddetails %}
+
+{% details Big data analytics in science and engineering %}
+
+For datasets that are:
     - Too big
     - Too complex
     - Too fast (streaming)
@@ -59,93 +62,122 @@ intermediate data that needs to be analyzed during the process.
 
 {% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
+{% enddetails %}
 
 ## Big Data in Industry
 
-- Old statistics
-    - In 2008-2009:​
-        - Google processed 20PB a day.
-        - Facebook had 2.5PB of user data + 15TB/day​.
-        - eBay had 6.5PB of user data + 50TB/day​.
-    - In 2010-2011:​
-        - Facebook had 400M users / 125PB of user data​.
-        - eBay had 10PB of user data in 2010, expected to double this number in 2011​
-    - In 2012-2013:​
-        - Facebook had 900M users​
-        - Twitter had 400M Tweets/day
-    - We don't see this kind of statistics collected anymore because it has become the norm. 
+{% details 2010-2020 %}
 
-- Newer (and different) statistics
-    - [53% of companies are using big data analytics today](https://www.forbes.com/sites/louiscolumbus/2017/12/24/53-of-companies-are-adopting-big-data-analytics/?sh=6c6c70cb39a1)
-        - Data warehouse optimization, customer/social analysis, predictive maintenance, clickstream 
-        analytics, fraud detectiton, and Internet of Things. 
-        - Spark, MapReduce, and Yarn are among the most popular framework. 
-    - [Medicine, Retail, Construction, Banking, and Transportation are the new industries that are being defined by big data analytic capabilities](https://towardsdatascience.com/5-industries-becoming-defined-by-big-data-and-analytics-e3e8cc0c0cf)
-    - People don't explicitly talk about Big Data anymore, it is just there!
+- In 2008-2009:​
+    - Google processed 20PB a day.
+    - Facebook had 2.5PB of user data + 15TB/day​.
+    - eBay had 6.5PB of user data + 50TB/day​.
+- In 2010-2011:​
+    - Facebook had 400M users / 125PB of user data​.
+    - eBay had 10PB of user data in 2010, expected to double this number in 2011​
+- In 2012-2013:​
+    - Facebook had 900M users​
+    - Twitter had 400M Tweets/day
+- [53% of companies are using big data analytics today](https://www.forbes.com/sites/louiscolumbus/2017/12/24/53-of-companies-are-adopting-big-data-analytics/?sh=6c6c70cb39a1)
+    - Data warehouse optimization, customer/social analysis, predictive maintenance, clickstream 
+    analytics, fraud detectiton, and Internet of Things. 
+    - Spark, MapReduce, and Yarn are among the most popular framework. 
+- [Medicine, Retail, Construction, Banking, and Transportation are the new industries that are being defined by big data analytic capabilities](https://towardsdatascience.com/5-industries-becoming-defined-by-big-data-and-analytics-e3e8cc0c0cf)
 
----
+{% enddetails %}
+
+
+{% details Post 2020 %}
+
+- IDC-scale (Internet Data Center) forecasts show annual data created/replicated growing from 72 ZB (2020) to 394 ZB (projected for 2028).
+    - [Seagate Report](https://s24.q4cdn.com/101481333/files/doc_downloads/2025/05/v3/Analyst-Day-2025.pdf)
+- Cloud object storage is now “hundreds of exabytes”
+    - AWS reported ([Pi Day 2024](https://aws.amazon.com/blogs/aws/aws-pi-day-2024-use-your-data-to-power-generative-ai/?utm_source=chatgpt.com)) Amazon S3 
+    stores 350+ trillion objects and exabytes of data, averaging 100+ million requests/second.
+    - By [re:Invent 2025](https://www.aboutamazon.com/news/aws/aws-re-invent-2025-ai-news-updates?utm_source=chatgpt.com), AWS stated S3 stores 500+ trillion objects 
+    and hundreds of exabytes, and is raising max single-object size from 5 TB to 50 TB.
+- **Exabyte-scale** is an everyday adjective inside big tech
+    - Meta describes its exabyte-scale data warehouse and notes stream processing that transports [multiple petabytes per hour](https://engineering.fb.com/2025/07/23/security/policy-zones-meta-purpose-limitation-batch-processing-systems/?utm_source=chatgpt.com).
+
+{% enddetails %}
+
 
 ## The Vs of Big Data
 
-- Initially, there were four: Volume, Velocity, Variety, Veracity. 
-    - Volume: the size of the files used to archive and spread data.
-    - Velocity: the speed with which data is generated and processed.
-    - Variety: formats and purposes of data, which may include objects as different as 
-    samples of animal tissue, free-text observations, humidity measurements, GPS coordinates, 
-    and the results of blood tests.
-    - Veracity: the extent to which the quality and reliability of big data can be guaranteed. 
-    Data with high volume, velocity and variety are at significant risk of containing  
-    inaccuracies, errors and unaccounted-for bias.
-- Other Vs are added over time. 
-    - Validity: the selection of appropriate data with respect to the intended use. The choice 
-    of a specific dataset as evidence base requires adequate and explicit justification, 
-    including recourse to relevant background knowledge to ground the identification of what counts 
-    as data in that context.
-    - Volatility: the extent to which data can be relied upon to remain available, accessible and 
-    re-interpretable despite changes in archival technologies. This is significant given the tendency 
-    of formats and tools used to generate and analyse data to become obsolete, and the efforts 
-    required to update data infrastructures so as to guarantee data access in the long term.
-    - Value: the multifaceted forms of significance attributed to big data by different sections 
-    of society, which depend as much on the intended use of the data as on historical, social and 
-    geographical circumstances.
+{% details Initial Vs %}
 
----
+- Volume: the size of the files used to archive and spread data.
+- Velocity: the speed with which data is generated and processed.
+- Variety: formats and purposes of data, which may include objects as different as 
+samples of animal tissue, free-text observations, humidity measurements, GPS coordinates, 
+and the results of blood tests.
+- Veracity: the extent to which the quality and reliability of big data can be guaranteed. 
+Data with high volume, velocity and variety are at significant risk of containing  
+inaccuracies, errors and unaccounted-for bias.
+
+{% enddetails %}
+
+
+{% details Other Vs %}
+
+- Validity: the selection of appropriate data with respect to the intended use. The choice 
+of a specific dataset as evidence base requires adequate and explicit justification, 
+including recourse to relevant background knowledge to ground the identification of what counts 
+as data in that context.
+- Volatility: the extent to which data can be relied upon to remain available, accessible and 
+re-interpretable despite changes in archival technologies. This is significant given the tendency 
+of formats and tools used to generate and analyse data to become obsolete, and the efforts 
+required to update data infrastructures so as to guarantee data access in the long term.
+- Value: the multifaceted forms of significance attributed to big data by different sections 
+of society, which depend as much on the intended use of the data as on historical, social and 
+geographical circumstances.
+
+{% enddetails %}
+
+People don't really talk about the Vs that much any more, but it helps to characterize the nature of 
+your data. 
+
 
 ## Programming Paradigm for Big Data
 
-- This is challenging on multiple facets
-    - Require not only parallel computation but also parallel data processing​.
-    - New computational tools and strategies​.
-    - New data intensive scalable architectures​.
-    - Science is moving increasingly from hypothesis-driven to data-driven discoveries​.
-    - Industry is at a stage where big data infrastructures are integrated and big data sets 
-    are beginning to be analyzed to produce business insights.
-    - Example general paradigm:
+{% details Challenges %}
+
+- Require not only parallel computation but also parallel data processing​.
+- New computational tools and strategies​.
+- New data intensive scalable architectures​.
+- Science is moving increasingly from hypothesis-driven to data-driven discoveries​.
+- Industry is at a stage where big data infrastructures are integrated and big data sets 
+are beginning to be analyzed to produce business insights.
+- Example general paradigm:
 
 {% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="data parallel programming"%}
 
-- Example difficulties
-    - It is difficult to write parallel programs​
-        - Difficult in converting algorithms from serial to parallel​.
-        - Difficult in identifying different ways that the program can fail​.
-        - No reliable way to detect failure of a process​.
-    - It is even more difficult to write parallel programs at large scale​
-        - Same set of errors, but scale up with size​.
-    - It is even more difficult to debug large scale parallel programs​
-        - What if the program doesn’t fail but only produce incorrect results?
+{% enddetails %}
 
-## Data Intensive Approach
+{% details Example of Difficulties %}
 
-- Design principles of data-intensive computing
-    - Scale "out", not "up"​
-        - It is easier and cheaper to add nodes to an existing cluster than to build a faster cluster.​
-    - Move computation to the data​
-        - Reduce data movement.​
-    - Sequential processing, avoid random access​
-        - Reduce seek movement on disks.​
-    - Seamless scalability
+- It is difficult to write parallel programs​
+    - Difficult in converting algorithms from serial to parallel​.
+    - Difficult in identifying different ways that the program can fail​.
+    - No reliable way to detect failure of a process​.
+- It is even more difficult to write parallel programs at large scale​
+    - Same set of errors, but scale up with size​.
+- It is even more difficult to debug large scale parallel programs​
+    - What if the program doesn’t fail but only produce incorrect results?
 
----
+{% enddetails %}
+
+{% details Design Principles of Data-Intensive Computing %}
+
+- Scale "out", not "up"​
+    - It is easier and cheaper to add nodes to an existing cluster than to build a faster cluster.​
+- Move computation to the data​
+    - Reduce data movement.​
+- Sequential processing, avoid random access​
+    - Reduce seek movement on disks.​
+- Seamless scalability
+
+{% enddetails %}
 
 ## Data Mining
 
