@@ -3,7 +3,7 @@ layout: post
 title: "Bring Engineering Thinking to What We Do"
 date: 2026-03-07 12:00:00
 description: Carrying an engineering mindset with you
-tags: cs-education, cloud, learning, engineering
+tags: memory, measurement, engineering
 categories: technical
 hidden: false
 ---
