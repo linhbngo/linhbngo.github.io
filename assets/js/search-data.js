@@ -149,7 +149,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-experiencing-productivity-scaling-up",
+            },{id: "post-bring-engineering-thinking-to-what-we-do",
+        
+          title: "Bring Engineering Thinking to What We Do",
+        
+        description: "Carrying an engineering mindset with you",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/engineering/";
+          
+        },
+      },{id: "post-experiencing-productivity-scaling-up",
         
           title: "Experiencing Productivity Scaling Up",
         
