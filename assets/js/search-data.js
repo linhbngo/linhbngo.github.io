@@ -149,7 +149,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-bring-engineering-thinking-to-what-we-do",
+            },{id: "post-teaching-learning-and-the-assumptions-between",
+        
+          title: "Teaching, Learning, and the Assumptions Between",
+        
+        description: "How teaching and learning operate through different APIs of assumptions",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/teaching-learning/";
+          
+        },
+      },{id: "post-bring-engineering-thinking-to-what-we-do",
         
           title: "Bring Engineering Thinking to What We Do",
         
