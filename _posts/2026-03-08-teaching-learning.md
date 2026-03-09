@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Teaching, Learning, and the Assumptions Between"
+title: "Redefining Rigor: From Selecting Talent to Developing Students in Computer Science"
 date: 2026-03-08 12:00:00
-description: How teaching and learning operate through different APIs of assumptions
-tags: cs-education, learning, api
+description: How teaching and learning operate through different levels of assumptions
+tags: cs-education, learning, assumptions
 categories: technical
 hidden: false
 ---
