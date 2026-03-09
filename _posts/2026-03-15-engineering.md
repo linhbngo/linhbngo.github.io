@@ -9,15 +9,15 @@ hidden: false
 ---
 
 Last week, I was teaching my Introduction to Cloud Computing class, and I was demonstrating to my students how additional containers can 
-place additional constraints on the host computer's resources using my MacBook Pro M4 24GB. As I show Mac's Activity Monitor, one thing 
-that struck me was that I was using 18 ou of 24GB of available memory. This surprised me by a lot. I thought at most I was consuming 
-10-12GB, and it turned out that I was wrong. So what have I been using that consume this much memory? 
+place additional constraints on the host computer's resources using my MacBook Pro M4 24GB. As I was showing Mac's Activity Monitor, one thing 
+that struck me was that I was using 18 out of 24GB of available memory. This surprised me by a lot. I thought at most I was consuming 
+10-12GB, and it turned out that I was wrong. So what have I been using that consumed this much memory? 
 
-As I was contemplating my Mac's utilization, another thought pop up. How did my estimation get so wrong? Perhaps my engineering senses 
+As I was contemplating my Mac's utilization, another thought popped up. How did my estimate get so wrong? Perhaps my engineering senses 
 have become dull over time, given how much resources I have access to (*since I started making real money*). At the moment, my PC with 96GB 
 of memory and my laptop with 24GB of memory have given me a wrong sense of having abundant resources. Gone are the days where I had to adjust 
-swap memory to fit applications into tiny machines having only 4GB or 6GB of memory. I need to return to those mindset and become more tuned 
-in to my application usage and resource consumptions. 
+swap memory to fit applications into tiny machines having only 4GB or 6GB of memory. Has the abundance of resources made me sloppy about resource 
+intuition. I need to return to that mindset and become more tuned in to my application usage and resource consumptions. 
 
 *This essay is written for my Mac, but the principles can be applied to Windows machines as well.*
 
@@ -26,9 +26,9 @@ in to my application usage and resource consumptions.
 
 To become resource-aware, we need to be able to know how much resources we are using. First, to know how much resources we are using, we need to 
 know how to measure them. In this essay, I am going to limit to measure memory consumption only. Secondly, we need to know which applications 
-to measure. Modern OS come with many operations and they will take up resources and there is nothing we can do about those. Let's consider only 
-applications that we have launched. A simplest way to check is to look at the top right corner for Mac and examine those. At the moment, I have 
-the followings (from left to right):
+to measure. Modern OSes come with many operations and they will take up resources and there is nothing we can do about those. Let's consider only 
+applications that we have launched. The simplest way to check is to look at the top right corner for Mac and examine those. At the moment, I have 
+the following (from left to right):
 
 
 <div class="row mt-3 justify-content-center">
@@ -39,13 +39,13 @@ the followings (from left to right):
 - Cursor
 - Zoom
 - One Drive (Personal)
-- One Driver (WCUPA)
+- One Drive (WCUPA)
 - Ollama
 - Rectangle
 - Microsoft Teams
 - Cisco AnyConnect
 
-We also look at the opened applications that are not shown on the top. A dot indicates that there is an opened instance for these applications. 
+We also look at the open applications that are not shown on the top. A dot indicates that there is an opened instance for these applications. 
 
 
 <div class="row mt-3 justify-content-center">
@@ -76,16 +76,16 @@ container running.
     {% include figure.liquid loading="eager" path="assets/img/blogs/2026-03-07/activity-monitor-3.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
 </div>
 
-Upon further examination, the value showed in Activity Monitor was not exactly right. The next screenshot showed that the value reported in Activity Monitor and the `real memory 
-size`, as shown when we double click on the entry. 
+Upon further examination, the values shown in Activity Monitor are not as simple as they first appear. The per-process numbers are useful, but the overall memory picture in macOS also involves app memory, compressed memory, cached files, wired memory, and swap. 
 
 <div class="row mt-3 justify-content-center">
     {% include figure.liquid loading="eager" path="assets/img/blogs/2026-03-07/activity-monitor-2.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
 </div>
 
-To address this issue, perhaps we need a more systematic approach to measuring memory can be done by select all the processes, then copy and paste those into Excel/Sheet to use SUM to get a more correct value for memory usage. This automated approach involves setting a list of applications (or keywords associated with an application), then writing a script to go through these keywords to extract individual usages and summarize their values. 
+To have a simpler view for process memory consumption, perhaps we need a more systematic approach to measuring memory. This automated approach involves setting a list of applications (or keywords associated with an application), then writing a script to go through these keywords to extract individual usages and summarize their values. In this setting, my script is best understood as a simpler RSS-based estimate for user-launched processes, not a complete model of macOS memory behavior. 
 
-First a text file was created with each line represents keywords associated with one of the opened application. These keywords are selected by normalize the keyword found in 
+
+First, a text file was created in which each line represents keywords associated with one of the open applications. These keywords are selected by normalizing the keyword found in 
 the Activity Monitor. 
 
 ~~~
@@ -107,16 +107,29 @@ chrome
 ~~~
 
 The bash script will iterate through these lines, extract the memory usage value from all processes that contain the keyword (assumed relationship), and add the values together. 
+The script does the following:
+
+- Read the file `apps` (content above) line by line, and store the content of the line into variable `line`.
+- For each `line` (as iterated through the while loop), we will run a piped command:
+    - First, `ps -axo rss,pid,pgid,comm` will display all processes. Flags `a` and `x` let `ps` displays all processes (terminal and non-terminal) from all users. The `o` 
+    flag will display the results using the subsequent format, which specified `rss` (resident set size, the non-swapped physical memory that a process has used), `pid` (process 
+    id), `pgid` (group id), and `comm` (starting command that launched the process). 
+    - Next, the results is filtered. Using `grep`, only lines containing the values of `line` will remain. The `i` flag ignores case, and the `E` flag consider `line` as an 
+    extended regular expression to support multiple keywords. 
+    - Finally, `awk` process the final result and sum up the first column (`rss`) then return the value (`print`). 
+    - The returned value is assigned to variable `mem`
+    - The value of `mem` is added to the value of `sum_mem`, which was declared outside of the loop and initialized to 0. 
+- Once the loop complete, we print out the value of `sum_mem` with conversion to MB (divided by 1024) and GB (divided by 1048576).
 
 ~~~bash
-#!/bin/sh
+#!/usr/bin/env bash
 
 sum_mem=0
 
 while IFS= read -r line; do
   mem=$(ps -axo rss,pid,pgid,comm | grep -Ei "$line" | awk '{sum+=$1} END {print sum}')
-  ((sum_mem += mem))
-  echo "$((mem / 1024)) MB"
+  sum_mem=$((sum_mem += mem))
+  echo "$line $((mem / 1024)) MB"
 done < apps
 
 echo "Total memory usage (MB then GB):"
@@ -147,19 +160,20 @@ Total memory usage (MB then GB):
 10 GB
 ~~~
 
-So, Chrome is using up a lot of memory (4GB). I need to reign in my bazillions of opened tabs. I am not using Teams frequently, so that should go away. Discord is 
+So, Chrome is using up a lot of memory (4GB). I need to rein in my bazillions of opened tabs. I am not using Teams frequently, so that should go away. Discord is 
 surprisingly heavy for a chat. Zalo is yet another chat, but I probably only need to maintain that for another year or so. Many of these apps are unexpectedly 
 lightweight (e.g., ollama, onedrive, zoom, etc). Docker is another that eats up memory even when it is idle. 
 
 As I was creating a draft for this essay, I had this line down: *Launch at Log In is the bane of good resource awareness*. It turns out that this anecdotal evidence 
-is not quite applicable here, and most memory consumption in my case seem to show up during run time, not at startup time. That brings us to the next section, which 
+is not quite applicable here, and most memory consumption in my case seems to show up during run time, not at startup time. That brings us to the next section, which 
 is to focus on one application that can be managed. 
 
 ## Moving Forward
 
 Being aware of computational resource consumption is important. Maybe this is the universal truth, or maybe I say it because of my history working as a research 
 facilitator trying to get people to use computational resources in an efficient manner. In carrying out this measurement exercise, I got to stay aware of my applications 
-and I got to practice my scripting skills a little bit. It was fun, and I should do this more often!
+and I got to practice my scripting skills a little bit. It was fun, and I should do this more often! On a more serious note, resource awareness is not nostalgia for 
+weaker machines. It is part of the discipline of computing.
 
 
 
