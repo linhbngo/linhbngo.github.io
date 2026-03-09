@@ -149,11 +149,11 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-teaching-learning-and-the-assumptions-between",
+            },{id: "post-redefining-rigor-from-selecting-talent-to-developing-students-in-computer-science",
         
-          title: "Teaching, Learning, and the Assumptions Between",
+          title: "Redefining Rigor: From Selecting Talent to Developing Students in Computer Science",
         
-        description: "How teaching and learning operate through different APIs of assumptions",
+        description: "How teaching and learning operate through different levels of assumptions",
         section: "Posts",
         handler: () => {
           
