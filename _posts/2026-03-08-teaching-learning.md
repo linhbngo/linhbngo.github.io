@@ -14,7 +14,7 @@ Teaching and learning are often treated as if they were the same process. Once t
 should work equally well for all students, or that student success depends only on effort and ability. In reality, teaching and learning are 
 related but distinct, and the gap between them is bridged by instructional design, motivation, prior preparation, and resilience. Instructors 
 have the most direct control over instructional design, but they often build courses around assumptions about the other three factors, even 
-though those vary substantially from student to student. 
+though those vary substantially from student to student.
 
 The effectiveness of instructional design depends heavily on how these assumptions are made. In a sense, 
 this explains the difference between **selecting** and **developing** students, as suggested by 
