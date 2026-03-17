@@ -26,7 +26,12 @@ toc:
 
 {% details CloudLab %}
 
-- Deploy your Cloud experiment, Docker branch. 
+- You need to create a new branch (if you have not done so) from your main branch. The content of this new brand 
+should be similar to [Dr. Ngo's Docker Branch](https://github.com/linhbngo/cloudlab/tree/docker).
+  - Go to your CloudLab profile on CloudLab. 
+  - Click Edit, then click `Update` to refresh your ClouldLab content. 
+  - The new branch should show up. 
+- Deploy your Cloud experiment, Docker branch, using `Instantiate`. 
 - For today's lecture, each student should launch their own experiment. 
 
 {% enddetails %}
@@ -124,3 +129,4 @@ of the web app being changed by refreshing.
 
 - Community project `containerr/Towerwatch` is no longer supported as of this year. 
 - Everything can be fully controll via GitHub Actions. 
+- Examine the [go_app_compose_cdci_2 branch](https://github.com/CSC468-WCU/hello/tree/go_app_compose_cdci_2), particularly the `publish.yml` file inside `.github/workflows`. 
