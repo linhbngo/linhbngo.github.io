@@ -245,7 +245,7 @@ fabric-cli configure setup
 You are to clone the following repository
 
 ~~~bash
-git clone git@github.com:CSC468-WCU/fabric-examples.git
+git clone https://github.com/CSC468-WCU/fabric-examples.git
 cd fabric-examples
 ~~~
 
