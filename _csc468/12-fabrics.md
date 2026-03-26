@@ -239,3 +239,51 @@ fabric-cli configure setup
 - **Later courses or advanced projects can make deeper use of FABRIC's networking and distributed features.**
 
 {% enddetails %}
+
+## Local Deployment
+
+You are to clone the following repository
+
+~~~bash
+git clone git@github.com:CSC468-WCU/fabric-examples.git
+cd fabric-examples
+~~~
+
+Build the image, then launch
+
+~~~bash
+docker compose build --no-cache
+docker compose up
+~~~
+
+Visit `127.0.0.1:8888`
+
+The following items are to be done in the `configuration_and_validation.ipynb` notebook. 
+
+{% details Token Generation %}
+
+- Login into https://cm.fabric-testbed.net/ to generate a new token. Select Copy, 
+then 
+  - create a new cell in your notebook
+  - Identify the cell with the first line as `%%writefile /home/fabric/.fabric/token.json`. 
+  - Paste the content from the token page into the cell and run the cell. 
+
+{% include figure.liquid path="assets/img/courses/csc468/fabric/fabric-token.png" max-width="50%" zoomable=true %}
+
+{% enddetails %}
+
+{% details Bastion Key Acquisition %}
+
+- Go to `https://portal.fabric-testbed.net/` and Log in. 
+- On the top bar, visit `Experiments`, then select `Manage SSH Keys`. 
+- On the Bastion tab. 
+  - Generate a new Bastion Key Pair
+  - Download the generated public key file
+  - Upload the file to the notebook server. 
+  - Run the `fablib.verify_and_configure()` so that the notebook will pull the generated private key. 
+  - Run the next cell to move the public key into the correct location. 
+  - Rerun the next cell to confirm. 
+
+{% include figure.liquid path="assets/img/courses/csc468/fabric/fabric-bastion.png" max-width="50%" zoomable=true %}
+
+{% enddetails %}
