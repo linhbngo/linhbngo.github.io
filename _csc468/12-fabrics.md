@@ -279,7 +279,7 @@ mkdir .fabric
   - Change the value `__FABRIC_PROJECT_ID__` with the project id from your Fabric Hub Profile. 
   - Change the value `__FABRIC_BASTION_USERNAME__` to the Basion ID from your Fabric Hub Profile. 
 - Login into `https://cm.fabric-testbed.net/` to generate a new token. 
-  - Download the generated token file and save them inside `.fabric`. 
+  - Download the generated token file `id_token.json` and save them inside `.fabric`. 
 
 {% include figure.liquid path="assets/img/courses/csc468/fabric/fabric-token.png" max-width="50%" zoomable=true %}
 
