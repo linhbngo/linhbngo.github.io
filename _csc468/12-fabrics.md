@@ -248,11 +248,11 @@ You are to clone the following repository
 
 If you have a Windows machine, run the followings:
 
-~~~bash
+```bash
 git config --global core.autocrlf false
 git clone https://github.com/CSC468-WCU/fabric-examples.git
 cd fabric-examples
-~~~
+```
 
 {% enddetails %}
 
@@ -264,13 +264,13 @@ are not accidentally pushed back upstream.
 - You will need to populate this home directory. 
 - Create two directories inside this `home` directory:
 
-~~~bash
+```bash
 # Make sure that you start out inside fabric-examples. 
 pwd
 cd home
 mkdir .ssh
 mkdir .fabric
-~~~
+```
 
 {% details .fabric %}
 
@@ -306,22 +306,26 @@ It is important that you populate both `.fabric` and `.ssh` prior to building th
 
 {% enddetails %}
 
+
 {% details Building Image %}
 
 Build the image, then launch
 
-~~~bash
+```bash
 docker compose build --no-cache
 docker compose up
-~~~
+```
 
-{% enddetails}
+{% enddetails %}
 
 
 {% details Validation %}
 
-Visit `127.0.0.1:8888`
+- Visit `127.0.0.1:8888/lab`
+- Open `start_here.ipynb` then click on `Configure Environment` to open `configure_and_validate.ipynb`. 
+- Run the notebook. 
 
-The following items are to be done in the `configuration_and_validation.ipynb` notebook. 
+{% include figure.liquid path="assets/img/courses/csc468/fabric/fabric-validate.png" max-width="50%" zoomable=true %}
+
 
 {% enddetails %}
