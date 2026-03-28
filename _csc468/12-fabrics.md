@@ -244,10 +244,69 @@ fabric-cli configure setup
 
 You are to clone the following repository
 
+{% details Preparation %}
+
+If you have a Windows machine, run the followings:
+
 ~~~bash
+git config --global core.autocrlf false
 git clone https://github.com/CSC468-WCU/fabric-examples.git
 cd fabric-examples
 ~~~
+
+{% enddetails %}
+
+
+{% details Home Preparation %}
+
+- A home directory for `fabric` service account is available inside the `fabric-examples` directory. Everything inside this directory has been included `.gitginore` file inside this directory. This is to ensure that all credential information 
+are not accidentally pushed back upstream. 
+- You will need to populate this home directory. 
+- Create two directories inside this `home` directory:
+
+~~~bash
+# Make sure that you start out inside fabric-examples. 
+pwd
+cd home
+mkdir .ssh
+mkdir .fabric
+~~~
+
+{% details .fabric %}
+
+- Copy the file `fabric_env.sh.template` into the newly created `.fabric` directory.
+  - Change the file name to `fabric_rc`. 
+  - Change the value `__FABRIC_PROJECT_ID__` with the project id from your Fabric Hub Profile. 
+  - Change the value `__FABRIC_BASTION_USERNAME__` to the Basion ID from your Fabric Hub Profile. 
+- Login into `https://cm.fabric-testbed.net/` to generate a new token. 
+  - Download the generated token file and save them inside `.fabric`. 
+
+{% include figure.liquid path="assets/img/courses/csc468/fabric/fabric-token.png" max-width="50%" zoomable=true %}
+
+{% enddetails %}
+
+{% details .ssh %}
+
+- Go to `https://portal.fabric-testbed.net/` and Log in. 
+- On the top bar, visit `Experiments`, then select `Manage SSH Keys`. 
+- On the `Sliver0` tab, in the `Generate Sliver Key Pair` box
+  - Enter `slice_key` as the name
+  - Enter a short description, perhaps the date when you generated this key pair or the host computer name. 
+  - Generate, then download the `slice_key` and `slice_key.pub` files into this `.ssh` directory. 
+
+{% include figure.liquid path="assets/img/courses/csc468/fabric/generate-slice-key.png" max-width="50%" zoomable=true %}
+
+- Switch to the `Bastion` tab, and do the same thing. 
+  - For the name, enter `fabric-bastion-key`
+  - Generate, then download the `fabric-bastion-key` and `fabric-bastion-key.pub` files into this .ssh directory. 
+
+{% enddetails %}
+
+It is important that you populate both `.fabric` and `.ssh` prior to building the image. 
+
+{% enddetails %}
+
+{% details Building Image %}
 
 Build the image, then launch
 
@@ -256,34 +315,13 @@ docker compose build --no-cache
 docker compose up
 ~~~
 
+{% enddetails}
+
+
+{% details Validation %}
+
 Visit `127.0.0.1:8888`
 
 The following items are to be done in the `configuration_and_validation.ipynb` notebook. 
-
-{% details Token Generation %}
-
-- Login into https://cm.fabric-testbed.net/ to generate a new token. Select Copy, 
-then 
-  - create a new cell in your notebook
-  - Identify the cell with the first line as `%%writefile /home/fabric/.fabric/token.json`. 
-  - Paste the content from the token page into the cell and run the cell. 
-
-{% include figure.liquid path="assets/img/courses/csc468/fabric/fabric-token.png" max-width="50%" zoomable=true %}
-
-{% enddetails %}
-
-{% details Bastion Key Acquisition %}
-
-- Go to `https://portal.fabric-testbed.net/` and Log in. 
-- On the top bar, visit `Experiments`, then select `Manage SSH Keys`. 
-- On the Bastion tab. 
-  - Generate a new Bastion Key Pair
-  - Download the generated public key file
-  - Upload the file to the notebook server. 
-  - Run the `fablib.verify_and_configure()` so that the notebook will pull the generated private key. 
-  - Run the next cell to move the public key into the correct location. 
-  - Rerun the next cell to confirm. 
-
-{% include figure.liquid path="assets/img/courses/csc468/fabric/fabric-bastion.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
