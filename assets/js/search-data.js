@@ -1007,36 +1007,31 @@ ninja.data = [{
           description: "",
           section: "Csc468",handler: () => {
               window.location.href = "/csc468/12-fabrics/";
-            },},{id: "csc468-declarative-provisioning",
-          title: 'Declarative Provisioning',
-          description: "",
-          section: "Csc468",handler: () => {
-              window.location.href = "/csc468/13-terraform/";
             },},{id: "csc468-declarative-configuration-management",
           title: 'Declarative Configuration Management',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/14-ansible/";
+              window.location.href = "/csc468/13-ansible/";
             },},{id: "csc468-docker-swarm",
           title: 'Docker Swarm',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/15-docker-swarm/";
+              window.location.href = "/csc468/14-docker-swarm/";
             },},{id: "csc468-container-security",
           title: 'Container Security',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/16-container-security/";
+              window.location.href = "/csc468/15-container-security/";
             },},{id: "csc468-why-cloud",
           title: 'Why Cloud',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/17-why-cloud/";
+              window.location.href = "/csc468/16-why-cloud/";
             },},{id: "csc468-container-engines-and-platforms",
           title: 'Container Engines and Platforms',
           description: "",
           section: "Csc468",handler: () => {
-              window.location.href = "/csc468/18-docker-podman-singularity/";
+              window.location.href = "/csc468/17-docker-podman-singularity/";
             },},{id: "csc478-",
           title: '',
           description: "",
