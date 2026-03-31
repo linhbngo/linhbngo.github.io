@@ -267,7 +267,7 @@ are not accidentally pushed back upstream.
 ```bash
 # Make sure that you start out inside fabric-examples. 
 pwd
-cd home
+cd home/fabric
 mkdir .ssh
 mkdir .fabric
 ```
