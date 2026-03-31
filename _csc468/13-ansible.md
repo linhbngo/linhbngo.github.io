@@ -50,11 +50,41 @@ toc:
 
 ## Architecture of Ansible
 
-{% details Agentless Design %}
-    - Unlike older tools (Chef/Puppet), Ansible is **Agentless**. It does not require a daemon running on the target machines.
-    - It uses standard SSH, pushing Python modules to the targets, executing them, and tearing them down.
-    - **Inventory:** A file mapping IP addresses to logical groups (e.g., `[managers]`, `[workers]`).
-    - **Playbook:** A YAML file describing the desired state.
+{% details Overall Design %}
+
+- Agentless
+  - Unlike older tools (Chef/Puppet), Ansible is **Agentless**. It does not require a daemon running on the target machines.
+  - It uses standard SSH, pushing Python modules to the targets, executing them, and tearing them down.
+- Idempotency
+  - An Ansible playbook is guaranteed to result in the same system state no matter how many times it is run. 
+- Declarative Syntax:
+  - Users define `what` the system state should look like, and Ansible will handle `how` to achieve it. 
+- Extensible
+  - Support hundreds of built-in modules and allows for custom modules written in Python
+
+{% enddetails %}
+
+
+{% details Components %}
+
+- **Control Node**:
+  - Ansible installation
+  - Playbook deployment
+- **Managed Nodes (Hosts)**:
+  - Computing instances managed by Ansible
+  - Management connection is handled by SSH
+- **Inventory** :
+  - A file mapping IP addresses to the managed hosts (e.g., `[managers]`, `[workers]`), or
+  - A script that query cloud providers for list of current running instances
+- **Modules**:
+  - Small programs that Ansible pushes to the managed nodes to perform tasks (e.g., yum, apt, service, ...)
+  - Core modules are maintained by Ansible
+  - Custom modules can be developed by users
+- **Playbook**:
+  - A YAML file describing the desired state.
+- **Plugins**:
+  - Extend Ansible's core functionality
+
 {% enddetails %}
 
 ##  Hands-on
@@ -76,25 +106,14 @@ node.execute('bash scripts/web_server.sh',  quiet=True, output_file=f"{node.get_
 
 {% enddetails %}
 
-{% details Creating the Playbook %}
-    - We will write a `site.yml` to install Docker on the nodes Terraform just built.
-    ~~~yaml
-    - hosts: all
-      become: yes
-      tasks:
-        - name: Ensure Docker is installed
-          apt:
-            name: docker.io
-            state: present
-        - name: Ensure Docker service is running
-          service:
-            name: docker
-            state: started
-    ~~~
+{% details Declarative Setup using Ansible %}
+
+- Review notes from [web_ansible.ipynb](https://github.com/CSC468-WCU/fabric-examples/blob/main/468_examples/web_ansible/web_ansible.ipynb).
+
 {% enddetails %}
 
-{% details "Executing the Playbook" %}
-    ~~~bash
-    ansible-playbook -i inventory.ini site.yml
-    ~~~
+{% details Challenges %}
+
+Develop an Ansible playbook to setup Docker inside a single-node slice. 
+
 {% enddetails %}
