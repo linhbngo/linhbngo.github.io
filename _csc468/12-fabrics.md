@@ -274,7 +274,7 @@ mkdir .fabric
 
 {% details .fabric %}
 
-- Copy the file `fabric_env.sh.template` into the newly created `.fabric` directory.
+- Copy the file `fabric_env.sh.template` inside `.docker` into the newly created `.fabric` directory.
   - Change the file name to `fabric_rc`. 
   - Change the value `__FABRIC_PROJECT_ID__` with the project id from your Fabric Hub Profile. 
   - Change the value `__FABRIC_BASTION_USERNAME__` to the Basion ID from your Fabric Hub Profile. 
