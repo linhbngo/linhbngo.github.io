@@ -149,7 +149,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-redefining-rigor-from-selecting-talent-to-developing-students-in-computer-science",
+            },{id: "post-the-hidden-obligations-of-teaching",
+        
+          title: "The Hidden Obligations of Teaching",
+        
+        description: "As knowledge becomes abundant, the professor’s work shifts from gatekeeping content to designing structured variance for learning.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/teaching-ai/";
+          
+        },
+      },{id: "post-redefining-rigor-from-selecting-talent-to-developing-students-in-computer-science",
         
           title: "Redefining Rigor: From Selecting Talent to Developing Students in Computer Science",
         
