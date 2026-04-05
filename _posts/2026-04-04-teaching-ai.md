@@ -63,9 +63,9 @@ produce confusion or attrition, the result is often treated as evidence of rigor
 brittle interface that was never designed for real user heterogeneity in the first place.
 
 The flexibility and availability of varied learning interface do not imply that every student will meet the standard simply because the interface 
-is well designed. Even in a course with clear syllabus, detailed lectures materials with many examples, scaffolded practice, and responsive feedback, 
+is well designed. Even in a course with clear syllabus, detailed lecture materials, scaffolded practice, and responsive feedback, 
 some students will still not be ready, able, or willing to meet the demands of the subject within the available time. Good teaching design should not 
-be understood as a promise of universal success. Rather, it is a commitment that failure, when it occurs, should come after the standards were made 
+be understood as a promise of guaranteed success in learning. Rather, it is a commitment that failure, when it occurs, should come after the standards were made 
 legible and the learning pathways were made reasonable. In that sense, another, perhaps also hidden, obligation of teaching is not to eliminate failure, 
 but to ensure that failure is intellectually meaningful rather than merely the byproduct of opaque design.
 
@@ -77,27 +77,27 @@ heterogeneous conditions, the next question is not whether such work matters, bu
 
 ## The Role of AI
 
-This is where AI becomes relevant, not as a substitute for teaching, but as a way to reduce the added labor cost. Some of that is about 
-supporting routine tasks such as first-pass checks for minor requirements, OCR of handwritten work, or preliminary sorting of obvious errors so that faculty 
-attention can be spent where judgment matters more. Some of it is generative by nature such as drafting alternate quizzes, producing rubric skeletons, suggesting 
-lecture variations, or red-teaming course materials from the standpoint of a confused student. It could help with analytical tasks such as surfacing 
-patterns in student errors or identifying changes in performance over time. None of this removes the need for faculty judgment. The point of AI here is not 
-to eliminate the professor, but to make the design and maintenance of pedagogical variance more feasible
-under real conditions of academic labor.
+This is where AI becomes relevant, not as a substitute for teaching, but as a way to reduce the added labor cost. For example, routine tasks 
+such as initial checking for minor requirements or preliminary identification of obvious errors could be done by AI. The time saved can be used 
+for additional preparation of alternative presentations, more examples, and more scaffolding. These 
+later tasks can also be supported with AI. Possible applications can range from drafting alternate quizzes to asking 
+AI to assume various student perspectives to analyze course materials. Engaging with AI in this manner does not remove the need for faculty judgment. 
+Instead, the point is to make the design and maintenance of pedagogical variance more feasible under real conditions of academic labor.
 
 Why should professors do this? Not because every tradition is obsolete, and not because AI is about to make faculty disappear. The better answer is that as 
 knowledge becomes more accessible and pedagogical support more automatable, the distinctive value of professors shifts toward the things that are hardest 
 to commodify such as informed judgment, responsive support, intellectual sequencing, and the ability to decide which forms of variation genuinely serve learning. 
 Faculty who refuse that shift do not protect teaching. Instead, they risk reducing their own role to the parts of teaching that are easiest for institutions to 
 standardize, outsource, or automate. AI matters here because it may change not the purpose of teaching, but the cost of carrying out its previously hidden 
-obligations. If AI-facilitated pedagogy is becoming part of the professional baseline for teaching, then any doctoral programs that prepare future faculty cannot 
+obligations. If AI-facilitated pedagogy is becoming part of the professional baseline for teaching, then doctoral programs that prepare future faculty should not 
 treat it as an elective curiosity. [UNESCO’s framework](https://www.unesco.org/en/articles/ai-competency-framework-teachers) already treats AI pedagogy, ethics, 
 and professional learning as teacher competencies rather than optional extras. The question is no longer whether future educators will work alongside AI-mediated 
-systems, but whether they will be prepared to govern those systems with enough judgment to keep pedagogy human-centered.
+systems, but whether they will be prepared to govern those systems with enough judgment to keep pedagogy human-centered. Of course, the same automation that 
+supports faculty could also be used to replace them, but that outcome depends on institutional choices, not technical necessity.
 
 ## Conclusion
 
-The concluding thought of this essay is that the deeper issue is not about whether professors should remain central to teaching in the age of AI as they 
+The deeper issue is not about whether professors should remain central to teaching in the age of AI as they 
 definitely should. However, the basis of that centrality is changing. It lies less in controlling access to knowledge and more in exercising informed 
 judgment over how knowledge is disseminated for learners who do not all arrive through the same door. If teaching and learning are distinct, then teaching 
 can no longer be defended as mere presentation. It is design work. And increasingly, it is design work under conditions of visible heterogeneity.
