@@ -16,12 +16,66 @@ tikzjax: true
 typograms: true
 
 toc:
-  - name: Set up environment
   - name: Docker Swarm
   - name: Running Applications on Swarm
+  - name: CloudLab Setup
+
 ---
 
-## Set up environment 
+
+## Docker Swarm
+
+{% details SwarmKit %}
+
+- Open source tool kit to build multi-node systems
+- Reusable library.
+- Plumbing part of the Docker ecosystem.
+- Adopted into Docker as Docker Swarm
+
+{% enddetails %}
+
+{% details SwarmKit Features %}
+
+- Highly-available, distributed store based on Raft consensus algorithm.
+- Raft was developed by Ongaro, Diego, and John Ousterhout at Stanford.
+- [In search of an understandable consensus algorithm. In 2014 USENIX Annual Technical Conference, pp. 305-319. 2014.](https://www.usenix.org/system/files/conference/atc14/atc14-paper-ongaro.pdf)
+    - Dynamic reconfiguration of Raft without interrupting cluster operations
+    - Services managed with declarative API
+    - Integration with overlay networks and load balancing
+    - Strong emphasis on security
+
+{% enddetails %}
+
+{% details SwarmKit Concepts %}
+
+- A cluster will be at least one node.
+- A node can be a manager and/or a worker.
+- A manager actively takes part in the Raft consensus and keeps the Raft log.
+- One manager is elected as the leader; other manager merely forward requests to it.
+  - The managers expose the SwarmKit API.
+- You can talk to a manager using the SwarmKit API.
+  - Using the API, you can indicate that you want to run a service.
+  - A service is specified by its desired state: which image, how many instances…
+- The leader uses different subsystems to break down services into tasks: 
+  - orchestrator, scheduler, allocator, dispatcher.
+  - A task corresponds to a specific container, assigned to a specific node.
+- Nodes know which tasks should be running, and will start or stop containers accordingly.
+- The workers get their instructions from the managers.
+- Both workers and managers can run containers.
+
+{% enddetails %}
+
+
+## Running Applications on Swarm
+
+- This is to be done on FABRIC. 
+- Refresh your `fabric-examples` repository with `git pull`.
+- Open `468_examples/docker_swarm` and launch the `docker_swarm.ipynb`. 
+
+
+## CloudLab Setup
+
+This helps deploy Docker Swarm for your project. 
 
 {% details Update CloudLab Git Repository %}
 
@@ -40,50 +94,8 @@ toc:
     - `MB of RAM in each node`: 4096
 
 {% enddetails %}
----
 
-## Docker Swarm
 
-{% details SwarmKit %}
-
-- Open source tool kit to build multi-node systems
-- Reusable library.
-- Plumbing part of the Docker ecosystem.
-- Adopted into Docker as Docker Swarm
-
-{% enddetails %}
-{% details SwarmKit Features %}
-
-- Highly-available, distributed store based on Raft consensus algorithm.
-- Raft was developed by Ongaro, Diego, and John Ousterhout at Stanford.
-- [In search of an understandable consensus algorithm. In 2014 USENIX Annual Technical Conference, pp. 305-319. 2014.](https://www.usenix.org/system/files/conference/atc14/atc14-paper-ongaro.pdf)
-    - Dynamic reconfiguration of Raft without interrupting cluster operations
-    - Services managed with declarative API
-    - Integration with overlay networks and load balancing
-    - Strong emphasis on security
-
-{% enddetails %}
-{% details SwarmKit Concepts %}
-
-- A cluster will be at least one node.
-- A node can be a manager and a worker.
-- A manager actively takes part in the Raft consensus and keeps the Raft log.
-- You can talk to a manager using the SwarmKit API.
-- One manager is elected as the leader; other manager merely forward requests to it.
-- The workers get their instructions from the managers.
-- Both workers and managers can run containers.
-
-{% enddetails %}
-{% details SwarmKit Concepts %}
-
-- The managers expose the SwarmKit API.
-- Using the API, you can indicate that you want to run a service.
-- A service is specified by its desired state: which image, how many instances…
-- The leader uses different subsystems to break down services into tasks: orchestrator, scheduler, allocator, dispatcher.
-- A task corresponds to a specific container, assigned to a specific node.
-- Nodes know which tasks should be running, and will start or stop containers accordingly.
-
-{% enddetails %}
 {% details Deploying your swarm %}
 
 - By default, SwarmKit features are asleep until you active Swarm mode
@@ -113,21 +125,7 @@ docker node ls
 {% include figure.liquid path="assets/img/courses/csc468/docker-swarm/swarm-nodes.png" width="50%" zoomable=true %}
 
 {% enddetails %}
----
-    
-## Running Applications on Swarm
 
-{% details Local registry %}
-
-- Build images for application,
-- Ship these images with a registry,
-- Run services using these images.
-    - Why?
-    - For docker-compose up, images are built locally for services.
-    - For a Swarm, images need to be distributed.
-    - The easiest way is to use a Docker registry.
-
-{% enddetails %}
 {% details Hands-on: Launching a registry inside Swarm %}
 
 - Run the following on the head node
