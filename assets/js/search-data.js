@@ -80,7 +80,7 @@ ninja.data = [{
                 window.location.href = "/csc331/";
               },
             },{id: "dropdown-software-engineering-dev",
-              title: "Software Engineering. (dev)",
+              title: "Software Engineering (dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
@@ -127,20 +127,6 @@ ninja.data = [{
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/csc578/";
-              },
-            },{id: "dropdown-linux-system-administration-and-security-dev",
-              title: "Linux System Administration and Security (dev)",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/csc586/";
-              },
-            },{id: "dropdown-access-control-in-the-cloud-dev",
-              title: "Access Control in the Cloud (dev)",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/csc588/";
               },
             },{id: "dropdown-machine-learning-on-mcu-dev",
               title: "Machine Learning on MCU(dev)",
@@ -718,43 +704,38 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/setup/";
-            },},{id: "csc402-",
-          title: '',
-          description: "",
-          section: "Csc402",handler: () => {
-              window.location.href = "/csc402/00-client/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-syllabus",
+          title: 'Syllabus',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/00-syllabus/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-introduction",
+          title: 'Introduction',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/01-introduction/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-working-in-a-team",
+          title: 'Working in a Team',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/02-team/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-client-interactions",
+          title: 'Client interactions',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/03-client-interactions/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-software-projects-and-process-models",
+          title: 'Software Projects and Process Models',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/04-projects-process/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-working-in-a-team",
+          title: 'Working in a Team',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/05-planning/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-requirements-i",
+          title: 'Requirements I',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/06-requirements-I/";
@@ -763,33 +744,33 @@ ninja.data = [{
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/07-requirements-II/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-reflection-observations-fall-2025",
+          title: 'Reflection Observations (Fall 2025)',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/08-reflections/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-presentation",
+          title: 'Presentation',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/09-presentation/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-licensing-and-legal-considerations",
+          title: 'Licensing and Legal Considerations',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/10-legal/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-testing",
+          title: 'Testing',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/11-testing/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-architectures",
+          title: 'Architectures',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/12-architectures/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-more-architectures-styles",
+          title: 'More Architectures Styles',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/13-architectures-2/";
@@ -798,8 +779,8 @@ ninja.data = [{
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/14-ux/";
-            },},{id: "csc402-",
-          title: '',
+            },},{id: "csc402-models",
+          title: 'Models',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/15-models/";
@@ -1343,131 +1324,6 @@ ninja.data = [{
           description: "",
           section: "Csc578",handler: () => {
               window.location.href = "/csc578/index/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/00-syllabus/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/01-introduction/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/02-sys-admin/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/03-access-control/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/04-process-control/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/05-file-system/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/06-user-management/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/07-software-installation/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/08-bash-scripting/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/09-more-bash/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/10-nfs/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/11-sso/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/12-practice/";
-            },},{id: "csc586-",
-          title: '',
-          description: "",
-          section: "Csc586",handler: () => {
-              window.location.href = "/csc586/index/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/00-syllabus/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/01-introduction/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/02-cloud/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/03-access-control/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/04-rbac/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/05-system-resources/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/06-kubernetes/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/07-cloud-security/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/08-core-rbac/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/09-kubernetes-registry/";
-            },},{id: "csc588-",
-          title: '',
-          description: "",
-          section: "Csc588",handler: () => {
-              window.location.href = "/csc588/index/";
             },},{id: "news-a-simple-inline-announcement",
           title: 'A simple inline announcement.',
           description: "",
