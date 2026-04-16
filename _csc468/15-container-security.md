@@ -247,15 +247,12 @@ docker run --rm hello-world
   - **What claims are attached to it?**
   - **How was it built, and from what source?**
 - A better modern vocabulary is:
-
   - **Signature**
     - proves that a trusted identity signed a specific artifact.
-    - Example tools: **Sigstore Cosign** and **Notation**. :contentReference[oaicite:2]{index=2}
-
+    - Example tools: **Sigstore Cosign** and **Notation**. 
   - **Attestation**
     - signed metadata attached to an image, such as an **SBOM**, vulnerability/exemption data, or custom policy claims.
-    - Docker BuildKit generates attestations and stores them with the image; Sigstore Cosign can also sign and verify in-toto attestations. :contentReference[oaicite:3]{index=3}
-
+    - Docker BuildKit generates attestations and stores them with the image; Sigstore Cosign can also sign and verify in-toto attestations. 
   - **Provenance**
     - a specific kind of attestation describing **how the image was built**:
       - build timestamps,
@@ -263,25 +260,14 @@ docker run --rm hello-world
       - source repository and revision,
       - build materials,
       - platform,
-      - reproducibility metadata. :contentReference[oaicite:4]{index=4}
+      - reproducibility metadata.
 
-- Practical course guidance:
-  - teach students to pin and deploy by **digest** when possible,
-  - treat signatures as **identity and integrity** checks,
-  - treat attestations and provenance as **supply-chain evidence**,
-  - and present **Sigstore** or **Notation** as forward-looking verification workflows. :contentReference[oaicite:5]{index=5}
+{% enddetails %}
 
-- Example of current Docker-era build metadata:
 
-```bash
-docker buildx build --provenance=true --sbom=true --push -t myrepo/app:1.0 .
-```
+{% details Hands-on: Another Registry Besides Docker Hub %}
 
-BuildKit can attach provenance and SBOM attestations to the image,
-and Docker documents that provenance attestations at mode=min are added by default.
-Bottom line:
-Do not teach DCT as the future.
-Teach signed images + signed metadata + build provenance instead.
+Fork from the following [repository](https://github.com/CSC468-WCU/signed_hello)
 
 {% enddetails %}
 

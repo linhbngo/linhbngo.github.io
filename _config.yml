@@ -187,12 +187,6 @@ collections:
   csc578:
     output: true
     permalink: /csc578/:path/
-  csc586:
-    output: true
-    permalink: /csc586/:path/
-  csc588:
-    output: true
-    permalink: /csc588/:path/
   books:
     output: true
   news:

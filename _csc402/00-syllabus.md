@@ -1,21 +1,30 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc402
-course: CSC 402: Software Engineering.
-title: "CSC 402: Software Engineering."
+order: 1
+title: "Syllabus"
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
 toc:
   - name: General Information
   - name: Course Information
-  - name: Required Materials:
+  - name: Required Materials
   - name: Course Description
   - name: Learning Objectives
-  - name: Assessments and Grading:
+  - name: Assessments and Grading
   - name: Resources for Student Success
   - name: Course Topics and Schedules (subject to modification)
 ---
-
-# CSC 402: Software Engineering. 
 
 ## General Information
 
@@ -61,7 +70,7 @@ technical writing, presentations, and practical software development as part of 
   aspects of the software development process. 
   8. Understand various licenses and legal consideration in software development. 
 
-### BS in CS Program Objectives (CSPO):
+### BS in CS Program Objectives (CSPO)
 
   1. Be able to apply theory, techniques, and methodologies to create 
   and/or maintain high quality computing systems that function effectively 
@@ -72,7 +81,7 @@ technical writing, presentations, and practical software development as part of 
   science and have the communication skills and quantitative/analytical skills necessary 
   for career advancement. (CSLO 2, 6, 8)
 
-### ABET Objectives (APO):
+### ABET Objectives (APO)
 
 1. ABET 1: Analyze a complex computing problem and to apply principles of computing 
 and other relevant disciplines to identify solutions. 

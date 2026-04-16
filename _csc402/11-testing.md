@@ -1,15 +1,27 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc402
-course: CSC 402: Software Engineering.
+order: 12
 title: "Testing"
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
 toc:
   - name: Style Guides
   - name: Portability
   - name: Testing
   - name: Dynamic analysis
 ---
+
 # Testing
 
 ## Style Guides

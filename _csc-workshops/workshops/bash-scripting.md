@@ -4,9 +4,11 @@ Based on previous materials by Dr. Robert Kline
 
 ## 1. Bash Script
 
-???note Overview
+{% details note Overview %}
 
 
+
+{% enddetails %}
 - Just like the script for a movie that tells the actors what they should say and 
 do, a script for a computer tells the computer what is should do or say.
 - A bash script is a plain text file which contains a series of commands. 
@@ -14,9 +16,11 @@ do, a script for a computer tells the computer what is should do or say.
 
 ```
 
-???note Setup
+{% details note Setup %}
 
 
+
+{% enddetails %}
 - In your CloudLab experiment, run the following:
 
 ~~~bash
@@ -38,9 +42,11 @@ have to consult the online manual: [https://linux.die.net/man/1/bash](https://li
 
 ```
 
-???note Executing a bash script
+{% details note Executing a bash script %}
 
 
+
+{% enddetails %}
 - Bash script files can be named as you like. Unlike Windows systems, 
 the extension is not an essential feature which determines the usage. 
 The `.sh` extension is merely a convention which can assist editor 
@@ -64,9 +70,11 @@ bash hello.sh
 
 ```
 
-???note Self-executing bash script
+{% details note Self-executing bash script %}
 
 
+
+{% enddetails %}
 -	The file itself must be executable by you. 
 -	If you are the owner of the script you can add that 
 permission with statements like:
@@ -101,9 +109,11 @@ chmod +x hello.sh
 
 ## 2. The Bash Language
 
-???note Overview
+{% details note Overview %}
 
 
+
+{% enddetails %}
 - The Bash language has three main functions:
   -	execute commands interactively
   -	extend the set of commands via scripts
@@ -115,9 +125,11 @@ like, say, Perl, Python or TCL.
 
 ```
 
-???note Interactive Execution
+{% details note Interactive Execution %}
 
 
+
+{% enddetails %}
 -	When a shell is run interactively the lines of a bash program a
 re created one-by-one. 
 -	Shell code usually is considers the script to be interactive if the 
@@ -135,9 +147,11 @@ necessary in script execution such as:
 
 ## 3. Variables and Values
 
-???note Overview
+{% details note Overview %}
 
 
+
+{% enddetails %}
 - The program `scalars.sh` illustrates basic principles of 
 Bash variables and values. In particular, the only scalar data 
 type is a string. Values are created in several ways:
@@ -150,9 +164,11 @@ characters
 
 ```
 
-???note String operations
+{% details note String operations %}
 
 
+
+{% enddetails %}
 -	The most basic operation on strings is concatenation, which, in Bash, is simply juxtaposition. 
 In general, whitespace sequences are collapsed into a single blank; whitespace sequences at the 
 ends of strings are truncated (i.e., trimmed).
@@ -174,9 +190,11 @@ more scalars.sh
 
 ```
 
-???note echo and printf
+{% details note echo and printf %}
 
 
+
+{% enddetails %}
 - Although echo is the most common output statement, Bash 
 also supports the C-style printf statement, e.g.,
 
@@ -219,9 +237,11 @@ echo -e "\033[01;31m HELLO \033[0m THERE"
 
 ## 4. More about Bash
 
-???note Other types and declarations
+{% details note Other types and declarations %}
 
 
+
+{% enddetails %}
 - Bash, just as other languages, does support additional structured data types in the 
 form of lists and maps (associative lists). 
 - It also provides a way of assigning a type to a variable through a the declare 
@@ -234,9 +254,11 @@ more scalar-declares.sh
 
 ```
 
-???note Command-line arguments
+{% details note Command-line arguments %}
 
 
+
+{% enddetails %}
 - One of the primary purpose of the bash language is to extend the set of 
 commands. For this reason Bash provides simple access to the command-line 
 parameters. Bash uses the variables `$1`, `$2`, etc. The expression `$0` 
@@ -253,9 +275,11 @@ $ ./args.sh "a     b"   c
 
 ## 5. Bash condition
 
-???note if-else statements
+{% details note if-else statements %}
 
 
+
+{% enddetails %}
 - The bash if-else syntax is unusual compared to other languages. 
 The format looks like this:
 
@@ -276,9 +300,11 @@ portion like this: `if ...; then`
 
 ```
 
-???note Program exit status
+{% details note Program exit status %}
 
 
+
+{% enddetails %}
 ~~~bash
 more pingtest.sh
 ./pingtest.sh 
@@ -296,9 +322,11 @@ special variable which gives the exit status of a previous command (and so it ha
 the second echo statement).
 ```
 
-???note The && and || operators
+{% details note The && and || operators %}
 
 
+
+{% enddetails %}
 - The `&&` and `||` operators are much the same sense as other 
 languages using short-circuit execution. 
 - In Bash they are often used to express the chaining of operations based on 
@@ -307,9 +335,11 @@ we only run the compiled program if the compilation succeeds.
 
 ```
 
-???note Boolean expressions in test statements
+{% details note Boolean expressions in test statements %}
 
 
+
+{% enddetails %}
 - What is considered as boolean expression in an if test uses this syntax:
 
 ~~~bash
@@ -342,9 +372,11 @@ more falsetest.sh
 
 ```
 
-???note Unary file information operators
+{% details note Unary file information operators %}
 
 
+
+{% enddetails %}
 - A number of common Bash constructions use the unary "–" prefix file test operators, e.g.,
   - `-e` NAME: NAME exists as a file (of some type)
   - `-f` NAME: NAME exists as a regular file
@@ -359,9 +391,11 @@ fi
 
 ```
 
-???note Binary test operators
+{% details note Binary test operators %}
 
 
+
+{% enddetails %}
 - The `if` operator (and other tests) can be used with boolean expressions 
 using appropriate syntax. 
 - The test expressions are normally within single brackets [ .. ]. 
@@ -382,9 +416,11 @@ more test-values.sh
 
 ```
 
-???note Subtle syntax issues
+{% details note Subtle syntax issues %}
 
 
+
+{% enddetails %}
 - The way Bash deals with strings has certain unexpected consequences. 
 Consider the program `errors.sh`:
 
@@ -403,9 +439,11 @@ interpreted the inserted expression `"a b"` as the operator `a` with argument `b
 
 ```
 
-???note String patterns and the case statement
+{% details note String patterns and the case statement %}
 
 
+
+{% enddetails %}
 -	Bash uses primitive globbing patterns for various matching operations. 
 - The most common is the usage of `*` which matches any sequence of characters. 
 - Less common is `?` which matches any single character and even less common are 
@@ -437,9 +475,11 @@ esac
 
 ## 6. Bash loop
 
-???note Loops
+{% details note Loops %}
 
 
+
+{% enddetails %}
 Bash has both for and while loops. However, the type of control for these is typically not numerical. The most common looping structure in Bash is the for/in structure like this:
 for x in ...
 do
@@ -459,9 +499,11 @@ done
 
 ```
 
-???note Reading lines in Bash
+{% details note Reading lines in Bash %}
 
 
+
+{% enddetails %}
 - The while loop also has an advantage in its ability to read live input. 
 For example, this simple program reads and echos input lines:
 
@@ -493,9 +535,11 @@ the pipe operation and so its value cannot be used upon exiting the while loop.
 
 ```
 
-???note Command-line options
+{% details note Command-line options %}
 
 
+
+{% enddetails %}
 - Command-line arguments commonly consist of option arguments 
 beginning with a "-". Consider, for example, the follow `unzip` command 
 which extracts `FILE.zip` into `/usr/local`, 
@@ -568,9 +612,11 @@ presence of the "b" flag by: `if [ "$opt_b" ]; then ...`
 
 ## 7. More Bash
 
-???note Built-in string processing operations
+{% details note Built-in string processing operations %}
 
 
+
+{% enddetails %}
 - The Bash language itself has very unintuitive string-processing operations. 
 Later we'll see how to use UNIX commands to do string processing.
 
@@ -581,9 +627,11 @@ more string-processing.sh
 
 ```
 
-???note Functions
+{% details note Functions %}
 
 
+
+{% enddetails %}
 -	Functions offer an improvement of aliases. They must be defined before being used. In practice, they are often grouped into Bash files which are sourced within the script which uses them.
 -	Functions are supposed to emulate the way commands work. They do not return values in the usual way; any value sent back by the return statement must be an integer which acts like the exit code of an executable.
 
@@ -594,9 +642,11 @@ more functions.sh
 
 ```
 
-???note System command string processing
+{% details note System command string processing %}
 
 
+
+{% enddetails %}
 -	The Bash language relies heavily on the UNIX-like environment in which it resides in order to create utility scripts. This environment includes many standard UNIX string processing operations such as these:
   -	`sed`: (stream editor) for regular-expression substitution
   -	`grep`: can be used to perform match testing with -c (count) option; the -e option uses regular expression instead of glob patterns

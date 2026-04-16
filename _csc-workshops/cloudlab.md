@@ -3,9 +3,11 @@
 
 ## 1. CloudLab    
  
-???note Overview
+{% details note Overview %}
 
 
+
+{% enddetails %}
 - Visit [CloudLab's website](https://cloudlab.us)
 - Click "Request an Account" 
 - Fill in the information as shown in the following figure and click "Submit Request"
@@ -13,7 +15,7 @@
 ation email to arrive in your wcupa.edu mailbox. You might have to 
 resubmit a new request if you don't see this email in about half an hour. 
 
-![Account creation forms](fig/cloudlab/01.png)
+{% include figure.liquid path="fig/cloudlab/01.png" alt="Account creation forms" %}
 
 - After your account is confirmed, the instructor will be able to see your application 
 and can grant you access to CloudLab. 
@@ -24,25 +26,31 @@ your username, then select `Join Existing Project` and provide the name `SecureE
 
 ## 2. Setup SSH
 
-???note Command line terminal software 
+{% details note Command line terminal software %}
 
- 
+
+
+{% enddetails %}
 - Download and install [Windows Terminal from the Microsoft Store](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab).
 
 ```
 
-???note Command line terminal software on Mac
+{% details note Command line terminal software on Mac %}
 
 
+
+{% enddetails %}
 - Use the Search box (magnifying glass on top-right of your Mac Desktop) and 
 type in the word `Terminal`. 
 - Launch the resulting Terminal app. 
 
 ```
 
-???note SSH setup
+{% details note SSH setup %}
 
 
+
+{% enddetails %}
 - First, you need to check to see if you already have SSH key. If you have done `csc231` or are working 
 in classes using GitHub classroom, it is likely that you already setup your SSH keys. 
   - Run the following command
@@ -53,7 +61,7 @@ cat ~/.ssh/id_rsa.pub
 
 - If you have the SSH keys, you will see the following:
 
-![Public key generated](fig/cloudlab/04.png)
+{% include figure.liquid path="fig/cloudlab/04.png" alt="Public key generated" %}
 
 :::{admonition} No SSH Key
 
@@ -66,7 +74,7 @@ cd
 ssh-keygen -t rsa
 ~~~
 
-![Generate SSH keys](fig/cloudlab/03.png)
+{% include figure.liquid path="fig/cloudlab/03.png" alt="Generate SSH keys" %}
 
 - Run the following command to display the public key
 
@@ -74,7 +82,7 @@ ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
 ~~~
 
-![Public key generated](fig/cloudlab/04.png)
+{% include figure.liquid path="fig/cloudlab/04.png" alt="Public key generated" %}
 
 :::
 
@@ -82,11 +90,11 @@ cat ~/.ssh/id_rsa.pub
 character)
 - Log into CloudLab, click on your username (top right) and select `Manage SSH Keys`:
 
-![Manage SSH Keys box](fig/cloudlab/05.png)
+{% include figure.liquid path="fig/cloudlab/05.png" alt="Manage SSH Keys box" %}
 
 - Paste the key into the `Key` box and click `Add Key`: 
 
-![Paste SSH keys](fig/cloudlab/06.png)
+{% include figure.liquid path="fig/cloudlab/06.png" alt="Paste SSH keys" %}
 
 ```
 
@@ -94,9 +102,11 @@ character)
 
 ## 3. CloudLab Profiles and Experiments
 
-???note Profile creation and experiment instantiation
+{% details note Profile creation and experiment instantiation %}
 
 
+
+{% enddetails %}
 - Login to your CloudLab account, click `Experiments` on top left, 
 select `My Profiles`. 
 - Click on `Project Profiles` tab

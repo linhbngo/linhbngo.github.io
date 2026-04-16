@@ -8,21 +8,23 @@ Docker Dekstop setup. A quick guide is shown below. A more detailed workshop on
 getting yourself familiar with Docker can be found at 
 [Introduction to Docker](intro-docker.md)
 
-!!!warning "Older version of Docker Desktop"
+{% details warning Older version of Docker Desktop %}
 
-    If you had previously installed Docker Desktop on your system, you need to 
-    make sure that what you have installed is up to date. The latest Docker Desktop 
-    and the accompanying Docker Engine contain many useful tools to help administrating 
-    your images and containers. 
 
-    As of Summer 2025, this material is tested on:
-        - Docker Dekstop version `4.41.2 (191736)`
-        - Docker Engine: `28.1.1`
-        - Docker Compose: `v2.35.1-desktop.1`
+If you had previously installed Docker Desktop on your system, you need to 
+make sure that what you have installed is up to date. The latest Docker Desktop 
+and the accompanying Docker Engine contain many useful tools to help administrating 
+your images and containers. 
 
-    It is possible that by the time that you read this setup, the versions you have 
-    will be higher. That would be a good thing!
+As of Summer 2025, this material is tested on:
+    - Docker Dekstop version `4.41.2 (191736)`
+    - Docker Engine: `28.1.1`
+    - Docker Compose: `v2.35.1-desktop.1`
 
+It is possible that by the time that you read this setup, the versions you have 
+will be higher. That would be a good thing!
+
+{% enddetails %}
 - Links to download and install Docker Desktop
     - [Mac](https://docs.docker.com/desktop/setup/install/mac-install/)
     - [Windows](https://docs.docker.com/desktop/setup/install/windows-install/)
@@ -31,27 +33,31 @@ getting yourself familiar with Docker can be found at
     - [Linux](https://docs.docker.com/desktop/setup/install/linux/)
     - Successful installation and startup of Docker will show the following application
         - Screenshot is taken on a Mac, but the GUI should be the same across platforms
-        ![](fig/docker/docker-desktop-mac.png)
+        {% include figure.liquid path="fig/docker/docker-desktop-mac.png" %}
 
-!!!warning "Docker Desktop Terminal"
-    - The most recent version of Docker Desktop comes with a built-in Terminal. 
-    - If you are running the latest Docker Desktop version (4.35.1), this is a default feature 
-    available on the lower right cornder of the GUI. 
-    - For earlier versions, this could show up as a beta feature. 
+{% details warning Docker Desktop Terminal %}
 
-    ![](fig/docker/docker-desktop-mac-terminal.png)
+- The most recent version of Docker Desktop comes with a built-in Terminal. 
+- If you are running the latest Docker Desktop version (4.35.1), this is a default feature 
+available on the lower right cornder of the GUI. 
+- For earlier versions, this could show up as a beta feature. 
 
-    - The remainder of this workshop will use the Docker Desktop Terminal app for 
-    consistency purpose. All the CLI docker commands can be executed on the standard 
-    Linux-based terminal of Mac and Linux platforms. 
+{% include figure.liquid path="fig/docker/docker-desktop-mac-terminal.png" %}
 
-!!!tip "Docker Hub"
-    - Docker Hub is one of the public repository for Docker images (think GitHub for 
-    container images). 
-    - You should register for Docker Hub account at [https://hub.docker.com](https://hub.docker.com) 
-    and use it to log into your Docker Desktop environment (similar to how you link your 
-    GitHub account to GitHub Desktop, if you use GitHub Desktop).
+- The remainder of this workshop will use the Docker Desktop Terminal app for 
+consistency purpose. All the CLI docker commands can be executed on the standard 
+Linux-based terminal of Mac and Linux platforms. 
 
+{% enddetails %}
+{% details tip Docker Hub %}
+
+- Docker Hub is one of the public repository for Docker images (think GitHub for 
+container images). 
+- You should register for Docker Hub account at [https://hub.docker.com](https://hub.docker.com) 
+and use it to log into your Docker Desktop environment (similar to how you link your 
+GitHub account to GitHub Desktop, if you use GitHub Desktop).
+
+{% enddetails %}
 ## 2. CSC418-587
 
 ## 3. Distributed and Parallel Programming

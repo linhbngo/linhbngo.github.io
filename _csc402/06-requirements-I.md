@@ -1,10 +1,21 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc402
-course: CSC 402: Software Engineering.
+order: 7
 title: "Requirements I"
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
 ---
+
 # Requirements I
 
 {% details Purpose of requirements %}

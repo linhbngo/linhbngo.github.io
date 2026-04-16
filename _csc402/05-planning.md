@@ -1,9 +1,20 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc402
-course: CSC 402: Software Engineering.
+order: 6
 title: "Working in a Team"
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
 toc:
   - name: Objectives
   - name: Feasibility studies are difficult
@@ -11,6 +22,7 @@ toc:
   - name: Milestones and deliverables
   - name: Initial preparation steps
 ---
+
 # Working in a Team
 
 ## Objectives

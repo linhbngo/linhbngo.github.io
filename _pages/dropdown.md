@@ -26,7 +26,7 @@ children:
   - title: Operating Systems (dev)
     permalink: /csc331/
   - title: divider
-  - title: Software Engineering. (dev)
+  - title: Software Engineering (dev)
     permalink: /csc402/
   - title: divider
   - title: Distributed and Parallel Computing (dev)
@@ -46,12 +46,6 @@ children:
   - title: divider
   - title: Cloud Systems Engineering (dev)
     permalink: /csc578/
-  - title: divider
-  - title: Linux System Administration and Security (dev)
-    permalink: /csc586/
-  - title: divider
-  - title: Access Control in the Cloud (dev)
-    permalink: /csc588/
   - title: divider
   - title: Machine Learning on MCU(dev)
     permalink: /csc574/

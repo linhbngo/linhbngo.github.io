@@ -1,10 +1,21 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc402
-course: CSC 402: Software Engineering.
+order: 10
 title: "Presentation"
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
 ---
+
 # Presentation
 
 {% details Presentations in software engineering %}

@@ -1,6 +1,8 @@
 # SEED Labs – Packet Sniffing and Spoofing Lab
 
-???note Copyright © 2006 - 2016 by Wenliang Du.
+{% details note Copyright © 2006 - 2016 by Wenliang Du. %}
+
+{% enddetails %}
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 
 4.0 International License. If you remix, transform, or build upon the material, 
 this copyright notice must be left intact, or reproduced in a way that is reasonable 
@@ -40,7 +42,7 @@ In this lab, we will use three machines that are connected to the same LAN. We c
 three containers. Figure 1 depicts the lab environment setup using containers. We will do all the attacks on
 the attacker container, while using the other containers as the user machines.
 
-![Lab environment setup](fig/labs/3-network.png)
+{% include figure.liquid path="fig/labs/3-network.png" alt="Lab environment setup" %}
 
 Files needed for this lab are included in [Labsetup.zip](https://seedsecuritylabs.org/Labs_20.04/Files/Sniffing_Spoofing/Labsetup.zip). To download 
 the lab files to your CloudLab machine, run the followings:
@@ -77,7 +79,9 @@ docker ps --format "{{.ID}} {{.Names}}"
 docker exec -it <id> /bin/bash
 ~~~
 
-???note Note
+{% details note Note %}
+
+{% enddetails %}
 You should plan to launch three separate terminals to login to 
 your CloudLab experiment, so that you can `docker exec`
 into the three containers easily

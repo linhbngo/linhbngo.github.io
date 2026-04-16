@@ -1,6 +1,8 @@
 # SEED Labs – Environment Variable and Set-UID Program
 
-???note Copyright © 2006 - 2016 by Wenliang Du.
+{% details note Copyright © 2006 - 2016 by Wenliang Du. %}
+
+{% enddetails %}
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 
 4.0 International License. If you remix, transform, or build upon the material, 
 this copyright notice must be left intact, or reproduced in a way that is reasonable 
@@ -43,9 +45,11 @@ unzip Labsetup.zip
 cd Labsetup
 ~~~
 
-???note Task 1: Manipulating Environment Variables
+{% details note Task 1: Manipulating Environment Variables %}
 
 
+
+{% enddetails %}
 In this task, we study the commands that can be used to set and unset environment 
 variables. We are using Bash in the seed account. The default shell that a user uses 
 is set in the `/etc/passwd` file (the last field of each entry). You can change this 
@@ -58,9 +62,11 @@ interested in some particular environment variables, such as `PWD`, you can use 
 
 ```
 
-???note Task 2: Passing Environment Variables from Parent Process to Child Process
+{% details note Task 2: Passing Environment Variables from Parent Process to Child Process %}
 
 
+
+{% enddetails %}
 In this task, we study how a child process gets its environment variables from its 
 parent. In Unix, `fork()` creates a new process by duplicating the calling process. 
 The new process, referred to as the child, is an exact duplicate of the calling 
@@ -110,9 +116,11 @@ your conclusion.
 
 ```
 
-???note Task 3: Environment Variables and execve()
+{% details note Task 3: Environment Variables and execve() %}
 
 
+
+{% enddetails %}
 In this task, we study how environment variables are affected when a new program is 
 executed via `execve()`. The function `execve()` calls a system call to load a new command 
 and execute it; this function never returns. No new process is created; instead, the 
@@ -146,9 +154,11 @@ environment variables.
 
 ```
 
-???note Task 4: Environment Variables and system()
+{% details note Task 4: Environment Variables and system() %}
 
 
+
+{% enddetails %}
 In this task, we study how environment variables are affected when a new program 
 is executed via the `system()` function. This function is used to execute a command, 
 but unlike `execve()`, which directly executes a command, `system()` actually executes 
@@ -173,9 +183,11 @@ int main() {
 
 ```
 
-???note Task 5: Environment Variable and Set-UID Programs
+{% details note Task 5: Environment Variable and Set-UID Programs %}
 
 
+
+{% enddetails %}
 Set-UID is an important security mechanism in Unix operating systems. When a Set-UID 
 program runs, it assumes the owner’s privileges. For example, if the program’s owner 
 is root, when anyone runs this program, the program gains the root’s privileges during 
@@ -234,9 +246,11 @@ you, describe them.
 
 ```
 
-???note Task 6: The PATH Environment Variable and Set-UID Programs
+{% details note Task 6: The PATH Environment Variable and Set-UID Programs %}
 
 
+
+{% enddetails %}
 Because of the shell program invoked, calling `system()` within a Set-UID program is 
 quite dangerous. This is because the actual behavior of the shell program can be 
 affected by environment variables, such as `PATH`; these environment variables are 
@@ -283,9 +297,11 @@ commands to link `/bin/sh` to `/bin/zsh`: `sudo ln -sf /bin/zsh /bin/sh`
 
 ```
 
-???note Task 7: The LD_PRELOAD Environment Variable and Set-UID Programs
+{% details note Task 7: The LD_PRELOAD Environment Variable and Set-UID Programs %}
 
 
+
+{% enddetails %}
 In this task, we study how Set-UID programs deal with some of the environment 
 variables. Several environment variables, including `LD_PRELOAD`, `LD_LIBRARY_PATH, 
 and other `LD*` influence the behavior of dynamic loader/linker. A dynamic loader/linker 
@@ -355,9 +371,11 @@ figure out the main causes, and explain why the behaviors in Step 2 are differen
 
 ```
 
-???note Task 8: Invoking External Programs Using system() versus execve()
+{% details note Task 8: Invoking External Programs Using system() versus execve() %}
 
 
+
+{% enddetails %}
 Although `system()` and `execve()` can both be used to run new programs, `system()` 
 is quite dangerous if used in a privileged program, such as Set-UID programs. We have 
 seen how the `PATH` environment variable affect the behavior of `system()`, because the 

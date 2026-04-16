@@ -1,6 +1,8 @@
 # SEED Labs – Secret Encryption Lab
 
-???note Copyright © 2006 - 2016 by Wenliang Du.
+{% details note Copyright © 2006 - 2016 by Wenliang Du. %}
+
+{% enddetails %}
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 
 4.0 International License. If you remix, transform, or build upon the material, 
 this copyright notice must be left intact, or reproduced in a way that is reasonable 

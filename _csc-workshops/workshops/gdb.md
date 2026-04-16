@@ -2,16 +2,20 @@
 
 ## 1. Introduction
 
-???note In a nutshell
+{% details note In a nutshell %}
 
+
+{% enddetails %}
 - Developed in 1986 by Richard Stallman at MIT.
 - Current official maintainers come from RedHat, AdaCore, and Google.
 - Significant contribution from the open source community.
 
 ```
 
-???note Brief technical details
+{% details note Brief technical details %}
 
+
+{% enddetails %}
 - Allows programmers to see inside and interact/modify with all components of a programs,
 including information inside the registers.
 - Allows programmers to walk through the program step by step, including down to 
@@ -19,8 +23,10 @@ instruction level, to debug the program.
 
 ```
 
-???note Cheatsheet
+{% details note Cheatsheet %}
 
+
+{% enddetails %}
 - Study this [cheatsheet](https://cs.brown.edu/courses/cs033/docs/guides/gdb.pdf)
 - Developed by Dr. Doeppner at Brown University. 
 - Become very comfortable with terminal!
@@ -29,8 +35,10 @@ instruction level, to debug the program.
 
 ## 2. tmux
 
-???note Introduction
+{% details note Introduction %}
 
+
+{% enddetails %}
 - Our workspace is limited within the scope of a single terminal (a single shell) 
 to interact with the operating system. 
 - `tmux`: *terminal multiplexer*. 
@@ -40,8 +48,10 @@ within these terminals within a single original terminal.
 
 ```
 
-???note Beginning with tmux
+{% details note Beginning with tmux %}
 
+
+{% enddetails %}
 - SSH into `molly`
 - Start new with a session name:
 
@@ -98,8 +108,10 @@ be pressed together, otherwise, it means **lift your finger, then press ...**.
 - Be careful to not exit out of molly altogether. 
 ```
 
-???note Hands on: navigating among multiple tmux sessions
+{% details note Hands on: navigating among multiple tmux sessions %}
 
+
+{% enddetails %}
 - Run `tmux ls` to check and `tmux kill-session` to clean up all existing 
 tmux sessions. 
 - Create a new session called `s1`. 
@@ -120,8 +132,10 @@ tmux sessions.
 ```
 
 
-???note Multiple panes in tmux
+{% details note Multiple panes in tmux %}
 
+
+{% enddetails %}
 - Create a new session called `p1`.
 
 ~~~bash
@@ -157,8 +171,10 @@ to not get out of the container.
 
 ```
 
-???note Hands on: creating multiple panes
+{% details note Hands on: creating multiple panes %}
 
+
+{% enddetails %}
 - Run `tmux ls` to check and `tmux kill-session` to clean up all existing 
 tmux sessions. 
 - Create a new session called `p1`. 
@@ -177,8 +193,10 @@ tmux sessions.
 ```
 
 
-???note Resizing panels
+{% details note Resizing panels %}
 
+
+{% enddetails %}
 - What we did in the previous hands-on was not quite usable. 
 - We need to be able to adjust the panes to the proper sizes. 
 - This can be done by issuing additional commands via tmux's command line terminal.
@@ -203,8 +221,10 @@ the up/down arrows.
 
 
 
-???note Challenge
+{% details note Challenge %}
 
+
+{% enddetails %}
 - Redo the hands-on activity of slide 8 so that all the panes are aesthetically 
 proportional. 
 - After complete, finish and exit out of all tmux sessions
@@ -214,8 +234,10 @@ proportional.
 
 ## 3. Running and exiting gdb
 
-???note Setup pretty gdb
+{% details note Setup pretty gdb %}
 
+
+{% enddetails %}
 - Create a new tmux session called `gdb`. 
 - Run the following command in the `gdb` session.
 
@@ -238,8 +260,10 @@ gdb
 
 ```
 
-???note Setup an application with gdb
+{% details note Setup an application with gdb %}
 
+
+{% enddetails %}
 - To use `gdb` to debug, we need to compile the program with a `-g` flag.
 - Split the `gdb` session into two **horizontal** panes.
 - In the top pane, run the followings command:
@@ -267,8 +291,10 @@ gdb-peda$ run
 
 ```
 
-???note Debugging with gdb
+{% details note Debugging with gdb %}
 
+
+{% enddetails %}
 - This is a continue from the previous slide's tmux windows
 
 - We need to set a `breakpoint`:
@@ -290,8 +316,10 @@ gdb-peda$ run
 ```
 
 
-???note Scrolling within tmux's panes
+{% details note Scrolling within tmux's panes %}
 
+
+{% enddetails %}
 - Mouse scrolling does not work with tmux. 
 - To enable scrolling mode in tmux, type `Ctr-b` then `[`. 
 - You can use the `Up`/`Down`/`PgUp`/`PgDn` keys to navigate. 
@@ -315,8 +343,10 @@ C code to be executed.
 
 ```
 
-???note Hands on: finish running hello
+{% details note Hands on: finish running hello %}
 
+
+{% enddetails %}
 - Type `q` or `Esc` to quit scrolling mode. 
 - To continue executing the next line of code, type `n` then `Enter`. 
 - Turn back into the scrolling mode and scroll back up
@@ -328,8 +358,10 @@ and the final warning from `gdb`.
 
 ```
 
-???note Examining contents of program while debugging  malloc-1.c
+{% details note Examining contents of program while debugging  malloc-1.c %}
 
+
+{% enddetails %}
 - This slide should start in a two-horizontal-panel tmux session
 - Change to the directory containing your `malloc-1.c` that was 
 created from the previous lectures. If you don't have it, create a new `malloc-1.c` 
@@ -436,8 +468,10 @@ decimal?
 ```
 
 
-???note Examining contents of program while debugging array-4.c
+{% details note Examining contents of program while debugging array-4.c %}
 
+
+{% enddetails %}
 - In the top pane, compile `array-4.c` in debugging mode. 
 
 ~~~bash
@@ -551,8 +585,10 @@ gdb-peda$ run 3
 
 ```
 
-???note Hands on: finish running array-4
+{% details note Hands on: finish running array-4 %}
 
+
+{% enddetails %}
 - Use `n` to run the next two lines (`printf...` and `malloc..`).
 - Step through the `for` loop and printing out values of `i`, `p[i]`, `&p[i]`, 
 and `p + i` at every iteration. 

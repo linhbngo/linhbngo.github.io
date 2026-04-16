@@ -1,6 +1,8 @@
 # SEED Labs -- Buffer Overflow Attack Lab
 
-???note Copyright © 2006 - 2016 by Wenliang Du.
+{% details note Copyright © 2006 - 2016 by Wenliang Du. %}
+
+{% enddetails %}
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 
 4.0 International License. If you remix, transform, or build upon the material, 
 this copyright notice must be left intact, or reproduced in a way that is reasonable 
@@ -53,8 +55,10 @@ Later on, we will enable them and
 see whether our attack can still be successful or not.
 
 
-???note Address Space Randomization
+{% details note Address Space Randomization %}
 
+
+{% enddetails %}
   - `ubuntu` and several other Linux-based systems uses address space
   randomization to randomize the starting address of heap and
   stack. This makes guessing the exact addresses difficult; guessing
@@ -67,8 +71,10 @@ sudo sysctl -w kernel.randomize_va_space=0
 
 ```
 
-???note Configuring /bin/sh
+{% details note Configuring /bin/sh %}
 
+
+{% enddetails %}
 - In the recent versions of Ubuntu OS, the `/bin/sh` symbolic link 
 points to the `/bin/dash` shell. The `dash` program, as well
 as `bash`,  has implemented a security countermeasure
@@ -92,8 +98,10 @@ sudo ln -sf /bin/zsh /bin/sh
 ~~~
 
 
-???note StackGuard and Non-Executable Stack
+{% details note StackGuard and Non-Executable Stack %}
 
+
+{% enddetails %}
 These are two additional countermeasures implemented in the system. 
 They can be turned off during the compilation.
 We will discuss them later when we compile the vulnerable program.
@@ -110,8 +118,10 @@ Shellcode is widely used in most code-injection attacks.
 Let us get familiar with it in this task.
 
 
-???note The C Version of Shellcode
+{% details note The C Version of Shellcode %}
 
+
+{% enddetails %}
 A shellcode is basically a piece of code that launches a shell. 
 If we use C code to implement it, it will look like the following:
 
@@ -137,8 +147,10 @@ without explaining how it works (it is non-trivial).
 
 ```
 
-???note 32-bit Shellcode
+{% details note 32-bit Shellcode %}
 
+
+{% enddetails %}
 ~~~
 ; Store the command on stack
 xor  eax, eax
@@ -182,8 +194,10 @@ the content for these three arguments.
 ```
 
 
-???note 64-Bit Shellcode
+{% details note 64-Bit Shellcode %}
 
+
+{% enddetails %}
 We provide a sample 64-bit shellcode in the following.
 It is quite similar to the 32-bit shellcode, except that 
 the names of the registers are different and the 
@@ -209,9 +223,11 @@ syscall
 
 ```
 
-???note Task: Invoking the Shellcode
+{% details note Task: Invoking the Shellcode %}
 
 
+
+{% enddetails %}
 We have generated the binary code from the assembly code above, and
 put the code in a C program called `call\_shellcode.c` inside
 the `shellcode` folder. In this task, we will test the shellcode. 
@@ -323,9 +339,11 @@ is under users' control. Now, our objective is to create the contents for
 copies the contents into its buffer, a root shell can be spawned.
 
 
-???note Task: Compilation
+{% details note Task: Compilation %}
 
 
+
+{% enddetails %}
 To compile the above vulnerable program, do not forget to 
 turn off the StackGuard and the non-executable stack protections 
 using the `-fno-stack-protector` and `-z execstack` options.
@@ -354,9 +372,11 @@ set in `Makefile`; they will be used during the compilation.
 ## 5. Task 3: Launching Attack on 32-bit Program (Level 1)}
 
 
-???note Investigation
+{% details note Investigation %}
 
 
+
+{% enddetails %}
 To exploit the buffer-overflow vulnerability in the target program,
 the most important thing to know is the distance between the 
 buffer's starting position and the place where the return-address
@@ -400,9 +420,11 @@ will be larger. You should keep this in mind when constructing
 your payload. 
 
 
-???note Launching Attacks 
+{% details note Launching Attacks %}
 
 
+
+{% enddetails %}
 To exploit the buffer-overflow vulnerability in the target program,
 we need to prepare a payload, and save it inside `badfile`. 
 We will use a Python program to do that.

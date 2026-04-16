@@ -1,7 +1,9 @@
 # Linux Scripting
 
-???note 1. Pipes and Filters     
- 
+{% details note 1. Pipes and Filters %}
+
+
+{% enddetails %}
 - It is possible to combine multiple Linux commands into one
 - Settings:
   - Data are stored in `shell-lesson-data/excercise-data/proteins` on `molly`. 
@@ -11,8 +13,10 @@
 
 ```
 
-???note 2. Capturing output from commands
+{% details note 2. Capturing output from commands %}
 
+
+{% enddetails %}
 - SSH to `molly`. 
 - Run the following commands to prepare the environment.
 
@@ -73,8 +77,10 @@ cat lengths.txt
 
 ```
 
-???note 3. Filtering output
+{% details note 3. Filtering output %}
 
+
+{% enddetails %}
 - We can sort the contents of `lengths.txt` using `sort`
 
 ~~~
@@ -140,8 +146,10 @@ head -n 1 sorted-lengths.txt
 
 ```
 
-???note 4. Passing output to another command
+{% details note 4. Passing output to another command %}
 
+
+{% enddetails %}
 - We used intermediate files to store output. We can use a pipe (`|`) to 
 combine them together. 
 
@@ -275,8 +283,10 @@ Option 4. is the correct answer.
 
 ```
 
-???note 5. Nelle’s Pipeline: Checking Files
+{% details note 5. Nelle’s Pipeline: Checking Files %}
 
+
+{% enddetails %}
 - Nelle has run her samples through the assay machines and created 17 files 
 in the `north-pacific-gyre` directory described earlier. Let's check the 
 integrity of this data:
@@ -304,8 +314,10 @@ include these strange files in our calculations.
 
 ```
 
-???note 6. Loop
+{% details note 6. Loop %}
 
+
+{% enddetails %}
 Suppose we have several hundred genome data files named `basilisk.dat`, `minotaur.dat`, and
 `unicorn.dat`. For this example, we'll use the `exercise-data/creatures` directory which only 
 has three example files, but the principles can be applied to many many more files at once.
@@ -391,9 +403,11 @@ the `head` command.
 
 ```
 
-???note 7. Challenges: loop
+{% details note 7. Challenges: loop %}
 
 
+
+{% enddetails %}
 ::::{admonition} Same symbols, different meanings
 :class: note
 
@@ -567,8 +581,10 @@ redirected, nothing is printed to the screen.
 
 ```
 
-???note 8. More complicated loop
+{% details note 8. More complicated loop %}
 
+
+{% enddetails %}
 - Run the following loop
   - The shell starts by expanding `*.dat` to create the list of files it will process.
   - The **loop body** then executes two commands for each of those files.
@@ -636,8 +652,10 @@ judicious use of `echo` is a good debugging technique.
 
 ```
 
-???note 9. Nelle's Pipeline: Processing Files
+{% details note 9. Nelle's Pipeline: Processing Files %}
 
+
+{% enddetails %}
 Nelle is now ready to process her data files using `goostats.sh` ---
 a shell script written by her supervisor.
 This calculates some statistics from a protein sample file, and takes two arguments:
@@ -816,8 +834,10 @@ temperatures, and creates a new directory for each combination.
 
 ```
 
-???note 10. Shell scripting
+{% details note 10. Shell scripting %}
 
+
+{% enddetails %}
 - Let's start by going back to `~/shell-lesson-data/exercise-data/proteins$` and creating a new file, 
 `middle.sh` which will become our shell script:
 
@@ -1033,8 +1053,10 @@ and save it as a shell script.
 ```
 
 
-???note 11. Nelle's Pipeline: Creating a Script
+{% details note 11. Nelle's Pipeline: Creating a Script %}
 
+
+{% enddetails %}
 - Nelle's supervisor insisted that all her analytics must be reproducible.
 The easiest way to capture all the steps is in a script.
 

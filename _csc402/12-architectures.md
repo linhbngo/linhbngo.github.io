@@ -1,14 +1,26 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc402
-course: CSC 402: Software Engineering.
+order: 13
 title: "Architectures"
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
 toc:
   - name: System Design
   - name: UML
   - name: Architectural styles
 ---
+
 # Architectures
 
 ## System Design

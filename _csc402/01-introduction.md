@@ -1,17 +1,29 @@
 ---
 layout: lecture
 pretty_table: true
-collection: csc402
-course: CSC 402: Software Engineering.
+order: 2
 title: "Introduction"
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+
 toc:
   - name: Course overview
   - name: Example success and failures
-  - name: Discussion: What is software engineering?
+  - name: "Discussion: What is software engineering?"
   - name: The course project
   - name: Available project topics for Spring 2026
   - name: Challenges
 ---
+
 # Introduction
 
 *This class is based on Cornell's Software Engineering course.* 
