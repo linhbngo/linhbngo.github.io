@@ -135,7 +135,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-the-hidden-obligations-of-teaching",
+            },{id: "post-beyond-speaking-classes",
+        
+          title: "Beyond Speaking Classes",
+        
+        description: "How do students actually internalize soft skills?",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/soft-skills/";
+          
+        },
+      },{id: "post-the-hidden-obligations-of-teaching",
         
           title: "The Hidden Obligations of Teaching",
         
