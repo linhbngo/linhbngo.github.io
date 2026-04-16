@@ -21,8 +21,7 @@ toc:
   - name: Threat Model and Security Layers
   - name: Build and Supply-Chain Security
   - name: Runtime, Storage, Network, and Secrets
-  - name: Swarm / Compose Security
-  - name: Hands-on Hardening
+  - name: Compose Security
   - name: Best Practices Summary
 ---
 
