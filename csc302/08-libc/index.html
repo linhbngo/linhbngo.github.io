@@ -139,19 +139,6 @@ seed@instructor:~<span class="nv">$ </span>./shellcode
 104
 105
 106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
 </pre></td> <td class="rouge-code"><pre>
 ## Attack design
 
@@ -178,19 +165,6 @@ the program jump to where there are executable codes.
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc302/libc/libc_design-480.webp 480w,/assets/img/courses/csc302/libc/libc_design-800.webp 800w,/assets/img/courses/csc302/libc/libc_design-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc302/libc/libc_design.png"
@@ -294,21 +268,21 @@ gcc <span class="nt">-m32</span> <span class="nt">-o</span> myshell22 find_myshe
 ./myshell22
 gcc <span class="nt">-m32</span> <span class="nt">-o</span> myshell222 find_myshell.c
 ./myshell222
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>What is your observation regarding memory position of environment variables?</p> </li> <li>In buffer overflow, we manually place both <code class="language-plaintext highlighter-rouge">system()</code> and its corresponding arguments on the stack for execution.</li> <li>In <code class="language-plaintext highlighter-rouge">return-to-libc</code>, we invoke <code class="language-plaintext highlighter-rouge">system()</code> remotely.</li> <li>How can we place the corresponding arguments onto the stack? <ul> <li> <code class="language-plaintext highlighter-rouge">$esp</code>: Stack register</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/function_prologue_1-480.webp 480w,/assets/img/courses/csc302/libc/function_prologue_1-800.webp 800w,/assets/img/courses/csc302/libc/function_prologue_1-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/function_prologue_1.png" width="50%" height="auto" alt="Function prologue 1" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>What happens just before a function is called?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>What is your observation regarding memory position of environment variables?</p> </li> <li>In buffer overflow, we manually place both <code class="language-plaintext highlighter-rouge">system()</code> and its corresponding arguments on the stack for execution.</li> <li>In <code class="language-plaintext highlighter-rouge">return-to-libc</code>, we invoke <code class="language-plaintext highlighter-rouge">system()</code> remotely.</li> <li>How can we place the corresponding arguments onto the stack? <ul> <li> <code class="language-plaintext highlighter-rouge">$esp</code>: Stack register</li> </ul> </li> </ul> <figure> <picture> <img src="/assets/img/courses/csc302/libc/function_prologue_1.png" width="50%" height="auto" alt="Function prologue 1" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>What happens just before a function is called?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 </pre></td> <td class="rouge-code"><pre>pushl %ebp
 movl %esp, %ebp
 subl <span class="nv">$N</span>, %esp
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Return address (RA) is pushed onto the stack.</li> <li>Save (push) the caller function’s frame pointer (ebp)</li> <li>Set frame pointer to the stack pointer (esp) ’s current position</li> <li>Move the stack pointer by several bytes, leaving spaces for the local variables of the function.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/function_prologue_2-480.webp 480w,/assets/img/courses/csc302/libc/function_prologue_2-800.webp 800w,/assets/img/courses/csc302/libc/function_prologue_2-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/function_prologue_2.png" width="50%" height="auto" alt="Function prologue 2" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>What happens just before a function is completed?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Return address (RA) is pushed onto the stack.</li> <li>Save (push) the caller function’s frame pointer (ebp)</li> <li>Set frame pointer to the stack pointer (esp) ’s current position</li> <li>Move the stack pointer by several bytes, leaving spaces for the local variables of the function.</li> </ul> <figure> <picture> <img src="/assets/img/courses/csc302/libc/function_prologue_2.png" width="50%" height="auto" alt="Function prologue 2" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>What happens just before a function is completed?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 </pre></td> <td class="rouge-code"><pre>movl %ebp, %esp
 popl %ebp
 ret
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Move <code class="language-plaintext highlighter-rouge">%esp</code> to where the frame pointer points to (releasing the stack space for variables).</li> <li>Most most recent value of <code class="language-plaintext highlighter-rouge">%ebp</code>, return it to point to the previous frame pointer.</li> <li>Pops the return address from the stack, then jump to it, and move <code class="language-plaintext highlighter-rouge">%esp</code> to the top of the previous stack frame</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/function_epilogue-480.webp 480w,/assets/img/courses/csc302/libc/function_epilogue-800.webp 800w,/assets/img/courses/csc302/libc/function_epilogue-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/function_epilogue.png" width="50%" height="auto" alt="Function epilogue" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The malicious function did finish properly. <ul> <li>Its function epilogue was called.</li> <li>We know the location of $esp.</li> </ul> </li> <li>The malicious call redirect RA (next instruction) to a new function. <ul> <li>Activate this new function prologue</li> <li>But this new function will rely on values in <code class="language-plaintext highlighter-rouge">$esp</code> for execution</li> <li>We need to manipulate <code class="language-plaintext highlighter-rouge">$esp</code> </li> </ul> </li> <li>Observation <ul> <li> <code class="language-plaintext highlighter-rouge">$esp</code> and <code class="language-plaintext highlighter-rouge">$ebp</code> are values from vul_func(), but they are changed due to the procedural execution of vul_func()’s epilogue and system()’s prologue.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/libc/vul_func-480.webp 480w,/assets/img/courses/csc302/libc/vul_func-800.webp 800w,/assets/img/courses/csc302/libc/vul_func-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/libc/vul_func.png" width="50%" height="auto" alt="How changes are made" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Move <code class="language-plaintext highlighter-rouge">%esp</code> to where the frame pointer points to (releasing the stack space for variables).</li> <li>Most most recent value of <code class="language-plaintext highlighter-rouge">%ebp</code>, return it to point to the previous frame pointer.</li> <li>Pops the return address from the stack, then jump to it, and move <code class="language-plaintext highlighter-rouge">%esp</code> to the top of the previous stack frame</li> </ul> <figure> <picture> <img src="/assets/img/courses/csc302/libc/function_epilogue.png" width="50%" height="auto" alt="Function epilogue" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The malicious function did finish properly. <ul> <li>Its function epilogue was called.</li> <li>We know the location of $esp.</li> </ul> </li> <li>The malicious call redirect RA (next instruction) to a new function. <ul> <li>Activate this new function prologue</li> <li>But this new function will rely on values in <code class="language-plaintext highlighter-rouge">$esp</code> for execution</li> <li>We need to manipulate <code class="language-plaintext highlighter-rouge">$esp</code> </li> </ul> </li> <li>Observation <ul> <li> <code class="language-plaintext highlighter-rouge">$esp</code> and <code class="language-plaintext highlighter-rouge">$ebp</code> are values from vul_func(), but they are changed due to the procedural execution of vul_func()’s epilogue and system()’s prologue.</li> </ul> </li> </ul> <figure> <picture> <img src="/assets/img/courses/csc302/libc/vul_func.png" width="50%" height="auto" alt="How changes are made" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -399,19 +373,6 @@ ret
 88
 89
 90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
 </pre></td> <td class="rouge-code"><pre>
 ## Attack
 
@@ -454,19 +415,6 @@ gdb-peda$ quit
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc302/libc/distance-480.webp 480w,/assets/img/courses/csc302/libc/distance-800.webp 800w,/assets/img/courses/csc302/libc/distance-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc302/libc/distance.png"

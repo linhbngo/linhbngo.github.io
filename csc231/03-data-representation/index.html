@@ -220,32 +220,6 @@
 194
 195
 196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
 </pre></td> <td class="rouge-code"><pre>
 ## How do we "see" things?
 
@@ -272,19 +246,6 @@
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/03-data-representation/data_01-480.webp 480w,/assets/img/courses/csc231/03-data-representation/data_01-800.webp 800w,/assets/img/courses/csc231/03-data-representation/data_01-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc231/03-data-representation/data_01.png"
@@ -389,19 +350,6 @@
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/03-data-representation/data_02-480.webp 480w,/assets/img/courses/csc231/03-data-representation/data_02-800.webp 800w,/assets/img/courses/csc231/03-data-representation/data_02-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc231/03-data-representation/data_02.png"
@@ -800,7 +748,7 @@ that takes in a number of type `short` to be negated.
 :::{dropdown} Solution
 &lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=negation.c"&gt;&lt;/script&gt;
 :::
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="byte-oriented-memory-organization">Byte-oriented memory organization</h2> <ul> <li>Programs refer to data by address <ul> <li>Conceptually, envision it as a very large array of bytes <ul> <li>In reality, it’s not, but can think of it that way</li> </ul> </li> <li>An address is like an index into that array <ul> <li>and, a pointer variable stores an address</li> </ul> </li> </ul> </li> <li>Note: system provides private address spaces to each “process” <ul> <li>Think of a process as a program being executed</li> <li>So, a program can clobber its own data, but not that of others</li> </ul> </li> <li>Any given computer has a “Word Size”</li> <li>`word size”: Nominal size of integer-valued data and of addresses</li> <li>Until recently, most machines used 32 bits (4 bytes) as word size <ul> <li>Limits addresses to 4GB (232 bytes)</li> </ul> </li> <li>Increasingly, machines have 64-bit word size <ul> <li>Potentially, could have 18 EB (exabytes) of addressable memory</li> <li>That’s 18.4 X 1018</li> </ul> </li> <li>Machines still support multiple data formats <ul> <li>Fractions or multiples of word size</li> <li>Always integral number of bytes</li> </ul> </li> <li>Addresses specific byte locations <ul> <li>Address of first byte in word.</li> <li>Address of successive words differ by 4 (32-bit) or 8 (64-bit).</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/03-data-representation/data_08-480.webp 480w,/assets/img/courses/csc231/03-data-representation/data_08-800.webp 800w,/assets/img/courses/csc231/03-data-representation/data_08-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/03-data-representation/data_08.png" width="50%" height="auto" alt="word-oriented memory organization" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Machine-dependent</li> <li>Big Endian: Sun (Oracle SPARC), PPC Mac, Internet (network data transfer) <ul> <li>Least significant byte has the highest address.</li> </ul> </li> <li>Little Endian: x86, ARM processors running Android, iOS, and Linux <ul> <li>Least significant byte has lowest address.</li> </ul> </li> <li>Example <ul> <li>Variable x has 4-byte value of 0x01234567</li> <li>Address given by <code class="language-plaintext highlighter-rouge">&amp;x</code> is 0x100</li> </ul> </li> </ul> <p>:::{image} fig/03-data-representation/data_09.png :alt: byte ordering example :class: bg-primary mb-1 :height: 100px :align: center :::</p> <ul> <li>Make sure that you are inside <code class="language-plaintext highlighter-rouge">03-data</code> directory.</li> <li>Create a file named <code class="language-plaintext highlighter-rouge">byte_ordering.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=byte_ordering.c"></script> <ul> <li>Compile and run <code class="language-plaintext highlighter-rouge">byte_ordering.c</code>.</li> <li>Confirm that calculated values are correct.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="byte-oriented-memory-organization">Byte-oriented memory organization</h2> <ul> <li>Programs refer to data by address <ul> <li>Conceptually, envision it as a very large array of bytes <ul> <li>In reality, it’s not, but can think of it that way</li> </ul> </li> <li>An address is like an index into that array <ul> <li>and, a pointer variable stores an address</li> </ul> </li> </ul> </li> <li>Note: system provides private address spaces to each “process” <ul> <li>Think of a process as a program being executed</li> <li>So, a program can clobber its own data, but not that of others</li> </ul> </li> <li>Any given computer has a “Word Size”</li> <li>`word size”: Nominal size of integer-valued data and of addresses</li> <li>Until recently, most machines used 32 bits (4 bytes) as word size <ul> <li>Limits addresses to 4GB (232 bytes)</li> </ul> </li> <li>Increasingly, machines have 64-bit word size <ul> <li>Potentially, could have 18 EB (exabytes) of addressable memory</li> <li>That’s 18.4 X 1018</li> </ul> </li> <li>Machines still support multiple data formats <ul> <li>Fractions or multiples of word size</li> <li>Always integral number of bytes</li> </ul> </li> <li>Addresses specific byte locations <ul> <li>Address of first byte in word.</li> <li>Address of successive words differ by 4 (32-bit) or 8 (64-bit).</li> </ul> </li> </ul> <figure> <picture> <img src="/assets/img/courses/csc231/03-data-representation/data_08.png" width="50%" height="auto" alt="word-oriented memory organization" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Machine-dependent</li> <li>Big Endian: Sun (Oracle SPARC), PPC Mac, Internet (network data transfer) <ul> <li>Least significant byte has the highest address.</li> </ul> </li> <li>Little Endian: x86, ARM processors running Android, iOS, and Linux <ul> <li>Least significant byte has lowest address.</li> </ul> </li> <li>Example <ul> <li>Variable x has 4-byte value of 0x01234567</li> <li>Address given by <code class="language-plaintext highlighter-rouge">&amp;x</code> is 0x100</li> </ul> </li> </ul> <p>:::{image} fig/03-data-representation/data_09.png :alt: byte ordering example :class: bg-primary mb-1 :height: 100px :align: center :::</p> <ul> <li>Make sure that you are inside <code class="language-plaintext highlighter-rouge">03-data</code> directory.</li> <li>Create a file named <code class="language-plaintext highlighter-rouge">byte_ordering.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=byte_ordering.c"></script> <ul> <li>Compile and run <code class="language-plaintext highlighter-rouge">byte_ordering.c</code>.</li> <li>Confirm that calculated values are correct.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3

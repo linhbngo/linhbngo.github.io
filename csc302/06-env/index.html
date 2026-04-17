@@ -77,7 +77,7 @@ gcc <span class="nt">-w</span> <span class="nt">-o</span> passenv /local/reposit
 ./passenv 2
 ./passenv 3
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=passenv.c"></script> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/env/env_memory-480.webp 480w,/assets/img/courses/csc302/env/env_memory-800.webp 800w,/assets/img/courses/csc302/env/env_memory-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/env/env_memory.png" width="50%" height="auto" alt="Memory placement of environment variables in process" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Recompile <code class="language-plaintext highlighter-rouge">my_envp.c</code> with GDB flag and check the location of the environment variables</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=passenv.c"></script> <figure> <picture> <img src="/assets/img/courses/csc302/env/env_memory.png" width="50%" height="auto" alt="Memory placement of environment variables in process" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Recompile <code class="language-plaintext highlighter-rouge">my_envp.c</code> with GDB flag and check the location of the environment variables</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -113,7 +113,7 @@ strings /proc/<span class="nv">$$</span>/environ | <span class="nb">grep </span>
 <span class="nb">echo</span> <span class="nv">$LOGNAME</span>
 strings /proc/<span class="nv">$$</span>/environ | <span class="nb">grep </span>LOGNAME
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/env/env_shell-480.webp 480w,/assets/img/courses/csc302/env/env_shell-800.webp 800w,/assets/img/courses/csc302/env/env_shell-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/env/env_shell.png" width="50%" height="auto" alt="Shell variables" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <img src="/assets/img/courses/csc302/env/env_shell.png" width="50%" height="auto" alt="Shell variables" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -356,32 +356,6 @@ strings /proc/<span class="nv">$$</span>/environ | <span class="nb">grep </span>
 240
 241
 242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
 </pre></td> <td class="rouge-code"><pre>
 ## Attack surface caused by environment variables
 
@@ -400,19 +374,6 @@ strings /proc/<span class="nv">$$</span>/environ | <span class="nb">grep </span>
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc302/env/attack_surface-480.webp 480w,/assets/img/courses/csc302/env/attack_surface-800.webp 800w,/assets/img/courses/csc302/env/attack_surface-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc302/env/attack_surface.png"
@@ -608,19 +569,6 @@ PWD=randomdir
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc302/env/service_based-480.webp 480w,/assets/img/courses/csc302/env/service_based-800.webp 800w,/assets/img/courses/csc302/env/service_based-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc302/env/service_based.png"

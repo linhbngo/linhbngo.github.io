@@ -140,19 +140,6 @@
 114
 115
 116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
 </pre></td> <td class="rouge-code"><pre>
 ## Memory abstraction: writing and reading memory
 
@@ -178,19 +165,6 @@
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/01-480.webp 480w,/assets/img/courses/csc231/05-memory/01-800.webp 800w,/assets/img/courses/csc231/05-memory/01-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc231/05-memory/01.png"
@@ -282,7 +256,7 @@
       - DDR (2 bits), DDR2 (4 bits), DDR3 (8 bits), DDR4 (16 bits)
     - By 2010, standard for most server and desktop systems
   - Intel Core i7 supports DDR3 and DDR4 SDRAM
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="the-cpu-memory-gap">The CPU-Memory gap</h2> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/02-480.webp 480w,/assets/img/courses/csc231/05-memory/02-800.webp 800w,/assets/img/courses/csc231/05-memory/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/02.png" width="50%" height="auto" alt="CPU memory gap" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The key to bridging this gap is a fundamental property of computer programs known as <strong>locality</strong>: <ul> <li>Principle of Locality: Programs tend to use data and instructions with addresses near or equal to those they have used recently</li> <li> <code class="language-plaintext highlighter-rouge">Temporal locality</code>: Recently referenced items are likely to be referenced again in the near future</li> <li> <code class="language-plaintext highlighter-rouge">Spatial locality</code>: Items with nearby addresses tend to be referenced close together in time</li> </ul> </li> </ul> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="the-cpu-memory-gap">The CPU-Memory gap</h2> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/02.png" width="50%" height="auto" alt="CPU memory gap" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The key to bridging this gap is a fundamental property of computer programs known as <strong>locality</strong>: <ul> <li>Principle of Locality: Programs tend to use data and instructions with addresses near or equal to those they have used recently</li> <li> <code class="language-plaintext highlighter-rouge">Temporal locality</code>: Recently referenced items are likely to be referenced again in the near future</li> <li> <code class="language-plaintext highlighter-rouge">Spatial locality</code>: Items with nearby addresses tend to be referenced close together in time</li> </ul> </li> </ul> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -291,7 +265,7 @@
 <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
   <span class="n">sum</span> <span class="o">+=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
 <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Data references <ul> <li>Reference array elements in succession (stride-1 reference pattern): <code class="language-plaintext highlighter-rouge">spatial</code> </li> <li>Reference variable <code class="language-plaintext highlighter-rouge">sum</code> each iteration: <code class="language-plaintext highlighter-rouge">temporal</code> </li> </ul> </li> <li>Instruction references <ul> <li>Reference instructions in sequence: <code class="language-plaintext highlighter-rouge">spatial</code> </li> <li>Cycle through loop repeatedly: <code class="language-plaintext highlighter-rouge">temporal</code> </li> </ul> </li> <li>Being able to look at code and get a qualitative sense of its locality is among the key skills for a professional programmer.</li> <li>Example: array layout in memory is row-major order</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/03-480.webp 480w,/assets/img/courses/csc231/05-memory/03-800.webp 800w,/assets/img/courses/csc231/05-memory/03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/03.png" width="50%" height="auto" alt="Array layout in memory" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::::{tab-set}</p> <p>::::{tab-item} Exercise 1</p> <p>Does this function have good locality with respect to array <code class="language-plaintext highlighter-rouge">a</code>?</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Data references <ul> <li>Reference array elements in succession (stride-1 reference pattern): <code class="language-plaintext highlighter-rouge">spatial</code> </li> <li>Reference variable <code class="language-plaintext highlighter-rouge">sum</code> each iteration: <code class="language-plaintext highlighter-rouge">temporal</code> </li> </ul> </li> <li>Instruction references <ul> <li>Reference instructions in sequence: <code class="language-plaintext highlighter-rouge">spatial</code> </li> <li>Cycle through loop repeatedly: <code class="language-plaintext highlighter-rouge">temporal</code> </li> </ul> </li> <li>Being able to look at code and get a qualitative sense of its locality is among the key skills for a professional programmer.</li> <li>Example: array layout in memory is row-major order</li> </ul> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/03.png" width="50%" height="auto" alt="Array layout in memory" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::::{tab-set}</p> <p>::::{tab-item} Exercise 1</p> <p>Does this function have good locality with respect to array <code class="language-plaintext highlighter-rouge">a</code>?</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -332,7 +306,7 @@
 <span class="nv">$ </span>./sum
 <span class="nv">$ </span>./sum
 <span class="nv">$ </span>./sum
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: ::::{tab-item} Result</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/04-480.webp 480w,/assets/img/courses/csc231/05-memory/04-800.webp 800w,/assets/img/courses/csc231/05-memory/04-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/04.png" width="50%" height="auto" alt="Differences in performance due to access pattern" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>::::</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: ::::{tab-item} Result</p> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/04.png" width="50%" height="auto" alt="Differences in performance due to access pattern" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>::::</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -388,19 +362,6 @@
 53
 54
 55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
 </pre></td> <td class="rouge-code"><pre>
 
 ## Memory hierarchies
@@ -429,19 +390,6 @@ known as a memory hierarchy.
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
     
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/05-480.webp 480w,/assets/img/courses/csc231/05-memory/05-800.webp 800w,/assets/img/courses/csc231/05-memory/05-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
     &lt;img
       src="/assets/img/courses/csc231/05-memory/05.png"
       
@@ -469,7 +417,7 @@ known as a memory hierarchy.
   
 &lt;/figure&gt;
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="caching">Caching</h2> <ul> <li>Cache: A smaller, faster storage device that acts as a staging area for a subset of the data in a larger, slower device.</li> <li>Fundamental idea of a memory hierarchy: <ul> <li>For each <code class="language-plaintext highlighter-rouge">k</code>, the faster, smaller device at level <code class="language-plaintext highlighter-rouge">k</code> serves as a cache for the larger, slower device at level <code class="language-plaintext highlighter-rouge">k+1</code>.</li> </ul> </li> <li>Why do memory hierarchies work? <ul> <li>Because of locality, programs tend to access the data at level <code class="language-plaintext highlighter-rouge">k</code> more often than they access the data at level <code class="language-plaintext highlighter-rouge">k+1</code>.</li> <li>Thus, the storage at level k+1 can be slower, and thus larger and cheaper per bit.</li> </ul> </li> <li>Big Idea (Ideal): The memory hierarchy creates a large pool of storage that costs as much as the cheap storage near the bottom, but that serves data to programs at the rate of the fast storage near the top.</li> </ul> <p>:::::{tab-set} ::::{tab-item} Cache</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/06-480.webp 480w,/assets/img/courses/csc231/05-memory/06-800.webp 800w,/assets/img/courses/csc231/05-memory/06-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/06.png" width="50%" height="auto" alt="Cache concepts" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} Cache hits</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/07-480.webp 480w,/assets/img/courses/csc231/05-memory/07-800.webp 800w,/assets/img/courses/csc231/05-memory/07-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/07.png" width="50%" height="auto" alt="Cache hits" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} Cache misses</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/08-480.webp 480w,/assets/img/courses/csc231/05-memory/08-800.webp 800w,/assets/img/courses/csc231/05-memory/08-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/08.png" width="50%" height="auto" alt="Cache misses" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Cold (compulsory) miss <ul> <li>Cold misses occur because the cache starts empty and this is the first reference to the block.</li> </ul> </li> <li>Capacity miss <ul> <li>Occurs when the set of active cache blocks (working set) is larger than the cache.</li> </ul> </li> <li>Conflict miss <ul> <li>Most caches limit blocks at level <code class="language-plaintext highlighter-rouge">k+1</code> to a small subset (sometimes a singleton) of the block positions at level <code class="language-plaintext highlighter-rouge">k</code>. <ul> <li>E.g. Block i at level <code class="language-plaintext highlighter-rouge">k+1</code> must be placed in block (<code class="language-plaintext highlighter-rouge">i mod 4</code>) at level <code class="language-plaintext highlighter-rouge">k</code>.</li> </ul> </li> <li>Conflict misses occur when the level <code class="language-plaintext highlighter-rouge">k</code> cache is large enough, but multiple data objects all map to the same level <code class="language-plaintext highlighter-rouge">k</code> block. <ul> <li>E.g. Referencing blocks 0, 8, 0, 8, 0, 8, … would miss every time.</li> </ul> </li> </ul> </li> </ul> <p>:::: ::::{tab-item} Cache types</p> <table> <thead> <tr> <th>Cache Type</th> <th>What is cached</th> <th>Where is it cached</th> <th>Latency (cycles)</th> <th>Managed By</th> </tr> </thead> <tbody> <tr> <td>Register</td> <td>4-6 byte words</td> <td>CPU core</td> <td>0</td> <td>Compiler</td> </tr> <tr> <td>TLB</td> <td>Address translations</td> <td>On-chip TLB</td> <td>0</td> <td>Hardware MMU</td> </tr> <tr> <td>L1 cache</td> <td>64-byte blocks</td> <td>On-chip L1</td> <td>4</td> <td>Hardware</td> </tr> <tr> <td>L2 cache</td> <td>64-byte blocks</td> <td>On-chip L2</td> <td>10</td> <td>Hardware</td> </tr> <tr> <td>Virtual memory</td> <td>4-KB pages</td> <td>Main memory</td> <td>100</td> <td>Hardware + OS</td> </tr> <tr> <td>Buffer cache</td> <td>Part of files</td> <td>Main memory</td> <td>100</td> <td>OS</td> </tr> <tr> <td>Disk cache</td> <td>Disk sectors</td> <td>Disk controller</td> <td>100,000</td> <td>Disk firmware</td> </tr> <tr> <td>Network buffer cache</td> <td>Part of files</td> <td>Local disk</td> <td>10,000,000</td> <td>NFS client</td> </tr> <tr> <td>Browser cache</td> <td>Web pages</td> <td>Local disk</td> <td>10,000,000</td> <td>Web browser</td> </tr> <tr> <td>Web cache</td> <td>Web pages</td> <td>Remote server disks</td> <td>1,000,000,000</td> <td>Web proxy server</td> </tr> </tbody> </table> <p>::::</p> <ul> <li>Small, fast SRAM-based memories managed automatically in hardware.</li> <li>Hold frequently accessed blocks of main memory.</li> <li>CPU looks first for data in cache.</li> </ul> <p>:::::{tab-set} ::::{tab-item} L2/L3</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/09-480.webp 480w,/assets/img/courses/csc231/05-memory/09-800.webp 800w,/assets/img/courses/csc231/05-memory/09-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/09.png" width="50%" height="auto" alt="Example of L2 and L3 cache" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} L1/L2/L3</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/10-480.webp 480w,/assets/img/courses/csc231/05-memory/10-800.webp 800w,/assets/img/courses/csc231/05-memory/10-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/10.png" width="50%" height="auto" alt="Example of L1, L2, and L3 cache" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>::::</p> <ul> <li>Miss Rate <ul> <li>Fraction of memory references not found in cache <code class="language-plaintext highlighter-rouge">(misses / accesses) = 1 – hit rate</code> </li> <li>Typical numbers (in percentages): <ul> <li>3-10% for L1</li> <li>can be quite small (e.g., &lt; 1%) for L2, depending on size, etc.</li> </ul> </li> </ul> </li> <li>Hit Time <ul> <li>Time to deliver a line in the cache to the processor <ul> <li>includes time to determine whether the line is in the cache</li> </ul> </li> <li>Typical numbers: <ul> <li>4 clock cycle for L1</li> <li>10 clock cycles for L2</li> </ul> </li> </ul> </li> <li>Miss Penalty <ul> <li>Additional time required because of a miss <ul> <li>typically 50-200 cycles for main memory (Trend: increasing!)</li> </ul> </li> </ul> </li> <li>Huge difference between a hit and a miss <ul> <li>Could be 100x, if just L1 and main memory</li> </ul> </li> <li>Would you believe 99% hits is twice as good as 97%? <ul> <li>Consider this simplified example: <ul> <li>cache hit time of 1 cycle</li> <li>miss penalty of 100 cycles</li> </ul> </li> <li>Average access time: <ul> <li>97% hits: 1 cycle + 0.03 x 100 cycles = 4 cycles</li> <li>99% hits: 1 cycle + 0.01 x 100 cycles = 2 cycles</li> </ul> </li> </ul> </li> <li>This is why <code class="language-plaintext highlighter-rouge">miss rate</code> is used instead of <code class="language-plaintext highlighter-rouge">hit rate</code>.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="caching">Caching</h2> <ul> <li>Cache: A smaller, faster storage device that acts as a staging area for a subset of the data in a larger, slower device.</li> <li>Fundamental idea of a memory hierarchy: <ul> <li>For each <code class="language-plaintext highlighter-rouge">k</code>, the faster, smaller device at level <code class="language-plaintext highlighter-rouge">k</code> serves as a cache for the larger, slower device at level <code class="language-plaintext highlighter-rouge">k+1</code>.</li> </ul> </li> <li>Why do memory hierarchies work? <ul> <li>Because of locality, programs tend to access the data at level <code class="language-plaintext highlighter-rouge">k</code> more often than they access the data at level <code class="language-plaintext highlighter-rouge">k+1</code>.</li> <li>Thus, the storage at level k+1 can be slower, and thus larger and cheaper per bit.</li> </ul> </li> <li>Big Idea (Ideal): The memory hierarchy creates a large pool of storage that costs as much as the cheap storage near the bottom, but that serves data to programs at the rate of the fast storage near the top.</li> </ul> <p>:::::{tab-set} ::::{tab-item} Cache</p> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/06.png" width="50%" height="auto" alt="Cache concepts" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} Cache hits</p> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/07.png" width="50%" height="auto" alt="Cache hits" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} Cache misses</p> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/08.png" width="50%" height="auto" alt="Cache misses" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Cold (compulsory) miss <ul> <li>Cold misses occur because the cache starts empty and this is the first reference to the block.</li> </ul> </li> <li>Capacity miss <ul> <li>Occurs when the set of active cache blocks (working set) is larger than the cache.</li> </ul> </li> <li>Conflict miss <ul> <li>Most caches limit blocks at level <code class="language-plaintext highlighter-rouge">k+1</code> to a small subset (sometimes a singleton) of the block positions at level <code class="language-plaintext highlighter-rouge">k</code>. <ul> <li>E.g. Block i at level <code class="language-plaintext highlighter-rouge">k+1</code> must be placed in block (<code class="language-plaintext highlighter-rouge">i mod 4</code>) at level <code class="language-plaintext highlighter-rouge">k</code>.</li> </ul> </li> <li>Conflict misses occur when the level <code class="language-plaintext highlighter-rouge">k</code> cache is large enough, but multiple data objects all map to the same level <code class="language-plaintext highlighter-rouge">k</code> block. <ul> <li>E.g. Referencing blocks 0, 8, 0, 8, 0, 8, … would miss every time.</li> </ul> </li> </ul> </li> </ul> <p>:::: ::::{tab-item} Cache types</p> <table> <thead> <tr> <th>Cache Type</th> <th>What is cached</th> <th>Where is it cached</th> <th>Latency (cycles)</th> <th>Managed By</th> </tr> </thead> <tbody> <tr> <td>Register</td> <td>4-6 byte words</td> <td>CPU core</td> <td>0</td> <td>Compiler</td> </tr> <tr> <td>TLB</td> <td>Address translations</td> <td>On-chip TLB</td> <td>0</td> <td>Hardware MMU</td> </tr> <tr> <td>L1 cache</td> <td>64-byte blocks</td> <td>On-chip L1</td> <td>4</td> <td>Hardware</td> </tr> <tr> <td>L2 cache</td> <td>64-byte blocks</td> <td>On-chip L2</td> <td>10</td> <td>Hardware</td> </tr> <tr> <td>Virtual memory</td> <td>4-KB pages</td> <td>Main memory</td> <td>100</td> <td>Hardware + OS</td> </tr> <tr> <td>Buffer cache</td> <td>Part of files</td> <td>Main memory</td> <td>100</td> <td>OS</td> </tr> <tr> <td>Disk cache</td> <td>Disk sectors</td> <td>Disk controller</td> <td>100,000</td> <td>Disk firmware</td> </tr> <tr> <td>Network buffer cache</td> <td>Part of files</td> <td>Local disk</td> <td>10,000,000</td> <td>NFS client</td> </tr> <tr> <td>Browser cache</td> <td>Web pages</td> <td>Local disk</td> <td>10,000,000</td> <td>Web browser</td> </tr> <tr> <td>Web cache</td> <td>Web pages</td> <td>Remote server disks</td> <td>1,000,000,000</td> <td>Web proxy server</td> </tr> </tbody> </table> <p>::::</p> <ul> <li>Small, fast SRAM-based memories managed automatically in hardware.</li> <li>Hold frequently accessed blocks of main memory.</li> <li>CPU looks first for data in cache.</li> </ul> <p>:::::{tab-set} ::::{tab-item} L2/L3</p> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/09.png" width="50%" height="auto" alt="Example of L2 and L3 cache" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} L1/L2/L3</p> <figure> <picture> <img src="/assets/img/courses/csc231/05-memory/10.png" width="50%" height="auto" alt="Example of L1, L2, and L3 cache" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>::::</p> <ul> <li>Miss Rate <ul> <li>Fraction of memory references not found in cache <code class="language-plaintext highlighter-rouge">(misses / accesses) = 1 – hit rate</code> </li> <li>Typical numbers (in percentages): <ul> <li>3-10% for L1</li> <li>can be quite small (e.g., &lt; 1%) for L2, depending on size, etc.</li> </ul> </li> </ul> </li> <li>Hit Time <ul> <li>Time to deliver a line in the cache to the processor <ul> <li>includes time to determine whether the line is in the cache</li> </ul> </li> <li>Typical numbers: <ul> <li>4 clock cycle for L1</li> <li>10 clock cycles for L2</li> </ul> </li> </ul> </li> <li>Miss Penalty <ul> <li>Additional time required because of a miss <ul> <li>typically 50-200 cycles for main memory (Trend: increasing!)</li> </ul> </li> </ul> </li> <li>Huge difference between a hit and a miss <ul> <li>Could be 100x, if just L1 and main memory</li> </ul> </li> <li>Would you believe 99% hits is twice as good as 97%? <ul> <li>Consider this simplified example: <ul> <li>cache hit time of 1 cycle</li> <li>miss penalty of 100 cycles</li> </ul> </li> <li>Average access time: <ul> <li>97% hits: 1 cycle + 0.03 x 100 cycles = 4 cycles</li> <li>99% hits: 1 cycle + 0.01 x 100 cycles = 2 cycles</li> </ul> </li> </ul> </li> <li>This is why <code class="language-plaintext highlighter-rouge">miss rate</code> is used instead of <code class="language-plaintext highlighter-rouge">hit rate</code>.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -770,71 +718,6 @@ known as a memory hierarchy.
 298
 299
 300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
 </pre></td> <td class="rouge-code"><pre>
 ## Write cache friendly code
 
@@ -870,19 +753,6 @@ our understanding of cache memories.
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/15-480.webp 480w,/assets/img/courses/csc231/05-memory/15-800.webp 800w,/assets/img/courses/csc231/05-memory/15-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc231/05-memory/15.png"
@@ -949,19 +819,6 @@ for (i=0; i&lt;n; i++)  {
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
     
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/16-480.webp 480w,/assets/img/courses/csc231/05-memory/16-800.webp 800w,/assets/img/courses/csc231/05-memory/16-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
     &lt;img
       src="/assets/img/courses/csc231/05-memory/16.png"
       
@@ -1022,19 +879,6 @@ for (k=0; k&lt;n; k++)  {
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/17-480.webp 480w,/assets/img/courses/csc231/05-memory/17-800.webp 800w,/assets/img/courses/csc231/05-memory/17-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc231/05-memory/17.png"
@@ -1097,19 +941,6 @@ for (j=0; j&lt;n; j++)  {
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
     
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/18-480.webp 480w,/assets/img/courses/csc231/05-memory/18-800.webp 800w,/assets/img/courses/csc231/05-memory/18-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
     &lt;img
       src="/assets/img/courses/csc231/05-memory/18.png"
       
@@ -1159,19 +990,6 @@ for (j=0; j&lt;n; j++)  {
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/19-480.webp 480w,/assets/img/courses/csc231/05-memory/19-800.webp 800w,/assets/img/courses/csc231/05-memory/19-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
     
     &lt;img
       src="/assets/img/courses/csc231/05-memory/19.png"
