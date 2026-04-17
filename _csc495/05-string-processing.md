@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc495
-title: "String processing""
+title: "String processing"
 ---
 
 # String processing"
