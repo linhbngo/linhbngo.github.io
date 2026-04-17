@@ -33,16 +33,14 @@ course that I have taught every semester since Fall 2024. At the beginning, the 
 course was simply to provide students with an experiential learning experience by working on projects 
 provided by external clients. As this is a course for seniors that are close to graduation, they are 
 expected to come in with *adequate* technical preparation through previous electives. This course is 
-not meant to be a gate keeper but to serve as a personal measure stick: to see how much everyone can 
+not meant to be a gate keeper but to serve as a personal measuring stick: to see how much everyone can 
 accomplish before stepping out to the real world. At the end of the semester, each group will present 
 their work, not in class, but in a public setting, in front of invited guests (deans, parents, clients, 
 other students, etc) and on a large stage.  
 
-The course has been a success, as per both students' interests (the offering session is full 
-only after one or two days of registration, with many stay on the wait list) and their post-course 
-evaluation. One thing that surprised me in their post-course evaluation is the fact that they praised 
-how the course has made them become better in team work and communication and other soft-skill-related 
-aspects. I asked myself, did they not learn communication skills earlier? After talking with other students 
+The course has been a success, as per both students' interests (the course fills within one or two 
+days of registration, with many stay on the wait list) and their post-course 
+evaluation. One thing that surprised me in their post-course evaluation is the fact that they praised the course for helping them improve in teamwork, communication, and related professional habits. I asked myself, did they not learn communication skills earlier? After talking with other students 
 that are outside of CSC402, they all mentioned how they learned specific communication techniques in their 
 speaking classes. Similarly, many upper-level technical courses include a team project in their syllabi.  
 
@@ -54,7 +52,7 @@ works smoothly because friendship covers for poor process, or everyone learns th
 that equal contribution occurred. Adaptation happens, but usually only enough to satisfy the assignment. 
 Strategic thinking appears, but often in rubric-shaped form. Conflict management is less about managing 
 conflict than about avoiding it. Everyone is nice and everyone is agreeable. Problems are swept under the 
-rug because the semester is short and the grade matters more than the health of the collaboration. In that environment, students are not learning nothing. They are learning early forms of soft skills. However, early forms are not the same as internalized habits.
+rug because the semester is short and the grade matters more than the health of the collaboration. In that environment, students are not failing to learn altogether. They are learning early forms of soft skills. However, early forms are not the same as internalized habits.
 
 ## The power of real consequences in capstone
 
@@ -90,8 +88,8 @@ since that might hypothetically secure further funding. They learn that, in a te
 not the same thing as being collaborative, and being assertive and knowing how to professionally address 
 confrontations is critical to the team's dynamic and productivity. Adaptation does not simply mean changing 
 plans to keep a grade intact but to responding to shifting expectations, new information, and external 
-pressures without losing project coherence. In short, capstone does not teach soft skills but reveals and 
-pushes those skills to take root through relevant exposures.
+pressures without losing project coherence. In short, may not introduce these skills from scratch, but 
+it creates the conditions under which earlier exposure becomes difficult to ignore and easier to internalize.
 
 This leads to a more interesting observation. We can make the case that colleges do teach the fundamental 
 aspects of soft skills. However, they are taught in forms that are too isolated or low-stakes to make students 
@@ -103,9 +101,9 @@ The above observation should not be surprising, as the same is true of technical
 generally accept that technical skills mature through actual usage, and trials and errors. Yet with 
 soft skills, colleges often act as if one or two communication courses plus various forms of group 
 projects should do the trick. The hope seems to be that these fragments will somehow assemble themselves 
-into professional judgment by graduation. Sometimes they do, and often they do not. Hypothetically 
-speaking, if the realistic consequences in CSC402 have contributed toward this successful assembly, then 
-is it possible to do the same thing in earlier courses?
+into professional judgment by graduation. Sometimes they do, and often they do not. If the realistic 
+consequences in CSC402 have contributed toward this successful assembly, then is it possible to do the 
+same thing in earlier courses?
 
 In taking a deeper look at CSC 402, we can see that its non-grading consequences include fear of 
 disappointing a client and public performance in front of family/strangers. These have different 
@@ -139,9 +137,8 @@ them because the curriculum often teaches them in fragments and practices them u
 to make them necessary. Capstone, especially with external clients and public showcase, changes that by 
 attaching consequence to what had previously been academic form. It shows that communication, collaboration, 
 adaptability, and conflict management are not accessories to technical education but part of what makes 
-technical work hold together in the first place. While, in an ideal environment, capstone should not be 
-the first place where those skills become real, but realistically, it is the most suitable place for that 
-to happen. Earlier implementations are certainly possible, but it will take effort from both faculty and 
-institutions to make that happen. The question is not whether colleges teach soft skills. They do. The 
-question is whether they are willing to make those skills necessary for, and therefore internalized by, 
+technical work hold together in the first place. In an ideal curriculum, capstone would not be the first 
+place where these skills become consequential. In practice, however, it may be the most natural place for 
+that transformation to occur, because it concentrates technical maturity, external accountability, and public 
+visibility in one setting. Earlier implementations are certainly possible, but it will take effort from both faculty and institutions to make that happen. The question is not whether colleges teach soft skills. They do. The question is whether they are willing to make those skills necessary for, and therefore internalized by, 
 students before the final semester.
