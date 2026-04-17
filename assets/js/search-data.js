@@ -1090,16 +1090,6 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/10-load-balancer/";
-            },},{id: "csc478-infrastructure-as-code",
-          title: 'Infrastructure As Code',
-          description: "",
-          section: "Csc478",handler: () => {
-              window.location.href = "/csc478/11-infrastructure-as-code/";
-            },},{id: "csc478-configuration-as-code-cac-helms",
-          title: 'Configuration as Code (CaC): Helms',
-          description: "",
-          section: "Csc478",handler: () => {
-              window.location.href = "/csc478/12-conf-as-code/";
             },},{id: "csc478-rbac-model-taxonomy",
           title: 'RBAC Model Taxonomy',
           description: "",
