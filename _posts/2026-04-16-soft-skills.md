@@ -10,7 +10,7 @@ hidden: false
 
 The calls for embedding soft skills in colleges have now become routine. Students, we are told, 
 should graduate able to communicate, collaborate, adapt, think strategically, manage conflict, 
-and work well with others. Yet, in a similar routine, hiring managers and recruiters from industry 
+and work well with others. Yet, hiring managers and recruiters from industry 
 would keep coming back and raise the issue about how new employees are often lacking in these areas.
 
 It would be unfair to say that colleges do not teach these things at all. In fact, we do it quite 
