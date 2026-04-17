@@ -4,9 +4,9 @@ pretty_table: true
 collection: csc530
 title: "Balanced Tree"
 toc:
-  - name: Paper presentation dates:
-  - name: Balanced Tree: Red-Black and B-tree
-  - name: Balanced Tree: Red-Black implementation
+  - name: Paper presentation dates
+  - name: Balanced Tree Red-Black and B-tree
+  - name: Balanced Tree Red-Black implementation
   - name: Dynamic Selection
 ---
 # Balanced Tree

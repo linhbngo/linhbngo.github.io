@@ -5,7 +5,7 @@ collection: csc478
 title: "Storage Volumes in Kubernetes"
 toc:
   - name: Motivation & Problem Setup
-  - name: Kubernetes Volumes: The Basics
+  - name: "Kubernetes Volumes: The Basics"
   - name: Persistent Volumes and Claims
   - name: PV on multi-node cluster
 ---

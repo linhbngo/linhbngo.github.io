@@ -6,7 +6,7 @@ title: "Introduction"
 toc:
   - name: Getting Started with App Development
   - name: Coding in Swift
-  - name: Coding Swift: Xcode IDE
+  - name: Coding Swift Xcode IDE
   - name: "Modify/build your first app"
 ---
 # Introduction

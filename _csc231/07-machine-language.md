@@ -6,7 +6,7 @@ collection: csc231
 title: "Machine language"
 toc:
   - name: Intel x86 processors
-  - name: Machine programming: levels of abstraction
+  - name: "Machine programming: levels of abstraction"
   - name: Assembly language
   - name: Data movement
   - name: Arithmetic operations

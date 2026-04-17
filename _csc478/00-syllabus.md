@@ -8,8 +8,8 @@ toc:
   - name: Course Description
   - name: Course Student Learning Outcomes (CSLO)
   - name: Prerequisites
-  - name: Required Text (either print or e-book):
-  - name: Evaluation Policy:
+  - name: Required Text (either print or e-book)
+  - name: Evaluation Policy
   - name: Course Schedules
 ---
 

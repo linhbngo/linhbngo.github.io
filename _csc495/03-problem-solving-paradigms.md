@@ -6,23 +6,16 @@ title: "Problem solving paradigms"
 toc:
   - name: Four Common Problem Solving Paradigms
   - name: Strategies
-  - name: Improving Complete Search: Iterative Complete Search
-  - name: Improving Complete Search: Looping and Pruning
-  - name: Iterative Complete Search: Permutations
-  - name: Recursive Complete Search: Backtracking
+  - name: Improving Complete Search
   - name: Challenges
-  - name: Complete Search Tips:
-  - name: Divide and Conquer (D&C):
-  - name: D&C Binary Search: Uncommon Data Structures
-  - name: D&C Binary Search: Binary Search the Answer
+  - name: Complete Search Tips
+  - name: Divide and Conquer (D&C)
+  - name: D&C Binary Search
   - name: Challenges
   - name: Greedy
   - name: Challenges
   - name: Dynamic Programming (DP)
-  - name: Dynamic Programming (DP): Example
   - name: Non DP Approaches
-  - name: Top-down DP:
-  - name: Bottom-up DP:
   - name: LeetCode example
 ---
 # Problem solving paradigms

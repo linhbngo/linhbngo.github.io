@@ -7,7 +7,7 @@ title: "Operating System Security"
 toc:
   - name: Overview
   - name: Privileged Program
-  - name: Set UID: what can go wrong?
+  - name: "Set UID: what can go wrong?"
 ---
 
 # Operating System Security

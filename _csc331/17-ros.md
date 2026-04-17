@@ -6,7 +6,7 @@ collection: csc331
 title: "A Gentle Introduction to ROS"
 toc:
   - name: Overview
-  - name: Core ROS 2 Concept:
+  - name: Core ROS 2 Concept
   - name: Data Distribution Service
   - name: What Robots Use ROS 2?
 ---

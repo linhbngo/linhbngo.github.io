@@ -8,7 +8,7 @@ toc:
   - name: The questions
   - name: Initial assumptions
   - name: Initial assumptions
-  - name: External fragmentation:
+  - name: External fragmentation
 ---
 
 # Memory virtualization mechanism: address translation

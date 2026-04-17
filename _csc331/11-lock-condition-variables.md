@@ -9,27 +9,27 @@ toc:
   - name: What is shared/not shared in a multithreaded program?
   - name: Key definitions
   - name: Requirements for Critical Section Handling
-  - name: Lock: Definition
-  - name: Semantic of locking: lock() and unlock()
+  - name: "Lock: Definition"
+  - name: "Semantic of locking: lock() and unlock()"
   - name: How do we build a lock?
   - name: Criteria of a good lock
-  - name: First attempt: controlling interrupts
+  - name: "First attempt: controlling interrupts"
   - name: We need CPU hardware support
   - name: Spin lock with Test-and-Set
-  - name: Spin lock with Test-and-Set: how does it work?
+  - name: "Spin lock with Test-and-Set: how does it work?"
   - name: Evaluating the basic spin lock
-  - name: Scenario: one thread waiting on another
+  - name: "Scenario: one thread waiting on another"
   - name: A lock-based solution
   - name: How to wait for a condition?
   - name: Lock and conditional variable
   - name: Do we really need both?
   - name: The producer/consumer (bounded buffer) problem
-  - name: Vanilla: not thread-safe
+  - name: "Vanilla: not thread-safe"
   - name: First implementation
-  - name: First implementation: broken
-  - name: First implementation: why?
-  - name: Second implementation: slightly less broken
-  - name: Third implementation: finally work
+  - name: "First implementation: broken"
+  - name: "First implementation: why?"
+  - name: "Second implementation: slightly less broken"
+  - name: "Third implementation: finally work"
   - name: A generalized solution
 ---
 

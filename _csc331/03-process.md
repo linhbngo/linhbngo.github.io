@@ -8,8 +8,8 @@ toc:
   - name: Program and process
   - name: Process API
   - name: Process creation
-  - name: Loading: from program to process
-  - name: Process: data structure
+  - name: "Loading: from program to process"
+  - name: "Process: data structure"
   - name: Process API
   - name: The Shell
   - name: Other system calls ...

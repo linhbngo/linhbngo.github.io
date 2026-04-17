@@ -8,7 +8,7 @@ toc:
   - name: Loop parallelism
   - name: Loop Schedule
   - name: Nested Loops
-  - name: Hands-on:
+  - name: Hands-on
 ---
 # OpenMP: parallel regions and loop parallelism
 

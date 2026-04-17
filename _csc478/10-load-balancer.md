@@ -6,7 +6,7 @@ title: "LoadBalancer and Ingress"
 toc:
   - name: LoadBalancer
   - name: Load Balancing Algorithms
-  - name: Load Balancing: AWS, GCP, and Kubernetes
+  - name: "Load Balancing: AWS, GCP, and Kubernetes"
   - name: Hands-on
   - name: References
 ---

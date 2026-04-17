@@ -9,8 +9,8 @@ toc:
   - name: Course Description
   - name: Learning Objectives
   - name: Prerequisites
-  - name: Required Text (either print or e-book):
-  - name: Evaluation Policy:
+  - name: Required Text (either print or e-book)
+  - name: Evaluation Policy
   - name: Course Schedules
 ---
 

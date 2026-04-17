@@ -10,9 +10,9 @@ toc:
   - name: Semaphore
   - name: Semaphore as lock (binary semaphore)
   - name: Semaphore as condition variable
-  - name: Semaphore: producer/consumer I
-  - name: Semaphore: producer/consumer II
-  - name: Semaphore: producer/consumer III
+  - name: "Semaphore: producer/consumer I"
+  - name: "Semaphore: producer/consumer II"
+  - name: "Semaphore: producer/consumer III"
   - name: The dining philosophers
   - name: Solutions
 ---

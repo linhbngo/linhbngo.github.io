@@ -5,8 +5,8 @@ collection: csc478
 title: "Pod, Service, and Deployment"
 toc:
   - name: Big Picture
-  - name: Pods: Containers and Node Abstraction
-  - name: Services: Stable Access to Pods
+  - name: "Pods: Containers and Node Abstraction"
+  - name: "Services: Stable Access to Pods"
   - name: Deployment
 ---
 # Pod, Service, and Deployment

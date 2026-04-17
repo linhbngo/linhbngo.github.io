@@ -5,10 +5,10 @@ collection: csc331
 
 title: "Micro versus monolithnic kernels: Minix and Linux"
 toc:
-  - name: MINIX: what is it?
-  - name: MINIX: architecture
-  - name: MINIX: pros and cons
-  - name: Linux vs MINIX: the flame war of 1992
+  - name: "MINIX: what is it?"
+  - name: "MINIX: architecture"
+  - name: "MINIX: pros and cons"
+  - name: "Linux vs MINIX: the flame war of 1992"
 ---
 # Micro versus monolithnic kernels: Minix and Linux
 

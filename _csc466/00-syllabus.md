@@ -7,11 +7,11 @@ title: "CSC 466: Distributed and Parallel Computing"
 toc:
   - name: General Information
   - name: Course Information
-  - name: Required Materials:
+  - name: Required Materials
   - name: Course Description
   - name: Prerequisites
   - name: Learning Objectives
-  - name: Assessments and Grading:
+  - name: Assessments and Grading
   - name: Course Topics and Schedules
   - name: Bibliography
 ---

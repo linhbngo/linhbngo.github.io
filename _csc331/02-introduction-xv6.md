@@ -10,7 +10,7 @@ toc:
   - name: History of xv6
   - name: Why RISC-V?
   - name: What are we actually running?
-  - name: Even more specifics: Hands-on
+  - name: "Even more specifics: Hands-on"
   - name: Default xv6 commands
 ---
 # Introduction to xv6

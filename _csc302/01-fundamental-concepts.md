@@ -5,7 +5,7 @@ collection: csc302
 
 title: "Security at a Glance"
 toc:
-  - name: Computer Security: Additional attributes
+  - name: "Computer Security: Additional attributes"
   - name: Vulnerabilities and Attacks
   - name: Security Skills
 ---

@@ -5,7 +5,7 @@ collection: csc231
 
 title: "Memory hierarchy and cache memories"
 toc:
-  - name: Memory abstraction: writing and reading memory
+  - name: "Memory abstraction: writing and reading memory"
   - name: The CPU-Memory gap
   - name: Memory hierarchies
   - name: Caching

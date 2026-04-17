@@ -8,12 +8,12 @@ hide:
 toc:
   - name: General Information
   - name: Course Information
-  - name: Required Materials:
-  - name: Resources and Accessibility:
+  - name: Required Materials
+  - name: Resources and Accessibility
   - name: Course Description
   - name: Course Student Learning Outcomes (CSLO)
   - name: Prerequisites
-  - name: Evaluation Policy:
+  - name: Evaluation Policy
   - name: Course Schedules
 ---
 

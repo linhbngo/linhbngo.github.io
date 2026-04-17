@@ -5,7 +5,7 @@ collection: csc478
 title: "Cloud Security"
 toc:
   - name: Cloud Native Security
-  - name: Cluster Security: Kubernetes
+  - name: "Cluster Security: Kubernetes"
   - name: Container Security
 ---
 # Cloud Security

@@ -5,12 +5,12 @@ collection: csc495
 title: "Data structures and supporting libraries"
 toc:
   - name: Overview and motivation
-  - name: Linear Data Structure: Array
+  - name: "Linear Data Structure: Array"
   - name: Special Sorting Problems
-  - name: Linear Data Structure: Bitmask
+  - name: "Linear Data Structure: Bitmask"
   - name: Big Integer
   - name: Linked Data Structures
-  - name: Non-linear Data Structures: Binary Heap (Priority Queue)
+  - name: "Non-linear Data Structures: Binary Heap (Priority Queue)"
   - name: Hash Table
   - name: Balanced Binary Search Tree (bBST)
   - name: Order Statistics Tree

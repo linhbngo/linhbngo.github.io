@@ -5,11 +5,11 @@ collection: csc530
 title: "Syllabus"
 toc:
   - name: Course Information
-  - name: Required Materials:
-  - name: Recommended References:
+  - name: Required Materials
+  - name: Recommended References
   - name: Course Description
   - name: Learning Objectives
-  - name: Assessments and Grading:
+  - name: Assessments and Grading
   - name: Course Topics and Schedules (subject to change)
 ---
 # Syllabus

@@ -6,9 +6,9 @@ title: "Introduction to C"
 toc:
   - name: What is C?
   - name: C and Java
-  - name: Hands-on: Getting started
-  - name: Challenge: output
-  - name: Input: scanf
+  - name: "Hands-on: Getting started"
+  - name: "Challenge: output"
+  - name: "Input: scanf"
   - name: Challenge
   - name: Conditionals and Loops
   - name: Function in C

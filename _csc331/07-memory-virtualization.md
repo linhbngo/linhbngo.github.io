@@ -8,8 +8,8 @@ toc:
   - name: In the beginning ...
   - name: Multiprogramming and time sharing
   - name: Address space
-  - name: Hands on: Where the stack grows?
-  - name: Hands on: where the heap grows?
+  - name: "Hands on: Where the stack grows?"
+  - name: "Hands on: where the heap grows?"
   - name: What is address space, really?
   - name: Goals of memory virtualization
 ---

@@ -7,8 +7,8 @@ toc:
   - name: General Information
   - name: Course Description
   - name: Learning Objectives
-  - name: Required Learning Materials:
-  - name: Assessments and Grading:
+  - name: Required Learning Materials
+  - name: Assessments and Grading
   - name: Course Topics and Schedules (subject to change)
 ---
 

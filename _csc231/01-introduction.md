@@ -6,14 +6,14 @@ title: "Introduction"
 toc:
   - name: Overview
   - name: Understand how things work
-  - name: Hands-on: Getting started
+  - name: "Hands-on: Getting started"
   - name: Computer arithmetic
   - name: Assembly
   - name: Memory Matters
-  - name: Hands-on: Memory referencing bug
+  - name: "Hands-on: Memory referencing bug"
   - name: Memory referencing errors
   - name: Beyond asymptotic complexity
-  - name: Hands-on: Memory system performance
+  - name: "Hands-on: Memory system performance"
   - name: Does computer just execute arithmetic and control flow operations?
   - name: Layered Services
 ---

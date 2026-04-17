@@ -4,9 +4,9 @@ pretty_table: true
 collection: csc496
 title: "Swift Fundamentals: Arrays, Loops, Strings, Optional Type"
 toc:
-  - name: Array:
-  - name: String:
-  - name: Functions:
+  - name: Array
+  - name: String
+  - name: Functions
 ---
 # Swift Fundamentals: Arrays, Loops, Strings, Optional Type
 

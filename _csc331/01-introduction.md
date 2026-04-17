@@ -9,9 +9,9 @@ toc:
   - name: Why do we need OS?
   - name: How do the OS help (1)?
   - name: How do the OS help (2)?
-  - name: Hands-on: Getting started
-  - name: Hands-on: CPU Virtualization
-  - name: Hands-on: Memory Virtualization
+  - name: "Hands-on: Getting started"
+  - name: "Hands-on: CPU Virtualization"
+  - name: "Hands-on: Memory Virtualization"
   - name: Concurrency
   - name: Persistency
   - name: A brief history of operating system research and development

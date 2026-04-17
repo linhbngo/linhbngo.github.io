@@ -6,8 +6,8 @@ collection: csc331
 title: "Limited Direct Execution"
 toc:
   - name: CPU virtualization recall
-  - name: Problem: working with restricted operations
-  - name: Problem: switching processes
+  - name: "Problem: working with restricted operations"
+  - name: "Problem: switching processes"
 ---
 
 # Limited Direct Execution

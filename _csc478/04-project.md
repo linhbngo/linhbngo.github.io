@@ -6,9 +6,9 @@ title: "Course Project: Multi-Pod Multi-Container Pipeline on Kubernetes"
 toc:
   - name: Introduction
   - name: Example Project Idea
-  - name: Milestone 1: Team Formation & Architecture (Design Only)
-  - name: Milestone 2: Core Implementation:
-  - name: Milestone 3: Persistence & Full Integration (Demo)
+  - name: "Milestone 1: Team Formation & Architecture (Design Only)"
+  - name: "Milestone 2: Core Implementation:"
+  - name: "Milestone 3: Persistence & Full Integration (Demo)"
   - name: Constraints & Hints
 ---
 

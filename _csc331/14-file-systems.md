@@ -6,7 +6,7 @@ collection: csc331
 title: "Introduction to file systems"
 toc:
   - name: File systems
-  - name: Abstraction: files and directories
+  - name: "Abstraction: files and directories"
   - name: File operations
   - name: Implementations of file systems
   - name: Mental model of a file system

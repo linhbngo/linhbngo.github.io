@@ -6,14 +6,14 @@ title: "CSC 302: Computer Security II"
 toc:
   - name: Instructor
   - name: Course Information
-  - name: Required Materials:
-  - name: Resources and Accessibility:
+  - name: Required Materials
+  - name: Resources and Accessibility
   - name: Course Description
   - name: Prerequisites
   - name: Learning Objectives
-  - name: Assessments and Grading:
+  - name: Assessments and Grading
   - name: Resources for Student Success
-  - name: Course Topics and Schedules:
+  - name: Course Topics and Schedules
 ---
 # CSC 302: Computer Security II
 

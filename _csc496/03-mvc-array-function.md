@@ -4,8 +4,8 @@ pretty_table: true
 collection: csc496
 title: "Swift MVC"
 toc:
-  - name: MVC:
-  - name: Hands-on: MVC Array
+  - name: MVC
+  - name: Hands-on MVC Array
 ---
 # Swift MVC
 

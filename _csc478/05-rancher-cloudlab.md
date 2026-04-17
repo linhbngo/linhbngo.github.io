@@ -6,7 +6,7 @@ title: "Rancher RKE2"
 toc:
   - name: What is RKE2?
   - name: Key Features
-  - name: Hands-on: Typical Installation Workflow
+  - name: "Hands-on: Typical Installation Workflow"
 ---
 # Rancher RKE2
 

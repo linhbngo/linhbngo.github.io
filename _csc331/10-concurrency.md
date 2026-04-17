@@ -2,17 +2,16 @@
 layout: lecture
 pretty_table: true
 collection: csc331
-
 title: "Introduction to concurrency using threads"
 toc:
-  - name: Review: process calls fork()
-  - name: Review: process context switch
-  - name: Example: web server
-  - name: Thread: a new abstraction for running processes
-  - name: Thread: state of a single thread
-  - name: Example: web server using thread
-  - name: API: POSIX threads (pthreads)
-  - name: Hands on: say hello to my little threads ...
+  - name: "Review: process calls fork()"
+  - name: "Review: process context switch"
+  - name: "Example: web server"
+  - name: "Thread: a new abstraction for running processes"
+  - name: "Thread: state of a single thread"
+  - name: "Example: web server using thread"
+  - name: "API: POSIX threads (pthreads)"
+  - name: "Hands on: say hello to my little threads ..."
   - name: The problem with threads
   - name: Challenge
 ---

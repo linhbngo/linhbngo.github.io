@@ -11,8 +11,8 @@ toc:
   - name: Learning Objectives
   - name: Prerequisites
   - name: Resources and Accessibility
-  - name: Required Text (either print or e-book):
-  - name: Evaluation Policy:
+  - name: Required Text (either print or e-book)
+  - name: Evaluation Policy
   - name: Policy
 ---
 # CSC 495: Competitive Programming
