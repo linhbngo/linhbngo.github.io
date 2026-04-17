@@ -135,11 +135,11 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-beyond-speaking-classes",
+            },{id: "post-the-consequence-gap",
         
-          title: "Beyond Speaking Classes",
+          title: "The Consequence Gap",
         
-        description: "How do students actually internalize soft skills?",
+        description: "Why do students internalize soft skills in capstone but not in earlier courses?",
         section: "Posts",
         handler: () => {
           
