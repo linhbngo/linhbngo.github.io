@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc530
-course: CSC 530: Data Structures
 title: "CSC 530: Data Structures"
 ---
 # CSC 530: Data Structures 

@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc231
-course: CSC 231: Computer Systems
 title: "CSC 231: Computer Systems"
 toc:
   - name: Course Information

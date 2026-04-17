@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc496
-course: CSC 496: iOS App Development
 title: "Swift Fundamentals: Arrays, Loops, Strings, Optional Type"
 toc:
   - name: Array:

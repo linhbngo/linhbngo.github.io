@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-course: CSC478: Cloud Engineering
 title: "ClusterIP, NodePort, and Multi-Service Communication"
 toc:
   - name: Motivation

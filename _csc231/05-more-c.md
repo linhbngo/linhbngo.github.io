@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc231
-course: CSC 231: Computer Systems
+
 title: "Even more C"
 toc:
   - name: Addresses and pointers

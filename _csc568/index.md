@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc568
-course: CSC568: Cloud Computing Fundamentals
 title: "CSC568: Cloud Computing Fundamentals"
 ---
 # CSC568: Cloud Computing Fundamentals

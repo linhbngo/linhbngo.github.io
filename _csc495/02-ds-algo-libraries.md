@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc495
-course: CSC 495: Competitive Programming
 title: "Data structures and supporting libraries"
 toc:
   - name: Overview and motivation

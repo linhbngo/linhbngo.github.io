@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc466
-course: CSC 466: Distributed and Parallel Computing
+
 title: "OpenMP: parallel regions and loop parallelism"
 toc:
   - name: Loop parallelism

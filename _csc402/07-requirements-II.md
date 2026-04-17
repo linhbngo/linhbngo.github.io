@@ -17,7 +17,7 @@ typograms: true
 
 toc:
   - name: Requirements analysis
-  - name: Example: Online exam system
+  - name: "Example: Online exam system"
   - name: Requirements from existing products
 ---
 

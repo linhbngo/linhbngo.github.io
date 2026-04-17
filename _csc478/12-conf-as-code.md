@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-course: CSC478: Cloud Engineering
 title: "Configuration as Code (CaC): Helms"
 toc:
   - name: Configuration as Code in the Cloud Stack

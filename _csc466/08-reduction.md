@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc466
-course: CSC 466: Distributed and Parallel Computing
+
 title: "Reduction"
 toc:
   - name: Reduction

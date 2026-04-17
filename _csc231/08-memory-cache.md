@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc231
-course: CSC 231: Computer Systems
+
 title: "Memory hierarchy and cache memories"
 toc:
   - name: Memory abstraction: writing and reading memory

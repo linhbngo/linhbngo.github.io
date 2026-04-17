@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc331
-course: CSC 331: Operating Systems
+
 title: "Notes"
 ---
 15-Week Semester Outline (Sample)

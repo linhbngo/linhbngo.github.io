@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc496
-course: CSC 496: iOS App Development
 title: "Views and 3rd Party Library"
 toc:
   - name: Views

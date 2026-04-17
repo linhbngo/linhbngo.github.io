@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc331
-course: CSC 331: Operating Systems
+
 title: "Introduction to xv6"
 toc:
   - name: The need for a real OS

@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc568
-course: CSC568: Cloud Computing Fundamentals
 title: "Syllabus: CSC 568 - Cloud Computing Fundamentals"
 hide:
   - toc

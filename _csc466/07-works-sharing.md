@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc466
-course: CSC 466: Distributed and Parallel Computing
+
 title: "Work Sharing and Thread Data Management"
 toc:
   - name: Work sharing

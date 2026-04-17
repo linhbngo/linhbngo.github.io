@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc402
-course: CSC 402: Software Engineering.
 title: "CSC 402: Software Engineering."
 ---
 # CSC 402: Software Engineering. 

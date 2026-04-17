@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc331
-course: CSC 331: Operating Systems
+
 title: "Memory virtualization mechanism: paging and tlb"
 toc:
   - name: What is paging?

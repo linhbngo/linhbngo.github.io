@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc331
-course: CSC 331: Operating Systems
+
 title: "Introduction to Operating Systems"
 toc:
   - name: What happens when a computer program run?

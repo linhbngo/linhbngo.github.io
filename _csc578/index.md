@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc578
-course: CSC578: Cloud Systems Engineering
 title: "CSC578: Cloud Systems Engineering"
 ---
 # CSC578: Cloud Systems Engineering

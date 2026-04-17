@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc231
-course: CSC 231: Computer Systems
+
 title: "Machine language"
 toc:
   - name: Intel x86 processors

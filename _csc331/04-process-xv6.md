@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc331
-course: CSC 331: Operating Systems
+
 title: "Process in XV6"
 toc:
   - name: How does fork() behave in xv6?

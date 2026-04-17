@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc331
-course: CSC 331: Operating Systems
+
 title: "Micro versus monolithnic kernels: Minix and Linux"
 toc:
   - name: MINIX: what is it?

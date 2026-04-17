@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc302
-course: CSC 302: Computer Security II
+
 title: "One-Way Hash Functions"
 toc:
   - name: Overview of One-way Hash Functions

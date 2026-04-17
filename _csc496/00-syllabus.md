@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc496
-course: CSC 496: iOS App Development
 title: "CSC 496: iOS App Development"
 toc:
   - name: General Information

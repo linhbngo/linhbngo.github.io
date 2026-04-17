@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc466
-course: CSC 466: Distributed and Parallel Computing
+
 title: "Pleasantly parallel and workload allocation"
 toc:
   - name: Overview

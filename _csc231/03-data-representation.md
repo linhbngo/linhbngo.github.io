@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc231
-course: CSC 231: Computer Systems
+
 title: "Representing and manipulating information"
 toc:
   - name: How do we "see" things?

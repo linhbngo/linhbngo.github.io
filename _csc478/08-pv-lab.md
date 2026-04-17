@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-course: CSC478: Cloud Engineering
 title: "Kubernetes PV/PVC Hands-On Lab with NFS"
 toc:
   - name: Pre-Check

@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-course: CSC478: Cloud Engineering
 title: "From Prototype to Production: Deploying in the Cloud"
 toc:
   - name: Welcome to Cloud Engineering

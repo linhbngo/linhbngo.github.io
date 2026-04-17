@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc495
-course: CSC 495: Competitive Programming
 title: "Problem solving paradigms"
 toc:
   - name: Four Common Problem Solving Paradigms

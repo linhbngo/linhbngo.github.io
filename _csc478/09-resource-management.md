@@ -2,7 +2,6 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-course: CSC478: Cloud Engineering
 title: "Resource Units and Management in Kubernetes"
 toc:
   - name: Logistics
