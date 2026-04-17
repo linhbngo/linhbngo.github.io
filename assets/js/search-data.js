@@ -1150,8 +1150,8 @@ ninja.data = [{
           description: "",
           section: "Csc495",handler: () => {
               window.location.href = "/csc495/05-mathematics/";
-            },},{id: "csc495-",
-          title: '',
+            },},{id: "csc495-string-processing",
+          title: 'String processing',
           description: "",
           section: "Csc495",handler: () => {
               window.location.href = "/csc495/05-string-processing/";
