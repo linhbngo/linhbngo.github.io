@@ -70,7 +70,6 @@ from scratch, and building the mindset of an app developer.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_undergrad.csv") }}
 
 ### Assessments:
 
@@ -90,4 +89,3 @@ instructor before the deadline. No credit for unexcused late assignments.
 
 ## Course Topics and Schedules (subject to change)
 
-{{ read_csv("docs/csc496/topics.csv") }}

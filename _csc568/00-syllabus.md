@@ -124,7 +124,6 @@ containerization, and orchestration.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_grad.csv") }}
 
 ### Assessments:
 
@@ -148,7 +147,6 @@ Saturday and Sunday are each days.
 
 - Quizzes are typically disseminated once a week. 
 
-{{ read_csv("docs/csc568/topics.csv") }}
 
 ---
 

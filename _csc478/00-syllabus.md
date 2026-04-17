@@ -75,7 +75,6 @@ There is no required text for this class.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_undergrad.csv") }}
 
 ### Assessments:
 
@@ -100,5 +99,4 @@ Saturday and Sunday are each days.
 
 - Quizzes are typically disseminated once a week. 
 
-{{ read_csv("docs/csc478/topics.csv") }}
 

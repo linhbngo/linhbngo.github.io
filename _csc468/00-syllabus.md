@@ -136,7 +136,6 @@ Saturday and Sunday are each days.
     take the quiz, but the instructor will start the lecture 5 minutes after duration of the quiz. 
     - One lowest quiz will be dropped. There will be no quiz retake. 
 
-{{ read_csv("docs/csc468/topics.csv") }}
 
 
 {% include courses/policy.md %}

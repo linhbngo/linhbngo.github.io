@@ -131,7 +131,6 @@ appropriate to the program’s discipline.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_undergrad.csv") }}
 
 Refer to the [Grading Information section](https://catalog.wcupa.edu/undergraduate/academic-policies-procedures/grading-information/) 
 section of the Undergraduate Catalog for description  of NG (No Grade), 

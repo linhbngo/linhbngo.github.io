@@ -71,7 +71,6 @@ succinct.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_grad.csv") }}
 
 
 D grades are not used. Refer to the Graduate Catalog for description of NG (No Grade), W, & other grades.

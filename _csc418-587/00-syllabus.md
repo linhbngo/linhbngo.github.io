@@ -136,7 +136,6 @@ to produce computing-based solutions.
   </thead>
 </table>
 
-{{ read_csv("docs/assets/data/grade_undergrad.csv") }}
 
 Refer to the Undergraduate Catalog for description of NG (No Grade), W, & other grades.
 

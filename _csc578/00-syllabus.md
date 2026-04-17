@@ -119,7 +119,6 @@ producing a synthesis that highlights future trends.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_grad.csv") }}
 
 ### Assessments:
 
@@ -143,7 +142,6 @@ Saturday and Sunday are each days.
 
 - Quizzes are typically disseminated once a week. 
 
-{{ read_csv("docs/csc478/topics.csv") }}
 
 
 ---

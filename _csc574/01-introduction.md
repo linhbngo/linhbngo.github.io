@@ -205,7 +205,6 @@ computational power to train/inference: giant data centers
 - Comparison
     - Multiple magnitudes of difference
 
-    {{ read_csv("docs/csc581/lectures/data/compare.csv") }}
 
 - What does it mean to have less compute, memory, storage, and power consumption?
     - understand the task you want to run,

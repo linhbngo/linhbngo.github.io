@@ -109,7 +109,6 @@ to produce computing-based solutions.
 
 ### Grade Scale:
 
-{{ read_csv("docs/assets/data/grade_undergrad.csv") }}
 
 Refer to the Undergraduate Catalog for description of NG (No Grade), W, & other grades.
 
@@ -186,4 +185,3 @@ for specific information.
 
 ## Course Topics and Schedules (subject to modification)
 
-{{ read_csv("docs/csc402/topics.csv") }}
