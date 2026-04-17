@@ -480,13 +480,13 @@ ninja.data = [{
           description: "",
           section: "Csc231",handler: () => {
               window.location.href = "/csc231/00-syllabus/";
-            },},{id: "csc231-",
-          title: '',
+            },},{id: "csc231-introduction",
+          title: 'Introduction',
           description: "",
           section: "Csc231",handler: () => {
               window.location.href = "/csc231/01-introduction/";
-            },},{id: "csc231-",
-          title: '',
+            },},{id: "csc231-introduction-to-c",
+          title: 'Introduction to C',
           description: "",
           section: "Csc231",handler: () => {
               window.location.href = "/csc231/02-intro-to-c/";
@@ -510,13 +510,13 @@ ninja.data = [{
           description: "",
           section: "Csc231",handler: () => {
               window.location.href = "/csc231/06-architecture/";
-            },},{id: "csc231-",
-          title: '',
+            },},{id: "csc231-machine-language",
+          title: 'Machine language',
           description: "",
           section: "Csc231",handler: () => {
               window.location.href = "/csc231/07-machine-language/";
-            },},{id: "csc231-",
-          title: '',
+            },},{id: "csc231-memory-hierarchy-and-cache-memories",
+          title: 'Memory hierarchy and cache memories',
           description: "",
           section: "Csc231",handler: () => {
               window.location.href = "/csc231/08-memory-cache/";
@@ -530,13 +530,13 @@ ninja.data = [{
           description: "",
           section: "Csc231",handler: () => {
               window.location.href = "/csc231/index/";
-            },},{id: "csc302-",
-          title: '',
+            },},{id: "csc302-csc-302-computer-security-ii",
+          title: 'CSC 302: Computer Security II',
           description: "",
           section: "Csc302",handler: () => {
               window.location.href = "/csc302/00-syllabus/";
-            },},{id: "csc302-",
-          title: '',
+            },},{id: "csc302-security-at-a-glance",
+          title: 'Security at a Glance',
           description: "",
           section: "Csc302",handler: () => {
               window.location.href = "/csc302/01-fundamental-concepts/";
@@ -550,8 +550,8 @@ ninja.data = [{
           description: "",
           section: "Csc302",handler: () => {
               window.location.href = "/csc302/04-intro-seed/";
-            },},{id: "csc302-",
-          title: '',
+            },},{id: "csc302-operating-system-security",
+          title: 'Operating System Security',
           description: "",
           section: "Csc302",handler: () => {
               window.location.href = "/csc302/05-os-security/";
@@ -610,23 +610,23 @@ ninja.data = [{
           description: "",
           section: "Csc302",handler: () => {
               window.location.href = "/csc302/index/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-syllabus-csc-331-operating-systems",
+          title: 'Syllabus: CSC 331 - Operating Systems',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/00-syllabus/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-introduction-to-operating-systems",
+          title: 'Introduction to Operating Systems',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/01-introduction/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-introduction-to-xv6",
+          title: 'Introduction to xv6',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/02-introduction-xv6/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-abstraction-process-and-process-api",
+          title: 'Abstraction: Process and Process API',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/03-process/";
@@ -635,8 +635,8 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/04-process-xv6/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-limited-direct-execution",
+          title: 'Limited Direct Execution',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/05-limited-direct-execution/";
@@ -645,13 +645,13 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/06-cpu-scheduling/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-memory-virtualization",
+          title: 'Memory virtualization',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/07-memory-virtualization/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-memory-virtualization-mechanism-address-translation",
+          title: 'Memory virtualization mechanism: address translation',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/08-address-translation/";
@@ -660,18 +660,18 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/09-paging/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-introduction-to-concurrency-using-threads",
+          title: 'Introduction to concurrency using threads',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/10-concurrency/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-lock-and-condition-variables",
+          title: 'Lock and Condition Variables',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/11-lock-condition-variables/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-semaphores",
+          title: 'Semaphores',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/12-semaphores/";
@@ -680,8 +680,8 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/13-io-disk-scheduling/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-introduction-to-file-systems",
+          title: 'Introduction to file systems',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/14-file-systems/";
@@ -690,13 +690,13 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/15-crash-consistency-fsck-journaling/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-micro-versus-monolithnic-kernels-minix-and-linux",
+          title: 'Micro versus monolithnic kernels: Minix and Linux',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/16-minix/";
-            },},{id: "csc331-",
-          title: '',
+            },},{id: "csc331-a-gentle-introduction-to-ros",
+          title: 'A Gentle Introduction to ROS',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/17-ros/";
@@ -865,8 +865,8 @@ ninja.data = [{
           description: "",
           section: "Csc418-587",handler: () => {
               window.location.href = "/csc418-587/11-restful-api/";
-            },},{id: "csc466-",
-          title: '',
+            },},{id: "csc466-csc-466-distributed-and-parallel-computing",
+          title: 'CSC 466: Distributed and Parallel Computing',
           description: "",
           section: "Csc466",handler: () => {
               window.location.href = "/csc466/00-syllabus/";
@@ -895,8 +895,8 @@ ninja.data = [{
           description: "",
           section: "Csc466",handler: () => {
               window.location.href = "/csc466/05-intro-openmp/";
-            },},{id: "csc466-",
-          title: '',
+            },},{id: "csc466-openmp-parallel-regions-and-loop-parallelism",
+          title: 'OpenMP: parallel regions and loop parallelism',
           description: "",
           section: "Csc466",handler: () => {
               window.location.href = "/csc466/06-loop-parallelism/";
@@ -1035,8 +1035,8 @@ ninja.data = [{
           description: "",
           section: "Csc468",handler: () => {
               window.location.href = "/csc468/17-docker-podman-singularity/";
-            },},{id: "csc478-",
-          title: '',
+            },},{id: "csc478-syllabus-csc-478-cloud-engineering",
+          title: 'Syllabus: CSC 478 - Cloud Engineering',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/00-syllabus/";
@@ -1050,18 +1050,18 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/02-rancher/";
-            },},{id: "csc478-",
-          title: '',
+            },},{id: "csc478-pod-service-and-deployment",
+          title: 'Pod, Service, and Deployment',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/03-pod-service-deployment/";
-            },},{id: "csc478-",
-          title: '',
+            },},{id: "csc478-course-project-multi-pod-multi-container-pipeline-on-kubernetes",
+          title: 'Course Project: Multi-Pod Multi-Container Pipeline on Kubernetes',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/04-project/";
-            },},{id: "csc478-",
-          title: '',
+            },},{id: "csc478-rancher-rke2",
+          title: 'Rancher RKE2',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/05-rancher-cloudlab/";
@@ -1070,8 +1070,8 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/06-clusterip/";
-            },},{id: "csc478-",
-          title: '',
+            },},{id: "csc478-storage-volumes-in-kubernetes",
+          title: 'Storage Volumes in Kubernetes',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/07-volumes/";
@@ -1085,8 +1085,8 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/09-resource-management/";
-            },},{id: "csc478-",
-          title: '',
+            },},{id: "csc478-loadbalancer-and-ingress",
+          title: 'LoadBalancer and Ingress',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/10-load-balancer/";
@@ -1105,8 +1105,8 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/13-core-rbac/";
-            },},{id: "csc478-",
-          title: '',
+            },},{id: "csc478-cloud-security",
+          title: 'Cloud Security',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/14-cloud-security/";
@@ -1130,13 +1130,13 @@ ninja.data = [{
           description: "",
           section: "Csc495",handler: () => {
               window.location.href = "/csc495/01-introduction/";
-            },},{id: "csc495-",
-          title: '',
+            },},{id: "csc495-data-structures-and-supporting-libraries",
+          title: 'Data structures and supporting libraries',
           description: "",
           section: "Csc495",handler: () => {
               window.location.href = "/csc495/02-ds-algo-libraries/";
-            },},{id: "csc495-",
-          title: '',
+            },},{id: "csc495-problem-solving-paradigms",
+          title: 'Problem solving paradigms',
           description: "",
           section: "Csc495",handler: () => {
               window.location.href = "/csc495/03-problem-solving-paradigms/";
@@ -1155,18 +1155,18 @@ ninja.data = [{
           description: "",
           section: "Csc495",handler: () => {
               window.location.href = "/csc495/05-string-processing/";
-            },},{id: "csc495-",
-          title: '',
+            },},{id: "csc495-csc-495-competitive-programming",
+          title: 'CSC 495: Competitive Programming',
           description: "",
           section: "Csc495",handler: () => {
               window.location.href = "/csc495/index/";
-            },},{id: "csc496-",
-          title: '',
+            },},{id: "csc496-csc-496-ios-app-development",
+          title: 'CSC 496: iOS App Development',
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/00-syllabus/";
-            },},{id: "csc496-",
-          title: '',
+            },},{id: "csc496-introduction",
+          title: 'Introduction',
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/01-introduction/";
@@ -1175,18 +1175,18 @@ ninja.data = [{
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/02-swift-overview/";
-            },},{id: "csc496-",
-          title: '',
+            },},{id: "csc496-swift-mvc",
+          title: 'Swift MVC',
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/03-mvc-array-function/";
-            },},{id: "csc496-",
-          title: '',
+            },},{id: "csc496-swift-fundamentals-arrays-loops-strings-optional-type",
+          title: 'Swift Fundamentals: Arrays, Loops, Strings, Optional Type',
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/04-swift-fund/";
-            },},{id: "csc496-",
-          title: '',
+            },},{id: "csc496-string-processing",
+          title: 'String processing',
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/05-string-processing/";
@@ -1230,8 +1230,8 @@ ninja.data = [{
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/index/";
-            },},{id: "csc530-",
-          title: '',
+            },},{id: "csc530-syllabus",
+          title: 'Syllabus',
           description: "",
           section: "Csc530",handler: () => {
               window.location.href = "/csc530/00-syllabus/";
@@ -1245,8 +1245,8 @@ ninja.data = [{
           description: "",
           section: "Csc530",handler: () => {
               window.location.href = "/csc530/02-rmq/";
-            },},{id: "csc530-",
-          title: '',
+            },},{id: "csc530-balanced-tree",
+          title: 'Balanced Tree',
           description: "",
           section: "Csc530",handler: () => {
               window.location.href = "/csc530/03-b-tree/";
@@ -1270,8 +1270,8 @@ ninja.data = [{
           description: "",
           section: "Csc530",handler: () => {
               window.location.href = "/csc530/index/";
-            },},{id: "csc568-",
-          title: '',
+            },},{id: "csc568-syllabus-csc-568-cloud-computing-fundamentals",
+          title: 'Syllabus: CSC 568 - Cloud Computing Fundamentals',
           description: "",
           section: "Csc568",handler: () => {
               window.location.href = "/csc568/00-syllabus/";
@@ -1325,8 +1325,8 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/20-visual-wake-word/";
-            },},{id: "csc578-",
-          title: '',
+            },},{id: "csc578-syllabus-csc-578-cloud-systems-engineering",
+          title: 'Syllabus: CSC 578 - Cloud Systems Engineering',
           description: "",
           section: "Csc578",handler: () => {
               window.location.href = "/csc578/00-syllabus/";
