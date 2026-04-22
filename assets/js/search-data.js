@@ -410,12 +410,7 @@ ninja.data = [{
             window.location.href = "/blog/2025/tryingout-ollama/";
           
         },
-      },{id: "books-the-godfather",
-          title: 'The Godfather',
-          description: "",
-          section: "Books",handler: () => {
-              window.location.href = "/books/the_godfather/";
-            },},{id: "cs-agentic-ai-syllabus",
+      },{id: "cs-agentic-ai-syllabus",
           title: 'Syllabus',
           description: "",
           section: "Cs-agentic-ai",handler: () => {
