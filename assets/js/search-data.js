@@ -1275,21 +1275,36 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/01-introduction/";
-            },},{id: "csc574-machine-learning-paradigm",
-          title: 'Machine Learning Paradigm',
+            },},{id: "csc574-development-environment",
+          title: 'Development Environment',
           description: "",
           section: "Csc574",handler: () => {
-              window.location.href = "/csc574/02-ml-paradigm/";
-            },},{id: "csc574-building-blocks-of-deep-learning",
-          title: 'Building Blocks of Deep Learning',
+              window.location.href = "/csc574/02-setup/";
+            },},{id: "csc574-introduction-to-tinyml",
+          title: 'Introduction to tinyML',
           description: "",
           section: "Csc574",handler: () => {
-              window.location.href = "/csc574/03-deep-learning/";
+              window.location.href = "/csc574/03-arduino-cplusplus/";
             },},{id: "csc574-hardware-setup",
           title: 'Hardware Setup',
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/04-hardware/";
+            },},{id: "csc574-introduction-to-tinyml",
+          title: 'Introduction to tinyML',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/04-sensors/";
+            },},{id: "csc574-machine-learning-paradigm",
+          title: 'Machine Learning Paradigm',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/05-ml-paradigm/";
+            },},{id: "csc574-building-blocks-of-deep-learning",
+          title: 'Building Blocks of Deep Learning',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/06-deep-learning/";
             },},{id: "csc574-tensorflow-lite-micro",
           title: 'Tensorflow Lite Micro',
           description: "",
