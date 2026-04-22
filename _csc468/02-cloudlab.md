@@ -24,7 +24,6 @@ toc:
 ## CloudLab    
  
 {% details Overview %}
-
 - Visit [CloudLab's website](https://cloudlab.us)
 - Click "Request an Account" 
 - Fill in the information as shown in the following figure and click "Submit Request"
@@ -38,10 +37,9 @@ and can grant you access to CloudLab.
 - If you already had a CloudLab account, you can select `Start/Join Project` under
 your username, then select `Join Existing Project` and provide the name `cloud-edu`. 
 
-
 {% enddetails %}
-{% details CloudLab Network %}
 
+{% details CloudLab Network %}
 - Experimental testbed for future computing research
 - Allow researchers control to the bare metal
 - Diverse, distributed resources at large scale
@@ -50,8 +48,8 @@ your username, then select `Join Existing Project` and provide the name `cloud-e
 {% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/02.png" width="50%" zoomable=true alt="CloudLab GENI" %}
 
 {% enddetails %}
-{% details GENI %}
 
+{% details GENI %}
 - Global Environment for Networking Innovation
 - Combining heterogeneous resource types, each virtualized 
 along one or more suitable dimensions, to produce a single 
