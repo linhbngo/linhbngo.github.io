@@ -212,7 +212,24 @@ source ~/.zshrc
 
 {% details Create your first Arduino project %}
 
-PlatformIO’s own quick start uses a Blink project to introduce the workflow. ([PlatformIO Documentation][1])
+- Plug the Nano BLE33 into your computer. 
+- Open the PlatformIO CLI inside VSCode
+- Run the followings to confirm
+
+```bash
+pio device list
+```
+
+{% details info Device list on Mac %}
+
+{% enddetails %}
+
+{% details info Device list on Windows %}
+
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/win-pio-device-list.png" max-width="25%" zoomable=true alt="List of pio devices with Nano BLE33 is the USB Serial Device" %}
+
+{% enddetails %}
+
 
 In VS Code:
 
