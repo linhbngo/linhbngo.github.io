@@ -196,9 +196,14 @@ pio --version
 
 {% include figure.liquid path="assets/img/courses/csc574/02-setup/PlatformIO-CLI.png" max-width="50%" zoomable=true alt="Red arrow pointing to PlatformIO CLI from the icon" %}
 
-For Mac/Linux, it is possible that you will need to do some extra PATH setup
+For Mac, it is possible that you will need to do some extra PATH setup
 
-
+```bash
+ln -sf ~/.platformio/penv/bin/platformio ~/.local/bin/platformio
+ln -sf ~/.platformio/penv/bin/platformio ~/.local/bin/pio
+grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' ~/.zshrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
 
 {% enddetails %}
 
