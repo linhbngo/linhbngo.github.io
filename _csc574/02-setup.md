@@ -184,21 +184,21 @@ Do the followings in VSCode:
 
 {% details Open the PlatformIO CLI inside VSCode %}
 
-
- PlatformIO sidebar
-
-1. Click the **PlatformIO ant icon** in the left activity bar.
-2. Go to **Quick Access**.
-3. Open **Miscellaneous**.
-4. Click **PlatformIO Core CLI**. ([PlatformIO Documentation][1])
-
-Once that terminal opens, test:
+- Click the **PlatformIO ant icon** in the left activity bar.
+- Go to **Quick Access**.
+- Open **Miscellaneous**.
+- Click **PlatformIO Core CLI**.
+- Once that terminal opens, test:
 
 ```bash
 pio --version
 ```
 
-If it works there, PlatformIO is installed correctly inside VS Code.
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/PlatformIO-CLI.png" max-width="50%" zoomable=true alt="Red arrow pointing to PlatformIO CLI from the icon" %}
+
+For Mac/Linux, it is possible that you will need to do some extra PATH setup
+
+
 
 {% enddetails %}
 
