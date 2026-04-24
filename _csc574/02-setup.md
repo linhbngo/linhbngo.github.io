@@ -210,7 +210,7 @@ source ~/.zshrc
 
 ## First PlatformIO Project
 
-{% details Create your first Arduino project %}
+{% details Connect the Nano BLE33 %}
 
 - Plug the Nano BLE33 into your computer. 
 - Open the PlatformIO CLI inside VSCode
@@ -230,13 +230,25 @@ pio device list
 
 {% enddetails %}
 
+{% enddetails %}
+
+{% details Create your first Arduino project %}
 
 In VS Code:
 
-1. Click the **PlatformIO Home** button on the PlatformIO toolbar.
-2. Click **New Project**.
-3. Enter a project name.
-4. Choose your board.
+- Click the **PlatformIO** icon.
+- Click `Open` under `PIO Home` to open up the `PIO Home` tab. 
+- Click **New Project**.
+
+
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/platformio-home.png" max-width="25%" zoomable=true alt="Red boxes showing icons to click" %}
+
+
+- Enter a project name.
+- Choose your board.
+
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/platformio-blink.png" max-width="25%" zoomable=true alt="Red boxes showing icons to click" %}
+
 5. Choose the framework, if prompted.
 6. Create the project. PlatformIO describes this as the normal new-project flow. ([PlatformIO Documentation][1])
 
