@@ -386,13 +386,16 @@ external_links:
 # MAKE SURE imagemagick is installed and on your PATH before enabling imagemagick. In a terminal, run:
 #   convert -version
 imagemagick:
-  enabled: false # enables responsive images for your site (recommended, see https://github.com/alshedivat/al-folio/issues/537)
+  enabled: true # enables responsive images for your site (recommended, see https://github.com/alshedivat/al-folio/issues/537)
   widths:
     - 480
     - 800
     - 1400
   input_directories:
-    - assets/img/
+    - assets/img/courses/csc418
+    - assets/img/courses/csc467
+    - assets/img/courses/csc468
+    - assets/img/courses/csc574
   input_formats:
     - ".jpg"
     - ".jpeg"
@@ -400,7 +403,7 @@ imagemagick:
     - ".tiff"
     - ".gif"
   output_formats:
-    webp: "-quality 85"
+    webp: "-quality 95"
 
 # Lazy loading images
 #   If you enable lazy loading, all images will add the loading="lazy" attribute.

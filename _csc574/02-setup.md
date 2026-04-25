@@ -222,6 +222,8 @@ pio device list
 
 {% details info Device list on Mac %}
 
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/mac-pio-device-list.png" max-width="25%" zoomable=true alt="List of pio devices with Nano BLE33 is the USB Serial Device" %}
+
 {% enddetails %}
 
 {% details info Device list on Windows %}
@@ -244,41 +246,36 @@ In VS Code:
 {% include figure.liquid path="assets/img/courses/csc574/02-setup/platformio-home.png" max-width="25%" zoomable=true alt="Red boxes showing icons to click" %}
 
 
-- Enter a project name.
+- Enter a project name: `Blink`.
 - Choose your board.
+- **Uncheck the location box**
+- Specific the location of the project directory, which should be the `firmware` directory of the cloned `tinyml` repository.  
 
 {% include figure.liquid path="assets/img/courses/csc574/02-setup/platformio-blink.png" max-width="25%" zoomable=true alt="Red boxes showing icons to click" %}
 
-5. Choose the framework, if prompted.
-6. Create the project. PlatformIO describes this as the normal new-project flow. ([PlatformIO Documentation][1])
-
-After creation, PlatformIO will generate a standard project structure with:
-
-* a `platformio.ini`
-* a `src/` folder
-* a default `main.cpp` inside `src/` ([PlatformIO Documentation][1])
+- Click `Finish` to create the project. 
+- After creation, PlatformIO will generate a standard project structure with:
+    - a `platformio.ini` file
+    - two runtime folders, `.pio` and `.vscode`. 
+    - a `src/` folder containing aa default `main.cpp` inside `src/`
+    - empty folders for `include`, `lib`, and `test`. 
+    - a default `.gitignore` file. 
 
 {% enddetails %}
 
-{% details Replace `main.cpp` with Blink %}
+{% details Build and Deploy %}
 
-Open `src/main.cpp` and replace the contents with the Blink example. PlatformIO’s quick start provides the Arduino-based Blink code and notes that it is for Arduino-based boards. ([PlatformIO Documentation][1])
+- Replace the content of `main.cpp` with the following 
+    - We will go into the details of this code in the next lecture. 
 
-Use:
+```c
+#include <Arduino.h>
 
-```cpp
-#include "Arduino.h"
-
-// Set LED_BUILTIN if it is not defined by Arduino framework
-// #define LED_BUILTIN 13
-
-void setup()
-{
+void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void loop()
-{
+void loop() {
   digitalWrite(LED_BUILTIN, HIGH);
   delay(1000);
   digitalWrite(LED_BUILTIN, LOW);
@@ -286,40 +283,38 @@ void loop()
 }
 ```
 
-This is essentially the same Blink pattern PlatformIO shows in its quick start. ([PlatformIO Documentation][1])
+- You should also make sure that the `platform.ini` file has the following contents
 
-{% enddetails %}
+```c
+[env:nano33ble]
+platform = nordicnrf52
+board = nano33ble
+framework = arduino
+lib_deps = 
+    arduino-libraries/Arduino_LSM9DS1
+monitor_speed = 9600
+```
 
-{% details Build the project %}
+- To build this project, you are to 
+    - open the PlatformIO terminal
+    - change to the project directory
+    - run `pio run`
+- You might have a `warning` on LF clock source. That warning can be ignored. 
 
-PlatformIO documents two easy routes: toolbar or keyboard shortcut. The toolbar is less mysterious for students. ([PlatformIO Documentation][1])
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/pio-run.png" max-width="25%" zoomable=true alt="Run results of the Blink project build on a Mac" %}
+
+- After a successful build, we will need to deploy the built binary to the `Nano 33 BLE` board. 
+    - Plug in the board over USB.
+    - Run the following command. Use the port identified previously from `pio device list`. 
+
+```bash
+# This is for Mac
+pio run -t upload --upload-port /dev/cu.usbmodem1201
+```
+
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/pio-upload.png" max-width="25%" zoomable=true alt="Upload the built source code to the board" %}
 
 
-Keyboard shortcut
-
-* On macOS, PlatformIO lists **`cmd-shift-b`** as the build shortcut.
-* Other shortcuts vary by platform, but on Mac that is the one to remember. ([PlatformIO Documentation][1])
-
-You can also use the task menu:
-
-1. Go to **Terminal → Run Task...**
-2. Select **PlatformIO: Build**. PlatformIO documents these built-in tasks as part of the IDE integration. ([PlatformIO Documentation][1])
-
-{% enddetails %}
-
-{% details Connect the board and upload firmware %}
-
-After a successful build:
-
-1. Plug in the board over USB.
-2. Click the **Upload** button on the PlatformIO toolbar.
-
-Or:
-
-1. Go to **Terminal → Run Task...**
-2. Select **PlatformIO: Upload**. PlatformIO includes Upload as one of its built-in tasks. ([PlatformIO Documentation][1])
-
-The keyboard shortcut PlatformIO lists for upload is **`ctrl+alt+u`**. ([PlatformIO Documentation][1])
 
 {% enddetails %}
 
