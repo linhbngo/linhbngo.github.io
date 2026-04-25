@@ -4,7 +4,7 @@
       {
             "title": "ClusterIP, NodePort, and Multi-Service Communication",
             "description": "",
-            "published": "April 24, 2026",
+            "published": "April 25, 2026",
             "authors": [
               
             ],
@@ -128,13 +128,13 @@
 apk update
 apk add curl
 curl backend-svc
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Observe how curl can return results from different pods.</li> </ul> <figure> <picture> <img src="/assets/img/courses/csc478/clusterip/multi-pods.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <hr> <h2 id="nodeport-services">NodePort Services</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <ul> <li>Makes service accessible from outside cluster.</li> <li>Kubernetes opens a static port (30000–32767) on all nodes.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>NodePort</summary> <ul> <li>Manually expose the backend service externally:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Observe how curl can return results from different pods.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/clusterip/multi-pods-480.webp 480w,/assets/img/courses/csc478/clusterip/multi-pods-800.webp 800w,/assets/img/courses/csc478/clusterip/multi-pods-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/clusterip/multi-pods.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <hr> <h2 id="nodeport-services">NodePort Services</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <ul> <li>Makes service accessible from outside cluster.</li> <li>Kubernetes opens a static port (30000–32767) on all nodes.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>NodePort</summary> <ul> <li>Manually expose the backend service externally:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>kubectl expose deployment backend <span class="nt">--name</span><span class="o">=</span>backend-nodeport <span class="nt">--type</span><span class="o">=</span>NodePort <span class="nt">--port</span><span class="o">=</span>80 <span class="nt">--target-port</span><span class="o">=</span>80
 </pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Check service details:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>kubectl get svc backend-nodeport
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>You wil be assigned a random port between 30000 and 32767. An example output could be:</li> </ul> <figure> <picture> <img src="/assets/img/courses/csc478/clusterip/expose-nodeport.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>On a different node, or even a node from a different experiment, runs:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>You wil be assigned a random port between 30000 and 32767. An example output could be:</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/clusterip/expose-nodeport-480.webp 480w,/assets/img/courses/csc478/clusterip/expose-nodeport-800.webp 800w,/assets/img/courses/csc478/clusterip/expose-nodeport-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/clusterip/expose-nodeport.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>On a different node, or even a node from a different experiment, runs:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3

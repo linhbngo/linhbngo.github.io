@@ -4,7 +4,7 @@
       {
             "title": "Machine language",
             "description": "",
-            "published": "April 24, 2026",
+            "published": "April 25, 2026",
             "authors": [
               
             ],
@@ -145,6 +145,19 @@
 119
 120
 121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
 </pre></td> <td class="rouge-code"><pre>
 ## Intel x86 processors
 
@@ -178,6 +191,19 @@
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/04-machine/TransistorANDgate-480.webp 480w,/assets/img/courses/csc231/04-machine/TransistorANDgate-800.webp 800w,/assets/img/courses/csc231/04-machine/TransistorANDgate-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
     
     &lt;img
       src="/assets/img/courses/csc231/04-machine/TransistorANDgate.png"
@@ -266,7 +292,7 @@
 ::::
 :::::
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="machine-programming-levels-of-abstraction">Machine programming: levels of abstraction</h2> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/03.png" width="50%" height="auto" alt="Level of abstraction" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li> <code class="language-plaintext highlighter-rouge">Architecture</code>: (also <code class="language-plaintext highlighter-rouge">ISA</code>: instruction set architecture) The parts of a processor design that one needs to understand for writing correct machine/assembly code <ul> <li>Examples: instruction set specification, registers</li> <li> <code class="language-plaintext highlighter-rouge">Machine Code</code>: The byte-level programs that a processor executes</li> <li> <code class="language-plaintext highlighter-rouge">Assembly Code</code>: A text representation of machine code</li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">Microarchitecture</code>: Implementation of the architecture <ul> <li>Examples: cache sizes and core frequency</li> </ul> </li> <li>Example ISAs: <ul> <li>Intel: x86, IA32, Itanium, x86-64</li> <li>ARM: Used in almost all mobile phones</li> <li>RISC V: New open-source ISA</li> </ul> </li> <li>Machine code (Assembly code) differs greatly from the original C code.</li> <li>Parts of processor state that are not visible/accessible from C programs are now visible. <ul> <li>PC: Program counter <ul> <li>Contains address of next instruction</li> <li>Called <code class="language-plaintext highlighter-rouge">%rip</code> (instruction pointer register)</li> </ul> </li> <li>Register file <ul> <li>contains 16 named locations (registers), each can store 64-bit values.</li> <li>These registers can hold addresses (~ C pointers) or integer data.</li> </ul> </li> <li>Condition codes <ul> <li>Store status information about most recent arithmetic or logical operation</li> <li>Used for conditional branching (<code class="language-plaintext highlighter-rouge">if</code>/<code class="language-plaintext highlighter-rouge">while</code>)</li> </ul> </li> <li>Vector registers to hold one or more integers or floating-point values.</li> <li>Memory <ul> <li>Is seen as a byte-addressable array</li> <li>Contains code and user data</li> <li>Stack to support procedures</li> </ul> </li> </ul> </li> </ul> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/04.png" width="50%" height="auto" alt="Assembly programmer" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Inside your <code class="language-plaintext highlighter-rouge">csc231</code>, create another directory called <code class="language-plaintext highlighter-rouge">04-machine</code> and change into this directory.</li> <li>Create a file named <code class="language-plaintext highlighter-rouge">mstore.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=mstore.c"></script> <ul> <li>Run the following commands <em>It is capital o, not number 0</em> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="machine-programming-levels-of-abstraction">Machine programming: levels of abstraction</h2> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/03-480.webp 480w,/assets/img/courses/csc231/04-machine/03-800.webp 800w,/assets/img/courses/csc231/04-machine/03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/03.png" width="50%" height="auto" alt="Level of abstraction" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li> <code class="language-plaintext highlighter-rouge">Architecture</code>: (also <code class="language-plaintext highlighter-rouge">ISA</code>: instruction set architecture) The parts of a processor design that one needs to understand for writing correct machine/assembly code <ul> <li>Examples: instruction set specification, registers</li> <li> <code class="language-plaintext highlighter-rouge">Machine Code</code>: The byte-level programs that a processor executes</li> <li> <code class="language-plaintext highlighter-rouge">Assembly Code</code>: A text representation of machine code</li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">Microarchitecture</code>: Implementation of the architecture <ul> <li>Examples: cache sizes and core frequency</li> </ul> </li> <li>Example ISAs: <ul> <li>Intel: x86, IA32, Itanium, x86-64</li> <li>ARM: Used in almost all mobile phones</li> <li>RISC V: New open-source ISA</li> </ul> </li> <li>Machine code (Assembly code) differs greatly from the original C code.</li> <li>Parts of processor state that are not visible/accessible from C programs are now visible. <ul> <li>PC: Program counter <ul> <li>Contains address of next instruction</li> <li>Called <code class="language-plaintext highlighter-rouge">%rip</code> (instruction pointer register)</li> </ul> </li> <li>Register file <ul> <li>contains 16 named locations (registers), each can store 64-bit values.</li> <li>These registers can hold addresses (~ C pointers) or integer data.</li> </ul> </li> <li>Condition codes <ul> <li>Store status information about most recent arithmetic or logical operation</li> <li>Used for conditional branching (<code class="language-plaintext highlighter-rouge">if</code>/<code class="language-plaintext highlighter-rouge">while</code>)</li> </ul> </li> <li>Vector registers to hold one or more integers or floating-point values.</li> <li>Memory <ul> <li>Is seen as a byte-addressable array</li> <li>Contains code and user data</li> <li>Stack to support procedures</li> </ul> </li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/04-480.webp 480w,/assets/img/courses/csc231/04-machine/04-800.webp 800w,/assets/img/courses/csc231/04-machine/04-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/04.png" width="50%" height="auto" alt="Assembly programmer" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Inside your <code class="language-plaintext highlighter-rouge">csc231</code>, create another directory called <code class="language-plaintext highlighter-rouge">04-machine</code> and change into this directory.</li> <li>Create a file named <code class="language-plaintext highlighter-rouge">mstore.c</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=mstore.c"></script> <ul> <li>Run the following commands <em>It is capital o, not number 0</em> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -275,7 +301,7 @@
 <span class="nv">$ </span><span class="nb">cat </span>mstore.s
 <span class="nv">$ </span>gcc <span class="nt">-Og</span> <span class="nt">-c</span> mstore.c
 <span class="nv">$ </span>objdump <span class="nt">-d</span> mstore.o
-</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/05.png" width="50%" height="auto" alt="Assembly code" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>x86_64 instructions range in length from 1 to 15 bytes</li> <li>The disassembler determines the assembly code based purely on the byte-sequence in the machine-code file.</li> <li>All lines begin with <code class="language-plaintext highlighter-rouge">.</code> are directirves to the assembler and linker.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/05-480.webp 480w,/assets/img/courses/csc231/04-machine/05-800.webp 800w,/assets/img/courses/csc231/04-machine/05-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/05.png" width="50%" height="auto" alt="Assembly code" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>x86_64 instructions range in length from 1 to 15 bytes</li> <li>The disassembler determines the assembly code based purely on the byte-sequence in the machine-code file.</li> <li>All lines begin with <code class="language-plaintext highlighter-rouge">.</code> are directirves to the assembler and linker.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -329,6 +355,19 @@
 51
 52
 53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
 </pre></td> <td class="rouge-code"><pre>
 
 
@@ -353,6 +392,19 @@ microarchitecture's machine code instructions
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/04-machine/assembly-01-480.webp 480w,/assets/img/courses/csc231/04-machine/assembly-01-800.webp 800w,/assets/img/courses/csc231/04-machine/assembly-01-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
     
     &lt;img
       src="/assets/img/courses/csc231/04-machine/assembly-01.png"
@@ -382,7 +434,7 @@ microarchitecture's machine code instructions
 &lt;/figure&gt;
 
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::::{tab-set} ::::{tab-item} Intel data type</p> <table> <thead> <tr> <th>C data type</th> <th>Intel data type</th> <th>Assembly-code suffix</th> <th>Size</th> </tr> </thead> <tbody> <tr> <td>char</td> <td>Byte</td> <td>b</td> <td>1</td> </tr> <tr> <td>short</td> <td>Word</td> <td>w</td> <td>2</td> </tr> <tr> <td>int</td> <td>Double word</td> <td>l</td> <td>4</td> </tr> <tr> <td>long</td> <td>Quad word</td> <td>q</td> <td>8</td> </tr> <tr> <td>char *</td> <td>Quad word</td> <td>q</td> <td>8</td> </tr> <tr> <td>float</td> <td>Single precision</td> <td>s</td> <td>4</td> </tr> <tr> <td>double</td> <td>Double precision</td> <td>l</td> <td>8</td> </tr> </tbody> </table> <p>:::: :::::</p> <ul> <li>x86_64 CPU contains a set of 16 <code class="language-plaintext highlighter-rouge">general purpose registers</code> storing 64-bit values.</li> <li>Original 8086 design has eight 16-bit registers, <code class="language-plaintext highlighter-rouge">%ax</code> through <code class="language-plaintext highlighter-rouge">%sp</code>. <ul> <li>Origin (mostly obsolete) <ul> <li> <code class="language-plaintext highlighter-rouge">%ax</code>: accumulate</li> <li> <code class="language-plaintext highlighter-rouge">%cx</code>: counter</li> <li> <code class="language-plaintext highlighter-rouge">%dx</code>: data</li> <li> <code class="language-plaintext highlighter-rouge">%bx</code>: base</li> <li> <code class="language-plaintext highlighter-rouge">%si</code>: source index</li> <li> <code class="language-plaintext highlighter-rouge">%di</code>: destination index</li> <li> <code class="language-plaintext highlighter-rouge">%sp</code>: stack pointer</li> <li> <code class="language-plaintext highlighter-rouge">%bp</code>: base pointer</li> </ul> </li> </ul> </li> <li>After IA32 extension, these registers grew to 32 bits, labeled <code class="language-plaintext highlighter-rouge">%eax</code> through <code class="language-plaintext highlighter-rouge">%esp</code>.</li> <li>After x86_64 extension, these registers were expanded to 64 bits, labeled <code class="language-plaintext highlighter-rouge">%rax</code> through <code class="language-plaintext highlighter-rouge">%rsp</code>. Eight new registered were added: <code class="language-plaintext highlighter-rouge">%r8</code> through <code class="language-plaintext highlighter-rouge">%r15</code>.</li> <li>Instructions can operate on data of different sizes stored in low-order bytes of the 16 registers.</li> </ul> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/06.png" width="50%" height="auto" alt="General purpose registers" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p><em>Bryant and O’ Hallaron, Computer Systems: A Programmer’s Perspective, Third Edition</em></p> <ul> <li>Transfer data between memory and register <ul> <li>Load data from memory into register</li> <li>Store register data into memory</li> </ul> </li> <li>Perform arithmetic function on register or memory data</li> <li>Transfer control <ul> <li>Unconditional jumps to/from procedures</li> <li>Conditional branches</li> <li>Indirect branches</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::::{tab-set} ::::{tab-item} Intel data type</p> <table> <thead> <tr> <th>C data type</th> <th>Intel data type</th> <th>Assembly-code suffix</th> <th>Size</th> </tr> </thead> <tbody> <tr> <td>char</td> <td>Byte</td> <td>b</td> <td>1</td> </tr> <tr> <td>short</td> <td>Word</td> <td>w</td> <td>2</td> </tr> <tr> <td>int</td> <td>Double word</td> <td>l</td> <td>4</td> </tr> <tr> <td>long</td> <td>Quad word</td> <td>q</td> <td>8</td> </tr> <tr> <td>char *</td> <td>Quad word</td> <td>q</td> <td>8</td> </tr> <tr> <td>float</td> <td>Single precision</td> <td>s</td> <td>4</td> </tr> <tr> <td>double</td> <td>Double precision</td> <td>l</td> <td>8</td> </tr> </tbody> </table> <p>:::: :::::</p> <ul> <li>x86_64 CPU contains a set of 16 <code class="language-plaintext highlighter-rouge">general purpose registers</code> storing 64-bit values.</li> <li>Original 8086 design has eight 16-bit registers, <code class="language-plaintext highlighter-rouge">%ax</code> through <code class="language-plaintext highlighter-rouge">%sp</code>. <ul> <li>Origin (mostly obsolete) <ul> <li> <code class="language-plaintext highlighter-rouge">%ax</code>: accumulate</li> <li> <code class="language-plaintext highlighter-rouge">%cx</code>: counter</li> <li> <code class="language-plaintext highlighter-rouge">%dx</code>: data</li> <li> <code class="language-plaintext highlighter-rouge">%bx</code>: base</li> <li> <code class="language-plaintext highlighter-rouge">%si</code>: source index</li> <li> <code class="language-plaintext highlighter-rouge">%di</code>: destination index</li> <li> <code class="language-plaintext highlighter-rouge">%sp</code>: stack pointer</li> <li> <code class="language-plaintext highlighter-rouge">%bp</code>: base pointer</li> </ul> </li> </ul> </li> <li>After IA32 extension, these registers grew to 32 bits, labeled <code class="language-plaintext highlighter-rouge">%eax</code> through <code class="language-plaintext highlighter-rouge">%esp</code>.</li> <li>After x86_64 extension, these registers were expanded to 64 bits, labeled <code class="language-plaintext highlighter-rouge">%rax</code> through <code class="language-plaintext highlighter-rouge">%rsp</code>. Eight new registered were added: <code class="language-plaintext highlighter-rouge">%r8</code> through <code class="language-plaintext highlighter-rouge">%r15</code>.</li> <li>Instructions can operate on data of different sizes stored in low-order bytes of the 16 registers.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/06-480.webp 480w,/assets/img/courses/csc231/04-machine/06-800.webp 800w,/assets/img/courses/csc231/04-machine/06-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/06.png" width="50%" height="auto" alt="General purpose registers" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p><em>Bryant and O’ Hallaron, Computer Systems: A Programmer’s Perspective, Third Edition</em></p> <ul> <li>Transfer data between memory and register <ul> <li>Load data from memory into register</li> <li>Store register data into memory</li> </ul> </li> <li>Perform arithmetic function on register or memory data</li> <li>Transfer control <ul> <li>Unconditional jumps to/from procedures</li> <li>Conditional branches</li> <li>Indirect branches</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -573,6 +625,32 @@ microarchitecture's machine code instructions
 188
 189
 190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
 </pre></td> <td class="rouge-code"><pre>
 ## Data movement
 
@@ -656,6 +734,19 @@ $ objdump -d swap.o
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
     
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/04-machine/07-480.webp 480w,/assets/img/courses/csc231/04-machine/07-800.webp 800w,/assets/img/courses/csc231/04-machine/07-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
     &lt;img
       src="/assets/img/courses/csc231/04-machine/07.png"
       
@@ -718,6 +809,19 @@ $ objdump -d swap_dsp.o
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
     
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/04-machine/08-480.webp 480w,/assets/img/courses/csc231/04-machine/08-800.webp 800w,/assets/img/courses/csc231/04-machine/08-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
     &lt;img
       src="/assets/img/courses/csc231/04-machine/08.png"
       
@@ -768,17 +872,17 @@ $ objdump -d swap_dsp.o
 2
 </pre></td> <td class="rouge-code"><pre>$ gcc -Og -c m12.c
 $ objdump -d m12.o
-</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/09.png" width="50%" height="auto" alt="demonstrating load effective address" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Assembly code explanation of <code class="language-plaintext highlighter-rouge">m12.c</code>: <ul> <li> <code class="language-plaintext highlighter-rouge">%rdi</code>: x</li> <li> <code class="language-plaintext highlighter-rouge">(%rdi, %rdi,2)</code> = x + 2 * x</li> <li>The above result is moved to <code class="language-plaintext highlighter-rouge">%rdx</code> with <code class="language-plaintext highlighter-rouge">lea</code>.</li> <li> <code class="language-plaintext highlighter-rouge">0x0(,%rdx,4)</code> = 4 * (x + 2 * x) = 12*x</li> <li>The above result is moved to <code class="language-plaintext highlighter-rouge">%rax</code> with <code class="language-plaintext highlighter-rouge">lea</code>.</li> </ul> </li> <li>Omitting suffixes comparing to the book.</li> <li> <code class="language-plaintext highlighter-rouge">Src</code>: <code class="language-plaintext highlighter-rouge">S</code> </li> <li> <code class="language-plaintext highlighter-rouge">Dest</code>: <code class="language-plaintext highlighter-rouge">D</code> </li> </ul> <p>:::::{tab-set} ::::{tab-item} Arithmetic operations | Format | Computation | Description | | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">add Src,Dest</code> | D &lt;- D + S | add | <br> | <code class="language-plaintext highlighter-rouge">sub Src,Dest</code> | D &lt;- D - S | subtract |<br> | <code class="language-plaintext highlighter-rouge">imul Src,Dest</code> | D &lt;- D * S | multiply |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">shl Src,Dest</code> | D &lt;- D « S | shift left |<br> | <code class="language-plaintext highlighter-rouge">sar Src,Dest</code> | D &lt;- D &gt;S | arith. shift right |<br> | <code class="language-plaintext highlighter-rouge">shr Src,Dest</code> | D &lt;- D &gt;S | shift right |<br> | <code class="language-plaintext highlighter-rouge">sal Src,Dest</code> | D &lt;- D « S | arith. shift left |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">xor Src,Dest</code> | D &lt;- D ^ S | exclusive or |<br> | <code class="language-plaintext highlighter-rouge">and Src,Dest</code> | D &lt;- D &amp; S | and |<br> | <code class="language-plaintext highlighter-rouge">or Src,Dest</code> | D &lt;- D | S | or |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">inc Src</code> | D &lt;- D + 1 | increment |<br> | <code class="language-plaintext highlighter-rouge">dec Src</code> | D &lt;- D - 1 | decrement |<br> | <code class="language-plaintext highlighter-rouge">neg Src</code> | D &lt;- -D | negate |<br> | <code class="language-plaintext highlighter-rouge">not Src</code> | D &lt;- -D | complement |<br> :::: :::::</p> <ul> <li>Watch out for argument order (ATT versus Intel)</li> <li>No distinction between signed and unsigned int. <ul> <li>Exception: arithmetic right shift (<code class="language-plaintext highlighter-rouge">sar</code>) where the significant bit is retained.</li> </ul> </li> <li>Create a file named <code class="language-plaintext highlighter-rouge">scale.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=scale.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/09-480.webp 480w,/assets/img/courses/csc231/04-machine/09-800.webp 800w,/assets/img/courses/csc231/04-machine/09-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/09.png" width="50%" height="auto" alt="demonstrating load effective address" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Assembly code explanation of <code class="language-plaintext highlighter-rouge">m12.c</code>: <ul> <li> <code class="language-plaintext highlighter-rouge">%rdi</code>: x</li> <li> <code class="language-plaintext highlighter-rouge">(%rdi, %rdi,2)</code> = x + 2 * x</li> <li>The above result is moved to <code class="language-plaintext highlighter-rouge">%rdx</code> with <code class="language-plaintext highlighter-rouge">lea</code>.</li> <li> <code class="language-plaintext highlighter-rouge">0x0(,%rdx,4)</code> = 4 * (x + 2 * x) = 12*x</li> <li>The above result is moved to <code class="language-plaintext highlighter-rouge">%rax</code> with <code class="language-plaintext highlighter-rouge">lea</code>.</li> </ul> </li> <li>Omitting suffixes comparing to the book.</li> <li> <code class="language-plaintext highlighter-rouge">Src</code>: <code class="language-plaintext highlighter-rouge">S</code> </li> <li> <code class="language-plaintext highlighter-rouge">Dest</code>: <code class="language-plaintext highlighter-rouge">D</code> </li> </ul> <p>:::::{tab-set} ::::{tab-item} Arithmetic operations | Format | Computation | Description | | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">add Src,Dest</code> | D &lt;- D + S | add | <br> | <code class="language-plaintext highlighter-rouge">sub Src,Dest</code> | D &lt;- D - S | subtract |<br> | <code class="language-plaintext highlighter-rouge">imul Src,Dest</code> | D &lt;- D * S | multiply |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">shl Src,Dest</code> | D &lt;- D « S | shift left |<br> | <code class="language-plaintext highlighter-rouge">sar Src,Dest</code> | D &lt;- D &gt;S | arith. shift right |<br> | <code class="language-plaintext highlighter-rouge">shr Src,Dest</code> | D &lt;- D &gt;S | shift right |<br> | <code class="language-plaintext highlighter-rouge">sal Src,Dest</code> | D &lt;- D « S | arith. shift left |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">xor Src,Dest</code> | D &lt;- D ^ S | exclusive or |<br> | <code class="language-plaintext highlighter-rouge">and Src,Dest</code> | D &lt;- D &amp; S | and |<br> | <code class="language-plaintext highlighter-rouge">or Src,Dest</code> | D &lt;- D | S | or |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">inc Src</code> | D &lt;- D + 1 | increment |<br> | <code class="language-plaintext highlighter-rouge">dec Src</code> | D &lt;- D - 1 | decrement |<br> | <code class="language-plaintext highlighter-rouge">neg Src</code> | D &lt;- -D | negate |<br> | <code class="language-plaintext highlighter-rouge">not Src</code> | D &lt;- -D | complement |<br> :::: :::::</p> <ul> <li>Watch out for argument order (ATT versus Intel)</li> <li>No distinction between signed and unsigned int. <ul> <li>Exception: arithmetic right shift (<code class="language-plaintext highlighter-rouge">sar</code>) where the significant bit is retained.</li> </ul> </li> <li>Create a file named <code class="language-plaintext highlighter-rouge">scale.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=scale.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>gcc <span class="nt">-Og</span> <span class="nt">-c</span> scale.c
 <span class="nv">$ </span>objdump <span class="nt">-d</span> scale.o
-</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/10.png" width="50%" height="auto" alt="Scale.c" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Identify the registers holding x, y, and z.</li> <li>Which register contains the final return value?</li> </ul> <p>:::{admonition} Solution</p> <ul> <li> <code class="language-plaintext highlighter-rouge">%rdi</code>: x</li> <li> <code class="language-plaintext highlighter-rouge">%rsi</code>: y</li> <li> <code class="language-plaintext highlighter-rouge">%rdx</code>: z</li> <li> <code class="language-plaintext highlighter-rouge">%rax</code> contains the final return value.</li> </ul> <p>:::</p> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">arith.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=arith.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/10-480.webp 480w,/assets/img/courses/csc231/04-machine/10-800.webp 800w,/assets/img/courses/csc231/04-machine/10-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/10.png" width="50%" height="auto" alt="Scale.c" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Identify the registers holding x, y, and z.</li> <li>Which register contains the final return value?</li> </ul> <p>:::{admonition} Solution</p> <ul> <li> <code class="language-plaintext highlighter-rouge">%rdi</code>: x</li> <li> <code class="language-plaintext highlighter-rouge">%rsi</code>: y</li> <li> <code class="language-plaintext highlighter-rouge">%rdx</code>: z</li> <li> <code class="language-plaintext highlighter-rouge">%rax</code> contains the final return value.</li> </ul> <p>:::</p> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">arith.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=arith.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td> <td class="rouge-code"><pre>$ gcc -Og -c arith.c
 $ objdump -d arith.o
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Understand how the Assembly code represents the actual arithmetic operation in the C code.</li> </ul> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/11.png" width="50%" height="auto" alt="arith.c" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Understand how the Assembly code represents the actual arithmetic operation in the C code.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/11-480.webp 480w,/assets/img/courses/csc231/04-machine/11-800.webp 800w,/assets/img/courses/csc231/04-machine/11-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/11.png" width="50%" height="auto" alt="arith.c" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -929,6 +1033,19 @@ $ objdump -d arith.o
 148
 149
 150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
 </pre></td> <td class="rouge-code"><pre>
 
 
@@ -954,6 +1071,19 @@ $ objdump -d arith.o
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc231/04-machine/12-480.webp 480w,/assets/img/courses/csc231/04-machine/12-800.webp 800w,/assets/img/courses/csc231/04-machine/12-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
     
     &lt;img
       src="/assets/img/courses/csc231/04-machine/12.png"
@@ -1079,7 +1209,7 @@ resulting Assembly code.
 
 &lt;iframe width="560" height="315" src="https://www.youtube.com/embed/2VdCt8hhiRY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="mechanisms-in-procedures-functions">Mechanisms in procedures (functions)</h2> <ul> <li>Function = procedure (book terminology)</li> <li>Support procedure <code class="language-plaintext highlighter-rouge">P</code> calls procedure <code class="language-plaintext highlighter-rouge">Q</code>.</li> <li>Passing control <ul> <li>To beginning of procedure code <ul> <li>starting instruction of <code class="language-plaintext highlighter-rouge">Q</code> </li> </ul> </li> <li>Back to return point <ul> <li>next instruction in <code class="language-plaintext highlighter-rouge">P</code> after <code class="language-plaintext highlighter-rouge">Q</code> </li> </ul> </li> </ul> </li> <li>Passing data <ul> <li>Procedure arguments <ul> <li> <code class="language-plaintext highlighter-rouge">P</code> passes one or more parameters to <code class="language-plaintext highlighter-rouge">Q</code>.</li> <li> <code class="language-plaintext highlighter-rouge">Q</code> returns a value back to <code class="language-plaintext highlighter-rouge">P</code>.</li> </ul> </li> <li>Return value</li> </ul> </li> <li>Memory management <ul> <li>Allocate during procedure execution and de-allocate upon return <ul> <li> <code class="language-plaintext highlighter-rouge">Q</code> needs to allocate space for local variables and free that storage once finishes.</li> </ul> </li> </ul> </li> <li>Mechanisms all implemented with machine instructions</li> <li>x86-64 implementation of a procedure uses only those mechanisms required</li> <li> <p>Machine instructions implement the mechanisms, but the choices are determined by designers. These choices make up the <strong>Application Binary Interface (ABI).</strong></p> </li> <li>Region of memory managed with stack discipline <ul> <li>Memory viewed as array of bytes.</li> <li>Different regions have different purposes.</li> <li>(Like ABI, a policy decision)</li> </ul> </li> <li>Grows toward lower addresses <ul> <li>Register <code class="language-plaintext highlighter-rouge">%rsp</code> contains <strong>lowest stack address</strong>.</li> <li>address of “top” element</li> </ul> </li> </ul> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/16.png" width="50%" height="auto" alt="Stack frames" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li> <code class="language-plaintext highlighter-rouge">pushq Src</code> <ul> <li>Fetch operand at <code class="language-plaintext highlighter-rouge">Src</code> </li> <li>Decrement <code class="language-plaintext highlighter-rouge">%rsp</code> by 8</li> <li>Write operand at address given by <code class="language-plaintext highlighter-rouge">%rsp</code> </li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">popq Dest</code> <ul> <li>Read value at address given by <code class="language-plaintext highlighter-rouge">%rsp</code> </li> <li>Increment <code class="language-plaintext highlighter-rouge">%rsp</code> by 8</li> <li>Store value at Dest (usually a register)</li> </ul> </li> </ul> <figure> <picture> <img src="/assets/img/courses/csc231/04-machine/17.png" width="50%" height="auto" alt="Stack push and pop" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The <code class="language-plaintext highlighter-rouge">-Og</code> flag often combines/reduces these steps.</li> <li>The memory stack architecture for a function has a base pointer (<code class="language-plaintext highlighter-rouge">$rbp</code>) and a stack pointer (<code class="language-plaintext highlighter-rouge">$rsp</code>). <ul> <li>Base pointer: the bottom of the stack (higher memory address)</li> <li>Stack pointer: the top of the stack (lower memory address)</li> </ul> </li> <li>Function prologue <ul> <li>Push the current base pointer onto the memory stack (to be restored later).</li> <li>Assign the value of the base pointer (set the <code class="language-plaintext highlighter-rouge">$rbp</code> to that value) to the current address pointed to by the stack pointer.</li> <li>Move the stack pointer down further (<em>push</em> new memory in) a distance that would accommodate local variables of the function.</li> </ul> </li> <li>Function prologue (Assembly), ATT notation, assume rbp/ebp and rsp/esp <ul> <li><code class="language-plaintext highlighter-rouge">push $rbp</code></li> <li><code class="language-plaintext highlighter-rouge">mov $rsp, $rbp</code></li> <li><code class="language-plaintext highlighter-rouge">sub N, $rsp</code></li> </ul> </li> <li>Function epilogue <ul> <li>Drop the stack pointer to the current base pointer, so room reserved in the prologue for local variables is freed.</li> <li>Pops the base pointer off the stack, so it is restored to its value before the prologue.</li> <li>Returns to the calling function, by popping the previous frame’s program counter off the stack and jumping to it.</li> </ul> </li> <li>Function prologue (Assembly), ATT notation, assume rbp/ebp and rsp/esp</li> <li><code class="language-plaintext highlighter-rouge">mov $rbp, $rsp</code></li> <li><code class="language-plaintext highlighter-rouge">pop $rbp</code></li> <li><code class="language-plaintext highlighter-rouge">ret</code></li> <li>Video lecture on the slide</li> </ul> <iframe width="560" height="315" src="https://www.youtube.com/embed/DwGreRQzvzI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">mult.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=mult.c"></script> <ul> <li>Description of C code:</li> </ul> <iframe width="560" height="315" src="https://www.youtube.com/embed/R999iekcaUg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> <ul> <li>Compile with <code class="language-plaintext highlighter-rouge">-g</code> flag and run <code class="language-plaintext highlighter-rouge">gdb</code> on the resulting executable.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="mechanisms-in-procedures-functions">Mechanisms in procedures (functions)</h2> <ul> <li>Function = procedure (book terminology)</li> <li>Support procedure <code class="language-plaintext highlighter-rouge">P</code> calls procedure <code class="language-plaintext highlighter-rouge">Q</code>.</li> <li>Passing control <ul> <li>To beginning of procedure code <ul> <li>starting instruction of <code class="language-plaintext highlighter-rouge">Q</code> </li> </ul> </li> <li>Back to return point <ul> <li>next instruction in <code class="language-plaintext highlighter-rouge">P</code> after <code class="language-plaintext highlighter-rouge">Q</code> </li> </ul> </li> </ul> </li> <li>Passing data <ul> <li>Procedure arguments <ul> <li> <code class="language-plaintext highlighter-rouge">P</code> passes one or more parameters to <code class="language-plaintext highlighter-rouge">Q</code>.</li> <li> <code class="language-plaintext highlighter-rouge">Q</code> returns a value back to <code class="language-plaintext highlighter-rouge">P</code>.</li> </ul> </li> <li>Return value</li> </ul> </li> <li>Memory management <ul> <li>Allocate during procedure execution and de-allocate upon return <ul> <li> <code class="language-plaintext highlighter-rouge">Q</code> needs to allocate space for local variables and free that storage once finishes.</li> </ul> </li> </ul> </li> <li>Mechanisms all implemented with machine instructions</li> <li>x86-64 implementation of a procedure uses only those mechanisms required</li> <li> <p>Machine instructions implement the mechanisms, but the choices are determined by designers. These choices make up the <strong>Application Binary Interface (ABI).</strong></p> </li> <li>Region of memory managed with stack discipline <ul> <li>Memory viewed as array of bytes.</li> <li>Different regions have different purposes.</li> <li>(Like ABI, a policy decision)</li> </ul> </li> <li>Grows toward lower addresses <ul> <li>Register <code class="language-plaintext highlighter-rouge">%rsp</code> contains <strong>lowest stack address</strong>.</li> <li>address of “top” element</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/16-480.webp 480w,/assets/img/courses/csc231/04-machine/16-800.webp 800w,/assets/img/courses/csc231/04-machine/16-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/16.png" width="50%" height="auto" alt="Stack frames" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li> <code class="language-plaintext highlighter-rouge">pushq Src</code> <ul> <li>Fetch operand at <code class="language-plaintext highlighter-rouge">Src</code> </li> <li>Decrement <code class="language-plaintext highlighter-rouge">%rsp</code> by 8</li> <li>Write operand at address given by <code class="language-plaintext highlighter-rouge">%rsp</code> </li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">popq Dest</code> <ul> <li>Read value at address given by <code class="language-plaintext highlighter-rouge">%rsp</code> </li> <li>Increment <code class="language-plaintext highlighter-rouge">%rsp</code> by 8</li> <li>Store value at Dest (usually a register)</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/17-480.webp 480w,/assets/img/courses/csc231/04-machine/17-800.webp 800w,/assets/img/courses/csc231/04-machine/17-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/17.png" width="50%" height="auto" alt="Stack push and pop" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>The <code class="language-plaintext highlighter-rouge">-Og</code> flag often combines/reduces these steps.</li> <li>The memory stack architecture for a function has a base pointer (<code class="language-plaintext highlighter-rouge">$rbp</code>) and a stack pointer (<code class="language-plaintext highlighter-rouge">$rsp</code>). <ul> <li>Base pointer: the bottom of the stack (higher memory address)</li> <li>Stack pointer: the top of the stack (lower memory address)</li> </ul> </li> <li>Function prologue <ul> <li>Push the current base pointer onto the memory stack (to be restored later).</li> <li>Assign the value of the base pointer (set the <code class="language-plaintext highlighter-rouge">$rbp</code> to that value) to the current address pointed to by the stack pointer.</li> <li>Move the stack pointer down further (<em>push</em> new memory in) a distance that would accommodate local variables of the function.</li> </ul> </li> <li>Function prologue (Assembly), ATT notation, assume rbp/ebp and rsp/esp <ul> <li><code class="language-plaintext highlighter-rouge">push $rbp</code></li> <li><code class="language-plaintext highlighter-rouge">mov $rsp, $rbp</code></li> <li><code class="language-plaintext highlighter-rouge">sub N, $rsp</code></li> </ul> </li> <li>Function epilogue <ul> <li>Drop the stack pointer to the current base pointer, so room reserved in the prologue for local variables is freed.</li> <li>Pops the base pointer off the stack, so it is restored to its value before the prologue.</li> <li>Returns to the calling function, by popping the previous frame’s program counter off the stack and jumping to it.</li> </ul> </li> <li>Function prologue (Assembly), ATT notation, assume rbp/ebp and rsp/esp</li> <li><code class="language-plaintext highlighter-rouge">mov $rbp, $rsp</code></li> <li><code class="language-plaintext highlighter-rouge">pop $rbp</code></li> <li><code class="language-plaintext highlighter-rouge">ret</code></li> <li>Video lecture on the slide</li> </ul> <iframe width="560" height="315" src="https://www.youtube.com/embed/DwGreRQzvzI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">mult.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=mult.c"></script> <ul> <li>Description of C code:</li> </ul> <iframe width="560" height="315" src="https://www.youtube.com/embed/R999iekcaUg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> <ul> <li>Compile with <code class="language-plaintext highlighter-rouge">-g</code> flag and run <code class="language-plaintext highlighter-rouge">gdb</code> on the resulting executable.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td> <td class="rouge-code"><pre>$ gcc -g -o mult mult.c

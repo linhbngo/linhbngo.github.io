@@ -4,7 +4,7 @@
       {
             "title": "Operating System Security",
             "description": "",
-            "published": "April 24, 2026",
+            "published": "April 25, 2026",
             "authors": [
               
             ],
@@ -123,6 +123,19 @@
 97
 98
 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
 </pre></td> <td class="rouge-code"><pre>
 ## Privileged Program
 
@@ -154,6 +167,19 @@
       See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
       https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
     --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc302/os-security/01-480.webp 480w,/assets/img/courses/csc302/os-security/01-800.webp 800w,/assets/img/courses/csc302/os-security/01-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
     
     &lt;img
       src="/assets/img/courses/csc302/os-security/01.png"
@@ -222,7 +248,7 @@ sudo chmod 4755 mycat
 - `sudo chmod 4755 mycat`: This is a setuid mechanism - run `mycat` as its owner, 
 not as the user. 
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="set-uid-what-can-go-wrong">Set UID: what can go wrong?</h2> <figure> <picture> <img src="/assets/img/courses/csc302/os-security/02.png" width="50%" height="auto" alt="Attack surfaces of Set UID" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>User inputs (explicit inputs): Failure of input sanitization <ul> <li>Buffer overflow</li> <li>SQL injection</li> </ul> </li> <li>System inputs: System-provided inputs that were faked by other users <ul> <li>Race condition</li> </ul> </li> <li>Environment variables: inputs that can be manipulated by others</li> <li> <p>Non-privileged process: capability leaking</p> </li> <li>Creates a file called <code class="language-plaintext highlighter-rouge">/etc/zzz</code>. You will need to use <code class="language-plaintext highlighter-rouge">sudo</code> to create this file with the following content: <ul> <li><code class="language-plaintext highlighter-rouge">This is quality content!</code></li> </ul> </li> <li>A normal user cannot attempt to edit this file.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="set-uid-what-can-go-wrong">Set UID: what can go wrong?</h2> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/os-security/02-480.webp 480w,/assets/img/courses/csc302/os-security/02-800.webp 800w,/assets/img/courses/csc302/os-security/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/os-security/02.png" width="50%" height="auto" alt="Attack surfaces of Set UID" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>User inputs (explicit inputs): Failure of input sanitization <ul> <li>Buffer overflow</li> <li>SQL injection</li> </ul> </li> <li>System inputs: System-provided inputs that were faked by other users <ul> <li>Race condition</li> </ul> </li> <li>Environment variables: inputs that can be manipulated by others</li> <li> <p>Non-privileged process: capability leaking</p> </li> <li>Creates a file called <code class="language-plaintext highlighter-rouge">/etc/zzz</code>. You will need to use <code class="language-plaintext highlighter-rouge">sudo</code> to create this file with the following content: <ul> <li><code class="language-plaintext highlighter-rouge">This is quality content!</code></li> </ul> </li> <li>A normal user cannot attempt to edit this file.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
