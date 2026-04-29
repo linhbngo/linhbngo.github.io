@@ -1233,8 +1233,8 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/02-setup/";
-            },},{id: "csc574-introduction-to-tinyml",
-          title: 'Introduction to tinyML',
+            },},{id: "csc574-practical-introduction-to-c-for-arduino",
+          title: 'Practical Introduction to C++ for Arduino',
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/03-arduino-c/";
