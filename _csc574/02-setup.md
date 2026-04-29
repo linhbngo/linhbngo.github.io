@@ -6,8 +6,8 @@ toc:
   - name: Overview
   - name: Setup Environment
   - name: VSCode and PlatformIO
-  - name: Challenges of tinyML
-  - name: Course Hardware
+  - name: First PlatformIO Project
+  - name: Reading Sensor Data
 ---
 
 
@@ -64,6 +64,7 @@ The layout of this repository can be presented as follows.
 ```bash
 conda env create -f environment.yml
 conda activate tinyml
+python -m ipykernel install --user --name tinyml --display-name "Python (tinyml)"
 ```
 {% enddetails %}
 
@@ -285,7 +286,7 @@ void loop() {
 
 - You should also make sure that the `platform.ini` file has the following contents
 
-```c
+```bash
 [env:nano33ble]
 platform = nordicnrf52
 board = nano33ble
@@ -317,8 +318,13 @@ pio run -t upload --upload-port /dev/cu.usbmodem1201
 {% enddetails %}
 
 
-## Notes:
+## Reading Sensor Data
 
+{% details Create your second Arduino project %}
+
+- Setup a second project called `Sensors` inside `firmware` directory with the following file contents:
+
+- `platformio.ini`:
 
 ```bash
 [env:nano33ble]
@@ -330,6 +336,7 @@ lib_deps =
 monitor_speed = 9600
 ```
 
+- `main.cpp`:
 
 ```c
 #include <Arduino.h>
@@ -396,6 +403,13 @@ void loop() {
   delay(200);
 }
 ```
-- `firmware/` starter sketch templates
-- `notebooks/serial_plot.ipynb`
-- `models/README.md` describing naming conventions for exported models
+- Run and upload.
+
+{% enddetails %}
+
+{% details Python Notebook %}
+
+- Open the `serial_plot.ipynb` and select the `tinyml` kernel. 
+- Follow the notebook instruction to learn how to capture live sensor data from the Nano (that was generated via the previously uploaded Sensors code).
+
+{% enddetails %}
