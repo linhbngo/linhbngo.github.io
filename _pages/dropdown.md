@@ -38,9 +38,6 @@ children:
   - title: iOS App Development (dev)
     permalink: /csc496/
   - title: divider
-  - title: Advanced Data Structures (dev)
-    permalink: /csc530/
-  - title: divider
   - title: Cloud Computing Fundamentals (dev)
     permalink: /csc568/
   - title: divider

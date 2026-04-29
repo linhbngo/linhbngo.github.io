@@ -57,9 +57,10 @@ are capable of performing on-device sensor data analytics at extremely low power
 {% details note Course Structure %}
 
 - Based on Harvard's tinyML course
-- Part 1: Machine Learning
-- Part 2: Typical applications of tinyML
-- Part 3: Physical deployment of tinyML
+- Part 1: Introduction to programming on tiny devices (Arduino)
+- Part 2: Introduction to Machine Learning
+- Part 3: Typical applications of tinyML
+- Part 4: Physical deployment of tinyML
 
 {% enddetails %}
 
@@ -72,9 +73,10 @@ are capable of performing on-device sensor data analytics at extremely low power
 can learn to solve problems by analyzing data for interesting patterns.
 - DL is a type of ML that leverages neural networks and big data.
 
-{% include figure.liquid path="assets/img/courses/csc574/01-introduction/ai_ml_dl.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/01-introduction/ai_ml_dl.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details note ML applications %}
 
 - ML is embedded in all aspects of (digital) life nowadays. 
@@ -111,7 +113,7 @@ computational power to train/inference: giant data centers
 {% details Example: OK, Google %}
 
 
-{% include figure.liquid path="assets/img/courses/csc574/01-introduction/ok_google.jpg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/01-introduction/ok_google.jpg" max-width="50%" zoomable=true %}
 
 - Google Assistant: Machine Learning
 - HomiSmart: Physical device
@@ -137,7 +139,7 @@ computational power to train/inference: giant data centers
 {% enddetails %}
 {% enddetails %}
 
-{% details note Step 1: data input %}
+{% details note Step 1: Data input %}
 
 - Coming from sensors on device
     - Motion sensors,
@@ -160,7 +162,7 @@ computational power to train/inference: giant data centers
     - Mobile (Apple 0778 Apple Watch): $33\ {mm}^2$
     - Kinetis KL03: $3.2\ {mm}^2$
 
-    {% include figure.liquid path="assets/img/courses/csc574/01-introduction/kinetis.jpg" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc574/01-introduction/kinetis.jpg" max-width="50%" zoomable=true %}
 
 === "Power consumption"
 
@@ -170,7 +172,7 @@ computational power to train/inference: giant data centers
 
 === "Demand"
 
-    {% include figure.liquid path="assets/img/courses/csc574/01-introduction/north-america-microcontroller-market.png" width="50%" zoomable=true %} 
+    {% include figure.liquid path="assets/img/courses/csc574/01-introduction/north-america-microcontroller-market.png" max-width="50%" zoomable=true %} 
 
 {% enddetails %}
 
@@ -185,10 +187,10 @@ computational power to train/inference: giant data centers
 
 {% enddetails %}
 {% enddetails %}
+
 ## Challenges of tinyML
 
 {% details note Embedded Systems: Hardware %}
-
 
 - Fundamental building blocks of computing systems:
     - Compute
@@ -204,16 +206,14 @@ computational power to train/inference: giant data centers
         - Typically is preset in their functionality
 - Comparison
     - Multiple magnitudes of difference
-
-
 - What does it mean to have less compute, memory, storage, and power consumption?
     - understand the task you want to run,
     - understand the requirements,
     - how long is the run time duration?
 
 {% enddetails %}
-{% details note Embedded Systems: Software %}
 
+{% details note Embedded Systems: Software %}
 - What is software
     - High-level application
     - Supporting libraries
@@ -236,17 +236,16 @@ computational power to train/inference: giant data centers
     - Prioritize efficiency at cost of portability
     - Not easily portable 
         - To be portable, the OSes have to provide common library support. 
-
 {% enddetails %}
+
 {% details note ML Algorithms %}
 
-
-{% include figure.liquid path="assets/img/courses/csc574/01-introduction/model_size.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/01-introduction/model_size.png" max-width="50%" zoomable=true %}
 
 - Machine learning models are growing fast in complexity.
 - The computing capability that is needed is growing accordingly.
 
-{% include figure.liquid path="assets/img/courses/csc574/01-introduction/compute-needs.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/01-introduction/compute-needs.png" max-width="50%" zoomable=true %}
 
 - What about tinyML
     - How to pack ML into tiny devices with resource constraints
@@ -256,7 +255,7 @@ computational power to train/inference: giant data centers
     - VGGNet (71.5% acc, 528MB)
     - MobileNet (<70% acc, 16.9MB)
 
-{% include figure.liquid path="assets/img/courses/csc574/01-introduction/benchmarks.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/01-introduction/benchmarks.png" max-width="50%" zoomable=true %}
 
 - Bigger is not always better, especially in tinyML world. 
 - MobileNet is still not good enough: MCU has a few KB of memory

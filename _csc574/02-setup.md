@@ -301,7 +301,7 @@ monitor_speed = 9600
     - run `pio run`
 - You might have a `warning` on LF clock source. That warning can be ignored. 
 
-{% include figure.liquid path="assets/img/courses/csc574/02-setup/pio-run.png" max-width="25%" zoomable=true alt="Run results of the Blink project build on a Mac" %}
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/mac-blink-run.png" max-width="25%" zoomable=true alt="Run results of the Blink project build on a Mac" %}
 
 - After a successful build, we will need to deploy the built binary to the `Nano 33 BLE` board. 
     - Plug in the board over USB.
@@ -312,71 +312,7 @@ monitor_speed = 9600
 pio run -t upload --upload-port /dev/cu.usbmodem1201
 ```
 
-{% include figure.liquid path="assets/img/courses/csc574/02-setup/pio-upload.png" max-width="25%" zoomable=true alt="Upload the built source code to the board" %}
-
-
-
-{% enddetails %}
-
-{% details Open the Serial Monitor %}
-
-PlatformIO includes a Serial Port Monitor in the toolbar and in its task system. It also allows customization in `platformio.ini` through monitor-related options such as `monitor_port` and `monitor_speed`. ([PlatformIO Documentation][1])
-
-To open it:
-
-1. Click the **Serial Port Monitor** button on the PlatformIO toolbar.
-
-Or:
-
-1. Go to **Terminal → Run Task...**
-2. Select **PlatformIO: Monitor**. ([PlatformIO Documentation][1])
-
-The listed shortcut is **`ctrl+alt+s`**. ([PlatformIO Documentation][1])
-
-If you want to define the monitor baud rate in `platformio.ini`, PlatformIO documents `monitor_speed` for that purpose. ([PlatformIO Documentation][1])
-
-Example:
-
-```ini
-[env:yourboard]
-monitor_speed = 115200
-```
-{% enddetails %}
-
-{% details Understand the PlatformIO toolbar %}
-
-PlatformIO documents the status-bar toolbar and its common buttons. This is worth showing students explicitly because it becomes their dashboard. The toolbar includes quick access to:
-
-* PlatformIO Home
-* Build
-* Upload
-* Clean
-* Serial Port Monitor
-* PlatformIO Core CLI
-* environment switcher if multiple environments exist ([PlatformIO Documentation][1])
-
-{% enddetails %}
-
-{% details Use Project Tasks when you want more visibility %}
-
-PlatformIO exposes a **Project Task Explorer** under the PlatformIO activity bar and also integrates tasks into **Terminal → Run Task...**. That is useful when students need a visible list of actions such as Build, Upload, Clean, and Monitor instead of memorizing icons or shortcuts. ([PlatformIO Documentation][1])
-
-{% enddetails %}
-
-{% details 14. Working with multiple PlatformIO projects %}
-
-If your repo contains several firmware projects, PlatformIO supports **multi-project workspaces** through VS Code’s **multi-root workspaces**. That is the official route when you are working on multiple related firmware folders at once. ([PlatformIO Documentation][1])
-
-{% enddetails %}
-
-{% details “`pio` command not found” %}
-
-Usually one of these:
-
-* you opened a normal terminal, not **PlatformIO Core CLI**
-* `platformio-ide.useBuiltinPIOCore` is off
-* your shell `PATH` was overwritten instead of extended
-* you expected `pio` to work system-wide without using **Install Shell Commands** ([PlatformIO Documentation][1])
+{% include figure.liquid path="assets/img/courses/csc574/02-setup/mac-blink-upload.png" max-width="25%" zoomable=true alt="Upload the built source code to the board" %}
 
 {% enddetails %}
 

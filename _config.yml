@@ -178,9 +178,6 @@ collections:
   csc496:
     output: true
     permalink: /csc496/:path/
-  csc530:
-    output: true
-    permalink: /csc530/:path/
   csc568:
     output: true
     permalink: /csc568/:path/
