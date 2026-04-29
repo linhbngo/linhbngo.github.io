@@ -319,6 +319,83 @@ pio run -t upload --upload-port /dev/cu.usbmodem1201
 
 ## Notes:
 
+
+```bash
+[env:nano33ble]
+platform = nordicnrf52
+board = nano33ble
+framework = arduino
+lib_deps = 
+    arduino-libraries/Arduino_LSM9DS1
+monitor_speed = 9600
+```
+
+
+```c
+#include <Arduino.h>
+#include <Arduino_LSM9DS1.h>
+
+void setup() {
+  Serial.begin(9600);
+
+  while (!Serial) {
+    ; // wait for serial monitor
+  }
+
+  Serial.println("Serial ready. Initializing IMU...");
+
+  if (!IMU.begin()) {
+    Serial.println("Failed to initialize IMU");
+    while (1) {
+      delay(1000);
+    }
+  }
+
+  Serial.println("IMU ready.");
+  Serial.println("Ax Ay Az | Gx Gy Gz | Mx My Mz");
+}
+
+void loop() {
+  float ax, ay, az;
+  float gx, gy, gz;
+  float mx, my, mz;
+
+  if (IMU.accelerationAvailable()) {
+    IMU.readAcceleration(ax, ay, az);
+  }
+
+  if (IMU.gyroscopeAvailable()) {
+    IMU.readGyroscope(gx, gy, gz);
+  }
+
+  if (IMU.magneticFieldAvailable()) {
+    IMU.readMagneticField(mx, my, mz);
+  }
+
+  Serial.print("A:");
+  Serial.print(ax);
+  Serial.print(",");
+  Serial.print(ay);
+  Serial.print(",");
+  Serial.print(az);
+
+  Serial.print(" | G:");
+  Serial.print(gx);
+  Serial.print(",");
+  Serial.print(gy);
+  Serial.print(",");
+  Serial.print(gz);
+
+  Serial.print(" | M:");
+  Serial.print(mx);
+  Serial.print(",");
+  Serial.print(my);
+  Serial.print(",");
+  Serial.println(mz);
+
+  delay(200);
+}
+```
 - `firmware/` starter sketch templates
 - `notebooks/serial_plot.ipynb`
 - `models/README.md` describing naming conventions for exported models
