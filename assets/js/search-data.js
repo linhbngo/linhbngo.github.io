@@ -107,13 +107,6 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc496/";
               },
-            },{id: "dropdown-advanced-data-structures-dev",
-              title: "Advanced Data Structures (dev)",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/csc530/";
-              },
             },{id: "dropdown-cloud-computing-fundamentals-dev",
               title: "Cloud Computing Fundamentals (dev)",
               description: "",
@@ -1215,46 +1208,6 @@ ninja.data = [{
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/index/";
-            },},{id: "csc530-syllabus",
-          title: 'Syllabus',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/00-syllabus/";
-            },},{id: "csc530-introduction",
-          title: 'Introduction',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/01-review/";
-            },},{id: "csc530-minimum-range-query",
-          title: 'Minimum Range Query',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/02-rmq/";
-            },},{id: "csc530-balanced-tree",
-          title: 'Balanced Tree',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/03-b-tree/";
-            },},{id: "csc530-suffix-tree",
-          title: 'Suffix Tree',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/04-suffix/";
-            },},{id: "csc530-heap-review",
-          title: 'Heap Review',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/05-heap/";
-            },},{id: "csc530-fibonacci-heap-graph-shortest-path",
-          title: 'Fibonacci Heap - Graph Shortest Path',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/06-fibonacci-graph/";
-            },},{id: "csc530-csc-530-data-structures",
-          title: 'CSC 530: Data Structures',
-          description: "",
-          section: "Csc530",handler: () => {
-              window.location.href = "/csc530/index/";
             },},{id: "csc568-syllabus-csc-568-cloud-computing-fundamentals",
           title: 'Syllabus: CSC 568 - Cloud Computing Fundamentals',
           description: "",
