@@ -128,7 +128,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-the-consequence-gap",
+            },{id: "post-pork-rib-congee-versus-beef-stew-the-facets-of-simplicity",
+        
+          title: "Pork Rib Congee versus Beef Stew: The Facets of Simplicity",
+        
+        description: "What does simplicity really mean?",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/facets-simplicity/";
+          
+        },
+      },{id: "post-the-consequence-gap",
         
           title: "The Consequence Gap",
         
