@@ -128,7 +128,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-pork-rib-congee-versus-beef-stew-the-facets-of-simplicity",
+            },{id: "post-unvibe-the-vibe-learning-by-deconstruction-in-the-age-of-ai",
+        
+          title: "Unvibe the Vibe: Learning by Deconstruction in the Age of AI",
+        
+        description: "In an era of AI-generated code, learning by deconstruction rather than construction helps us make sense of what we produce.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/unvibe/";
+          
+        },
+      },{id: "post-pork-rib-congee-versus-beef-stew-the-facets-of-simplicity",
         
           title: "Pork Rib Congee versus Beef Stew: The Facets of Simplicity",
         
