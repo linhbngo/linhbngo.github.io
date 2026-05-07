@@ -268,19 +268,19 @@ computational power to train/inference: giant data centers
 
 {% details note Arduino Nano 33 BLE Sense (Rev1)  %}
 
-- [Specification Sheet](https://docs.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf)
+- [Specification Sheet](https://docs.arduino.cc/resources/datasheets/ABX00069-datasheet.pdf)
     - Arm® Cortex®-M4F @ **64 MHz**, **1 MB flash**, **256 KB RAM**.
     - **MCU / radio module:** u-blox **NINA-B306** (Nordic **nRF52840**)
-- Various [built-in sensors](https://docs.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf#page=7.12) and enough headroom for small TensorFlow Lite Micro models, 
+- Various built-in sensors
     - Optimization matters given limited CPU/memory.
-    - IMU (motion): LSM9DS1 (9-axis) 
-    - Pressure and temperature: LPS22HB
+    - IMU (motion): [BMI270](https://content.arduino.cc/assets/bmi270-ds000.pdf) and [BMM150](https://content.arduino.cc/assets/bmm150-ds001.pdf)
+        - three axis gyroscope, 
+        - three axis accelerometer, and
+        - magnetic field variations in all three dimensions.
+    - Barometer and temperature semspr: LPS22HB
+    = Temperature and humidity sensor: HS3003
     - Gesture, light, and proximity: APDS-9960
-    - Microphone: MP34DT05 
-- **Important Reality Check:**
-    - If purchased as part of the [Arduino Tiny Machine Learning Kit](https://store.arduino.cc/products/arduino-tiny-machine-learning-kit?srsltid=AfmBOoqoxmN3Tw2wdOp0CQ-ZtMw_QtIXWBsyEdtgN3DsehfZmGVaFBor0)
-        - Carry the original **Nano 33 BLE Sense**
-        - There is no humidity sensor (No HTS221)
+    - Microphone: MP34DT06JTR 
     - Can only tolerate **3.3V** power (not 5V tolerant). 
 
 {% enddetails %}

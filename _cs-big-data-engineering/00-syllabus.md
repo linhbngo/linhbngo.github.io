@@ -28,25 +28,20 @@ toc:
 
 ---
 
-# CSC 467: Big Data Engineering
-
-
 ## General Information
 
 - **Semester**: Summer 2026
 - **Class Meeting Time**:  N/A 
 
-{!assets/text/instructor_info_summer.md!}
+{% include courses/instructor_info_summer.md %}
 
----
 
 ## Course Information
 
-- The course runs from June 30, 2025 until August 03, 2025. It is a fully online course. 
+- The course runs from May 18, 2026 until June 21, 2026. It is a fully online course. 
   - The course is 100% asynchronous. 
   - All class materials and recorded links to the lectures will be provided via D2L. 
 
----
 
 ## Required Materials:
 
@@ -54,7 +49,6 @@ toc:
 and Jeffrey David Ullman.
 - [Author’s Textbook Download Page](https://www.mmds.org/).
 
----
 
 ## Resources and Accessibility:
 
@@ -67,7 +61,6 @@ inside D2L. Technical questions specific to online competition platforms
 used in the course can be sent via email to the instructor or posted on 
 the Discord server.
 
----
 
 ## Course Description
 
@@ -76,7 +69,6 @@ data-intensive and big data computing problems. Course topics include distribute
 and parallel algorithms that help with acquiring, cleaning, and mining very large
 amount of data.
 
----
 
 ## Learning Objectives
 
@@ -102,7 +94,6 @@ other relevant disciplines to identify solutions (ABET 1).
 2. Design, implement, and evaluate a computing-based solution to meet a given set 
 of computing requirements in the context of the program’s discipline (ABET 2).
 
----
 
 ## Assessments and Grading:
 
@@ -138,7 +129,6 @@ Refer to the Undergraduate Catalog for description of NG (No Grade), W, & other 
 Individual assignments that are late are assessed a 10% per day late penalty. Saturday and Sunday are each days. There is no late 
 acceptance for team-based milestones. 
 
----
 
 ## Course Topics and Schedules
 
@@ -157,10 +147,7 @@ acceptance for team-based milestones.
 |      | Page Rank | - |
 | 5    | Decision Trees | - | 
 
----
 
-{!assets/text/policy.md!}
+{% include courses/policy.md %}
 
----
-
-{!assets/text/distance_education.md!}
+{% include courses/distance_education.md %}

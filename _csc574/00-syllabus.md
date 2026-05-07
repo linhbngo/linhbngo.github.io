@@ -31,6 +31,10 @@ toc:
 
 {% include courses/instructor_info_summer.md %}
 
+- The course runs from May 11, 2026 until June 14, 2026. It is a fully online course. 
+  - The course is 100% asynchronous. 
+  - All class materials and recorded links to the lectures will be provided via D2L. 
+
 ## Course Description
 
 In this course, students will study the emerging field of tiny machine learning (tinyML). This 
@@ -38,7 +42,7 @@ field is at the intersection of machine learning (ML) applications and embedded
 devices/microcontrollers. It requires both software and embedded-hardware knowledge. More 
 specifically, students will follow a hands-on learning approach with training and optimizing ML models 
 in such ways that they are deployable onto tiny microcontrollers. The course will involve work with 
-an [Nano 33BLE sense microcontroller](https://docs.arduino.cc/hardware/nano-33-ble-sense/). 
+an [Nano 33BLE sense microcontroller Rev 2](https://store-usa.arduino.cc/products/nano-33-ble-sense-rev2). 
 
 
 ## Learning Objectives
@@ -57,8 +61,9 @@ an [Nano 33BLE sense microcontroller](https://docs.arduino.cc/hardware/nano-33-b
 ## Required Learning Materials
 
 There is no textbook requirement for this class. However, students are required to purchase an 
-[Arduino Tiny Machine Learning Kit](https://store-usa.arduino.cc/collections/edu-family/products/arduino-tiny-machine-learning-kit). 
-The cost of the kit is $60. If you get this from Amazon, you might be able to get it via free shipping. 
+[Nano 33BLE Sense Microcontroller Rev 2](https://store-usa.arduino.cc/products/nano-33-ble-sense-rev2). 
+The cost of the kit is $38.70, not including shipping. If you get this from Amazon, you might be able to 
+get it via free shipping. 
 
 
 ## Assessments and Grading

@@ -123,7 +123,7 @@ For Windows PowerShell, run the followings:
 
 {% details Setup core libraries %}
 
-- This script installs the `Arduino Mbed OS Nano Boards` core used by the Nano 33 BLE/BLE Sense, plus the course libraries `ArduinoBLE`, `Arduino_LSM9DS1`, and `Harvard_TinyMLx`. 
+- This script installs the `Arduino Mbed OS Nano Boards` core used by the Nano 33 BLE/BLE Sense, plus the course libraries `ArduinoBLE`, `Arduino_BMI270_BMM150`, and `Harvard_TinyMLx`. 
 - The script also forces Arduino CLI to use repo-local state via ARDUINO_* variables. 
 
 For macOS/Linux/Git Bash, run the followings:
@@ -292,7 +292,7 @@ platform = nordicnrf52
 board = nano33ble
 framework = arduino
 lib_deps = 
-    arduino-libraries/Arduino_LSM9DS1
+    arduino-libraries/Arduino_BMI270_BMM150
 monitor_speed = 9600
 ```
 
@@ -332,7 +332,7 @@ platform = nordicnrf52
 board = nano33ble
 framework = arduino
 lib_deps = 
-    arduino-libraries/Arduino_LSM9DS1
+    arduino-libraries/Arduino_BMI270_BMM150
 monitor_speed = 9600
 ```
 
@@ -340,7 +340,7 @@ monitor_speed = 9600
 
 ```c
 #include <Arduino.h>
-#include <Arduino_LSM9DS1.h>
+#include <Arduino_BMI270_BMM150.h>
 
 void setup() {
   Serial.begin(9600);
