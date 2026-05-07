@@ -4,7 +4,7 @@
       {
             "title": "Development Environment",
             "description": "",
-            "published": "May 03, 2026",
+            "published": "May 07, 2026",
             "authors": [
               
             ],
@@ -80,7 +80,7 @@ scripts/check-setup.sh
 </pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc574/02-setup/mac-check-setup-480.webp 480w,/assets/img/courses/csc574/02-setup/mac-check-setup-800.webp 800w,/assets/img/courses/csc574/02-setup/mac-check-setup-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc574/02-setup/mac-check-setup.png" width="100%" height="auto" style=" max-width: 50%; " alt="Check results of Arduino CLI activation" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>For Windows PowerShell, run the followings:</p> <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre><span class="o">.</span><span class="n">\scripts\check-setup.ps1</span><span class="w">
-</span></pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc574/02-setup/win-check-setup-480.webp 480w,/assets/img/courses/csc574/02-setup/win-check-setup-800.webp 800w,/assets/img/courses/csc574/02-setup/win-check-setup-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc574/02-setup/win-check-setup.png" width="100%" height="auto" style=" max-width: 50%; " alt="Check results of Arduino CLI activation" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Setup core libraries</summary> <ul> <li>This script installs the <code class="language-plaintext highlighter-rouge">Arduino Mbed OS Nano Boards</code> core used by the Nano 33 BLE/BLE Sense, plus the course libraries <code class="language-plaintext highlighter-rouge">ArduinoBLE</code>, <code class="language-plaintext highlighter-rouge">Arduino_LSM9DS1</code>, and <code class="language-plaintext highlighter-rouge">Harvard_TinyMLx</code>.</li> <li>The script also forces Arduino CLI to use repo-local state via ARDUINO_* variables.</li> </ul> <p>For macOS/Linux/Git Bash, run the followings:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</span></pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc574/02-setup/win-check-setup-480.webp 480w,/assets/img/courses/csc574/02-setup/win-check-setup-800.webp 800w,/assets/img/courses/csc574/02-setup/win-check-setup-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc574/02-setup/win-check-setup.png" width="100%" height="auto" style=" max-width: 50%; " alt="Check results of Arduino CLI activation" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Setup core libraries</summary> <ul> <li>This script installs the <code class="language-plaintext highlighter-rouge">Arduino Mbed OS Nano Boards</code> core used by the Nano 33 BLE/BLE Sense, plus the course libraries <code class="language-plaintext highlighter-rouge">ArduinoBLE</code>, <code class="language-plaintext highlighter-rouge">Arduino_BMI270_BMM150</code>, and <code class="language-plaintext highlighter-rouge">Harvard_TinyMLx</code>.</li> <li>The script also forces Arduino CLI to use repo-local state via ARDUINO_* variables.</li> </ul> <p>For macOS/Linux/Git Bash, run the followings:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td> <td class="rouge-code"><pre><span class="nb">chmod </span>u+x scripts/bootstrap-arduino.sh
@@ -141,7 +141,7 @@ platform <span class="o">=</span> nordicnrf52
 board <span class="o">=</span> nano33ble
 framework <span class="o">=</span> arduino
 lib_deps <span class="o">=</span> 
-    arduino-libraries/Arduino_LSM9DS1
+    arduino-libraries/Arduino_BMI270_BMM150
 monitor_speed <span class="o">=</span> 9600
 </pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>To build this project, you are to <ul> <li>open the PlatformIO terminal</li> <li>change to the project directory</li> <li>run <code class="language-plaintext highlighter-rouge">pio run</code> </li> </ul> </li> <li>You might have a <code class="language-plaintext highlighter-rouge">warning</code> on LF clock source. That warning can be ignored.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc574/02-setup/mac-blink-run-480.webp 480w,/assets/img/courses/csc574/02-setup/mac-blink-run-800.webp 800w,/assets/img/courses/csc574/02-setup/mac-blink-run-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc574/02-setup/mac-blink-run.png" width="100%" height="auto" style=" max-width: 25%; " alt="Run results of the Blink project build on a Mac" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>After a successful build, we will need to deploy the built binary to the <code class="language-plaintext highlighter-rouge">Nano 33 BLE</code> board. <ul> <li>Plug in the board over USB.</li> <li>Run the following command. Use the port identified previously from <code class="language-plaintext highlighter-rouge">pio device list</code>.</li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -161,7 +161,7 @@ platform <span class="o">=</span> nordicnrf52
 board <span class="o">=</span> nano33ble
 framework <span class="o">=</span> arduino
 lib_deps <span class="o">=</span> 
-    arduino-libraries/Arduino_LSM9DS1
+    arduino-libraries/Arduino_BMI270_BMM150
 monitor_speed <span class="o">=</span> 9600
 </pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">main.cpp</code>:</li> </ul> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -228,7 +228,7 @@ monitor_speed <span class="o">=</span> 9600
 62
 63
 </pre></td> <td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;Arduino_LSM9DS1.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;Arduino_BMI270_BMM150.h&gt;</span><span class="cp">
 </span>
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
