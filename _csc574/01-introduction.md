@@ -266,7 +266,7 @@ computational power to train/inference: giant data centers
 
 ## Course Hardware
 
-{% details note Arduino Nano 33 BLE Sense (Rev1)  %}
+{% details note Arduino Nano 33 BLE Sense (Rev2)  %}
 
 - [Specification Sheet](https://docs.arduino.cc/resources/datasheets/ABX00069-datasheet.pdf)
     - Arm® Cortex®-M4F @ **64 MHz**, **1 MB flash**, **256 KB RAM**.

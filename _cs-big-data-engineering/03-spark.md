@@ -183,9 +183,13 @@ to a line of text in the file.
 
 ### 3.1. Preparation
 
-- Launch a Jupyter notebook with Spark context ready (see the [Setup](setup.md) 
-page for launch options). 
-- Create a new notebook, then change the notebook's name to `spark-1`. 
+
+- Clone repository
+
+```bash
+git clone https://github.com/ngo-classes/big-data-engineering.git
+```
+- Setup 
 
 ![](fig/03-spark/spark_1.png)
 
