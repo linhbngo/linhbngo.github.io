@@ -121,8 +121,8 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc578/";
               },
-            },{id: "dropdown-machine-learning-on-mcu-dev",
-              title: "Machine Learning on MCU(dev)",
+            },{id: "dropdown-tiny-machine-learning-tinyml",
+              title: "Tiny Machine Learning (tinyML)",
               description: "",
               section: "Dropdown",
               handler: () => {
