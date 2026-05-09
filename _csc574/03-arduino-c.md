@@ -4,18 +4,11 @@ pretty_table: true
 title: "Practical Introduction to C++ for Arduino"
 toc:
   - name: Overview
-  - name: Blink
-  - name: Sensor
-  - name: Blink as C++
-  - name: Variables, types, and constants
-  - name: Conditions and loops
-  - name: Functions
-  - name: Objects and member functions
-  - name: References and sensor reads
+  - name: Arduino Sketches
+  - name: More Function
+  - name: Objects and Member Functions
   - name: Arrays and sensor triples
   - name: Structs for sensor samples
-  - name: Safer embedded C++ and MISRA C++
-  - name: Exercises
 ---
 
 ## Overview
@@ -30,15 +23,12 @@ to immediately read, modify, and debug the kind of C++ code that appears in Ardu
   - `Sensor stream`: read accelerometer, gyroscope, and magnetometer data from the Nano 33 BLE Sense IMU.
 
 - Arduino sketches are written in C++, but the Arduino framework hides much of the startup code.
+  - On a laptop, a program often starts, performs a task, and exits.
+  - On an Arduino, a program usually starts, configures hardware once, and then runs forever.
 
-On a laptop, a program often starts, performs a task, and exits.
-
-On an Arduino, a program usually starts, configures hardware once, and then runs forever.
-
-That is why Arduino sketches are organized around two functions:
-
-- `setup()` runs once.
-- `loop()` runs repeatedly.
+- Arduino sketches are organized around two functions:
+  - `setup()` runs once.
+  - `loop()` runs repeatedly.
 
 {% enddetails %}
 
@@ -64,11 +54,11 @@ That is why Arduino sketches are organized around two functions:
 
 {% enddetails %}
 
-## Arduino sketches are C++ programs
+## Arduino Sketches
 
-{% details Blink sketch (source code) %}
+{% details Blink %}
 
-~~~cpp
+```cpp
 #include <Arduino.h>
 
 void setup() {
@@ -81,7 +71,7 @@ void loop() {
   digitalWrite(LED_BUILTIN, LOW);
   delay(1000);
 }
-~~~
+```
 
 - This file may have an `.ino` extension in the Arduino IDE, or it may be written as a `.cpp` file in PlatformIO.
 - Either way, the code is compiled as C++ code for the target board.
@@ -131,13 +121,13 @@ int main() {
 }
 ~~~
 
-> A microcontroller program is often a never-ending conversation with hardware:
-1. configure pins and sensors;
-2. check whether new data is available;
-3. read inputs;
-4. compute something small;
-5. update outputs;
-6. repeat.
+> A microcontroller program maintains a continuous with hardware:
+  - 1. configure pins and sensors;
+  - 2. check whether new data is available;
+  - 3. read inputs;
+  - 4. compute something small;
+  - 5. update outputs;
+  - 6. repeat.
 That is the `setup()` / `loop()` model.
 
 {% enddetails %}
@@ -151,7 +141,7 @@ void setup() {
 }
 ~~~
 
-- [API for pinMode][pinMode]
+- [API for pinMode](pinMode)
 - This configures the built-in LED pin as an output pin.
 
 {% enddetails %}
@@ -169,36 +159,21 @@ void loop() {
 }
 ```
 
-- [API for digitalWrite][digitalWrite]
+- [API for digitalWrite](digitalWrite)
 - In Blink, `loop()` repeatedly turns the LED on and off by `write` (send) a `HIGH` voltage value 
 and a `LOW` voltage value to the `LED_BUILTIN` pin, with a delay of 1000ms between sends. 
 
 {% enddetails %}
 
-{% details %}
-
-{% enddetails %}
-
 {% enddetails %}
 
 
+{% details Sensor %}
 
-For the IMU sensor sketch, we include another library:
-
-~~~cpp
+```cpp
 #include <Arduino.h>
-#include <Arduino_LSM9DS1.h>
-~~~
+#include <Arduino_BMI270_BMM150.h>
 
-The second include gives us access to the `IMU` object and its sensor-reading functions.
-
----
-
-
-
-In the sensor sketch:
-
-~~~cpp
 void setup() {
   Serial.begin(9600);
 
@@ -206,89 +181,77 @@ void setup() {
     ; // wait for serial monitor
   }
 
-  Serial.println("Serial ready. Initializing IMU...");
-
   if (!IMU.begin()) {
-    Serial.println("Failed to initialize IMU");
+    Serial.println("Failed to initialize IMU!");
     while (1) {
       delay(1000);
     }
   }
 
+  Serial.println("Serial ready. Initializing IMU...");
   Serial.println("IMU ready.");
   Serial.println("Ax Ay Az | Gx Gy Gz | Mx My Mz");
 }
-~~~
 
-This does three jobs:
+void loop() {
+  float ax, ay, az;
+  float gx, gy, gz;
+  float mx, my, mz;
 
-1. starts serial communication;
-2. waits for a serial monitor;
-3. initializes the IMU sensor.
+  if (IMU.accelerationAvailable()) {
+    IMU.readAcceleration(ax, ay, az);
+  }
+
+  if (IMU.gyroscopeAvailable()) {
+    IMU.readGyroscope(gx, gy, gz);
+  }
+
+  if (IMU.magneticFieldAvailable()) {
+    IMU.readMagneticField(mx, my, mz);
+  }
+ 
+  char line[160];
+
+  snprintf(line,sizeof(line),
+    "A:%.3f,%.3f,%.3f | G:%.3f,%.3f,%.3f | M:%.3f,%.3f,%.3f",
+    ax, ay, az,
+    gx, gy, gz,
+    mx, my, mz
+  );
+
+  Serial.println(line);
+  
+  delay(200);
+}
+```
+
+> For the IMU sensor sketch, we include another library:
+```cpp
+#include <Arduino.h>
+#include <Arduino_BMI270_BMM150.h>
+```
+The second include gives us access to the `IMU` object and its sensor-reading functions.
+
+{% details info setup() %}
+- starts serial communication;
+- waits for a serial monitor;
+- initializes the IMU sensor.
+{% enddetails %}
 
 
+{% details info Variables and types %}
 
-In the sensor sketch, `loop()` repeatedly:
+- A variable gives a name to a value.
+- The sensor sketch declares variables as follows:
 
-1. declares sensor variables;
-2. checks whether data is available;
-3. reads acceleration, gyroscope, and magnetic-field values;
-4. prints the values;
-5. waits briefly.
-
-
-## Blink as C++
-
-
-### Function calls
-
-This line is a function call:
-
-~~~cpp
-digitalWrite(LED_BUILTIN, HIGH);
-~~~
-
-A function call means:
-
-> run a named piece of code, possibly with input values.
-
-In this example:
-
-- `digitalWrite` is the function name;
-- `LED_BUILTIN` tells Arduino which pin to control;
-- `HIGH` tells Arduino to set that pin high.
-
-This line:
-
-~~~cpp
-delay(1000);
-~~~
-
-means:
-
-> wait for 1000 milliseconds.
-
-One second for us. Plenty of time for a microcontroller to contemplate existence.
-
----
-
-## Variables, types, and constants
-
-A variable gives a name to a value.
-
-The sensor sketch uses variables like this:
-
-~~~cpp
+```cpp
 float ax, ay, az;
 float gx, gy, gz;
 float mx, my, mz;
-~~~
+```
 
-The type `float` means a number with a decimal point.
-
-Sensor readings are not usually nice whole numbers, so `float` is appropriate.
-
-Common Arduino/C++ types include:
+- In Arduino/C++, variables are associated with types: 
+- Common types include:
 
 | Type | Meaning | Example use |
 |---|---|---|
@@ -298,126 +261,33 @@ Common Arduino/C++ types include:
 | `char` | single character | simple serial command |
 | `unsigned long` | large non-negative integer | time from `millis()` |
 
-### Initialize variables
+- In `Sensor`, sensor readings are not usually integers, so `float` is appropriate.
 
-A safer version of the sensor variables is:
+{% enddetails %} <!-- closes details variables -->
 
-~~~cpp
-float ax = 0.0F;
-float ay = 0.0F;
-float az = 0.0F;
-
-float gx = 0.0F;
-float gy = 0.0F;
-float gz = 0.0F;
-
-float mx = 0.0F;
-float my = 0.0F;
-float mz = 0.0F;
-~~~
-
-The `F` suffix tells the compiler that the literal is a `float`, not a `double`.
-
-{% details warning Why initialization matters %}
-
-In C++, a local variable declared inside a function is not automatically initialized to zero.
-
-This means the following code can be risky:
-
-~~~cpp
-float ax, ay, az;
-~~~
-
-If the sensor does not provide a new acceleration reading before the variables are printed, the program may print old or meaningless values.
-
-A microcontroller will not politely raise its hand and say, "Professor, I am about to use undefined data." It will just do it.
-
+{% details info loop() %}
+- declares sensor variables;
+- checks whether data is available;
+- reads acceleration, gyroscope, and magnetic-field values;
+- prints the values;
+- waits for 200ms and repeats.
 {% enddetails %}
 
-### Constants
 
-The original Blink sketch uses `1000` directly:
+{% details info if statements %}
 
-~~~cpp
-delay(1000);
-~~~
+- The sensor sketch uses `if` statements.
+- This means: If acceleration data is available, then read those values into the variables `ax`, `ay`, and `az`.
 
-This works, but the meaning is hidden.
-
-A better version names the value:
-
-~~~cpp
-#include <Arduino.h>
-
-constexpr int kLedPin = LED_BUILTIN;
-constexpr unsigned long kBlinkDelayMs = 1000UL;
-
-void setup() {
-  pinMode(kLedPin, OUTPUT);
-}
-
-void loop() {
-  digitalWrite(kLedPin, HIGH);
-  delay(kBlinkDelayMs);
-
-  digitalWrite(kLedPin, LOW);
-  delay(kBlinkDelayMs);
-}
-~~~
-
-`constexpr` means the value is known at compile time and should not change.
-
-`1000UL` means the number is an `unsigned long`, which matches many Arduino timing functions.
-
-{% details tip Naming convention %}
-
-The `k` prefix in names such as `kLedPin` and `kBlinkDelayMs` is one common convention for constants.
-
-The specific convention matters less than consistency.
-
-The bigger idea is this:
-
-> Give important hardware and timing values names.
-
-Named values are easier to read, easier to change, and easier to review.
-
-{% enddetails %}
-
----
-
-## Conditions and loops
-
-### `if` statements
-
-The sensor sketch uses `if` statements:
-
-~~~cpp
+```cpp
 if (IMU.accelerationAvailable()) {
   IMU.readAcceleration(ax, ay, az);
 }
-~~~
+```
 
-This means:
+- Similar patterns are for the gyroscope and magnetometer:
 
-> If acceleration data is available, then read it.
-
-The condition goes inside parentheses:
-
-~~~cpp
-IMU.accelerationAvailable()
-~~~
-
-The body goes inside braces:
-
-~~~cpp
-{
-  IMU.readAcceleration(ax, ay, az);
-}
-~~~
-
-A similar pattern appears for the gyroscope and magnetometer:
-
-~~~cpp
+```cpp
 if (IMU.gyroscopeAvailable()) {
   IMU.readGyroscope(gx, gy, gz);
 }
@@ -425,193 +295,174 @@ if (IMU.gyroscopeAvailable()) {
 if (IMU.magneticFieldAvailable()) {
   IMU.readMagneticField(mx, my, mz);
 }
-~~~
+```
 
-### `while` loops
+{% enddetails %} 
+
+
+
+{% details info while loop %}
 
 The setup code uses a `while` loop:
 
-~~~cpp
+```cpp
 while (!Serial) {
   ; // wait for serial monitor
 }
-~~~
+```
 
-This means:
-
-> While the serial connection is not ready, keep waiting.
-
-The `!` operator means not.
-
-So:
-
-~~~cpp
-!Serial
-~~~
-
-means:
-
-> Serial is not ready.
-
-The body contains only a semicolon:
-
-~~~cpp
-;
-~~~
-
-That is an empty statement. It does nothing. This is a deliberate wait loop.
-
-A more readable version is:
-
-~~~cpp
-while (!Serial) {
-  delay(10);
-}
-~~~
-
-This still waits, but it avoids a completely empty loop.
-
-{% details warning Embedded-system concern %}
-
-This code can block forever:
-
-~~~cpp
-while (!Serial) {
-  ;
-}
-~~~
-
-That may be fine in a classroom when students always open the Serial Monitor.
-
-It is less appropriate for a deployed device. A device installed in a field, backpack, robot, or medical prototype should not stop forever just because nobody opened a serial console.
+This means while the serial connection is not ready, keep waiting.
 
 {% enddetails %}
 
-### Add a timeout
 
-A safer classroom/deployment compromise is:
 
-~~~cpp
-constexpr unsigned long kSerialTimeoutMs = 5000UL;
+{% details function calls %}
 
-void waitForSerialOrTimeout() {
-  const unsigned long startTime = millis();
+```cpp
+readMagneticField(mx, my, mz)
+```
 
-  while (!Serial && (millis() - startTime < kSerialTimeoutMs)) {
-    delay(10);
-  }
-}
-~~~
-
-Then `setup()` can call:
-
-~~~cpp
-Serial.begin(9600);
-waitForSerialOrTimeout();
-~~~
-
-This still gives students time to open the Serial Monitor, but the board will not wait forever.
-
-### Infinite loops as error traps
-
-This part of the sensor sketch checks whether the IMU starts correctly:
-
-~~~cpp
-if (!IMU.begin()) {
-  Serial.println("Failed to initialize IMU");
-  while (1) {
-    delay(1000);
-  }
-}
-~~~
-
-`IMU.begin()` tries to initialize the sensor.
-
-If it fails, `!IMU.begin()` becomes true.
-
-Then the code prints an error message and enters:
-
-~~~cpp
-while (1) {
-  delay(1000);
-}
-~~~
-
-In a condition, `1` means true. So `while (1)` means loop forever.
-
-A C++-style version is:
-
-~~~cpp
-while (true) {
-  delay(1000);
-}
-~~~
-
-{% details note Why stop forever? %}
-
-This is a common embedded systems pattern:
-
-> If a required hardware component fails, stop the program in a safe and obvious way.
-
-The board is not crashed. It is intentionally parked.
-
-For a more advanced version, we might blink an error code on the LED.
+- Calling a function means to run a named segment of code, possibly with input values.
+- In this example:
+  - `readMagneticField` is the function name. 
+  - `mx`, `my`, `mz` are the variables where `readMagneticField` write the contents of the magnetic 
+  sensors into. 
+  - [readMagneticField API](https://docs.arduino.cc/libraries/arduino_bmi270_bmm150/#Methods)
 
 {% enddetails %}
 
----
+{% enddetails %} <!-- closes details Sensor -->
 
-## Functions
 
-A function packages repeated behavior into a named block.
 
-The original Blink code repeats the same pattern every loop:
+## More Functions
 
-~~~cpp
-digitalWrite(LED_BUILTIN, HIGH);
-delay(1000);
-digitalWrite(LED_BUILTIN, LOW);
-delay(1000);
-~~~
+{% details tip Problem Statement %}
 
-We can create our own function:
+> Setup a pothole detector: If the sensor detects bounciness (`vertical acceleration`) that is greater than a certain value, change 
+the LED light to `RED`. Otherwise, keep it as `GREEN`. 
 
-~~~cpp
-#include <Arduino.h>
+- From the sensor code, we know that the accelerometer measures acceleration on three axis, x, y, and z. The vertical acceleration is 
+on the z axis. 
+- The LED light on the board is RBG, and [can be controlled](https://support.arduino.cc/hc/en-us/articles/360016724140-Control-the-RGB-LED-on-Nano-33-BLE-boards).
+- The pseudocode is as follows.
 
-constexpr int kLedPin = LED_BUILTIN;
-constexpr unsigned long kBlinkDelayMs = 1000UL;
-
-void blinkOnce() {
-  digitalWrite(kLedPin, HIGH);
-  delay(kBlinkDelayMs);
-
-  digitalWrite(kLedPin, LOW);
-  delay(kBlinkDelayMs);
-}
-
+```cpp
 void setup() {
-  pinMode(kLedPin, OUTPUT);
+  initialize LED with OUTPUT using LEDR, LEDG, and LEDB;
+  initialize IMU;
+  possibly initialize Serial for debugging purposes;
 }
 
 void loop() {
-  blinkOnce();
+  capture accelerometer values into ax, ay, az;
+  if az is greaer than a certain value (1 means stationary), change LED to RED;
+  else change LED to GREEN; 
+  delay
 }
-~~~
+```
 
-This defines a new function:
+{% enddetails %}
 
-~~~cpp
-void blinkOnce() {
-  // function body
+{% details First version %}
+
+```cpp
+#include <Arduino.h>
+#include <Arduino_BMI270_BMM150.h>
+
+void setup() {
+  if (!IMU.begin()) {
+    Serial.println("Failed to initialize IMU!");
+    while (1) {
+      delay(1000);
+    }
+  }
+
+  pinMode(LEDR, OUTPUT);
+  pinMode(LEDG, OUTPUT);
+  pinMode(LEDB, OUTPUT);
 }
-~~~
 
-`void` means the function does not return a value.
+void loop() {
+  float ax, ay, az;
 
-The function name is `blinkOnce`.
+  if (IMU.accelerationAvailable()) {
+    IMU.readAcceleration(ax, ay, az);
+  }
 
-The parentheses are empty because this function does not take input parameters.
+  if (az > 2) {
+     // Red
+    digitalWrite(LEDR, LOW);
+    digitalWrite(LEDG, HIGH);
+    digitalWrite(LEDB, HIGH);
+  } else {
+    // Green
+    digitalWrite(LEDR, HIGH);
+    digitalWrite(LEDG, LOW);
+    digitalWrite(LEDB, HIGH);
+  }
+  
+  delay(200);
+}
+```
+
+{% enddetails %}
+
+{% details Creating a function %}
+
+- We are going to change the code a bit so that the the code for setting the LED light to red and green. 
+  - Since this function sends a signal to the chip directly, we will 
+  use `void`, which means the function does not return a value.
+
+
+```cpp
+#include <Arduino.h>
+#include <Arduino_BMI270_BMM150.h>
+
+void setred() {
+  digitalWrite(LEDR, LOW);
+  digitalWrite(LEDG, HIGH);
+  digitalWrite(LEDB, HIGH);
+}
+
+void setgreen() {
+  digitalWrite(LEDR, HIGH);
+  digitalWrite(LEDG, LOW);
+  digitalWrite(LEDB, HIGH);
+}
+
+void beginLED() {
+  pinMode(LEDR, OUTPUT);
+  pinMode(LEDG, OUTPUT);
+  pinMode(LEDB, OUTPUT);
+}
+
+void setup() {
+  IMU.begin();
+  beginLED();
+}
+
+void loop() {
+  float ax, ay, az;
+
+  if (IMU.accelerationAvailable()) {
+    IMU.readAcceleration(ax, ay, az);
+  }
+
+  if (az > 1.5) {
+     setred();
+  } else {
+     setgreen();
+  }
+  
+  delay(200);
+}
+```
+
+{% enddetails %}
+
+
 
 ### Function parameters
 
@@ -716,23 +567,8 @@ void blinkOnce(unsigned long delayMs) {
 }
 ~~~
 
-{% details note Arduino IDE versus PlatformIO %}
 
-The Arduino IDE often generates function prototypes automatically for `.ino` sketches.
-
-PlatformIO with `.cpp` files is closer to normal C++ compilation rules.
-
-For teaching, it is better for students to see the real C++ rule:
-
-> declare a function before calling it.
-
-This avoids surprises when code moves from a small sketch to a larger project.
-
-{% enddetails %}
-
----
-
-## Objects and member functions
+## Objects and Member Functions
 
 C++ supports objects.
 
@@ -772,7 +608,7 @@ This is one of the biggest reasons to call the lecture **Introduction to C++**, 
 
 In C, there are no objects or member functions.
 
-In Arduino C++, students use objects almost immediately, even before they know the word "object."
+In Arduino C++, we use objects almost immediately, even before they know the word "object."
 
 {% enddetails %}
 
@@ -819,111 +655,6 @@ This is more advanced than we need for the first lab, but it shows the idea:
 - the member function `begin()` configures the hardware;
 - the member function `blinkOnce()` performs the repeated behavior.
 
-{% details warning Do not overuse this yet %}
-
-For early Arduino labs, a class may be overkill.
-
-A few constants and helper functions are usually clearer.
-
-But students should recognize object-style calls because Arduino libraries use them constantly.
-
-{% enddetails %}
-
----
-
-## References and sensor reads
-
-The following line is surprisingly important:
-
-~~~cpp
-IMU.readAcceleration(ax, ay, az);
-~~~
-
-At first glance, this looks like we are sending values into the function.
-
-But after the function call, `ax`, `ay`, and `az` contain new sensor readings.
-
-That means the function is not merely reading the values. It is modifying the variables.
-
-In C++, this is commonly done using **references**.
-
-A simple example:
-
-~~~cpp
-void resetToZero(float& x, float& y, float& z) {
-  x = 0.0F;
-  y = 0.0F;
-  z = 0.0F;
-}
-
-void loop() {
-  float ax = 1.0F;
-  float ay = 2.0F;
-  float az = 3.0F;
-
-  resetToZero(ax, ay, az);
-
-  Serial.println(ax); // prints 0.0
-}
-~~~
-
-The `&` in this parameter list means reference:
-
-~~~cpp
-float& x
-~~~
-
-A reference parameter gives the function access to the caller's variable.
-
-So when the function changes `x`, the original variable changes too.
-
-{% details note Compare to C pointers %}
-
-In C, the same idea is often expressed with pointers:
-
-~~~c
-void resetToZero(float* x) {
-  *x = 0.0F;
-}
-~~~
-
-In C++, references are often easier for beginners to read:
-
-~~~cpp
-void resetToZero(float& x) {
-  x = 0.0F;
-}
-~~~
-
-Both ideas are related to memory addresses, but references hide some of the pointer syntax.
-
-{% enddetails %}
-
-### Why `readAcceleration` uses references
-
-A function can return one value directly:
-
-~~~cpp
-int getAnswer() {
-  return 42;
-}
-~~~
-
-But acceleration has three values:
-
-- x-axis;
-- y-axis;
-- z-axis.
-
-One practical C++ style is to pass three variables by reference:
-
-~~~cpp
-IMU.readAcceleration(ax, ay, az);
-~~~
-
-The function fills all three variables.
-
----
 
 ## Arrays and sensor triples
 
@@ -1082,465 +813,3 @@ A `struct` is one of the first tools students can use to represent structured se
 
 {% enddetails %}
 
----
-
-## Safer embedded C++ and MISRA C++
-
-C++ is powerful. Embedded C++ is powerful in a smaller room with fewer exits.
-
-On a laptop, a crash may mean restarting a program.
-
-On an embedded device, a software defect may mean:
-
-- a robot behaves incorrectly;
-- a drone loses stability;
-- a medical or assistive device gives a wrong signal;
-- a deployed sensor silently collects bad data;
-- a tinyML model receives garbage input and confidently produces garbage output.
-
-This is why professional embedded software often follows coding standards.
-
-### What is MISRA C++?
-
-MISRA C++ is a set of coding guidelines for writing safer, more reliable C++ in critical systems.
-
-The current modern version is **MISRA C++:2023**, whose full title is:
-
-> MISRA C++:2023 Guidelines for the use of C++:17 in critical systems.
-
-The practical idea is not "never use C++."
-
-The practical idea is:
-
-> Use a safer, more restricted subset of C++ and document the rare cases where a project must deviate from the rules.
-
-{% details note Important distinction %}
-
-This course is **not** claiming MISRA compliance.
-
-MISRA compliance is a project-level engineering process. It involves selected guidelines, tool support, reviews, documentation, and formal handling of deviations.
-
-In this course, we use MISRA C++ as a professional lens:
-
-- write code that is easier to inspect;
-- avoid undefined behavior;
-- initialize variables;
-- avoid unnecessary dynamic memory;
-- avoid cleverness where clarity is safer;
-- check whether hardware initialization succeeded;
-- make constants explicit;
-- limit global mutable state;
-- keep functions small and purposeful.
-
-{% enddetails %}
-
-### MISRA-inspired rules for our Arduino labs
-
-We will not teach the full MISRA C++ rule set here.
-
-Instead, we will borrow a small set of habits that are appropriate for early Arduino work.
-
-| Habit | Why it matters in embedded C++ |
-|---|---|
-| Initialize variables | Avoid printing or computing with undefined values |
-| Use named constants | Avoid unexplained hardware and timing numbers |
-| Check initialization results | Do not continue if required hardware failed |
-| Prefer clear types | Reduce surprises from implicit conversions |
-| Keep functions short | Make behavior easier to review and test |
-| Avoid dynamic allocation in basic labs | Heap allocation can fail or fragment memory on small devices |
-| Avoid blocking forever unless intentional | Deployed devices may not have a serial monitor attached |
-| Keep sensor output format consistent | Python notebooks and data loggers depend on predictable data |
-
-### Unsafe-ish sensor code
-
-This version is common in quick demos:
-
-~~~cpp
-void loop() {
-  float ax, ay, az;
-  float gx, gy, gz;
-  float mx, my, mz;
-
-  if (IMU.accelerationAvailable()) {
-    IMU.readAcceleration(ax, ay, az);
-  }
-
-  if (IMU.gyroscopeAvailable()) {
-    IMU.readGyroscope(gx, gy, gz);
-  }
-
-  if (IMU.magneticFieldAvailable()) {
-    IMU.readMagneticField(mx, my, mz);
-  }
-
-  Serial.print("A:");
-  Serial.print(ax);
-  Serial.print(",");
-  Serial.print(ay);
-  Serial.print(",");
-  Serial.println(az);
-
-  delay(200);
-}
-~~~
-
-The problem is subtle:
-
-- if acceleration data is available, `ax`, `ay`, and `az` are updated;
-- if it is not available, they may still contain undefined values;
-- the program prints them anyway.
-
-### Safer version: initialize and track availability
-
-~~~cpp
-#include <Arduino.h>
-#include <Arduino_LSM9DS1.h>
-
-constexpr unsigned long kBaudRate = 9600UL;
-constexpr unsigned long kSampleDelayMs = 200UL;
-constexpr unsigned long kSerialTimeoutMs = 5000UL;
-
-void waitForSerialOrTimeout() {
-  const unsigned long startTime = millis();
-
-  while (!Serial && (millis() - startTime < kSerialTimeoutMs)) {
-    delay(10);
-  }
-}
-
-void stopForever() {
-  while (true) {
-    delay(1000);
-  }
-}
-
-void setup() {
-  Serial.begin(kBaudRate);
-  waitForSerialOrTimeout();
-
-  Serial.println("Serial ready. Initializing IMU...");
-
-  if (!IMU.begin()) {
-    Serial.println("Failed to initialize IMU");
-    stopForever();
-  }
-
-  Serial.println("IMU ready.");
-  Serial.println("Ax,Ay,Az,Gx,Gy,Gz,Mx,My,Mz");
-}
-
-void loop() {
-  float ax = 0.0F;
-  float ay = 0.0F;
-  float az = 0.0F;
-
-  float gx = 0.0F;
-  float gy = 0.0F;
-  float gz = 0.0F;
-
-  float mx = 0.0F;
-  float my = 0.0F;
-  float mz = 0.0F;
-
-  const bool hasAcceleration = IMU.accelerationAvailable();
-  const bool hasGyroscope = IMU.gyroscopeAvailable();
-  const bool hasMagnetometer = IMU.magneticFieldAvailable();
-
-  if (hasAcceleration) {
-    IMU.readAcceleration(ax, ay, az);
-  }
-
-  if (hasGyroscope) {
-    IMU.readGyroscope(gx, gy, gz);
-  }
-
-  if (hasMagnetometer) {
-    IMU.readMagneticField(mx, my, mz);
-  }
-
-  Serial.print(ax);
-  Serial.print(",");
-  Serial.print(ay);
-  Serial.print(",");
-  Serial.print(az);
-  Serial.print(",");
-
-  Serial.print(gx);
-  Serial.print(",");
-  Serial.print(gy);
-  Serial.print(",");
-  Serial.print(gz);
-  Serial.print(",");
-
-  Serial.print(mx);
-  Serial.print(",");
-  Serial.print(my);
-  Serial.print(",");
-  Serial.println(mz);
-
-  delay(kSampleDelayMs);
-}
-~~~
-
-This version is still beginner-friendly, but it is safer and more data-friendly:
-
-- constants are named;
-- variables are initialized;
-- serial waiting has a timeout;
-- IMU failure is handled explicitly;
-- CSV output is easier for Python to parse;
-- helper functions give names to repeated ideas.
-
-{% details warning Constructive criticism %}
-
-The variables `hasAcceleration`, `hasGyroscope`, and `hasMagnetometer` are computed, but this version still prints zeros when data is unavailable.
-
-That may be acceptable for a first demo, but it is not ideal for real data collection.
-
-For real data collection, we should either:
-
-- print only complete samples;
-- include availability flags in the output;
-- carry forward the most recent valid value intentionally;
-- timestamp each sample so missing values can be handled later.
-
-Good embedded code is not merely code that compiles. Good embedded code tells the truth about the hardware state.
-
-{% enddetails %}
-
-### Safer version: print only complete samples
-
-For data collection, this version is often better:
-
-~~~cpp
-void loop() {
-  if (!IMU.accelerationAvailable() ||
-      !IMU.gyroscopeAvailable() ||
-      !IMU.magneticFieldAvailable()) {
-    delay(kSampleDelayMs);
-    return;
-  }
-
-  float ax = 0.0F;
-  float ay = 0.0F;
-  float az = 0.0F;
-
-  float gx = 0.0F;
-  float gy = 0.0F;
-  float gz = 0.0F;
-
-  float mx = 0.0F;
-  float my = 0.0F;
-  float mz = 0.0F;
-
-  IMU.readAcceleration(ax, ay, az);
-  IMU.readGyroscope(gx, gy, gz);
-  IMU.readMagneticField(mx, my, mz);
-
-  Serial.print(ax);
-  Serial.print(",");
-  Serial.print(ay);
-  Serial.print(",");
-  Serial.print(az);
-  Serial.print(",");
-
-  Serial.print(gx);
-  Serial.print(",");
-  Serial.print(gy);
-  Serial.print(",");
-  Serial.print(gz);
-  Serial.print(",");
-
-  Serial.print(mx);
-  Serial.print(",");
-  Serial.print(my);
-  Serial.print(",");
-  Serial.println(mz);
-
-  delay(kSampleDelayMs);
-}
-~~~
-
-The line:
-
-~~~cpp
-return;
-~~~
-
-exits the current call to `loop()` early.
-
-Because Arduino calls `loop()` again and again, the program will check again on the next iteration.
-
-### MISRA C++ and tinyML
-
-MISRA C++ is not only about cars or aerospace systems.
-
-The spirit applies naturally to tinyML:
-
-- sensor input should be valid;
-- preprocessing should be predictable;
-- memory use should be controlled;
-- model input layout should be explicit;
-- failure modes should be visible;
-- the code should be reviewable by someone other than the original author.
-
-For classroom projects, this means we will prefer code that is clear and boring over code that is clever and fragile.
-
-In embedded systems, boring is not an insult. Boring is often what keeps the robot from doing interpretive dance into a wall.
-
-### References
-
-- MISRA official release note: [MISRA C++:2023 released](https://misra.org.uk/misra-cpp2023-released-including-hardcopy/)
-- MISRA official compliance page: [MISRA Compliance](https://misra.org.uk/compliance/)
-- MISRA Compliance:2020 document: [PDF](https://misra.org.uk/app/uploads/2021/06/MISRA-Compliance-2020.pdf)
-
----
-
-## Exercises
-
-{% details tip Exercise 1: Change Blink timing %}
-
-Start with this version:
-
-~~~cpp
-#include <Arduino.h>
-
-constexpr int kLedPin = LED_BUILTIN;
-constexpr unsigned long kBlinkDelayMs = 1000UL;
-
-void setup() {
-  pinMode(kLedPin, OUTPUT);
-}
-
-void loop() {
-  digitalWrite(kLedPin, HIGH);
-  delay(kBlinkDelayMs);
-  digitalWrite(kLedPin, LOW);
-  delay(kBlinkDelayMs);
-}
-~~~
-
-Modify the constant so the LED blinks four times faster.
-
-Question:
-
-- What value should `kBlinkDelayMs` have?
-
-{% enddetails %}
-
-{% details tip Exercise 2: Create a helper function %}
-
-Rewrite Blink so that `loop()` contains only this line:
-
-~~~cpp
-blinkOnce(500UL);
-~~~
-
-Your task:
-
-- create a function named `blinkOnce`;
-- give it one parameter named `delayMs`;
-- use that parameter for both delays.
-
-{% enddetails %}
-
-{% details tip Exercise 3: Add a serial timeout %}
-
-The following code can wait forever:
-
-~~~cpp
-while (!Serial) {
-  ;
-}
-~~~
-
-Modify it so that it waits at most 5 seconds.
-
-Hint:
-
-- use `millis()`;
-- store the starting time;
-- compare the elapsed time against a named constant.
-
-{% enddetails %}
-
-{% details tip Exercise 4: Fix uninitialized sensor variables %}
-
-Start with this code:
-
-~~~cpp
-float ax, ay, az;
-
-if (IMU.accelerationAvailable()) {
-  IMU.readAcceleration(ax, ay, az);
-}
-
-Serial.println(ax);
-~~~
-
-Modify it so that `ax`, `ay`, and `az` are initialized safely.
-
-Then answer:
-
-- What value will be printed if acceleration is not available?
-- Is that value truthful, or merely safe?
-
-{% enddetails %}
-
-{% details tip Exercise 5: Use a struct %}
-
-Create a `struct` named `Vec3` with three fields:
-
-- `x`
-- `y`
-- `z`
-
-Then create a variable:
-
-~~~cpp
-Vec3 acceleration = {0.0F, 0.0F, 0.0F};
-~~~
-
-Modify the acceleration reading code so that it stores values into:
-
-~~~cpp
-acceleration.x
-acceleration.y
-acceleration.z
-~~~
-
-{% enddetails %}
-
-{% details tip Exercise 6: MISRA-inspired code review %}
-
-Review the original sensor sketch and identify at least four improvements inspired by safer embedded C++ practices.
-
-Possible categories:
-
-- uninitialized variables;
-- magic numbers;
-- blocking forever;
-- inconsistent output format;
-- repeated print code;
-- unclear failure behavior;
-- missing timestamp;
-- unclear handling of unavailable sensor data.
-
-{% enddetails %}
-
----
-
-## Takeaways
-
-- Arduino sketches are C++ programs, even though they look C-like.
-- `setup()` runs once; `loop()` runs repeatedly.
-- `Serial` and `IMU` are objects.
-- `Serial.print(...)` and `IMU.readAcceleration(...)` are member function calls.
-- C++ references help explain why `IMU.readAcceleration(ax, ay, az)` can modify variables.
-- Constants make hardware and timing choices easier to read.
-- Initialization matters because embedded programs should not compute or print undefined values.
-- `struct` types help organize sensor data.
-- MISRA C++ gives us a professional safety lens: clear, restricted, reviewable C++ is better than clever code that only works on a lucky Tuesday.
-
-[pinMode](https://docs.arduino.cc/language-reference/en/functions/digital-io/pinMode/)
-[digitalWrite](https://docs.arduino.cc/language-reference/en/functions/digital-io/digitalwrite/)

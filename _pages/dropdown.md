@@ -44,6 +44,6 @@ children:
   - title: Cloud Systems Engineering (dev)
     permalink: /csc578/
   - title: divider
-  - title: Machine Learning on MCU(dev)
+  - title: Tiny Machine Learning (tinyML)
     permalink: /csc574/
 ---

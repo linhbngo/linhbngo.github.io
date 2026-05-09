@@ -349,15 +349,14 @@ void setup() {
     ; // wait for serial monitor
   }
 
-  Serial.println("Serial ready. Initializing IMU...");
-
   if (!IMU.begin()) {
-    Serial.println("Failed to initialize IMU");
+    Serial.println("Failed to initialize IMU!");
     while (1) {
       delay(1000);
     }
   }
 
+  Serial.println("Serial ready. Initializing IMU...");
   Serial.println("IMU ready.");
   Serial.println("Ax Ay Az | Gx Gy Gz | Mx My Mz");
 }
@@ -378,28 +377,18 @@ void loop() {
   if (IMU.magneticFieldAvailable()) {
     IMU.readMagneticField(mx, my, mz);
   }
+ 
+  char line[160];
 
-  Serial.print("A:");
-  Serial.print(ax);
-  Serial.print(",");
-  Serial.print(ay);
-  Serial.print(",");
-  Serial.print(az);
+  snprintf(line,sizeof(line),
+    "A:%.3f,%.3f,%.3f | G:%.3f,%.3f,%.3f | M:%.3f,%.3f,%.3f",
+    ax, ay, az,
+    gx, gy, gz,
+    mx, my, mz
+  );
 
-  Serial.print(" | G:");
-  Serial.print(gx);
-  Serial.print(",");
-  Serial.print(gy);
-  Serial.print(",");
-  Serial.print(gz);
-
-  Serial.print(" | M:");
-  Serial.print(mx);
-  Serial.print(",");
-  Serial.print(my);
-  Serial.print(",");
-  Serial.println(mz);
-
+  Serial.println(line);
+  
   delay(200);
 }
 ```
