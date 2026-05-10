@@ -1260,16 +1260,11 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/03-arduino-c/";
-            },},{id: "csc574-hardware-setup",
-          title: 'Hardware Setup',
+            },},{id: "csc574-sensors",
+          title: 'Sensors',
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/04-hardware/";
-            },},{id: "csc574-introduction-to-tinyml",
-          title: 'Introduction to tinyML',
-          description: "",
-          section: "Csc574",handler: () => {
-              window.location.href = "/csc574/04-sensors/";
             },},{id: "csc574-machine-learning-paradigm",
           title: 'Machine Learning Paradigm',
           description: "",
