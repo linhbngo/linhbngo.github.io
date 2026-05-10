@@ -6,9 +6,7 @@ toc:
   - name: Overview
   - name: Arduino Sketches
   - name: More Function
-  - name: Objects and Member Functions
-  - name: Arrays and sensor triples
-  - name: Structs for sensor samples
+  - name: Struct and Class
 ---
 
 ## Overview
@@ -338,7 +336,7 @@ readMagneticField(mx, my, mz)
 
 ## More Functions
 
-{% details tip Problem Statement %}
+### Problem Statement
 
 > Setup a pothole detector: If the sensor detects bounciness (`vertical acceleration`) that is greater than a certain value, change 
 the LED light to `RED`. Otherwise, keep it as `GREEN`. 
@@ -346,7 +344,8 @@ the LED light to `RED`. Otherwise, keep it as `GREEN`.
 - From the sensor code, we know that the accelerometer measures acceleration on three axis, x, y, and z. The vertical acceleration is 
 on the z axis. 
 - The LED light on the board is RBG, and [can be controlled](https://support.arduino.cc/hc/en-us/articles/360016724140-Control-the-RGB-LED-on-Nano-33-BLE-boards).
-- The pseudocode is as follows.
+
+{% details Pseudocode %}
 
 ```cpp
 void setup() {
@@ -409,12 +408,14 @@ void loop() {
 
 {% enddetails %}
 
-{% details Creating a function %}
+### Creating a function 
 
 - We are going to change the code a bit so that the the code for setting the LED light to red and green. 
   - Since this function sends a signal to the chip directly, we will 
   use `void`, which means the function does not return a value.
 
+
+{% details Second version %}
 
 ```cpp
 #include <Arduino.h>
@@ -463,278 +464,210 @@ void loop() {
 {% enddetails %}
 
 
-
 ### Function parameters
 
-A better helper function can accept input values:
+- What if we want to change the settings so that the sensor will give out a YELLOW warning 
+prior to a RED warning?
+- We can have the `loop` code detect which color, then run a single `emitColor` function 
+whose parameter is the integer code for coloring
+  - `0`: green
+  - `1`: yellow
+  - `2`: red
 
-~~~cpp
+{% details Third version %}
+
+```cpp
 #include <Arduino.h>
+#include <Arduino_BMI270_BMM150.h>
 
-constexpr int kLedPin = LED_BUILTIN;
+void setred() {
+  digitalWrite(LEDR, LOW);
+  digitalWrite(LEDG, HIGH);
+  digitalWrite(LEDB, HIGH);
+}
 
-void blinkOnce(unsigned long delayMs) {
-  digitalWrite(kLedPin, HIGH);
-  delay(delayMs);
+void setyellow() {
+  digitalWrite(LEDR, LOW);
+  digitalWrite(LEDG, LOW);
+  digitalWrite(LEDB, HIGH);
+}
 
-  digitalWrite(kLedPin, LOW);
-  delay(delayMs);
+void setgreen() {
+  digitalWrite(LEDR, HIGH);
+  digitalWrite(LEDG, LOW);
+  digitalWrite(LEDB, HIGH);
+}
+
+void beginLED() {
+  pinMode(LEDR, OUTPUT);
+  pinMode(LEDG, OUTPUT);
+  pinMode(LEDB, OUTPUT);
+}
+
+void emitColor(int color) {
+    if (color == 0) {
+        setgreen();
+    } else if (color == 1) {
+        setyellow();
+    } else if (color == 2) {
+        setred();
+    }
 }
 
 void setup() {
-  pinMode(kLedPin, OUTPUT);
+  IMU.begin();
+  beginLED();
 }
 
 void loop() {
-  blinkOnce(1000UL);
+  float ax, ay, az;
+
+  if (IMU.accelerationAvailable()) {
+    IMU.readAcceleration(ax, ay, az);
+  }
+
+  if (az < 1.2) {
+     emitColor(0);
+  } else if (az > 1.2 && az < 1.8) {
+     emitColor(1);
+  } else {
+     emitColor(2);
+  }
+  
+  delay(200);
 }
-~~~
+```
 
-Now:
+{% enddetails %}
 
-~~~cpp
-void blinkOnce(unsigned long delayMs)
-~~~
-
-means:
-
-> Define a function named `blinkOnce` that accepts one `unsigned long` parameter named `delayMs`.
-
-When we call:
-
-~~~cpp
-blinkOnce(1000UL);
-~~~
-
-the value `1000UL` is copied into `delayMs`.
-
-Try modifying the call:
-
-~~~cpp
-blinkOnce(250UL);
-~~~
-
-The LED should blink faster.
 
 ### Function declarations
 
-In C++, a function must be declared before it is used.
+- The `main.cpp` file in version 2 is getting lengthy. 
+- PlatformIO gives us a directory structure to organize codes more efficiently. 
+  - The supporting functions managing the LED can be moved to a different file in `src` 
+  called `led_controller.cpp`.
+  - A new header file needs to be placed into `include` to let PlatformIO knows about the 
+  new structure. 
+- Update your project with the following files/directory structures. 
 
-This works:
+{% details include/led_controller.h %}
 
-~~~cpp
-void blinkOnce(unsigned long delayMs) {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(delayMs);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(delayMs);
-}
-
-void loop() {
-  blinkOnce(1000UL);
-}
-~~~
-
-This may fail in a `.cpp` file if the compiler sees the call before it sees the function:
-
-~~~cpp
-void loop() {
-  blinkOnce(1000UL);
-}
-
-void blinkOnce(unsigned long delayMs) {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(delayMs);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(delayMs);
-}
-~~~
-
-The fix is a function declaration, also called a prototype:
-
-~~~cpp
-void blinkOnce(unsigned long delayMs);
-
-void loop() {
-  blinkOnce(1000UL);
-}
-
-void blinkOnce(unsigned long delayMs) {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(delayMs);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(delayMs);
-}
-~~~
-
-
-## Objects and Member Functions
-
-C++ supports objects.
-
-An object combines data and functions that operate on that data.
-
-We already use objects in Arduino code:
-
-~~~cpp
-Serial.begin(9600);
-Serial.println("IMU ready.");
-IMU.begin();
-IMU.readAcceleration(ax, ay, az);
-~~~
-
-Here:
-
-- `Serial` is an object representing serial communication;
-- `IMU` is an object representing the inertial measurement unit;
-- `begin`, `println`, and `readAcceleration` are member functions.
-
-A member function call uses the dot operator:
-
-~~~cpp
-objectName.memberFunction(arguments);
-~~~
-
-Examples:
-
-~~~cpp
-Serial.println("Hello");
-IMU.accelerationAvailable();
-~~~
-
-{% details note Why this matters %}
-
-This is one of the biggest reasons to call the lecture **Introduction to C++**, not **Introduction to C**.
-
-In C, there are no objects or member functions.
-
-In Arduino C++, we use objects almost immediately, even before they know the word "object."
+```cpp
+void beginLED();
+void emitColor(int color);
+void setred();
+void setyellow();
+void setgreen();
+```
 
 {% enddetails %}
 
-### A tiny class example
 
-We do not need to write many classes yet, but a tiny example helps explain what `Serial` and `IMU` are doing conceptually.
+{% details src/led_controller.cpp %}
 
-~~~cpp
-class LedBlinker {
-public:
-  LedBlinker(int pin, unsigned long delayMs)
-      : pin_(pin), delayMs_(delayMs) {}
+```cpp
+#include <Arduino.h>
+#include "led_controller.h"
 
-  void begin() {
-    pinMode(pin_, OUTPUT);
-  }
+void setred() {
+  digitalWrite(LEDR, LOW);
+  digitalWrite(LEDG, HIGH);
+  digitalWrite(LEDB, HIGH);
+}
 
-  void blinkOnce() {
-    digitalWrite(pin_, HIGH);
-    delay(delayMs_);
-    digitalWrite(pin_, LOW);
-    delay(delayMs_);
-  }
+void setyellow() {
+  digitalWrite(LEDR, LOW);
+  digitalWrite(LEDG, LOW);
+  digitalWrite(LEDB, HIGH);
+}
 
-private:
-  int pin_;
-  unsigned long delayMs_;
-};
+void setgreen() {
+  digitalWrite(LEDR, HIGH);
+  digitalWrite(LEDG, LOW);
+  digitalWrite(LEDB, HIGH);
+}
 
-LedBlinker blinker(LED_BUILTIN, 1000UL);
+void beginLED() {
+  pinMode(LEDR, OUTPUT);
+  pinMode(LEDG, OUTPUT);
+  pinMode(LEDB, OUTPUT);
+}
+
+void emitColor(int color) {
+    if (color == 0) {
+        setgreen();
+    } else if (color == 1) {
+        setyellow();
+    } else if (color == 2) {
+        setred();
+    }
+}
+```
+
+{% enddetails %}
+
+{% details src/main.cpp %}
+```cpp
+#include <Arduino.h>
+#include <Arduino_BMI270_BMM150.h>
+
+#include "led_controller.h"
 
 void setup() {
-  blinker.begin();
+  IMU.begin();
+  beginLED();
 }
 
 void loop() {
-  blinker.blinkOnce();
+  float ax, ay, az;
+
+  if (IMU.accelerationAvailable()) {
+    IMU.readAcceleration(ax, ay, az);
+  }
+
+  if (az < 1.2) {
+     emitColor(0);
+  } else if (az > 1.2 && az < 1.8) {
+     emitColor(1);
+  } else {
+     emitColor(2);
+  }
+  
+  delay(200);
 }
-~~~
-
-This is more advanced than we need for the first lab, but it shows the idea:
-
-- the object `blinker` stores the pin and delay;
-- the member function `begin()` configures the hardware;
-- the member function `blinkOnce()` performs the repeated behavior.
-
-
-## Arrays and sensor triples
-
-An array stores multiple values of the same type.
-
-The sensor sketch currently uses separate variables:
-
-~~~cpp
-float ax = 0.0F;
-float ay = 0.0F;
-float az = 0.0F;
-~~~
-
-We can also store the three values in an array:
-
-~~~cpp
-constexpr int kAxisCount = 3;
-float acceleration[kAxisCount] = {0.0F, 0.0F, 0.0F};
-~~~
-
-Array indices start at `0`:
-
-~~~cpp
-acceleration[0] // x
-acceleration[1] // y
-acceleration[2] // z
-~~~
-
-For simple Arduino sensor code, separate variables are often easier to read.
-
-But arrays become useful when we want to loop over many values.
-
-~~~cpp
-for (int i = 0; i < kAxisCount; ++i) {
-  Serial.println(acceleration[i]);
-}
-~~~
-
-{% details warning Array safety %}
-
-C++ does not automatically stop you from writing past the end of a basic C-style array.
-
-This is wrong:
-
-~~~cpp
-float acceleration[3] = {0.0F, 0.0F, 0.0F};
-acceleration[3] = 9.9F; // wrong: valid indices are 0, 1, 2
-~~~
-
-That kind of mistake may corrupt nearby memory.
-
-This is one reason professional embedded teams use coding standards and static analysis tools.
-
+```
 {% enddetails %}
 
----
 
-## Structs for sensor samples
+## Struct and Class
 
-A `struct` groups related data together.
+While modern C++ has added many new features that are not really *C-like*, historically, 
+C++ began as *C with Classes*, and therefore, it inherited much of C's syntax and builtin 
+structures, including `struct`. 
 
-Instead of keeping x, y, and z as separate variables, we can define a vector-like type:
+### Struct
 
-~~~cpp
-struct Vec3 {
+A `struct` groups related data together. Going back to the `Sensors` sketch, instead of keeping x, y, 
+and z as separate variables, we can define a vector-like `struct`:
+
+```cpp
+struct Vec3D {
   float x;
   float y;
   float z;
 };
-~~~
+```
 
-Then we can create variables:
+Then we can create 3 variables representing the three sensors, rather than the 9 variables. 
 
-~~~cpp
-Vec3 acceleration = {0.0F, 0.0F, 0.0F};
-Vec3 gyroscope = {0.0F, 0.0F, 0.0F};
-Vec3 magnetometer = {0.0F, 0.0F, 0.0F};
-~~~
+```cpp
+Vec3D acceleration = {0.0F, 0.0F, 0.0F};
+Vec3D gyroscope = {0.0F, 0.0F, 0.0F};
+Vec3D magnetometer = {0.0F, 0.0F, 0.0F};
+```
 
-We access fields using the dot operator:
+The fields of a a struct can be accessed using the dot operator:
 
 ~~~cpp
 Serial.print(acceleration.x);
@@ -742,12 +675,10 @@ Serial.print(acceleration.y);
 Serial.println(acceleration.z);
 ~~~
 
-### A structured IMU sample
-
 We can group all sensor values into one sample:
 
 ~~~cpp
-struct Vec3 {
+struct Vec3D {
   float x;
   float y;
   float z;
@@ -796,20 +727,34 @@ This is longer at first, but the organization becomes valuable when programs gro
 
 {% details tip Why structs matter for tinyML %}
 
-A machine learning dataset is not just a pile of numbers.
-
-It is structured data.
-
-For motion recognition, a single sample might include:
-
-- acceleration x/y/z;
-- gyroscope x/y/z;
-- timestamp;
-- label;
-- device ID;
-- sampling rate.
-
-A `struct` is one of the first tools students can use to represent structured sensor data cleanly.
+- A machine learning dataset is structured data.
+- For motion recognition, a single sample might include:
+  - acceleration x/y/z;
+  - gyroscope x/y/z;
+  - timestamp;
+  - label;
+  - device ID;
+  - sampling rate.
+- A `struct` is one of the first tools students can use to represent structured sensor data cleanly.
 
 {% enddetails %}
+
+### Class and Object
+
+- An object combines data and functions that operate on that data.
+- A class is the source code blueprint of an object.
+  - An object is `instantiated` from a class. 
+- We already use classes/objects in Arduino code:
+  - `Serial` is an object representing serial communication; 
+  - `IMU` is an object representing the inertial measurement unit;
+  - `begin`, `println`, and `readAcceleration` are member functions.
+
+```cpp
+Serial.begin(9600);
+Serial.println("IMU ready.");
+IMU.begin();
+IMU.readAcceleration(ax, ay, az);
+```
+
+
 
