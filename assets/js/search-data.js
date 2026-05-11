@@ -1264,7 +1264,7 @@ ninja.data = [{
           title: 'Sensors',
           description: "",
           section: "Csc574",handler: () => {
-              window.location.href = "/csc574/04-hardware/";
+              window.location.href = "/csc574/04-sensors/";
             },},{id: "csc574-machine-learning-paradigm",
           title: 'Machine Learning Paradigm',
           description: "",
