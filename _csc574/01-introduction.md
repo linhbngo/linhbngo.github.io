@@ -278,7 +278,7 @@ computational power to train/inference: giant data centers
         - three axis accelerometer, and
         - magnetic field variations in all three dimensions.
     - Barometer and temperature sensor: LPS22HB
-    = Temperature and humidity sensor: HS3003
+    - Temperature and humidity sensor: HS3003
     - Gesture, light, and proximity: APDS-9960
     - Microphone: MP34DT06JTR 
     - Can only tolerate **3.3V** power (not 5V tolerant). 
