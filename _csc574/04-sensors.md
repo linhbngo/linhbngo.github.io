@@ -12,7 +12,7 @@ toc:
 >In this lecture we look a bit more into the hardware available for the Nano 33 BLE Rev2. More specifically:
 - IMU (accelerometer, gyroscope, and magnetometer)
 - Microphone
-- Other sensors (proximity, rbg)
+- Other sensors (temperature and humidity, proximity, rbg)
 
 ## IMU
 
@@ -254,8 +254,9 @@ The remaining sensors of Nano33BLE include:
 - Gesture, light, and proximity: APDS-9960
 
 The approach to getting and analyzing data from these sensors are similar to that of the IMU and Microphone components. Documents and tutorials can be found at.
+- [Temperature and Humidity](https://docs.arduino.cc/tutorials/nano-33-ble-sense-rev2/humidity-and-temperature-sensor/)
 - [Proximity sensor](https://docs.arduino.cc/tutorials/nano-33-ble-sense-rev2/proximity-sensor/)
-- [Color detection with APDS9960](https://docs.arduino.cc/tutorials/nano-33-ble-sense-rev2/rgb-sensor/)
+- [Color detection](https://docs.arduino.cc/tutorials/nano-33-ble-sense-rev2/rgb-sensor/)
 
 
 
