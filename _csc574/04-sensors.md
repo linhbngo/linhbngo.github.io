@@ -12,7 +12,7 @@ toc:
 >In this lecture we look a bit more into the hardware available for the Nano 33 BLE Rev2. More specifically:
 - IMU (accelerometer, gyroscope, and magnetometer)
 - Microphone
-- Temperature and Humidity
+- Other sensors (proximity, rbg)
 
 ## IMU
 
