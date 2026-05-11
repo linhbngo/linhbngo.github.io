@@ -52,8 +52,38 @@ the MCU's position.
 {% enddetails %}
 
 
-
 ## Microphone
+
+{% details Overview %}
+
+- Sound is a longitudinal mechanical wave that requires a medium (air, water, or solids) to travel. 
+  - *If a tree fells in a vacuum, it makes no sound!*.
+- Microphones act as transducers to capture sound. They typically use a thin diaphragm that mimics the human eardrum. When sound waves hit the diaphragm, it vibrates, and the microphone converts that physical movement into an analog electrical signal.
+- The Analog-to-Digital Converter (ADC) unit measures the amplitude (voltage) of the analog signal at discrete, equal intervals of time and converts these measurements into binary format (bits). 
+  - ADC could be placed external to the microphones (e.g. sound cards on PC)
+  - For microphone components for edge devices like the Nano33BLE, the ADC component is built into the 
+  microphone's silicon. 
+- The higher the sampling rate, the more accurate the information about the sound can be captured. 
+  - The [Nyquist-Shannon Sampling Theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) states 
+  that a perfect reconstruction of a real time signal (*sound* in this case) can be capture with a sampling rate of at least 
+  twice the highest frequency of the signal. 
+  - Since human can generally hear up to 20,000 Hz (20kHz), standard audio uses a sampling rate of 44,100 Hz. 
+- Sampling rate represents the capturing of **pitch**, how high or low the voices are. 
+  - High pitch: whistle, bird chirping, high voices ...
+  - Low pitch: bass drum, thunder, deep voices ...
+- Typical sampling rate for edge devices can be set at 16,000 Hz. This means the device can capture sounds within 
+standard pitches for voice recognition purposes. 
+
+{% enddetails %}
+
+
+{% details Programmatic design %}
+
+- The microphone of Nano33BLE is a Pulse-density modulation type. 
+- You can interact with this microphone via the [PDM API library](https://docs.arduino.cc/learn/built-in-libraries/pdm/).
+
+{% enddetails %}
+
 
 
 ## Other Sensors
