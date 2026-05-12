@@ -14,20 +14,16 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
+  - name: General Information
   - name: Course Information
-  - name: Required Materials
-  - name: Prerequisites
+  - name: 'Required Materials:'
+  - name: 'Resources and Accessibility:'
   - name: Course Description
   - name: Learning Objectives
-  - name: Assessments and Grading
+  - name: 'Assessments and Grading:'
   - name: Course Topics and Schedules
-  - name: University Policies 
-  - name: Resources for Student Success
-
 ---
-
 ## General Information
 
 - **Semester**: Summer 2026
@@ -80,6 +76,7 @@ technologies to manage big data sets.
 programming concepts.
 3. Be able to implement key data mining techniques using Spark 
 programming libraries.
+
 
 ### BS in CS Program Objectives (CSPO):
 

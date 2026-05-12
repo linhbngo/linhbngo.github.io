@@ -14,7 +14,6 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
   - name: Big Data Problems
   - name: Big Data in Science
@@ -24,9 +23,8 @@ toc:
   - name: Data Mining
   - name: Meaningfulness of Analytic Answers
   - name: Things Useful to Know
-  
+  - name: Setup Computing Environment
 ---
-
 ## Big Data Problems
 
 - Not only the processing power, but the size of the data is also the 
@@ -34,7 +32,6 @@ limiting factor in being able to find a timely solution.
 - Input data carry characteristics of Big Data (the Vs)​.
 - Input data may or may not be big data​ but computational process produces massive and complex 
 intermediate data that needs to be analyzed during the process.
-
 
 ## Big Data in Science
 
@@ -60,7 +57,7 @@ For datasets that are:
     - Too noisy
     - Too heterogeneous
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
 
 {% enddetails %}
 
@@ -126,7 +123,7 @@ including recourse to relevant background knowledge to ground the identification
 as data in that context.
 - Volatility: the extent to which data can be relied upon to remain available, accessible and 
 re-interpretable despite changes in archival technologies. This is significant given the tendency 
-of formats and tools used to generate and analyse data to become obsolete, and the efforts 
+of formats and tools used to generate and analyze data to become obsolete, and the efforts 
 required to update data infrastructures so as to guarantee data access in the long term.
 - Value: the multifaceted forms of significance attributed to big data by different sections 
 of society, which depend as much on the intended use of the data as on historical, social and 
@@ -136,7 +133,6 @@ geographical circumstances.
 
 People don't really talk about the Vs that much any more, but it helps to characterize the nature of 
 your data. 
-
 
 ## Programming Paradigm for Big Data
 
@@ -150,7 +146,7 @@ your data.
 are beginning to be analyzed to produce business insights.
 - Example general paradigm:
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="data parallel programming"%}
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true alt="data parallel programming"%}
 
 {% enddetails %}
 
@@ -198,8 +194,6 @@ are beginning to be analyzed to produce business insights.
     - Summarizing the data (PageRank)
     - Extracting the relevant features of the data (Frequent Itemsets or Similar Items)
 
----
-
 ## Meaningfulness of Analytic Answers
 
 - Bonferroni's principle
@@ -232,35 +226,73 @@ at the same hotel on the same day
     - Too many to observe ...
 
 {% enddetails %}
----
 
 ## Things Useful to Know
 
-- TF.IDF measure of word importance
-    - Measure how concentrated into relatively few documents are
-    the occurrences of a given word.
-    - Suppose we have a collection of $N$ documents. 
-    - $f_{ij}$ to be the frequency (number of occurrences) of 
-    term (word) i in document j. 
-    - The term frequency (TF): $TF_{ij}=\frac{f_{ij}}{max_{k}f_{kj}}$
-    - The inverse document frequency (IDF): $IDF_i=log_2(N/n_i)$ with 
-    term i appears in $n_i$ of the N documents. 
-    - The TF.IDF score for term is is $TF_{ij}\times IDF_i$
-    - The terms with the highest TF.IDF score are often the terms that 
-    best characterize the topic of the document.
+{% details TF.IDF %}
+TF.IDF are measures of word importance
+- Measure how concentrated into relatively few documents are the occurrences of a given word.
+- Suppose we have a collection of $N$ documents. 
+- $f_{ij}$ to be the frequency (number of occurrences) of term (word) i in document j. 
+- The term frequency (TF): 
 
-- Hash function
-    - Given $B$ buckets, 
-    - A hash function uses a data value to produce a 
-    bucket number $b$ that is in the range of 0 to $B-1$
+$
+TF_{ij}=\frac{f_{ij}}{max_{k}f_{kj}}
+$
 
-- Indexes
+- The inverse document frequency (IDF) with term i appears in $n_i$ of the N documents. 
+
+$
+IDF_i=log_2(N/n_i)
+$
+
+- The TF.IDF score for term is 
+
+$
+TF_{ij}\times IDF_i
+$
+
+- The terms with the highest TF.IDF score are often the terms that best characterize the topic of the document.
+
+{% enddetails %}
+
+{% details Hash functions %}
+- Given $B$ buckets, 
+- A hash function uses a data value to produce a bucket number $b$ that is in the range of 0 to $B-1$
+{% enddetails %}
+
+{% details Indices %}
+- Index
     - Similar to pointer ...
     - Given an index value, we can access all data related to that 
     index without scanning through the entire collection. 
-    - Index can be built from hash table
-    
-- Secondary storage and memory hierarchy impact
-    - Cache/memory/disk/network
-    - Performance differences can be in multiple orders of magnitude
-    - Understand data placement on secondary storage is important
+- Index can be built from hash table
+{% enddetails %}
+
+{% details Secondary storage and memory hierarchy impact %}
+- Cache/memory/disk/network
+- Performance differences can be in multiple orders of magnitude
+- Understand data placement on secondary storage is important
+{% enddetails %}
+
+## Setup Computing Environment
+
+We will set up a local computing environment for this class that supports Spark and other big 
+data engineering/analytics tools. The steps to set up are as follows. 
+
+This setup instruction uses Anaconda to create virtual environment. If you are comfortable with 
+virtual environments in Python, feel free to adapt the `environment.yml` file into a `requirements.txt`
+
+If you don't already have one, [download and install Anaconda](https://www.anaconda.com/download/success?reg=skipped) for your computing device. 
+
+Clone the repository and run the setup commands.
+
+```bash
+git config --global core.autocrlf false # run this if you are on Windows
+git clone https://github.com/ngo-classes/big-data-engineering
+cd big-data-engineering
+conda env create -f environment.yml
+conda activate pyspark-3.5.1
+```
+
+Going forward, you are to run the `conda activate` command prior to carrying out coding tasks for the class. 

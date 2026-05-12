@@ -14,23 +14,14 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: Application
+  - name: Linear models for classification
+  - name: Support Vector Machine
 ---
-
 # Distributed Machine Learning with Spark
 
-## 1. Application 
+## Application
 
 Example: Spam filtering
 
@@ -49,9 +40,9 @@ Example: Spam filtering
 
 ---
 
-## 2. Linear models for classification
+## Linear models for classification
 
-### 2.1. Overview
+{% details Overview %}
 
 $$
 f(x) =
@@ -73,70 +64,74 @@ $$
 
 - Dot is spam, minus is ham!
 
-![](fig/10-svm/03.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/03.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 
 
-### 2.2. Linear classifiers
+{% enddetails %}
+{% details Linear classifiers %}
 
 - Each feature `i` as a weight w_i$
 - Prediction is based on the weighted sum:
-![](fig/10-svm/04.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/04.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 - If f(x) is:
     - Positive: predict +1
     - Negative: predict -1
 
-  ![](fig/10-svm/05.png)
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/05.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 
-## 3. Support Vector Machine
+{% enddetails %}
+## Support Vector Machine
 
-### 3.1. Overview
+{% details Overview %}
 - Originally developed by Vapnik and collaborators as a linear classifier. 
 - Could be modified to support non-linear classification by mapping into high-dimensional spaces. 
 - Problem statement:
     - We want to separate `+` from `-` using a line. 
     - Training examples: 
   
-    ![](fig/10-svm/06.png)
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/06.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
   
     - Each example `i`:
   
-    ![](fig/10-svm/07.png)
-    ![](fig/10-svm/08.png)
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/07.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/08.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
   
     - Inner product:
-    ![](fig/10-svm/09.png)
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/09.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Which is the best linear separate defined by w?
 
-![](fig/10-svm/10.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/10.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
-### 3.2. Support Vector Machine: largest margin
+{% enddetails %}
+{% details Support Vector Machine: largest margin %}
 
 - Distance from the separating line corresponds to the **confidence** of the prediction. 
 - For example, we are more sure about the class of `A` and `B` than of `C`. 
 
-![](fig/10-svm/11.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/11.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Margin definition:
 
-![](fig/10-svm/12.png)
-![](fig/10-svm/13.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/12.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/13.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Maximizing the margin while identifying `w` is good according to intuition, theory, and practice. 
 
-![](fig/10-svm/14.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/14.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - A math question: how do you narrate this equation?
 
-![](fig/10-svm/15.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/15.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
-### 3.3. Support Vector Machine: what is the margin?
+{% enddetails %}
+{% details Support Vector Machine: what is the margin? %}
 
 - Slide from the book
 
-![](fig/10-svm/16.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/16.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Notation:
   - `Gamma` is the distance from point A to the linear separator L: `d(A,L) = |AH|`
@@ -147,28 +142,31 @@ $$
 - In other words, maximizing the margin is directly related to how `w` is chosen.
 - For the *i<sup>th</sup>* data point:
 
-  ![](fig/10-svm/17.png).
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/17.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}.
 
-### 3.4. Some more math ...
+{% enddetails %}
+{% details Some more math ... %}
 
-  ![](fig/10-svm/18.png)
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/18.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
   - After some more mathematical manipulations:
-  ![](fig/10-svm/19.png)
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/19.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
   - Everything comes back to an optimization problem on `w`:
-  ![](fig/10-svm/20.png)
-  ![](fig/10-svm/21.png)
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/20.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/21.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 
-### 3.5. SVM: Non-linearly separable data
+{% enddetails %}
+{% details SVM: Non-linearly separable data %}
 
-  ![](fig/10-svm/22.png)
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/22.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
   - For each data point:
     - If margin greater than 1, don't care. 
     - If margin is less than 1, pay linear penalty. 
   - Introducing slack variables:
 
-  ![](fig/10-svm/23.png)
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/23.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
-  ![](fig/10-svm/24.png)
+  {% include figure.liquid loading="eager" path="assets/img/courses/csc467/10-svm/24.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 
+{% enddetails %}

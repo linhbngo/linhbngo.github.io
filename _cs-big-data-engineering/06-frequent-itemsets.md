@@ -14,26 +14,20 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: Association rule discovery
+  - name: Definition of a frequent itemsets.
+  - name: Finding frequent itemsets
+  - name: A-Priori algorithm.
+  - name: PCY (Park-Chen-Yu) Algorithm
+  - name: 'SON: Savasere-Omiecinski-Navathe'
 ---
-
 # Frequent Itemsets
 
 
-## 1. Association rule discovery
+## Association rule discovery
 
-### 1.1. Overview
+{% details Overview %}
 
 - Example motivation: supermarket shelf management 
 - Goal:
@@ -42,8 +36,8 @@ toc:
 among items
 - Example:
     - If someone buys diaper and milk, then he/she is likely to buy beer
-
-### 1.2. The market-basket model
+{% enddetails %}
+{% details The market-basket model %}
 
 - Describe a common form of many-to-many relationship between two kinds of objects. 
 - A large set of `items`. e.g.: things sold in a supermarket. 
@@ -54,8 +48,8 @@ among items
 - Want to discover `association` rule:
     - People who bought {x,y,z} tend to buy {v,w}
     - Amazon's recommendation
-
-### 1.3. Example applications
+{% enddetails %}
+{% details Example applications %}
 
 - Baskets = sets of products someone bought in one trip to the store; Items = products
     - Real market baskets: Chain stores keep TBs of data about what customers buy together
@@ -71,19 +65,19 @@ among items
     - But requires extension: Absence of an item needs to be observed as well as presence
 
 ---
+{% enddetails %}
+## Definition of a frequent itemsets.
 
-## 2. Definition of a frequent itemsets.
-
-### 2.1. Definition
+{% details Definition %}
 
 - A set of items that appears in many baskets is said to be `frequent`. 
 - Assume a value `s`: *support threshold*. 
 - If `I` is a set of items. 
     - The `support` for `I` is the number of baskets in which `I` is a subset. 
 - `I` is frequent if its support is `s` or higher. 
-
-
-### 2.2. Example of frequent itemsets
+{% enddetails %}
+{% details Example of frequent itemsets %}
+<a id="example-of-frequent-itemsets"></a>
 - Items = {milk, coke, pepsi, beer, juice}
 - Observed baskets:
     - B1: m,c,b
@@ -103,8 +97,8 @@ among items
     - Pair {m,b} appears 4 times in baskets: B1, B3, B5, B6
     - Pair {b,c} appears 4 times in baskets: B1, B6, B7, B8
     - Pair {c,j} appears 3 times in baskets: B4, B6, B7
-
-### 2.3. Association rules
+{% enddetails %}
+{% details Association rules %}
 
 - `If-then` rules about the contents of baskets. 
 - Notation ${i_1, i_2, ..., i_k} \rightarrow j$ means
@@ -125,8 +119,8 @@ among items
         - There are four baskets containing both $m$ and $b$: B1, B3, B5, B6
         - Out of these four baskets, two baskets also contain $c$: B1, B6
         - The confidence of this association rule is: $C = \frac{2}{4} = 0.5$
-
-### 2.4. Interesting association rules
+{% enddetails %}
+{% details Interesting association rules %}
 
 - Not all high-confidence rules are interesting
 - The rule $X \rightarrow milk$ may have high confidence for many itemsets X, because milk 
@@ -149,16 +143,16 @@ fraction of baskets that contain j
     - Since item $c$ apepars in 5 out of the total 8 baskets, fraction of baskets that contains $c$ is $\frac{5}/{8} = 0.625$.
     - Association rule interest is: $|0.5-5/8| = 0.125$
         - This association rule is not very interesting!
-
-### 2.5. Finding association rules
+{% enddetails %}
+{% details Finding association rules %}
 
 - Problem: Find all association rules with support greater than **s** and confidence greater than **c**.
     - Note: Support of an association rule is the support of the set of items on the left side
 - Hard part: Finding the frequent itemsets!
     - If ${i_1, i_2,…, i_k} \rightarrow j$ has high support and confidence, 
     then both ${i_1, i_2,…, i_k}$ and ${i_1, i_2,…,i_k, j}$ will be “frequent”
-
-### 2.6. Mining association rules
+{% enddetails %}
+{% details Mining association rules %}
 
 - Step 1: Find all frequent itemsets I
 - Step 2: Rule generation
@@ -169,8 +163,8 @@ fraction of baskets that contain j
         - Variant 2: Observation: If $A,B,C \rightarrow D$ is below confidence, so is $A,B \rightarrow C,D$
             - Can generate **bigger** rules from smaller ones! 
     - Output the rules above the confidence threshold
-
-### 2.7. Example
+{% enddetails %}
+{% details Example %}
 - Given the following baskets:
     - B1: m,c,b
     - B2: m,p,j
@@ -252,10 +246,10 @@ fraction of baskets that contain j
 - Exercise: Identify whether the remaining association rules of {c,m}, {c,j}, and {m,c,b} meet the confidence threshold. If they do, identify if they are interesting!
 
 ---
+{% enddetails %}
+## Finding frequent itemsets
 
-## 3. Finding frequent itemsets
-
-### 3.1. Computation model
+{% details Computation model %}
 - Back to finding frequent itemsets
 - Typically, data is kept in flat files rather than in a database system:
     - Stored on disk
@@ -263,19 +257,19 @@ fraction of baskets that contain j
     - Baskets are small but we have many baskets and many items
         - Expand baskets into pairs, triples, etc. as you read baskets
         - Use k nested loops to generate all sets of size k
-
-### 3.2. Computational cost
+{% enddetails %}
+{% details Computational cost %}
 - The true cost of mining disk-resident data is usually the number of disk I/Os
 - In practice, association-rule algorithms read the data in passes: all baskets read in each pass.
 - We measure the cost by the number of passes an algorithm makes over the data
-
-### 3.3. Main-memory bottleneck
+{% enddetails %}
+{% details Main-memory bottleneck %}
 - For many frequent-itemset algorithms, main-memory is the critical resource.
 - As we read baskets, we need to count something, e.g., occurrences of pairs of items
 - The number of different things we can count is limited by main memory
     - Swapping counts in/out is a disaster
-
-### 3.4. Finding frequent pairs
+{% enddetails %}
+{% details Finding frequent pairs %}
 - The hardest problem often turns out to be finding the frequent 
 pairs of items ${i_1, i_2}$.
     - Why? Freq. pairs are common, freq. triples are rare, and frequent sets with higher item counts are much rarer!
@@ -283,8 +277,8 @@ pairs of items ${i_1, i_2}$.
 - The approach:
     - We always need to generate all the itemsets
     - But we would only like to count (keep track) of those itemsets that in the end turn out to be frequent
-
-### 3.5. Naive approach
+{% enddetails %}
+{% details Naive approach %}
 - Read file once, counting in main memory the occurrences of each pair:
     - From each basket of n items, generate its $\frac{n(n-1)}{2}$ pairs by two nested loops
 - Fails if the square of number of items exceeds main memory
@@ -292,8 +286,8 @@ pairs of items ${i_1, i_2}$.
     - Suppose $10^5$ items, counts are 4-byte integers
     - Number of pairs of items: $10^{5}(10^{5}-1)/2 = 5*10^9$
     - Therefore, $2*10^{10}$, or 20 GB of memory, is needed.
-
-### 3.6. Counting pairs in memory
+{% enddetails %}
+{% details Counting pairs in memory %}
 
 {% details Approach 1: Count all pairs using a matrix %}
 
@@ -319,10 +313,10 @@ pairs of items ${i_1, i_2}$.
 
 {% enddetails %}
 ---
+{% enddetails %}
+## A-Priori algorithm.
 
-## 4. A-Priori algorithm. 
-
-### 4.1. Overview
+{% details Overview %}
 
 - Limit the need for main memory.
 - Key idea: `monotonicity`
@@ -330,8 +324,8 @@ pairs of items ${i_1, i_2}$.
     of I. 
 - Contrapositive: If an item `i` does not appear in `s` baskets, then no 
 pair containing `i` can appear in s baskets. 
-
-### 4.2. A-Priori algorithm
+{% enddetails %}
+{% details A-Priori algorithm %}
 
 - Pass 1: read baskets and count the item occurrences. Only keep items 
 that appear at least `s` times - `frequent items`. 
@@ -342,27 +336,27 @@ pairs whose both items were found to be frequent from Pass 1.
     - Plus a list of the frequent items (so you know what must be counted)
 - Repeat the process with increasing number of items added to only sets 
 found to be `frequent`. 
+{% enddetails %}
+{% details Frequent triples %}
 
-### 4.3. Frequent triples
-
-![](fig/07-frequent-items/01.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/07-frequent-items/01.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - For each k, we construct two sets of k-tuples  (sets of size k):
     - $C_k$ = candidate k-tuples = those that might be frequent sets 
     (support > s) based on information from the pass for k–1
     - $L_k$ = the set of truly frequent k-tuples
-
-### 4.4. Example
+{% enddetails %}
+{% details Example %}
 
 - Review the [sequential implementation of A-Priori](https://colab.research.google.com/drive/1lJR-8yEWn_mQoQ8_f0NmKc5oDFAYTwc0?usp=sharing)
-- Confirm that the output matches with the example in [Section 2.2](#22-example-of-frequent-itemsets).
-- Question: How to turn this sequential implementation into the mapreduce programming paradigm for Spark (See [Section 6](#6-son-savasere-omiecinski-navathe))?
+- Confirm that the output matches with the example in [Section 2.2](#example-of-frequent-itemsets).
+- Question: How to turn this sequential implementation into the mapreduce programming paradigm for Spark (See [Section 6](#son-savasere-omiecinski-navathe))?
 
 ---
+{% enddetails %}
+## PCY (Park-Chen-Yu) Algorithm
 
-## 5. PCY (Park-Chen-Yu) Algorithm
-
-### 5.1. Observation
+{% details Observation %}
 - Observation: In pass 1 of A-Priori, most memory is idle
     - We store only individual item counts
     - Can we use the idle memory to reduce 
@@ -372,8 +366,8 @@ as many buckets as fit in memory
     - Keep a `count` for each bucket into which `pairs` of items are hashed
     - For each bucket just keep the count, not the actual 
     pairs that hash to the bucket!
-
-### 5.2. PCY Algorithm - First Pass
+{% enddetails %}
+{% details PCY Algorithm - First Pass %}
 
 ```
 FOR (each basket) :
@@ -394,8 +388,8 @@ FOR (each basket) :
 - For a bucket with total count less than s, none of its pairs can be frequent
 - Pairs that hash to this bucket can be eliminated as candidates (even if the 
 pair consists of 2 frequent items)
-
-### 5.3. PCY Algorithm - Second Pass
+{% enddetails %}
+{% details PCY Algorithm - Second Pass %}
 - Before the second pass
     - Replace the buckets by a bit-vector
     - 1 means the bucket count exceeded the support `s` 
@@ -413,13 +407,13 @@ pair consists of 2 frequent items)
     - Both conditions are necessary for the pair to have a chance of 
     being frequent
 
-![](fig/07-frequent-items/pcy.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/07-frequent-items/pcy.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 ---
+{% enddetails %}
+## SON: Savasere-Omiecinski-Navathe
 
-## 6. SON: Savasere-Omiecinski-Navathe
-
-### 6.1. Overview
+{% details Overview %}
 - Under two passes.
 - Adaptable to a distributed data model (mapreduce). 
 - Repeatedly read small subsets of the baskets into main memory 
@@ -427,8 +421,8 @@ and perform `a-priori` on these subsets, using a support that is
 equal to the main support divided by the total numbers of subsets. 
 - Aggregate all candidate itemsets and determine which are frequent 
 in the entire set. 
-
-### 6.2. SON: MapReduce Phase 1
+{% enddetails %}
+{% details SON: MapReduce Phase 1 %}
 - Find candidate itemsets
 - Map: Take the assigned subset of the baskets and find the
 itemsets frequent in the subset. 
@@ -441,8 +435,8 @@ itemsets frequent in the subset.
 are itemsets. The value is ignored, and the Reduce task simply produces 
 those keys (itemsets) that appear one or more times. 
 - The output of the first Reduce function is the candidate itemsets.
-
-### 6.3. SON: MapReduce Phase 2
+{% enddetails %}
+{% details SON: MapReduce Phase 2 %}
 - Find true frequent itemsets
 - Map: The Map tasks for the second Map function take 
 all the output from the first Reduce Function (the candidate itemsets) 
@@ -457,5 +451,4 @@ and sum the associated values.
     - The result is the total support for unique itemsets (the keys)
     - Those itemsets whose sum of values is at least `s` are frequent 
     in the whole dataset, so the Reduce task outputs these itemsets.
-
-
+{% enddetails %}

@@ -14,47 +14,194 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: Distributed Storage for Big Data
+  - name: MapReduce Programming Model
+  - name: Word Count
+  - name: Algorithms using MapReduce
+  - name: Extensions to MapReduce
+  - name: Cost Model
 ---
+## Distributed Storage for Big Data
 
-# MapReduce Programming Paradigm
-
-## 1. Distributed storage for big data
-
-### 1.1. Working with big data
+{% details Working with big data %}
 
 - Hundreds or thousands of machines to support big data.​
     - Distribute data for storage
     - Distribute data computation
     - Handle failure
 - **The papers**
-    - [The Google File System](files/gfs-sosp2003.pdf)
-    - [MapReduce: simplified data processing on large clusters​](files/mapreduce-osdi04.pdf)
+    - [The Google File System](https://dl.acm.org/doi/pdf/10.1145/945445.945450)
+    - [MapReduce: simplified data processing on large clusters​](https://dl.acm.org/doi/pdf/10.1145/1327452.1327492)
 
-### 1.2. Types of storage
+{% enddetails %}
 
-- Single computer storage
-- Remote large-scale storage
+
+{% details Types of storage %}
+
+- Storage/process model
+
+```mermaid
+flowchart LR
+
+%% -------------------- Styles --------------------
+classDef cpu fill:#f4a582,stroke:#b45f3c,stroke-width:1px,color:#000;
+classDef disk fill:#f7c6a3,stroke:#b45f3c,stroke-width:1px,color:#000;
+classDef data fill:#7bc96f,stroke:#3f8f3f,stroke-width:1px,color:#000;
+classDef network fill:#ffffff,stroke:#555,stroke-dasharray:3 3,color:#000;
+classDef note fill:#ffffff,stroke:#ffffff,color:#333,font-size:11px;
+
+%% -------------------- Panel 1 --------------------
+subgraph P1["Storage/process model"]
+direction TB
+
+P1CPU["CPU"]:::cpu
+P1Disk[("Disk")]:::disk
+
+P1CPU -- "process" --> P1Disk
+P1Disk -- "storage" --> P1CPU
+
+P1Note["Storage/process are not split<br/>across machines"]:::note
+P1Disk --- P1Note
+
+end
+```
+
+- Remote large-scale storage: 
     - Networked file systems
-- Remote distributed storage
     - Parallel file systems
+
+```mermaid
+flowchart LR
+
+%% -------------------- Styles --------------------
+classDef cpu fill:#f4a582,stroke:#b45f3c,stroke-width:1px,color:#000;
+classDef disk fill:#f7c6a3,stroke:#b45f3c,stroke-width:1px,color:#000;
+classDef data fill:#7bc96f,stroke:#3f8f3f,stroke-width:1px,color:#000;
+classDef network fill:#ffffff,stroke:#555,stroke-dasharray:3 3,color:#000;
+classDef note fill:#ffffff,stroke:#ffffff,color:#333,font-size:11px;
+
+%% -------------------- Panel 2 --------------------
+subgraph P2["Remote-storage model"]
+direction TB
+
+subgraph P2Compute["Compute nodes"]
+direction TB
+P2C1["CPU"]:::cpu
+P2D1["Disk"]:::disk
+P2C2["CPU"]:::cpu
+P2D2["Disk"]:::disk
+P2C3["CPU"]:::cpu
+P2D3["Disk"]:::disk
+P2C4["CPU"]:::cpu
+P2D4["Disk"]:::disk
+
+P2D1 --> P2C1
+P2D2 --> P2C2
+P2D3 --> P2C3
+P2D4 --> P2C4
+end
+
+P2Net["NETWORK"]:::network
+
+subgraph P2Storage["Storage nodes"]
+direction TB
+
+P2S1["CPU"]:::cpu
+P2SD1[("Disk")]:::disk
+
+P2S2["CPU"]:::cpu
+P2SD2[("Disk")]:::disk
+
+P2S3["CPU"]:::cpu
+P2SD3[("Disk")]:::disk
+
+P2Data["DATA"]:::data
+
+P2S1 --> P2SD1
+P2S2 --> P2SD2
+P2S3 --> P2SD3
+
+P2SD1 --- P2Data
+P2SD2 --- P2Data
+P2SD3 --- P2Data
+end
+
+P2Compute -- "access" --> P2Net
+P2Net -- "storage" --> P2Storage
+P2Storage -- "data moved over network" --> P2Net
+P2Net -- "processing request" --> P2Compute
+
+P2Note["Large data sets live on specialized<br/>storage systems. Data must move across<br/>the network to compute nodes."]:::note
+P2Storage --- P2Note
+
+end
+
+```
+
+- Remote distributed storage
     - Distributed file systems
+        - Fastest I/O on local data
+        - Impact of network bandwidth limit is reduced
+        - How to program?
 
-![](fig/02-mapreduce/distributed_storage.png)
+```mermaid
+flowchart LR
 
+%% -------------------- Styles --------------------
+classDef cpu fill:#f4a582,stroke:#b45f3c,stroke-width:1px,color:#000;
+classDef disk fill:#f7c6a3,stroke:#b45f3c,stroke-width:1px,color:#000;
+classDef data fill:#7bc96f,stroke:#3f8f3f,stroke-width:1px,color:#000;
+classDef network fill:#ffffff,stroke:#555,stroke-dasharray:3 3,color:#000;
+classDef note fill:#ffffff,stroke:#ffffff,color:#333,font-size:11px;
 
-### 1.3. Google File System (GFS)
+%% -------------------- Panel 3 --------------------
+subgraph P3["Data-locality storage model"]
+direction TB
+
+P3Net["NETWORK"]:::network
+
+subgraph P3Workers["Co-located compute and storage"]
+direction LR
+
+P3N1["CPU"]:::cpu
+P3D1[("Disk<br/>DATA")]:::disk
+
+P3N2["CPU"]:::cpu
+P3D2[("Disk<br/>DATA")]:::disk
+
+P3N3["CPU"]:::cpu
+P3D3[("Disk<br/>DATA")]:::disk
+
+P3N4["CPU"]:::cpu
+P3D4[("Disk<br/>DATA")]:::disk
+
+P3N1 --> P3D1
+P3N2 --> P3D2
+P3N3 --> P3D3
+P3N4 --> P3D4
+
+end
+
+P3Net --> P3N1
+P3Net --> P3N2
+P3Net --> P3N3
+P3Net --> P3N4
+
+P3D1 -- "local process" --> P3N1
+P3D2 -- "local process" --> P3N2
+P3D3 -- "local process" --> P3N3
+P3D4 -- "local process" --> P3N4
+
+P3Note["Applications run near the data.<br/>The network carries coordination,<br/>not large amounts of raw data."]:::note
+P3Workers --- P3Note
+
+end
+```
+
+{% enddetails %}
+
+{% details Google File System %}
 
 - Google File System (and its open-source counterpart, Hadoop Distributed File System) addressed the distributed storage question. 
     - Hardware failure is the norm rather than the exception
@@ -68,7 +215,10 @@ toc:
     - Portability across heterogeneous hardware and software platform
 - How do you write programs to process data stored in this manner?
 
-### 1.4. Design and implementation of GFS/HDFS
+{% enddetails %}
+
+
+{% details Design and implementation of GFS/HDFS %}
 
 - Master node (GFS) / NameNode (HDFS)
     - Stores metadata about where files are stored
@@ -82,13 +232,12 @@ toc:
     - Talks to master to find chunk servers 
     - Connects directly to chunk servers to access data
 
-![](fig/02-mapreduce/hdfs.png)
+{% enddetails %}
 
----
 
-## 2. MapReduce Programming Model
+## MapReduce Programming Model
 
-### 2.1 Motivation
+{% details Motivation %}
 
 - Challenges:
     - input data is usually large 
@@ -110,7 +259,9 @@ large amounts of supporting complex codes.​
         - applying a `_reduce_` operation to all the values that shared the same key to combine 
         the derived data appropriately. 
 
-### 2.2. In a nutshell
+{% enddetails %}
+
+{% details In a nutshell %}
 
 - What is `map`? A function/procedure that is applied to every individual elements of a 
 collection/list/array/…​
@@ -128,11 +279,14 @@ reduce ([1,2,3,4]) using sum -> 10​
 reduce ([1,2,3,4]) using multiply -> 24​
 ```
 
----
+{% enddetails %}
 
-## 3. Word Count: the "Hello, World" of Big Data
 
-### 3.1. Problem statement
+## Word Count
+
+>the Hello, World of Big Data
+
+{% details Problem statement %}
 
 - We have a large amount of text ...
     - Could be stored in a single massive file. 
@@ -149,12 +303,92 @@ reduce ([1,2,3,4]) using multiply -> 24​
     - Significant coding effort​​
 - Serial implementation:
     - [LeetCode's Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/description/)
+{% enddetails %}
 
-### 3.2. MapReduce workflow
+{% details MapReduce workflow %}
 
-![](fig/02-mapreduce/01.png)
+```mermaid
+flowchart LR
 
-### 3.3. MapReduce workflow - what do you really do
+classDef block fill:#9dccf5,stroke:#333,stroke-width:1px,color:#000;
+classDef final fill:#9dccf5,stroke:#333,stroke-width:1px,color:#000;
+classDef phase fill:#ffffff,stroke:#ffffff,color:#000,font-size:18px;
+
+Title["The overall MapReduce word count process"]:::phase
+
+subgraph Input["Input"]
+direction TB
+I0["Deer Bear River<br/>Car Car River<br/>Deer Car Bear"]:::block
+end
+
+subgraph Splitting["Splitting"]
+direction TB
+S1["Deer Bear River"]:::block
+S2["Car Car River"]:::block
+S3["Deer Car Bear"]:::block
+end
+
+subgraph Mapping["Mapping"]
+direction TB
+M1["Deer, 1<br/>Bear, 1<br/>River, 1"]:::block
+M2["Car, 1<br/>Car, 1<br/>River, 1"]:::block
+M3["Deer, 1<br/>Car, 1<br/>Bear, 1"]:::block
+end
+
+subgraph Shuffling["Shuffling"]
+direction TB
+H1["Bear, 1<br/>Bear, 1"]:::block
+H2["Car, 1<br/>Car, 1<br/>Car, 1"]:::block
+H3["Deer, 1<br/>Deer, 1"]:::block
+H4["River, 1<br/>River, 1"]:::block
+end
+
+subgraph Reducing["Reducing"]
+direction TB
+R1["Bear, 2"]:::block
+R2["Car, 3"]:::block
+R3["Deer, 2"]:::block
+R4["River, 2"]:::block
+end
+
+subgraph Result["Final result"]
+direction TB
+F["Bear, 2<br/>Car, 3<br/>Deer, 2<br/>River, 2"]:::final
+end
+
+I0 --> S1
+I0 --> S2
+I0 --> S3
+
+S1 --> M1
+S2 --> M2
+S3 --> M3
+
+M1 --> H1
+M1 --> H3
+M1 --> H4
+
+M2 --> H2
+M2 --> H4
+
+M3 --> H1
+M3 --> H2
+M3 --> H3
+
+H1 --> R1
+H2 --> R2
+H3 --> R3
+H4 --> R4
+
+R1 --> F
+R2 --> F
+R3 --> F
+R4 --> F
+```
+
+{% enddetails %}
+
+{% details MapReduce workflow - what do you really do %}
 
 - Input: a set of key-value pairs
 - Programmer specifies two methods:
@@ -167,9 +401,121 @@ reduce ([1,2,3,4]) using multiply -> 24​
         in `v'` order.
         - There is one Reduce function call per unique key `k'`.
 
-![](fig/02-mapreduce/02.png){alt="mapping and reducing"}
+```mermaid
+flowchart LR
 
-### 3.4. Everything else ...
+classDef data fill:#9dccf5,stroke:#333,stroke-width:1px,color:#000;
+classDef framework fill:#d8d5c4,stroke:#3b73c4,stroke-width:2px,color:#000;
+classDef mrLabel fill:transparent,stroke:transparent,color:#ff0000,font-size:20px,font-weight:bold;
+classDef phase fill:transparent,stroke:transparent,color:#000,font-size:18px;
+
+T["The overall MapReduce word count process"]:::phase
+
+%% ---------------- MR Framework: Input + Splitting ----------------
+subgraph MR1[" "]
+direction LR
+
+MRL1["MR Framework"]:::mrLabel
+
+subgraph Input["Input"]
+direction TB
+I0["Deer Bear River<br/>Car Car River<br/>Deer Car Bear"]:::data
+end
+
+subgraph Splitting["Splitting"]
+direction TB
+S1["Deer Bear River"]:::data
+S2["Car Car River"]:::data
+S3["Deer Car Bear"]:::data
+end
+
+end
+
+%% ---------------- Mapping ----------------
+subgraph Mapping["Mapping"]
+direction TB
+M1["Deer, 1<br/>Bear, 1<br/>River, 1"]:::data
+M2["Car, 1<br/>Car, 1<br/>River, 1"]:::data
+M3["Deer, 1<br/>Car, 1<br/>Bear, 1"]:::data
+end
+
+%% ---------------- MR Framework: Shuffling ----------------
+subgraph MR2[" "]
+direction TB
+
+MRL2["MR Framework"]:::mrLabel
+
+subgraph Shuffling["Shuffling"]
+direction TB
+H1["Bear, 1<br/>Bear, 1"]:::data
+H2["Car, 1<br/>Car, 1<br/>Car, 1"]:::data
+H3["Deer, 1<br/>Deer, 1"]:::data
+H4["River, 1<br/>River, 1"]:::data
+end
+
+end
+
+%% ---------------- Reducing ----------------
+subgraph Reducing["Reducing"]
+direction TB
+R1["Bear, 2"]:::data
+R2["Car, 3"]:::data
+R3["Deer, 2"]:::data
+R4["River, 2"]:::data
+end
+
+%% ---------------- MR Framework: Final result ----------------
+subgraph MR3[" "]
+direction TB
+
+MRL3["MR Framework"]:::mrLabel
+
+subgraph Result["Final result"]
+direction TB
+F["Bear, 2<br/>Car, 3<br/>Deer, 2<br/>River, 2"]:::data
+end
+
+end
+
+%% ---------------- Flow ----------------
+I0 --> S1
+I0 --> S2
+I0 --> S3
+
+S1 --> M1
+S2 --> M2
+S3 --> M3
+
+M1 --> H1
+M1 --> H3
+M1 --> H4
+
+M2 --> H2
+M2 --> H4
+
+M3 --> H1
+M3 --> H2
+M3 --> H3
+
+H1 --> R1
+H2 --> R2
+H3 --> R3
+H4 --> R4
+
+R1 --> F
+R2 --> F
+R3 --> F
+R4 --> F
+
+%% ---------------- Framework block styling ----------------
+style MR1 fill:#d8d5c4,stroke:#3b73c4,stroke-width:2px
+style MR2 fill:#d8d5c4,stroke:#3b73c4,stroke-width:2px
+style MR3 fill:#d8d5c4,stroke:#3b73c4,stroke-width:2px
+```
+
+{% enddetails %}
+
+{% details Everything else ... %}
 
 - The MapReduce framework takes care of:
     - Partitioning the input data
@@ -177,18 +523,13 @@ reduce ([1,2,3,4]) using multiply -> 24​
     - Performing the group by key step
     - Handling machine failures
     - Managing required inter-machine communication
+- The MapReduce framework lends itself nicely to the distributed storage model of GFS/HDFS.
+{% enddetails %}
 
-### 3.5. Distributed storage and MapReduce
 
-The MapReduce framework lends itself nicely to the distributed storage model of GFS/HDFS, as shown in the figure below. 
+## Algorithms using MapReduce
 
-![](fig/02-mapreduce/hdfs_mr.png)
-
----
-
-## 4. Algorithms using MapReduce
-
-### 4.1. Overview
+{% details Overview %}
 
 - MapReduce is not a solution to every problem
 - GFS/HDFS is only beneficial for files that are 
@@ -198,9 +539,9 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
     - matrix-vector calculation
     - matrix-matrix calculation
 - Relational algebra
+{% enddetails %}
 
-
-### 4.2. Matrix-Vector multiplication
+### Matrix-Vector multiplication
 
 - Suppose we have:
     - $n\times n$ matrix M whose element in row $i$ and column $j$ is denoted $m_{ij}$
@@ -213,20 +554,68 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
     - Reduce
         - Sum up all values of pairs with the same key $i$
     
-{% details Example Colab Notebook %}
+{% details tip Matrix Vector Dot Product %}
 
-[Matrix Vector Dot Product](https://colab.research.google.com/drive/1aZVgYJQP6Hd3vUgD0Fc_yZYpHr_uEnTU?usp=sharing)
+```python
+import numpy as np
 
+np.random.seed(0) # set static random seed to guarantee reproducibility
+
+# Define the dimensions of the matrix and vector
+N = 4
+
+# Generate one random matrix and one random vector with the following dimensions:
+# Matrix M (N x N)
+# Vector V (N)
+M = np.random.randint(0, 10, size=(N, N))
+V = np.random.randint(0, 10, size=N)
+P = np.matmul(M, V)
+
+# Print the matrices
+print(f"Matrix M:\n {M}")
+print(f"Vector N:\n {V}")
+print(f"Dot Product P:\n {P}")
+
+# In this cell, we are pairing up individual elements of M and V
+map_list = []
+
+for i in range(N):
+  for j in range(N):
+    map_list.append((i,(M[i,j],V[j])))
+
+print(f"Pairing up individual elements of M and V:")
+for pair in map_list:
+  print(pair)
+
+# We can go ahead and multiply the paired up elements of M and V, and store the results in a list of tuples (i, M[i,j] * V[j])
+map_list = []
+for i in range(N):
+  for j in range(N):
+    map_list.append((i,M[i,j] * V[j]))
+
+print("Multiplying the paired up elements of M and V:")
+for pair in map_list:
+  print(pair)
+
+list_Q = []
+for i in range(N):
+  list_tmp = [value for key, value in map_list if key == i]
+  list_Q.append(sum(list_tmp))
+
+print(f"MapReduce Matrix Q:\n {np.array(list_Q)}")
+print(f"Matrix P:\n {P}")
+```
 
 {% enddetails %}
-- If n does not fit into main memory
-    - Divide matrix into vertical stripes of equal width
-        - Matrix M becomes $n/w$ matrices, each has the same dimension $(n/w,n)$
-    - Divide vector in equal stripes of the same length $w$
-    - Develop Map and Reduce procedures in a similar fashion.
 
+{% details If n does not fit into main memory %}
+- Divide matrix into vertical stripes of equal width
+    - Matrix M becomes $n/w$ matrices, each has the same dimension $(n/w,n)$
+- Divide vector in equal stripes of the same length $w$
+- Develop Map and Reduce procedures in a similar fashion.
+{% enddetails %}
 
-### 4.3. Matrix multiplication
+### Matrix-matrix multiplication
 
 - Matrix M with element $m_{ij}$ in row $i$ and column $j$
 - Matrix N with element $n_{jk}$ in row $j$ and column $k$
@@ -237,46 +626,54 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
     - The product of M and N is almost a natural join of M and N, followed by grouping and aggregation:
         - $(M(I, J, V),N(J,K,W)) \xrightarrow{natural\ join} (i,j,k,m_{ij},n_{jk})$
         - What we want: $(i,j,k,m_{ij}\times n_{jk})$
-- Two MapReduce passes:
-    - Map 1:
-        - $m_{ij}\ of M \xrightarrow{map} (j, (M, i, m_{ij}))$
-        - $n_{jk}\ of N \xrightarrow{map} (j, (N, k, n_{jk}))$
-        - M and N are sing-bit values representing whether this comes from M or N
-    - Reduce 1:
-        - For each key $j$, examine the list of associated values.
-            - For each value that comes from M and each value that comes from N, produce $((i,k),m_{ij}n_{jk})$
-    - Map 2:
-        - Pass through: $((i,k),m_{ij}n_{jk})$
-    - Reduce 2:
-        - For each key $(i,k)$, produce sum of the list of values associated with this key/ 
-        - Result: $((i,k),v)$ element $p_{ik}$ of resulting matrix P. 
 
-    {% details Example Colab Notebook %}
+{% details Implementation using two MapReduce passes %}
+- Map 1:
+    - $m_{ij}\ of M \xrightarrow{map} (j, (M, i, m_{ij}))$
+    - $n_{jk}\ of N \xrightarrow{map} (j, (N, k, n_{jk}))$
+    - M and N are sing-bit values representing whether this comes from M or N
+- Reduce 1:
+    - For each key $j$, examine the list of associated values.
+        - For each value that comes from M and each value that comes from N, produce $((i,k),m_{ij}n_{jk})$
+- Map 2:
+    - Pass through: $((i,k),m_{ij}n_{jk})$
+- Reduce 2:
+    - For each key $(i,k)$, produce sum of the list of values associated with this key/ 
+    - Result: $((i,k),v)$ element $p_{ik}$ of resulting matrix P. 
+
+{% details Example Colab Notebook %}
 
 [2-passes MapReduce Matrix Multiplication](https://colab.research.google.com/drive/1-Q26xwX2U5LSQ6YbRZAGKKoAJmAX5gAP?usp=sharing)
 
-    {% enddetails %}
-- Single MapReduce pass
-    - Map
-        - $m_{ij}$ of $M \xrightarrow{map} ((i,k), (M, j, m_{ij}))$ up to the number of columns of N (K)
-            - This is a one-to-many mapping: one $m_{ij}$ map to k $m_{ij}$: $((i,0), (M, j, m_{ij}))$, $((i,1), (M, j, m_{ij}))$, $((i,2), (M, j, m_{ij}))$, $((i,3), (M, j, m_{ij}))$, ...
-        - $n_{jk}$ of $N \xrightarrow{map} ((i,k), (N, j, n_{jk}))$ up to the number of rows of M (I)
-            - Similar one-to-many mapping as above. 
-        - M and N are sing-bit values representing whether this comes from M or N
-    - Reduce
-        - Sort by values of $j$ for the two subsets of associated values, M and N, for each key $(i,k)$
-        - Extract and multiply $m_{ij}$ and $n_{jk}$ for each value of j. 
-        - Sum the final list and return with key $(i,k)$
+{% enddetails %}
 
+{% enddetails %}
 
-### 4.4. Relational algebra: selection
+{% details Implementation using one MapReduce pass %}
+- Map
+    - $m_{ij}$ of $M \xrightarrow{map} ((i,k), (M, j, m_{ij}))$ up to the number of columns of N (K)
+        - This is a one-to-many mapping: one $m_{ij}$ map to k $m_{ij}$: $((i,0), (M, j, m_{ij}))$, $((i,1), (M, j, m_{ij}))$, $((i,2), (M, j, m_{ij}))$, $((i,3), (M, j, m_{ij}))$, ...
+    - $n_{jk}$ of $N \xrightarrow{map} ((i,k), (N, j, n_{jk}))$ up to the number of rows of M (I)
+        - Similar one-to-many mapping as above. 
+    - M and N are sing-bit values representing whether this comes from M or N
+- Reduce
+    - Sort by values of $j$ for the two subsets of associated values, M and N, for each key $(i,k)$
+    - Extract and multiply $m_{ij}$ and $n_{jk}$ for each value of j. 
+    - Sum the final list and return with key $(i,k)$
+
+{% enddetails %}
+
+### Relational algebra
+
+{% details Selection %}
 
 - Apply a condition C to each tuple in the relation and produce as output only those satisfies C. 
 - Does not need the full power of MapReduce
 - Map: for each data element e, test if it satisfies condition C. If so, produce the key/value pair (e,e)
 - Reduce: not needed. Simply pass the pair (e,e) through
+{% enddetails %}
 
-### 4.5. Relational algebra: projection
+{% details Projection %}
 
 - For some subset S of the attributes of the relation, produce from each tuple only the components for the attributes in S
     - Could generate duplicates
@@ -285,8 +682,9 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
 - Reduce:
     - Group pairs by key. 
     - Pairs with multiple values should be flattened to a single value (remove duplicates)
+{% enddetails %}
 
-### 4.6. Relational algebra: union, intersection, and difference
+{% details Union, intersection, and difference %}
 
 - Relations R and S 
 - tuple t could belong to either R or S
@@ -297,8 +695,8 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
 - Difference
     - Assume R - S
     - $t \xrightarrow{map} (t,R)\ or\ (t,S) \xrightarrow{shuffle} (t,R)\ or\ (t,S)\ or\ (t,[R,S]) \xrightarrow{reduce} (t,R)$
-
-### 4.7. Relational algebra: natural join
+{% enddetails %}
+{% details Natural join %}
 
 - Join R(A, B) with S(B, C)
 - Map
@@ -307,25 +705,28 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
     - R and S are sing-bit values representing whether this comes from R or S
 - Reduce
     - $(b,[(R,a),(S,c)]) \xrightarrow{reduce} (somekey, (a,b,c))$
+{% enddetails %}
 
-### 4.8. Relational algebra: grouping and aggregation
+{% details Grouping and aggregation %}
 
 - Assume a relation whose tuple has three attributes: A for group, B for aggregating, and C: R(A,B,C)
 - Map: for each tuple, produce key-value pair (a,b)
 - Reduce: perform aggregation on the list-type value: $(a,[b_1,b_2,...,b_n])$
 
 ---
+{% enddetails %}
 
-## 5. Extensions to MapReduce
+## Extensions to MapReduce
 
-### 5.1. Overview
+{% details Overview %}
 - MapReduce influenced a number of extensions and modifications
 - Similarity
     - Built on a distributed file system
     - Manage a very large number of tasks, spawned from small number of user-written code (bring computation to data)
     - Builtin fault tolerant and error recovery
+{% enddetails %}
 
-### 5.2. Workflow systems
+{% details Workflow systems %}
 - Extend MR from a two-step workflow to any collection of functions
 - An acyclic graph representing workflow among functions
 - Dataflow programming
@@ -334,10 +735,11 @@ The MapReduce framework lends itself nicely to the distributed storage model of 
 - Examples
     - Spark
     - Tensorflow
+{% enddetails %}
 
-## 6. Cost Model
+## Cost Model
 
-### 6.1. Communication cost
+{% details Communication cost %}
 - Assuming an algorithm implemented by an acyclic network of tasks
     - Single MapReduce job
     - Chained MapReduce jobs
@@ -350,7 +752,9 @@ cost of all tasks.
     - I/O bottleneck due to network transfer
     - I/O bottleneck due to disk-to-memory transfer
 - Example: MapReduce natural join
+{% enddetails %}
 
-### 6.2. Wall-Clock time 
+{% details Wall-Clock time %}
 - Parallel by nature (move computation to distributed data storage)
 - Should be very carefully if used in tradeoff with communication cost
+{% enddetails %}

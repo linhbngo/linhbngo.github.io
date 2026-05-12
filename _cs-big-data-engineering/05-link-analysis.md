@@ -14,36 +14,30 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: History
+  - name: PageRank
+  - name: 'PageRank: the Google formulation'
+  - name: 'Hands-on: Page Rank in Spark'
+  - name: Hub and Authority
+  - name: 'Hands-on: HITS'
 ---
-
 # Link Analysis
 
-## 1. History
+## History
 
-### 1.1. Web page organization in the past
+{% details Web page organization in the past %}
 - Web pages were manually curated and organized. 
 - Does not scale. 
 
-![](fig/05-pagerank/01.jpg)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/05-pagerank/01.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Next, web search engines were developed: information retrieval
 - Information retrieval focuses on finding documents from a trusted set. 
 
-![](fig/05-pagerank/02.jpg)
-
-### 1.2. Challenges for web search
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/05-pagerank/02.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details Challenges for web search %}
 - Who to trust given the massive variety of information sources?
     - Trustworthy pages may point to each other. 
 - What is the best answer to a keyword search (given a context)?
@@ -57,10 +51,10 @@ connections between nodes.
 the distribution/intensity of these links. 
 
 ---
+{% enddetails %}
+## PageRank
 
-## 2. PageRank
-
-### 2.1. Initial formulation
+{% details Initial formulation %}
 - Link as votes:
     - A page (node) is more important if it has more links. 
         - Incoming or outgoing?
@@ -154,9 +148,9 @@ graph TD
 $$
 r_j = \frac{r_i}{3} + \frac{r_k}{4}
 $$
-
-
-### 2.2. The flow model
+{% enddetails %}
+{% details The flow model %}
+<a id="the-flow-model"></a>
 
 - Summary:
     - A `vote` from an important page is worth more. 
@@ -208,8 +202,9 @@ $$r_j = \sum\limits_{i\rightarrow j}^{n} \frac{r_i}{d_i}$$
     - $r_{a} = 2/5$
     - $r_{m} = 1/5$
 - **Does not scale to Internet-size!**
-
-### 2.3. Matrix formulation
+{% enddetails %}
+{% details Matrix formulation %}
+<a id="matrix-formulation"></a>
 - Using the coefficients from the above flow equations, we can set up a stochastic adjacency matrix M
 - Matrix M of size N: N is the number of nodes in the graph (think number of web pages on the Internet).
 - Let page *i* has $d_{i}$ outgoing links. 
@@ -235,12 +230,14 @@ $$r = M \cdot r$$
 - Suppose page *i* has importance $r_{i}$ and has outgoing links
 to three other pages, including page *j*. 
 
-![](fig/05-pagerank/09.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/05-pagerank/09.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-### 2.4. Example of matrix formulation
+{% enddetails %}
+{% details Example of matrix formulation %}
+<a id="example-of-matrix-formulation"></a>
 
-- Revisiting our flow equations from [Section 2.2](#22-the-flow-model):
+- Revisiting our flow equations from [Section 2.2](#the-flow-model):
 
 $$
 \begin{align}
@@ -320,8 +317,8 @@ m
 \end{array}
 \right]
 $$
-
-### 2.5. Power iteration
+{% enddetails %}
+{% details Power iteration %}
 - We want to find the page rank value *r*
 - Power method: an iterative scheme.  
     - Support there are `N` web pages on the Internet. 
@@ -329,10 +326,10 @@ $$
     - Rank vector r: $r^{(0)} = [1/N, ...,1/N]^{T}$ 
     - Iterate: $r^{(t+1)} = M\cdot r$
     - Stopping condition: $r^{(t+1)} -  r^{(t)} < some\ small\ positive\ error\ threshold\ e$.
+{% enddetails %}
+{% details Example of power iteration %}
 
-### 2.6. Example of power iteration
-
-- Revisiting our flow equations from [Section 2.4](#24-example-of-matrix-formulation):
+- Revisiting our flow equations from [Section 2.4](#example-of-matrix-formulation):
 
 {% details Iteration 0 %}
 
@@ -509,15 +506,15 @@ m
 $$
 
 {% enddetails %}
-- The final iteration results is the same as the results from the Gaussian approach in [Section 2.2](#22-the-flow-model)
+- The final iteration results is the same as the results from the Gaussian approach in [Section 2.2](#the-flow-model)
 
 ---
+{% enddetails %}
+## PageRank: the Google formulation
 
-## 3. PageRank: the Google formulation
+{% details Scenarios %}
 
-### 3.1. Scenarios
-
-- Recalling the equation from [section 2.3](#23-matrix-formulation):
+- Recalling the equation from [section 2.3](#matrix-formulation):
 
 
 $$r_j = \sum\limits_{i=0}^{N-1} M_{ij}r_{j}$$
@@ -525,8 +522,8 @@ $$r_j = \sum\limits_{i=0}^{N-1} M_{ij}r_{j}$$
 - Does the above equation converge?
 - Does it converge to what we want?. 
 - Are the results reasonable? 
-
-### 3.2. Does it converge?
+{% enddetails %}
+{% details Does it converge? %}
 
 - The `spider trap` problem
 - Build the stochastic adjacency matrix for the following graph and calculate the ranking for `a` and `b`.  
@@ -555,7 +552,8 @@ r_b
 $$
 
 {% enddetails %}
-### 3.3. Does it converge to what we want?
+{% enddetails %}
+{% details Does it converge to what we want? %}
 
 - The `dead end` problem
 - Build the stochastic adjacency matrix for the following:
@@ -585,7 +583,8 @@ r_b
 $$
 
 {% enddetails %}
-### 3.4. The solution: random teleport
+{% enddetails %}
+{% details The solution: random teleport %}
 
 - At each time step, the random surfer has two options:
     - A probably of β to follow an out-going link at random. 
@@ -651,13 +650,13 @@ $$
 where $\left[ \frac{1 - \beta}{N}\right]_{N}$ is a vector with all $N$ entries have the same value $\frac{1-\beta}{N}$.
 
 ---
-
-## 4. Hands-on: Page Rank in Spark
+{% enddetails %}
+## Hands-on: Page Rank in Spark
 
 - The code instructions here is meant for Spark running on local devices. 
     - If you are using Colab or Kaggle, make sure that you prepare your notebook with instructions in the Setup lecture. 
 
-### 4.1. Small example data
+{% details Small example data %}
 
 - Run the following in a cell to generate a data file
 
@@ -755,18 +754,18 @@ while sum > 0.01:
 ``` 
 
 ---
-
-### 4.2. Hollins dataset
+{% enddetails %}
+{% details Hollins dataset %}
 
 - Download [the Hollins dataset](https://www.cs.wcupa.edu/LNGO/data/hollins.dat) using wget
 - Hollins University web bot crawl in 2004. 
 - Which page is most important (internally). 
 
 ---
+{% enddetails %}
+## Hub and Authority
 
-## 5. Hub and Authority
-
-### 5.1. Intuition
+{% details Intuition %}
 - PageRank only assume one-dimensional notion of importance
 - HITS: hyperlink-induced topic search
     -  Two flavors of importance:
@@ -778,8 +777,9 @@ for each course.
     - If you want to know about a certain course, you need the page for that course (`authorities`). 
     - If you want to find out what courses the department is offering, you need 
     the page with the course list first (`hub`).
-
-### 5.2. Formalizing Hubbiness and Authority
+{% enddetails %}
+{% details Formalizing Hubbiness and Authority %}
+<a id="formalizing-hubbiness-and-authority"></a>
 - For a collection of pages (enumarated)
     - Two vectors: $h$ and $a$
     - The $i^{th}$ component of $h$: the hubbiness of the $i^{th}$ page
@@ -797,8 +797,9 @@ for each course.
     - $L^T$ is the transpose of $L$
         - $L^T_{ij} = 1$ if there is a link from page j to page i
         - $L^T_{ij} = 0$ if not
-
-### 5.3. Example
+{% enddetails %}
+{% details Example %}
+<a id="example"></a>
 
 - Given a 5-node (5 pages) link graph as follows:
 
@@ -870,9 +871,9 @@ $$
     $$  
 
     - and so on ...
-
-### 5.4. Formal equation
-- From [Section 5.2](#52-formalizing-hubbiness-and-authority), for a collection of pages (enumarated)
+{% enddetails %}
+{% details Formal equation %}
+- From [Section 5.2](#formalizing-hubbiness-and-authority), for a collection of pages (enumarated)
     - Two vectors: $h$ and $a$
     - The $i^{th}$ component of $h$: the hubbiness of the $i^{th}$ page
     - The $i^{th}$ component of $a$ gives the authority of the same page.
@@ -899,8 +900,8 @@ $$
 
 - Ommiting $\lambda$ and $\mu$ and you can see the same self-calculating structure emerges for $h$ and $a$ similar to how the rank vector $r$ was formalized in Page Rank. 
 - In this case, $h$ and $a$ will alternate their roles, with one being used to calculate the other. 
-
-### 5.5. Computation implementation
+{% enddetails %}
+{% details Computation implementation %}
 - Construct $L$
 - Generate $L^T$
 - Generate $h$ as a vector of all 1’s.
@@ -908,7 +909,7 @@ $$
 - Compute $h = La$ then scale so that the largest component is 1
 - Repeat the previous two steps until differences of successive values of $h$ and $a$ 
 are small enough. 
-- We demonstrate this procedure using the example from [Section 5.3](#53-example):
+- We demonstrate this procedure using the example from [Section 5.3](#example):
 
 {% details Iteration 0 %}
 
@@ -1157,11 +1158,11 @@ a = [0.2087,1,1,0.7913,0]
 $$ 
 
 ---
+{% enddetails %}
+## Hands-on: HITS
 
-## 6. Hands-on: HITS
-
-### 6.1. Example data
-- Run the following in a cell to generate a data file. This data file represents the graph shown in [Section 5.3](#53-example)
+{% details Example data %}
+- Run the following in a cell to generate a data file. This data file represents the graph shown in [Section 5.3](#example)
 
 ```python linenums="1"
 %%file small_web.dat
@@ -1175,6 +1176,7 @@ D C
 D B
 ```
 - Review the [sequential implementation of HITS](https://colab.research.google.com/drive/1pfoEjaCSY9dNeqmuSR4ur1fJIzWSbRFl?usp=sharing)
-
-### 6.2. Redo Hollins data
+{% enddetails %}
+{% details Redo Hollins data %}
 - Identify the pages with highest level of `hubbiness` in the Hollins site. 
+{% enddetails %}

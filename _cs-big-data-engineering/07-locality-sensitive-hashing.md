@@ -14,25 +14,18 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: Overview
+  - name: Finding Similar Items
+  - name: Shingling
+  - name: 'Minhashing: Jaccard Similarity'
+  - name: Locality-sensitive-hashing (LSH)
 ---
-
 # Locality Sensitive Hashing
 
-## 1. Overview
+## Overview
 
-### 1.1. Applications of set-similarity
+{% details Applications of set-similarity %}
 
 - Many data mining problems can be expressed as finding `similar` sets:
     - Pages with similar words, e.g., for classification by topic.
@@ -47,8 +40,8 @@ toc:
     - Similar news articles at many news sites.
         - Application: Cluster articles by `same story`: topic modeling, 
         trend identification.
-
-### 1.2. Problem statement
+{% enddetails %}
+{% details Problem statement %}
 - Given: High dimensional data points $x_1, x_2, ...$
     - For example: Image is a long vector of pixel colors
 
@@ -66,8 +59,8 @@ toc:
 some distance threshold $d(x_i,x_j) \leq s$
 - Naïve solution would take $O(N^2)$ where N is the number of data points
 - This can be done in $O(N)$!!!
-
-### 1.3. Motivation from frequent itemsets
+{% enddetails %}
+{% details Motivation from frequent itemsets %}
 - A-Priori:
     - First pass: Find frequent singletons. For a pair to be a frequent pair candidate, 
     its singletons have to be frequent!
@@ -87,10 +80,10 @@ some distance threshold $d(x_i,x_j) \leq s$
     find similar documents
 
 --- 
+{% enddetails %}
+## Finding Similar Items
 
-## 2. Finding Similar Items
-
-### 2.1. Distance measures
+{% details Distance measures %}
 - Goal: Find near-neighbors in high-dimensional space
     - We formally define `near neighbors` as points that are a `small distance` apart
 - For each application, we first need to define what `distance` means
@@ -104,23 +97,23 @@ some distance threshold $d(x_i,x_j) \leq s$
 - The `Jaccard similiarity` of two sets is the size of their 
 intersection divided by the size of their union.
 
-![](fig/06-locality/02.png)
-
-### 2.2. Three essential techniques for similar documents
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/02.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details Three essential techniques for similar documents %}
 - Shingling : convert documents, emails, etc., to sets.
 - Minhashing : convert large sets to short signatures, while preserving 
 similarity.
 - Locality sensitive hashing : focus on pairs of signatures likely to be 
 similar.
 
-![](fig/06-locality/01.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/01.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 ---
+{% enddetails %}
+## Shingling
 
-## 3. Shingling
 
-
-### 3.1. Shingles
+{% details Shingles %}
 - Documents as high-dimensional data
 - Simple approaches
     - Document = set of words appearing in document
@@ -133,8 +126,8 @@ similar.
         - k = 2; 
         - Document:`abcab`; 
         - Set of 2-shingles: {ab, bc, ca}.
-
-### 3.2. Compressing shingles
+{% enddetails %}
+{% details Compressing shingles %}
 - To `compress long shingles`, we can hash them to (say) 4 bytes
 - Represent a document by the set of hash values of its 
 k-shingles
@@ -156,8 +149,8 @@ k-shingles
     $$
 
     - Therefore, the hash of the shingles: h(D1) = {1, 5, 7}
-
-### 3.3. Similarity metrics for shingles
+{% enddetails %}
+{% details Similarity metrics for shingles %}
 - Document $D_i$ is a set of its k-shingles $C_i=S(D_i)$
 - If we collect all unique k-shingles from all documents, each document can be represent as a 0/1 vector in the space of the k-shingles
     - Each unique shingle is a dimension
@@ -196,8 +189,8 @@ $$
 
 {% enddetails %}
 - A natural similarity measure is the `Jaccard similarity`
-
-### 3.4. Motivation for Minhash/LSH
+{% enddetails %}
+{% details Motivation for Minhash/LSH %}
 - Documents that are intuitively similar will have many shingles in common.
     - k = 5 is ok for short documents
     - k = 10 is better for long documents
@@ -209,10 +202,10 @@ similarities for every pair of docs
 - For $N=10^7$, it takes more than a year…
 
 ---
+{% enddetails %}
+## Minhashing: Jaccard Similarity
 
-## 4. Minhashing: Jaccard Similarity
-
-### 4.1. Encoding sets as bit vectors
+{% details Encoding sets as bit vectors %}
 - Many similarity problems can be formalized as 
 finding subsets that have significant intersection
 - Encode sets using 0/1 (bit, boolean) vectors 
@@ -222,9 +215,8 @@ finding subsets that have significant intersection
     - Size of intersection = 3; size of union = 4, 
     - Jaccard similarity (not distance) = 3/4
     - Distance: $d(C_1,C_2)$ = 1 – (Jaccard similarity) = 1/4
-
-
-### 4.2. Convert from sets to boolean matrices
+{% enddetails %}
+{% details Convert from sets to boolean matrices %}
 - Rows: elements of the universal set. In other words, all elements in the union.
 - Columns: individual sets. 
 - A cell value of `1` in row e and column S if and only if e is a member of S. 
@@ -234,22 +226,22 @@ the value of `1`.
 - Typically sparse. 
 - This gives you another way to calculate similarity: column similarity = Jaccard similarity. 
 
-![](fig/06-locality/03.png)
-
-### 4.3. Finding similar columns
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/03.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details Finding similar columns %}
 - Naïve approach:
     - Signatures of columns: small summaries of columns
     - Examine pairs of signatures to find similar columns
         - Essential: Similarities of signatures and columns are related
     - Optional: Check that columns with similar signatures are really similar
-
-### 4.4. Hashing columns: Signatures
+{% enddetails %}
+{% details Hashing columns: Signatures %}
 - Key idea: “hash” each column C to a small signature h(C), such that:
     - (1) h(C) is small enough that the signature fits in RAM
     - (2) $sim(C_1, C_2)$ is the same as the “similarity” of signatures $h(C_1)$ and $h(C_2)$
 - Solution: `min-hashing`
-
-### 4.5. Minhashing
+{% enddetails %}
+{% details Minhashing %}
 - Imagine the rows permuted randomly.
 - Define `minhash` function **h(C)** = **the number of the first (in the permuted order)  row in which column C has 1**.
 - Use several (e.g., 100) independent hash functions to create a signature 
@@ -399,7 +391,8 @@ $$
     \right]
     $$
         
-### 4.6. Minhashing: surprising property
+{% enddetails %}
+{% details Minhashing: surprising property %}
 - The probability (over **all** permutations of the rows) that $h(C_1) = h(C_2)$ is the same 
 as $Sim(C_1, C_2)$.
 - The *similarity of signatures* is the fraction of the minhash functions in which they agree. 
@@ -447,8 +440,8 @@ as $Sim(C_1, C_2)$.
     \end{array}
     \right]
     $$
-
-### 4.7. Minhashing: implementation
+{% enddetails %}
+{% details Minhashing: implementation %}
 - Can't realistically permute billion of rows: 
     - Too many permutation entries to store.  
     - Random access on big data (big no no). 
@@ -460,10 +453,10 @@ as $Sim(C_1, C_2)$.
         value of $h_i(r)$ for which column *c* has 1 in row *r*.
 
 ---
+{% enddetails %}
+## Locality-sensitive-hashing (LSH)
 
-## 5. Locality-sensitive-hashing (LSH)
-
-### 5.1. Overview
+{% details Overview %}
 - Generate from the collection of signatures a list of candidate pairs: pairs of 
 elements  where similarity must be evaluated. 
     - For signature matrices: hash columns to many buckets and make elements of the
@@ -472,14 +465,13 @@ elements  where similarity must be evaluated.
     - We want a pair of columns `c` and `d` of the signature matrix M to be a 
     `candidate pair` if and only if their signatures agree in at least fraction `t`
     of the rows. 
-
-
-### 5.2. LSH
+{% enddetails %}
+{% details LSH %}
 - Big idea: hash columns of signature matrix M several times and arrange that
 only similar columns are likely to hash to the same bucket. 
 - Reality: we don't need to study the entire column. 
 
-![](fig/06-locality/07.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/07.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Divide matrix M into `b` bands of `r` rows each. 
 - For each band, hash its portion of each column to a hash table with `k` buckets, 
@@ -488,6 +480,7 @@ with `k` as large as possible.
 band. 
 - Fine tune `b` and `r`. 
 - We will not go into the math here ...
-
-### 5.3. Hands on LSH
+{% enddetails %}
+{% details Hands on LSH %}
 - Download the set of inaugural speeches from https://www.cs.wcupa.edu/lngo/data/inaugural_speeches.zip. 
+{% enddetails %}

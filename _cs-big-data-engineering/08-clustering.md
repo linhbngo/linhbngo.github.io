@@ -14,26 +14,20 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: Overview
+  - name: 'Overview: methods of clustering'
+  - name: K-means clustering
+  - name: 'K-means on big data: BFR (Bradley-Fayyad-Reina)'
+  - name: 'Improvement on BFR: CURE'
+  - name: Clustering on Spark
 ---
-
 # Clustering
 
 
-## 1. Overview
+## Overview
 
-### 1.1. General problem statement
+{% details General problem statement %}
 
 - Given a **set of data points**, with a notion of **distance** between points, 
 **group the points** into some number of **clusters** so that:
@@ -42,8 +36,8 @@ toc:
 - Usually
     - Points are in high-dimensional space (observations have many attributes).
     - Similarity is defined using a distance measure: Euclidean, Cosine, Jaccard, edit distance ...
-
-### 1.2. Clustering is a hard problem
+{% enddetails %}
+{% details Clustering is a hard problem %}
 
 - Clustering in two dimensions looks easy.  
 - Clustering small amounts of data looks easy. 
@@ -57,10 +51,7 @@ toc:
 - A catalog of 2 billion **sky objects** represents objects by their radiation in 7 dimensions (frequency bands)
 - Problem: cluster into similar objects, e.g., galaxies, stars, quasars, etc.
 
-<figure markdown="span">
-    ![](fig/08-clustering/sn_gallery24.jpg)
-    <figcaption>36 of the 500+ Type Ia supernovae discovered by the Sloan Supernova Survey</figcaption>
-</figure>
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/sn_gallery24.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true caption="36 of the 500+ Type Ia supernovae discovered by the Sloan Supernova Survey" %}
 
 {% enddetails %}
 {% details Clustering music albums %}
@@ -96,7 +87,8 @@ and only if` the $i^{th}$ word (in some order) appears in the document.
 
 {% enddetails %}
 {% enddetails %}
-### 1.3. Distance Measurements: Cosine, Jaccard, Euclidean
+{% enddetails %}
+{% details Distance Measurements: Cosine, Jaccard, Euclidean %}
 
 - Different ways of representing documents or music albums 
 lead to different distance measures. 
@@ -110,11 +102,11 @@ lead to different distance measures.
         - Cosine distance. 
 
 - Review sequential implementation of these distance via the [distance-measurment notebook](https://colab.research.google.com/drive/1r0fxDR1hffHVyREEINLicoB5lNiIfYSQ?usp=sharing).
-
-## 1.4. Overview: methods of clustering
+{% enddetails %}
+## Overview: methods of clustering
 
 === "Hierarchical"
-    ![Hierrarchical](fig/08-clustering/hierarchical_dendo.png){ align=left width=300 loading=lazy }
+    {% include figure.liquid loading="lazy" path="assets/img/courses/csc467/08-clustering/hierarchical_dendo.png" class="img-fluid rounded z-depth-1 float-start me-3 mb-2" max-width="300px" zoomable=true alt="Hierrarchical" %}
 
     - Agglomerative (bottom up): each point is a cluster, 
     repeatedly combining two nearest cluster.
@@ -123,7 +115,7 @@ lead to different distance measures.
     - Key operation: repeatedly combine two nearest clusters. 
 
 === "Point assignment"
-    ![Point assignment](fig/08-clustering/point_assignment.png){ align=left width=300 height=200 loading=lazy }
+    {% include figure.liquid loading="lazy" path="assets/img/courses/csc467/08-clustering/point_assignment.png" class="img-fluid rounded z-depth-1 float-start me-3 mb-2" max-width="300px" height="200" zoomable=true alt="Point assignment" %}
 
     - Maintain a set of clusters
     - Points belong to `nearest` cluster
@@ -164,16 +156,16 @@ clustroid
     {% enddetails %}
 ---
 
-## 2. K-means clustering
+## K-means clustering
 
-### 2.1. Overview
+{% details Overview %}
 - Assumes `Euclidean` space/distance 
 - Pick `k`, the number of clusters. 
 - Initialize clsuters by picking on point per cluster. 
     - Example: Pick one point at random, then  k-1 other points, 
     each as far away as possible from the previous points
-
-### 2.2. Populating clusters
+{% enddetails %}
+{% details Populating clusters %}
 
 1. For each point, place it in the cluster whose current centroid it is nearest. 
     - A cluster centroid has its coordinates calculated as the averages of all its points' coordinates. 
@@ -183,8 +175,8 @@ clustroid
 - Repeat 1. and 2. until convergence
     - Points don’t move between clusters and centroids stabilize, or
     - Very few points move, and the movements are back and forth in nature
-
-### 2.3. How to select k?
+{% enddetails %}
+{% details How to select k? %}
 
 - Try different `k`, looking at the change in the average distance 
 to centroid, as `k` increases. 
@@ -203,7 +195,7 @@ to centroid, as `k` increases.
 {% details Too few %}
 
 
-![Too few](fig/08-clustering/kmean_few.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_few.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Too few" %}
 
 - Many long distances to centroid
 
@@ -211,7 +203,7 @@ to centroid, as `k` increases.
 {% details Just right %}
 
 
-![Just right](fig/08-clustering/kmean_right.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_right.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Just right" %}
 
 - Distances are relatively short
 
@@ -219,17 +211,17 @@ to centroid, as `k` increases.
 {% details Too many %}
 
 
-![Too many](fig/08-clustering/kmean_many.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_many.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Too many" %}
 
 - Little improvement in avaerage distance
 
 {% enddetails %}
 {% enddetails %}
 ---
+{% enddetails %}
+## K-means on big data: BFR (Bradley-Fayyad-Reina)
 
-## 3. K-means on big data: BFR (Bradley-Fayyad-Reina)
-
-### 3.1. BFR: Bradley-Fayyad-Reina
+{% details BFR: Bradley-Fayyad-Reina %}
 
 - [Scaling EM (Expectation-Maximization) Clustering to Large Databases](data/scaling_em.pdf)
 - BFR [Bradley-Fayyad-Reina] is a variant of k-means designed 
@@ -252,9 +244,10 @@ some sensible approach:
     previously selected points as possible
 
 {% enddetails %}
-### 3.2. Three classes of points
+{% enddetails %}
+{% details Three classes of points %}
 
-![Point classes](fig/08-clustering/kmean_point_class.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_point_class.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Point classes" %}
 
 {% details Discard set (DS) %}
 
@@ -272,7 +265,8 @@ some sensible approach:
 - Isolated points waiting to be assigned to a compression set
 
 {% enddetails %}
-### 3.3. Discard set (DS)
+{% enddetails %}
+{% details Discard set (DS) %}
 - Represented by:
     - The number of points, N
     - The vector `SUM`, whose $i^{th}$ component is the sum of 
@@ -288,8 +282,8 @@ some sensible approach:
     - Variance of a cluster's discard set in dimension i 
     is: $\frac{SUMSQ_i}{N} - (\frac{SUM_i}{N})^2$
         - And standard deviation is the square root of variance. 
-
-### 3.4. Processing the Memory-Load of points
+{% enddetails %}
+{% details Processing the Memory-Load of points %}
 0. Start out with a selection of k centroids. 
 1. Find those points that are “sufficiently close” to a cluster 
 centroid and add those points to that cluster and the DS
@@ -330,9 +324,10 @@ BFR suggests two approaches
 {% enddetails %}
 ---
  
-## 4. Improvement on BFR: CURE
+{% enddetails %}
+## Improvement on BFR: CURE
 
-### 4.1. Overview
+{% details Overview %}
 - Problem with BFR/k-means:
     - Assumes clusters are normally distributed in each dimension
     - And axes are fixed - ellipses at an angle are not OK  
@@ -341,10 +336,9 @@ BFR suggests two approaches
     - Allows clusters to assume any shape
     - Uses a collection of representative points to represent clusters
 
-![](fig/08-clustering/cure_example.png)
-
-
-### 4.2. Two-pass algorithm
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/cure_example.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details Two-pass algorithm %}
 - Pass 1:
     1. Pick a random sample of points that fit in main memory
     2. Initial clusters: 
@@ -358,8 +352,8 @@ BFR suggests two approaches
         - Normal definition of “closest”: Find the closest representative to p and assign it to representative’s cluster
 
 ---
-
-## 5. Clustering on Spark
+{% enddetails %}
+## Clustering on Spark
 
 - [Libraries for major clustering techniques](https://spark.apache.org/docs/latest/ml-clustering.html) 
 - [K-means](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.clustering.KMeans.html)

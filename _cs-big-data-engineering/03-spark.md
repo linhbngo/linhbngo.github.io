@@ -14,25 +14,17 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: What is Spark?
+  - name: Programming for Spark Computing Environment
+  - name: 'Hands-on: Word Count in Spark'
+  - name: Challenges
 ---
-
 # Spark Computing Environment
 
-## 1. What is Spark?
+## What is Spark?
 
-### 1.1. Overview and design philosophy
+{% details Overview and design philosophy %}
 
 - A unified compute engine and a set of libraries for parallel
 data processing on computer clusters. 
@@ -46,9 +38,10 @@ data processing on computer clusters.
     external libraries for complex data analytic tasks. 
 
 
-![Spark Computing Environment](fig/03-spark/spark_env.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_env.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Spark Computing Environment" %}
 
-### 1.2. A brief history of Spark
+{% enddetails %}
+{% details A brief history of Spark %}
 
 - Research project at UC Berkeley AMP Lab in 2009 to address drawbacks of 
 Hadoop MapReduce. 
@@ -59,7 +52,8 @@ contributors from more than 30 organizations outside UC Berkeley.
 - Currently, Spark is being used extensively in academic and industry 
 (NASA, CERN, Uber, Netflix …). 
 
-### 1.3. A workflow system
+{% enddetails %}
+{% details A workflow system %}
 
 - A more advanced workflow system
 - Efficient way to cope with failures
@@ -67,7 +61,8 @@ contributors from more than 30 organizations outside UC Berkeley.
 execution of tasks
 - Integration of programming language features and libraries
 
-### 1.4. RDD: Resilient distributed dataset
+{% enddetails %}
+{% details RDD: Resilient distributed dataset %}
 
 - Immutable file of objects of one type (e.g., files of key-value pairs)
 - `Distributed`: An RDD is broken into chunks and stored on different 
@@ -75,7 +70,8 @@ compute nodes.
 - `Resilient`: Spark is able to recovered from the loss of any of all chunks 
 of an RDD. 
 
-### 1.5. Spark applications
+{% enddetails %}
+{% details Spark applications %}
 
 - Typically consists of a `driver` process and a set of `executor` processes. 
 - The `driver` runs the main function and is responsible for: 
@@ -91,7 +87,7 @@ of an RDD.
     - To allow executor to perform work in parallel breaks up data into 
     chunks called `partitions`. 
 
-![Spark application architecture](fig/03-spark/driver_executor.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/driver_executor.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Spark application architecture" %}
 
 - Spark also has a local mode (what we are using for this class), where driver 
 and executors are simply processes on the same machine. 
@@ -102,9 +98,10 @@ to run in cluster mode (one of the attractiveness of Spark).
 
 --- 
 
-## 2. Programming for Spark Computing Environment
+{% enddetails %}
+## Programming for Spark Computing Environment
 
-### 2.1. Overview
+{% details Overview %}
 
 - Operations applied on RDDs:
     - 'transformations': applying some functions on an RDD to create another RDD
@@ -129,7 +126,8 @@ to run in cluster mode (one of the attractiveness of Spark).
 
 - Detailed syntax can be found via [Spark Python API](https://spark.apache.org/docs/latest/api/python/reference/pyspark.html)
 
-### 2.2. Common Spark transformations
+{% enddetails %}
+{% details Common Spark transformations %}
 - `map`: Return a new distributed dataset formed by passing each element of the source 
 through a function.
 - `filter`:	Return a new dataset formed by selecting those elements of the source 
@@ -160,7 +158,8 @@ supported through leftOuterJoin, rightOuterJoin, and fullOuterJoin.
 - `pipe`:	Pipe each partition of the RDD through a shell command, e.g. a Perl or 
 bash script. RDD elements are written to the process's stdin and lines output to its stdout are returned as an RDD of strings.
 
-### 2.3. Common Spark actions
+{% enddetails %}
+{% details Common Spark actions %}
 - `reduce`: Aggregate the elements of the dataset using a function func (which takes 
 two arguments and returns one). The function should be commutative and associative 
 so that it can be computed correctly in parallel.
@@ -179,9 +178,10 @@ text files) in a given directory in the local filesystem, HDFS or any other
 Hadoop-supported file system. Spark will call toString on each element to convert it 
 to a line of text in the file.
 
-## 3. Hands-on: Word Count in Spark
+{% enddetails %}
+## Hands-on: Word Count in Spark
 
-### 3.1. Preparation
+{% details Preparation %}
 
 
 - Clone repository
@@ -191,9 +191,10 @@ git clone https://github.com/ngo-classes/big-data-engineering.git
 ```
 - Setup 
 
-![](fig/03-spark/spark_1.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_1.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
-### 3.2. Getting data
+{% enddetails %}
+{% details Getting data %}
 
 - Depending on whether you are on Google Colab, Kaggle, or local device, the download location 
 of the files will differ. 
@@ -202,9 +203,10 @@ of the files will differ.
 ```python
 !wget -O 100-0.txt --no-check-certificate 'https://drive.google.com/uc?export=download&id=1oKnG6y2mkKcaPSZEJM9ZjQ7UXo4SzP7I'
 ```
-![](fig/03-spark/getting_data.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/getting_data.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
-### 3.3. Running WordCount
+{% enddetails %}
+{% details Running WordCount %}
 
 - Enter the following Python code. This should be the same code as from the init notebook. 
 - Pay attention to `input_path` and `output_path` variables. They are used to 
@@ -222,11 +224,12 @@ wordcount.saveAsTextFile(output_path)
 - A successful run will generate the resulting output 
 directory that contain `_SUCCESS` flag file (size 0). 
 
-![](fig/03-spark/wordcount_output.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/wordcount_output.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 
 
-### 3.4. Word Count workflow breakdown
+{% enddetails %}
+{% details Word Count workflow breakdown %}
 
 - Let's breakdown the WordCount Python statements by running them 
 in individual cells. 
@@ -242,7 +245,7 @@ print(input_path)
 ```python
 textFile.take(5)
 ```
-![](fig/03-spark/spark_data.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_data.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Each line of the text file is considered an element in your RDD. 
 - To highlight the difference between `map` and `flatMap`, we can 
@@ -279,7 +282,7 @@ step3 = step2.reduceByKey(lambda a, b: a + b)
 step3.take(10)
 ```
 
-![](fig/03-spark/spark_wordcount.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_wordcount.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Try to save the RDD file in the output path  is going to create 
 an error: `org.apache.hadoop.mapred.FileAlreadyExistsException`. 
@@ -288,16 +291,17 @@ an error: `org.apache.hadoop.mapred.FileAlreadyExistsException`.
 step3.saveAsTextFile(output_path)
 ```
 
-![](fig/03-spark/spark_output_error.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_output_error.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 ```python
 output_path="output-wordcount-02"
 step3.saveAsTextFile(output_path)
 ```
 
-![](fig/03-spark/spark_output_correct.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_output_correct.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
-### 3.5. Data distribution in Spark
+{% enddetails %}
+{% details Data distribution in Spark %}
 
 - Run the following code in a new cell
 
@@ -305,7 +309,7 @@ step3.saveAsTextFile(output_path)
 textFile.getNumPartitions()
 ```
 
-![](fig/03-spark/spark_nums.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_nums.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - We can make a copy of our `textFile` that is distributed across more 
 partitions. Run the following code in a cell on `spark-1`
@@ -326,21 +330,24 @@ wordcount = textFile_2.flatMap(lambda line: line.split(" ")) \
 wordcount.saveAsTextFile(output_path)
 ```
 
-![](fig/03-spark/spark_partitions.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_partitions.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 ---
 
-## 3. Challenges
+{% enddetails %}
+## Challenges
 
-### 3.1. Challenge 1:
+{% details Challenge 1: %}
 
 - Augment the mapping process of WordCount with a function to filter out
 punctuations and capitalization from the unique words
 - Hint: The string module is helpful for removing punctuation.
 
-### 3.2. Challenge 2:
+{% enddetails %}
+{% details Challenge 2: %}
 
 - Look up the [Spark Python API for filter](https://spark.apache.org/docs/latest/api/python/pyspark.html?highlight=filter#pyspark.RDD.filter).
 - Augment the results from Challenge 1 to remove the empty spaces (`''`).
 
 
+{% enddetails %}

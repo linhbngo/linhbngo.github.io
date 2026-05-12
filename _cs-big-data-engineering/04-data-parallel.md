@@ -14,23 +14,14 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: Initial preparation
+  - name: Matrix-vector multiplication
+  - name: Analyzing text data (not using Spark SQL)
 ---
-
 # Data Parallel Computing with Spark
 
-## 1. Initial preparation
+## Initial preparation
 
 - The code instructions here is meant for Spark running on local devices. 
     - If you are using Colab or Kaggle, make sure that you prepare your notebook with instructions in the Setup lecture. 
@@ -55,9 +46,9 @@ sc = pyspark.SparkContext(conf=conf)
 
 ---
 
-## 2. Matrix-vector multiplication
+## Matrix-vector multiplication
 
-### 2.1. Initial data
+{% details Initial data %}
 
 ```python linenums="1"
 import numpy as np
@@ -94,7 +85,8 @@ Dot Product P:
 Vector V fits into memory
 
 {% enddetails %}
-### 2.2. Moving data from notebook's memory into Spark cluster
+{% enddetails %}
+{% details Moving data from notebook's memory into Spark cluster %}
 
 - Data can be generated on the driver side, then `parallelize` into 
 RDD objects on the cluster. 
@@ -127,7 +119,8 @@ print(mspark.take(4))
 ```
 
 {% enddetails %}
-### 2.3. Direct multiplication
+{% enddetails %}
+{% details Direct multiplication %}
 
 ```python linenums="1"
 def vectorDot(mRow): 
@@ -155,7 +148,8 @@ Dot Product P:
 - Vector V no longer fits into memory
 
 {% enddetails %}
-### 2.4. Data processing for multiplication
+{% enddetails %}
+{% details Data processing for multiplication %}
 
 - Both matrix M and vector V are loaded onto Spark
 
@@ -366,10 +360,10 @@ Dot Product P:
 
 {% enddetails %}
 ---
+{% enddetails %}
+## Analyzing text data (not using Spark SQL)
 
-## 3. Analyzing text data (not using Spark SQL) 
-
-### 3.1. Getting MovieLens data
+{% details Getting MovieLens data %}
 
 - Downloading move review data
 
@@ -465,4 +459,5 @@ Wall time: 58.4 s
 - What are the average ratings over the years of each genre
 - Assumption: **movies.csv does not fit in memory**
 
+{% enddetails %}
 {% enddetails %}

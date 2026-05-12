@@ -14,25 +14,17 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-
 toc:
-  - name: Big Data Problems
-  - name: Big Data in Science
-  - name: Big Data in Industry
-  - name: The Vs of Big Data
-  - name: Programming Paradigm for Big Data
-  - name: Data Intensive Approach
-  - name: Data Mining
-  - name: Meaningfulness of Analytic Answers
-  - name: Things Useful to Know
-  
+  - name: Recommendations
+  - name: Content-based Recommender Systems
+  - name: Collaborative Filtering
+  - name: The Netflix Prize
 ---
-
 # Recommendation Systems
 
-## 1. Recommendations
+## Recommendations
 
-### 1.1. Overview
+{% details Overview %}
 
 - Shelf space is a scarce commodity for traditional retailers 
     - Also: TV networks, movie theaters,…
@@ -42,9 +34,9 @@ toc:
     - Recommendation engines
     - How Into Thin Air made Touching the Void a bestseller: http://www.wired.com/wired/archive/12.10/tail.html
 
-![](fig/14-recommendation/examples.png)
-
-### 1.2. Types of recommendations
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/examples.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details Types of recommendations %}
 - Editorial and hand curated
     - List of favorites
     - Lists of “essential” items
@@ -52,8 +44,8 @@ toc:
     - Top 10, Most Popular, Recent Uploads
 - Tailored to individual users
     - Amazon, Netflix, …
-
-### 1.3. Formal Model
+{% enddetails %}
+{% details Formal Model %}
 
 - X = set of Customers
 - S = set of Items
@@ -106,20 +98,19 @@ toc:
 
 {% enddetails %}
 ---
+{% enddetails %}
+## Content-based Recommender Systems
 
-## 2. Content-based Recommender Systems
-
-### 2.1. Main Idea
+{% details Main Idea %}
 - Main idea: Recommend items to customer x similar to previous items rated highly by x
 - Example:
     - Movie recommendations: Recommend movies with same actor(s), director, genre, …
     - Websites, blogs, news: Recommend other sites with `similar` content
 
-    ![](fig/14-recommendation/main-idea.png)
+    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/main-idea.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
    <figcaption>J. Leskovec, A. Rajaraman, J. Ullman: Mining of Massive Datasets</figcaption>
-
-
-### 2.2. Item profiles
+{% enddetails %}
+{% details Item profiles %}
 - For each item, create an item profile
 - Profile is a set (vector) of features
     - Movies: author, title, actor, director,…
@@ -129,8 +120,8 @@ toc:
     (Term frequency * Inverse Doc Frequency)
     - Term … Feature
     - Document … Item
-
-### 2.3. User profiles and prediction
+{% enddetails %}
+{% details User profiles and prediction %}
 - User profile possibilities:
     - Weighted average of rated item profiles
     - Variation: weight by difference from average rating for item
@@ -142,7 +133,8 @@ toc:
         u(x,i)=cos(x,i)=\frac{x \cdot i}{||x|| \times ||i||}
     $$
     
-### 2.4. Pros and cons
+{% enddetails %}
+{% details Pros and cons %}
 
 - Pros:
     - No need for data on other users
@@ -163,17 +155,17 @@ toc:
         - Unable to exploit quality judgments of other users
     
 ---
+{% enddetails %}
+## Collaborative Filtering
 
-## 3. Collaborative Filtering
-
-### 3.1. Overview
+{% details Overview %}
 - Consider user x
 - Find set N of other users whose ratings are `similar` to x’s ratings
 - Estimate x’s ratings based on ratings of users in N
 
-![](fig/14-recommendation/CF-overview.png)
-
-### 3.2. How do we find similar users
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/CF-overview.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details How do we find similar users %}
 - Assume:
     - Ratings are 1 to 3 stars
     - Two users:
@@ -210,8 +202,8 @@ Treats missing ratings as `negative`
     $$
         sim(x,y) = \frac{\sum_{s \in S_{xy}}(r_{xs} - \overline{r_x})(r_{ys} - \overline{r_y})}{\sqrt{\sum_{s \in S_{xy}}(r_{xs} - \overline{r_x})^2}\sqrt{\sum_{s \in S_{xy}}(r_{ys} - \overline{r_y})^2}}
     $$
-
-### 3.3. Example differences of similarity metrics
+{% enddetails %}
+{% details Example differences of similarity metrics %}
 
 - HP: Harry Potter
 - TW: Twilight
@@ -297,7 +289,8 @@ $$
 
 
 {% enddetails %}
-### 3.4. Rating Predictions
+{% enddetails %}
+{% details Rating Predictions %}
 - From similarity metric to recommendations:
     - Let $r_x$ be the vector of user x’s ratings
     - Let $N$ be the set of $k$ users most similar to $x$ who have rated item $i$
@@ -312,8 +305,8 @@ r_{xi} = \frac{\sum_{y \in N}s_{xy} \cdot r_{yi}}{\sum_{y \in N}s_{xy}}
 $$
 
 - Other approaches
-
-### 3.5. Item-item collaborative filtering
+{% enddetails %}
+{% details Item-item collaborative filtering %}
 - Another view: item-item
 - For item i, find other similar items
 - Estimate rating for item i based on ratings for similar items
@@ -326,8 +319,8 @@ $$
 $$
 r_{xi} = \frac{\sum_{j \in N(i;x)}s_{ij} \cdot r_{xj}}{\sum_{j \in N(i;x)}s_{ij}}
 $$
-
-### 3.6. Example: item to item
+{% enddetails %}
+{% details Example: item to item %}
 
 |       | $u_1$ | $u_2$ | $u_3$ | $u_4$ | $u_5$ | $u_6$ | $u_7$ | $u_8$ | $u_9$ | $u_{10}$ | $u_{11}$ | $u_{12}$ | 
 | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | -------- | 
@@ -399,7 +392,8 @@ $$
 | $m_6$ |   1   |       |   3   |       |   3   |       |       |   2   |       |          |     4    |          |      0.59    |
 
 {% enddetails %}
-### 3.7. CF: Common Practice
+{% enddetails %}
+{% details CF: Common Practice %}
 - Define similarity $s_{ij}$ of items $i$ and $j$
 - Select k nearest neighbors $N(i; x)$
     - Items most similar to $i$, that were rated by $x$
@@ -414,8 +408,8 @@ $$
     - $\mu$ is overall mean rating
     - $b_x$ is the rating deviation of user $x$ (average rating minus overall mean rating)
     - $b_i$ is the rating deviation of movie $i$
-
-### 3.8. CF: Pros and cons
+{% enddetails %}
+{% details CF: Pros and cons %}
 - Pros:
     - Works for any kind of item
     - No feature selection needed
@@ -437,10 +431,10 @@ $$
     - Add content-based methods to collaborative filtering
         - Item profiles for new item problem
         - Demographics to deal with new user problem
+{% enddetails %}
+{% details Evaluation %}
 
-### 3.9. Evaluation
-
-![](fig/14-recommendation/cf_evaluation.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/cf_evaluation.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Compare predictions with known ratings
 - Root-mean-square error (RMSE)
@@ -469,10 +463,10 @@ $$
 
 {% enddetails %}
 ---
+{% enddetails %}
+## The Netflix Prize
 
-## 4. The Netflix Prize
-
-### 4.1. Training data
+{% details Training data %}
 - Training data
     - 100 million ratings, 480,000 users, 17,770 movies
     - 6 years of data: 2000-2005
@@ -485,8 +479,8 @@ $$
     - 2,700+ teams
     - **$1 million** prize for 10% improvement on Netflix
 - Data no longer available due to later researchers were able to extract personal information based on reviews. 
-
-### 4.2. Winner: BellKor Recommender System
+{% enddetails %}
+{% details Winner: BellKor Recommender System %}
 - [Y. Koren, Collaborative filtering with temporal dynamics, KDD 2009](data/cf_temporal_dynamics.pdf)
 - Multi-scale modeling of the data: Combine top level, “regional” modeling of the data, with a refined, local view:
     - Global:
@@ -508,7 +502,8 @@ $$
     - Final estimate: Joe will rate The Sixth Sense 3.8 stars
 
 {% enddetails %}
-### 4.3. Interpolation weights
+{% enddetails %}
+{% details Interpolation weights %}
 $$
 r_{xi} = b_{xi} + \frac{\sum_{j \in N(i;x)}s_{ij} \cdot (r_{xj} - b_{xj})}{\sum_{j \in N(i;x)}s_{ij}}
 $$
@@ -537,7 +532,8 @@ $$
     - $w_{ij}$ can be learned/estimated based on x and all other users that rated i
 
 {% enddetails %}
-### 4.4. Recommendations via Optimization
+{% enddetails %}
+{% details Recommendations via Optimization %}
 - Idea: Let’s set values w such that they work well on known (user, item) ratings
 - How to find such values w?
 - Idea: Define an objective function and solve the optimization problem
@@ -547,14 +543,13 @@ $$
 $$
 J(w)=\sum_{x,i} \left( \left[ b_{xi} + \sum_{j \in N(i;x)}w_{ij}(r_{xj} - b_{xj}) \right] - r_{xi} \right)^2
 $$
-
-### 4.5. Performance
+{% enddetails %}
+{% details Performance %}
 - Optimization via gradient descent
     - Not there yet
-![](fig/14-recommendation/netflix_1.png)
-
-
-### 4.6. Latent factor models (singular value decomposition - SVD)"
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_1.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details Latent factor models (singular value decomposition - SVD) %}
 
 - Utility matrix:
 
@@ -575,9 +570,9 @@ $$
         - We can calculate the missing rating as a dot product of these two matrices. 
         - Optimization/estimation of U and V using Stochastic Gradient Descent. 
 
-![](fig/14-recommendation/netflix_2.png)
-
-### 4.7. Bringing everything together
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_2.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
+{% details Bringing everything together %}
 - Baseline predictor
     - Separates users and movies
     - Benefits from insights into user’s behavior
@@ -596,8 +591,8 @@ $$
     - You are a critical reviewer: your ratings are 1 star lower than the mean: $b_x$ = -1
     - Star Wars gets a mean rating of 0.5 higher than average movie:  $b_i$ = + 0.5
     - Predicted rating for you on Star Wars:	= 3.7 -  1  +  0.5  = 3.2 
-
-### 4.8. Additional details
+{% enddetails %}
+{% details Additional details %}
 - Sudden rise in the average movie rating (early 2004)
     - Improvements in Netflix 
     - GUI improvements
@@ -611,11 +606,12 @@ r_{xi} = \mu + b_x(t) + b_i(t) + q_i \cdot p_x
 $$
 
 - Add temporal dependence
+{% enddetails %}
+{% details Still not there yet %}
 
-### 4.9. Still not there yet
-
-![](fig/14-recommendation/netflix_3.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_3.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Continuous calibration of models
 
-![](fig/14-recommendation/netflix_4.png)
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_4.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% enddetails %}
