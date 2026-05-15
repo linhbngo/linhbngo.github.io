@@ -32,7 +32,7 @@ toc:
 
 - It is how we do it since the beginning of time!
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/pong.png" width="25%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/pong.png" max-width="25%" zoomable=true %}
 
 - The ball moves along a path
     - Angle/velocity
@@ -46,39 +46,37 @@ toc:
 {% enddetails %}
 {% details info Explicit coding %}
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/explicit_coding.jpeg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/explicit_coding.jpeg" max-width="50%" zoomable=true %}
 
 - Powerful but can be limited
 
 {% enddetails %}
 
-{% details Example: Explicit coding: activity detection %}
+{% details Explicit coding example: activity detection %}
 
 - Write an app that uses sensors on a phone or a watch or something else to 
 determine a person's activity.
     - Use the data about their speed and write a rule that determines 
     if the speed is below a certain amount, then they're probably walking.
 
-=== "Walking"
-    - If less than 4 miles an hour, then they are walking.
+{% details success Walking %}
 
-    {% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/walking.png" width="50%" zoomable=true %}
+- If less than 4 miles an hour, then they are walking.
 
-    {% details success Pseudocode %}
-
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/walking.png" max-width="50%" zoomable=true %}
+ 
 ```python
 if speed < 4.0:
     print("Walking")
 ```
 
-    {% enddetails %}
-=== "Running"
+{% enddetails %}
 
-    - If more than 4 miles an hour, then they are running. 
+{% details success Running %}
 
-    {% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/running.jpg" width="50%" zoomable=true %}
+- If more than 4 miles an hour, then they are running. 
 
-    {% details success Pseudocode %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/running.jpg" max-width="50%" zoomable=true %}
 
 ```python
 if speed < 4.0:
@@ -87,16 +85,14 @@ else:
     print("Running")
 ```
 
-    {% enddetails %}
-=== "Biking"
+{% enddetails %}
 
-    - If more than 4 miles an hour but less than 12, 
-    then they are running. 
-    - Otherwise, they are biking
+{% details success Biking %}
 
-    {% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/biking.jpg" width="50%" zoomable=true %}
+- If more than 4 miles an hour but less than 12, then they are running. 
+- Otherwise, they are biking
 
-    {% details success Pseudocode %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/biking.jpg" max-width="50%" zoomable=true %}
 
 ```python
 if speed < 4.0:
@@ -106,32 +102,27 @@ elif speed < 12.0:
 else
     print("Biking")
 ``` 
-    {% enddetails %}
-=== "Playing soccer"
 
-    - ???
+{% enddetails %}
 
-    {% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/soccer.jpg" width="50%" zoomable=true %}
+{% details failure Playing soccer %}
 
-    {% details Failure: Pseudocode %}
+- How do we describe movements of soccer players? goal keeper?
 
-```python
-if speed < 4.0:
-    print("Walking")
-elif speed < 12.0:
-    print("Running")
-else
-    print("Biking")
-``` 
-    {% enddetails %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/soccer.jpg" max-width="50%" zoomable=true %}
+
+{% enddetails %}
+
 - It is challenging to write rules for complex problems
 
 {% enddetails %}
+
 {% details info Implicit learning %}
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/implicit_learning.jpeg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/implicit_learning.jpeg" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% enddetails %}
 
 {% details note Machine Learning Paradigm %}
@@ -151,12 +142,13 @@ else
         - Assumption: each subsequent guess gets better than the previous one
 
 {% enddetails %}
+
 {% details Example: Relationship between two sets of numbers %}
 
 - X: $-1,0,1,2,3,4$
 - Y: $-3,-1,1,3,5,7$
 
-{% details Question: First guess %}
+{% details First guess %}
 
 - $x_1=-1$ and $y_1=-3$
     - $y_1 = 3{x}_1$
@@ -166,7 +158,7 @@ else
 
 {% enddetails %}
 
-{% details Question: Second guess %}
+{% details Second guess %}
 
 - $x_1=-1$ and $y_1=-3$
     - $y_1 = 3x_1$
@@ -178,7 +170,7 @@ else
 
 {% enddetails %}
 
-{% details success Third guess %}
+{% details Third guess %}
 
 - $x_1=-1$ and $y_1=-3$
     - $y_1 = 3x_1$
@@ -196,23 +188,19 @@ else
 
 ## Measure accuracy
 
-{% details note Setting up conda environment %}
+{% details note Setting up programming environment %}
 
-~~~python
-conda create -n tf python=3.12
-conda activate tf
-pip install --upgrade pip
-pip install tensorflow
-pip install opencv-python scipy pooch matplotlib jupyter ipykernel
-~~~
+- Open the `ml-paradigm.ipynb` notebook from the tinyml Git repo (python/notebooks).
+    - Select `tinyml` as the kernel for the notebook. 
 
 {% enddetails %}
+
+
 {% details Example: Coding hands on %}
 
-- Bring up a Jupyter notebook
 - Run the following code segment in a cell and monitor different combinations of `w` and `b` to observe the loss value
 
-~~~python
+```python
 import math
 import matplotlib.pyplot as plt
 import numpy as np
@@ -252,40 +240,66 @@ plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
 plt.title('Points with Vertical Lines')
 plt.show()
-~~~
+```
 
 {% enddetails %}
+
 {% details note How good (or bad) are your guesses? %}
 
 - We want to have a way to measure the loss values and their aggregation.
 - Account for negative value (over/under guess)
+- Run the following code in the next cell of your notebook
 
-```python linenums="1"
---8<-- "docs/csc581/lectures/codes/02-ml-paradigm/loss_calculation.py"
+```python
+import math
+
+w = 3
+b = -1
+
+x = [-1, 0, 1, 2, 3, 4]
+y = [-3, -1, 1, 3, 5, 7]
+myY = []
+
+
+for thisX in x:
+  thisY = (w*thisX)+b
+  myY.append(thisY)
+
+print(f"Real Y is {str(y)}")
+print(f"My Y is   {str(myY)}")
+
+# let's calculate the loss
+total_square_error = 0
+for i in range(0, len(y)):
+  square_error = (y[i] - myY[i]) ** 2
+  total_square_error += square_error
+
+print(f"My loss is: {str(math.sqrt(total_square_error))}")
+
 ```
 
 {% enddetails %}
-{% details note Loss function/Cost function %}
 
 
-{% details Example: Mean Squared Error (MSE) %}
+{% details note Loss function %}
+
+
+Loss function: Mean Squared Error (MSE)
 
 $J = \frac{1}{n}\sum(actual-predicted)^2$
 
-{% enddetails %}
-- Given the following
+- Given the following\
     - Set of X: $x_0,x_1,...,x_n$
     - Set of Y (actual): $y_0,y_1,...y_n$
     - A linear regression function that try to estimate Y from X: $Y=mX + c$
 
-{% details Example: MSE loss function for linear regression %}
+MSE loss function for linear regression
 
  $J = \frac{1}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))^2$
 
+{% enddetails %}
 
-{% enddetails %}
-{% enddetails %}
-{% details note Gradient descent %}
+{% details Gradient descent %}
 
 - Gradient: measure of change in all the weights (m and c in the case of linear regression) with regard to change in error.
     - Slope of a function
@@ -293,11 +307,45 @@ $J = \frac{1}{n}\sum(actual-predicted)^2$
     - Iterative function that applies a predefined rate of change (learning rate) to m and c 
     until a perceived minimal loss is realized. 
 
-```python linenums="1"
---8<-- "docs/csc581/lectures/codes/02-ml-paradigm/3d_loss.py"
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Generate some sample data
+np.random.seed(0)
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100, 1)
+
+# Define a function to compute the loss
+def compute_loss(w0, w1):
+    y_pred = w0 + w1 * X
+    return np.mean((y - y_pred) ** 2)
+
+# Create a grid of parameter values
+w0_range = np.linspace(-10, 10, 50)
+w1_range = np.linspace(-10, 10, 50)
+W0, W1 = np.meshgrid(w0_range, w1_range)
+
+# Compute the loss for each combination of parameter values
+loss = np.zeros_like(W0)
+for i in range(len(w0_range)):
+    for j in range(len(w1_range)):
+        loss[i, j] = compute_loss(W0[i, j], W1[i, j])
+
+# Plot the 3D surface
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(W0, W1, loss, cmap='viridis')
+ax.set_xlabel('w0 (intercept)')
+ax.set_ylabel('w1 (slope)')
+ax.set_zlabel('Loss')
+plt.show()
 ```
 
-{% details Example: Gradient descent for linear regression %}
+{% enddetails %}
+
+{% details Gradient descent for linear regression %}
 
 - $D_m = \frac{1}{n}\sum^{n}_{i=0} 2(y_i - (mx_i+c))^2(-x_i)$
 - $D_c = \frac{-2}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))$
@@ -305,11 +353,11 @@ $J = \frac{1}{n}\sum(actual-predicted)^2$
 - $m = m - LD_m$
 - $c = c - LD_c$
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/ICLH_Diagram_Batch_03_21-AI-ML-GradientDescent.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/ICLH_Diagram_Batch_03_21-AI-ML-GradientDescent.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% enddetails %}
-{% details Example: Gradient descent in tensorflow %}
+
+{% details Gradient descent in tensorflow %}
 
 - Download and launch the following notebook
 
@@ -371,7 +419,7 @@ model.fit(xs, ys, epochs=500)
 {% details Example: A neural network %}
 
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/nn.jpg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/nn.jpg" max-width="50%" zoomable=true %}
 
 - Hidden Layer 1: `units=4`
 - Hidden Layer 2: `units=4`
