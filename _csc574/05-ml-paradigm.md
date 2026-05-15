@@ -295,14 +295,29 @@ $J = \frac{1}{n}\sum(actual-predicted)^2$
 
 MSE loss function for linear regression
 
- $J = \frac{1}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))^2$
+$J = \frac{1}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))^2$
 
 {% enddetails %}
 
 {% details Gradient descent %}
 
 - Gradient: measure of change in all the weights (m and c in the case of linear regression) with regard to change in error.
-    - Slope of a function
+    - **Slope of the loss function**: Calculated as the derivative of the loss function with respect to the specific weight 
+    being calculated. 
+
+- MSE Loss function
+
+$\frac{\partial L_{MSE}}{\partial m} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - \hat{y}_i) \cdot (-x_i)$
+
+$\frac{\partial J_{MSE}}{\partial m} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - (mx_i + c)) \cdot \frac{\partial}{\partial m}(y_i - (mx_i + c))$
+
+$\frac{\partial L_{MSE}}{\partial m} = -\frac{2}{n} \sum_{i=1}^{n} x_i(y_i - \hat{y}_i)$
+
+- Let's call U an outer variable representing the component under the squar
+
+- $D_m = \frac{1}{n}\sum^{n}_{i=0} 2(y_i - (mx_i+c))^2(-x_i)$
+- $D_c = \frac{-2}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))$
+
 - Gradient descent:
     - Iterative function that applies a predefined rate of change (learning rate) to m and c 
     until a perceived minimal loss is realized. 
@@ -347,8 +362,6 @@ plt.show()
 
 {% details Gradient descent for linear regression %}
 
-- $D_m = \frac{1}{n}\sum^{n}_{i=0} 2(y_i - (mx_i+c))^2(-x_i)$
-- $D_c = \frac{-2}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))$
 - L = learning rate < 1
 - $m = m - LD_m$
 - $c = c - LD_c$
