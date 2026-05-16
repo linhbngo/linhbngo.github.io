@@ -20,6 +20,7 @@ toc:
   - name: Overview
   - name: Convolutional Neural Networks
   - name: CNN in Tensorflow
+  - name: Visualizing CNN
 ---
 
 ## Overview
@@ -412,6 +413,54 @@ highlighted by the convolution (Line 10).
     - val_loss: 0.3361
   - While individual epoch for CNN takes longer than DNN (7ms versus 1ms in my case), CNN performance surpassed DNN performance only after 4 epochs. 
 
-
+## Visualizing CNN
 
 More technical details about CNN can be found at [Visualizing and Understanding Convolutional Networks]( https://arxiv.org/pdf/1311.2901)
+
+```python
+import matplotlib.pyplot as plt
+import tensorflow as tf
+
+fig, axarr = plt.subplots(3, 3, figsize=(10, 10))
+
+LABEL = 9
+CONVOLUTION_NUMBER = 1
+
+# Get the first three unique image indices matching the label
+image_nine = [i for i in range(len(val_labels)) if val_labels[i] == LABEL]
+selected_images = [image_nine[0], image_nine[1], image_nine[2]]
+
+# Create the activation extraction model
+layer_outputs = [layer.output for layer in model.layers]
+activation_model = tf.keras.models.Model(inputs=model.inputs, outputs=layer_outputs)
+
+for row_idx, img_idx in enumerate(selected_images):
+    input_img = val_images[img_idx].reshape(1, 28, 28, 1)
+    activations = activation_model.predict(input_img)
+
+    # Column 0: Original Image (28x28)
+    axarr[row_idx, 0].imshow(val_images[img_idx].reshape(28, 28), cmap='gray')
+    
+    # Column 1: Layer 0 (Conv2D - 26x26)
+    f1 = activations[0]
+    axarr[row_idx, 1].imshow(f1[0, :, :, CONVOLUTION_NUMBER], cmap='inferno')
+    
+    # Column 2: Layer 1 (MaxPooling2D - 13x13)
+    f2 = activations[1]
+    axarr[row_idx, 2].imshow(f2[0, :, :, CONVOLUTION_NUMBER], cmap='inferno')
+
+    for col_idx in range(3):
+        axarr[row_idx, col_idx].set_xlim(0, 28)
+        axarr[row_idx, col_idx].set_ylim(28, 0)  # Flipped to keep image right-side up
+        axarr[row_idx, col_idx].grid(False)
+plt.tight_layout()
+plt.show()
+```
+
+- Lines 10 and 11: First three images from the validation set that have the same label `LABEL` are selected. 
+- Line 14 and 15: An activation model is created with the parameters from just the layers of the model. 
+- Loop in line 17: For each row of the graph
+  - The original image is displayed (line 22)
+  - The image created from the output from the first convolutional layer is displayed (lines 25 and 26)
+  - The image craeted from the output from the second max pooling layer is displayed (lines 29 and 30). 
+
