@@ -668,6 +668,9 @@ print(val_labels[0])
 ```
 
 - Lines 4 and 5: Load MNIST dataset from Tensorflow.
+    - We split our dataset into two portions, `training` and `validation`. 
+    - We use `training` data to train (adjust) the weights and biases on the neurons. 
+    - We use `validation` data to test (validate) on how actually good these weights and biases are on unseen data. 
 - Lines 7 and 8: normalize pixel values to between 0 and 1. 
 - Line 10: Adding the `Flatten` layer to the model to turn the 2D matrix representing the image into a one-dimensional vector. 
 
