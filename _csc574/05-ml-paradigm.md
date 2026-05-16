@@ -18,7 +18,9 @@ typograms: true
 toc:
   - name: Overview and motivation
   - name: Measure accuracy
-  - name: Introductory Neural Network
+  - name: Introductory neural network
+  - name: Complex neural networks
+  - name: Introduction to classification
 ---
 
 ## Overview and motivation
@@ -32,7 +34,7 @@ toc:
 
 - It is how we do it since the beginning of time!
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/pong.png" max-width="25%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/pong.png" max-width="25%" zoomable=true %}
 
 - The ball moves along a path
     - Angle/velocity
@@ -46,7 +48,7 @@ toc:
 {% enddetails %}
 {% details info Explicit coding %}
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/explicit_coding.jpeg" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/explicit_coding.jpeg" max-width="50%" zoomable=true %}
 
 - Powerful but can be limited
 
@@ -63,7 +65,7 @@ determine a person's activity.
 
 - If less than 4 miles an hour, then they are walking.
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/walking.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/walking.png" max-width="50%" zoomable=true %}
  
 ```python
 if speed < 4.0:
@@ -76,7 +78,7 @@ if speed < 4.0:
 
 - If more than 4 miles an hour, then they are running. 
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/running.jpg" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/running.jpg" max-width="50%" zoomable=true %}
 
 ```python
 if speed < 4.0:
@@ -92,7 +94,7 @@ else:
 - If more than 4 miles an hour but less than 12, then they are running. 
 - Otherwise, they are biking
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/biking.jpg" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/biking.jpg" max-width="50%" zoomable=true %}
 
 ```python
 if speed < 4.0:
@@ -109,7 +111,7 @@ else
 
 - How do we describe movements of soccer players? goal keeper?
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/soccer.jpg" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/soccer.jpg" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -119,7 +121,7 @@ else
 
 {% details info Implicit learning %}
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/implicit_learning.jpeg" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/implicit_learning.jpeg" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -297,30 +299,8 @@ MSE loss function for linear regression
 
 $J = \frac{1}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))^2$
 
-{% enddetails %}
-
-{% details Gradient descent %}
-
-- Gradient: measure of change in all the weights (m and c in the case of linear regression) with regard to change in error.
-    - **Slope of the loss function**: Calculated as the derivative of the loss function with respect to the specific weight 
-    being calculated. 
-
-- MSE Loss function
-
-$\frac{\partial L_{MSE}}{\partial m} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - \hat{y}_i) \cdot (-x_i)$
-
-$\frac{\partial J_{MSE}}{\partial m} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - (mx_i + c)) \cdot \frac{\partial}{\partial m}(y_i - (mx_i + c))$
-
-$\frac{\partial L_{MSE}}{\partial m} = -\frac{2}{n} \sum_{i=1}^{n} x_i(y_i - \hat{y}_i)$
-
-- Let's call U an outer variable representing the component under the squar
-
-- $D_m = \frac{1}{n}\sum^{n}_{i=0} 2(y_i - (mx_i+c))^2(-x_i)$
-- $D_c = \frac{-2}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))$
-
-- Gradient descent:
-    - Iterative function that applies a predefined rate of change (learning rate) to m and c 
-    until a perceived minimal loss is realized. 
+Run the below code in another cell of the notebook and examine how the MSE loss function 
+changes as we change the parameters of our estimation function.
 
 ```python
 import numpy as np
@@ -360,59 +340,84 @@ plt.show()
 
 {% enddetails %}
 
-{% details Gradient descent for linear regression %}
+{% details Gradient %}
+
+- Gradient: measure of change in all the weights (m and c in the case of linear regression) with regard to change in error.
+    - **Slope of the loss function**: Calculated as the derivative of the loss function with respect to the specific weight 
+    being calculated. 
+
+- $D_m = \frac{\partial J}{\partial m} = \frac{1}{n} \sum_{i=1}^{n} 2(y_i - (mx_i + c)) \cdot \frac{\partial}{\partial m}(y_i - (mx_i + c)) = \frac{1}{n}\sum^{n}_{i=0} 2(y_i - (mx_i+c))(-x_i)$
+- $D_c = \frac{\partial J}{\partial c} = \frac{-2}{n}\sum^{n}_{i=0} (y_i - (mx_i+c))$
+
+{% enddetails %}
+
+{% details Gradient descent %}
+
+- Gradient descent:
+    - Iterative function that applies a predefined rate of change (learning rate $L$) to m and c 
+    until a perceived minimal loss is realized. 
 
 - L = learning rate < 1
 - $m = m - LD_m$
 - $c = c - LD_c$
 
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/ICLH_Diagram_Batch_03_21-AI-ML-GradientDescent.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/ICLH_Diagram_Batch_03_21-AI-ML-GradientDescent.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
-{% details Gradient descent in tensorflow %}
+{% details Gradient descent in TensorFlow %}
 
-- Download and launch the following notebook
+Implementing gradient descent calculation from scratch is a tedious process. It involves:
+- Identifying and implementing the mathematical derivation (calculus) of your original function.
+- Setting up loops to support repeated calculations of gradients as you iteratively optimize your model parameters.
 
-[Minimizing Loss](codes/02-ml-paradigm/Mimimizing_Loss.ipynb)
+The TensorFlow library includes various utility APIs that support automated mathematical subsystems to 
+help streamlining this process. 
+- [GradientTape](https://www.tensorflow.org/api_docs/python/tf/GradientTape) is one such API that support 
+automatic differentiation. 
 
-- Change the learning rate and observe how that change the loss values
+More details about GradientTape are included in the the `ml-paradigm_minimizing_loss.ipynb` notebook.
+    - Select the `tinyml` kernel when open this notebook. 
+
+{% enddetails %}
+
+
+## Introductory neural network
+
+Up to this point, we have been manually guessing values for $m$ and $c$ because we knew our data was 
+generated by a simple linear function ($Y=mX+c$)
+
+**But what if we don't know the mathematical function that describes the data?**
+
+In real-world scenarios like detecting a pothole or recognizing a voice, the underlying math is often too complex 
+to define with a single equation. 
+
+This is where we use a Neural Network. Instead of trying to find the parameters of a specific, known function, we allow 
+the network to estimate its own internal parameters (weights). 
+
+Through a repeated cycle of Guessing, Measuring, and Optimizing, the network learns to approximate the correct output without 
+us ever needing to know the mathematical format of the original, unknown function. 
+
+This is also the basic concept for `implicit learning`. 
+
+{% details Example: A neural network %}
+
+{% include figure.liquid path="assets/img/courses/csc574/05-ml-paradigm/nn.jpg" max-width="50%" zoomable=true %}
+
+- Hidden Layer 1: `units=4`
+- Hidden Layer 2: `units=4`
+- Output Layer: `units=1`
 
 {% enddetails %}
 
+Let's copy the following code into an empty cell in the `ml-paradigm` notebook. 
 
-## Introductory Neural Network
+- Open a new cell and run the following:
+    - Press `Shift-L` to turn on line number in cells. 
 
-{% details note Preparation %}
-
-- In the previous lecture, I showed the installation of in-person Anaconda/tensorflow
-
-{% details info Alternative: Google Colab %}
-
-- Visit [https://colab.research.google.com/](https://colab.research.google.com/)
-- Sign in with your Gmail account, or with your West Chester University account (works 
-for Google)
-- Click `File` and select `New notebook in Drive`
-
-{% enddetails %}
-{% enddetails %}
-{% details note Loading libraries %}
-
-- In the first cell, run the following:
-
-```python linenums="1"
-import sys
+```python 
 import numpy as np
 import tensorflow as tf
-```
-
-{% enddetails %}
-{% details note Setup a simple neural network model %}
-
-
-- In the second cell, run the following:
-
-```python linenums="1"
 model = tf.keras.Sequential([tf.keras.layers.Dense(units=1, input_shape=[1])])
 
 model.compile(optimizer='sgd', loss='mean_squared_error')
@@ -422,60 +427,42 @@ ys = np.array([-3.0, -1.0, 1.0, 3.0, 5.0, 7.0], dtype=float)
 
 model.fit(xs, ys, epochs=500)
 
-```   
+print(model.predict(np.array([10.0])))
+print(model.predict(np.array([10.0, 11.0])))
+```
 
-- Line 1 defines a very simple neural network model. 
+- Line 3 defines a very simple neural network model. 
     - `units= 1`: Dimensionality of the output space
     - `input_shape=[1]`: Dimensionality of the input data
-    - We're training a neural network on single x's to predict single y's.
+        - We're training a neural network on single x's to predict single y's.
 
-{% details Example: A neural network %}
-
-
-{% include figure.liquid path="assets/img/courses/csc574/02-ml-paradigm/nn.jpg" max-width="50%" zoomable=true %}
-
-- Hidden Layer 1: `units=4`
-- Hidden Layer 2: `units=4`
-- Output Layer: `units=1`
-
-{% enddetails %}
-- Line 2 compiles the model
+- Line 5 compiles the model
     - Optimizer is defined as `sgd` - Stochastic Gradient Descent. 
     - Loss function is `mean_squared_error` - MSE.
 
-- Lines 5 and 6 define the X and Y arrays to train the models. 
+- Lines 7 and 8 define the X and Y arrays to train the models. 
 - The fitting process runs 500 times (500 epochs)
     - Each epoch is a step:
         - Guess
         - Measure the loss
         - Optimize and repeat
 
-```python linenums="1"
-print(model.predict(np.array([10.0])))
-```
+- We can observe the predicted output by feeding a single value (line 12) or an array of values (line 13)
 
-- By providing an array of test inputs, we can observe the predicted outputs
-
-```python linenums="1"
-print(model.predict(np.array([10.0, 11.0])))
-```
-
-{% enddetails %}
 {% details note Common Layer Type %}
 
 - Dense Layer: neurons from previous layer fully connected to neurons in the next layer
 - Convolutional Layer: contain filters that can be used to transform data
-- Recurrent Layer: allow learning about relationship between data points 
-in a sequence. 
+- Recurrent Layer: allow learning about relationship between data points in a sequence. 
 
 {% enddetails %}
-{% details Question: Exercise %}
 
+{% details Exercise %}
 
 - Replace `SHAPE` and `LOSS` with relevance values for the following segment of code, 
 then run it in a new cell
 
-```python linenums="1"
+```python
 import sys
 
 import numpy as np
@@ -507,4 +494,212 @@ for EPOCH in EPOCH_NUMBERS:
 plt.legend()
 plt.show()
 ```
+
+{% enddetails %}
+
+
+## Complex neural network
+
+{% details note One layer %}
+
+{% include figure.liquid path="assets/img/courses/csc574/03-dl/nn_1-1.jpeg" max-width="50%" zoomable=true %}
+
+- Each neuron:
+    Output = (Weight * Input) + Bias
+
+```python
+my_layer = keras.layers.Dense(units=1, input_shape=[1])
+model = tf.keras.Sequential([my_layer])
+model.compile(optimizer='sgd', loss='mean_squared_error')
+
+xs = np.array([-1.0,  0.0, 1.0, 2.0, 3.0, 4.0], dtype=float)
+ys = np.array([-3.0, -1.0, 1.0, 3.0, 5.0, 7.0], dtype=float)
+
+model.fit(xs, ys, epochs=500)
+```
+
+{% enddetails %}
+
+{% details note Two layers %}
+
+- Two layers
+    - First layer with two neurons
+    - Second layer with one neurons
+
+{% include figure.liquid path="assets/img/courses/csc574/03-dl/nn_2-1.jpeg" max-width="50%" zoomable=true %}
+
+{% details info Code setup %}
+
+```python linenums="1"
+my_layer_1 = keras.layers.Dense(units=2, input_shape=[1])
+my_layer_2 = keras.layers.Dense(units=1)
+
+model = tf.keras.Sequential([my_layer_1, my_layer_2])
+model.compile(optimizer='sgd', loss='mean_squared_error')
+
+xs = np.array([-1.0,  0.0, 1.0, 2.0, 3.0, 4.0], dtype=float)
+ys = np.array([-3.0, -1.0, 1.0, 3.0, 5.0, 7.0], dtype=float)
+
+model.fit(xs, ys, epochs=500)
+```
+
+{% enddetails %}
+
+- Each neuron in the first layers has its own weight/bias and will 
+general one output. 
+- The sole neuron in the second layers will have two inputs, which means
+it will have two weight and one bias. 
+
+{% details info Manual output calculation %}
+
+```python
+value_to_predict = 10.0
+
+layer1_w1 = (my_layer_1.get_weights()[0][0][0])
+layer1_w2 = (my_layer_1.get_weights()[0][0][1])
+layer1_b1 = (my_layer_1.get_weights()[1][0])
+layer1_b2 = (my_layer_1.get_weights()[1][1])
+
+neuron1_output = (layer1_w1 * value_to_predict) + layer1_b1
+neuron2_output = (layer1_w2 * value_to_predict) + layer1_b2
+
+layer2_w1 = (my_layer_2.get_weights()[0][0])
+layer2_w2 = (my_layer_2.get_weights()[0][1])
+layer2_b = (my_layer_2.get_weights()[1][0])
+
+neuron3_output = (layer2_w1 * neuron1_output) + (layer2_w2 * neuron2_output) + layer2_b
+print(neuron3_output)
+```
+
+{% enddetails %}
+
+{% enddetails %}
+
+{% details Question: Validating manual output %}
+
+- Implement the two-layer code setup and the manual output calculation. 
+- Match the manual result with the `model.predict` call for comparison purposes. 
+
+{% enddetails %}
+
+{% details Question: Comparing models %}
+
+- Comparing the results of one-layer and two-layer setup. 
+- Which one is better?
+
+{% enddetails %}
+
+## Introduction to classification
+
+{% details note Overview %}
+
+- Previously: Regression
+    - Fit internal parameters of a function, from X to Y
+    - Using neural network to predict a single value from one or 
+    more inputs. 
+
+{% include figure.liquid path="assets/img/courses/csc574/03-dl/nn_regression.jpeg" max-width="50%" zoomable=true %}
+
+- Another scenario: Classification
+
+{% include figure.liquid path="assets/img/courses/csc574/03-dl/nn_classification.jpeg" max-width="50%" zoomable=true %}
+
+- Output:
+    - Dog: [0,1]
+    - Cat: [1,0]
+
+{% enddetails %}
+
+{% details Example: Hand writing recognition %}
+
+- Output definitions:
+    - \[`1`,0,0,0,0,0,0,0,0,0,0\]: represent images similar to number 0
+    - \[0,`1`,0,0,0,0,0,0,0,0,0\]: represent images similar to number 1
+    - \[0,0,`1`,0,0,0,0,0,0,0,0\]: represent images similar to number 2
+    - \[0,0,0,0,`1`,0,0,0,0,0,0\]: represent images similar to number 3
+    - \[0,0,0,0,0,`1`,0,0,0,0,0\]: represent images similar to number 4
+    - \[0,0,0,0,0,0,`1`,0,0,0,0\]: represent images similar to number 5
+    - \[0,0,0,0,0,0,0,`1`,0,0,0\]: represent images similar to number 6
+    - \[0,0,0,0,0,0,0,0,`1`,0,0\]: represent images similar to number 7
+    - \[0,0,0,0,0,0,0,0,0,`1`,0\]: represent images similar to number 8
+    - \[0,0,0,0,0,0,0,0,0,0,`1`\]: represent images similar to number 9
+
+{% details info Dataset %}
+
+- MNIST dataset, built into Tensorflow
+    - Already split into training and validation images and labels
+    - 60,000 labelled training examples
+    - 10,000 labelled validation examples
+- Each image in MNIST
+    - 28 by 28 pixels
+    - Each pixel is monochrome, therefore the value is 0 to 255
+
+{% include figure.liquid path="assets/img/courses/csc574/03-dl/mnist.jpg" max-width="50%" zoomable=true %}
+
+{% enddetails %}
+
+{% details info Build the model %}
+
+```python
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+data = tf.keras.datasets.mnist
+(training_images, training_labels), (val_images, val_labels) = data.load_data()
+
+training_images  = training_images / 255.0
+val_images = val_images / 255.0
+
+model = tf.keras.models.Sequential([tf.keras.layers.Flatten(input_shape=(28,28)),
+                                    tf.keras.layers.Dense(20, activation=tf.nn.relu),
+                                    tf.keras.layers.Dense(10, activation=tf.nn.softmax)])
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+model.fit(training_images, training_labels, epochs=20, validation_data=(val_images, val_labels))
+model.evaluate(val_images, val_labels)
+
+plt.figure(figsize=(3, 3))
+plt.imshow(val_images[0], cmap='gray')
+
+classifications = model.predict(val_images)
+print(classifications[0])
+print(val_labels[0])
+```
+
+- Lines 4 and 5: Load MNIST dataset from Tensorflow.
+- Lines 7 and 8: normalize pixel values to between 0 and 1. 
+- Line 10: Adding the `Flatten` layer to the model to turn the 2D matrix representing the image into a one-dimensional vector. 
+
+{% include figure.liquid path="assets/img/courses/csc574/03-dl/flatten_01.webp" max-width="50%" zoomable=true %}
+
+- This so that each image data can be fed into the subsequent Dense layers. 
+
+{% include figure.liquid path="assets/img/courses/csc574/03-dl/flatten_02.webp" max-width="50%" zoomable=true %}
+
+- Line 11: Our first Dense layer which has 20 neurons
+    - How to pick optimum number
+        - Too few: not enough to learn about the image
+        - Too many: over specialize, slow to learn
+- Line 12: Our final Dense layer with 10 neurons
+    - Expected 10 values for the output list. 
+- Lines 11 and 12: Activation function
+    - Called by each neuron
+    - The `ReLU` activation function changes any output that is less than 0 to 0.
+        - Commonly used in dense layers,
+        - Introduce a non-linear relationship between the layers to help capturing complex relationships
+    - The `softmax` activation function helps finding the neuron from amongst the 10 that 
+    has the highest value.
+- Lines 13, 14, 15: Compiling
+    - `Adam` optimizer can vary its learning rate to help with faster convergence.
+    - The selected loss function measure loss for categorical data. 
+- Line 16: Training
+    - 20 epochs
+    - train on `training_images` and `training_labels`
+    - `val_images` and `val_labels` are kept for validation
+- Lines 19 and 20: 
+    - Visualizing the actual image that we are trying to classify. 
+- Lines 22, 23, and 24:
+    - Printing the predicted label (classification) generated by the neural network. 
+{% enddetails %}
 {% enddetails %}
