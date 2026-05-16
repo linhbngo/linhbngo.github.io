@@ -1270,11 +1270,11 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/05-ml-paradigm/";
-            },},{id: "csc574-building-blocks-of-deep-learning",
-          title: 'Building Blocks of Deep Learning',
+            },},{id: "csc574-convolution-neural-networks",
+          title: 'Convolution Neural Networks',
           description: "",
           section: "Csc574",handler: () => {
-              window.location.href = "/csc574/06-deep-learning/";
+              window.location.href = "/csc574/06-convolutions/";
             },},{id: "csc574-tensorflow-lite-micro",
           title: 'Tensorflow Lite Micro',
           description: "",
