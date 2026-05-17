@@ -1275,6 +1275,11 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/06-convolutions/";
+            },},{id: "csc574-working-with-image-data",
+          title: 'Working with Image Data',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/07-working-with-image/";
             },},{id: "csc574-tensorflow-lite-micro",
           title: 'Tensorflow Lite Micro',
           description: "",
