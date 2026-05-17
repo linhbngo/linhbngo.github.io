@@ -11,8 +11,8 @@ children:
   - title: CSC 418/587 (dev)
     permalink: /csc418-587/
   - title: divider
-  - title: Big Data Engineering (dev)
-    permalink: /cs-big-data-engineering/
+  - title: Big Data Engineering
+    permalink: /csc467/
   - title: divider
   - title: Introduction to Cloud
     permalink: /csc468/
