@@ -15,35 +15,10 @@ chart:
 tikzjax: true
 typograms: true
 toc:
-  - name: Initial preparation
   - name: Matrix-vector multiplication
   - name: Analyzing text data (not using Spark SQL)
 ---
 
-## Initial preparation
-
-- The code instructions here is meant for Spark running on local devices. 
-    - If you are using Colab or Kaggle, make sure that you prepare your notebook with instructions in the Setup lecture. 
-- Each segment of codes in this lecture is meant to be run 
-on a separate Jupyter notebook cell. The ordering is important!
-
-```python linenums="1"
-import sys
-import os
-sys.path.insert(0, '/opt/spark/python')
-sys.path.insert(0, '/opt/spark/python/lib/py4j-0.10.9.7-src.zip')
-os.environ['SPARK_HOME'] = '/opt/spark'
-
-import pyspark
-
-conf = pyspark.SparkConf()
-conf.setMaster("spark://spark-master:7077")
-conf.set("spark.driver.memory","1g")
-
-sc = pyspark.SparkContext(conf=conf)
-```
-
----
 
 ## Matrix-vector multiplication
 

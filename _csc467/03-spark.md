@@ -44,7 +44,7 @@ data processing on computer clusters.
 
 - Research project at UC Berkeley AMP Lab in 2009 to address drawbacks of 
 Hadoop MapReduce. 
-- Paper published in 2010: [Spark: Cluster Computing with Working Sets](files/Zaharia.pdf) 
+- Paper published in 2010: [Spark: Cluster Computing with Working Sets](https://www.usenix.org/legacy/event/hotcloud10/tech/full_papers/Zaharia.pdf) 
 - Source code is contributed to Apache in 2013. The project had more than 100 
 contributors from more than 30 organizations outside UC Berkeley. 
 - Version 1.0 was released in 2014. 
@@ -52,6 +52,7 @@ contributors from more than 30 organizations outside UC Berkeley.
 (NASA, CERN, Uber, Netflix …). 
 
 {% enddetails %}
+
 {% details A workflow system %}
 
 - A more advanced workflow system
