@@ -19,7 +19,6 @@ toc:
   - name: Matrix-vector multiplication
   - name: Analyzing text data (not using Spark SQL)
 ---
-# Data Parallel Computing with Spark
 
 ## Initial preparation
 

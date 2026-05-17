@@ -17,10 +17,9 @@ typograms: true
 toc:
   - name: What is Spark?
   - name: Programming for Spark Computing Environment
-  - name: 'Hands-on: Word Count in Spark'
+  - name: Word Count in Spark
   - name: Challenges
 ---
-# Spark Computing Environment
 
 ## What is Spark?
 
@@ -179,7 +178,7 @@ Hadoop-supported file system. Spark will call toString on each element to conver
 to a line of text in the file.
 
 {% enddetails %}
-## Hands-on: Word Count in Spark
+## Word Count in Spark
 
 {% details Preparation %}
 
