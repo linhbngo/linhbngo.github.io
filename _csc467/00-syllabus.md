@@ -17,11 +17,11 @@ typograms: true
 toc:
   - name: General Information
   - name: Course Information
-  - name: 'Required Materials:'
-  - name: 'Resources and Accessibility:'
+  - name: Required Materials
+  - name: Resources and Accessibility
   - name: Course Description
   - name: Learning Objectives
-  - name: 'Assessments and Grading:'
+  - name: Assessments and Grading
   - name: Course Topics and Schedules
 ---
 ## General Information
@@ -39,14 +39,14 @@ toc:
   - All class materials and recorded links to the lectures will be provided via D2L. 
 
 
-## Required Materials:
+## Required Materials
 
 - **Mining of Massive Datasets**. Julre Leskovec, Anand Rajaraman, 
 and Jeffrey David Ullman.
 - [Author’s Textbook Download Page](https://www.mmds.org/).
 
 
-## Resources and Accessibility:
+## Resources and Accessibility
 
 - For general technical support, students can contact WCU IT 
 HelpDesk at 610-436-3350 or via email: helpdesk@wcupa.edu.
@@ -92,9 +92,9 @@ other relevant disciplines to identify solutions (ABET 1).
 of computing requirements in the context of the program’s discipline (ABET 2).
 
 
-## Assessments and Grading:
+## Assessments and Grading
 
-### Grade Scale:
+### Grade Scale
 
 <table
   data-toggle="table"
