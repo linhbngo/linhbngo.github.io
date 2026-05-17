@@ -16,7 +16,6 @@ tikzjax: true
 typograms: true
 
 toc:
-
   - name: Overview
   - name: Convolutional Neural Networks
   - name: CNN in Tensorflow
