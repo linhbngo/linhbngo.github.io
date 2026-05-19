@@ -128,7 +128,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc574/";
               },
-            },{id: "post-unvibe-the-vibe-learning-by-deconstruction-in-the-age-of-ai",
+            },{id: "post-modern-cs-the-age-of-minors-and-certificates",
+        
+          title: "Modern CS: The Age of Minors and Certificates",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/ai-engineers/";
+          
+        },
+      },{id: "post-unvibe-the-vibe-learning-by-deconstruction-in-the-age-of-ai",
         
           title: "Unvibe the Vibe: Learning by Deconstruction in the Age of AI",
         
