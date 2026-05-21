@@ -1,0 +1,27 @@
+# Local Jekyll/al-folio toolchain isolated in a conda env.
+# Ruby version aligned with .github/workflows/deploy.yml (3.3.5).
+# System deps aligned with Dockerfile / devcontainer (ImageMagick, Node, nbconvert).
+#
+# Supported platforms: macOS, Linux, WSL2 on Windows.
+# On Windows, use WSL2 — see INSTALL_LOCAL.md (do not use native Windows conda).
+#
+# Create:  conda env create -f environment.yml
+# Finish:  bash bin/setup-conda-env.sh
+# Daily:   conda activate linhbngo-jekyll && bundle exec jekyll serve
+
+name: linhbngo-jekyll
+channels:
+  - conda-forge
+dependencies:
+  - ruby=3.3.6
+  - nodejs>=20
+  - imagemagick
+  - git
+  - compilers
+  - cxx-compiler
+  - c-compiler
+  - zlib
+  - python=3.13
+  - pip
+  - pip:
+      - nbconvert
