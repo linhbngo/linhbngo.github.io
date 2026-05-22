@@ -91,64 +91,37 @@ We will use the [Horses or Humans dataset](https://laurencemoroney.com/datasets.
 
 {% details Data acquisition %}
 
-Create a directory called `data` in the same directory as the notebook or script. Then download the training and validation zip files:
+- Use the `data` directory inside the main `tinyml` directory. The contents in here are gitignored 
+so that it will not accidentally be uploaded if you decide to fork `tinyml`. 
+- Download the training and validation zip files and unzip them inside these directories. 
+    - [Training data](https://storage.googleapis.com/learning-datasets/horse-or-human.zip)
+    - [Validation data](https://storage.googleapis.com/learning-datasets/validation-horse-or-human.zip)
 
-- Training data: `https://storage.googleapis.com/learning-datasets/horse-or-human.zip`
-- Validation data: `https://storage.googleapis.com/learning-datasets/validation-horse-or-human.zip`
+{% include figure.liquid path="assets/img/courses/csc574/07-working-images/data-horses-humans.png" max-width="25%" zoomable=true %}
 
-The following code assumes the two zip files already exist in `./data/`.
+The following code segment in the `working-image.ipynb` notebook inside `python/notebooks/` will 
+automatically extract the data
 
 ```python
 import os
 import zipfile
 
-os.makedirs("./data", exist_ok=True)
+data_path = "../../data/"
 
-with zipfile.ZipFile("./data/horse-or-human.zip", "r") as zip_ref:
-    zip_ref.extractall("./data/horse-or-human")
+with zipfile.ZipFile(os.path.join(data_path, "horse-or-human.zip"), "r") as zip_ref:
+    zip_ref.extractall(os.path.join(data_path, "horse-or-human"))
 
-with zipfile.ZipFile("./data/validation-horse-or-human.zip", "r") as zip_ref:
-    zip_ref.extractall("./data/validation-horse-or-human")
+with zipfile.ZipFile(os.path.join(data_path, "validation-horse-or-human.zip"), "r") as zip_ref:
+    zip_ref.extractall(os.path.join(data_path, "validation-horse-or-human"))
 ```
 
-If students are working in a fresh environment, the following version downloads the files first:
+We can confirm the existence of data in the next cell
 
 ```python
-import os
-import urllib.request
-import zipfile
-
-os.makedirs("./data", exist_ok=True)
-
-files = {
-    "./data/horse-or-human.zip": "https://storage.googleapis.com/learning-datasets/horse-or-human.zip",
-    "./data/validation-horse-or-human.zip": "https://storage.googleapis.com/learning-datasets/validation-horse-or-human.zip",
-}
-
-for local_path, url in files.items():
-    if not os.path.exists(local_path):
-        urllib.request.urlretrieve(url, local_path)
-
-with zipfile.ZipFile("./data/horse-or-human.zip", "r") as zip_ref:
-    zip_ref.extractall("./data/horse-or-human")
-
-with zipfile.ZipFile("./data/validation-horse-or-human.zip", "r") as zip_ref:
-    zip_ref.extractall("./data/validation-horse-or-human")
-```
-
-{% enddetails %}
-
-{% details Inspect the directory contents %}
-
-Before training, we should confirm that the files are where we expect them to be.
-
-```python
-import os
-
-train_horse_dir = os.path.join("./data/horse-or-human/horses")
-train_human_dir = os.path.join("./data/horse-or-human/humans")
-validation_horse_dir = os.path.join("./data/validation-horse-or-human/horses")
-validation_human_dir = os.path.join("./data/validation-horse-or-human/humans")
+train_horse_dir = os.path.join(data_path,"horse-or-human/horses")
+train_human_dir = os.path.join(data_path,"horse-or-human/humans")
+validation_horse_dir = os.path.join(data_path,"validation-horse-or-human/horses")
+validation_human_dir = os.path.join(data_path,"validation-horse-or-human/humans")
 
 train_horse_names = os.listdir(train_horse_dir)
 train_human_names = os.listdir(train_human_dir)
@@ -257,33 +230,33 @@ In this example, each image is resized to `100x100`, and pixel values are rescal
 ```python
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# Start with only rescaling.
-# Later, we can uncomment augmentation options to reduce overfitting.
+# All images will be augmented according to whichever lines are uncommented
+# below. We can first try without any of the augmentation beyond the rescaling
 train_datagen = ImageDataGenerator(
-    rescale=1.0 / 255,
-    # rotation_range=40,
-    # width_shift_range=0.2,
-    # height_shift_range=0.2,
-    # shear_range=0.2,
-    # zoom_range=0.2,
-    # horizontal_flip=True,
-    # fill_mode="nearest"
-)
+      rescale=1./255,
+      #rotation_range=40,
+      #width_shift_range=0.2,
+      #height_shift_range=0.2,
+      #shear_range=0.2,
+      #zoom_range=0.2,
+      #horizontal_flip=True,
+      #fill_mode='nearest'
+      )
 
+# Flow training images in batches of 128 using train_datagen generator
 train_generator = train_datagen.flow_from_directory(
-    "./data/horse-or-human/",
-    target_size=(100, 100),
-    batch_size=128,
-    class_mode="binary"
-)
+        os.path.join(data_path, "horse-or-human"),  # This is the source directory for training images
+        target_size=(100, 100),  # All images will be resized to 100x100
+        batch_size=128,
+        # Since we use binary_crossentropy loss, we need binary labels
+        class_mode='binary')
 
-validation_datagen = ImageDataGenerator(rescale=1.0 / 255)
+validation_datagen = ImageDataGenerator(rescale=1./255)
 
 validation_generator = validation_datagen.flow_from_directory(
-    "./data/validation-horse-or-human",
-    target_size=(100, 100),
-    class_mode="binary"
-)
+        os.path.join(data_path, "validation-horse-or-human"),
+        target_size=(100, 100),
+        class_mode='binary')
 ```
 
 - `rescale=1.0 / 255` normalizes pixel values.
@@ -574,7 +547,7 @@ TensorFlow provides many optimizer and loss function options:
 - [Optimizers](https://www.tensorflow.org/api_docs/python/tf/keras/optimizers)
 - [Loss functions](https://www.tensorflow.org/api_docs/python/tf/keras/losses)
 
-The important habit is not to memorize every option. The important habit is to match the final layer, loss function, and label format.
+The important habit is to match the final layer, loss function, and label format.
 
 | Problem type | Final layer | Common loss | Label format |
 |---|---|---|---|
@@ -596,40 +569,9 @@ The dataset contains `224x224` color images of bean plants from Uganda. The goal
 
 Data downloads:
 
-- Training data: `https://storage.googleapis.com/learning-datasets/beans/train.zip`
-- Validation data: `https://storage.googleapis.com/learning-datasets/beans/validation.zip`
-- Test data: `https://storage.googleapis.com/learning-datasets/beans/test.zip`
-
-{% details Download and extract the bean dataset %}
-
-```python
-import os
-import urllib.request
-import zipfile
-
-os.makedirs("./data/beans", exist_ok=True)
-
-files = {
-    "./data/beans/train.zip": "https://storage.googleapis.com/learning-datasets/beans/train.zip",
-    "./data/beans/validation.zip": "https://storage.googleapis.com/learning-datasets/beans/validation.zip",
-    "./data/beans/test.zip": "https://storage.googleapis.com/learning-datasets/beans/test.zip",
-}
-
-for local_path, url in files.items():
-    if not os.path.exists(local_path):
-        urllib.request.urlretrieve(url, local_path)
-
-with zipfile.ZipFile("./data/beans/train.zip", "r") as zip_ref:
-    zip_ref.extractall("./data/beans/train")
-
-with zipfile.ZipFile("./data/beans/validation.zip", "r") as zip_ref:
-    zip_ref.extractall("./data/beans/validation")
-
-with zipfile.ZipFile("./data/beans/test.zip", "r") as zip_ref:
-    zip_ref.extractall("./data/beans/test")
-```
-
-{% enddetails %}
+- [Training data](https://storage.googleapis.com/learning-datasets/beans/train.zip)
+- [Validation data](https://storage.googleapis.com/learning-datasets/beans/validation.zip)
+- [Test data](https://storage.googleapis.com/learning-datasets/beans/test.zip)
 
 {% details Starter code: data generators %}
 
@@ -678,8 +620,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 train_datagen = ImageDataGenerator(rescale=1.0 / 255)
 validation_datagen = ImageDataGenerator(rescale=1.0 / 255)
 
-TRAIN_DIRECTORY_LOCATION = "./data/beans/train"
-VAL_DIRECTORY_LOCATION = "./data/beans/validation"
+TRAIN_DIRECTORY_LOCATION = 
+VAL_DIRECTORY_LOCATION = 
 TARGET_SIZE = (224, 224)
 CLASS_MODE = "categorical"
 
@@ -834,7 +776,7 @@ The original hands-on notebook includes a test data link. A responsible workflow
 ```python
 test_datagen = ImageDataGenerator(rescale=1.0 / 255)
 
-TEST_DIRECTORY_LOCATION = "./data/beans/test"
+TEST_DIRECTORY_LOCATION = 
 
 # For final evaluation, do not shuffle the test set.
 test_generator = test_datagen.flow_from_directory(
