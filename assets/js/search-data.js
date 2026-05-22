@@ -1291,6 +1291,11 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/07-working-with-image/";
+            },},{id: "csc574-bluetooth-low-energy-connection",
+          title: 'Bluetooth Low Energy Connection',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/08-ble/";
             },},{id: "csc574-tensorflow-lite-micro",
           title: 'Tensorflow Lite Micro',
           description: "",

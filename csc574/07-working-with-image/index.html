@@ -4,7 +4,7 @@
       {
             "title": "Working with Image Data",
             "description": "",
-            "published": "May 21, 2026",
+            "published": "May 22, 2026",
             "authors": [
               
             ],
@@ -54,7 +54,7 @@
     humans/
       human01.png
       human02.png
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Each subdirectory name becomes a class label. <ul> <li>Images inside <code class="language-plaintext highlighter-rouge">horses/</code> are labeled as horses.</li> <li>Images inside <code class="language-plaintext highlighter-rouge">humans/</code> are labeled as humans.</li> </ul> </li> <li>The same structure is used for both training and validation data.</li> </ul> </details> <h2 id="horse-or-human-classifier">Horse or Human Classifier</h2> <p>We will use the <a href="https://laurencemoroney.com/datasets.html#horses-or-humans-dataset" rel="external nofollow noopener" target="_blank">Horses or Humans dataset</a>. This dataset contains color images of horses and humans in different poses and backgrounds.</p> <details class="details details--default" data-variant="default"><summary>Data acquisition</summary> <p>Create a directory called <code class="language-plaintext highlighter-rouge">data</code> in the same directory as the notebook or script. Then download the training and validation zip files:</p> <ul> <li>Training data: <code class="language-plaintext highlighter-rouge">https://storage.googleapis.com/learning-datasets/horse-or-human.zip</code> </li> <li>Validation data: <code class="language-plaintext highlighter-rouge">https://storage.googleapis.com/learning-datasets/validation-horse-or-human.zip</code> </li> </ul> <p>The following code assumes the two zip files already exist in <code class="language-plaintext highlighter-rouge">./data/</code>.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Each subdirectory name becomes a class label. <ul> <li>Images inside <code class="language-plaintext highlighter-rouge">horses/</code> are labeled as horses.</li> <li>Images inside <code class="language-plaintext highlighter-rouge">humans/</code> are labeled as humans.</li> </ul> </li> <li>The same structure is used for both training and validation data.</li> </ul> </details> <h2 id="horse-or-human-classifier">Horse or Human Classifier</h2> <p>We will use the <a href="https://laurencemoroney.com/datasets.html#horses-or-humans-dataset" rel="external nofollow noopener" target="_blank">Horses or Humans dataset</a>. This dataset contains color images of horses and humans in different poses and backgrounds.</p> <details class="details details--default" data-variant="default"><summary>Data acquisition</summary> <ul> <li>Use the <code class="language-plaintext highlighter-rouge">data</code> directory inside the main <code class="language-plaintext highlighter-rouge">tinyml</code> directory. The contents in here are gitignored so that it will not accidentally be uploaded if you decide to fork <code class="language-plaintext highlighter-rouge">tinyml</code>.</li> <li>Download the training and validation zip files and unzip them inside these directories. <ul> <li><a href="https://storage.googleapis.com/learning-datasets/horse-or-human.zip" rel="external nofollow noopener" target="_blank">Training data</a></li> <li><a href="https://storage.googleapis.com/learning-datasets/validation-horse-or-human.zip" rel="external nofollow noopener" target="_blank">Validation data</a></li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc574/07-working-images/data-horses-humans-480.webp 480w,/assets/img/courses/csc574/07-working-images/data-horses-humans-800.webp 800w,/assets/img/courses/csc574/07-working-images/data-horses-humans-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc574/07-working-images/data-horses-humans.png" width="100%" height="auto" style=" max-width: 25%; " data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>The following code segment in the <code class="language-plaintext highlighter-rouge">working-image.ipynb</code> notebook inside <code class="language-plaintext highlighter-rouge">python/notebooks/</code> will automatically extract the data</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -68,14 +68,14 @@
 </pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="n">os</span>
 <span class="kn">import</span> <span class="n">zipfile</span>
 
-<span class="n">os</span><span class="p">.</span><span class="nf">makedirs</span><span class="p">(</span><span class="sh">"</span><span class="s">./data</span><span class="sh">"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="sh">"</span><span class="s">../../data/</span><span class="sh">"</span>
 
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/horse-or-human.zip</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/horse-or-human</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="sh">"</span><span class="s">horse-or-human.zip</span><span class="sh">"</span><span class="p">),</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="sh">"</span><span class="s">horse-or-human</span><span class="sh">"</span><span class="p">))</span>
 
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/validation-horse-or-human.zip</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/validation-horse-or-human</span><span class="sh">"</span><span class="p">)</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>If students are working in a fresh environment, the following version downloads the files first:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="sh">"</span><span class="s">validation-horse-or-human.zip</span><span class="sh">"</span><span class="p">),</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="sh">"</span><span class="s">validation-horse-or-human</span><span class="sh">"</span><span class="p">))</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>We can confirm the existence of data in the next cell</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -90,55 +90,10 @@
 12
 13
 14
-15
-16
-17
-18
-19
-20
-</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="n">os</span>
-<span class="kn">import</span> <span class="n">urllib.request</span>
-<span class="kn">import</span> <span class="n">zipfile</span>
-
-<span class="n">os</span><span class="p">.</span><span class="nf">makedirs</span><span class="p">(</span><span class="sh">"</span><span class="s">./data</span><span class="sh">"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">files</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="sh">"</span><span class="s">./data/horse-or-human.zip</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">https://storage.googleapis.com/learning-datasets/horse-or-human.zip</span><span class="sh">"</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">./data/validation-horse-or-human.zip</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">https://storage.googleapis.com/learning-datasets/validation-horse-or-human.zip</span><span class="sh">"</span><span class="p">,</span>
-<span class="p">}</span>
-
-<span class="k">for</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">files</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">local_path</span><span class="p">):</span>
-        <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="nf">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_path</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/horse-or-human.zip</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/horse-or-human</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/validation-horse-or-human.zip</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/validation-horse-or-human</span><span class="sh">"</span><span class="p">)</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Inspect the directory contents</summary> <p>Before training, we should confirm that the files are where we expect them to be.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="n">os</span>
-
-<span class="n">train_horse_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/horse-or-human/horses</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">train_human_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/horse-or-human/humans</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">validation_horse_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/validation-horse-or-human/horses</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">validation_human_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/validation-horse-or-human/humans</span><span class="sh">"</span><span class="p">)</span>
+</pre></td> <td class="rouge-code"><pre><span class="n">train_horse_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span><span class="sh">"</span><span class="s">horse-or-human/horses</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">train_human_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span><span class="sh">"</span><span class="s">horse-or-human/humans</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">validation_horse_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span><span class="sh">"</span><span class="s">validation-horse-or-human/horses</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">validation_human_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span><span class="sh">"</span><span class="s">validation-horse-or-human/humans</span><span class="sh">"</span><span class="p">)</span>
 
 <span class="n">train_horse_names</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="nf">listdir</span><span class="p">(</span><span class="n">train_horse_dir</span><span class="p">)</span>
 <span class="n">train_human_names</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="nf">listdir</span><span class="p">(</span><span class="n">train_human_dir</span><span class="p">)</span>
@@ -271,33 +226,33 @@
 29
 </pre></td> <td class="rouge-code"><pre><span class="kn">from</span> <span class="n">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
 
-<span class="c1"># Start with only rescaling.
-# Later, we can uncomment augmentation options to reduce overfitting.
+<span class="c1"># All images will be augmented according to whichever lines are uncommented
+# below. We can first try without any of the augmentation beyond the rescaling
 </span><span class="n">train_datagen</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span>
-    <span class="n">rescale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">255</span><span class="p">,</span>
-    <span class="c1"># rotation_range=40,
-</span>    <span class="c1"># width_shift_range=0.2,
-</span>    <span class="c1"># height_shift_range=0.2,
-</span>    <span class="c1"># shear_range=0.2,
-</span>    <span class="c1"># zoom_range=0.2,
-</span>    <span class="c1"># horizontal_flip=True,
-</span>    <span class="c1"># fill_mode="nearest"
-</span><span class="p">)</span>
+      <span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span>
+      <span class="c1">#rotation_range=40,
+</span>      <span class="c1">#width_shift_range=0.2,
+</span>      <span class="c1">#height_shift_range=0.2,
+</span>      <span class="c1">#shear_range=0.2,
+</span>      <span class="c1">#zoom_range=0.2,
+</span>      <span class="c1">#horizontal_flip=True,
+</span>      <span class="c1">#fill_mode='nearest'
+</span>      <span class="p">)</span>
 
-<span class="n">train_generator</span> <span class="o">=</span> <span class="n">train_datagen</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span>
-    <span class="sh">"</span><span class="s">./data/horse-or-human/</span><span class="sh">"</span><span class="p">,</span>
-    <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-    <span class="n">class_mode</span><span class="o">=</span><span class="sh">"</span><span class="s">binary</span><span class="sh">"</span>
-<span class="p">)</span>
+<span class="c1"># Flow training images in batches of 128 using train_datagen generator
+</span><span class="n">train_generator</span> <span class="o">=</span> <span class="n">train_datagen</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="sh">"</span><span class="s">horse-or-human</span><span class="sh">"</span><span class="p">),</span>  <span class="c1"># This is the source directory for training images
+</span>        <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>  <span class="c1"># All images will be resized to 100x100
+</span>        <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="c1"># Since we use binary_crossentropy loss, we need binary labels
+</span>        <span class="n">class_mode</span><span class="o">=</span><span class="sh">'</span><span class="s">binary</span><span class="sh">'</span><span class="p">)</span>
 
-<span class="n">validation_datagen</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">validation_datagen</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span>
 
 <span class="n">validation_generator</span> <span class="o">=</span> <span class="n">validation_datagen</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span>
-    <span class="sh">"</span><span class="s">./data/validation-horse-or-human</span><span class="sh">"</span><span class="p">,</span>
-    <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-    <span class="n">class_mode</span><span class="o">=</span><span class="sh">"</span><span class="s">binary</span><span class="sh">"</span>
-<span class="p">)</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="sh">"</span><span class="s">validation-horse-or-human</span><span class="sh">"</span><span class="p">),</span>
+        <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+        <span class="n">class_mode</span><span class="o">=</span><span class="sh">'</span><span class="s">binary</span><span class="sh">'</span><span class="p">)</span>
 </pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">rescale=1.0 / 255</code> normalizes pixel values.</li> <li> <code class="language-plaintext highlighter-rouge">target_size=(100, 100)</code> resizes every image.</li> <li> <code class="language-plaintext highlighter-rouge">batch_size=128</code> controls how many images are passed through the model at a time.</li> <li> <code class="language-plaintext highlighter-rouge">class_mode="binary"</code> tells TensorFlow that there are two classes.</li> </ul> </details> <h2 id="training-and-prediction">Training and Prediction</h2> <details class="details details--default" data-variant="default"><summary>Train the model</summary> <p>Training this model may take a little while because we are now using a larger CNN and real image files.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -545,56 +500,7 @@
     <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
     <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="nc">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">softmax</span><span class="p">)</span>
 <span class="p">])</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Dropout is applied during training.</li> <li>During prediction, the full network is used.</li> <li>The dropout value is a hyperparameter that should be tested.</li> <li>If training accuracy is much higher than validation accuracy, dropout may help.</li> </ul> <p>Reference: <a href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf" rel="external nofollow noopener" target="_blank">Nitish Srivastava et al. Dropout: A Simple Way to Prevent Neural Networks from Overfitting, 2014</a></p> </details> <details class="details details--default" data-variant="default"><summary>Optimizers and loss functions</summary> <p>TensorFlow provides many optimizer and loss function options:</p> <ul> <li><a href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers" rel="external nofollow noopener" target="_blank">Optimizers</a></li> <li><a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses" rel="external nofollow noopener" target="_blank">Loss functions</a></li> </ul> <p>The important habit is not to memorize every option. The important habit is to match the final layer, loss function, and label format.</p> <table> <thead> <tr> <th>Problem type</th> <th>Final layer</th> <th>Common loss</th> <th>Label format</th> </tr> </thead> <tbody> <tr> <td>Binary classification</td> <td><code class="language-plaintext highlighter-rouge">Dense(1, activation="sigmoid")</code></td> <td><code class="language-plaintext highlighter-rouge">binary_crossentropy</code></td> <td> <code class="language-plaintext highlighter-rouge">0</code> or <code class="language-plaintext highlighter-rouge">1</code> </td> </tr> <tr> <td>Multi-class classification with integer labels</td> <td><code class="language-plaintext highlighter-rouge">Dense(num_classes, activation="softmax")</code></td> <td><code class="language-plaintext highlighter-rouge">sparse_categorical_crossentropy</code></td> <td> <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">1</code>, <code class="language-plaintext highlighter-rouge">2</code>, …</td> </tr> <tr> <td>Multi-class classification with one-hot labels</td> <td><code class="language-plaintext highlighter-rouge">Dense(num_classes, activation="softmax")</code></td> <td><code class="language-plaintext highlighter-rouge">categorical_crossentropy</code></td> <td> <code class="language-plaintext highlighter-rouge">[1,0,0]</code>, <code class="language-plaintext highlighter-rouge">[0,1,0]</code>, …</td> </tr> </tbody> </table> </details> <h2 id="hands-on-bean-disease-classifier">Hands-on: Bean Disease Classifier</h2> <p>In this activity, students adapt the image-classification workflow to a new dataset: bean leaf disease classification.</p> <p>The dataset contains <code class="language-plaintext highlighter-rouge">224x224</code> color images of bean plants from Uganda. The goal is to classify leaves into three categories:</p> <ul> <li>Healthy</li> <li>Bean rust</li> <li>Angular leaf spot</li> </ul> <p>Data downloads:</p> <ul> <li>Training data: <code class="language-plaintext highlighter-rouge">https://storage.googleapis.com/learning-datasets/beans/train.zip</code> </li> <li>Validation data: <code class="language-plaintext highlighter-rouge">https://storage.googleapis.com/learning-datasets/beans/validation.zip</code> </li> <li>Test data: <code class="language-plaintext highlighter-rouge">https://storage.googleapis.com/learning-datasets/beans/test.zip</code> </li> </ul> <details class="details details--default" data-variant="default"><summary>Download and extract the bean dataset</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="n">os</span>
-<span class="kn">import</span> <span class="n">urllib.request</span>
-<span class="kn">import</span> <span class="n">zipfile</span>
-
-<span class="n">os</span><span class="p">.</span><span class="nf">makedirs</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/beans</span><span class="sh">"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">files</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="sh">"</span><span class="s">./data/beans/train.zip</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">https://storage.googleapis.com/learning-datasets/beans/train.zip</span><span class="sh">"</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">./data/beans/validation.zip</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">https://storage.googleapis.com/learning-datasets/beans/validation.zip</span><span class="sh">"</span><span class="p">,</span>
-    <span class="sh">"</span><span class="s">./data/beans/test.zip</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">https://storage.googleapis.com/learning-datasets/beans/test.zip</span><span class="sh">"</span><span class="p">,</span>
-<span class="p">}</span>
-
-<span class="k">for</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">files</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="n">local_path</span><span class="p">):</span>
-        <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="nf">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">local_path</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/beans/train.zip</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/beans/train</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/beans/validation.zip</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/beans/validation</span><span class="sh">"</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">zipfile</span><span class="p">.</span><span class="nc">ZipFile</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/beans/test.zip</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">r</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-    <span class="n">zip_ref</span><span class="p">.</span><span class="nf">extractall</span><span class="p">(</span><span class="sh">"</span><span class="s">./data/beans/test</span><span class="sh">"</span><span class="p">)</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Starter code: data generators</summary> <p>Fill in the missing values. The hint from the notebook still applies: we do not want abnormal data, so the first preprocessing step should normalize pixel values.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Dropout is applied during training.</li> <li>During prediction, the full network is used.</li> <li>The dropout value is a hyperparameter that should be tested.</li> <li>If training accuracy is much higher than validation accuracy, dropout may help.</li> </ul> <p>Reference: <a href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf" rel="external nofollow noopener" target="_blank">Nitish Srivastava et al. Dropout: A Simple Way to Prevent Neural Networks from Overfitting, 2014</a></p> </details> <details class="details details--default" data-variant="default"><summary>Optimizers and loss functions</summary> <p>TensorFlow provides many optimizer and loss function options:</p> <ul> <li><a href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers" rel="external nofollow noopener" target="_blank">Optimizers</a></li> <li><a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses" rel="external nofollow noopener" target="_blank">Loss functions</a></li> </ul> <p>The important habit is to match the final layer, loss function, and label format.</p> <table> <thead> <tr> <th>Problem type</th> <th>Final layer</th> <th>Common loss</th> <th>Label format</th> </tr> </thead> <tbody> <tr> <td>Binary classification</td> <td><code class="language-plaintext highlighter-rouge">Dense(1, activation="sigmoid")</code></td> <td><code class="language-plaintext highlighter-rouge">binary_crossentropy</code></td> <td> <code class="language-plaintext highlighter-rouge">0</code> or <code class="language-plaintext highlighter-rouge">1</code> </td> </tr> <tr> <td>Multi-class classification with integer labels</td> <td><code class="language-plaintext highlighter-rouge">Dense(num_classes, activation="softmax")</code></td> <td><code class="language-plaintext highlighter-rouge">sparse_categorical_crossentropy</code></td> <td> <code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">1</code>, <code class="language-plaintext highlighter-rouge">2</code>, …</td> </tr> <tr> <td>Multi-class classification with one-hot labels</td> <td><code class="language-plaintext highlighter-rouge">Dense(num_classes, activation="softmax")</code></td> <td><code class="language-plaintext highlighter-rouge">categorical_crossentropy</code></td> <td> <code class="language-plaintext highlighter-rouge">[1,0,0]</code>, <code class="language-plaintext highlighter-rouge">[0,1,0]</code>, …</td> </tr> </tbody> </table> </details> <h2 id="hands-on-bean-disease-classifier">Hands-on: Bean Disease Classifier</h2> <p>In this activity, students adapt the image-classification workflow to a new dataset: bean leaf disease classification.</p> <p>The dataset contains <code class="language-plaintext highlighter-rouge">224x224</code> color images of bean plants from Uganda. The goal is to classify leaves into three categories:</p> <ul> <li>Healthy</li> <li>Bean rust</li> <li>Angular leaf spot</li> </ul> <p>Data downloads:</p> <ul> <li><a href="https://storage.googleapis.com/learning-datasets/beans/train.zip" rel="external nofollow noopener" target="_blank">Training data</a></li> <li><a href="https://storage.googleapis.com/learning-datasets/beans/validation.zip" rel="external nofollow noopener" target="_blank">Validation data</a></li> <li><a href="https://storage.googleapis.com/learning-datasets/beans/test.zip" rel="external nofollow noopener" target="_blank">Test data</a></li> </ul> <details class="details details--default" data-variant="default"><summary>Starter code: data generators</summary> <p>Fill in the missing values. The hint from the notebook still applies: we do not want abnormal data, so the first preprocessing step should normalize pixel values.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -680,8 +586,8 @@
 <span class="n">train_datagen</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
 <span class="n">validation_datagen</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
 
-<span class="n">TRAIN_DIRECTORY_LOCATION</span> <span class="o">=</span> <span class="sh">"</span><span class="s">./data/beans/train</span><span class="sh">"</span>
-<span class="n">VAL_DIRECTORY_LOCATION</span> <span class="o">=</span> <span class="sh">"</span><span class="s">./data/beans/validation</span><span class="sh">"</span>
+<span class="n">TRAIN_DIRECTORY_LOCATION</span> <span class="o">=</span> 
+<span class="n">VAL_DIRECTORY_LOCATION</span> <span class="o">=</span> 
 <span class="n">TARGET_SIZE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
 <span class="n">CLASS_MODE</span> <span class="o">=</span> <span class="sh">"</span><span class="s">categorical</span><span class="sh">"</span>
 
@@ -855,7 +761,7 @@
 16
 </pre></td> <td class="rouge-code"><pre><span class="n">test_datagen</span> <span class="o">=</span> <span class="nc">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
 
-<span class="n">TEST_DIRECTORY_LOCATION</span> <span class="o">=</span> <span class="sh">"</span><span class="s">./data/beans/test</span><span class="sh">"</span>
+<span class="n">TEST_DIRECTORY_LOCATION</span> <span class="o">=</span> 
 
 <span class="c1"># For final evaluation, do not shuffle the test set.
 </span><span class="n">test_generator</span> <span class="o">=</span> <span class="n">test_datagen</span><span class="p">.</span><span class="nf">flow_from_directory</span><span class="p">(</span>
