@@ -557,7 +557,7 @@ The important habit is to match the final layer, loss function, and label format
 
 {% enddetails %}
 
-## Hands-on: Bean Disease Classifier
+## Bean Disease Classifier
 
 In this activity, students adapt the image-classification workflow to a new dataset: bean leaf disease classification.
 
