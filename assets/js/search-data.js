@@ -1296,6 +1296,16 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/08-ble/";
+            },},{id: "csc574-introduction-to-tensorflow-lite",
+          title: 'Introduction to TensorFlow Lite',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/09-tflite/";
+            },},{id: "csc574-course-project",
+          title: 'Course Project',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/10-project/";
             },},{id: "csc574-tensorflow-lite-micro",
           title: 'Tensorflow Lite Micro',
           description: "",
