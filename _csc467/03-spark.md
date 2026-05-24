@@ -18,7 +18,6 @@ toc:
   - name: What is Spark?
   - name: Programming for Spark Computing Environment
   - name: Word Count in Spark
-  - name: Challenges
 ---
 
 ## What is Spark?
@@ -202,92 +201,93 @@ Run the setup scripts
 
 {% enddetails %}
 
-{% details Getting data %}
-
-- Depending on whether you are on Google Colab, Kaggle, or local device, the download location 
-of the files will differ. 
-- Direct download link: https://drive.google.com/uc?export=download&id=1oKnG6y2mkKcaPSZEJM9ZjQ7UXo4SzP7I
-
-```python
-!wget -O 100-0.txt --no-check-certificate 'https://drive.google.com/uc?export=download&id=1oKnG6y2mkKcaPSZEJM9ZjQ7UXo4SzP7I'
-```
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/getting_data.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
-
-{% enddetails %}
 {% details Running WordCount %}
 
-- Enter the following Python code. This should be the same code as from the init notebook. 
-- Pay attention to `input_path` and `output_path` variables. They are used to 
-provide a path to the location of the input file, and the directory containing the output files. 
+This is the source code for `wordcount.py` inside the `wordcount` directory:
 
 ```python
-input_path="100-0.txt"
-output_path="output-wordcount-01"
-textFile = sc.textFile(input_path)
-wordcount = textFile.flatMap(lambda line: line.split(" ")) \
-    .map(lambda word: (word, 1)) \
-    .reduceByKey(lambda a, b: a + b)
-wordcount.saveAsTextFile(output_path)
+import sys
+from pyspark.sql import SparkSession
+
+def wordcount(input_path: str, output_path: str):
+    try:
+        spark = SparkSession.builder.appName("WordCount").getOrCreate()
+        sc = spark.sparkContext
+        wordcount = sc.textFile(input_path) \
+            .flatMap(lambda line: line.split(" ")) \
+            .filter(lambda word: word != "") \
+            .map(lambda word: (word, 1)) \
+            .reduceByKey(lambda a, b: a + b) 
+        wordcount.saveAsTextFile(output_path)
+        spark.stop()
+    except Exception as e:
+        print(f"Spark failed to start: {e}")
+
+if __name__ == "__main__":
+    wordcount(sys.argv[1], sys.argv[2])
 ```
-- A successful run will generate the resulting output 
-directory that contain `_SUCCESS` flag file (size 0). 
+
+- Pay attention to `input_path` and `output_path` variables. They are used to 
+provide a path to the location of the input file, and the directory containing the output files. 
+- Run the program with the following command
+
+```bash
+spark-submit --master="local[*]" ./wordcount/wordcount.py ./wordcount/data/100-0.txt ./wordcount/out-wc-1
+```
 
 {% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/wordcount_output.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
+- A successful run will generate the resulting output directory that contain `_SUCCESS` flag file (size 0). 
+    - There will be several `*.crc` files, these are the check files to confirm data validity. 
+    - The output of the word counting process is stored in two files: `part-00000` and `part-00001`. 
 
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/wordcount_output_dir.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+
+- **For Windows users**: You might have an error message at the end. If the output files are generated correctly, 
+feel free to ignore that error. 
+
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/wordcount_output_err.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details Word Count workflow breakdown %}
 
-- Let's breakdown the WordCount Python statements by running them 
-in individual cells. 
-- First, let's review the content of the `input_path` variable. 
-    - The `textFile` variable only points to the *address inside the Spark cluster 
-    that will hold the RDD*
-    - Only by performing `take`, an action, then we can get the actual content. 
+- Let's breakdown the WordCount Python statements by save each stage individually. 
 
 ```python
-print(input_path)
+import sys
+from pyspark.sql import SparkSession
+
+def wordcount(input_path: str, output_path: str):
+    try:
+        spark = SparkSession.builder.appName("WordCount").getOrCreate()
+        sc = spark.sparkContext
+        wordcount = sc.textFile(input_path)
+
+        wordcount_flatMap = wordcount.flatMap(lambda line: line.split(" "))
+        wordcount_flatMap.saveAsTextFile(output_path + "_flatMap")
+
+        wordcount_filter = wordcount_flatMap.filter(lambda word: word != "")
+        wordcount_filter.saveAsTextFile(output_path + "_filter")
+
+        wordcount_map = wordcount_filter.map(lambda word: (word, 1))
+        wordcount_map.saveAsTextFile(output_path + "_map")
+
+        wordcount_reduceByKey = wordcount_map.reduceByKey(lambda a, b: a + b)
+        wordcount_reduceByKey.saveAsTextFile(output_path + "_reduceByKey")
+        
+        spark.stop()
+    except Exception as e:
+        print(f"Spark failed to start: {e}")
+
+if __name__ == "__main__":
+    wordcount(sys.argv[1], sys.argv[2])
 ```
 
-```python
-textFile.take(5)
-```
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_data.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+Run the program
 
-- Each line of the text file is considered an element in your RDD. 
-- To highlight the difference between `map` and `flatMap`, we can 
-try the following block of codes to observe the results:
-    - Observe how each `line` inside the lambda function corresponds to 
-    a line in the original text file. 
-    - Observe how `tmp` is a list of lists, while `tmp2` is only a 
-    list. In other words, `flatMap` breaks lines into lists of words, and 
-    concatenate these lists into a single new RDD. 
-
-```python
-tmp = textFile.map(lambda line: line.split(" "))
-print(tmp.take(5))
-tmp2 = textFile.flatMap(lambda line: line.split(" "))
-print(tmp2.take(5))
-```
-
-- In the next block of codes, we first repeat the `flatMap` operation, then 
-use the resulting RDD (`step2`). Next, we use `map` to apply an operation that 
-create a key-value pair, with the key is the word and the value is 1. 
-
-```python
-step1 = textFile.flatMap(lambda line: line.split(" "))
-print(step1.take(5))
-step2 = step1.map(lambda word: (word, 1))
-print(step2.take(5))
-```
-
-- All pairs with the same key are `reduced` together using pairwise 
-summation to get the final count of each key. 
-
-```python
-step3 = step2.reduceByKey(lambda a, b: a + b)
-step3.take(10)
+```bash
+spark-submit --master="local[*]" ./wordcount/wordcount-stages.py ./wordcount/data/100-0.txt ./wordcount/out-wc
 ```
 
 {% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_wordcount.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
@@ -309,53 +309,47 @@ step3.saveAsTextFile(output_path)
 {% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_output_correct.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details Data distribution in Spark %}
 
-- Run the following code in a new cell
+- This is an updated word count code
+    - Log Level is set to display ERROR only. 
+    - We print out the default number of partitions for the data. 
+    - This value can be reset and change. 
 
 ```python
-textFile.getNumPartitions()
+import sys
+from pyspark.sql import SparkSession
+
+def wordcount(input_path: str, output_path: str):
+    try:
+        spark = SparkSession.builder.appName("WordCount").getOrCreate()
+        sc = spark.sparkContext
+        sc.setLogLevel("ERROR")
+        wordcount = sc.textFile(input_path)
+
+        print(f"Number of partitions before repartitioning: {wordcount.getNumPartitions()}")
+
+        wordcount_repartitions = wordcount.repartition(4)
+        print(f"Number of partitions after repartitioning: {wordcount_repartitions.getNumPartitions()}")
+
+        output = (wordcount_repartitions.flatMap(lambda line: line.split(" "))
+                  .filter(lambda word: word != "")
+                  .map(lambda word: (word, 1))
+                  .reduceByKey(lambda a, b: a + b)
+                  )
+        
+        output.saveAsTextFile(output_path)
+        spark.stop()
+    except Exception as e:
+        print(f"Spark failed to start: {e}")
+
+if __name__ == "__main__":
+    wordcount(sys.argv[1], sys.argv[2])
 ```
 
 {% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_nums.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
-- We can make a copy of our `textFile` that is distributed across more 
-partitions. Run the following code in a cell on `spark-1`
-
-```python
-textFile_2 = textFile.repartition(4)
-textFile_2.getNumPartitions()
-```
-
-- Rerunning the WordCount codes and observe the output directory
-    - There are now four resulting output files
-
-```python
-output_path="output-wordcount-03"
-wordcount = textFile_2.flatMap(lambda line: line.split(" ")) \
-            .map(lambda word: (word, 1)) \
-            .reduceByKey(lambda a, b: a + b)
-wordcount.saveAsTextFile(output_path)
-```
-
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_partitions.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
-
----
-
 {% enddetails %}
-## Challenges
-
-{% details Challenge 1: %}
-
-- Augment the mapping process of WordCount with a function to filter out
-punctuations and capitalization from the unique words
-- Hint: The string module is helpful for removing punctuation.
-
-{% enddetails %}
-{% details Challenge 2: %}
-
-- Look up the [Spark Python API for filter](https://spark.apache.org/docs/latest/api/python/pyspark.html?highlight=filter#pyspark.RDD.filter).
-- Augment the results from Challenge 1 to remove the empty spaces (`''`).
 
 
-{% enddetails %}

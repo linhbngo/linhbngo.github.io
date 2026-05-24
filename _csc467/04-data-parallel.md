@@ -24,7 +24,7 @@ toc:
 
 {% details Initial data %}
 
-```python linenums="1"
+```python
 import numpy as np
 np.random.seed(123)
 N = 4
@@ -54,18 +54,22 @@ Dot Product P:
 ```
 
 {% enddetails %}
+
 {% details Initial assumption %}
 
 Vector V fits into memory
 
 {% enddetails %}
+
 {% enddetails %}
+
+
 {% details Moving data from notebook's memory into Spark cluster %}
 
 - Data can be generated on the driver side, then `parallelize` into 
 RDD objects on the cluster. 
 
-```python linenums="1"
+```python
 mspark = sc.parallelize(M)
 print(mspark.take(4))
 ```
@@ -80,7 +84,7 @@ print(mspark.take(4))
 - This will not work well, as we no longer have an indicator of row order. We need to provide some additional information as we parallelize our local data. 
     - [zipWithIndex](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html)
 
-```python linenums="1"
+```python
 mspark = sc.parallelize(M).zipWithIndex()
 print(mspark.take(4))
 ```
@@ -96,7 +100,7 @@ print(mspark.take(4))
 {% enddetails %}
 {% details Direct multiplication %}
 
-```python linenums="1"
+```python
 def vectorDot(mRow): 
     return mRow.dot(V)
 
@@ -127,7 +131,7 @@ Dot Product P:
 
 - Both matrix M and vector V are loaded onto Spark
 
-```python linenums="1"
+```python
 mspark = sc.parallelize(M).zipWithIndex()
 vspark = sc.parallelize(V).zipWithIndex()
 print(mspark.take(4))
@@ -148,7 +152,7 @@ print(vspark.take(4))
 {% enddetails %}
 - We want to use indices as keys
 
-```python linenums="1"
+```python
 mspark = sc.parallelize(M).zipWithIndex().map(lambda item: (item[1],item[0]))
 vspark = sc.parallelize(V).zipWithIndex().map(lambda item: (item[1],item[0]))
 print(mspark.take(4))
@@ -169,7 +173,7 @@ print(vspark.take(4))
 {% enddetails %}
 - Let's turn RDDs of M and V into a single RDD
 
-```python linenums="1"
+```python
 pspark = mspark.union(vspark)
 print(pspark.take(8))
 ```
@@ -197,7 +201,7 @@ of the matrix (see `Initial data`).
     - Need to extract column identifier from each numpy array and turn them into individual values, similar to the vector's values. 
     - This needs to be done prior to `union`
 
-```python linenums="1"
+```python
 def getPos(t):
     res = []
     for idx,x in np.ndenumerate(t[1]):
@@ -224,7 +228,7 @@ print(pspark.take(20))
 - If value is a tuple, first element is the column identifier and second element 
 represent the value of the matrix cell corresponding to the specific row and column. 
 
-```python linenums="1"
+```python
 def getPos(t):
     res = []
     for idx,x in np.ndenumerate(t[1]):
@@ -248,7 +252,7 @@ print(pspark.take(16))
 {% enddetails %}
 - Convert data into `list` type instead of Spark's `iterables`
 
-```python linenums="1"
+```python
 def getPos(t):
     res = []
     for idx,x in np.ndenumerate(t[1]):
@@ -278,7 +282,7 @@ print(pspark.take(16))
 - As shown in the previous output, we cannot assume proper order after union, especially for large scale data
 - Need to flatten the final results (list of tupples instead of list of lists of tuples)
 
-```python linenums="1"
+```python
 def getPos(t):
     res = []
     for idx,x in np.ndenumerate(t[1]):
@@ -316,7 +320,7 @@ print(pspark.take(16))
     - mapValues: Convert value type `iterables` into `list`.
     - mapValues: Apply sum on the value list. 
 
-```python linenums="1"
+```python
 dotspark = pspark.groupByKey().mapValues(list).mapValues(sum).map(lambda x: x[1])
 print(f"MapReduce Dot Product:\n {np.array(dotspark.take(4))}")
 print(f"Dot Product P:\n {P}")
@@ -341,20 +345,20 @@ Dot Product P:
 
 - Downloading move review data
 
-```python linenums="1"
+```python
 !wget https://files.grouplens.org/datasets/movielens/ml-32m.zip
 !unzip ml-32m.zip
 ```
 
 - How big of a data set are we talking about?
 
-```python linenums="1"
+```python
 !ls -lh ml-32m/
 ```
 
 - You can review the [README](https://files.grouplens.org/datasets/movielens/ml-32m-README.html) of this data set. 
 
-```python linenums="1"
+```python
 ratings = sc.textFile(working_dir + "/ml-32m/ratings.csv")
 print(ratings.take(5))   
 ratings.cache()
@@ -362,7 +366,7 @@ ratings.cache()
 
 - First count, not yet loaded into memory
 
-```python linenums="1"
+```python
 %%time
 ratings.count()
 ```
@@ -379,7 +383,7 @@ Wall time: 1min 40s
 {% enddetails %}
 - Second count, preloaded
 
-```python linenums="1"
+```python
 %%time
 ratings.count()
 ```
@@ -395,7 +399,7 @@ Wall time: 58.4 s
 {% enddetails %}
 - Third count, preloaded
 
-```python linenums="1"
+```python
 %%time
 ratings.count()
 ```
