@@ -285,14 +285,6 @@ virtual environments in Python, feel free to adapt the `environment.yml` file in
 
 If you don't already have one, [download and install Anaconda](https://www.anaconda.com/download/success?reg=skipped) for your computing device. 
 
-Clone the repository and run the setup commands.
+Carry out [the setup instructions for your specific platfoms in the README.md](https://github.com/ngo-classes/big-data-engineering/blob/main/README.md).
 
-```bash
-git config --global core.autocrlf false # run this if you are on Windows
-git clone https://github.com/ngo-classes/big-data-engineering
-cd big-data-engineering
-conda env create -f environment.yml
-conda activate pyspark-3.5.1
-```
-
-Going forward, you are to run the `conda activate` command prior to carrying out coding tasks for the class. 
+Going forward, you are to run the `conda activate pyspark-3.5.1` command prior to carrying out coding tasks for the class. 

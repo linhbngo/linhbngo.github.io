@@ -183,17 +183,25 @@ to a line of text in the file.
 
 {% details Preparation %}
 
+Assuming that you have complete the setup mentioned in [Introduction](https://linhbngo.github.io/csc467/01-introduction/#setup-computing-environment), the example code and data in the remainder of this lecture and 
+the subsequent lectures will be available in the `big-data-engineering` directory. You will need to make 
+sure that:
+    - The terminal prompt is inside `big-data-engineering`
+    - The conda environment `pyspark-3.5.1` is activated. 
 
-- Clone repository
 
 ```bash
-git clone https://github.com/ngo-classes/big-data-engineering.git
+pwd 
+conda activate pyspark-3.5.1
 ```
-- Setup 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/03-spark/spark_1.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+Run the setup scripts
+
+- `setup-pyspark-win.ps1` for Windows
+- `source setup-pyspark-mac.sh` for Mac/Linux
 
 {% enddetails %}
+
 {% details Getting data %}
 
 - Depending on whether you are on Google Colab, Kaggle, or local device, the download location 
