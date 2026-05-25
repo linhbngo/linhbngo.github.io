@@ -15,45 +15,78 @@ chart:
 tikzjax: true
 typograms: true
 toc:
-  - name: Matrix-vector multiplication
+  - name: Matrix-vector multiplication I
+  - name: Matrix-vector multiplication II
   - name: Analyzing text data (not using Spark SQL)
 ---
 
 
-## Matrix-vector multiplication
+## Matrix-vector multiplication I
 
-{% details Initial data %}
+- Run `git pull` on the `big-data-engineering` repository.
+- Source Code
 
 ```python
+import sys
 import numpy as np
+from pyspark.sql import SparkSession
+
 np.random.seed(123)
-N = 4
-M = np.random.randint(5, size = (N, N))
-V = np.random.randint(5, size = N)
 
-P = np.matmul(M, V)
+def matvec(N: int):
+  try:
+    spark = SparkSession.builder.appName("Vector and Matrix Multiplication").getOrCreate()
+    sc = spark.sparkContext
+    M = np.random.randint(5, size = (N, N))
+    V = np.random.randint(5, size = N)
+        
+    P = np.matmul(M, V)
 
-# Print the matrices
-print(f"Matrix M:\n {M}")
-print(f"Vector N:\n {V}")
-print(f"Dot Product P:\n {P}")
+    # Print the matrices
+    print(f"Matrix M:\n {M}")
+    print(f"Vector N:\n {V}")
+    print(f"Dot Product P:\n {P}")
+    
+    mspark = sc.parallelize(M)
+    print(f"Parallelize M inside Spark Context:\n {mspark.take(4)}")
+
+    mspark = sc.parallelize(M).zipWithIndex()
+    print(f"Parallelize M inside Spark Context with Index:\n {mspark.take(4)}")
+
+    mspark = (sc
+              .parallelize(M)
+              .zipWithIndex()
+              .map(lambda item: item[0].dot(V))
+    )
+
+    print(f"MapReduce Dot Product:\n {np.array(mspark.take(4))}")
+    print(f"Serial Dot Product P for comparison purposes:\n {P}")
+
+    spark.stop()
+
+  except Exception as e:
+    print(f"Spark failed to start: {e}")
+
+if __name__ == "__main__":
+    matvec(int(sys.argv[1]))
 ```
 
-{% details Output %}
+Run the following command
 
-```output
-Matrix M:
-[[2 4 2 1]
-[3 2 3 1]
-[1 0 1 1]
-[0 0 1 3]]
-Vector N:
-[4 0 0 4]
-Dot Product P:
-[12 16 8 12]
+```bash
+spark-submit --master="local[*]" .\data-parallel\matrix-vector.py 4
 ```
+
+{% details Screenshot: output %}
+
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/04-data-parallel/mat-vec.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Example output" %}
 
 {% enddetails %}
+
+{% details Data initialization %}
+
+- Lines 11-12: We initialize matrix M of size N by N, and vector V of size N. 
+- Line 14: We carry out a dot product using the builtin function of numpy. 
 
 {% details Initial assumption %}
 
@@ -64,281 +97,135 @@ Vector V fits into memory
 {% enddetails %}
 
 
-{% details Moving data from notebook's memory into Spark cluster %}
+{% details Parallelizing data in Spark cluster %}
 
-- Data can be generated on the driver side, then `parallelize` into 
+- Lines 21-22: Data can be generated on the driver side, then `parallelize` into 
 RDD objects on the cluster. 
-
-```python
-mspark = sc.parallelize(M)
-print(mspark.take(4))
-```
-
-{% details Output %}
-
-```output
-[array([2, 4, 2, 1]), array([3, 2, 3, 1]), array([1, 0, 1, 1]), array([0, 0, 1, 3])]
-```
+    - This will not work well, as we no longer have an indicator of row order. We need to provide some additional information as we parallelize our local data. 
+- Lines 24-25: This is possible with [zipWithIndex](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html)
 
 {% enddetails %}
-- This will not work well, as we no longer have an indicator of row order. We need to provide some additional information as we parallelize our local data. 
-    - [zipWithIndex](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html)
-
-```python
-mspark = sc.parallelize(M).zipWithIndex()
-print(mspark.take(4))
-```
-
-{% details Output %}
 
 
-```output
-[(array([2, 4, 2, 1]), 0), (array([3, 2, 3, 1]), 1), (array([1, 0, 1, 1]), 2), (array([0, 0, 1, 3]), 3)]    
-```
-
-{% enddetails %}
-{% enddetails %}
 {% details Direct multiplication %}
 
-```python
-def vectorDot(mRow): 
-    return mRow.dot(V)
-
-mspark = sc.parallelize(M).zipWithIndex().\
-    map(lambda item: (vectorDot(item[0])))
-
-print(f"MapReduce Dot Product:\n {np.array(mspark.take(4))}")
-print(f"Dot Product P:\n {P}")
-```
-{% details Output %}
-
-
-```output
-MapReduce Dot Product:
-[12 16 8 12]
-Dot Product P:
-[12 16 8 12]
-```
+- Lines 27-31: We can take each data element of `mspark` and perform a dot product between the element and Vector V. 
+- **What happens if Vector V no longer fits into memory?**
 
 {% enddetails %}
-{% details Remove assumption %}
 
-- Vector V no longer fits into memory
-
-{% enddetails %}
-{% enddetails %}
-{% details Data processing for multiplication %}
-
-- Both matrix M and vector V are loaded onto Spark
+## Matrix-vector multiplication II
 
 ```python
-mspark = sc.parallelize(M).zipWithIndex()
-vspark = sc.parallelize(V).zipWithIndex()
-print(mspark.take(4))
-print(vspark.take(4))
-```
+import sys
+import numpy as np
+from pyspark.sql import SparkSession
 
-{% details Output %}
+np.random.seed(123)
 
-
-```output
-[(array([2, 4, 2, 1]), 0), 
-(array([3, 2, 3, 1]), 1), 
-(array([1, 0, 1, 1]), 2), 
-(array([0, 0, 1, 3]), 3)]
-[(np.int64(4), 0), (np.int64(0), 1), (np.int64(0), 2), (np.int64(4), 3)]
-```
-
-{% enddetails %}
-- We want to use indices as keys
-
-```python
-mspark = sc.parallelize(M).zipWithIndex().map(lambda item: (item[1],item[0]))
-vspark = sc.parallelize(V).zipWithIndex().map(lambda item: (item[1],item[0]))
-print(mspark.take(4))
-print(vspark.take(4))
-```
-
-{% details Output %}
-
-
-```output
-[(0, array([2, 4, 2, 1])), 
-(1, array([3, 2, 3, 1])), 
-(2, array([1, 0, 1, 1])), 
-(3, array([0, 0, 1, 3]))]
-[(0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
-```
-
-{% enddetails %}
-- Let's turn RDDs of M and V into a single RDD
-
-```python
-pspark = mspark.union(vspark)
-print(pspark.take(8))
-```
-
-{% details Output %}
-
-
-```output
-[(0, array([2, 4, 2, 1])), 
-(1, array([3, 2, 3, 1])), 
-(2, array([1, 0, 1, 1])), 
-(3, array([0, 0, 1, 3])), 
-(0, np.int64(4)), 
-(1, np.int64(0)), 
-(2, np.int64(0)), 
-(3, np.int64(4))]
-```
-
-{% enddetails %}
-- Each of these numpy array represents one row 
-of the matrix (see `Initial data`).
-    - The summation is made on the product of each element of the same column
-    on each row. 
-- Because V no longer fits into memory, it can be reasoned taht each of these numpy arrays also does not fit in memory. 
-    - Need to extract column identifier from each numpy array and turn them into individual values, similar to the vector's values. 
-    - This needs to be done prior to `union`
-
-```python
 def getPos(t):
-    res = []
-    for idx,x in np.ndenumerate(t[1]):
-        res.append((idx[0], (t[0], x))) # (row, (column, cell value))
-    return res
-
-pspark = mspark.flatMap(getPos).union(vspark)
-print(pspark.take(20))
-```
-
-{% details Output %}
-
-
-```output
-[(0, (0, np.int64(2))), (1, (0, np.int64(4))), (2, (0, np.int64(2))), (3, (0, np.int64(1))), 
-(0, (1, np.int64(3))), (1, (1, np.int64(2))), (2, (1, np.int64(3))), (3, (1, np.int64(1))), 
-(0, (2, np.int64(1))), (1, (2, np.int64(0))), (2, (2, np.int64(1))), (3, (2, np.int64(1))), 
-(0, (3, np.int64(0))), (1, (3, np.int64(0))), (2, (3, np.int64(1))), (3, (3, np.int64(3))), 
-(0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
-```
-
-{% enddetails %}
-- The keys of the above pairs represent the row identifier. 
-- If value is a tuple, first element is the column identifier and second element 
-represent the value of the matrix cell corresponding to the specific row and column. 
-
-```python
-def getPos(t):
-    res = []
-    for idx,x in np.ndenumerate(t[1]):
-        res.append((idx[0], (t[0], x)))
-    return res
-    
-pspark = mspark.flatMap(getPos).union(vspark).groupByKey()
-print(pspark.take(16))
-```
-
-{% details Output %}
-
-
-```output
-[(0, <pyspark.resultiterable.ResultIterable object at 0xffff885f62c0>), 
-(1, <pyspark.resultiterable.ResultIterable object at 0xffff885f4d30>), 
-(2, <pyspark.resultiterable.ResultIterable object at 0xffff885f6a70>), 
-(3, <pyspark.resultiterable.ResultIterable object at 0xffff885f6ec0>)]
-```
-
-{% enddetails %}
-- Convert data into `list` type instead of Spark's `iterables`
-
-```python
-def getPos(t):
-    res = []
-    for idx,x in np.ndenumerate(t[1]):
-        res.append((idx[0], (t[0], x)))
-    return res
-    
-pspark = mspark.flatMap(getPos).union(vspark).groupByKey().mapValues(list)
-print(pspark.take(16))
-```
-
-{% details Output %}
-
-
-```output
-[(0, [(1, np.int64(3)), (2, np.int64(1)), (3, np.int64(0)), (0, np.int64(2)), np.int64(4)]), 
-(1, [(3, np.int64(0)), np.int64(0), (0, np.int64(4)), (1, np.int64(2)), (2, np.int64(0))]), 
-(2, [(0, np.int64(2)), (1, np.int64(3)), (3, np.int64(1)), (2, np.int64(1)), np.int64(0)]), 
-(3, [(1, np.int64(1)), np.int64(4), (3, np.int64(3)), (0, np.int64(1)), (2, np.int64(1))])]
-```
-
-{% enddetails %}
-- Each element in this `pspark` frame is a key/value pair:
-    - The key is the row index 
-    - The value is a 5-element array: 
-        - Four elements belong to a row of the matrix M, each of this element is a tuple with the key representing the column index and the value represent the corresponding matrix cell value. 
-        - One remaining element belong to the value of the vector V at that row index position. 
-- As shown in the previous output, we cannot assume proper order after union, especially for large scale data
-- Need to flatten the final results (list of tupples instead of list of lists of tuples)
-
-```python
-def getPos(t):
-    res = []
-    for idx,x in np.ndenumerate(t[1]):
-        res.append((idx[0], (t[0], x)))
-    return res
+  res = []
+  for idx,x in np.ndenumerate(t[1]):
+    res.append((idx[0], (t[0], x.item()))) # (row, (column, cell value))
+  return res
 
 def arrayMul(t):
-    res = []
-    vectorVal = 0
-    for x in t[1]:
-        if type(x) != tuple:
-            vectorVal = x
-    for x in t[1]:
-        if type(x) == tuple:
-            res.append((x[0], x[1] * vectorVal))
-    return res
+  res = []
+  vectorVal = None
+  for x in t[1]:
+    if type(x) != tuple:
+      vectorVal = x
+  for x in t[1]:
+    if isinstance(x, tuple):
+      row_index = x[0]
+      matrix_value = x[1]
+      res.append((row_index, matrix_value * vectorVal))
+  return res
+
+def matvec(N: int):
+  try:
+    spark = SparkSession.builder.appName("Vector and Matrix Multiplication").getOrCreate()
+    sc = spark.sparkContext
+    M = np.random.randint(5, size = (N, N))
+    V = np.random.randint(5, size = N)
+        
+    P = np.matmul(M, V)
+
+    # Print the matrices
+    print(f"Matrix M:\n {M}")
+    print(f"Vector V:\n {V}")
+    print(f"Dot Product P:\n {P}")
     
-pspark = mspark.flatMap(getPos).union(vspark).groupByKey().mapValues(list).flatMap(arrayMul)
-print(pspark.take(16))
+    mspark = sc.parallelize(M).zipWithIndex().map(lambda item: (item[1],item[0].tolist()))
+    print(f"Parallelize M inside Spark Context with Index:")
+    local_mspark = mspark.collect()
+    for item in local_mspark:
+      print(item)
+
+    vspark = sc.parallelize(V).zipWithIndex().map(lambda item: (item[1],item[0].tolist()))
+    print(f"Parallelize V inside Spark Context with Index:")
+    local_vspark = vspark.collect()
+    for item in local_vspark:
+      print(item)
+
+    pspark = (mspark
+              .flatMap(getPos)
+              .union(vspark)
+              .groupByKey()
+              .mapValues(list)
+              .flatMap(arrayMul)
+              .reduceByKey(lambda a, b: a + b)
+    )
+    
+    print(f"MapReduce Dot Product:")
+    local_pspark = pspark.collect()
+    for item in local_pspark:
+      print(item)
+
+    #flatMap(arrayMul)
+
+    #print(f"MapReduce Dot Product:\n {np.array(pspark.take(16))}")
+    print(f"Serial Dot Product P for comparison purposes:\n {P}")
+
+    spark.stop()
+
+  except Exception as e:
+    print(f"Spark failed to start: {e}")
+
+if __name__ == "__main__":
+    matvec(int(sys.argv[1]))
 ```
 
-{% details Output %}
+Run the following command
 
-
-```output
-[(3, np.int64(0)), (2, np.int64(4)), (0, np.int64(8)), (1, np.int64(12)), 
-(1, np.int64(0)), (2, np.int64(0)), (0, np.int64(0)), (3, np.int64(0)), 
-(3, np.int64(0)), (2, np.int64(0)), (1, np.int64(0)), (0, np.int64(0)), 
-(0, np.int64(4)), (2, np.int64(4)), (3, np.int64(12)), (1, np.int64(4))]
+```bash
+spark-submit --master="local[*]" .\data-parallel\matrix-big-vector.py 16
 ```
+
+{% details Data processing for multiplication %}
+
+- Lines 40-50: Both matrix M and vector V are loaded onto Spark
+    - Line 40 and line 50: We want to use indices as keys
 
 {% enddetails %}
-- Final steps: 
-    - groupByKey: Bring the values with same row index together.
-    - mapValues: Convert value type `iterables` into `list`.
-    - mapValues: Apply sum on the value list. 
 
-```python
-dotspark = pspark.groupByKey().mapValues(list).mapValues(sum).map(lambda x: x[1])
-print(f"MapReduce Dot Product:\n {np.array(dotspark.take(4))}")
-print(f"Dot Product P:\n {P}")
-```
+{% details Matrix multiplication %}
 
-{% details Output %}
-
-
-```output
-MapReduce Dot Product:
-[12 16 8 12]
-Dot Product P:
-[12 16 8 12]
-```
+- Because V no longer fits into memory, it can be reasoned that each of these numpy arrays also does not fit in memory. 
+- Line 53: Need to extract column identifier from each numpy array and turn them into individual values, similar to the vector's values with `getPos`
+- Line 54: Combine individual items of M and V, and group them together with `groupBy`. 
+    - Line 56: Convert data into `list` type instead of Spark's `iterables`
+    - Each element in this frame after `groupBy` is a key/value pair:
+    - The key is the row index 
+    - The value is a (N+1)-element array: 
+        - N elements belong to a row of the matrix M, each of this element is a tuple with the key representing the column index and the value represent the corresponding matrix cell value. 
+        - One remaining element belong to the value of the vector V at that row index position. 
+- Line 57: As shown in the previous output, we cannot assume proper order after union, especially for large scale data
+    - Need to flatten the final results (list of tupples instead of list of lists of tuples)
+- Line 58: Add elements together with `reduceByKey`. 
 
 {% enddetails %}
----
-{% enddetails %}
+
 ## Analyzing text data (not using Spark SQL)
 
 {% details Getting MovieLens data %}
