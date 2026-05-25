@@ -4,7 +4,7 @@
       {
             "title": "Data Parallel Computing with Spark",
             "description": "",
-            "published": "May 24, 2026",
+            "published": "May 25, 2026",
             "authors": [
               
             ],
@@ -23,179 +23,7 @@
               ]
             }
           }
-    </script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Linh</span> B. Ngo </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">teaching </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/csc-agentic-ai/">Agentic AI (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc418-587/">CSC 418/587 (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc467/">Big Data Engineering</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc468/">Introduction to Cloud</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc231/">Computer Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc302/">Computer Security II (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc331/">Operating Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc402/">Software Engineering (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc466/">Distributed and Parallel Computing (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc478/">Cloud Engineering (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc496/">iOS App Development (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc568/">Cloud Computing Fundamentals (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc578/">Cloud Systems Engineering (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc574/">Tiny Machine Learning (tinyML)</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill lecture-layout"> <d-title> <h1>Data Parallel Computing with Spark</h1> <p></p> </d-title> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div> <a href="#matrix-vector-multiplication">Matrix-vector multiplication</a> </div> <div> <a href="#analyzing-text-data-not-using-spark-sql">Analyzing text data (not using Spark SQL)</a> </div> </nav> </d-contents> <h2 id="matrix-vector-multiplication">Matrix-vector multiplication</h2> <details class="details details--default" data-variant="default"><summary>Initial data</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
-<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">N</span><span class="p">)</span>
-
-<span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
-
-<span class="c1"># Print the matrices
-</span><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Matrix M:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Vector N:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">V</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Dot Product P:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">P</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">Matrix M:
-[[2 4 2 1]
-[3 2 3 1]
-[1 0 1 1]
-[0 0 1 3]]
-Vector N:
-[4 0 0 4]
-Dot Product P:
-[12 16 8 12]
-</code></pre> </details> <details class="details details--default" data-variant="default"><summary>Initial assumption</summary> <p>Vector V fits into memory</p> </details> </details> <details class="details details--default" data-variant="default"><summary>Moving data from notebook’s memory into Spark cluster</summary> <ul> <li>Data can be generated on the driver side, then <code class="language-plaintext highlighter-rouge">parallelize</code> into RDD objects on the cluster.</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre><span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[array([2, 4, 2, 1]), array([3, 2, 3, 1]), array([1, 0, 1, 1]), array([0, 0, 1, 3])]
-</code></pre> </details> <ul> <li>This will not work well, as we no longer have an indicator of row order. We need to provide some additional information as we parallelize our local data. <ul> <li><a href="https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html" rel="external nofollow noopener" target="_blank">zipWithIndex</a></li> </ul> </li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre><span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">()</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(array([2, 4, 2, 1]), 0), (array([3, 2, 3, 1]), 1), (array([1, 0, 1, 1]), 2), (array([0, 0, 1, 3]), 3)]    
-</code></pre> </details> </details> <details class="details details--default" data-variant="default"><summary>Direct multiplication</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">vectorDot</span><span class="p">(</span><span class="n">mRow</span><span class="p">):</span> 
-    <span class="k">return</span> <span class="n">mRow</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
-
-<span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">().</span>\
-    <span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">(</span><span class="nf">vectorDot</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">MapReduce Dot Product:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Dot Product P:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">P</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">MapReduce Dot Product:
-[12 16 8 12]
-Dot Product P:
-[12 16 8 12]
-</code></pre> </details> <details class="details details--default" data-variant="default"><summary>Remove assumption</summary> <ul> <li>Vector V no longer fits into memory</li> </ul> </details> </details> <details class="details details--default" data-variant="default"><summary>Data processing for multiplication</summary> <ul> <li>Both matrix M and vector V are loaded onto Spark</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td> <td class="rouge-code"><pre><span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">()</span>
-<span class="n">vspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">V</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">()</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">vspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(array([2, 4, 2, 1]), 0), 
-(array([3, 2, 3, 1]), 1), 
-(array([1, 0, 1, 1]), 2), 
-(array([0, 0, 1, 3]), 3)]
-[(np.int64(4), 0), (np.int64(0), 1), (np.int64(0), 2), (np.int64(4), 3)]
-</code></pre> </details> <ul> <li>We want to use indices as keys</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td> <td class="rouge-code"><pre><span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">().</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="n">vspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">V</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">().</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">vspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(0, array([2, 4, 2, 1])), 
-(1, array([3, 2, 3, 1])), 
-(2, array([1, 0, 1, 1])), 
-(3, array([0, 0, 1, 3]))]
-[(0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
-</code></pre> </details> <ul> <li>Let’s turn RDDs of M and V into a single RDD</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre><span class="n">pspark</span> <span class="o">=</span> <span class="n">mspark</span><span class="p">.</span><span class="nf">union</span><span class="p">(</span><span class="n">vspark</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">pspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(0, array([2, 4, 2, 1])), 
-(1, array([3, 2, 3, 1])), 
-(2, array([1, 0, 1, 1])), 
-(3, array([0, 0, 1, 3])), 
-(0, np.int64(4)), 
-(1, np.int64(0)), 
-(2, np.int64(0)), 
-(3, np.int64(4))]
-</code></pre> </details> <ul> <li>Each of these numpy array represents one row of the matrix (see <code class="language-plaintext highlighter-rouge">Initial data</code>). <ul> <li>The summation is made on the product of each element of the same column on each row.</li> </ul> </li> <li>Because V no longer fits into memory, it can be reasoned taht each of these numpy arrays also does not fit in memory. <ul> <li>Need to extract column identifier from each numpy array and turn them into individual values, similar to the vector’s values.</li> <li>This needs to be done prior to <code class="language-plaintext highlighter-rouge">union</code> </li> </ul> </li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">getPos</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="nf">ndenumerate</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">res</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">)))</span> <span class="c1"># (row, (column, cell value))
-</span>    <span class="k">return</span> <span class="n">res</span>
-
-<span class="n">pspark</span> <span class="o">=</span> <span class="n">mspark</span><span class="p">.</span><span class="nf">flatMap</span><span class="p">(</span><span class="n">getPos</span><span class="p">).</span><span class="nf">union</span><span class="p">(</span><span class="n">vspark</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">pspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(0, (0, np.int64(2))), (1, (0, np.int64(4))), (2, (0, np.int64(2))), (3, (0, np.int64(1))), 
-(0, (1, np.int64(3))), (1, (1, np.int64(2))), (2, (1, np.int64(3))), (3, (1, np.int64(1))), 
-(0, (2, np.int64(1))), (1, (2, np.int64(0))), (2, (2, np.int64(1))), (3, (2, np.int64(1))), 
-(0, (3, np.int64(0))), (1, (3, np.int64(0))), (2, (3, np.int64(1))), (3, (3, np.int64(3))), 
-(0, np.int64(4)), (1, np.int64(0)), (2, np.int64(0)), (3, np.int64(4))]
-</code></pre> </details> <ul> <li>The keys of the above pairs represent the row identifier.</li> <li>If value is a tuple, first element is the column identifier and second element represent the value of the matrix cell corresponding to the specific row and column.</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">getPos</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="nf">ndenumerate</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">res</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">res</span>
-    
-<span class="n">pspark</span> <span class="o">=</span> <span class="n">mspark</span><span class="p">.</span><span class="nf">flatMap</span><span class="p">(</span><span class="n">getPos</span><span class="p">).</span><span class="nf">union</span><span class="p">(</span><span class="n">vspark</span><span class="p">).</span><span class="nf">groupByKey</span><span class="p">()</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">pspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(0, &lt;pyspark.resultiterable.ResultIterable object at 0xffff885f62c0&gt;), 
-(1, &lt;pyspark.resultiterable.ResultIterable object at 0xffff885f4d30&gt;), 
-(2, &lt;pyspark.resultiterable.ResultIterable object at 0xffff885f6a70&gt;), 
-(3, &lt;pyspark.resultiterable.ResultIterable object at 0xffff885f6ec0&gt;)]
-</code></pre> </details> <ul> <li>Convert data into <code class="language-plaintext highlighter-rouge">list</code> type instead of Spark’s <code class="language-plaintext highlighter-rouge">iterables</code> </li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">getPos</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="nf">ndenumerate</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">res</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">res</span>
-    
-<span class="n">pspark</span> <span class="o">=</span> <span class="n">mspark</span><span class="p">.</span><span class="nf">flatMap</span><span class="p">(</span><span class="n">getPos</span><span class="p">).</span><span class="nf">union</span><span class="p">(</span><span class="n">vspark</span><span class="p">).</span><span class="nf">groupByKey</span><span class="p">().</span><span class="nf">mapValues</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">pspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(0, [(1, np.int64(3)), (2, np.int64(1)), (3, np.int64(0)), (0, np.int64(2)), np.int64(4)]), 
-(1, [(3, np.int64(0)), np.int64(0), (0, np.int64(4)), (1, np.int64(2)), (2, np.int64(0))]), 
-(2, [(0, np.int64(2)), (1, np.int64(3)), (3, np.int64(1)), (2, np.int64(1)), np.int64(0)]), 
-(3, [(1, np.int64(1)), np.int64(4), (3, np.int64(3)), (0, np.int64(1)), (2, np.int64(1))])]
-</code></pre> </details> <ul> <li>Each element in this <code class="language-plaintext highlighter-rouge">pspark</code> frame is a key/value pair: <ul> <li>The key is the row index</li> <li>The value is a 5-element array: <ul> <li>Four elements belong to a row of the matrix M, each of this element is a tuple with the key representing the column index and the value represent the corresponding matrix cell value.</li> <li>One remaining element belong to the value of the vector V at that row index position.</li> </ul> </li> </ul> </li> <li>As shown in the previous output, we cannot assume proper order after union, especially for large scale data</li> <li>Need to flatten the final results (list of tupples instead of list of lists of tuples)</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    </script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Linh</span> B. Ngo </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">teaching </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/csc-agentic-ai/">Agentic AI (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc418-587/">CSC 418/587 (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc467/">Big Data Engineering</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc468/">Introduction to Cloud</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc231/">Computer Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc302/">Computer Security II (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc331/">Operating Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc402/">Software Engineering (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc466/">Distributed and Parallel Computing (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc478/">Cloud Engineering (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc496/">iOS App Development (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc568/">Cloud Computing Fundamentals (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc578/">Cloud Systems Engineering (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc574/">Tiny Machine Learning (tinyML)</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill lecture-layout"> <d-title> <h1>Data Parallel Computing with Spark</h1> <p></p> </d-title> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div> <a href="#matrix-vector-multiplication-i">Matrix-vector multiplication I</a> </div> <div> <a href="#matrix-vector-multiplication-ii">Matrix-vector multiplication II</a> </div> <div> <a href="#analyzing-text-data-not-using-spark-sql">Analyzing text data (not using Spark SQL)</a> </div> </nav> </d-contents> <h2 id="matrix-vector-multiplication-i">Matrix-vector multiplication I</h2> <ul> <li>Run <code class="language-plaintext highlighter-rouge">git pull</code> on the <code class="language-plaintext highlighter-rouge">big-data-engineering</code> repository.</li> <li>Source Code</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -215,41 +43,233 @@ Dot Product P:
 17
 18
 19
-</pre></td> <td class="rouge-code"><pre><span class="k">def</span> <span class="nf">getPos</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="nf">ndenumerate</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">res</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">res</span>
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 
-<span class="k">def</span> <span class="nf">arrayMul</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">vectorVal</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="nf">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">tuple</span><span class="p">:</span>
-            <span class="n">vectorVal</span> <span class="o">=</span> <span class="n">x</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="nf">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">:</span>
-            <span class="n">res</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">vectorVal</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">res</span>
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">matvec</span><span class="p">(</span><span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="nf">appName</span><span class="p">(</span><span class="sh">"</span><span class="s">Vector and Matrix Multiplication</span><span class="sh">"</span><span class="p">).</span><span class="nf">getOrCreate</span><span class="p">()</span>
+    <span class="n">sc</span> <span class="o">=</span> <span class="n">spark</span><span class="p">.</span><span class="n">sparkContext</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">N</span><span class="p">)</span>
+        
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+
+    <span class="c1"># Print the matrices
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Matrix M:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Vector N:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">V</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Dot Product P:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">P</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
     
-<span class="n">pspark</span> <span class="o">=</span> <span class="n">mspark</span><span class="p">.</span><span class="nf">flatMap</span><span class="p">(</span><span class="n">getPos</span><span class="p">).</span><span class="nf">union</span><span class="p">(</span><span class="n">vspark</span><span class="p">).</span><span class="nf">groupByKey</span><span class="p">().</span><span class="nf">mapValues</span><span class="p">(</span><span class="nb">list</span><span class="p">).</span><span class="nf">flatMap</span><span class="p">(</span><span class="n">arrayMul</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">pspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">[(3, np.int64(0)), (2, np.int64(4)), (0, np.int64(8)), (1, np.int64(12)), 
-(1, np.int64(0)), (2, np.int64(0)), (0, np.int64(0)), (3, np.int64(0)), 
-(3, np.int64(0)), (2, np.int64(0)), (1, np.int64(0)), (0, np.int64(0)), 
-(0, np.int64(4)), (2, np.int64(4)), (3, np.int64(12)), (1, np.int64(4))]
-</code></pre> </details> <ul> <li>Final steps: <ul> <li>groupByKey: Bring the values with same row index together.</li> <li>mapValues: Convert value type <code class="language-plaintext highlighter-rouge">iterables</code> into <code class="language-plaintext highlighter-rouge">list</code>.</li> <li>mapValues: Apply sum on the value list.</li> </ul> </li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    <span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Parallelize M inside Spark Context:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Parallelize M inside Spark Context with Index:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">mspark</span> <span class="o">=</span> <span class="p">(</span><span class="n">sc</span>
+              <span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">zipWithIndex</span><span class="p">()</span>
+              <span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">dot</span><span class="p">(</span><span class="n">V</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">MapReduce Dot Product:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">mspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Serial Dot Product P for comparison purposes:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">P</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">spark</span><span class="p">.</span><span class="nf">stop</span><span class="p">()</span>
+
+  <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Spark failed to start: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">matvec</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Run the following command</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>spark-submit <span class="nt">--master</span><span class="o">=</span><span class="s2">"local[*]"</span> .<span class="se">\d</span>ata-parallel<span class="se">\m</span>atrix-vector.py 4
+</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Screenshot: output</summary> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc467/04-data-parallel/mat-vec-480.webp 480w,/assets/img/courses/csc467/04-data-parallel/mat-vec-800.webp 800w,/assets/img/courses/csc467/04-data-parallel/mat-vec-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc467/04-data-parallel/mat-vec.png" class="img-fluid rounded z-depth-1 mx-auto d-block" width="100%" height="auto" style=" max-width: 50%; " alt="Example output" data-zoomable="" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Data initialization</summary> <ul> <li>Lines 11-12: We initialize matrix M of size N by N, and vector V of size N.</li> <li>Line 14: We carry out a dot product using the builtin function of numpy.</li> </ul> <details class="details details--default" data-variant="default"><summary>Initial assumption</summary> <p>Vector V fits into memory</p> </details> </details> <details class="details details--default" data-variant="default"><summary>Parallelizing data in Spark cluster</summary> <ul> <li>Lines 21-22: Data can be generated on the driver side, then <code class="language-plaintext highlighter-rouge">parallelize</code> into RDD objects on the cluster. <ul> <li>This will not work well, as we no longer have an indicator of row order. We need to provide some additional information as we parallelize our local data.</li> </ul> </li> <li>Lines 24-25: This is possible with <a href="https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html" rel="external nofollow noopener" target="_blank">zipWithIndex</a> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Direct multiplication</summary> <ul> <li>Lines 27-31: We can take each data element of <code class="language-plaintext highlighter-rouge">mspark</code> and perform a dot product between the element and Vector V.</li> <li><strong>What happens if Vector V no longer fits into memory?</strong></li> </ul> </details> <h2 id="matrix-vector-multiplication-ii">Matrix-vector multiplication II</h2> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td> <td class="rouge-code"><pre><span class="n">dotspark</span> <span class="o">=</span> <span class="n">pspark</span><span class="p">.</span><span class="nf">groupByKey</span><span class="p">().</span><span class="nf">mapValues</span><span class="p">(</span><span class="nb">list</span><span class="p">).</span><span class="nf">mapValues</span><span class="p">(</span><span class="nb">sum</span><span class="p">).</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">MapReduce Dot Product:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">dotspark</span><span class="p">.</span><span class="nf">take</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Dot Product P:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">P</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Output</summary> <pre><code class="language-output">MapReduce Dot Product:
-[12 16 8 12]
-Dot Product P:
-[12 16 8 12]
-</code></pre> </details> <hr> </details> <h2 id="analyzing-text-data-not-using-spark-sql">Analyzing text data (not using Spark SQL)</h2> <details class="details details--default" data-variant="default"><summary>Getting MovieLens data</summary> <ul> <li>Downloading move review data</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+</pre></td> <td class="rouge-code"><pre><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="n">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">getPos</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="nf">ndenumerate</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="n">res</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">.</span><span class="nf">item</span><span class="p">())))</span> <span class="c1"># (row, (column, cell value))
+</span>  <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">arrayMul</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">vectorVal</span> <span class="o">=</span> <span class="bp">None</span>
+  <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nf">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">tuple</span><span class="p">:</span>
+      <span class="n">vectorVal</span> <span class="o">=</span> <span class="n">x</span>
+  <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+      <span class="n">row_index</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">matrix_value</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+      <span class="n">res</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">row_index</span><span class="p">,</span> <span class="n">matrix_value</span> <span class="o">*</span> <span class="n">vectorVal</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">matvec</span><span class="p">(</span><span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="p">.</span><span class="n">builder</span><span class="p">.</span><span class="nf">appName</span><span class="p">(</span><span class="sh">"</span><span class="s">Vector and Matrix Multiplication</span><span class="sh">"</span><span class="p">).</span><span class="nf">getOrCreate</span><span class="p">()</span>
+    <span class="n">sc</span> <span class="o">=</span> <span class="n">spark</span><span class="p">.</span><span class="n">sparkContext</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">N</span><span class="p">)</span>
+        
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+
+    <span class="c1"># Print the matrices
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Matrix M:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Vector V:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">V</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Dot Product P:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">P</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="n">mspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">M</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">().</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Parallelize M inside Spark Context with Index:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">local_mspark</span> <span class="o">=</span> <span class="n">mspark</span><span class="p">.</span><span class="nf">collect</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">local_mspark</span><span class="p">:</span>
+      <span class="nf">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="n">vspark</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="nf">parallelize</span><span class="p">(</span><span class="n">V</span><span class="p">).</span><span class="nf">zipWithIndex</span><span class="p">().</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Parallelize V inside Spark Context with Index:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">local_vspark</span> <span class="o">=</span> <span class="n">vspark</span><span class="p">.</span><span class="nf">collect</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">local_vspark</span><span class="p">:</span>
+      <span class="nf">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="n">pspark</span> <span class="o">=</span> <span class="p">(</span><span class="n">mspark</span>
+              <span class="p">.</span><span class="nf">flatMap</span><span class="p">(</span><span class="n">getPos</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">union</span><span class="p">(</span><span class="n">vspark</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">groupByKey</span><span class="p">()</span>
+              <span class="p">.</span><span class="nf">mapValues</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">flatMap</span><span class="p">(</span><span class="n">arrayMul</span><span class="p">)</span>
+              <span class="p">.</span><span class="nf">reduceByKey</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">MapReduce Dot Product:</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">local_pspark</span> <span class="o">=</span> <span class="n">pspark</span><span class="p">.</span><span class="nf">collect</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">local_pspark</span><span class="p">:</span>
+      <span class="nf">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="c1">#flatMap(arrayMul)
+</span>
+    <span class="c1">#print(f"MapReduce Dot Product:\n {np.array(pspark.take(16))}")
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Serial Dot Product P for comparison purposes:</span><span class="se">\n</span><span class="s"> </span><span class="si">{</span><span class="n">P</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+    <span class="n">spark</span><span class="p">.</span><span class="nf">stop</span><span class="p">()</span>
+
+  <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Spark failed to start: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">__main__</span><span class="sh">"</span><span class="p">:</span>
+    <span class="nf">matvec</span><span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Run the following command</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>spark-submit <span class="nt">--master</span><span class="o">=</span><span class="s2">"local[*]"</span> .<span class="se">\d</span>ata-parallel<span class="se">\m</span>atrix-big-vector.py 16
+</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--default" data-variant="default"><summary>Data processing for multiplication</summary> <ul> <li>Lines 40-50: Both matrix M and vector V are loaded onto Spark <ul> <li>Line 40 and line 50: We want to use indices as keys</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Matrix multiplication</summary> <ul> <li>Because V no longer fits into memory, it can be reasoned that each of these numpy arrays also does not fit in memory.</li> <li>Line 53: Need to extract column identifier from each numpy array and turn them into individual values, similar to the vector’s values with <code class="language-plaintext highlighter-rouge">getPos</code> </li> <li>Line 54: Combine individual items of M and V, and group them together with <code class="language-plaintext highlighter-rouge">groupBy</code>. <ul> <li>Line 56: Convert data into <code class="language-plaintext highlighter-rouge">list</code> type instead of Spark’s <code class="language-plaintext highlighter-rouge">iterables</code> </li> <li>Each element in this frame after <code class="language-plaintext highlighter-rouge">groupBy</code> is a key/value pair:</li> <li>The key is the row index</li> <li>The value is a (N+1)-element array: <ul> <li>N elements belong to a row of the matrix M, each of this element is a tuple with the key representing the column index and the value represent the corresponding matrix cell value.</li> <li>One remaining element belong to the value of the vector V at that row index position.</li> </ul> </li> </ul> </li> <li>Line 57: As shown in the previous output, we cannot assume proper order after union, especially for large scale data <ul> <li>Need to flatten the final results (list of tupples instead of list of lists of tuples)</li> </ul> </li> <li>Line 58: Add elements together with <code class="language-plaintext highlighter-rouge">reduceByKey</code>.</li> </ul> </details> <h2 id="analyzing-text-data-not-using-spark-sql">Analyzing text data (not using Spark SQL)</h2> <details class="details details--default" data-variant="default"><summary>Getting MovieLens data</summary> <ul> <li>Downloading move review data</li> </ul> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td> <td class="rouge-code"><pre><span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">files</span><span class="p">.</span><span class="n">grouplens</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">movielens</span><span class="o">/</span><span class="n">ml</span><span class="o">-</span><span class="mi">32</span><span class="n">m</span><span class="p">.</span><span class="nb">zip</span>
