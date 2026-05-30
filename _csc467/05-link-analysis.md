@@ -653,15 +653,15 @@ where $\left[ \frac{1 - \beta}{N}\right]_{N}$ is a vector with all $N$ entries h
 {% enddetails %}
 ## Hands-on: Page Rank in Spark
 
-- The code instructions here is meant for Spark running on local devices. 
-    - If you are using Colab or Kaggle, make sure that you prepare your notebook with instructions in the Setup lecture. 
+- If you have not already done so, run `git pull` to update the `big-data-engineering` repository.
 
 {% details Small example data %}
 
-- Run the following in a cell to generate a data file
+- A small example data file is located in `link-analysis/data/small_graph.dat` and has the following format
+    - Each line represents one link
+    - On each line, the source (first) and the destination (second) are separated by a single space. 
 
-```python linenums="1"
-%%file small_graph.dat
+```text
 y y
 y a
 a y
@@ -671,14 +671,14 @@ m a
 
 - Load and view the data
 
-```python linenums="1"
+```python
 graph_data = sc.textFile("small_graph.dat")
 graph_data.take(5)
 ```
 
 - Create links
 
-```python linenums="1"
+```python
 links = graph_data.map(lambda line: (line.split(" ")[0], line.split(" ")[1]))
 print(links.take(10))
 links = links.groupByKey()
@@ -690,7 +690,7 @@ print(links.take(10))
 - Setup initial weight
 
 
-```python linenums="1"
+```python
 N = links.count()
 ranks = links.map(lambda line: (line[0], 1/N))
 ranks.take(3)
@@ -698,7 +698,7 @@ ranks.take(3)
 
 - Calculate the votes
 
-```python linenums="1"
+```python
 def calculateVotes(t):
     res = []
     for item in t[1][1]:
@@ -711,26 +711,26 @@ calculateVotes(('y', (0.3333333333333333, ['y', 'a'])))
 
 - Vote distribution
 
-```python linenums="1"
+```python
 votes = ranks.join(links)
 votes.take(10)
 ```  
 
-```python linenums="1"
+```python
 votes = votes.flatMap(calculateVotes)
 print(votes.take(10))
 ```  
 
 - Vote tally
 
-```python linenums="1"
+```python
 ranks = votes.reduceByKey(lambda x,y: x + y)
 ranks.take(10)
 ```
 
 - Iteration in Spark
 
-```python linenums="1"
+```python
 %%time
 for i in range(10):
     votes = ranks.join(links).flatMap(calculateVotes)
@@ -740,7 +740,7 @@ for i in range(10):
 
 - Iterating with a stopping condition
 
-```python linenums="1"
+```python
 %%time
 sum = 1
 while sum > 0.01:
@@ -763,6 +763,7 @@ while sum > 0.01:
 
 ---
 {% enddetails %}
+
 ## Hub and Authority
 
 {% details Intuition %}
@@ -1164,7 +1165,7 @@ $$
 {% details Example data %}
 - Run the following in a cell to generate a data file. This data file represents the graph shown in [Section 5.3](#example)
 
-```python linenums="1"
+```python
 %%file small_web.dat
 A B
 A D
