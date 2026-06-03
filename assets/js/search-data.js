@@ -941,31 +941,36 @@ ninja.data = [{
           description: "",
           section: "Csc467",handler: () => {
               window.location.href = "/csc467/05-link-analysis/";
+            },},{id: "csc467-project",
+          title: 'Project',
+          description: "",
+          section: "Csc467",handler: () => {
+              window.location.href = "/csc467/06-project/";
             },},{id: "csc467-frequent-itemsets",
           title: 'Frequent Itemsets',
           description: "",
           section: "Csc467",handler: () => {
-              window.location.href = "/csc467/06-frequent-itemsets/";
+              window.location.href = "/csc467/07-frequent-itemsets/";
             },},{id: "csc467-locality-sensitive-hashing",
           title: 'Locality Sensitive Hashing',
           description: "",
           section: "Csc467",handler: () => {
-              window.location.href = "/csc467/07-locality-sensitive-hashing/";
+              window.location.href = "/csc467/08-locality-sensitive-hashing/";
             },},{id: "csc467-clustering",
           title: 'Clustering',
           description: "",
           section: "Csc467",handler: () => {
-              window.location.href = "/csc467/08-clustering/";
+              window.location.href = "/csc467/09-clustering/";
             },},{id: "csc467-recommendation-systems",
           title: 'Recommendation Systems',
           description: "",
           section: "Csc467",handler: () => {
-              window.location.href = "/csc467/09-recommendation-systems/";
+              window.location.href = "/csc467/10-recommendation-systems/";
             },},{id: "csc467-distributed-machine-learning-with-spark",
           title: 'Distributed Machine Learning with Spark',
           description: "",
           section: "Csc467",handler: () => {
-              window.location.href = "/csc467/10-large-scale-machine-learning/";
+              window.location.href = "/csc467/11-large-scale-machine-learning/";
             },},{id: "csc468-syllabus",
           title: 'Syllabus',
           description: "",
