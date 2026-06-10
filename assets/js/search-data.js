@@ -1311,6 +1311,11 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/10-project/";
+            },},{id: "csc574-full-cycle",
+          title: 'Full Cycle',
+          description: "",
+          section: "Csc574",handler: () => {
+              window.location.href = "/csc574/11-full-cycle/";
             },},{id: "csc574-tensorflow-lite-micro",
           title: 'Tensorflow Lite Micro',
           description: "",
