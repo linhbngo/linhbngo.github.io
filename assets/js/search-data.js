@@ -1311,31 +1311,16 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/10-project/";
-            },},{id: "csc574-full-cycle",
-          title: 'Full Cycle',
-          description: "",
-          section: "Csc574",handler: () => {
-              window.location.href = "/csc574/11-full-cycle/";
             },},{id: "csc574-tensorflow-lite-micro",
           title: 'Tensorflow Lite Micro',
           description: "",
           section: "Csc574",handler: () => {
-              window.location.href = "/csc574/17-tf-lite-micro/";
-            },},{id: "csc574-deployment-of-kws",
-          title: 'Deployment of KWS',
+              window.location.href = "/csc574/11-tf-lite-micro/";
+            },},{id: "csc574-full-cycle",
+          title: 'Full Cycle',
           description: "",
           section: "Csc574",handler: () => {
-              window.location.href = "/csc574/18-kws-deploy/";
-            },},{id: "csc574-data-engineering",
-          title: 'Data Engineering',
-          description: "",
-          section: "Csc574",handler: () => {
-              window.location.href = "/csc574/19-data-engineering/";
-            },},{id: "csc574-visual-wake-word-vww",
-          title: 'Visual Wake Word (VWW)',
-          description: "",
-          section: "Csc574",handler: () => {
-              window.location.href = "/csc574/20-visual-wake-word/";
+              window.location.href = "/csc574/12-full-cycle/";
             },},{id: "csc578-syllabus-csc-578-cloud-systems-engineering",
           title: 'Syllabus: CSC 578 - Cloud Systems Engineering',
           description: "",
