@@ -230,7 +230,7 @@ void loop() {
 
 {% enddetails %}
 
-In `setup()`, to prior to initalizing the microphone (*line 31*), we will need to setup a callback 
+In `setup()`, to prior to initializing the microphone (*line 31*), we will need to setup a callback 
 function called `onPDMdata` (*line 30*). 
 - This function will be called when the data is available to be read. 
 - How frequent this function is called depends on the size of the PDM buffer and the sampling rate defined in the `begin()` call (*line 31*). 
