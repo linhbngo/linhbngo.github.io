@@ -448,11 +448,46 @@ ninja.data = [{
           description: "",
           section: "Cs-agentic-ai",handler: () => {
               window.location.href = "/cs-agentic-ai/00-syllabus/";
+            },},{id: "csc-workshops-bash-scriptings",
+          title: 'Bash Scriptings',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/bash-scripting/";
+            },},{id: "csc-workshops-cloud-lab",
+          title: 'Cloud Lab',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/cloudlab/";
+            },},{id: "csc-workshops-gdb",
+          title: 'GDB',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/gdb/";
             },},{id: "csc-workshops-introduction-to-docker-containers",
           title: 'Introduction to Docker Containers',
           description: "",
           section: "Csc-workshops",handler: () => {
               window.location.href = "/csc-workshops/intro-docker/";
+            },},{id: "csc-workshops-introduction-to-linux",
+          title: 'Introduction to Linux',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/intro-linux/";
+            },},{id: "csc-workshops-introduction-to-machine-learning",
+          title: 'Introduction to Machine Learning',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/intro-ml/";
+            },},{id: "csc-workshops-introduction-to-python-programming",
+          title: 'Introduction to Python Programming',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/intro-python/";
+            },},{id: "csc-workshops-more-bash",
+          title: 'More Bash',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/more-bash/";
             },},{id: "csc231-csc-231-computer-systems",
           title: 'CSC 231: Computer Systems',
           description: "",

@@ -1,0 +1,1490 @@
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> More Bash | Linh B. Ngo </title> <meta name="author" content="Linh B. Ngo"> <meta name="description" content="Learner, Researcher, Educator "> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.css" integrity="sha256-uRX+PiRTR4ysKFRCykT8HLuRCub26LgXJZym3Yeom1c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://linhbngo.github.io/csc-workshops/more-bash/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" integrity="sha256-q9ba7o845pMPFU+zcAll8rv+gC+fSovKsOoNQ6cynuQ=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" integrity="sha256-Oppd74ucMR5a5Dq96FxjEzGF7tTw2fZ/6ksAqDCM8GY=" crossorigin="anonymous" media="screen and (prefers-color-scheme: light)"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" integrity="sha256-nyCNAiECsdDHrr/s2OQsp5l9XeY2ZJ0rMepjCT2AkBk=" crossorigin="anonymous" media="screen and (prefers-color-scheme: dark)"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html@3.4.47/bundles/css/diff2html.min.css" integrity="sha256-IMBK4VNZp0ivwefSn51bswdsrhk0HoMTLc2GqFHFBXg=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css"> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> </head> <body> <d-front-matter> <script async type="text/json">
+      {
+            "title": "More Bash",
+            "description": "",
+            "published": "June 11, 2026",
+            "authors": [
+              
+            ],
+            "katex": {
+              "delimiters": [
+                {
+                  "left": "$",
+                  "right": "$",
+                  "display": false
+                },
+                {
+                  "left": "$$",
+                  "right": "$$",
+                  "display": true
+                }
+              ]
+            }
+          }
+    </script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Linh</span> B. Ngo </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">teaching </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/csc-workshops/">Workshops and Tutorials</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc331/"><strong>Operating Systems (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc402/"><strong>Software Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc478/"><strong>Cloud Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc578/"><strong>Cloud Systems Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc574/">Tiny Machine Learning (tinyML) (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc467/">Big Data Engineering (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc418-587/">CSC 418/587 (WI25)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc468/">Introduction to Cloud (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc231/">Computer Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc302/">Computer Security II (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc466/">Distributed and Parallel Computing (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc496/">iOS App Development (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc568/">Cloud Computing Fundamentals (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc-agentic-ai/">Agentic AI (dev)</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill lecture-layout"> <d-title> <h1>More Bash</h1> <p></p> </d-title> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div> <a href="#setup">Setup</a> </div> <div> <a href="#introduction-to-docker">Introduction to Docker</a> </div> <div> <a href="#docker-images">Docker Images</a> </div> <div> <a href="#infrastructure-as-code">Infrastructure as Code</a> </div> <div> <a href="#infrastructure-as-code-storage">Infrastructure as Code: Storage</a> </div> <div> <a href="#infrastructure-as-code-networking">Infrastructure as Code: Networking</a> </div> </nav> </d-contents> <h1 id="linux-scripting">Linux Scripting</h1> <ul> <li>It is possible to combine multiple Linux commands into one</li> <li>Settings: <ul> <li>Data are stored in <code class="language-plaintext highlighter-rouge">shell-lesson-data/excercise-data/proteins</code> on <code class="language-plaintext highlighter-rouge">molly</code>.</li> <li>Data files have <code class="language-plaintext highlighter-rouge">.pdb</code> extension.</li> </ul> </li> <li>Question: <ul> <li>Which of these files contains the fewest lines?</li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+</pre></td> <td class="rouge-code"><pre>
+
+- SSH to `molly`. 
+- Run the following commands to prepare the environment.
+
+~~~
+clear
+cd
+pwd
+wget --no-check-certificate https://www.cs.wcupa.edu/lngo/data/shell-lesson-data.zip
+unzip shell-lesson-data.zip
+cd ~/shell-lesson-data/exercise-data/proteins
+ls -l *.pdb
+~~~
+
+:::{image} fig/09-scripting-linux/pdb-list.png
+:alt: List files in current directory
+:class: bg-primary mb-1
+:height: 200px
+:align: center
+:::
+
+- To get counts of characters, words, and lines in a file, we use `wc`. 
+
+~~~
+man wc
+wc *.pdb
+wc -l *.pdb
+~~~
+
+:::{image} fig/09-scripting-linux/wc-cli.png
+:alt: Running wc command
+:class: bg-primary mb-1
+:height: 300px
+:align: center
+:::
+
+- We can use the `&gt;` to redirect output to a file
+  - `&gt;` redirects output and creates a new file. 
+  - `&gt;&gt;` appends output to a file (if the file already exists, else creates a new file)
+
+~~~
+ls
+wc -l *.pdb &gt; lengths.txt
+ls
+cat lengths.txt
+wc -l *.pdb &gt;&gt; lengths.txt
+cat lengths.txt
+wc -l *.pdb &gt; lengths.txt
+cat lengths.txt
+~~~
+
+
+:::{image} fig/09-scripting-linux/wc-redirect.png
+:alt: Redirect outputs to a file
+:class: bg-primary mb-1
+:height: 600px
+:align: center
+:::
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>We can sort the contents of <code class="language-plaintext highlighter-rouge">lengths.txt</code> using <code class="language-plaintext highlighter-rouge">sort</code> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>man sort
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::::{admonition} Challenge: what does <code class="language-plaintext highlighter-rouge">sort -n</code> do? :class: note</p> <ul> <li>Explain what does <code class="language-plaintext highlighter-rouge">-n</code> do by observing the following two commands</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>sort ~/shell-lesson-data/exercise-data/numbers.txt
+10
+19
+2
+22
+6
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>sort -n ~/shell-lesson-data/exercise-data/numbers.txt
+2
+6
+10
+19
+22
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{dropdown} Solution</p> <ul> <li> <p>The <code class="language-plaintext highlighter-rouge">-n</code> option specifies a numerical rather than an alphanumerical sort. ::: ::::</p> </li> <li> <p>Let’s look at <code class="language-plaintext highlighter-rouge">lengths.txt</code>:</p> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>sort -n lengths.txt
+sort -n lengths.txt &gt; sorted-lengths.txt
+cat sorted-lengths.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{image} fig/09-scripting-linux/sort-cli.png :alt: Redirect sorted outputs to a file :class: bg-primary mb-1 :height: 200px :align: center :::</p> <ul> <li>We can use the <code class="language-plaintext highlighter-rouge">head</code> command to get the first line</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>head -n 1 sorted-lengths.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{image} fig/09-scripting-linux/head-cli.png :alt: Run head to get the first line :class: bg-primary mb-1 :height: 50px :align: center :::</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+</pre></td> <td class="rouge-code"><pre>
+
+- We used intermediate files to store output. We can use a pipe (`|`) to 
+combine them together. 
+
+~~~
+sort -n lengths.txt | head -n 1
+~~~
+
+- We can combine multiple commands
+
+~~~
+wc -l *.pdb | sort -n | head -n 1
+~~~
+
+:::{image} fig/09-scripting-linux/pipe-multiple.png
+:alt: Multiple commands connection via pipes
+:class: bg-primary mb-1
+:height: 100px
+:align: center
+:::
+
+
+::::{admonition} Challenge: piping commands together
+:class: note
+- In our current directory, we want to find the 3 files which have the least 
+number of lines. Which command listed below would work?
+
+1. `wc -l * &gt; sort -n &gt; head -n 3`
+2. `wc -l * | sort -n | head -n 1-3`
+3. `wc -l * | head -n 3 | sort -n`
+4. `wc -l * | sort -n | head -n 3`
+
+:::{dropdown} Solution
+- Option 4 is the solution. The pipe character `|` is used to connect the output 
+from one command to the input of another. `&gt;` is used to redirect standard output 
+to a file. Try it in the `shell-lesson-data/exercise-data/proteins` directory!
+:::
+::::
+
+::::{admonition} Challenge: pipe reading comprehension
+:class: note
+- A file called animals.csv (in the `shell-lesson-data/exercise-data/animal-counts` folder) 
+contains the following data: 
+
+~~~
+cat ~/shell-lesson-data/exercise-data/animal-counts/animals.csv
+2012-11-05,deer,5
+2012-11-05,rabbit,22
+2012-11-05,raccoon,7
+2012-11-06,rabbit,19
+2012-11-06,deer,2
+2012-11-06,fox,4
+2012-11-07,rabbit,16
+2012-11-07,bear,1
+~~~
+
+- What text passes through each of the pipes and the final redirect in the 
+pipeline below? Note, the `sort -r` command sorts in reverse order.
+
+~~~
+cat animals.csv | head -n 5 | tail -n 3 | sort -r &gt; final.txt
+~~~
+
+:::{dropdown} Solution
+~~~
+2012-11-06,rabbit,19
+2012-11-06,deer,2
+2012-11-05,raccoon,7
+~~~
+:::
+::::
+
+
+::::{admonition} Challenge: pipe construction
+
+- For the file `animals.csv` from the previous exercise, consider the following command:
+
+~~~
+man cut
+cut -d , -f 2 animals.csv
+~~~
+
+:::{image} fig/09-scripting-linux/cut-pipe.png
+:alt: Piping the cut command
+:class: bg-primary mb-1
+:height: 100px
+:align: center
+:::
+
+- The `uniq` command filters out adjacent matching lines in a file. How could you 
+extend this pipeline (using uniq and another command) to find out what animals the 
+file contains (without any duplicates in their names)?
+
+
+:::{dropdown} Solution
+~~~
+cut -d , -f 2 animals.csv | sort | uniq
+~~~
+:::
+::::
+
+
+::::{admonition} Challenge: which pipe?
+
+- The file `animals.csv` contains 8 lines of data formatted as follows::
+
+~~~
+2012-11-05,deer,5
+2012-11-05,rabbit,22
+2012-11-05,raccoon,7
+2012-11-06,rabbit,19
+...
+~~~
+
+
+The `uniq` command has a `-c` option which gives a count of the number of 
+times a line occurs in its input. Assuming your current directory is 
+`shell-lesson-data/exercise-data/animal-counts`, what command would you 
+use to produce a table that shows the total count of each type of animal in the file?
+
+1. `sort animals.csv | uniq -c`
+2. `sort -t, -k2,2 animals.csv | uniq -c`
+3. `cut -d, -f 2 animals.csv | uniq -c`
+4. `cut -d, -f 2 animals.csv | sort | uniq -c`
+5. `cut -d, -f 2 animals.csv | sort | uniq -c | wc -l`
+
+
+:::{dropdown} Solution
+Option 4. is the correct answer.
+:::
+::::
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Nelle has run her samples through the assay machines and created 17 files in the <code class="language-plaintext highlighter-rouge">north-pacific-gyre</code> directory described earlier. Let’s check the integrity of this data:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>cd ~/shell-lesson-data/north-pacific-gyre
+ls -l 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>How do we check for data integrity? Imagine if you have thousands of files?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>wc -l *.txt | sort -n | head -n 5
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>This is possible by looking at metadata (line counts, word counts, etc)</li> <li>There are also files containing <code class="language-plaintext highlighter-rouge">Z</code> in their names,</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>ls *Z.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>It is important to be careful when using wildcards if we don’t want to include these strange files in our calculations.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+</pre></td> <td class="rouge-code"><pre>
+
+Suppose we have several hundred genome data files named `basilisk.dat`, `minotaur.dat`, and
+`unicorn.dat`. For this example, we'll use the `exercise-data/creatures` directory which only 
+has three example files, but the principles can be applied to many many more files at once.
+
+The structure of these files is the same: 
+
+- The common name, classification, and updated date are
+presented on the first three lines
+- The DNA sequences on the following lines.
+
+Let's look at the files:
+
+
+~~~
+cd ~/shell-lesson-data/exercise-data/creatures/
+head -n 5 basilisk.dat minotaur.dat unicorn.dat
+~~~
+
+:::{image} fig/09-scripting-linux/loop-creatures.png
+:alt: Viewing DNA contents of mystical creatures
+:class: bg-primary mb-1
+:height: 300px
+:align: center
+:::
+
+
+- We would like to print out the classification for each species, which is given on 
+the second line of each file.
+- For each file, we would need to execute the command `head -n 2` and pipe this to `tail -n 1`.
+- We’ll use a loop to solve this problem, but first let’s look at the general form of a loop:
+
+~~~
+for thing in list_of_things
+do
+    operation_using $thing    # Indentation within the loop is not required, but aids legibility
+done
+~~~
+
+and we can apply this to our example like this:
+
+~~~
+for filename in basilisk.dat minotaur.dat unicorn.dat
+&gt; do
+&gt;   head -n 2 $filename | tail -n 1
+&gt; done
+~~~
+
+:::{image} fig/09-scripting-linux/loop-classifications.png
+:alt: Looping through the dat files to view creature classifications
+:class: bg-primary mb-1
+:height: 100px
+:align: center
+:::
+
+::::{admonition} Follow the prompt
+:class: note
+
+The shell prompt changes from `$` to `&gt;` and back again as we were
+typing in our loop. The second prompt, `&gt;`, is different to remind
+us that we haven't finished typing a complete command yet. A semicolon, `;`,
+can be used to separate two commands written on a single line.
+
+::::
+
+
+- When the shell sees the keyword `for`, it knows to repeat a command (or group of commands) once 
+for each item in a list.
+- Inside the loop, we call for the variable's value by putting `$` in front of it. The `$` tells 
+the shell interpreter to treat the variable as a variable name and substitute its value in its place,
+rather than treat it as text or an external command.
+- In this example, the list is three filenames: `basilisk.dat`, `minotaur.dat`, and `unicorn.dat`.
+Each time the loop iterates, it will assign a file name to the variable `filename` and run 
+the `head` command.
+  - The first time through the loop, `$filename` is `basilisk.dat`. The interpreter runs the 
+  command `head` on `basilisk.dat` and pipes the first two lines to the `tail` command, 
+  which then prints the second line of `basilisk.dat`.
+  - For the second iteration, `$filename` becomes `minotaur.dat`. This time, the shell runs 
+  `head` on `minotaur.dat` and pipes the first two lines to the `tail` command, which then 
+  prints the second line of `minotaur.dat`. 
+  - For the third iteration, `$filename` becomes `unicorn.dat`, so the shell runs the `head` 
+  command on that file, and `tail` on the output of that.
+  - Since the list was only three items, the shell exits the `for` loop.
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::::{admonition} Same symbols, different meanings :class: note</p> <ul> <li>Here we see <code class="language-plaintext highlighter-rouge">&gt;</code> being used as a shell prompt, whereas <code class="language-plaintext highlighter-rouge">&gt;</code> is also used to redirect output.</li> <li>Similarly, <code class="language-plaintext highlighter-rouge">$</code> is used as a shell prompt, but, as we saw earlier, it is also used to ask the shell to get the value of a variable.</li> <li>If the <em>shell</em> prints <code class="language-plaintext highlighter-rouge">&gt;</code> or <code class="language-plaintext highlighter-rouge">$</code> then it expects you to type something, and the symbol is a prompt.</li> <li>If <em>you</em> type <code class="language-plaintext highlighter-rouge">&gt;</code> or <code class="language-plaintext highlighter-rouge">$</code> yourself, it is an instruction from you that the shell should redirect output or get the value of a variable.</li> <li>When using variables it is also possible to put the names into curly braces to clearly delimit the variable name: <ul> <li> <code class="language-plaintext highlighter-rouge">$filename</code> is equivalent to <code class="language-plaintext highlighter-rouge">${filename}</code>, but is different from <code class="language-plaintext highlighter-rouge">${file}name</code>. You may find this notation in other people’s programs.</li> </ul> </li> </ul> <p>::::</p> <p>::::{admonition} Challenge: write your own loop :class: note</p> <ul> <li>How would you write a loop that echoes all 10 numbers from 0 to 9?</li> </ul> <p>:::{dropdown} Solution</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>for loop_variable in 0 1 2 3 4 5 6 7 8 9
+&gt; do
+&gt;   echo $loop_variable
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::: ::::</p> <p>::::{admonition} Challenge: variables in loops :class: note</p> <ul> <li>This exercise refers to the <code class="language-plaintext highlighter-rouge">shell-lesson-data/exercise-data/proteins</code> directory.</li> <li>Run the following commands, observe the outputs, and answer the questions:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>cd ~/shell-lesson-data/exercise-data/proteins/
+ls *.pdb
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>What is the output of the following code?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>for datafile in *.pdb
+&gt; do
+&gt;   ls *.pdb
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Now, what is the output of the following code?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>for datafile in *.pdb
+&gt; do
+&gt;   ls $datafile
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Why do these two loops give different outputs?</li> </ul> <p>:::{dropdown} Solution</p> <ul> <li>The first code block gives the same output on each iteration through the loop. <ul> <li>Bash expands the wildcard <code class="language-plaintext highlighter-rouge">*.pdb</code> within the loop body (as well as before the loop starts) to match all files ending in <code class="language-plaintext highlighter-rouge">.pdb</code> and then lists them using <code class="language-plaintext highlighter-rouge">ls</code>.</li> </ul> </li> <li>The second code block lists a different file on each loop iteration. The value of the <code class="language-plaintext highlighter-rouge">datafile</code> variable is evaluated using <code class="language-plaintext highlighter-rouge">$datafile</code>, and then listed using <code class="language-plaintext highlighter-rouge">ls</code>. ::: ::::</li> </ul> <p>::::{admonition} Challenge: limiting sets of files :class: note</p> <ul> <li>What would be the output of running the following loop in the <code class="language-plaintext highlighter-rouge">shell-lesson-data/exercise-data/proteins</code> directory?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>cd ~/shell-lesson-data/exercise-data/proteins/
+for filename in c*
+&gt; do
+&gt;   ls $filename
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ol> <li>No files are listed.</li> <li>All files are listed.</li> <li>Only <code class="language-plaintext highlighter-rouge">cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">octane.pdb</code> and <code class="language-plaintext highlighter-rouge">pentane.pdb</code> are listed.</li> <li>Only <code class="language-plaintext highlighter-rouge">cubane.pdb</code> is listed.</li> </ol> <ul> <li>How would the output differ from using this command instead?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>cd ~/shell-lesson-data/exercise-data/proteins/
+for filename in *c*
+&gt; do
+&gt;   ls $filename
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ol> <li>The same files would be listed.</li> <li>All the files are listed this time.</li> <li>No files are listed this time.</li> <li>The files <code class="language-plaintext highlighter-rouge">cubane.pdb</code> and <code class="language-plaintext highlighter-rouge">octane.pdb</code> will be listed.</li> <li>Only the file <code class="language-plaintext highlighter-rouge">octane.pdb</code> will be listed.</li> </ol> <p>:::{dropdown} Solution</p> <ul> <li>4 is the correct answer. <code class="language-plaintext highlighter-rouge">*</code> matches zero or more characters, so any file name starting with the letter c, followed by zero or more other characters will be matched.</li> <li>8 is the correct answer. <code class="language-plaintext highlighter-rouge">*</code> matches zero or more characters, so a file name with zero or more characters before a letter c and zero or more characters after the letter c will be matched. ::: ::::</li> </ul> <p>::::{admonition} Challenge: saving to a file in a Loop :class: note</p> <ul> <li>In the <code class="language-plaintext highlighter-rouge">shell-lesson-data/exercise-data/proteins</code> directory, what is the effect of this loop?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>cd ~/shell-lesson-data/exercise-data/proteins/
+for alkanes in *.pdb
+&gt; do
+&gt;   echo $alkanes
+&gt;   cat $alkanes &gt; alkanes.pdb
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ol> <li>Prints <code class="language-plaintext highlighter-rouge">cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">ethane.pdb</code>, <code class="language-plaintext highlighter-rouge">methane.pdb</code>, <code class="language-plaintext highlighter-rouge">octane.pdb</code>, <code class="language-plaintext highlighter-rouge">pentane.pdb</code> and <code class="language-plaintext highlighter-rouge">propane.pdb</code>, and the text from <code class="language-plaintext highlighter-rouge">propane.pdb</code> will be saved to a file called <code class="language-plaintext highlighter-rouge">alkanes.pdb</code>.</li> <li>Prints <code class="language-plaintext highlighter-rouge">cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">ethane.pdb</code>, and <code class="language-plaintext highlighter-rouge">methane.pdb</code>, and the text from all three files would be concatenated and saved to a file called <code class="language-plaintext highlighter-rouge">alkanes.pdb</code>.</li> <li>Prints <code class="language-plaintext highlighter-rouge">cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">ethane.pdb</code>, <code class="language-plaintext highlighter-rouge">methane.pdb</code>, <code class="language-plaintext highlighter-rouge">octane.pdb</code>, and <code class="language-plaintext highlighter-rouge">pentane.pdb</code>, and the text from <code class="language-plaintext highlighter-rouge">propane.pdb</code> will be saved to a file called <code class="language-plaintext highlighter-rouge">alkanes.pdb</code>.</li> <li>None of the above.</li> </ol> <ul> <li>Also in the <code class="language-plaintext highlighter-rouge">shell-lesson-data/exercise-data/proteins</code> directory, what would be the output of the following loop?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>cd ~/shell-lesson-data/exercise-data/proteins/
+for datafile in *.pdb
+&gt; do
+&gt;   cat $datafile &gt;&gt; all.pdb
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ol> <li>All of the text from <code class="language-plaintext highlighter-rouge">cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">ethane.pdb</code>, <code class="language-plaintext highlighter-rouge">methane.pdb</code>, <code class="language-plaintext highlighter-rouge">octane.pdb</code>, and <code class="language-plaintext highlighter-rouge">pentane.pdb</code> would be concatenated and saved to a file called <code class="language-plaintext highlighter-rouge">all.pdb</code>.</li> <li>The text from <code class="language-plaintext highlighter-rouge">ethane.pdb</code> will be saved to a file called <code class="language-plaintext highlighter-rouge">all.pdb</code>.</li> <li>All of the text from <code class="language-plaintext highlighter-rouge">cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">ethane.pdb</code>, <code class="language-plaintext highlighter-rouge">methane.pdb</code>, <code class="language-plaintext highlighter-rouge">octane.pdb</code>, <code class="language-plaintext highlighter-rouge">pentane.pdb</code> and <code class="language-plaintext highlighter-rouge">propane.pdb</code> would be concatenated and saved to a file called <code class="language-plaintext highlighter-rouge">all.pdb</code>.</li> <li>All of the text from <code class="language-plaintext highlighter-rouge">cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">ethane.pdb</code>, <code class="language-plaintext highlighter-rouge">methane.pdb</code>, <code class="language-plaintext highlighter-rouge">octane.pdb</code>, <code class="language-plaintext highlighter-rouge">pentane.pdb</code> and <code class="language-plaintext highlighter-rouge">propane.pdb</code> would be printed to the screen and saved to a file called <code class="language-plaintext highlighter-rouge">all.pdb</code>.</li> </ol> <p>:::{dropdown} Solution</p> <ul> <li> <ol> <li>The text from each file in turn gets written to the <code class="language-plaintext highlighter-rouge">alkanes.pdb</code> file. However, the file gets overwritten on each loop iteration, so the final content of <code class="language-plaintext highlighter-rouge">alkanes.pdb</code> is the text from the <code class="language-plaintext highlighter-rouge">propane.pdb</code> file.</li> </ol> </li> <li>7 is the correct answer. <code class="language-plaintext highlighter-rouge">&gt;&gt;</code> appends to a file, rather than overwriting it with the redirected output from a command. Given the output from the <code class="language-plaintext highlighter-rouge">cat</code> command has been redirected, nothing is printed to the screen. ::: ::::</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+</pre></td> <td class="rouge-code"><pre>
+
+- Run the following loop
+  - The shell starts by expanding `*.dat` to create the list of files it will process.
+  - The **loop body** then executes two commands for each of those files.
+    - The first command, `echo`, prints its command-line arguments to standard output.
+    In this case, since the shell expands `$filename` to be the name of a file, 
+    `echo $filename` prints the name of the file.
+    - Finally, the `head` and `tail` combination selects lines 81-100 
+    from whatever file is being processed (assuming the file has at least 100 lines).
+
+~~~
+cd ~/shell-lesson-data/exercise-data/creatures
+for filename in *.dat
+&gt; do
+&gt;   echo $filename
+&gt;   head -n 100 $filename | tail -n 20
+&gt; done
+~~~
+
+- We would like to modify each of the files in `shell-lesson-data/exercise-data/creatures`,
+but also save a version of the original files, naming the copies `original-basilisk.dat` 
+and `original-unicorn.dat`.
+- We can't use:
+
+~~~
+cp *.dat original-*.dat
+~~~
+{: .language-bash}
+
+because that would expand to:
+
+~~~
+cp basilisk.dat minotaur.dat unicorn.dat original-*.dat
+~~~
+{: .language-bash}
+
+This wouldn't back up our files, instead we get an error:
+
+~~~
+cp: target `original-*.dat' is not a directory
+~~~
+{: .error}
+
+- This problem arises when `cp` receives more than two inputs. When this happens, it
+expects the last input to be a directory where it can copy all the files it was passed.
+Since there is no directory named `original-*.dat` in the `creatures` directory we get an
+error.
+- Instead, we can use a loop:
+
+~~~
+for filename in *.dat
+&gt; do
+&gt;   cp $filename original-$filename
+&gt; done
+~~~
+{: .language-bash}
+
+- Since the `cp` command does not normally produce any output, it's hard to check
+that the loop is doing the correct thing. However, we learned earlier how to print strings 
+using `echo`, and we can modify the loop to use `echo` to print our commands without 
+actually executing them. As such we can check what commands *would be* run in the unmodified loop.
+
+The following diagram
+shows what happens when the modified loop is executed, and demonstrates how the
+judicious use of `echo` is a good debugging technique.
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Nelle is now ready to process her data files using <code class="language-plaintext highlighter-rouge">goostats.sh</code> — a shell script written by her supervisor. This calculates some statistics from a protein sample file, and takes two arguments:</p> <ol> <li>an input file (containing the raw data)</li> <li>an output file (to store the calculated statistics)</li> </ol> <p>Since she’s still learning how to use the shell, she decides to build up the required commands in stages. Her first step is to make sure that she can select the right input files — remember, these are ones whose names end in ‘A’ or ‘B’, rather than ‘Z’. Starting from her home directory, Nelle types:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>cd ~/shell-lesson-data/north-pacific-gyre
+for datafile in NENE*A.txt NENE*B.txt
+&gt; do
+&gt;     echo $datafile
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Her next step is to decide what to call the files that the <code class="language-plaintext highlighter-rouge">goostats.sh</code> analysis program will create. Prefixing each input file’s name with ‘stats’ seems simple, so she modifies her loop to do that:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>for datafile in NENE*A.txt NENE*B.txt
+&gt; do
+&gt;     echo $datafile stats-$datafile
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>She hasn’t actually run <code class="language-plaintext highlighter-rouge">goostats.sh</code> yet, but now she’s sure she can select the right files and generate the right output filenames.</p> <p>Typing in commands over and over again is becoming tedious, though, and Nelle is worried about making mistakes, so instead of re-entering her loop, she presses <kbd>↑</kbd>. In response, the shell redisplays the whole loop on one line (using semi-colons to separate the pieces):</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>for datafile in NENE*A.txt NENE*B.txt; do echo $datafile stats-$datafile; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Using the left arrow key, Nelle backs up and changes the command <code class="language-plaintext highlighter-rouge">echo</code> to <code class="language-plaintext highlighter-rouge">bash goostats.sh</code>:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>for datafile in NENE*A.txt NENE*B.txt; do bash goostats.sh $datafile stats-$datafile; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>When she presses <kbd>Enter</kbd>, the shell runs the modified command. However, nothing appears to happen — there is no output. After a moment, Nelle realizes that since her script doesn’t print anything to the screen any longer, she has no idea whether it is running, much less how quickly. She kills the running command by typing <kbd>Ctrl</kbd>+<kbd>C</kbd>, uses <kbd>↑</kbd> to repeat the command, and edits it to read:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>for datafile in NENE*A.txt NENE*B.txt; do echo $datafile;
+bash goostats.sh $datafile stats-$datafile; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::::{admonition} Beginning and End :class: note</p> <ul> <li>We can move to the beginning of a line in the shell by typing <kbd>Ctrl</kbd>+<kbd>A</kbd> and to the end using <kbd>Ctrl</kbd>+<kbd>E</kbd>.</li> </ul> <p>::::</p> <p>When she runs her program now, it produces one line of output every five seconds or so 1518 times 5 seconds, divided by 60, tells her that her script will take about two hours to run. As a final check, she opens another terminal window, goes into <code class="language-plaintext highlighter-rouge">north-pacific-gyre</code>, and uses <code class="language-plaintext highlighter-rouge">cat stats-NENE01729B.txt</code> to examine one of the output files. It looks good, so she decides to get some coffee and catch up on her reading.</p> <p>::::{admonition} Those Who Know History Can Choose to Repeat It :class: note</p> <p>Another way to repeat previous work is to use the <code class="language-plaintext highlighter-rouge">history</code> command to get a list of the last few hundred commands that have been executed, and then to use <code class="language-plaintext highlighter-rouge">!123</code> (where ‘123’ is replaced by the command number) to repeat one of those commands. For example, if Nelle types this:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>history | tail -n 5
+   456  ls -l NENE0*.txt
+   457  rm stats-NENE01729B.txt.txt
+   458  bash goostats.sh NENE01729B.txt stats-NENE01729B.txt
+   459  ls -l NENE0*.txt
+   460  history
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>then she can re-run <code class="language-plaintext highlighter-rouge">goostats.sh</code> on <code class="language-plaintext highlighter-rouge">NENE01729B.txt</code> simply by typing <code class="language-plaintext highlighter-rouge">!458</code>.</p> <p>::::</p> <p>::::{admonition} Challenge: doing a dry run :class: note</p> <ul> <li>A loop is a way to do many things at once — or to make many mistakes at once if it does the wrong thing. One way to check what a loop <em>would</em> do is to <code class="language-plaintext highlighter-rouge">echo</code> the commands it would run instead of actually running them.</li> <li>Suppose we want to preview the commands the following loop will execute without actually running those commands:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>for datafile in *.pdb
+&gt; do
+&gt;   cat $datafile &gt;&gt; all.pdb
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>What is the difference between the two loops below, and which one would we want to run?</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre># Version 1
+for datafile in *.pdb
+&gt; do
+&gt;   echo cat $datafile &gt;&gt; all.pdb
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre># Version 2
+for datafile in *.pdb
+&gt; do
+&gt;   echo "cat $datafile &gt;&gt; all.pdb"
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{dropdown} Solution</p> <ul> <li>The second version is the one we want to run. This prints to screen everything enclosed in the quote marks, expanding the loop variable name because we have prefixed it with a dollar sign. It also <em>does not</em> modify nor create the file <code class="language-plaintext highlighter-rouge">all.pdb</code>, as the <code class="language-plaintext highlighter-rouge">&gt;&gt;</code> is treated literally as part of a string rather than as a redirection instruction.</li> <li>The first version appends the output from the command <code class="language-plaintext highlighter-rouge">echo cat $datafile</code> to the file, <code class="language-plaintext highlighter-rouge">all.pdb</code>. This file will just contain the list; <code class="language-plaintext highlighter-rouge">cat cubane.pdb</code>, <code class="language-plaintext highlighter-rouge">cat ethane.pdb</code>, <code class="language-plaintext highlighter-rouge">cat methane.pdb</code> etc.</li> <li>Try both versions for yourself to see the output! Be sure to change to the proper directory and open <code class="language-plaintext highlighter-rouge">all.pdb</code> file to view its contents. ::: ::::</li> </ul> <p>::::{admonition} Challenge: nested loops :class: note</p> <ul> <li>Suppose we want to set up a directory structure to organize some experiments measuring reaction rate constants with different compounds <em>and</em> different temperatures. What would be the result of the following code:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>for species in cubane ethane methane
+&gt; do
+&gt;    for temperature in 25 30 37 40
+&gt;    do
+&gt;       mkdir $species-$temperature
+&gt;     done
+&gt; done
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{dropdown} Solution</p> <ul> <li>We have a nested loop, i.e. contained within another loop, so for each species in the outer loop, the inner loop (the nested loop) iterates over the list of temperatures, and creates a new directory for each combination.</li> <li>Try running the code for yourself to see which directories are created! ::: ::::</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+</pre></td> <td class="rouge-code"><pre>
+
+- Let's start by going back to `~/shell-lesson-data/exercise-data/proteins$` and creating a new file, 
+`middle.sh` which will become our shell script:
+
+~~~
+cd ~/shell-lesson-data/exercise-data/proteins
+nano middle.sh
+cat middle.sh
+~~~
+
+- Add the following line to `middle.sh` and save:
+  - `head -n 15 octane.pdb | tail -n 5`
+- Once we have saved the file, we can ask the shell to execute the commands it contains.
+Our shell is called `bash`, so we run the following command:
+
+~~~
+bash middle.sh
+~~~
+
+:::{image} fig/09-scripting-linux/script-middle.png
+:alt: First simple script
+:class: bg-primary mb-1
+:height: 200px
+:align: center
+:::
+
+
+::::{admonition} Text vs. Whatever
+:class: note
+
+We usually call programs like Microsoft Word or LibreOffice Writer *text 
+editors*, but we need to be a bit more careful when it comes to 
+programming. By default, Microsoft Word uses `.docx` files to store not 
+only text, but also formatting information about fonts, headings, and so 
+on. This extra information isn't stored as characters and doesn't mean 
+anything to tools like `head`: they expect input files to contain 
+nothing but the letters, digits, and punctuation on a standard computer 
+keyboard. When editing programs, therefore, you must either use a plain 
+text editor, or be careful to save files as plain text.
+::::
+
+- What if we want to select lines from an arbitrary file? We could edit 
+`middle.sh` each time to change the filename, but that would probably 
+take longer than typing the command out again in the shell and 
+executing it with a new file name. Instead, let's edit `middle.sh` 
+and make it more versatile:
+  - Edit `middle.sh` and replace the text `octane.pdb` with the special variable called `$1`. 
+    - Wrap `$1` inside double quotes: `"$1"`. 
+  - `$1` means 'the first filename (or other argument) on the command line'.
+
+~~~
+nano middle.sh
+cat middle.sh
+bash middle.sh octane.pdb
+bash middle.sh pentane.pdb
+~~~
+{: .language-bash}
+
+:::{image} fig/09-scripting-linux/script-arguments.png
+:alt: script with command line arguments
+:class: bg-primary mb-1
+:height: 300px
+:align: center
+:::
+
+- Currently, we need to edit `middle.sh` each time we want to adjust the range of
+lines that is returned. Let's fix that by configuring our script to instead use three 
+command-line arguments.
+- After the first command-line argument (`$1`), each additional argument that we
+provide will be accessible via the special variables `$1`, `$2`, `$3`,
+which refer to the first, second, third command-line arguments, respectively.
+- Edit `middle.sh` and replace `15` with `"$2"` and `5` with `"$3"`
+
+~~~
+nano middle.sh
+cat middle.sh
+bash middle.sh pentane.pdb 15 5
+~~~
+
+- By changing the arguments to our command we can change our script's
+behaviour:
+
+~~~
+bash middle.sh pentane.pdb 20 5
+~~~
+{: .language-bash}
+
+- This works, but it may take the next person who reads `middle.sh` a moment to 
+figure out what it does. We can improve our script by adding some **comments** at the top:
+  - A comment starts with a `#` character and runs to the end of the line.
+  - Add the following comments to `middle.sh` at the top:
+    - `# Select lines from the middle of a file.`
+    - `#Usage: bash middle.sh filename end_line num_lines`
+- What if we want to process many files in a single pipeline?
+For example, if we want to sort our `.pdb` files by length, we would type
+the following command because `wc -l` lists the number of lines in the files 
+and `sort -n` sorts things numerically.
+
+~~~
+wc -l *.pdb | sort -n
+~~~
+
+- We could put this in a file, but then it would only ever sort a list of `.pdb` files 
+in the current directory. If we want to be able to get a sorted list of other kinds of files,
+we need a way to get all those names into the script.
+- We can't use `$1`, `$2`, and so on because we don't know how many files there are.
+- Instead, we use the special variable `$@`, which means, 
+'All of the command-line arguments to the shell script'.
+- We also should put `$@` inside double-quotes to handle the case of arguments 
+containing spaces (`"$@"` is special syntax and is equivalent to `"$1"` `"$2"` ...).
+- Create a file called `sorted.sh` inside `shell-lesson-data/exercise-data/proteins` with 
+the following contents:
+
+
+~~~
+# Sort files by their length.
+# Usage: bash sorted.sh one_or_more_filenames
+wc -l "$@" | sort -n
+~~~
+
+- Observe the following commands:
+
+~~~
+cd ~/shell-lesson-data/exercise-data/proteins
+nano sorted.sh
+cat sorted.sh
+bash sorted.sh *.pdb ../creatures/*.dat
+~~~
+{: .language-bash}
+
+- To turn your script into an `executable file` (run without `bash` command), the 
+following line must be at the top of your script:
+~~~
+#!/bin/bash
+~~~
+
+- and your script file must have executable permission:
+
+~~~
+chmod 755 sorted.sh
+./sorted.sh
+~~~
+
+::::{admonition} Challenge: list unique species
+:class: note
+
+- Leah has several hundred data files, each of which is formatted like this:
+
+~~~
+2013-11-05,deer,5
+2013-11-05,rabbit,22
+2013-11-05,raccoon,7
+2013-11-06,rabbit,19
+2013-11-06,deer,2
+2013-11-06,fox,1
+2013-11-07,rabbit,18
+2013-11-07,bear,1
+~~~
+
+- An example of this type of file is given in 
+`shell-lesson-data/exercise-data/animal-counts/animals.csv`.
+- We can use the command `cut -d , -f 2 animals.txt | sort | uniq` to produce 
+the unique species in `animals.txt`.
+- In order to avoid having to type out this series of commands every time, 
+a scientist may choose to write a shell script instead.
+- Write a shell script called `species.sh` that takes any number of 
+filenames as command-line arguments, and uses a variation of the above command 
+to print a list of the unique species appearing in each of those files separately.
+
+:::{dropdown} Solution
+~~~
+#!/bin/bash
+# Script to find unique species in csv files where species is the second data field
+# This script accepts any number of file names as command line arguments
+# Loop over all files
+for file in $@
+do
+  echo "Unique species in $file:"
+  # Extract species names
+  cut -d , -f 2 $file | sort | uniq
+done
+~~~
+:::
+::::
+
+- Suppose we have just run a series of commands that did something useful --- for example,
+that created a graph we'd like to use in a paper. We'd like to be able to re-create the 
+graph later if we need to, so we want to save the commands in a file. 
+- Instead of typing them in again (and potentially getting them wrong) we can do this:
+
+~~~
+history | tail -n 5 &gt; redo-figure-3.sh
+~~~
+
+The file `redo-figure-3.sh` now *could* contains:
+
+~~~
+297 bash goostats.sh NENE01729B.txt stats-NENE01729B.txt
+298 bash goodiff.sh stats-NENE01729B.txt /data/validated/01729.txt &gt; 01729-differences.txt
+299 cut -d ',' -f 2-3 01729-differences.txt &gt; 01729-time-series.txt
+300 ygraph --format scatter --color bw --borders none 01729-time-series.txt figure-3.png
+301 history | tail -n 5 &gt; redo-figure-3.sh
+~~~
+
+- After a moment's work in an editor to remove the serial numbers on the commands,
+and to remove the final line where we called the `history` command, 
+we have a completely accurate record of how we created that figure.
+- In practice, most people develop shell scripts by running commands at the shell prompt a few 
+times to make sure they're doing the right thing, then saving them in a file for re-use.
+- This style of work allows people to recycle what they discover about their data and their 
+workflow with one call to `history` and a bit of editing to clean up the output
+and save it as a shell script.
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <p>Nelle’s supervisor insisted that all her analytics must be reproducible. The easiest way to capture all the steps is in a script.</p> </li> <li> <p>First we return to Nelle’s project directory:</p> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>cd ../../north-pacific-gyre/
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>then creates a file using <code class="language-plaintext highlighter-rouge">nano</code> …</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>nano do-stats.sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>…which contains the following:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>#!/bin/bash
+# Calculate stats for data files.
+for datafile in "$@"
+do
+    echo $datafile
+    bash goostats.sh $datafile stats-$datafile
+done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>… saves this in a file called <code class="language-plaintext highlighter-rouge">do-stats.sh</code> and set executable mode so that she can now re-do the first stage of her analysis by typing:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>./do-stats.sh NENE*A.txt NENE*B.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>She can also do the following so that the output is just the number of files processed rather than the names of the files that were processed.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>./do-stats.sh NENE*A.txt NENE*B.txt | wc -l
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>One thing to note about Nelle’s script is that it lets the person running it decide what files to process. She could have written it as:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>#!/bin/bash
+# Calculate stats for Site A and Site B data files.
+for datafile in NENE*A.txt NENE*B.txt
+do
+    echo $datafile
+    bash goostats.sh $datafile stats-$datafile
+done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The advantage is that this always selects the right files: <ul> <li>she doesn’t have to remember to exclude the ‘Z’ files.</li> </ul> </li> <li>The disadvantage is that it <em>always</em> selects just those files — she can’t run it on all files (including the ‘Z’ files), or on the ‘G’ or ‘H’ files her colleagues in Antarctica are producing, without editing the script.</li> <li>She could modify her script to check for command-line arguments, and use <code class="language-plaintext highlighter-rouge">NENE*A.txt NENE*B.txt</code> if none were provided. Of course, this introduces another tradeoff between flexibility and complexity.</li> </ul> <p>::::{admonition} Challenge: variables in shell scripts :class: note</p> <ul> <li>In the <code class="language-plaintext highlighter-rouge">proteins</code> directory, imagine you have a shell script called <code class="language-plaintext highlighter-rouge">script.sh</code> containing the following commands:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>#!/bin/bash
+head -n $2 $1
+tail -n $3 $1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>While you are in the <code class="language-plaintext highlighter-rouge">proteins</code> directory, you type the following command:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>./script.sh '*.pdb' 1 1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Which of the following outputs would you expect to see?</p> <ol> <li>All of the lines between the first and the last lines of each file ending in <code class="language-plaintext highlighter-rouge">.pdb</code> in the <code class="language-plaintext highlighter-rouge">proteins</code> directory</li> <li>The first and the last line of each file ending in <code class="language-plaintext highlighter-rouge">.pdb</code> in the <code class="language-plaintext highlighter-rouge">proteins</code> directory</li> <li>The first and the last line of each file in the <code class="language-plaintext highlighter-rouge">proteins</code> directory</li> <li>An error because of the quotes around <code class="language-plaintext highlighter-rouge">*.pdb</code> </li> </ol> <p>:::{dropdown} Solution</p> <ul> <li>The correct answer is 2.</li> <li>The special variables $1, $2 and $3 represent the command line arguments given to the script, such that the commands run are:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>head -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
+tail -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The shell does not expand <code class="language-plaintext highlighter-rouge">'*.pdb'</code> because it is enclosed by quote marks.</li> <li>As such, the first argument to the script is <code class="language-plaintext highlighter-rouge">'*.pdb'</code> which gets expanded within the script by <code class="language-plaintext highlighter-rouge">head</code> and <code class="language-plaintext highlighter-rouge">tail</code>. ::: ::::</li> </ul> <p>::::{admonition} Challenge: find the longest file with a given extension :class: note</p> <ul> <li>Write a shell script called <code class="language-plaintext highlighter-rouge">longest.sh</code> that takes the name of a directory and a filename extension as its arguments, and prints out the name of the file with the most lines in that directory with that extension. For example:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>./longest.sh shell-lesson-data/data/pdb pdb
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>would print the name of the <code class="language-plaintext highlighter-rouge">.pdb</code> file in <code class="language-plaintext highlighter-rouge">shell-lesson-data/data/pdb</code> that has the most lines.</p> <p>Feel free to test your script on another directory e.g.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>bash longest.sh shell-lesson-data/writing/data txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{dropdown} Solution</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>#!/bin/bash
+# Shell script which takes two arguments:
+#    1. a directory name
+#    2. a file extension
+# and prints the name of the file in that directory
+# with the most lines which matches the file extension.
+wc -l $1/*.$2 | sort -n | tail -n 2 | head -n 1
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>The first part of the pipeline, <code class="language-plaintext highlighter-rouge">wc -l $1/*.$2 | sort -n</code>, counts the lines in each file and sorts them numerically (largest last). When there’s more than one file, <code class="language-plaintext highlighter-rouge">wc</code> also outputs a final summary line, giving the total number of lines across <em>all</em> files. We use <code class="language-plaintext highlighter-rouge">tail -n 2 | head -n 1</code> to throw away this last line.</li> <li>With <code class="language-plaintext highlighter-rouge">wc -l $1/*.$2 | sort -n | tail -n 1</code> we’ll see the final summary line: we can build our pipeline up in pieces to be sure we understand the output. ::: ::::</li> </ul> <p>::::{admonition} Challenge: script reading comprehension :class: note</p> <ul> <li>For this question, consider the <code class="language-plaintext highlighter-rouge">shell-lesson-data/exercise-data/proteins</code> directory once again. This contains a number of <code class="language-plaintext highlighter-rouge">.pdb</code> files in addition to any other files you may have created.</li> <li>Explain what each of the following three scripts would do when run as <code class="language-plaintext highlighter-rouge">bash script1.sh *.pdb</code>, <code class="language-plaintext highlighter-rouge">bash script2.sh *.pdb</code>, and <code class="language-plaintext highlighter-rouge">bash script3.sh *.pdb</code> respectively.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre># Script 1
+echo *.*
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre># Script 2
+for filename in $1 $2 $3
+do
+  cat $filename
+done
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre># Script 3
+echo $@.pdb
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::{dropdown} Solution In each case, the shell expands the wildcard in <code class="language-plaintext highlighter-rouge">*.pdb</code> before passing the resulting list of file names as arguments to the script.</p> <ul> <li>Script 1 would print out a list of all files containing a dot in their name. The arguments passed to the script are not actually used anywhere in the script.</li> <li>Script 2 would print the contents of the first 3 files with a <code class="language-plaintext highlighter-rouge">.pdb</code> file extension. <code class="language-plaintext highlighter-rouge">$1</code>, <code class="language-plaintext highlighter-rouge">$2</code>, and <code class="language-plaintext highlighter-rouge">$3</code> refer to the first, second, and third argument respectively.</li> <li>Script 3 would print all the arguments to the script (i.e. all the <code class="language-plaintext highlighter-rouge">.pdb</code> files), followed by <code class="language-plaintext highlighter-rouge">.pdb</code>. <code class="language-plaintext highlighter-rouge">$@</code> refers to <em>all</em> the arguments given to a shell script.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre> cubane.pdb ethane.pdb methane.pdb octane.pdb pentane.pdb propane.pdb.pdb
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>::: ::::</p> <p>::::{admonition} Challenge: debugging scripts :class: note</p> <ul> <li>Suppose you have saved the following script in a file called <code class="language-plaintext highlighter-rouge">do-errors.sh</code> in Nelle’s <code class="language-plaintext highlighter-rouge">north-pacific-gyre/scripts</code> directory:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre># Calculate stats for data files.
+for datafile in "$@"
+do
+  echo $datfile
+  bash goostats.sh $datafile stats-$datafile
+done
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>When you run it from the <code class="language-plaintext highlighter-rouge">north-pacific-gyre</code> directory, the output is blank.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>bash do-errors.sh NENE*A.txt NENE*B.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>To figure out why, re-run the script using the <code class="language-plaintext highlighter-rouge">-x</code> option:</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>bash -x do-errors.sh NENE*A.txt NENE*B.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>What is the output showing you?</li> <li>Which line is responsible for the error?</li> </ul> <p>:::{dropdown} Solution</p> <ul> <li>The <code class="language-plaintext highlighter-rouge">-x</code> option causes <code class="language-plaintext highlighter-rouge">bash</code> to run in debug mode.</li> <li>This prints out each command as it is run, which will help you to locate errors.</li> <li>In this example, we can see that <code class="language-plaintext highlighter-rouge">echo</code> isn’t printing anything. We have made a typo in the loop variable name, and the variable <code class="language-plaintext highlighter-rouge">datfile</code> doesn’t exist, hence returning an empty string. ::: ::::</li> </ul> <p>```</p> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js" integrity="sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js" integrity="sha256-1rA678n2xEx7x4cTZ5x4wpUCj6kUMZEZ5cxLSVSFWxw=" crossorigin="anonymous"></script> <script defer src="/assets/js/mermaid-setup.js?38ca0a0126f7328d2d9a46bad640931f" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/diff2html@3.4.47/bundles/js/diff2html-ui.min.js" integrity="sha256-eU2TVHX633T1o/bTQp6iIJByYJEtZThhF9bKz/DcbbY=" crossorigin="anonymous"></script> <script defer src="/assets/js/diff2html-setup.js?80a6e52ce727518bbd3aed2bb6ba5601" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js" integrity="sha256-MgH13bFTTNqsnuEoqNPBLDaqxjGH+lCpqrukmXc8Ppg=" crossorigin="anonymous"></script> <script defer src="/assets/js/leaflet-setup.js?b6313931e203b924523e2d8b75fe8874" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha256-0q+JdOlScWOHcunpUk21uab1jW7C1deBQARHtKMcaB4=" crossorigin="anonymous"></script> <script defer src="/assets/js/chartjs-setup.js?183c5859923724fb1cb3c67593848e71" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="sha256-QvgynZibb2U53SsVu98NggJXYqwRL7tg3FeyfXvPOUY=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/theme/dark-fresh-cut.js" integrity="sha256-sm6Ui9w41++ZCWmIWDLC18a6ki72FQpWDiYTDxEPXwU=" crossorigin="anonymous"></script> <script defer src="/assets/js/echarts-setup.js?738178999630746a8d0cfc261fc47c2c" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/vega@5.27.0/build/vega.min.js" integrity="sha256-Yot/cfgMMMpFwkp/5azR20Tfkt24PFqQ6IQS+80HIZs=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.3/build/vega-lite.min.js" integrity="sha256-TvBvIS5jUN4BSy009usRjNzjI1qRrHPYv7xVLJyjUyw=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6.24.0/build/vega-embed.min.js" integrity="sha256-FPCJ9JYCC9AZSpvC/t/wHBX7ybueZhIqOMjpWqfl3DU=" crossorigin="anonymous"></script> <script defer src="/assets/js/vega-setup.js?7c7bee055efe9312afc861b128fe5f36" type="text/javascript"></script> <script defer src="https://tikzjax.com/v1/tikzjax.js" integrity="sha256-+1qyucCXRZJrCg3lm3KxRt/7WXaYhBid4/1XJRHGB1E=" crossorigin="anonymous"></script> <script src="/assets/js/typograms.js?062e75bede72543443762dc3fe36c7a5"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>
