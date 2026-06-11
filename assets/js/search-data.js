@@ -30,29 +30,64 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "dropdown-agentic-ai-dev",
-              title: "Agentic AI (dev)",
+        },{id: "dropdown-workshops-and-tutorials",
+              title: "Workshops and Tutorials",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/csc-agentic-ai/";
+                window.location.href = "/csc-workshops/";
               },
-            },{id: "dropdown-csc-418-587-dev",
-              title: "CSC 418/587 (dev)",
+            },{id: "dropdown-lt-strong-gt-operating-systems-fa26-lt-strong-gt",
+              title: "&lt;strong&gt;Operating Systems (FA26)&lt;/strong&gt;",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/csc418-587/";
+                window.location.href = "/csc331/";
               },
-            },{id: "dropdown-big-data-engineering",
-              title: "Big Data Engineering",
+            },{id: "dropdown-lt-strong-gt-software-engineering-fa26-lt-strong-gt",
+              title: "&lt;strong&gt;Software Engineering (FA26)&lt;/strong&gt;",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc402/";
+              },
+            },{id: "dropdown-lt-strong-gt-cloud-engineering-fa26-lt-strong-gt",
+              title: "&lt;strong&gt;Cloud Engineering (FA26)&lt;/strong&gt;",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc478/";
+              },
+            },{id: "dropdown-lt-strong-gt-cloud-systems-engineering-fa26-lt-strong-gt",
+              title: "&lt;strong&gt;Cloud Systems Engineering (FA26)&lt;/strong&gt;",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc578/";
+              },
+            },{id: "dropdown-tiny-machine-learning-tinyml-su26",
+              title: "Tiny Machine Learning (tinyML) (SU26)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc574/";
+              },
+            },{id: "dropdown-big-data-engineering-su26",
+              title: "Big Data Engineering (SU26)",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/csc467/";
               },
-            },{id: "dropdown-introduction-to-cloud",
-              title: "Introduction to Cloud",
+            },{id: "dropdown-csc-418-587-wi25",
+              title: "CSC 418/587 (WI25)",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc418-587/";
+              },
+            },{id: "dropdown-introduction-to-cloud-sp26",
+              title: "Introduction to Cloud (SP26)",
               description: "",
               section: "Dropdown",
               handler: () => {
@@ -72,33 +107,12 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc302/";
               },
-            },{id: "dropdown-operating-systems-dev",
-              title: "Operating Systems (dev)",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/csc331/";
-              },
-            },{id: "dropdown-software-engineering-dev",
-              title: "Software Engineering (dev)",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/csc402/";
-              },
             },{id: "dropdown-distributed-and-parallel-computing-dev",
               title: "Distributed and Parallel Computing (dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/csc466/";
-              },
-            },{id: "dropdown-cloud-engineering-dev",
-              title: "Cloud Engineering (dev)",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/csc478/";
               },
             },{id: "dropdown-ios-app-development-dev",
               title: "iOS App Development (dev)",
@@ -107,26 +121,19 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc496/";
               },
-            },{id: "dropdown-cloud-computing-fundamentals-dev",
-              title: "Cloud Computing Fundamentals (dev)",
+            },{id: "dropdown-cloud-computing-fundamentals-sp26",
+              title: "Cloud Computing Fundamentals (SP26)",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/csc568/";
               },
-            },{id: "dropdown-cloud-systems-engineering-dev",
-              title: "Cloud Systems Engineering (dev)",
+            },{id: "dropdown-agentic-ai-dev",
+              title: "Agentic AI (dev)",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/csc578/";
-              },
-            },{id: "dropdown-tiny-machine-learning-tinyml",
-              title: "Tiny Machine Learning (tinyML)",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/csc574/";
+                window.location.href = "/csc-agentic-ai/";
               },
             },{id: "post-modern-cs-the-age-of-minors-and-certificates",
         
@@ -441,6 +448,11 @@ ninja.data = [{
           description: "",
           section: "Cs-agentic-ai",handler: () => {
               window.location.href = "/cs-agentic-ai/00-syllabus/";
+            },},{id: "csc-workshops-introduction-to-docker-containers",
+          title: 'Introduction to Docker Containers',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/intro-docker/";
             },},{id: "csc231-csc-231-computer-systems",
           title: 'CSC 231: Computer Systems',
           description: "",
@@ -576,111 +588,101 @@ ninja.data = [{
           description: "",
           section: "Csc302",handler: () => {
               window.location.href = "/csc302/index/";
-            },},{id: "csc331-syllabus-csc-331-operating-systems",
-          title: 'Syllabus: CSC 331 - Operating Systems',
+            },},{id: "csc331-syllabus",
+          title: 'Syllabus',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/00-syllabus/";
-            },},{id: "csc331-introduction-to-operating-systems",
-          title: 'Introduction to Operating Systems',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/01-introduction/";
-            },},{id: "csc331-introduction-to-xv6",
-          title: 'Introduction to xv6',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/02-introduction-xv6/";
-            },},{id: "csc331-abstraction-process-and-process-api",
-          title: 'Abstraction: Process and Process API',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/03-process/";
-            },},{id: "csc331-process-in-xv6",
-          title: 'Process in XV6',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/04-process-xv6/";
-            },},{id: "csc331-limited-direct-execution",
-          title: 'Limited Direct Execution',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/05-limited-direct-execution/";
-            },},{id: "csc331-cpu-scheduling",
-          title: 'CPU Scheduling',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/06-cpu-scheduling/";
-            },},{id: "csc331-memory-virtualization",
-          title: 'Memory virtualization',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/07-memory-virtualization/";
-            },},{id: "csc331-memory-virtualization-mechanism-address-translation",
-          title: 'Memory virtualization mechanism: address translation',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/08-address-translation/";
-            },},{id: "csc331-memory-virtualization-mechanism-paging-and-tlb",
-          title: 'Memory virtualization mechanism: paging and tlb',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/09-paging/";
-            },},{id: "csc331-introduction-to-concurrency-using-threads",
-          title: 'Introduction to concurrency using threads',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/10-concurrency/";
-            },},{id: "csc331-lock-and-condition-variables",
-          title: 'Lock and Condition Variables',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/11-lock-condition-variables/";
-            },},{id: "csc331-semaphores",
-          title: 'Semaphores',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/12-semaphores/";
-            },},{id: "csc331-i-o-and-disks-disk-scheduling",
-          title: 'I/O and Disks: Disk Scheduling',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/13-io-disk-scheduling/";
-            },},{id: "csc331-introduction-to-file-systems",
-          title: 'Introduction to file systems',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/14-file-systems/";
-            },},{id: "csc331-crash-consistency-fsck-and-journaling",
-          title: 'Crash consistency: fsck and journaling',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/15-crash-consistency-fsck-journaling/";
-            },},{id: "csc331-micro-versus-monolithnic-kernels-minix-and-linux",
-          title: 'Micro versus monolithnic kernels: Minix and Linux',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/16-minix/";
-            },},{id: "csc331-a-gentle-introduction-to-ros",
-          title: 'A Gentle Introduction to ROS',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/17-ros/";
-            },},{id: "csc331-csc-331-operating-systems",
-          title: 'CSC 331: Operating Systems',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/index/";
-            },},{id: "csc331-notes",
-          title: 'Notes',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/notes/";
             },},{id: "csc331-infrastructure",
           title: 'Infrastructure',
           description: "",
           section: "Csc331",handler: () => {
-              window.location.href = "/csc331/setup/";
+              window.location.href = "/csc331/01-setup/";
+            },},{id: "csc331-introduction-to-operating-systems",
+          title: 'Introduction to Operating Systems',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/02-introduction/";
+            },},{id: "csc331-introduction-to-xv6",
+          title: 'Introduction to xv6',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/03-introduction-xv6/";
+            },},{id: "csc331-abstraction-process-and-process-api",
+          title: 'Abstraction: Process and Process API',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/04-process/";
+            },},{id: "csc331-process-in-xv6",
+          title: 'Process in XV6',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/05-process-xv6/";
+            },},{id: "csc331-limited-direct-execution",
+          title: 'Limited Direct Execution',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/06-limited-direct-execution/";
+            },},{id: "csc331-cpu-scheduling",
+          title: 'CPU Scheduling',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/07-cpu-scheduling/";
+            },},{id: "csc331-memory-virtualization",
+          title: 'Memory virtualization',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/08-memory-virtualization/";
+            },},{id: "csc331-memory-virtualization-mechanism-address-translation",
+          title: 'Memory virtualization mechanism: address translation',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/09-address-translation/";
+            },},{id: "csc331-memory-virtualization-mechanism-paging-and-tlb",
+          title: 'Memory virtualization mechanism: paging and tlb',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/10-paging/";
+            },},{id: "csc331-introduction-to-concurrency-using-threads",
+          title: 'Introduction to concurrency using threads',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/11-concurrency/";
+            },},{id: "csc331-lock-and-condition-variables",
+          title: 'Lock and Condition Variables',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/12-lock-condition-variables/";
+            },},{id: "csc331-semaphores",
+          title: 'Semaphores',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/13-semaphores/";
+            },},{id: "csc331-i-o-and-disks-disk-scheduling",
+          title: 'I/O and Disks: Disk Scheduling',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/14-io-disk-scheduling/";
+            },},{id: "csc331-introduction-to-file-systems",
+          title: 'Introduction to file systems',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/15-file-systems/";
+            },},{id: "csc331-crash-consistency-fsck-and-journaling",
+          title: 'Crash consistency: fsck and journaling',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/16-crash-consistency-fsck-journaling/";
+            },},{id: "csc331-micro-versus-monolithnic-kernels-minix-and-linux",
+          title: 'Micro versus monolithnic kernels: Minix and Linux',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/17-minix/";
+            },},{id: "csc331-a-gentle-introduction-to-ros",
+          title: 'A Gentle Introduction to ROS',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/18-ros/";
             },},{id: "csc402-syllabus",
           title: 'Syllabus',
           description: "",
