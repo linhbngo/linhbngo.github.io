@@ -58,14 +58,16 @@ will be higher. That would be a good thing!
 - Successful installation and startup of Docker will show the Docker Desktop Dashboard
     - This screenshot is taken on a Mac, but the GUI should be the same across platforms
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc-workshops/docker/docker-desktop-mac.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
+
+
+{% include figure.liquid loading="eager" path="assets/img/courses/workshops/docker/docker-desktop-mac.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
 
 
 - You should also carry out a test for Docker inside a terminal.
     - Mac: If you have not used a Terminal on Mac before, click the Magnifying Glass icon (top right) and type in `Terminal` to find the app. 
     - Windows: It is highly recommended that you download and use the Terminal App from Windows Store. For Windows 11+, this has become a default application. 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc-workshops/docker/docker-desktop-mac-terminal.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/workshops/docker/docker-desktop-mac-terminal.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
 
 
 {% details tip Docker Hub %}

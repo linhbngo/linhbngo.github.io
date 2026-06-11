@@ -1,4 +1,28 @@
-# Introduction to Machine Learning using Python
+---
+layout: lecture
+pretty_table: true
+order: 2
+title: Introduction to Machine Learning
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+toc:
+  - name: Setup
+  - name: Introduction to Docker
+  - name: Docker Images
+  - name: Infrastructure as Code
+  - name: "Infrastructure as Code: Storage"
+  - name: "Infrastructure as Code: Networking"
+
+---
 
 
 Python has become the de facto language for machine learning due to its simplicity, readability, and extensive ecosystem of libraries. Its flexibility allows for rapid prototyping and development, while its powerful libraries like NumPy, Pandas, and Scikit-learn provide efficient tools for data manipulation and model building.
@@ -435,6 +459,7 @@ plt.show()
 "Linear" regression is surprisingly flexible!
 
 {% enddetails %}
+
 {% details info Logistic Regression %}
 
 
@@ -569,6 +594,7 @@ print("Decision Tree created and visualized based on the loan approval data.")
 ```
 
 {% enddetails %}
+
 {% details info Random Forests %}
 
 
@@ -688,9 +714,6 @@ X_test_scaled = scaler.transform(X_test)
 svm_classifier = svm.SVC(kernel='rbf', random_state=42)
 svm_classifier.fit(X_train_scaled, y_train)
 ```
-
-
-
 
 
 ```python
@@ -825,7 +848,7 @@ plt.show()
 ```
 
 {% enddetails %}
----
+
 
 ## 3. Supervised Learning Model Evaluation Metrics
 

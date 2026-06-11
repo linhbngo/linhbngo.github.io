@@ -1,3 +1,29 @@
+---
+layout: lecture
+pretty_table: true
+order: 2
+title: Cloud Lab
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+toc:
+  - name: Setup
+  - name: Introduction to Docker
+  - name: Docker Images
+  - name: Infrastructure as Code
+  - name: "Infrastructure as Code: Storage"
+  - name: "Infrastructure as Code: Networking"
+
+---
+
 
 # Introduction to CloudLab
 
