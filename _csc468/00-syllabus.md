@@ -128,14 +128,13 @@ necessary to support the tasks described in the assignments and projects.
 Assignments that are late are assessed a 10% per day late penalty.
 Saturday and Sunday are each days.
 
-## Course Schedules
+## Tentative Course Schedules
 
 - Quizzes are typically disseminated once a week. 
-    - Quizzes will be opened at the beginning of the class and typically last 10-15 minutes. 
-    - Quizzes are available for the first 30 minutes of the class. If you are late, you can still 
-    take the quiz, but the instructor will start the lecture 5 minutes after duration of the quiz. 
-    - One lowest quiz will be dropped. There will be no quiz retake. 
-
+  - Quizzes will be opened at the beginning of the class and typically last 10-15 minutes. 
+  - Quizzes are available for the first 30 minutes of the class. If you are late, you can still 
+  take the quiz, but the instructor will start the lecture 5 minutes after duration of the quiz. 
+  - One lowest quiz will be dropped. There will be no quiz retake. 
 
 
 {% include courses/policy.md %}

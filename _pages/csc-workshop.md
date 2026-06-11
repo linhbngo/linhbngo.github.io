@@ -1,0 +1,47 @@
+---
+layout: default
+permalink: /csc-workshops/
+title: "Workshops and Tutorials"
+nav: false
+collection: csc-workshops
+---
+
+<hr class="hr-medium hr-theme">
+
+## Description
+
+> This collections include workshops and tutorials covering technical topics that  are applicable across multiple courses. They include Linux, GDB, Git, and many others. 
+{: .block-tip}
+
+<hr class="hr-medium hr-theme">
+
+## Topics
+
+<hr class="hr-medium hr-theme">
+
+<div class="post">
+  <ul class="post-list post-list-compact">
+    {% assign postlist = site.csc-workshops %}
+    {% for post in postlist %}
+        {% assign year = post.date | date: "%Y" %}
+        {% assign tags = post.tags | join: "" %}
+        {% assign categories = post.categories | join: "" %}
+
+        <li>
+            <h4>
+                {% if post.redirect == blank %}
+                    <a class="post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                {% elsif post.redirect contains '://' %}
+                    <a class="post-title" href="{{ post.redirect }}" target="_blank">{{ post.title }}</a>
+                    <svg width="2rem" height="2rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                {% else %}
+                    <a class="post-title" href="{{ post.redirect | relative_url }}">{{ post.title }}</a>
+                {% endif %}
+            </h4>
+            <p>{{ post.description }}</p>
+        </li>
+    {% endfor %}
+  </ul>
+</div>

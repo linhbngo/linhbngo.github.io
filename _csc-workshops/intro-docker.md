@@ -1,7 +1,31 @@
-# Introduction to Docker Containers
+---
+layout: lecture
+pretty_table: true
+order: 2
+title: Introduction to Docker Containers
+mermaid:
+  enabled: true
+  zoomable: true
+code_diff: true
+map: true
+chart:
+  chartjs: true
+  echarts: true
+  vega_lite: true
+tikzjax: true
+typograms: true
+toc:
+  - name: Setup
+  - name: Introduction to Docker
+  - name: Docker Images
+  - name: Infrastructure as Code
+  - name: "Infrastructure as Code: Storage"
+  - name: "Infrastructure as Code: Networking"
+
+---
 
 
-## 1. Setup
+## Setup
 
 {% details warning Older version of Docker Desktop %}
 
@@ -19,6 +43,7 @@ It is possible that by the time that you read this setup, the versions you have
 will be higher. That would be a good thing!
 
 {% enddetails %}
+
 {% details note Links to download and install Docker Desktop %}
 
 - Select the appropriate link for your computing platform:
@@ -27,25 +52,20 @@ will be higher. That would be a good thing!
         - **You should run Linux containers when installing Docker Desktop for Windows**
         - It is recommended that you use WSL2 option when installing Docker Desktop on Windows
     - [Linux](https://docs.docker.com/desktop/setup/install/linux/)
-- Successful installation and startup of Docker will show the following application
-    - Screenshot is taken on a Mac, but the GUI should be the same across platforms
-    {% include figure.liquid path="fig/docker/docker-desktop-mac.png" %}
 
 {% enddetails %}
-{% details warning Docker Desktop Terminal %}
 
-- The most recent version of Docker Desktop comes with a built-in Terminal. 
-- If you are running the latest Docker Desktop version (4.35.1), this is a default feature 
-available on the lower right cornder of the GUI. 
-- For earlier versions, this could show up as a beta feature. 
+- Successful installation and startup of Docker will show the Docker Desktop Dashboard
+    - This screenshot is taken on a Mac, but the GUI should be the same across platforms
 
-{% include figure.liquid path="fig/docker/docker-desktop-mac-terminal.png" %}
+{% include figure.liquid path="assets/img/courses/csc-workshops/docker/docker-desktop-mac.png" max-width="50%" %}
 
-- The remainder of this workshop will use the Docker Desktop Terminal app for 
-consistency purpose. All the CLI docker commands can be executed on the standard 
-Linux-based terminal of Mac and Linux platforms. 
+- You should also carry out a test for Docker inside a terminal.
+    - Mac: If you have not used a Terminal on Mac before, click the Magnifying Glass icon (top right) and type in `Terminal` to find the app. 
+    - Windows: It is highly recommended that you download and use the Terminal App from Windows Store. For Windows 11+, this has become a default application. 
 
-{% enddetails %}
+{% include figure.liquid path="assets/img/courses/csc-workshops/docker/docker-desktop-mac-terminal.png" max-width="50%" %}
+
 {% details tip Docker Hub %}
 
 - Docker Hub is one of the public repository for Docker images (think GitHub for 
@@ -55,7 +75,8 @@ and use it to log into your Docker Desktop environment (similar to how you link 
 GitHub account to GitHub Desktop, if you use GitHub Desktop).
 
 {% enddetails %}
-## 2. Introduction to Docker
+
+## Introduction to Docker
 
 {% details note Motivation %}
 
@@ -247,7 +268,7 @@ ID or click on the `Stop` or `Trash Can` icons on the container's line inside th
 GUI's Container tab. 
 
 {% enddetails %}
-## 3. Docker Images
+## Docker Images
 
 {% details note Docker images %}
 
@@ -521,7 +542,7 @@ exit
 
 {% enddetails %}
 {% enddetails %}
-## 4. Infrastructure as Code
+## Infrastructure as Code
 
 {% details note Overview %}
 
@@ -630,7 +651,7 @@ exit
 ~~~
 
 {% enddetails %}
-## 5. Infrastructure as Code: Storage
+## Infrastructure as Code: Storage
 
 {% details note Overview %}
 
@@ -698,7 +719,7 @@ created binary file `hello` still persists.
 {% include figure.liquid path="fig/docker/image-volume.png" %}
 
 {% enddetails %}
-## 6. Infrastucture as Code: Networking
+## Infrastructure as Code: Networking
 
 {% details note Networking for container %}
 

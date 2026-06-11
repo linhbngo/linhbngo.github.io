@@ -16,9 +16,6 @@ toc:
   - name: Persistency
   - name: A brief history of operating system research and development
 ---
-# Introduction to Operating Systems
-
----
 
 ## What happens when a computer program run?
 
@@ -27,8 +24,6 @@ toc:
     - **decodes** the instruction, and
     - **executes** the instruction.
 - This is the fundamental **Von Neumann** model of computing. 
-
----
 
 ## Why do we need OS?
 

@@ -5,16 +5,31 @@ nav: true
 nav_order: 8
 dropdown: true
 children:
-  - title: Agentic AI (dev)
-    permalink: /csc-agentic-ai/
+  - title: Workshops and Tutorials
+    permalink: /csc-workshops/
   - title: divider
-  - title: CSC 418/587 (dev)
-    permalink: /csc418-587/
+  - title: <strong>Operating Systems (FA26)</strong>
+    permalink: /csc331/
   - title: divider
-  - title: Big Data Engineering
+  - title: <strong>Software Engineering (FA26)</strong>
+    permalink: /csc402/
+  - title: divider
+  - title: <strong>Cloud Engineering (FA26)</strong>
+    permalink: /csc478/
+  - title: divider
+  - title: <strong>Cloud Systems Engineering (FA26)</strong>
+    permalink: /csc578/
+  - title: divider
+  - title: Tiny Machine Learning (tinyML) (SU26)
+    permalink: /csc574/
+  - title: divider
+  - title: Big Data Engineering (SU26)
     permalink: /csc467/
   - title: divider
-  - title: Introduction to Cloud
+  - title: CSC 418/587 (WI25)
+    permalink: /csc418-587/
+  - title: divider
+  - title: Introduction to Cloud (SP26)
     permalink: /csc468/
   - title: divider
   - title: Computer Systems (dev)
@@ -23,27 +38,15 @@ children:
   - title: Computer Security II (dev)
     permalink: /csc302/
   - title: divider
-  - title: Operating Systems (dev)
-    permalink: /csc331/
-  - title: divider
-  - title: Software Engineering (dev)
-    permalink: /csc402/
-  - title: divider
   - title: Distributed and Parallel Computing (dev)
     permalink: /csc466/
-  - title: divider
-  - title: Cloud Engineering (dev)
-    permalink: /csc478/
   - title: divider
   - title: iOS App Development (dev)
     permalink: /csc496/
   - title: divider
-  - title: Cloud Computing Fundamentals (dev)
+  - title: Cloud Computing Fundamentals (SP26)
     permalink: /csc568/
   - title: divider
-  - title: Cloud Systems Engineering (dev)
-    permalink: /csc578/
-  - title: divider
-  - title: Tiny Machine Learning (tinyML)
-    permalink: /csc574/
+  - title: Agentic AI (dev)
+    permalink: /csc-agentic-ai/
 ---

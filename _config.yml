@@ -148,6 +148,9 @@ collections:
   csc574:
     output: true
     permalink: /csc574/:path/
+  csc-workshops:
+    output: true
+    permalink: /csc-workshops/:path/
   cs-agentic-ai:
     output: true
     permalink: /cs-agentic-ai/:path/

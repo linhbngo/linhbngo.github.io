@@ -5,18 +5,19 @@ collection: csc331
 
 title: "Infrastructure"
 toc:
-  - name: Preliminary
+  - name: Setup Docker
   - name: Setup
   - name: Test
 ---
-# Infrastructure
 
-For this class, we will be using running a Docker container with additional privilege to emulate the ability to 
+- MIT provides instructions to setup [the tools directly on Linux/Mac and Windows](https://pdos.csail.mit.edu/6.1810/2025/tools.html). You are permitted to follow these instructions directly if you do not want to use container. 
+
+- For this class' materials, we will be using running a Docker container with additional privilege to emulate the ability to 
 interact with the OS system calls. 
 
----
+- It should be noted that once we access the running container via the terminal, everything should be the same regardless of the setup choice. 
 
-## Preliminary
+## Setup Docker
 
 - If you have not used Docker Desktop before, you can go over the instruction on how to setup Docker Desktop at 
 [Docker for Classroom: Quick Setup Reminder](https://cs.wcupa.edu/LNGO/courses/workshops/docker-environment/#1-quick-setup-reminder).
