@@ -628,8 +628,8 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/00-syllabus/";
-            },},{id: "csc331-infrastructure",
-          title: 'Infrastructure',
+            },},{id: "csc331-setup",
+          title: 'Setup',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/01-setup/";
