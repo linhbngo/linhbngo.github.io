@@ -6,7 +6,7 @@ collection: csc331
 title: "Infrastructure"
 toc:
   - name: Setup Docker
-  - name: Setup
+  - name: Setup CSC 331 Environment
   - name: Test
 ---
 
@@ -19,12 +19,10 @@ interact with the OS system calls.
 
 ## Setup Docker
 
-- If you have not used Docker Desktop before, you can go over the instruction on how to setup Docker Desktop at 
-[Docker for Classroom: Quick Setup Reminder](https://cs.wcupa.edu/LNGO/courses/workshops/docker-environment/#1-quick-setup-reminder).
+- If you have not used Docker Desktop before, you can go over the [instruction on how to setup Docker Desktop](https://linhbngo.github.io/csc-workshops/intro-docker/#setup).
 
----
 
-## Setup
+## Setup CSC 331 Environment
 
 {% details Fall 2025 students %}
 

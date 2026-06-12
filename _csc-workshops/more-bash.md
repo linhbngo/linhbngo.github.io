@@ -25,16 +25,13 @@ toc:
 ---
 
 
-
-# Linux Scripting
-
 {% details note 1. Pipes and Filters %}
 
 
 {% enddetails %}
 - It is possible to combine multiple Linux commands into one
 - Settings:
-  - Data are stored in `shell-lesson-data/excercise-data/proteins` on `molly`. 
+  - Data are stored in `shell-lesson-data/exercise-data/proteins` on `molly`. 
   - Data files have `.pdb` extension. 
 - Question:
   - Which of these files contains the fewest lines?
