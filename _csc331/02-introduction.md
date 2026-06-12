@@ -50,17 +50,25 @@ these resources (through the corresponding virtual interface) at the same time.
 
 {% details info Preparation %}
 
+
 - The source code examples from the OSTEP book is located inside the container at `/home/student/ostep-code`
 - For this lecture, we will build the source codes inside the `intro` subdirectory. 
 - Launch the `csc331` container if necessary, then open a bash terminal into the container. 
-  - View the file list
-  - Compile all the files using `make`
+  - In [docker-compose.yml](hhttps://github.com/WCU-AIR/the-one-ring/blob/csc331/docker-compose.yml), the following setting is made `cpusets: "0-1"`. This means the container is limited to run on the physical cores 0 and 1 of the CPU, which is to emulate a simple dual-core configuration. 
+
+~~~bash
+cpuset: "0-1"
+~~~
+
+- View the file list
+- Compile all the files using `make`
 
 ```bash
 docker compose up -d
 docker compose exec -it csc331 /bin/bash
 cd ~/ostep-code/intro
 ls
+make
 ```
 
 {% include figure.liquid path="assets/img/courses/csc331/intro/intro-src.png" max-width="50%" zoomable=true %}
@@ -70,21 +78,31 @@ ls
 
 {% details CPU Virtualization %}
 
-- Use Code server browser to view the source code of `cpu.c`.
+The example program, `cpu.c`, will run an infinite loop that prints out the first command line argument:
 
-In [docker-compose.yml](https://github.com/ngo-classes/the-one-ring/blob/main/docker-compose.yml), the amount of cpus made available to the containers are only 2:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "common.h"
 
-~~~bash
-deploy:
-  resources:
-    limits:
-      cpus: 2.0
-~~~
+int main(int argc, char *argv[])
+{
+    if (argc != 2) {
+	fprintf(stderr, "usage: cpu <string>\n");
+	exit(1);
+    }
+    char *str = argv[1];
 
-- From the in-browser terminal, setup the dual terminal using the `Split Terminal` icon (top right corner of the 
-terminal panel). 
+    while (1) {
+	printf("%s\n", str);
+	Spin(1);
+    }
+    return 0;
+}
+```
 
-{% include figure.liquid path="assets/img/courses/csc331/intro/03.png" max-width="50%" zoomable=true %}
+- Open two terminals, and connect to the running container from these two terminals
+
 
 - In the left terminal pane, run the following command. 
 
@@ -92,7 +110,7 @@ terminal panel).
 ./cpu A & ./cpu B & ./cpu C &./cpu D 
 ~~~
 
-{% include figure.liquid path="assets/img/courses/csc331/intro/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/04.png" max-width="50%" zoomable=true %}
 
 - To stop the running processes on the left pane, move to the right pane and running the
 following commands:

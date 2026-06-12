@@ -45,6 +45,11 @@ docker compose exec -it csc331 /bin/bash
 
 - This opens up a terminal inside the container. 
   - You are logged in by default as the `student` account, with passwordless sudo privilege. 
+
+- **Containers running on Mac Silicon can have the following warning, which is ok to ignore**. 
+
+{% include figure.liquid loading="eager" path="assets/img/courses/csc331/setup/csc331-terminal-mac.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Screenshot of the terminal view inside csc331 container" %}
+
 - Test that the tools are available inside the container
 
 ```bash
