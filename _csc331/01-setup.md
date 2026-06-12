@@ -40,7 +40,7 @@ cd the-one-ring
 ```bash
 docker image pull linhbngo/onering:csc331
 docker compose up -d
-docker compose exec -it csc 331 /bin/bash
+docker compose exec -it csc331 /bin/bash
 ```
 
 - This opens up a terminal inside the container. 

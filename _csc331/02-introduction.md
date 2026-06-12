@@ -5,74 +5,72 @@ collection: csc331
 
 title: "Introduction to Operating Systems"
 toc:
-  - name: What happens when a computer program run?
-  - name: Why do we need OS?
-  - name: How do the OS help (1)?
-  - name: How do the OS help (2)?
-  - name: "Hands-on: Getting started"
-  - name: "Hands-on: CPU Virtualization"
-  - name: "Hands-on: Memory Virtualization"
+  - name: Overview
+  - name: Virtualization
   - name: Concurrency
   - name: Persistency
-  - name: A brief history of operating system research and development
+  - name: A Brief History
 ---
 
-## What happens when a computer program run?
+## Overview
 
+{% details What happens when a computer program run? %}
+
+- The fundamental **Von Neumann** model of computing.
 - The process
     - **fetches** an instruction from memory,
     - **decodes** the instruction, and
     - **executes** the instruction.
-- This is the fundamental **Von Neumann** model of computing. 
 
-## Why do we need OS?
+{% enddetails %}
 
-{% include figure.liquid path="assets/img/courses/csc331/01-intro/01.png" width="50%" zoomable=true %}
+{% details Why do we need OS? %}
+
+{% include figure.liquid path="assets/img/courses/csc331/intro/01.png" max-width="50%" zoomable=true %}
 
 - What a programmer see is all code, lines of codes.
 - Underneath, there is a complex ecosystem of hardware components. 
 - How do we hide this complexity away from the programmers?
 
----
+{% enddetails %}
 
-## How do the OS help (1)?
-
-This is possible due to **virtualization**.
-
-- Virtualization: presents general, powerful, and easy-to-use **virtual** forms of 
-**physical** computing resources to users (*programmers*). 
-- The linkage between virtual interfaces and physical components are enabled through
-the OS' **system calls** (or **standard library**).  
-
----
-
-## How do the OS help (2)?
+{% details How do the OS help? %}
 
 - Each physical component in a computing system is considered a resource. 
 - The OS **manages** these resources so that multiple programs can access
 these resources (through the corresponding virtual interface) at the same time.  
 - This is called **concurrency**. 
----
 
-## Hands-on: Getting started
+{% enddetails %}
 
-- Launch your `csc331` container. 
-- Visit the VSCode server `http://localhost:18088/` in a web browser, open a terminal. 
+## Virtualization
 
-~~~bash
+- **Virtualization**: presents general, powerful, and easy-to-use **virtual** forms of  **physical** computing resources to users (*programmers*). 
+- The linkage between virtual interfaces and physical components are enabled through the OS' **system calls** (or **standard library**).  
+
+{% details info Preparation %}
+
+- The source code examples from the OSTEP book is located inside the container at `/home/student/ostep-code`
+- For this lecture, we will build the source codes inside the `intro` subdirectory. 
+- Launch the `csc331` container if necessary, then open a bash terminal into the container. 
+  - View the file list
+  - Compile all the files using `make`
+
+```bash
+docker compose up -d
+docker compose exec -it csc331 /bin/bash
 cd ~/ostep-code/intro
-make
-~~~
+ls
+```
 
-{% include figure.liquid path="assets/img/courses/csc331/01-intro/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/intro-src.png" max-width="50%" zoomable=true %}
 
----
 
-## Hands-on: CPU Virtualization
+{% enddetails %}
+
+{% details CPU Virtualization %}
 
 - Use Code server browser to view the source code of `cpu.c`.
-
-{% details CPU limit %}
 
 In [docker-compose.yml](https://github.com/ngo-classes/the-one-ring/blob/main/docker-compose.yml), the amount of cpus made available to the containers are only 2:
 
@@ -83,11 +81,10 @@ deploy:
       cpus: 2.0
 ~~~
 
-{% enddetails %}
 - From the in-browser terminal, setup the dual terminal using the `Split Terminal` icon (top right corner of the 
 terminal panel). 
 
-{% include figure.liquid path="assets/img/courses/csc331/01-intro/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/03.png" max-width="50%" zoomable=true %}
 
 - In the left terminal pane, run the following command. 
 
@@ -95,7 +92,7 @@ terminal panel).
 ./cpu A & ./cpu B & ./cpu C &./cpu D 
 ~~~
 
-{% include figure.liquid path="assets/img/courses/csc331/01-intro/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/04.png" width="50%" zoomable=true %}
 
 - To stop the running processes on the left pane, move to the right pane and running the
 following commands:
@@ -107,19 +104,19 @@ ps aux | grep cpu
 - Identify the process ID (the second columns), then use the `kill` to kill all the process IDs 
 (see figure below). 
 
-{% include figure.liquid path="assets/img/courses/csc331/01-intro/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/05.png" max-width="50%" zoomable=true %}
 
-{% details The illusion of infinite CPU resources %}
 
+The illusion of infinite CPUs
 
 - A limited number of physical CPUs can still be represented as infinite number of CPUs through 
 **virtualization**.  
 - The OS will **manage** the scheduling and allocation of the actual run on physical resources. 
 
 {% enddetails %}
----
 
-## Hands-on: Memory Virtualization
+
+{% details Memory Virtualization %}
 
 - In the left terminal pane, run the following commands:
   - `-R` will disable randomization of virtual memory address space for shells. 
@@ -133,14 +130,13 @@ sudo setarch `uname -m` -R /bin/bash
 - In the right pane, use the same procedure as above to kill the two running programs 
 after a few iterations. 
 
-{% include figure.liquid path="assets/img/courses/csc331/01-intro/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/06.png" max-width="50%" zoomable=true %}
 
-{% details Do programs running concurrently occupy the same memory locations (addresses)? %}
+Do programs running concurrently occupy the same memory locations (addresses)?
 
 **No**
 
-{% enddetails %}
-{% details The illusion of dedicated memory resources %}
+The illusion of dedicated memory resources
 
 - Many running program share the physical memory space. 
 - Each runnning program is presented with the illusion that they have access to their own private
@@ -154,7 +150,7 @@ prevent others from guessing and applying direct manipulation techniques to the 
 memory location that acually contains `p`. 
 
 {% enddetails %}
----
+
 
 ## Concurrency
 
@@ -186,7 +182,7 @@ the final value of counter should be twice that of the command line argument.
 ./threads 30000
 ~~~
 
-{% include figure.liquid path="assets/img/courses/csc331/01-intro/07.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/07.png" max-width="50%" zoomable=true %}
 
 {% details Problem with concurrency %}
 
@@ -228,9 +224,9 @@ the final value of counter should be twice that of the command line argument.
 
 ---
 
-## A brief history of operating system research and development
+## A Brief History
 
-A good paper to read: [Hanser, Per Brinch. "The evolution of oeprating systems" 2001](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.104.1524&rep=rep1&type=pdf)
+A good paper to read: [Hanser, Per Brinch. "The evolution of operating systems" 2001](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.104.1524&rep=rep1&type=pdf)
 
 
 - Early operating systems: just libraries
