@@ -26,7 +26,7 @@ Alas, it was not simple and elegant at all in practice. The initial Spack setup 
 
 **Practicality:** After working through these various issues, it was finally at the point when Spack is up and running. It turned out that Spack took a significant amount of time to download and compile these various packages and their respective dependencies. I hadn't experienced this latency when using Spack inside a multi-core supercomputer with a high-speed network. The reality is vastly different when running inside a localized container with limited cores and a wireless connection. I realized I had not arrived at a simpler engineering solution at all. Instead, I had traded the structural complexity of the original design for longer deployment times and a heavier storage and configuration burden on the user's side.
 
-In the end, I am scraping the vision of The One Ring altogether, and going back to a one-container-per-class design where everything is fully customized exactly as needed, no more no less. It is certainly not fancy, but it works with minimal fuss. 
+In the end, I am scrapping the vision of The One Ring altogether, and going back to a one-container-per-class design where everything is fully customized exactly as needed, no more no less. It is certainly not fancy, but it works with minimal fuss. 
 
 ## Macro versus Micro Engineering
 
