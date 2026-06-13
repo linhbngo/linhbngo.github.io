@@ -110,8 +110,6 @@ int main(int argc, char *argv[])
 ./cpu A & ./cpu B & ./cpu C &./cpu D 
 ~~~
 
-{% include figure.liquid path="assets/img/courses/csc331/intro/04.png" max-width="50%" zoomable=true %}
-
 - To stop the running processes on the left pane, move to the right pane and running the
 following commands:
 
@@ -122,14 +120,12 @@ ps aux | grep cpu
 - Identify the process ID (the second columns), then use the `kill` to kill all the process IDs 
 (see figure below). 
 
-{% include figure.liquid path="assets/img/courses/csc331/intro/05.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/intro/intro-cpu.png" max-width="50%" zoomable=true %}
 
-
-The illusion of infinite CPUs
-
-- A limited number of physical CPUs can still be represented as infinite number of CPUs through 
+- The illusion of infinite CPUs
+  - A limited number of physical CPUs can still be represented as infinite number of CPUs through 
 **virtualization**.  
-- The OS will **manage** the scheduling and allocation of the actual run on physical resources. 
+  - The OS will **manage** the scheduling and allocation of the actual run on physical resources. 
 
 {% enddetails %}
 
