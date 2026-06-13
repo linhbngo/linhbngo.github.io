@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "A Good Engineering Habit: Knowing When To Stop"
-date: 2026-06-10 12:00:00
+date: 2026-06-13 12:00:00
 description: ... and when to rollback. 
 tags: engineering, simplicity, best-practice
 categories: technical
