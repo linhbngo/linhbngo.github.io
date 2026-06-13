@@ -135,7 +135,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-modern-cs-the-age-of-minors-and-certificates",
+            },{id: "post-a-good-engineering-habit-knowing-when-to-stop",
+        
+          title: "A Good Engineering Habit: Knowing When To Stop",
+        
+        description: "... and when to rollback.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/toward-simplicity/";
+          
+        },
+      },{id: "post-modern-cs-the-age-of-minors-and-certificates",
         
           title: "Modern CS: The Age of Minors and Certificates",
         
