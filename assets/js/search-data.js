@@ -143,6 +143,17 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
+            window.location.href = "/blog/2026/vscode-to-nvim/";
+          
+        },
+      },{id: "post-a-good-engineering-habit-knowing-when-to-stop",
+        
+          title: "A Good Engineering Habit: Knowing When To Stop",
+        
+        description: "... and when to rollback.",
+        section: "Posts",
+        handler: () => {
+          
             window.location.href = "/blog/2026/toward-simplicity/";
           
         },
