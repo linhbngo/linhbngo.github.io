@@ -135,11 +135,11 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-a-good-engineering-habit-knowing-when-to-stop",
+            },{id: "post-ankle-weight-for-the-mind-migration-to-lazyvim",
         
-          title: "A Good Engineering Habit: Knowing When To Stop",
+          title: "Ankle Weight for the Mind: Migration to Lazyvim",
         
-        description: "... and when to rollback.",
+        description: "Do you even lift?",
         section: "Posts",
         handler: () => {
           
