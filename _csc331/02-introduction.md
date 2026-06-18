@@ -56,9 +56,9 @@ these resources (through the corresponding virtual interface) at the same time.
 - Launch the `csc331` container if necessary, then open a bash terminal into the container. 
   - In [docker-compose.yml](hhttps://github.com/WCU-AIR/the-one-ring/blob/csc331/docker-compose.yml), the following setting is made `cpusets: "0-1"`. This means the container is limited to run on the physical cores 0 and 1 of the CPU, which is to emulate a simple dual-core configuration. 
 
-~~~bash
+```bash
 cpuset: "0-1"
-~~~
+```
 
 - View the file list
 - Compile all the files using `make`
@@ -106,16 +106,17 @@ int main(int argc, char *argv[])
 
 - In the left terminal pane, run the following command. 
 
-~~~bash
+```bash
 ./cpu A & ./cpu B & ./cpu C &./cpu D 
-~~~
+```
+
 
 - To stop the running processes on the left pane, move to the right pane and running the
 following commands:
 
-~~~bash
+```bash
 ps aux | grep cpu
-~~~
+```
 
 - Identify the process ID (the second columns), then use the `kill` to kill all the process IDs 
 (see figure below). 
@@ -205,8 +206,8 @@ the final value of counter should be twice that of the command line argument.
 - Naive concurrency gives you wrong and inconsistent results. 
 
 {% enddetails %}
-{% details Why does this happen? %}
 
+{% details Why does this happen? %}
 
 - At machine level, incrementing counter involves three steps:
   - Load value of counter from memory into register,
@@ -221,7 +222,7 @@ the final value of counter should be twice that of the command line argument.
   steps in and attempts to increment the stale content of counter in memory.
 
 {% enddetails %}
----
+
 
 ## Persistency
 
@@ -236,7 +237,7 @@ the final value of counter should be twice that of the command line argument.
     - `write()`
     - `close()`
 
----
+
 
 ## A Brief History
 
