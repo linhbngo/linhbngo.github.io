@@ -1,0 +1,78 @@
+{%- comment -%}
+  Usage:
+    {% include quiz.liquid
+       id="q1"
+       question="Your question here?"
+       choices="Choice A|Choice B|Choice C|Choice D"
+       answer="0"
+       hint="Optional hint text."
+       explanation="Optional explanation shown after correct answer."
+    %}
+  Parameters:
+    id          (required) — unique string ID, namespaces DOM element IDs
+    question    (required) — question text (plain text or inline HTML)
+    choices     (required) — pipe-separated answer choices, e.g. "Paris|London|Berlin"
+    answer      (required) — 0-based index of the correct choice as a string, e.g. "0"
+    hint        (optional) — short hint text
+    explanation (optional) — explanation shown after correct answer or reveal
+{%- endcomment -%}
+
+{%- assign _quiz_choices = include.choices | split: "|" -%}
+{%- assign _quiz_letters = "A,B,C,D,E,F,G,H" | split: "," -%}
+{%- assign _quiz_correct = include.answer | plus: 0 -%}
+
+<div class="quiz-block" id="quiz-{{ include.id }}">
+  <p class="quiz-question">{{ include.question }}</p>
+
+  <div class="quiz-choices">
+    {%- for _choice in _quiz_choices -%}
+      {%- if forloop.index0 == _quiz_correct -%}
+        {%- assign _quiz_is_correct = "true" -%}
+      {%- else -%}
+        {%- assign _quiz_is_correct = "false" -%}
+      {%- endif -%}
+      <button
+        class="quiz-choice"
+        data-quiz-id="{{ include.id }}"
+        data-choice-index="{{ forloop.index0 }}"
+        data-correct="{{ _quiz_is_correct }}"
+        onclick="quizHandleChoice(this)"
+      >
+        <span class="quiz-choice-letter">{{ _quiz_letters[forloop.index0] }}</span>
+        <span class="quiz-choice-text">{{ _choice }}</span>
+      </button>
+    {%- endfor -%}
+  </div>
+
+  <div class="quiz-feedback" hidden>
+    <span class="quiz-feedback-icon"></span>
+    <span class="quiz-feedback-text"></span>
+  </div>
+
+  {%- if include.hint %}
+  <div class="quiz-hint" id="quiz-hint-{{ include.id }}" hidden>
+    {{ include.hint }}
+  </div>
+  {%- endif %}
+
+  {%- if include.explanation %}
+  <div class="quiz-explanation" id="quiz-explanation-{{ include.id }}" hidden>
+    {{ include.explanation }}
+  </div>
+  {%- endif %}
+
+  <div class="quiz-actions">
+    {%- if include.hint %}
+    <button class="quiz-btn" onclick="quizToggleHint('{{ include.id }}')">Hint</button>
+    {%- endif %}
+    <button class="quiz-btn" onclick="quizReveal('{{ include.id }}')">Show Answer</button>
+    <button class="quiz-btn" onclick="quizReset('{{ include.id }}')">Reset</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  window.__quizAnswers = window.__quizAnswers || {};
+  window.__quizAnswers["{{ include.id }}"] = {{ _quiz_correct }};
+})();
+</script>

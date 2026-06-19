@@ -43,6 +43,15 @@ these resources (through the corresponding virtual interface) at the same time.
 
 {% enddetails %}
 
+{% include quiz.liquid
+   id="os-intro-1"
+   question="Which of the following best describes the primary role of an Operating System?"
+   choices="Execute user applications directly on hardware|Manage hardware resources and provide services to programs|Store files permanently on disk|Connect computers to the internet"
+   answer="1"
+   hint="Think about what sits between your hardware and your applications."
+   explanation="The OS acts as an intermediary between hardware and software. It manages the CPU, memory, storage, and I/O devices, and exposes them to programs through a set of abstractions (processes, files, sockets, etc.) so applications don't have to talk to hardware directly."
+%}
+
 ## Virtualization
 
 - **Virtualization**: presents general, powerful, and easy-to-use **virtual** forms of  **physical** computing resources to users (*programmers*). 
