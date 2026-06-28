@@ -2,10 +2,8 @@ function _quizBlock(id) {
   return document.getElementById("quiz-" + id);
 }
 
-function _quizChoiceButtons(id) {
-  var block = _quizBlock(id);
-  if (!block) return [];
-  return Array.from(block.querySelectorAll(".quiz-choice"));
+function _quizSelect(id) {
+  return document.getElementById("quiz-select-" + id);
 }
 
 function _quizCorrectIndex(id) {
@@ -28,27 +26,26 @@ function _showExplanation(id) {
 }
 
 function _lockChoices(id) {
-  _quizChoiceButtons(id).forEach(function (btn) {
-    btn.disabled = true;
-  });
+  var sel = _quizSelect(id);
+  if (sel) sel.disabled = true;
 }
 
-function quizHandleChoice(btn) {
-  var id = btn.dataset.quizId;
-  var buttons = _quizChoiceButtons(id);
-  if (buttons.some(function (b) { return b.disabled; })) return;
+function quizHandleSelect(selectEl, id) {
+  if (selectEl.disabled) return;
+  var chosenIndex = parseInt(selectEl.value, 10);
+  var correctIndex = _quizCorrectIndex(id);
+  var isCorrect = (chosenIndex === correctIndex);
 
-  var isCorrect = btn.dataset.correct === "true";
   if (isCorrect) {
-    btn.classList.add("quiz-correct");
+    selectEl.classList.add("quiz-correct");
     _setFeedback(id, true, "Correct!");
     _showExplanation(id);
     _lockChoices(id);
   } else {
-    btn.classList.add("quiz-wrong");
+    selectEl.classList.add("quiz-wrong");
     _setFeedback(id, false, "Not quite — try again.");
     setTimeout(function () {
-      btn.classList.remove("quiz-wrong");
+      selectEl.classList.remove("quiz-wrong");
       var block = _quizBlock(id);
       if (block) {
         var feedback = block.querySelector(".quiz-feedback");
@@ -60,9 +57,10 @@ function quizHandleChoice(btn) {
 
 function quizReveal(id) {
   var idx = _quizCorrectIndex(id);
-  var buttons = _quizChoiceButtons(id);
-  if (idx >= 0 && idx < buttons.length) {
-    buttons[idx].classList.add("quiz-revealed");
+  var sel = _quizSelect(id);
+  if (sel && idx >= 0) {
+    sel.value = String(idx);
+    sel.classList.add("quiz-revealed");
   }
   _setFeedback(id, true, "The correct answer has been revealed.");
   _showExplanation(id);
@@ -80,11 +78,12 @@ function quizToggleHint(id) {
 }
 
 function quizReset(id) {
-  var buttons = _quizChoiceButtons(id);
-  buttons.forEach(function (btn) {
-    btn.classList.remove("quiz-correct", "quiz-wrong", "quiz-revealed");
-    btn.disabled = false;
-  });
+  var sel = _quizSelect(id);
+  if (sel) {
+    sel.value = "";
+    sel.classList.remove("quiz-correct", "quiz-wrong", "quiz-revealed");
+    sel.disabled = false;
+  }
 
   var block = _quizBlock(id);
   if (!block) return;

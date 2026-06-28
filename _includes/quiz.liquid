@@ -25,23 +25,16 @@
   <p class="quiz-question">{{ include.question }}</p>
 
   <div class="quiz-choices">
-    {%- for _choice in _quiz_choices -%}
-      {%- if forloop.index0 == _quiz_correct -%}
-        {%- assign _quiz_is_correct = "true" -%}
-      {%- else -%}
-        {%- assign _quiz_is_correct = "false" -%}
-      {%- endif -%}
-      <button
-        class="quiz-choice"
-        data-quiz-id="{{ include.id }}"
-        data-choice-index="{{ forloop.index0 }}"
-        data-correct="{{ _quiz_is_correct }}"
-        onclick="quizHandleChoice(this)"
-      >
-        <span class="quiz-choice-letter">{{ _quiz_letters[forloop.index0] }}</span>
-        <span class="quiz-choice-text">{{ _choice }}</span>
-      </button>
-    {%- endfor -%}
+    <select
+      class="quiz-select"
+      id="quiz-select-{{ include.id }}"
+      onchange="quizHandleSelect(this, '{{ include.id }}')"
+    >
+      <option value="" disabled selected>— choose an answer —</option>
+      {%- for _choice in _quiz_choices -%}
+      <option value="{{ forloop.index0 }}">{{ _quiz_letters[forloop.index0] }}. {{ _choice }}</option>
+      {%- endfor -%}
+    </select>
   </div>
 
   <div class="quiz-feedback" hidden>
