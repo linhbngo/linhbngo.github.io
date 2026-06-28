@@ -22,28 +22,26 @@ toc:
 
 {% details What is a program? %}
 
-
 - A program is a static list of intsructions and data.
 - When a program runs, the OS takes this list and asks the CPU to execute them. 
 - If we only have one CPU, how can we run more than one program at a time. 
 
 {% enddetails %}
+
 {% details What is a process? %}
 
-
 - A process is a **running program**.
-- But the program itself is not running ...
+  - But the program itself is not running ...
 - A process is an **abstraction** provided by the OS to describe the running of a program.   
 - What is a process made of?
-- Memory that the process (running program) can address.
-- Memory registers.
-- Program counter. 
-- Stack pointer.
-- Frame pointer.
-- I/O devices. 
+  - Memory that the process (running program) can address.
+  - Memory registers.
+  - Program counter. 
+  - Stack pointer.
+  - Frame pointer.
+  - I/O devices. 
 
 {% enddetails %}
----
 
 ## Process API
 
@@ -60,8 +58,6 @@ are provided:
   - Frame pointer.
   - I/O devices. 
 
----
-
 ## Process creation
 
 When a program is run, the OS performs the following steps: 
@@ -77,7 +73,6 @@ of the process).
   - *In Linux, everything is a file.*
 - Begin executing from **main()**. 
 
---- 
 
 ## Loading: from program to process
 
@@ -105,8 +100,6 @@ of the process).
 
 {% include figure.liquid path="assets/img/courses/csc331/process/03.png" width="50%" zoomable=true %}
 
----
-
 ## Process: data structure
 
 - The OS is a program, and will data structures to track different pieces of information.
@@ -133,16 +126,16 @@ Include three function calls:
 - Open a shell into your csc331 container (ssh or Code browser)
 - Run the following command to build the example code for process API
 
-~~~bash
+```bash
 cd ~/ostep-code/cpu-api
 make
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc331/process/04.png" width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details fork() %}
 
+{% details fork() %}
 
 - ... is a system call. 
 - ... is used to create a new process.   
@@ -171,6 +164,7 @@ for the following points:
     signal-driven I/O attributes.
 
 {% enddetails %}
+
 {% details Hands-on: fork() %}
 
 
@@ -196,8 +190,9 @@ process ID and the parent process prints out the `rc` value. These two values sh
 {% enddetails %}
 - Run `p1` several times. 
 
-~~~bash
+```bash
 ./p1
+```
 
 {% details What do you notice? %}
 
@@ -246,8 +241,9 @@ This line is evaluated within the parent process (since the child process creati
 {% enddetails %}
 - Run p2 several times. 
 
-~~~bash
+```bash
 ./p2
+```
 
 {% details What do you notice? %}
 
@@ -255,7 +251,9 @@ This line is evaluated within the parent process (since the child process creati
 {% include figure.liquid path="assets/img/courses/csc331/process/06.png" width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% enddetails %}
+
 {% details exec() %}
 
 
@@ -306,7 +304,7 @@ out when `exec` replaces the current child process with the new process for `wc`
 - This facilitates a number of interesting features in the UNIX shell. 
 
 {% enddetails %}
----
+
 
 ## The Shell
 
@@ -336,11 +334,11 @@ to graphical interfaces like Windows, Mac, and the X Window System.
 
 - Run the following command
 
-~~~bash
+```bash
 wc p3.c
 wc p3.c > newfile.txt
 cat newfile.txt
-~~~
+```
 
 - The shell ... 
     - finds out where `wc` is in the file system. 
@@ -358,12 +356,12 @@ cat newfile.txt
 
 - Run the following commands
 
-~~~bash
+```bash
 ./p4
 ls
 cat p4.output
 cat -n p4.c
-~~~
+```
 
 - `wc p4` should have printed out to terminal.
 - `close(STDOUT_FILENO)` closes the file descriptor that writes to the terminal 
@@ -374,7 +372,7 @@ file descriptor ID for the terminal is now free, this file descriptor is assigne
 - This is the basis for the concepts of redirection and pipelining in Linux.
 
 {% enddetails %}
----
+
 
 ## Other system calls ...
 
