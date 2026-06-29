@@ -92,7 +92,7 @@ For this sketch, `Arduino.h` gives us access to names such as:
 - A traditional C++ program begins with `main()`:
 - For Arduino, we write:
 
-~~~cpp
+```cpp
 void setup() {
   // runs once
 }
@@ -100,14 +100,14 @@ void setup() {
 void loop() {
   // runs repeatedly
 }
-~~~
+```
 
 - These two functions represent two major tasks in embedded systems:
   - Configure hardware
   - Execute tasks (read sensors, process data, write to serial connectors ...) forever. 
 - Conceptually, Arduino behaves like this:
 
-~~~cpp
+```cpp
 int main() {
   initArduinoHardware();
 
@@ -117,7 +117,7 @@ int main() {
     loop();
   }
 }
-~~~
+```
 
 > A microcontroller program maintains a continuous with hardware:
   - 1. configure pins and sensors;
@@ -133,11 +133,11 @@ That is the `setup()` / `loop()` model.
 {% details info setup() %}
 `setup()` is for one-time configuration
 
-~~~cpp
+```cpp
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
-~~~
+```
 
 - [API for pinMode](pinMode)
 - This configures the built-in LED pin as an output pin.
@@ -669,15 +669,15 @@ Vec3D magnetometer = {0.0F, 0.0F, 0.0F};
 
 The fields of a a struct can be accessed using the dot operator:
 
-~~~cpp
+```cpp
 Serial.print(acceleration.x);
 Serial.print(acceleration.y);
 Serial.println(acceleration.z);
-~~~
+```
 
 We can group all sensor values into one sample:
 
-~~~cpp
+```cpp
 struct Vec3D {
   float x;
   float y;
@@ -689,11 +689,11 @@ struct ImuSample {
   Vec3 gyroscope;
   Vec3 magnetometer;
 };
-~~~
+```
 
 Then the loop can work with one `ImuSample` variable:
 
-~~~cpp
+```cpp
 void loop() {
   ImuSample sample = {
       {0.0F, 0.0F, 0.0F},
@@ -721,7 +721,7 @@ void loop() {
 
   delay(200);
 }
-~~~
+```
 
 This is longer at first, but the organization becomes valuable when programs grow.
 

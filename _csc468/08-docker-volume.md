@@ -94,34 +94,34 @@ toc:
 
 - **Step 1: Create Data**
 
-~~~bash
+```bash
 echo "Important Data" > original.txt
-~~~
+```
 
 - **Step 2: Create Links**
 
-~~~bash
+```bash
 # Create a Hard Link (Direct reference to inode)
 ln original.txt hard.txt
 # Create a Soft Link (Reference to path)
 ln -s original.txt soft.txt
-~~~
+```
 
 - **Step 3: Forensic Inspection**
 
-~~~bash
+```bash
 ls -li *.txt
-~~~
+```
 
 - **Observation:**
     - Look at the first column (Inode Number). `original.txt` and `hard.txt` have the **identical number**.
     - Look at `soft.txt`. It has a different number, and explicitly points `-> original.txt`.
 - **Step 4: The Persistence Test**
-~~~bash
+```bash
 rm original.txt
 cat hard.txt   # SUCCEEDS: Data still exists because Inode ref count > 0
 cat soft.txt   # FAILS: "No such file or directory"
-~~~
+```
 
 
 {% enddetails %}
@@ -377,24 +377,24 @@ node server.js
     observed on either Windows WSL2 or Mac Terminal. 
 - On the host machine, create a file and identify its **Inode Number**.
 
-~~~bash
+```bash
 echo "This is physical evidence" > host_evidence.txt
 ls -i host_evidence.txt
 # Example Output: 123456 host_evidence.txt
-~~~
+```
 
 - Run a container mapping this file.
 
-~~~bash
+```bash
 docker run -it -v $(pwd)/host_evidence.txt:/container_evidence.txt ubuntu:20.04 bash
-~~~
+```
 
 - Inside the container, check the Inode.
 
-~~~bash
+```bash
 ls -i /container_evidence.txt
 # Output: 123456 /container_evidence.txt
-~~~
+```
 
 - **Observation:** The Inode numbers are identical.
 - **Conclusion:** There is no "Container File" vs "Host File". There is only one physical set of blocks on the disk, with two different doors (VFS entries) leading to it.

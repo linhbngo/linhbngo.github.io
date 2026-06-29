@@ -128,12 +128,12 @@ This lecture will cover contents from [Chapter 11](https://diveintosystems.org/b
   - `Temporal locality`:  Recently referenced items are likely to be referenced again in the near future
   - `Spatial locality`:  Items with nearby addresses tend to be referenced close together in time
 
-~~~c
+```c
 sum = 0;
 for (i = 0; i < n; i++)
   sum += a[i];
 return sum;
-~~~
+```
 
 - Data references
   - Reference array elements in succession (stride-1 reference pattern): `spatial`
@@ -160,7 +160,7 @@ key skills for a professional programmer.
 
 Does this function have good locality with respect to array `a`?
 
-~~~c
+```c
 int sum_array_rows(int a[M][N]) {
   int i, j, sum = 0;
   for (i = 0; i < M; i++)
@@ -168,7 +168,7 @@ int sum_array_rows(int a[M][N]) {
       sum += a[i][j];
   return sum;
 }
-~~~
+```
 
 :::{admonition} Answer
 
@@ -182,7 +182,7 @@ Yes
 
 Does this function have good locality with respect to array `a`?
 
-~~~c
+```c
 int sum_array_rows(int a[M][N]) {
   int i, j, sum = 0;
   for (j = 0; j < N; j++)
@@ -190,7 +190,7 @@ int sum_array_rows(int a[M][N]) {
       sum += a[i][j];
   return sum;
 }
-~~~
+```
 
 :::{admonition} Answer
 
@@ -219,13 +219,13 @@ directory.
 
 :::::{tab-set}
 ::::{tab-item} Compile and run
-~~~bash
+```bash
 $ gcc -Og -o sum sum.c
 $ ./sum
 $ ./sum
 $ ./sum
 $ ./sum
-~~~
+```
 ::::
 ::::{tab-item} Result
 {% include figure.liquid path="assets/img/courses/csc231/05-memory/04.png" width="50%" zoomable=true alt="Differences in performance due to access pattern" %}
@@ -414,7 +414,7 @@ our understanding of cache memories.
 {% enddetails %}
 :::::{tab-set}
 ::::{tab-item} Case 1
-~~~c
+```c
 /* ijk */
 for (i=0; i<n; i++)  {
   for (j=0; j<n; j++) {
@@ -424,7 +424,7 @@ for (i=0; i<n; i++)  {
     c[i][j] = sum;
   }
 } 
-~~~
+```
 
 - Miss rate for inner loop iterations:
 - Block size = 32 bytes (4 doubles)
@@ -436,7 +436,7 @@ for (i=0; i<n; i++)  {
 {% include figure.liquid path="assets/img/courses/csc231/05-memory/16.png" width="50%" zoomable=true alt="Miss rate 1" %}
 ::::
 ::::{tab-item} Case 2
-~~~c
+```c
 /* kij */
 for (k=0; k<n; k++)  {
   for (i=0; i<n; i++) {
@@ -445,7 +445,7 @@ for (k=0; k<n; k++)  {
       c[i][j] += r * b[k][j];
   }
 } 
-~~~
+```
 
 - Miss rate for inner loop iterations:
 - Block size = 32 bytes (4 doubles)
@@ -457,7 +457,7 @@ for (k=0; k<n; k++)  {
 {% include figure.liquid path="assets/img/courses/csc231/05-memory/17.png" width="50%" zoomable=true alt="Miss rate 2" %}
 ::::
 ::::{tab-item} Case 3
-~~~c
+```c
 /* jki */
 for (j=0; j<n; j++)  {
   for (k=0; k<n; k++) {
@@ -466,7 +466,7 @@ for (j=0; j<n; j++)  {
       c[i][j] += a[i][k] * r;
   }
 } 
-~~~
+```
 
 - Miss rate for inner loop iterations:
 - Block size = 32 bytes (4 doubles)

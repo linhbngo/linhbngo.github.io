@@ -284,11 +284,11 @@ on [their wiki](https://wiki.alpinelinux.org/wiki/Install_to_disk)
 - You should be inside the console after log in as root and have the root password. 
 - Run the following commands to install Apache webserver
 
-~~~
+```
 $ apk update
 $ apk add apache2
 $ rc-service apache2 start
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc468/05-programmatic/38.png" width="50%" zoomable=true alt="Update and install apache2" %}
 

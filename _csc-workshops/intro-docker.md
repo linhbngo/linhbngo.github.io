@@ -100,9 +100,9 @@ GitHub account to GitHub Desktop, if you use GitHub Desktop).
 - Launch your Docker Desktop app
 - Open the built-in terminal and run
 
-~~~bash
+```bash
 docker version
-~~~
+```
 
 {% include figure.liquid path="fig/docker/docker-version.png" %}
 
@@ -122,10 +122,10 @@ docker version
 - Docker `containers` are instantiated from Docker `images`. 
 - You can check availability of local `images` and `containers`. 
 
-~~~bash
+```bash
 docker image ls
 docker container ls
-~~~
+```
 
 {% include figure.liquid path="fig/docker/docker-ls.png" %}
 
@@ -138,12 +138,12 @@ that there is no exissting container or image on your Docker envrironment.
 `hello world` to the screen. 
     - This requires a Linux container to run the `echo` command. 
 
-~~~bash
+```bash
 docker run alpine echo hello, world
 docker image ls
 docker container ls 
 docker container ls --all
-~~~
+```
 
 - The outcomes of the above commands are shown in the screenshot below
     - User want to run a Linux command using an alpine Linux container
@@ -175,9 +175,9 @@ docker container ls --all
 
 - We can launch a container and get into the shell of the container. 
 
-~~~bash
+```bash
 docker run -it ubuntu bash
-~~~
+```
 
 {% include figure.liquid path="fig/docker/cli-docker-run-interactive.png" %}
 
@@ -191,19 +191,19 @@ docker run -it ubuntu bash
   - `-t` tells Docker that we want a pseudo-terminal
 - Let's attempt to run `figlet` inside the container (`#` prompt)
 
-~~~bash
+```bash
 figlet hello
-~~~
+```
 
 - There will be an error: `bash: figlet: command not found`
 - The current container does not have the `figlet` program yet. 
 - Let's install `figlet` inside the container (`#` prompt)
 
-~~~bash
+```bash
 apt update -qq
 apt install -y -qq figlet
 figlet hello
-~~~
+```
 
 {% include figure.liquid path="fig/docker/cli-docker-run-figlet.png" %}
 
@@ -234,18 +234,18 @@ back to the host machine environment.
 - Run the following command
     - Press `Ctrl-C` to stop after a few time stamps. 
 
-~~~bash
+```bash
 docker run ubuntu /bin/sh -c "while date; do sleep 1; done"
-~~~
+```
 
 {% include figure.liquid path="fig/docker/cli-docker-run-date.png" %}
 
 - Run the following command 
 
-~~~bash
+```bash
 docker run -d jpetazzo/clock
 docker container ls
-~~~
+```
 
 - Notice in the screenshot that you are now returned to the host machine's 
 terminal. 
@@ -261,9 +261,9 @@ log of the running Docker container
     - From the above screenshot, it is `cd16`
 - Use `--tail N` to only look at latest `N` lines of the log. 
 
-~~~bash
+```bash
 docker logs --tail 5 cd16
-~~~
+```
 
 {% include figure.liquid path="fig/docker/cli-docker-logs.png" %}
 
@@ -348,9 +348,9 @@ read-write copy of that filesystem.
 - At this point, you should have at least two images 
 downloaded to Docker's local repository: `alpine` and `ubuntu`. 
 
-~~~bash
+```bash
 docker image ls
-~~~
+```
 
 - The command should show two outputs clearly. 
 - You should also see the images listed in the `Image` tab 
@@ -360,9 +360,9 @@ of Docker Desktop, on the top portion of the GUI.
 
 - We can search for available images in the public Docker Hub 
 
-~~~bash
+```bash
 docker search mysql
-~~~
+```
 
 {% include figure.liquid path="fig/docker/docker-search.png" %}
 
@@ -384,20 +384,20 @@ docker search mysql
 
 - Launch an interactive bash shell on a running container
 
-~~~bash
+```bash
 clear
 docker run -it ubuntu /bin/sh
-~~~
+```
 
 - Install `figlet`, test, then exit the container
     - **Remember the hash id of your container**
 
-~~~bash
+```bash
 apt update -qq
 apt install -y -qq figlet
 figlet hellp
 exit
-~~~
+```
 
 {% include figure.liquid path="fig/docker/image-create-container.png" %}
 
@@ -406,9 +406,9 @@ started and stopped 56 seconds ago), you can see the ID `cb2149...`
 - It is possible to check for the differences between this container and 
 the base image with the ID and `docker diff`
 
-~~~bash
+```bash
 docker diff cb21
-~~~
+```
 
 {% include figure.liquid path="fig/docker/image-docker-diff.png" %}
 
@@ -427,10 +427,10 @@ docker diff cb21
     56 seconds ago), you can see the ID `cb2149...`
 - Run the following commands
 
-~~~bash
+```bash
 docker commit cb21 linhbngo/ubuntu_figlet:1.0
 docker image ls
-~~~
+```
 
 - The `docker commit ...` command created a new image named `ubuntu_figlet` that 
 is associated with the DockerHub account `linhbngo` (my DockerHub account). This 
@@ -447,9 +447,9 @@ created with a size of 144MB.
 - We can examine the layers of the newly committed image by running the 
 command `docker history ...` as shown below.  
 
-~~~bash
+```bash
 docker history 2379
-~~~
+```
 
 - The previous screenshot also shows that the new layer making up the new image
 has a size of 43.3MB. This, adding to the base ubuntu image, is what giving 
@@ -461,9 +461,9 @@ the new image the size of 144MB (101 + 43.3).
     are running on an external terminal, you will need to run `docker login` first 
     to sign in to your Docker Hub account. 
 
-~~~bash
+```bash
 docker push linhbngo/ubuntu_figlet:1.0
-~~~
+```
 
 
 {% enddetails %}
@@ -481,12 +481,12 @@ docker push linhbngo/ubuntu_figlet:1.0
 
 - The following commands are done in the terminal (Ubuntu WSL on Windows/Mac Terminal). 
 
-~~~bash
+```bash
 cd
 mkdir myimage
 cd myimage
 nano Dockerfile
-~~~
+```
 
 - Type the following contents into the nano editor.
     - To save and quit nano, press `Ctrl-X` (or `Control-X` for Mac)
@@ -503,11 +503,11 @@ nano Dockerfile
     - Assumption: you are still inside `myimage`
     - This could be checked with `pwd`. 
 
-~~~bash
+```bash
 pwd
 ls
 docker build -t linhbngo/ubuntu_figlet:2.0 .
-~~~
+```
 
 - `-t` indicates a tag named `figlet` will be applied to the image. 
 - `.` indicates that the `Dockerfile` file is in the current directory. 
@@ -519,9 +519,9 @@ see that there are now two tags for the same repository name. If you run
 `docker push` and check your Docker Hub repo, you will see the second 
 tag now stored in the same repository
 
-~~~bash
+```bash
 docker push linhbngo/ubuntu_figlet:2.0
-~~~
+```
 
 {% include figure.liquid path="fig/docker/image-docker-push.png" %}
 
@@ -535,11 +535,11 @@ container using this image, then immediately run `figlet hello world`.
 
 - Replace `linhbngo` with your own DockerHub account
 
-~~~bash
+```bash
 docker run -it linhbngo/ubuntu_figlet:2.0 /bin/bash
 figlet hello world
 exit
-~~~
+```
 
 {% include figure.liquid path="fig/docker/image-test-image.png" %}
 
@@ -576,12 +576,12 @@ but also allows users to append additional parameters to `docker run` call.
 - Rebuild the image with the tag `linhbngo/ubuntu_figlet:3.0`. 
 - Run the following command
 
-~~~bash
+```bash
 cd
 cd myimage
 docker build -t linhbngo/ubuntu_figlet:3.0 .
 docker run -it linhbngo/ubuntu_figlet:3.0
-~~~
+```
 
 {% include figure.liquid path="fig/docker/image-create-cmd.png" %}
 
@@ -590,9 +590,9 @@ docker run -it linhbngo/ubuntu_figlet:3.0
 
 - Run the following commands
 
-~~~bash
+```bash
 docker image ls
-~~~
+```
 
 - Did we use any additional storage for this new image?
     - Hint: Try running `docker system df`
@@ -613,11 +613,11 @@ docker image ls
 - Rebuild the image with the tag `linhbngo/ubuntu_figlet:4.0`.  
 - Run the followings:
 
-~~~bash
+```bash
 docker build -t linhbngo/ubuntu_figlet:4.0 .
 docker run linhbngo/ubuntu_figlet:4.0
 docker run linhbngo/ubuntu_figlet:4.0 golden rams
-~~~
+```
 
 - Notice that the first `docker run`, without any input parameters, does not generate any text. 
 - The second `docker run` takes `golden rams` and feeds it to the figlet command specified by `ENTRYPOINT`. 
@@ -637,22 +637,22 @@ docker run linhbngo/ubuntu_figlet:4.0 golden rams
 - Rebuild the image with the tag `linhbngo/ubuntu_figlet:5.0`. 
 - Run the followings:
 
-~~~bash
+```bash
 docker build -t linhbngo/ubuntu_figlet:5.0 .
 docker run linhbngo/ubuntu_figlet:5.0
 docker run linhbngo/ubuntu_figlet:5.0 golden rams
-~~~
+```
 
 {% include figure.liquid path="fig/docker/image-cmd-entrypoint.png" %}
 
 - Caveat with `ENTRYPOINT`: `/bin/bash` does not work as expected.  
     - Need to override with `--entrypoint` flag.
 
-~~~bash
+```bash
 docker run -it linhbngo/ubuntu_figlet:5.0
 docker run -it --entrypoint bash linhbngo/ubuntu_figlet:5.0
 exit
-~~~
+```
 
 {% enddetails %}
 ## Infrastructure as Code: Storage
@@ -690,10 +690,10 @@ of the containers.
 
 - You can build an image with a specific Dockerfile
 
-~~~bash
+```bash
 docker build -t linhbngo/hello:1.0 -f Dockerfile.hello .
 docker run linhbngo/hello:1.0
-~~~
+```
 
 {% include figure.liquid path="fig/docker/image-docker-build-copy.png" %}
 
@@ -703,19 +703,19 @@ docker run linhbngo/hello:1.0
 - Create a directory called `src` inside `myimage`.
 - Copy `hello.c` into this directory.
 
-~~~bash
+```bash
 mkdir src
 cp hello.c src/
-~~~
+```
 
 - Create the following Dockerfile called `Dockerfile.gcc`:
 
 <script src="https://gist.github.com/linhbngo/b9f794bed306562f2eb85da310ae7b5e.js?file=Dockerfile.8"></script>
 
-~~~bash
+```bash
 docker build -t linhbngo/gcc:1.0 -f Dockerfile.gcc .
 docker run -it -v ./src:/ext_src linhbngo/gcc:1.0
-~~~
+```
 
 - From the screenshot below, notice that after exiting out of the container, the newly 
 created binary file `hello` still persists. 
@@ -749,10 +749,10 @@ created binary file `hello` still persists.
 
 - Run the following commands inside the Docker terminal
 
-~~~bash
+```bash
 docker run -d -P nginx
 docker container ls
-~~~
+```
 
 - `-P`: make this service reachable from other computers (`--publish-all`)
 - `-d` : run in background
@@ -762,9 +762,9 @@ docker container ls
 
 - Run the following command
 
-~~~bash
+```bash
 docker inspect --format '{{json .Config.ExposedPorts}}' nginx 
-~~~
+```
 
 - The outconme of the above command is `{"80/tcp":{}}`. 
 - In other words, the container exposes its own internal port, `80`. In turn, 
@@ -778,10 +778,10 @@ this port is mapped to the external port `55000`, as shown in the screenshot.
 - In the previous example, the port randomly assigned by the host machine was `55000`. 
 - This could be specified via the `-p` flag as follows:
 
-~~~bash
+```bash
 docker run -d -p 8000:80 nginx
 docker run -d -p 8080:80 -p 8888:80 nginx
-~~~
+```
 
 - Convention: `port-on-host:port-on-container`
 - Check out the web servers at all of these ports 

@@ -37,12 +37,12 @@ location on the stack which stores malicious code.
 
 <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=shellcode.c"></script>
 
-~~~bash
+```bash
 seed@instructor:~$ gcc -m32 -z execstack -o shellcode shellcode.c
 seed@instructor:~$ ./shellcode
 seed@instructor:~$ gcc -m32 -o shellcode shellcode.c
 seed@instructor:~$ ./shellcode
-~~~
+```
 
 ```
 
@@ -80,12 +80,12 @@ the program jump to where there are executable codes.
 
 - Compile stack with specific flags
 
-~~~bash
+```bash
 gcc -m32 -fno-stack-protector -z noexecstack -o stack stack.c
 sudo sysctl -w kernel.randomize_va_space=0
 sudo chown root stack
 sudo chmod 4755 stack
-~~~
+```
 
 - Flag meanings
   - `fno-stack-protector`: disable protection against changes in stack
@@ -114,19 +114,19 @@ stack so that system() can get to it.
 - Using `gdb`, we can find out the location of `system()` with the 
 following commands:
 
-~~~bash
+```bash
 gdb stack
-~~~
+```
 
 - This is to bring up `gdb-peda`. We don't need a `-g` enabled version 
 for the followings: 
 
-~~~bash
+```bash
 (gdb-peda)$ run
 (gdb-peda)$ p system
 (gdb-peda)$ p exit
 (gdb-peda)$ quit
-~~~
+```
 
 - Rerun the entire process. several time to ensure that 
 the addresses doesn’t change, and **record the values**.
@@ -159,7 +159,7 @@ code of vulnerable program).
 
 - Create the EV, then compile and run find_myshell.c
 
-~~~bash
+```bash
 export MYSHELL="/bin/sh"
 gcc -m32 -o myshell find_myshell.c
 ./myshell
@@ -171,7 +171,7 @@ gcc -m32 -o myshell22 find_myshell.c
 ./myshell22
 gcc -m32 -o myshell222 find_myshell.c
 ./myshell222
-~~~
+```
 
 - What is your observation regarding memory position of 
 environment variables?
@@ -192,11 +192,11 @@ its corresponding arguments on the stack for execution.
 
 - What happens just before a function is called?
 
-~~~bash
+```bash
 pushl %ebp
 movl %esp, %ebp
 subl $N, %esp
-~~~
+```
 
 - Return address (RA) is pushed onto the stack.
 - Save (push) the caller function’s frame pointer (ebp)
@@ -214,11 +214,11 @@ local variables of the function.
 {% enddetails %}
 - What happens just before a function is completed?
 
-~~~bash
+```bash
 movl %ebp, %esp
 popl %ebp
 ret
-~~~
+```
 
 - Move `%esp` to where the frame pointer points to 
 (releasing the stack space for variables).
@@ -261,14 +261,14 @@ jump to it, and move `%esp` to the top of the previous stack frame
 {% enddetails %}
 - Compile `gdb_stack` 
 
-~~~bash
+```bash
 gcc -m32 -fno-stack-protector -z noexecstack -g -o gdb_stack stack.c
 gdb gdb_stack
-~~~
+```
 
 - Run `gdb_stack` with the following steps
 
-~~~bash
+```bash
 gdb-peda$ break vul_func
 gdb-peda$ run
 gdb-peda$ n
@@ -276,7 +276,7 @@ gdb-peda$ p $ebp
 gdb-peda$ p &buffer
 gdb-peda$ p hex_value_from_ebp - hex_value_from_buffer
 gdb-peda$ quit
-~~~
+```
 
 - The distance should be `0x3e` (`62`)
 - Offsets
@@ -294,10 +294,10 @@ gdb-peda$ quit
 {% enddetails %}
 <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=ret_to_libc_exploit.c"></script>
 
-~~~bash
+```bash
 gcc -o kcats find_myshell.c
 ./kcats
-~~~
+```
 
 - Keep track of the `/bin/sh` address. 
 - Use the recorded address from `system` and `exit`, and 
@@ -309,9 +309,9 @@ the `/bin/sh` address to modify `ret_to_libc_exploit.c`.
 
 
 {% enddetails %}
-~~~bash
+```bash
 gcc -m32 -o exploit ret_to_libc_exploit.c; ./exploit; ./stack
-~~~
+```
 
 ```
 

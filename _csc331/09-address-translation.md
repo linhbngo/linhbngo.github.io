@@ -59,10 +59,10 @@ to keep track of and maintain control over free and used memory locations.
 - Base register
 - Bounds (Limit) register
 
-~~~
+```
 physical address = virtual address + base
 0 <= virtual address <= bound
-~~~
+```
 
 
 {% details note What happen after boot? %}

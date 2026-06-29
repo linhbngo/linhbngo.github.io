@@ -58,10 +58,10 @@ Create a file called `divide.c`
 
 - Compile and run
 
-~~~bash
+```bash
 mpicc -lm -o divide divide.c
 mpirun -np 8 divide
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc466/divide-conquer/divide_mpi.png" width="50%" zoomable=true alt="Run divide" %}
 
@@ -73,10 +73,10 @@ mpirun -np 8 divide
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=conquer.c"></script>
 
-~~~bash
+```bash
 mpicc -lm -o conquer conquer.c
 mpirun -np 8 conquer
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc466/divide-conquer/conquer_mpi.png" width="50%" zoomable=true alt="Run conquer" %}
 
@@ -106,7 +106,7 @@ mpirun -np 8 conquer
 {% details Scatter and Scatterv Syntax %}
 
 
-~~~c
+```c
 int MPI_Scatter(
     void *sendbuf, 
     int sendcount, 
@@ -116,9 +116,9 @@ int MPI_Scatter(
     MPI_Datatype recvtype,
     int root, 
     MPI_Comm comm);
-~~~
+```
 
-~~~c
+```c
 int MPI_Scatterv(
   void *sendbuf,
   int *sendcount,
@@ -130,7 +130,7 @@ int MPI_Scatterv(
   int root,
   MPI_Comm comm
 );
-~~~
+```
 
 - `sendbuf`: address of send buffer (choice, significant only at root)
 - `sendcount`: integer array (of length group size) specifying the number of elements to send to each processor
@@ -148,10 +148,10 @@ int MPI_Scatterv(
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=scatterv.c"></script>
 
-~~~bash
+```bash
 mpicc -o scatterv scatterv.c
 mpirun -np 4 scatterv
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc466/divide-conquer/scatterv.png" width="50%" zoomable=true alt="Run Scatterv" %}
 
@@ -160,7 +160,7 @@ mpirun -np 4 scatterv
 {% details Gather and Gatherv Syntax %}
 
 
-~~~c
+```c
 int MPI_Gather(
     void *sendbuff, 
     int sendcount, 
@@ -170,9 +170,9 @@ int MPI_Gather(
     MPI_Datatype recvtype,
     int root, 
     MPI_Comm comm);
-~~~
+```
 
-~~~c
+```c
 int MPI_Gatherv(
   void *sendbuf,
   int sendcount,
@@ -184,7 +184,7 @@ int MPI_Gatherv(
   int root,
   MPI_Comm comm
 );
-~~~
+```
 
 - `sendbuf`: starting address of send buffer (choice)
 - `sendcount`: number of elements in send buffer (integer)
@@ -202,10 +202,10 @@ int MPI_Gatherv(
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=gatherv.c"></script>
 
-~~~bash
+```bash
 mpicc -o gatherv gatherv.c
 mpirun -np 4 gatherv
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc466/divide-conquer/gatherv.png" width="50%" zoomable=true alt="Run Gatherv" %}
 
@@ -216,10 +216,10 @@ mpirun -np 4 gatherv
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=bucket1.c"></script>
 
-~~~bash
+```bash
 mpicc -o bucket1 bucket1.c
 mpirun -np 8 bucket1
-~~~
+```
 
 
 {% enddetails %}
@@ -243,7 +243,7 @@ mpirun -np 8 bucket1
 {% details Alltoall %}
 
 
-~~~c
+```c
 int MPI_Alltoall(
   void *sendbuf,
   int sendcount,
@@ -253,7 +253,7 @@ int MPI_Alltoall(
   MPI_Datatype recvtype,
   MPI_Comm comm
 );
-~~~
+```
 
 - `sendbuf`: starting address of send buffer (choice)
 - `sendcount`: number of elements to send to each process (integer)
@@ -269,10 +269,10 @@ int MPI_Alltoall(
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=alltoall.c"></script>
 
-~~~bash
+```bash
 mpicc -o alltoall alltoall.c 
 mpirun -np 4 alltoall
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2all_mpi.png" width="50%" zoomable=true alt="Run All to all" %}
 
@@ -281,7 +281,7 @@ mpirun -np 4 alltoall
 {% details Alltoallv %}
 
 
-~~~c
+```c
 int MPI_Alltoallv(
   void *sendbuf,
   int *sendcounts,
@@ -293,7 +293,7 @@ int MPI_Alltoallv(
   MPI_Datatype recvtype,
   MPI_Comm comm
 );
-~~~
+```
 
 - `sendbuf`: starting address of send buffer (choice)
 - `sendcounts`: integer array equal to the group size specifying the number of elements to send to each processor
@@ -311,10 +311,10 @@ int MPI_Alltoallv(
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=alltoallv.c"></script>
 
-~~~bash
+```bash
 mpicc -o alltoallv alltoallv.c 
 mpirun -np 4 alltoallv
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2allv_mpi.png" width="50%" zoomable=true alt="Run All to allv" %}
 
@@ -325,10 +325,10 @@ mpirun -np 4 alltoallv
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=bucket2.c"></script>
 
-~~~bash
+```bash
 mpicc -o bucket2 bucket2.c
 mpirun -np 8 bucket2
-~~~
+```
 
 {% enddetails %}
 ## N-Body Problem

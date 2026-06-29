@@ -49,7 +49,7 @@ do, a script for a computer tells the computer what is should do or say.
 {% enddetails %}
 - In your CloudLab experiment, run the following:
 
-~~~bash
+```bash
 sudo su - seed
 wget https://cs.wcupa.edu/lngo/assets/src/bash_basics.zip
 sudo apt-get update
@@ -57,7 +57,7 @@ sudo apt-get install -y unzip
 unzip bash_basics.zip
 cd bash_basics
 ls
-~~~
+```
 
 - These scripts will be used to illustrate concepts in the remainder of 
 this slide deck.
@@ -78,21 +78,21 @@ the extension is not an essential feature which determines the usage.
 The `.sh` extension is merely a convention which can assist editor 
 recognition. All scripts can be executed explicitly using the bash executable:
 
-~~~bash
+```bash
 bash SOME-SCRIPT.sh
-~~~
+```
 
 - Create a file named `hello.sh` with the following content:
 
-~~~bash
+```bash
 echo "hello world"
-~~~ 
+``` 
 
 - Execute the file using the following command: 
 
-~~~bash
+```bash
 bash hello.sh
-~~~
+```
 
 ```
 
@@ -105,15 +105,15 @@ bash hello.sh
 -	If you are the owner of the script you can add that 
 permission with statements like:
 
-~~~bash
+```bash
 chmod +x SOME-SCRIPT.sh          
-~~~
+```
 
 or 
 
-~~~bash
+```bash
 chmod 700 SOME-SCRIPT.sh       
-~~~
+```
 
 -	The file must either be locatable by its path prefix or have its containing 
 directory in the PATH variable. A full path to the script might be: `/usr/local/bin/SOME-SCRIPT.sh` 
@@ -125,10 +125,10 @@ directory in the PATH variable. A full path to the script might be: `/usr/local/
 
 -	Edit and add `#!/bin/bash` to the first line of `hello.sh`
 
-~~~bash
+```bash
 chmod +x hello.sh
 ./hello.sh
-~~~
+```
 
 ```
 
@@ -207,10 +207,10 @@ a statement terminator if you want two or more statements on the same line.
 -	View, then execute scalars.h
 -	Observe the corresponding outcomes versus the codes
 
-~~~bash
+```bash
 more scalars.sh
 ./scalars.sh
-~~~
+```
 
 -	Type something and hit Enter to exit this script.
 
@@ -224,17 +224,17 @@ more scalars.sh
 - Although echo is the most common output statement, Bash 
 also supports the C-style printf statement, e.g.,
 
-~~~bash
+```bash
 printf "num=%05d\n" 27
 echo AFTER
-~~~
+```
 
 - There is an equivalent to sprintf (printf to a variable) in the form of
 
-~~~bash
+```bash
 printf -v num "%05d" 27
 echo $num
-~~~
+```
 
 - For most situations, echo is more common. It is easy to use and, for 
 the most part does what you want in a simple manner. One 
@@ -242,10 +242,10 @@ the most part does what you want in a simple manner. One
   - The bash syntax for this control character has the cumbersome form: $'\t'
 - For example, these two statements generate the same output:
 
-~~~bash
+```bash
 echo   $'\t'foo
 printf "\tfoo\n"
-~~~
+```
 
 - As you can imagine the `printf` version is more memorable. On feature 
 available to echo which is not available to printf is colorization. When used 
@@ -253,9 +253,9 @@ with the `-e` flag, echo interprets certain special convoluted escape sequences
 as indication to change the color of the output. For example this prints "HELLO" 
 in bold red followed by "THERE" in (normal) black
 
-~~~bash
+```bash
 echo -e "\033[01;31m HELLO \033[0m THERE"
-~~~
+```
 
 - The output need not be separated like this, we are simply making it easier to see
 
@@ -273,10 +273,10 @@ form of lists and maps (associative lists).
 - It also provides a way of assigning a type to a variable through a the declare 
 statement. View and execute the following script for observation
 
-~~~bash
+```bash
 more scalar-declares.sh
 ./scalar-declares.sh
-~~~
+```
 
 ```
 
@@ -290,12 +290,12 @@ commands. For this reason Bash provides simple access to the command-line
 parameters. Bash uses the variables `$1`, `$2`, etc. The expression `$0` 
 is the command name itself. They should be double-quoted. Use these test-runs:
 
-~~~bash
+```bash
 $ more args.sh
 $ ./args.sh 
 $ ./args.sh  a     b    c
 $ ./args.sh "a     b"   c
-~~~
+```
 
 ```
 
@@ -309,7 +309,7 @@ $ ./args.sh "a     b"   c
 - The bash if-else syntax is unusual compared to other languages. 
 The format looks like this:
 
-~~~bash
+```bash
 if ...
 then
   some statements
@@ -318,7 +318,7 @@ elif ...
 else
   some statements
 fi
-~~~
+```
 
 The "..." sections represent boolean "tests". The chained `elif` and the `else` 
 parts are optional. The "then" syntax is often written on the same line as the if 
@@ -331,12 +331,12 @@ portion like this: `if ...; then`
 
 
 {% enddetails %}
-~~~bash
+```bash
 more pingtest.sh
 ./pingtest.sh 
 ./pingtest.sh 8.8.8.8
 ./pingtest.sh 2.2.2.2
-~~~
+```
 
 -	What is happening is that the ping operation with the options used 
 is a single ping which can either succeed or fail within 2 seconds with these two possible outcomes:
@@ -368,11 +368,11 @@ we only run the compiled program if the compilation succeeds.
 {% enddetails %}
 - What is considered as boolean expression in an if test uses this syntax:
 
-~~~bash
+```bash
 if [ BOOLEAN-EXPRESSION ]; then
   statements ...
 fi
-~~~
+```
 
 - The only value regarded as false is the empty string. Bash does not recognize 
 any numerical types per se, only strings used in a numerical context. An undefined 
@@ -383,16 +383,16 @@ undefined a variable `x` by `unset x`.
 - You can verify the values of false by viewing and running this sample script: `falsetest.sh`
 
 
-~~~bash
+```bash
 more falsetest.sh
 ./falsetest.sh
-~~~
+```
 
 - An example usage is this line in `pingtest.sh`:
 
-~~~bash
+```bash
 [ "$host" ] || { echo usage: $(basename $0) "<host or ip>"; exit 1; }
-~~~
+```
 
 - In this example host is the first parameter; if undefined, give a "usage" message.
 
@@ -409,11 +409,11 @@ more falsetest.sh
   -	`-d` NAME: NAME exists as a directory
 - An example of this appears in the `~/.bashrc` startup script: 
 
-~~~bash
+```bash
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-~~~
+```
 
 ```
 
@@ -435,10 +435,10 @@ can serve as delimiters.
 but can be used for lexicographic comparison, within `[[ .. ]]` and numerical comparison within `(( .. ))`. 
 - You can view and observe some examples from: `test-values.sh`
 
-~~~bash
+```bash
 more test-values.sh
 ./test-values.sh
-~~~
+```
 
 ```
 
@@ -450,10 +450,10 @@ more test-values.sh
 - The way Bash deals with strings has certain unexpected consequences. 
 Consider the program `errors.sh`:
 
-~~~bash
+```bash
 more errors.sh
 ./errors.sh
-~~~
+```
 
 - When executed, the 3 out of 4 test lines are flagged as errors:
   - line 4: `[a: command not found`
@@ -484,7 +484,7 @@ pattern generators which, in Bash, are only available through auxiliary commands
 constructions primarily by its ability to test its cases by matching 
 the argument against glob patterns. The syntax is like this:
 
-~~~bash
+```bash
 case "$file" in
   *.txt)  # treat "$file" like a text file
           ;;
@@ -493,7 +493,7 @@ case "$file" in
   *) # catch-all
      ;;
 esac 
-~~~
+```
 
 - Unlike C++ or Java syntax, the break exits an enclosing loop, not exit the particular case.
 
@@ -533,11 +533,11 @@ done
 - The while loop also has an advantage in its ability to read live input. 
 For example, this simple program reads and echos input lines:
 
-~~~bash
+```bash
 while read line; do
   echo "$line"
 done
-~~~
+```
 
 - In a programmatic setting, it is often useful to process lines generated 
 from the output of some command. 
@@ -545,10 +545,10 @@ from the output of some command.
 dictionary (`/usr/share/dict/words`) by removing - the initial `my` part. 
 - The following two scripts represent two possible ways of doing so:
 
-~~~bash
+```bash
 more process-lines-1.sh
 more process-lines-2.sh
-~~~
+```
 
 - The command `grep ^my /usr/share/dict/words` is used to generate the target information. 
 - The two respective approaches to processing this are:
@@ -575,42 +575,42 @@ which extracts `FILE.zip` into `/usr/local`,
   - Some options, like -d, take an argument themselves. 
 - The unzip command takes many more options (mostly prior to the argument).
 
-~~~bash
+```bash
 unzip -q -o FILE.zip -d /usr/local
-~~~
+```
 
 - The options can be "compressed" under certain circumstances. For example, this is 
 an equivalent call:
 
-~~~bash
+```bash
 unzip -qo FILE.zip -d /usr/local
-~~~
+```
 
 - The bash built-in operation `getopts` is meant to assist in extracting these options 
 from the command line. 
 - Consider the program getopts-test.sh:
 
-~~~bash
+```bash
 more getopts-test.sh
 ./getopts-test.sh
-~~~
+```
 
 - Running this command
 
-~~~bash
+```bash
 ./getopts-test.sh -q -o FILE.zip -d /usr/local
-~~~
+```
 
 yields the output:
 
-~~~bash
+```bash
 q 2
 o 3
 ? 3
 FILE.zip
 d 3 /usr/local
 ? 3
-~~~
+```
 
 - The while loop `while getopts` runs through the 
 arguments looking for `-n`, `-o`, `-q`, `-s` options. 
@@ -623,10 +623,10 @@ arguments looking for `-n`, `-o`, `-q`, `-s` options.
 - A useful style of option sensing is to set `option flag` variables as shown in `optflags.sh`. 
 Try the followings: 
 
-~~~bash
+```bash
 ./optflags.sh
 ./optflags.sh -abc foo -d bar foobar barfoo
-~~~
+```
 
 - What is happening is that the variables `opt_a`, `opt_b`, and `opt_c` are 
 being created through deferred evaluation using the Bash eval function. 
@@ -646,10 +646,10 @@ presence of the "b" flag by: `if [ "$opt_b" ]; then ...`
 - The Bash language itself has very unintuitive string-processing operations. 
 Later we'll see how to use UNIX commands to do string processing.
 
-~~~bash
+```bash
 more string-processing.sh
 ./string-processing.sh
-~~~
+```
 
 ```
 
@@ -661,10 +661,10 @@ more string-processing.sh
 -	Functions offer an improvement of aliases. They must be defined before being used. In practice, they are often grouped into Bash files which are sourced within the script which uses them.
 -	Functions are supposed to emulate the way commands work. They do not return values in the usual way; any value sent back by the return statement must be an integer which acts like the exit code of an executable.
 
-~~~bash
+```bash
 more functions.sh
 ./functions.sh
-~~~
+```
 
 ```
 
@@ -684,10 +684,10 @@ looks something like this: `result="$(echo "input string" | OPERATION)"`
 - The pipe operator "|" is crucial for passing the input string to OPERATION via echo. 
 The following program illustrates some of these external operations.
 
-~~~bash
+```bash
 more string-operations.sh
 ./string-operations.sh
-~~~
+```
 
 ```
 

@@ -66,13 +66,13 @@ or assembly is completed.
 
 - Run the following commands
 
-~~~bash
+```bash
 sudo apt-get update
 sudo apt-get install -y gcc-multilib g++-multilib
 gcc -m32 -W -c mem_layout.c
 gcc -m32 -o mem_layout mem_layout.o
 size mem_layout mem_layout.o
-~~~
+```
 
 - Why don’t we see the stack and heap information?
 
@@ -90,10 +90,10 @@ size mem_layout mem_layout.o
 
 - Run the following commands
 
-~~~bash
+```bash
 gcc -m32 -o mem_layout_print mem_layout_print.o
 ./mem_layout_print
-~~~
+```
 
 - Can you relate the variables’ position in memory to their respective position 
 in a program’s memory layout?
@@ -178,10 +178,10 @@ of this exploit:
 
 - Run the following commands
 
-~~~bash
+```bash
 gcc -m32 -o strcpy_overflow strcpy_overflow.c
 ./strcpy_overflow
-~~~
+```
 
 - What happens?
 - The region above the buffer includes critical values, including the return address 
@@ -198,12 +198,12 @@ and the previous frame pointer.
 
 - Run the following commands
 
-~~~bash
+```bash
 git clone https://github.com/longld/peda.git
 echo "source $HOME/peda/peda.py" > $HOME/.gdbinit
 gcc -m32 -g -o gdb_strcpy_overflow strcpy_overflow.c
 gdb gdb_strcpy_overflow
-~~~
+```
 
 - Setup gdb with a breakpoint at main (`b main`) and start running (`run`).
 - A new GDB command is `si`: executing the next instruction (machine or code instruction).
@@ -235,27 +235,27 @@ gdb gdb_strcpy_overflow
 {% enddetails %}
 - Rerun `mem_layout_print` several times
 
-~~~bash
+```bash
 ./mem_layout_print
 ./mem_layout_print
 ./mem_layout_print
-~~~
+```
 
 - You will notice the addresses printed out change each time. This is one of the 
 system protection against buffer overflow attacks. 
 - First, we need to disable the countermeasures
 
-~~~bash 
+```bash 
 echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
-~~~
+```
 
 - Rerun mem_layout_print several time to confirm that addresses are not changing
 	
-~~~bash
+```bash
 ./mem_layout_print
 ./mem_layout_print
 ./mem_layout_print
-~~~
+```
 
 
 {% details First try %}
@@ -267,7 +267,7 @@ echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 	- `-z execstack`
 	- `-fno-stack-protector`
 
-~~~bash
+```bash
 gcc -m32 -o stack -z execstack -fno-stack-protector stack.c
 sudo chown root stack
 sudo chmod 4755 stack
@@ -275,7 +275,7 @@ echo "aaaa" > badfile
 ./stack
 echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" > badfile
 ./stack
-~~~
+```
 
 - Why segmentation fault?
 
@@ -292,23 +292,23 @@ jump address)?
   - The stack is shallow (good programming practice don't use deeply nested functions).
 - To make a (much more) educated guess
 
-~~~bash
+```bash
 gcc -m32 -g -o gdb_stack -z execstack -fno-stack-protector stack.c
 rm badfile
 touch badfile
 gdb gdb_stack
-~~~
+```
 
 - Run the following GDB command inside gdb (gdb-peda)
 
-~~~bash
+```bash
 break foo
 run
 print $ebp
 print &buffer
 print <hex address of ebp> - <hex address of buffer>
 quit
-~~~
+```
 
 - Take notes of your $ebp
 - What is the result of the subtraction? 

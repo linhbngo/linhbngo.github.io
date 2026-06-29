@@ -365,20 +365,20 @@ we can use internal stylesheet.
     
 
 ```html
-    <html>
-        <head>
-            <title>HTML abd CSS</title>
-            <style>
-            P {
-                Color:Blue
-            }
-            </style>
-        </head>
-        <body style="color:red">
-            This is a test
-            <p> This is a paragraph </p>
-        </body>
-    </html>
+<html>
+    <head>
+        <title>HTML abd CSS</title>
+        <style>
+        P {
+            Color:Blue
+        }
+        </style>
+    </head>
+    <body style="color:red">
+        This is a test
+        <p> This is a paragraph </p>
+    </body>
+</html>
 ```
 
 {% enddetails %}
@@ -390,17 +390,17 @@ any of the above methods. Instead, you may use “external stylesheets.” That 
 to include all styles in one external file. An example is given below with the `<link>` tag.
 
 ```html
-    <html>
-        <head>
-            <title>External Stylesheets</title>
-            <style>
-                <link rel="stylesheet" href="style.css">
-            </style>
-        </head>
-        <body>
-            ...
-        </body>
-    </html>
+<html>
+    <head>
+        <title>External Stylesheets</title>
+        <style>
+            <link rel="stylesheet" href="style.css">
+        </style>
+    </head>
+    <body>
+        ...
+    </body>
+</html>
 ```
 
 {% enddetails %}

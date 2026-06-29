@@ -28,7 +28,7 @@ toc:
 - Manual approach (we have seen this before)
   - In previous trapezoid example, we calculate the division of iteration manually.  
 
-~~~c
+```c
 #pragma omp parallel
 {
   int threadnum = omp_get_thread_num(),
@@ -38,23 +38,23 @@ toc:
   for (int i=low; i<high; i++)
     // do something with i
 }
-~~~
+```
 
 - An alternative is to use `parallel for` pragma 
 
-~~~c
+```c
 #pragma omp parallel
 #pragma omp for
 for (int i=0; i<N; i++) {
   // do something with i
 }
-~~~
+```
 
 {% enddetails %}
 {% details OpenMP for: visualization %}
 
 
-~~~c
+```c
 #pragma omp parallel
 {
   code1()
@@ -121,10 +121,10 @@ The schedules can be setup in a more fine-grained manner
     --8<-- "docs/csc466/lectures/data/openmp/for.c"
 ```
 
-~~~bash
+```bash
 gcc -o for for.c -fopenmp
 ./for 20 4
-~~~
+```
 
 {% enddetails %}
 {% details info pragma for, schedule static, chunk size 2 %}
@@ -136,10 +136,10 @@ gcc -o for for.c -fopenmp
     --8<-- "docs/csc466/lectures/data/openmp/for_static.c"
 ```
 
-~~~bash
+```bash
 gcc -o for_static for_static.c -fopenmp
 ./for 20 4
-~~~
+```
 
 {% enddetails %}
 {% details Questions %}
@@ -158,10 +158,10 @@ gcc -o for_static for_static.c -fopenmp
       --8<-- "docs/csc466/lectures/data/openmp/for_dynamic.c"
   ```
 
-  ~~~bash
+  ```bash
   gcc -o for_dynamic for_dynamic.c -fopenmp
   ./for 20 4
-  ~~~
+  ```
 
 - What is the difference?
 
@@ -174,10 +174,10 @@ gcc -o for_static for_static.c -fopenmp
     --8<-- "docs/csc466/lectures/data/openmp/for_static_rand.c"
 ```
 
-~~~bash
+```bash
 gcc -o for_static_rand for_static_rand.c -fopenmp
 ./for 20 4
-~~~
+```
 
 {% enddetails %}
 {% details info pragma for, schedule dynamic, workload simulation by sleep %}
@@ -189,10 +189,10 @@ gcc -o for_static_rand for_static_rand.c -fopenmp
     --8<-- "docs/csc466/lectures/data/openmp/for_dynamic_rand.c"
 ```
 
-~~~bash
+```bash
 gcc -o for_dynamic_rand for_dynamic_rand.c -fopenmp
 ./for 20 4
-~~~
+```
 
 {% enddetails %}
 {% details info 32 portions, 4 threads %}
@@ -226,10 +226,10 @@ gcc -o for_dynamic_rand for_dynamic_rand.c -fopenmp
     --8<-- "docs/csc466/lectures/data/openmp/nested_loops.c"
 ```
 
-~~~bash
+```bash
 gcc -o nested_loop nested_loop.c -fopenmp
 ./for 2 4
-~~~
+```
 
 - How many printf statements are there in total?
 - How many threads contribute to the execution of these statements?
@@ -243,10 +243,10 @@ gcc -o nested_loop nested_loop.c -fopenmp
     --8<-- "docs/csc466/lectures/data/openmp/nested_loops_collapse.c"
 ```
 
-~~~bash
+```bash
 gcc -o nested_loops_collapse nested_loops_collapse.c -fopenmp
 ./for 2 4
-~~~
+```
 
 - How many printf statements are there in total?
 - How many threads contribute to the execution of these statements?

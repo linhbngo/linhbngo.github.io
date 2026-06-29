@@ -86,10 +86,10 @@ contents
 
 - Compile and run `send_recv.c`:
 
-~~~bash
+```bash
 mpicc -o send_recv send_recv.c
 mpirun --host compute01:1,compute02:1 -np 2 ./send_recv
-~~~
+```
 
 - Did we get what we want? Why?
 - Correction: separate sending and receiving buffers. 
@@ -111,10 +111,10 @@ contents
 
 - Compile and run `multi_send_recv.c`:
 
-~~~bash
+```bash
 mpicc -o multi_send_recv multi_send_recv.c
 mpirun --host compute01:2,compute02:2 -np 4 ./multi_send_recv
-~~~
+```
 
 - Did we get what we want? Why?
 
@@ -132,10 +132,10 @@ contents
 
 - Compile and run `deadlock_send_recv.c`:
 
-~~~bash
+```bash
 mpicc -o deadlock_send_recv deadlock_send_recv.c
 mpirun --host compute01:1,compute02:1 -np 2 ./deadlock_send_recv
-~~~
+```
 
 - What happens?
 - To get out of deadlock, press `Ctrl-C`. 

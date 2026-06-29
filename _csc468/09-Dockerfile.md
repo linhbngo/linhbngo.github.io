@@ -37,12 +37,12 @@ toc:
 
 - The following commands are done in the terminal (Ubuntu WSL on Windows/Mac Terminal). 
 
-~~~bash
+```bash
 cd
 mkdir myimage
 cd myimage
 nano Dockerfile
-~~~
+```
 
 - Type the following contents into the nano editor.
     - To save and quit nano, press `Ctrl-X` (or `Control-X` for Mac)
@@ -59,11 +59,11 @@ nano Dockerfile
     - Assumption: you are still inside `myimage`
     - This could be checked with `pwd`. 
 
-~~~bash
+```bash
 pwd
 ls
 docker build -t linhbngo/ubuntu_figlet:2.0 .
-~~~
+```
 
 - `-t` indicates a tag named `figlet` will be applied to the image. 
 - `.` indicates that the `Dockerfile` file is in the current directory. 
@@ -75,9 +75,9 @@ see that there are now two tags for the same repository name. If you run
 `docker push` and check your Docker Hub repo, you will see the second 
 tag now stored in the same repository
 
-~~~bash
+```bash
 docker push linhbngo/ubuntu_figlet:2.0
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-push.png" width="50%" zoomable=true %}
 
@@ -91,11 +91,11 @@ container using this image, then immediately run `figlet hello world`.
 
 - Replace `linhbngo` with your own DockerHub account
 
-~~~bash
+```bash
 docker run -it linhbngo/ubuntu_figlet:2.0 /bin/bash
 figlet hello world
 exit
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc468/docker/image-test-image.png" width="50%" zoomable=true %}
 
@@ -135,12 +135,12 @@ but also allows users to append additional parameters to `docker run` call.
 - Rebuild the image with the tag `linhbngo/ubuntu_figlet:3.0`. 
 - Run the following command
 
-~~~bash
+```bash
 cd
 cd myimage
 docker build -t linhbngo/ubuntu_figlet:3.0 .
 docker run -it linhbngo/ubuntu_figlet:3.0
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc468/docker/image-create-cmd.png" width="50%" zoomable=true %}
 
@@ -149,9 +149,9 @@ docker run -it linhbngo/ubuntu_figlet:3.0
 
 - Run the following commands
 
-~~~bash
+```bash
 docker image ls
-~~~
+```
 
 - Did we use any additional storage for this new image?
     - Hint: Try running `docker system df`
@@ -171,11 +171,11 @@ docker image ls
     - Rebuild the image with the tag `linhbngo/ubuntu_figlet:4.0`.  
     - Run the followings:
 
-    ~~~bash
+    ```bash
     docker build -t linhbngo/ubuntu_figlet:4.0 .
     docker run linhbngo/ubuntu_figlet:4.0
     docker run linhbngo/ubuntu_figlet:4.0 golden rams
-    ~~~
+    ```
 
     - Notice that the first `docker run`, without any input parameters, does not generate any text. 
     - The second `docker run` takes `golden rams` and feeds it to the figlet command specified by `ENTRYPOINT`. 
@@ -196,22 +196,22 @@ docker image ls
     - Rebuild the image with the tag `linhbngo/ubuntu_figlet:5.0`. 
     - Run the followings:
 
-    ~~~bash
+    ```bash
     docker build -t linhbngo/ubuntu_figlet:5.0 .
     docker run linhbngo/ubuntu_figlet:5.0
     docker run linhbngo/ubuntu_figlet:5.0 golden rams
-    ~~~
+    ```
 
     {% include figure.liquid path="assets/img/courses/csc468/docker/image-cmd-entrypoint.png" width="50%" zoomable=true %}
 
     - Caveat with `ENTRYPOINT`: `/bin/bash` does not work as expected.  
         - Need to override with `--entrypoint` flag.
 
-    ~~~bash
+    ```bash
     docker run -it linhbngo/ubuntu_figlet:5.0
     docker run -it --entrypoint bash linhbngo/ubuntu_figlet:5.0
     exit
-    ~~~
+    ```
 
 {% enddetails %}
 
@@ -254,10 +254,10 @@ of the containers.
 
     - You can build an image with a specific Dockerfile
 
-    ~~~bash
+    ```bash
     docker build -t linhbngo/hello:1.0 -f Dockerfile.hello .
     docker run linhbngo/hello:1.0
-    ~~~
+    ```
 
     {% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-build-copy.png" width="50%" zoomable=true %}
 
@@ -268,19 +268,19 @@ of the containers.
     - Create a directory called `src` inside `myimage`.
     - Copy `hello.c` into this directory.
 
-    ~~~bash
+    ```bash
     mkdir src
     cp hello.c src/
-    ~~~
+    ```
 
     - Create the following Dockerfile called `Dockerfile.gcc`:
 
     <script src="https://gist.github.com/linhbngo/b9f794bed306562f2eb85da310ae7b5e.js?file=Dockerfile.8"></script>
 
-    ~~~bash
+    ```bash
     docker build -t linhbngo/gcc:1.0 -f Dockerfile.gcc .
     docker run -it -v ./src:/ext_src linhbngo/gcc:1.0
-    ~~~
+    ```
 
     - From the screenshot below, notice that after exiting out of the container, the newly 
     created binary file `hello` still persists. 

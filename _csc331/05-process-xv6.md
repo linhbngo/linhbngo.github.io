@@ -9,15 +9,13 @@ toc:
   - name: What about wait()?
   - name: The implementation of fork() in xv6
 ---
-# Process in XV6
 
----
 
 ## How does fork() behave in xv6?
 
 - Using the code browser, create a file called `p1.c` inside the `user` directory of `xv6-riscv` directory with the following content:
 
-~~~c
+```c
 #include "kernel/types.h"
 #include "user/user.h"
 
@@ -46,12 +44,12 @@ int main() {
 {% enddetails %}
 - Let's rebuild and relaunch xv6. In a terminal, run the followings
 
-~~~bash
+```bash
 cd ~/xv6-riscv
 make clean
 make
 make qemu
-~~~
+```
 
 
 - When you run `ls`, you will see the content of the available commands in xv6, which now includes `p1`. 
@@ -68,14 +66,13 @@ make qemu
 
 
 {% enddetails %}
----
 
 ## What about wait()?
 
 
 - Using the code browser, create a file called `p2.c` inside the `user` directory of `xv6-riscv` directory with the following content:
 
-~~~c
+```c
 #include "kernel/types.h"
 #include "user/user.h"
 
@@ -105,12 +102,12 @@ int main() {
 {% enddetails %}
 - Let's rebuild and relaunch xv6. In a terminal, run the followings
 
-~~~bash
+```bash
 cd ~/xv6-riscv
 make clean
 make
 make qemu
-~~~
+```
 
 
 - When you run `ls`, you will see the content of the available commands in xv6, which now includes `p1` and `p2`. 
@@ -126,11 +123,11 @@ make qemu
 
 {% details info Details %}
 
-~~~c
+```c
 int i, pid;
 struct proc *np;
 struct proc *p = myproc();
-~~~
+```
 
 {% enddetails %}
 - `p = myproc()` retrieves the **current running process** (caller of `fork()`).
@@ -142,12 +139,12 @@ struct proc *p = myproc();
 
 {% details info Details %}
 
-~~~c
+```c
 // Allocate process.
 if((np = allocproc()) == 0){
     return -1;
 }
-~~~
+```
 
 {% enddetails %}
 - `allocproc()` finds an UNUSED `struct proc` and sets up a kernel stack and page table.
@@ -158,7 +155,7 @@ if((np = allocproc()) == 0){
 
 {% details info Details %}
 
-~~~c
+```c
 // Copy user memory from parent to child.
 if(uvmcopy(p->pagetable, np->pagetable, p->sz) < 0){
     freeproc(np);
@@ -166,9 +163,10 @@ if(uvmcopy(p->pagetable, np->pagetable, p->sz) < 0){
     return -1;
 }
 np->sz = p->sz;
-~~~
+```
 
 {% enddetails %}
+
 - `uvmcopy(...)` copies the parent’s entire user address space into the child.
     - `uvmcopy()` is defined in `kernel/vm.c`
     - On failure, clean up the new proc and return error.
@@ -176,22 +174,23 @@ np->sz = p->sz;
 
 {% details info Details %}
 
-~~~c
+```c
 // copy saved user registers.
 *(np->trapframe) = *(p->trapframe);
-~~~
+```
 
 {% enddetails %}
+
 - The **trapframe** stores user-space registers saved during a syscall/trap.
     - `trapframe` is a `struct` defined in `kernel/riscv.h`
     - This ensures that when the child resumes in user space, it resumes from the same point.
 
 {% details info Details %}
 
-~~~c
+```c
 // Cause fork to return 0 in the child.
 np->trapframe->a0 = 0;
-~~~
+```
 
 {% enddetails %}
 - In RISC-V calling convention:
@@ -204,12 +203,12 @@ np->trapframe->a0 = 0;
 
 {% details info Details %}
 
-~~~c
+```c
 // increment reference counts on open file descriptors.
 for(i = 0; i < NOFILE; i++)
     if(p->ofile[i])
     np->ofile[i] = filedup(p->ofile[i]);
-~~~
+```
 
 {% enddetails %}
 - Copies the parent's open file table to the child.
@@ -221,9 +220,9 @@ for(i = 0; i < NOFILE; i++)
 
 {% details info Details %}
 
-~~~c
+```c
 np->cwd = idup(p->cwd);
-~~~
+```
 
 {% enddetails %}
 - Duplicates the parent’s **current working directory** inode for the child.
@@ -232,9 +231,9 @@ np->cwd = idup(p->cwd);
 
 {% details info Details %}
 
-~~~c
+```c
 safestrcpy(np->name, p->name, sizeof(p->name));
-~~~
+```
 
 {% enddetails %}
 - Copies the process name (for debugging purposes).
@@ -243,18 +242,18 @@ safestrcpy(np->name, p->name, sizeof(p->name));
 
 {% details info Details %}
 
-~~~c
+```c
 pid = np->pid;
-~~~
+```
 
 {% enddetails %}
 - Store the child’s PID for returning to the parent.
 
 {% details info Details %}
 
-~~~c
+```c
 release(&np->lock);
-~~~
+```
 
 {% enddetails %}
 - Done modifying the child; release its lock temporarily.
@@ -263,11 +262,11 @@ release(&np->lock);
 
 {% details info Details %}
 
-~~~c
+```c
 acquire(&wait_lock);
 np->parent = p;
 release(&wait_lock);
-~~~
+```
 
 {% enddetails %}
 - Set the parent pointer.
@@ -277,11 +276,11 @@ release(&wait_lock);
 
 {% details info Details %}
 
-~~~c
+```c
 acquire(&np->lock);
 np->state = RUNNABLE;
 release(&np->lock);
-~~~
+```
 
 {% enddetails %}
 - Marks the child process as `RUNNABLE`, so it can be scheduled.
@@ -290,9 +289,9 @@ release(&np->lock);
 
 {% details info Details %}
 
-~~~c
+```c
 return pid;
-~~~
+```
 
 {% enddetails %}
 - Return the child’s PID to the parent.

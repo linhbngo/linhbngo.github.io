@@ -91,12 +91,12 @@ named called `docker-compose.yml`.
 
 - Run the following commands:
 
-~~~bash
+```bash
 cd
 git clone https://github.com/CSC468-WCU/ram_coin.git
 cd ram_coin
 docker compose up
-~~~
+```
 
 - Visit `YOUR_CLOUDLAB_HEADNODE:YOUR_CHOSEN_PORT` to see the deployed webserver. 
 - Does it work?
@@ -134,19 +134,19 @@ By default, containers will be connected on a private, per-compose-file network.
 {% details Hands-on: Rerun ram_coin in background %}
 
 
-~~~bash
+```bash
 docker compose -d up
 docker compose ps
-~~~
+```
 
 {% enddetails %}
 {% details Hands-on: cleanup %}
 
 
-~~~bash
+```bash
 docker compose kill
 docker compose rm
-~~~
+```
 
 {% enddetails %}
 ---

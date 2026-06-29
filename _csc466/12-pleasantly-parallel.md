@@ -73,13 +73,13 @@ calculating one trapezoid and moving to another.
 
 - Compile and run `trapezoid.c`:
 
-~~~bash
+```bash
 mpicc -o trapezoid trapezoid.c
 mpirun --host compute01:2,compute02:2 -np 4 ./trapezoid 0 1 10
 mpirun --host compute01:2,compute02:2 -np 4 ./trapezoid 0 1 100
 mpirun --host compute01:2,compute02:2 -np 4 ./trapezoid 0 1 1000
 mpirun --host compute01:2,compute02:2 -np 4 ./trapezoid 0 1 10000
-~~~
+```
 
 {% enddetails %}
 ## Accessing PSC

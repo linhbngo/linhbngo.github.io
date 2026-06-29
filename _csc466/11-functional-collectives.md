@@ -51,10 +51,10 @@ contents
 
 - Compile and run `bcast.c`:
 
-~~~bash
+```bash
 mpicc -o bcast bcast.c
 mpirun --host compute01:2,compute02:2 -np 4 ./bcast
-~~~
+```
 
 {% enddetails %}
 {% details MPI_Scatter %}
@@ -76,10 +76,10 @@ contents
 
 - Compile and run `scatter.c`:
 
-~~~bash
+```bash
 mpicc -o scatter scatter.c
 mpirun --host compute01:2,compute02:2 -np 4 ./scatter
-~~~
+```
 
 {% enddetails %}
 {% details MPI_Gather %}
@@ -103,10 +103,10 @@ contents
 
 - Compile and run `gather.c`:
 
-~~~bash
+```bash
 mpicc -o gather gather.c
 mpirun --host compute01:2,compute02:2 -np 4 ./gather
-~~~
+```
 
 {% enddetails %}
 {% details MPI_Reduce %}
@@ -130,10 +130,10 @@ contents
 
 - Compile and run `reduce.c`:
 
-~~~bash
+```bash
 mpicc -o reduce reduce.c
 mpirun --host compute01:2,compute02:2 -np 4 ./reduce
-~~~
+```
 
 
 

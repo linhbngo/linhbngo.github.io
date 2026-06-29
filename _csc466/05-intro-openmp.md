@@ -47,22 +47,22 @@ toc:
 - OpenMP must be told when to parallelize.    
 - For C/C++, `pragma` is used to annotate
 
-~~~c
+```c
 #pragma omp somedirective clause(value, othervalue)
   parallel statement;
-~~~
+```
 
 
 - or
 
-~~~c
+```c
 #pragma omp somedirective clause(value, othervalue)
 {
   parallel statement 1;
   parallel statement 2;
   ...
 }
-~~~
+```
 
 {% enddetails %}
 {% details Hands-on: create hello_omp.c %}
@@ -78,13 +78,13 @@ with the following contents:
 
 - Compile and run:
 
-~~~bash
+```bash
 gcc -o hello_omp hello_omp.c -fopenmp
 export OMP_NUM_THREADS=4
 ./hello_omp
 export OMP_NUM_THREADS=8
 ./hello_omp
-~~~
+```
 
 - Line 1: Include `omp.h` to have libraries that support OpenMP. 
 - Line 7: Declare the beginning of the `parallel` region. **Pay attention to how the curly bracket
@@ -102,9 +102,9 @@ a variable named `nthreads` of type `int`.
 - They allow us to coordinate the parallel workloads.   
 - Specify the environment variable **OMP_NUM_THREADS**. 
 
-~~~bash
+```bash
 export OMP_NUM_THREADS=4
-~~~
+```
 
 {% enddetails %}
 ## Trapezoid

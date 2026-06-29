@@ -204,9 +204,9 @@ node server.js
 - In the previous example, the port randomly assigned by the host machine was random. 
 - This could be specified via the `-p` flag as follows:
 
-~~~bash
+```bash
 docker run -itd -p 30080:3000 --expose 3000 --name my_nodejs my_nodejs:1.0 sh
-~~~
+```
 
 - Convention: `port-on-host:port-on-container`
 - Delete the previous container and rerun it with the new `-p` flag. 

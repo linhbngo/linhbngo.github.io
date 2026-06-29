@@ -38,23 +38,23 @@ toc:
 - When a pod is deployed, kubelet pulls the associated container image(s) and runs it(them).
 
 ```mermaid
-    graph TD
-        subgraph Node1["Node (VM)"]
-            Kubelet1["kubelet + runtime"]
-            subgraph Pod1["Pod"]
-                Nginx["Container: Nginx"]
-            end
+graph TD
+    subgraph Node1["Node (VM)"]
+        Kubelet1["kubelet + runtime"]
+        subgraph Pod1["Pod"]
+            Nginx["Container: Nginx"]
         end
+    end
 
-        subgraph Node2["Node (VM)"]
-            Kubelet2["kubelet + runtime"]
-            subgraph Pod2["Pod"]
-                Redis["Container: Redis"]
-            end
+    subgraph Node2["Node (VM)"]
+        Kubelet2["kubelet + runtime"]
+        subgraph Pod2["Pod"]
+            Redis["Container: Redis"]
         end
+    end
 
-        Kubelet1 --> Pod1
-        Kubelet2 --> Pod2
+    Kubelet1 --> Pod1
+    Kubelet2 --> Pod2
 ```
 
 {% enddetails %}
@@ -122,9 +122,9 @@ At this point, if we try to access the above pod using the `containerPort` 80, i
 - A `NodePort` service opens a port on every node's IP. 
 - A `LoadBalancer` (on cloud) provisions an external IP (if available). 
 
-~~~bash
+```bash
 kubectl get nodes
-~~~
+```
 
 {% enddetails %}
 {% details Hands-on with Rancher Desktop: Adding service to pod %}

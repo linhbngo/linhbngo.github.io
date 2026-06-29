@@ -59,7 +59,7 @@ Prentice Hall 1988.
 :::::{tab-set} 
 ::::{tab-item} hello.c
 
-~~~c
+```c
 #include <math.h>
 #include <stdio.h>
 
@@ -69,13 +69,13 @@ int main() {
     printf("sqrt(4) is %f\n", sqrt(4));
     return 0;  // main returns value 0
 }
-~~~
+```
 
 ::::
 
 ::::{tab-item} hello.java
 
-~~~java
+```java
 import java.lang.Math;
 
 /* define a HelloWorld class */
@@ -87,7 +87,7 @@ class Hello {
     System.out.println("sqrt(4) is " + Math.sqrt(4));
   }
 }
-~~~
+```
 
 ::::
 :::::
@@ -149,14 +149,14 @@ do so.
 - Create a directory named `intro-c` inside `csc231`, 
 then change into that directory.
 
-~~~
+```
 cd ~/csc231
 pwd
 mkdir intro-c
 ls
 cd intro-c
 pwd
-~~~
+```
 
 :::{image} fig/02-c/02.png
 :alt: create intro-c directory
@@ -170,10 +170,10 @@ pwd
 - Inside the terminal, make sure that you are still inside
 `intro-c`, then use `nano` to create `hello.c`with the source code below. 
 
-~~~
+```
 pwd
 nano -l hello.c
-~~~
+```
 
 <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=hello.c"></script>
 
@@ -208,13 +208,13 @@ nano -l hello.c
 - Similar to `javac`, we use `gcc` to compile C code. 
 - Before compile, make sure that you are still inside `intro-c` in the terminal. 
 
-~~~
+```
 ls
 pwd
 gcc -o hello hello.c
 ls
 ./hello
-~~~
+```
 
 :::{image} fig/02-c/04.png
 :alt: Creating hello.c using nano
@@ -226,12 +226,12 @@ ls
 
 - There are a number of steps from C codes to executable binaries.  
 
-~~~
+```
 ls -l
 gcc -save-temps -o hello2 hello.c
 ls -l
 ./hello2
-~~~
+```
 
 :::{image} fig/02-c/05.png
 :alt: compile and run hello.c, keeping intermediate files
@@ -257,25 +257,25 @@ ls -l
 - For `hello.i` and `hello.s`, they can be view on the editor. 
 - Run the following command to view `hello.i`
 
-~~~
+```
 cat -n hello.i
-~~~
+```
 
 
 - Run the following command to view `hello.s`
 
-~~~
+```
 cat -n hello.s
-~~~
+```
 
 
 - For `hello.o` and `hello`, we need to dump the binary contents first. 
 
-~~~
+```
 xxd -b hello.o hello.o.txt
 xxd -b hello hello.txt
 ls -l
-~~~
+```
 
 :::{image} fig/02-c/07.png
 :alt: hexdumping hello.c and hello
@@ -285,16 +285,16 @@ ls -l
 
 - Run the following command to view `hello.o.txt`
 
-~~~
+```
 cat -n hello.o.txt
-~~~
+```
 
 
 - Run the following command to view `hello.txt`
 
-~~~
+```
 cat -n hello.txt
-~~~
+```
 
 ## Challenge: output
 
@@ -320,7 +320,7 @@ C formatting placeholders: (similar to Java)
 :::::{tab-set} 
 ::::{tab-item} readInput.c
 
-~~~c
+```c
 #include <stdio.h>
 
 int main() {
@@ -332,13 +332,13 @@ int main() {
   printf("%d + %d = %d\n", num1, num2, (num1+num2) );
   return 0;
 }
-~~~
+```
 
 ::::
 
 ::::{tab-item} InputReader.java
 
-~~~java
+```java
 import java.util.Scanner;
 
 class InputReader {
@@ -353,7 +353,7 @@ class InputReader {
           num1, num2, (num1+num2) );
   }
 }
-~~~
+```
 
 ::::
 :::::
@@ -368,7 +368,7 @@ and results as done in **readInput.c**.
 
 :::{dropdown} Answer     
 
-~~~c
+```c
 #include <stdio.h>
 
 int main() {
@@ -382,7 +382,7 @@ int main() {
   printf("%g * %g * %g = %g\n", num1, num2, num3, (num1*num2*num3) );
   return 0;
 }
-~~~
+```
 
 :::
 
@@ -393,7 +393,7 @@ Similar to Java.
 
 - Conditionals: **compare.c**
 
-~~~c
+```c
 #include <stdio.h>
 
 int main(void) {
@@ -414,14 +414,14 @@ int main(void) {
 
     return 0;
 }
-~~~
+```
 
 - Loops
 
 :::::{tab-set} 
 ::::{tab-item} forLoop.c
 
-~~~c
+```c
 #include <stdio.h>
 
 int main(void) {
@@ -440,13 +440,13 @@ int main(void) {
 
     return 0;
 }
-~~~
+```
 
 ::::
 
 ::::{tab-item} whileLoop.c
 
-~~~c
+```c
 #include <stdio.h>
 
 int main(void) {
@@ -466,7 +466,7 @@ int main(void) {
 
     return 0;
 }
-~~~
+```
 
 ::::
 :::::

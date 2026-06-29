@@ -82,9 +82,9 @@ within these terminals within a single original terminal.
 - SSH into `molly`
 - Start new with a session name:
 
-~~~bash
+```bash
 tmux new -s csc231
-~~~
+```
 
 :::{image} fig/gdb/01.png
 :alt: A new tmux windows
@@ -96,9 +96,9 @@ tmux new -s csc231
 - You are now in the new tmux session. 
 - You can list all active tmux sessions. 
 
-~~~bash
+```bash
 tmux ls
-~~~
+```
 
 :::{image} fig/gdb/02.png
 :alt: List active tmux sessions
@@ -165,9 +165,9 @@ tmux sessions.
 {% enddetails %}
 - Create a new session called `p1`.
 
-~~~bash
+```bash
 tmux new -s p1
-~~~
+```
 
 - Splits terminal into vertical panels: `Ctrl-b` then `Shift-5` (technical documents
 often write this as `Ctrl-b` and `%`).
@@ -268,12 +268,12 @@ proportional.
 - Create a new tmux session called `gdb`. 
 - Run the following command in the `gdb` session.
 
-~~~bash
+```bash
 cd 
 git clone https://github.com/longld/peda.git
 echo "source $HOME/peda/peda.py" > $HOME/.gdbinit
 gdb
-~~~
+```
 
 
 - To exit from gdb type `q` and hit `Enter`. 
@@ -295,19 +295,19 @@ gdb
 - Split the `gdb` session into two **horizontal** panes.
 - In the top pane, run the followings command:
 
-~~~bash
+```bash
 cd ~/csc231/intro-c
 gcc -g -o hello hello.c
-~~~
+```
 
 
 - In the bottom pane, run the followings command:
 
-~~~
+```
 cd ~/intro-c
 gdb hello
 gdb-peda$ run
-~~~
+```
 
 :::{image} fig/gdb/10.png
 :alt: Running gdb on hello.c
@@ -328,10 +328,10 @@ gdb-peda$ run
   - Could be a line number or
   - Could be a function name
 
-~~~bash
+```bash
 gdb-peda$ b main
 gdb-peda$ run
-~~~
+```
 
 :::{image} fig/gdb/11.png
 :alt: Set break points and run
@@ -398,21 +398,21 @@ with the code below
 
 - In the top pane, compile `malloc-1.c` in debugging mode.
 
-~~~bash
+```bash
 gcc -g -o malloc-1 malloc-1.c
 cat -n malloc-1.c
-~~~
+```
 
 - Adjust the top/bottom panes proportion as needed. 
 - In the bottom pane, quit the current gdb session and 
 rerun it on the recently created `malloc-1` executable. 
 - Setup `main` as the `breakpoint` and start running. 
 
-~~~bash
+```bash
 gdb malloc-1
 gdb-peda$ b main
 gdb-peda$ run
-~~~
+```
 
 ::::{dropdown} After initial run command
 :::{image} fig/gdb/malloc-01.png
@@ -501,20 +501,20 @@ decimal?
 {% enddetails %}
 - In the top pane, compile `array-4.c` in debugging mode. 
 
-~~~bash
+```bash
 gcc -g -o array-4 array-4.c
 cat -n array-4.c
-~~~
+```
 
 
 - In the bottom pane, quit the current gdb session and 
 rerun it on the recently created `array-4` executable as follows: 
 
-~~~bash
+```bash
 gdb array-4
 gdb-peda$ b main
 gdb-peda$ run
-~~~
+```
 
 ::::{dropdown} After initial run command
 :::{image} fig/gdb/array-01.png
@@ -560,11 +560,11 @@ gdb-peda$ run
 
 - Rerun gdb on `array_4` executable as follows: 
 
-~~~
+```
 gdb array-4
 gdb-peda$ b main
 gdb-peda$ run 3
-~~~
+```
 
 ::::{dropdown} After initial run command
 :::{image} fig/gdb/array-04.png

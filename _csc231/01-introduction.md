@@ -52,18 +52,18 @@ Log into `molly` and run the following commands:
 the `mkdir` command. 
 - Change into that directory using the `cd` command.
 
-~~~
+```
 mkdir csc231
 cd csc231
-~~~
+```
 
 - Check that you are inside `csc231` using the `pwd` command.
 - Clone the Git repository for the class' examples. 
 
-~~~
+```
 pwd
 git clone https://github.com/CSC231-WCU/examples.git
-~~~
+```
 
 
 - The `git clone` command will download the repository into a directory called 
@@ -72,21 +72,21 @@ git clone https://github.com/CSC231-WCU/examples.git
 - Change into `examples` using `cd`. 
 - Run `ls -l` to see how many subdirectories there are inside `examples`. 
 
-~~~
+```
 ls -l
 cd examples
 ls -l
-~~~
+```
 
 
 - Change into the directory `01-intro`. 
 - Compile and run the example code `nums.c`. 
 
-~~~
+```
 cd 01-intro
 gcc -Wno-overflow nums.c
 ./a.out
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/01-intro/01.png" width="50%" zoomable=true alt="Compile and run nums.c" %}
 
@@ -139,10 +139,10 @@ gcc -Wno-overflow nums.c
  
 - We are still inside `examples\intro-01` directory from Hands-on 1.   
 
-~~~
+```
 gcc mem1.c
 ./a.out
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/01-intro/02.png" width="50%" zoomable=true alt="Compile and run mem1.c" %}
 
@@ -179,10 +179,10 @@ gcc mem1.c
  
 - We are still inside `examples\intro-01` directory from Hands-on 1.  
 
-~~~
+```
 gcc mem2.c
 ./a.out
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/01-intro/03.png" width="50%" zoomable=true alt="Compile and run mem2.c" %}
 

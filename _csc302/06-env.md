@@ -25,7 +25,7 @@ toc:
   programs are stored. When a shell executes a program, it uses this EV to find where the 
   program is if the full path is not provided. 
 
-~~~bash
+```bash
 
 echo "Hello World"
 mkdir test
@@ -36,7 +36,7 @@ export PATH=$PATH:/home/seed/test
 echo $PATH
 myecho "Hello World"
 
-~~~
+```
 
 
 {% details Accessing EV from a process %}
@@ -54,24 +54,24 @@ myecho "Hello World"
 :::::{tab-set}
 ::::{tab-item} envp
 
-~~~bash
+```bash
 
 gcc -w -o my_envp /local/repository/setup_scripts/software/env/my_envp.c
 ./my_envp
 
-~~~
+```
 
 <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=my_envp.c"></script>
 
 ::::
 ::::{tab-item} environ
 
-~~~bash
+```bash
 
 gcc -w -o my_environ /local/repository/setup_scripts/software/env/my_environ.c
 ./my_environ
 
-~~~
+```
 
 <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=my_environ.c"></script>
 
@@ -95,7 +95,7 @@ gcc -w -o my_environ /local/repository/setup_scripts/software/env/my_environ.c
   - The copy of parent's memory for the child is overwritten
   - EV need to be specifically passed. 
 
-~~~bash
+```bash
 
 gcc -w -o passenv /local/repository/setup_scripts/software/env/passenv.c
 ./passenv
@@ -103,7 +103,7 @@ gcc -w -o passenv /local/repository/setup_scripts/software/env/passenv.c
 ./passenv 2
 ./passenv 3
 
-~~~
+```
 
 <script src="https://gist.github.com/linhbngo/a583a6912f26fb77b67c835933f76dce.js?file=passenv.c"></script>
 
@@ -118,7 +118,7 @@ gcc -w -o passenv /local/repository/setup_scripts/software/env/passenv.c
 - Recompile `my_envp.c` with GDB flag and check the 
 location of the environment variables
 
-~~~bash
+```bash
 
 gcc -g -o my_envp_gdb my_envp.c
 gdb my_envp_gdb
@@ -129,7 +129,7 @@ gdb-peda$ p argv
 gdb-peda$ p envp
 gdb-peda$ x/s *((char **)envp + 1)
 
-~~~
+```
 
 
 
@@ -151,7 +151,7 @@ operating system (Linux)
   - The shell can easily get the value of the environment variables 
   by referring to its own shell variables
 
-~~~bash
+```bash
 
 strings /proc/$$/environ | grep LOGNAME
 echo $LOGNAME
@@ -159,7 +159,7 @@ LOGNAME=ram
 echo $LOGNAME
 strings /proc/$$/environ | grep LOGNAME
 
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc302/env/env_shell.png" width="50%" zoomable=true alt="Shell variables" %}
 
@@ -188,25 +188,25 @@ program and links the code to the program (think import in Java).
   - Requires a lot of memory
   - Compiled external functions are static and cannot be updated/patched
 
-~~~bash
+```bash
 
 gcc -o my_envp my_envp.c
 gcc -static -o my_envp_static my_envp.c
 ls -lh my_envp*
 
-~~~
+```
 
 - Linking can be done on the fly
   - External functions are linked at run time, called `shared libraries`.
   - `.so` on Unix system, `.dll` on Windows system
    - `ldd` can be used to see what shared libraries a program depends on. 
 
-~~~bash
+```bash
 
 ldd my_envp_static
 ldd my_envp
 
-~~~
+```
 
 
 {% details Vulnerabilities via environment variables %}
@@ -223,7 +223,7 @@ runtime, under users' control.
   functions from default locations.
   - These locations are determined via **LD_PRELOAD** and **LD_LIBRARY_PATH**
 
-~~~bash
+```bash
 
 echo $LD_PRELOAD
 echo $LD_LIBRARY_PATH
@@ -239,7 +239,7 @@ echo $LD_PRELOAD
 export LD_PRELOAD=""
 ./linking
 
-~~~
+```
 
 
 {% details Countermeasures for EV's dynamic linking %}
@@ -251,7 +251,7 @@ export LD_PRELOAD=""
 ignores **LD_PRELOAD** and **LD_LIBRARY_PATH** when there is a difference in a process' real 
 and effective user IDs or group IDs.
 
-~~~bash
+```bash
 
 cp $(which env) myenv
 export LD_PRELOAD=./libmylib.so.1.0.1
@@ -264,7 +264,7 @@ sudo chown root myenv
 sudo chmod 4755 myenv
 myenv | grep LD_
 
-~~~
+```
 
 
 
@@ -275,16 +275,16 @@ myenv | grep LD_
 {% enddetails %}
 - `PATH` environment variable
 
-~~~bash
+```bash
 
 echo $PATH
 
-~~~
+```
 
 - Many system commands are placed in `/usr/bin` or `/bin`, which are 
 mapped in `PATH`
 
-~~~bash
+```bash
 
 cp /local/repository/setup_scripts/software/env/vul.c .
 gcc -o vul vul.c
@@ -298,14 +298,14 @@ vul
 $ id
 $ exit
 
-~~~
+```
 
 - Open a new terminator shell to reset `PATH` to default. 
 - What happens when you switch the order of the new `PATH` 
 export for the previous exercise?
 - Why?
 
-~~~bash
+```bash
 
 cp /local/repository/setup_scripts/software/env/vul.c .
 gcc -o vul vul.c
@@ -319,7 +319,7 @@ vul
 $ id
 $ exit
 
-~~~
+```
 
 
 
@@ -332,7 +332,7 @@ $ exit
 which can be manipulated. 
 
 
-~~~bash
+```bash
 
 cp /local/repository/setup_scripts/software/env/pwd.c .
 echo $PWD
@@ -343,7 +343,7 @@ cd /tmp
 PWD=randomdir
 ~/pwd
 
-~~~
+```
 
 
 

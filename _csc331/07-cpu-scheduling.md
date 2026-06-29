@@ -11,10 +11,6 @@ toc:
   - name: Multi-level Feedback Queue (MLFQ)
 ---
 
-# CPU Scheduling
-
----
-
 ## What is CPU scheduling?
 
 - The allocation of processors to processes over time
@@ -24,8 +20,6 @@ toc:
 (ready, running, block ...)
 - Policies: Given more than one runnable processes, how do we choose which one to 
 run next?
-
----
 
 ## Basic Scheduling Algorithms (Non-preemptive)
 
@@ -182,7 +176,6 @@ alphabetic ordering based on jobs’ names.
 5. The run time of each job is known.
 
 {% enddetails %}
----
 
 ## Preemptive vs Non-preemptive
 
@@ -344,7 +337,6 @@ duration so that we can minimize **turn around time** and
 also minimize **response time** for interactive jobs?
 
 {% enddetails %}
----
 
 ## Multi-level Feedback Queue (MLFQ)
 

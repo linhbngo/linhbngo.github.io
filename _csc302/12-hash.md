@@ -70,7 +70,7 @@ a final hashed value
 - Aavilable via Linux utility programs
 - Example: `md5sum`, `sha224sum`, `sha256sum`, `sha384sum` and `sha512sum`
 
-~~~bash
+```bash
 echo -n "Golden Rams" > file.txt
 md5sum file.txt
 sha256sum file.txt
@@ -78,7 +78,7 @@ openssl dgst -sha256 file.txt
 openssl sha256 file.txt
 openssl md5 file.txt
 openssl dgst -md5 file.txt
-~~~
+```
 
 ### Computing One-Way Hash in Programs
 - Different languages including C/C++, Python, SQL, PHP provide support
@@ -88,16 +88,16 @@ openssl dgst -md5 file.txt
   - C - Use functions from openssl/sha.h header
 - Python example:
 
-~~~python
+```python
 python3
 >>> import hashlib
 >>> m = hashlib.sha256()
 >>> m.update(b"Golden Rams")
-~~~
+```
 
 - C example: `calculate_sha256.c`
 
-~~~c
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -120,24 +120,24 @@ int main(int argc, char* argv) {
   }
   printf("\n");
 }
-~~~
+```
 
 - Confirm that the hash matches
 
-~~~bash
+```bash
 gcc -o calculate_sha256 calculate_sha256.c -lcrypto
 ./calculate_sha256 
-~~~
+```
 
 ## Applications of One-Way Hash Functions
 
 ### Integrity Verification
 - Changing one bit of the original data changes hash value
 
-~~~bash
+```bash
 echo -n "Golden Rams" | sha256sum
 echo -n "G0lden Rams" | sha256sum
-~~~
+```
 
 - Usage examples:
   - Detect change in system files
@@ -163,9 +163,9 @@ echo -n "G0lden Rams" | sha256sum
 - Solution: one-way hash function
 - Example: Linux stores passwords in the /etc/shadow file
 
-~~~
+```
 sudo cat /etc/shadow | grep root
-~~~
+```
 
 - Case Study: Linux Shadow File
   - Password field has 3 parts, separated by the `$` sign: 
@@ -178,30 +178,30 @@ sudo cat /etc/shadow | grep root
   - Random string is the salt
 
 
-~~~bash
+```bash
 useradd -m -s /bin/bash seed
 echo "seed:dees" | chpasswd
 useradd -m -s /bin/bash seed2
 echo "seed2:dees" | chpasswd
 cat /etc/shadow | grep seed
 cat /etc/shadow | grep seed
-~~~
+```
 
 - In my case, the outcomes of the final two `cat` commands are:
 
-~~~bash
+```bash
 seed:$6$6m4jvilqG3xbXlNa$xHCTxjkWN0Agbo5jBl8xl1EkEN7kyakIHr87Mw2oG1vwV2y2fllXiY5pspZfcu6orQuclyo530S/okBMk2oTy/:19480:0:99999:7:::
 seed2:$6$CbEbHBQYnmoyZtw6$EgS8kC6qZXbgJ9tRsucryLKarHRg4NZcXZJ7zAkBoeZ8otrkwx4E3IjjRkrMJmQh9YrP0osbno9RyETkvwDye0:19480:0:99999:7:::
-~~~
+```
 
 - Both accounts `seed` and `seed2` have the same password, but are salted differently in the hash
 
-~~~python
+```python
 python3
 >>> import crypt
 >>> print(crypt.crypt("dees","$6$6m4jvilqG3xbXlNa"))
 >>> print(crypt.crypt("dees","$6$CbEbHBQYnmoyZtw6")) 
-~~~
+```
 
 - Attacks Prevented by Salt
   - Dictionary Attack

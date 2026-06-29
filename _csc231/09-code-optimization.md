@@ -65,10 +65,10 @@ This lecture will cover contents from [Chapter 12](https://diveintosystems.org/b
 - Compile and run the following `bad_fib.c` program:
 - `fib(1)` returns an incorrect result. Why?
 
-~~~bash
+```bash
 $ gcc -o bad_fib bad_fib.c
 $ ./bad_fib
-~~~
+```
  
 ::::
 ::::{tab-item} Scientific debugging
@@ -109,16 +109,16 @@ $ ./bad_fib
 - Strict compilation flags: `-Wall`, `-Werror`. 
 - Include optimization flags (**capital letter o**): `-O3` or `-O0`. 
 
-~~~bash
+```bash
 $ gcc -Wall -Werror -O3 -o bad_fib bad_fib.c
-~~~
+```
  
 - Use `valgrind`, memory analyzer. 
 
-~~~bash
+```bash
 $ gcc -Wall -Werror -o bad_fib bad_fib.c
 $ valgrind ./bad_fib
-~~~
+```
 ::::
 ::::{tab-item} Observation
 
@@ -210,9 +210,9 @@ how the loops are broken up to align with cache size.
 ::::{tab-item} Cache blocks
 - Check the size of cache blocks 
 
-~~~bash
+```bash
 $ getconf -a | grep CACHE
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/06-optimization/02.png" width="50%" zoomable=true alt="Cache size" %}
 
@@ -234,12 +234,12 @@ in cache line).
 
 - Compile and run `matrix_mult.c`. 
 
-~~~bash
+```bash
 $ gcc -o mm matrix_mult.c
 $ ./mm 512
 $ ./mm 1024
 $ ./mm 2048
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/06-optimization/04.png" width="50%" zoomable=true alt="Matrix with block optimization" %}
 
@@ -248,12 +248,12 @@ $ ./mm 2048
 
 - Compile and run `block_matrix_mult.c`. 
 
-~~~bash
+```bash
 $ gcc -o bmm block_matrix_mult.c
 $ ./bmm 512
 $ ./bmm 1024
 $ ./bmm 2048
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/06-optimization/05.png" width="50%" zoomable=true alt="Matrix with block and compiler optimization" %}
 
@@ -290,12 +290,12 @@ $ ./bmm 2048
 
 <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=eval.sh"></script>
 
-~~~bash
+```bash
 $ chmod 755 eval.sh
 $ ./eval.sh block_matrix_mult
 $ ./eval.sh block_matrix_mult_2
 $ ./eval.sh block_matrix_mult_3
-~~~
+```
 ::::
 ::::{tab-item} Outcome
 
@@ -332,7 +332,7 @@ x86_64's single instructions, multiple data (SIMD) instructions.
 
 <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=intrinsic_sum.c"></script>
 
-~~~bash
+```bash
 $ gcc -mavx2 -o imm intrinsic_sum.c 
 $ ./imm 1024
 $ ./imm 2048
@@ -341,7 +341,7 @@ $ ./imm 8192
 $ ./imm 16384
 $ ./imm 32678
 $ ./imm 33554432
-~~~
+```
 
 ::::
 ::::{tab-item} Outcome

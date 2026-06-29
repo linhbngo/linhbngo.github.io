@@ -93,9 +93,9 @@ flowchart LR
     E --> I
     E --> J
 
-    B ~~~ G
-    D ~~~ F
-    F ~~~ H
+    B ``` G
+    D ``` F
+    F ``` H
 ```
 
 {% enddetails %}

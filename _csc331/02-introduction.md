@@ -145,11 +145,11 @@ ps aux | grep cpu
 - In the left terminal pane, run the following commands:
   - `-R` will disable randomization of virtual memory address space for shells. 
 
-~~~bash
+```bash
 clear
 sudo setarch `uname -m` -R /bin/bash
 ./mem 100 &./mem 200
-~~~
+```
 
 - In the right pane, use the same procedure as above to kill the two running programs 
 after a few iterations. 
@@ -187,11 +187,11 @@ in designing and implementing various management mechanisms within the OS.
 - Type exit to close one of the two terminal panes. 
 - Run the following commands in the remaining terminal:
 
-~~~bash
+```bash
 ./threads 50
 ./threads 100
 ./threads 200
-~~~
+```
 
 - `threads.c` creates two functions running at the same time, within the same memory 
 space of the  main program.
@@ -199,12 +199,12 @@ space of the  main program.
 the final value of counter should be twice that of the command line argument.
 - Now run with bigger values.
 
-~~~bash
+```bash
 ./threads 20000
 ./threads 30000
 ./threads 30000
 ./threads 30000
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc331/intro/07.png" max-width="50%" zoomable=true %}
 

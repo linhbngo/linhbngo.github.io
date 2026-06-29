@@ -80,10 +80,10 @@ Rancher Desktop is designed with Kubernetes in mind from day one
     {% enddetails %}
 - Confirm setup in terminal:
 
-~~~bash
+```bash
 docker version
 kubectl version
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc478/rancher/04.png" width="50%" zoomable=true %}
 
@@ -138,10 +138,10 @@ kubectl version
 
 ## Kubernetes Readiness Check
 
-~~~bash
+```bash
 kubectl get nodes
 kubectl get pods -A
-~~~
+```
 
 You’re ready for Week 2: Kubernetes deployments
 

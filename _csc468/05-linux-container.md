@@ -60,10 +60,10 @@ toc:
 - SSH into your CloudLab node.
 - Run the following:
 
-~~~bash
+```bash
 sudo apt update
 sudo apt install -y cgroup-tools stress debootstrap
-~~~
+```
 
 {% enddetails %}
 ---
@@ -87,30 +87,30 @@ sudo apt install -y cgroup-tools stress debootstrap
 - Open your CloudLab terminal.
 - Check your current PID:
 
-~~~bash
+```bash
 echo $$
-~~~
+```
 
 - Use `unshare` to create a new PID namespace and fork a bash process:
 
-~~~bash
+```bash
 sudo unshare --fork --pid --mount-proc bash
-~~~
+```
 
 - Check the PID inside this new environment:
 
-~~~bash
+```bash
 echo $$
 ps aux
-~~~
+```
 
 - *Observation:* You should see only a few processes, and your bash shell should be PID 1.
 - Type `exit` once to return to the host and test pid again.
 
-~~~bash
+```bash
 exit
 echo $$
-~~~
+```
 
 {% enddetails %}
 ---
@@ -130,16 +130,16 @@ echo $$
 - **Goal:** Create a "jail" that limits a process to 100MB of RAM.
 - Create a new cgroup called `mygroup`:
 
-~~~bash
+```bash
 sudo cgcreate -g memory:mygroup
-~~~
+```
 
 - Set the limit to 100MB (in bytes):
 
-~~~bash
+```bash
 # 100MB = 104857600 bytes
 echo 104857600 | sudo tee /sys/fs/cgroup/mygroup/memory.max
-~~~
+```
 
 {% enddetails %}
 {% details Hands-on: Testing the Limit %}
@@ -148,15 +148,15 @@ echo 104857600 | sudo tee /sys/fs/cgroup/mygroup/memory.max
 - Run a `stress` test inside that cgroup that tries to eat 99MB of RAM.
     - You will need to use `Ctrl-C` to terminate the running process
 
-~~~bash
+```bash
 sudo cgexec -g memory:mygroup stress --vm 1 --vm-bytes 99M --vm-keep
-~~~
+```
 
 - Run a `stress` test inside that cgroup that tries to eat 101MB of RAM.
 
-~~~bash
+```bash
 sudo cgexec -g memory:mygroup stress --vm 1 --vm-bytes 101M --vm-keep
-~~~
+```
 
 - *Observation:* The process should fail or be killed by the OOM (Out of Memory) Killer immediately.
 - Compare this to running it without the cgroup (which would succeed).
@@ -178,34 +178,34 @@ sudo cgexec -g memory:mygroup stress --vm 1 --vm-bytes 101M --vm-keep
 - **Goal:** Create a mini-filesystem and lock a process inside it.
 - Create a folder for our new root:
 
-~~~bash
+```bash
 mkdir container
-~~~
+```
 
 - Use debootstrap to setup a base file system inside:
 
-~~~bash
+```bash
 sudo debootstrap --variant=minbase stable /users/$USER/container http://deb.debian.org/debian
-~~~
+```
 
 - Mount essential virtual filesystems
 
-~~~bash
+```bash
 for dir in dev proc sys; do sudo mount --bind /$dir /users/$USER/container/$dir; done
-~~~
+```
 
 - Enter the isolated file system jail:
 
-~~~bash
+```bash
 sudo unshare --mount --uts --ipc --pid --fork chroot /users/$USER/container /bin/bash
-~~~
+```
 
 - Try to look at `/home` or `/users`. They don't exist here! You are isolated.
 - Exit out of the container when done
 
-~~~bash
+```bash
 exit
-~~~
+```
 
 {% enddetails %}
 ---
@@ -222,16 +222,16 @@ exit
 
 - We will use `unshare` to create a new namespace, then immediately `chroot` into our folder.
 
-~~~bash
+```bash
 sudo unshare --mount --uts --ipc --pid --fork chroot container /bin/bash
-~~~
+```
 
 - Next, we install `ps` and setup a separate mount point for `/proc` from inside the container
 
-~~~bash
+```bash
 apt update
 apt install -y procps
-~~~
+```
 
 {% enddetails %}
 {% details Step 2: Verify Isolation %}

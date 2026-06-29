@@ -45,7 +45,7 @@ toc:
 - SSH to `molly`. 
 - Run the following commands to prepare the environment.
 
-~~~
+```
 clear
 cd
 pwd
@@ -53,7 +53,7 @@ wget --no-check-certificate https://www.cs.wcupa.edu/lngo/data/shell-lesson-data
 unzip shell-lesson-data.zip
 cd ~/shell-lesson-data/exercise-data/proteins
 ls -l *.pdb
-~~~
+```
 
 :::{image} fig/09-scripting-linux/pdb-list.png
 :alt: List files in current directory
@@ -64,11 +64,11 @@ ls -l *.pdb
 
 - To get counts of characters, words, and lines in a file, we use `wc`. 
 
-~~~
+```
 man wc
 wc *.pdb
 wc -l *.pdb
-~~~
+```
 
 :::{image} fig/09-scripting-linux/wc-cli.png
 :alt: Running wc command
@@ -81,7 +81,7 @@ wc -l *.pdb
   - `>` redirects output and creates a new file. 
   - `>>` appends output to a file (if the file already exists, else creates a new file)
 
-~~~
+```
 ls
 wc -l *.pdb > lengths.txt
 ls
@@ -90,7 +90,7 @@ wc -l *.pdb >> lengths.txt
 cat lengths.txt
 wc -l *.pdb > lengths.txt
 cat lengths.txt
-~~~
+```
 
 
 :::{image} fig/09-scripting-linux/wc-redirect.png
@@ -108,9 +108,9 @@ cat lengths.txt
 {% enddetails %}
 - We can sort the contents of `lengths.txt` using `sort`
 
-~~~
+```
 man sort
-~~~
+```
 
 
 ::::{admonition} Challenge: what does `sort -n` do?
@@ -118,23 +118,23 @@ man sort
 
 - Explain what does `-n` do by observing the following two commands
 
-~~~
+```
 sort ~/shell-lesson-data/exercise-data/numbers.txt
 10
 19
 2
 22
 6
-~~~
+```
 
-~~~
+```
 sort -n ~/shell-lesson-data/exercise-data/numbers.txt
 2
 6
 10
 19
 22
-~~~
+```
 
 :::{dropdown} Solution
 - The `-n` option specifies a numerical rather than an alphanumerical sort.
@@ -143,11 +143,11 @@ sort -n ~/shell-lesson-data/exercise-data/numbers.txt
 
 - Let's look at `lengths.txt`:
 
-~~~
+```
 sort -n lengths.txt
 sort -n lengths.txt > sorted-lengths.txt
 cat sorted-lengths.txt
-~~~
+```
 
 :::{image} fig/09-scripting-linux/sort-cli.png
 :alt: Redirect sorted outputs to a file
@@ -158,9 +158,9 @@ cat sorted-lengths.txt
 
 - We can use the `head` command to get the first line
 
-~~~
+```
 head -n 1 sorted-lengths.txt
-~~~
+```
 
 :::{image} fig/09-scripting-linux/head-cli.png
 :alt: Run head to get the first line
@@ -178,15 +178,15 @@ head -n 1 sorted-lengths.txt
 - We used intermediate files to store output. We can use a pipe (`|`) to 
 combine them together. 
 
-~~~
+```
 sort -n lengths.txt | head -n 1
-~~~
+```
 
 - We can combine multiple commands
 
-~~~
+```
 wc -l *.pdb | sort -n | head -n 1
-~~~
+```
 
 :::{image} fig/09-scripting-linux/pipe-multiple.png
 :alt: Multiple commands connection via pipes
@@ -218,7 +218,7 @@ to a file. Try it in the `shell-lesson-data/exercise-data/proteins` directory!
 - A file called animals.csv (in the `shell-lesson-data/exercise-data/animal-counts` folder) 
 contains the following data: 
 
-~~~
+```
 cat ~/shell-lesson-data/exercise-data/animal-counts/animals.csv
 2012-11-05,deer,5
 2012-11-05,rabbit,22
@@ -228,21 +228,21 @@ cat ~/shell-lesson-data/exercise-data/animal-counts/animals.csv
 2012-11-06,fox,4
 2012-11-07,rabbit,16
 2012-11-07,bear,1
-~~~
+```
 
 - What text passes through each of the pipes and the final redirect in the 
 pipeline below? Note, the `sort -r` command sorts in reverse order.
 
-~~~
+```
 cat animals.csv | head -n 5 | tail -n 3 | sort -r > final.txt
-~~~
+```
 
 :::{dropdown} Solution
-~~~
+```
 2012-11-06,rabbit,19
 2012-11-06,deer,2
 2012-11-05,raccoon,7
-~~~
+```
 :::
 ::::
 
@@ -251,10 +251,10 @@ cat animals.csv | head -n 5 | tail -n 3 | sort -r > final.txt
 
 - For the file `animals.csv` from the previous exercise, consider the following command:
 
-~~~
+```
 man cut
 cut -d , -f 2 animals.csv
-~~~
+```
 
 :::{image} fig/09-scripting-linux/cut-pipe.png
 :alt: Piping the cut command
@@ -269,9 +269,9 @@ file contains (without any duplicates in their names)?
 
 
 :::{dropdown} Solution
-~~~
+```
 cut -d , -f 2 animals.csv | sort | uniq
-~~~
+```
 :::
 ::::
 
@@ -280,13 +280,13 @@ cut -d , -f 2 animals.csv | sort | uniq
 
 - The file `animals.csv` contains 8 lines of data formatted as follows::
 
-~~~
+```
 2012-11-05,deer,5
 2012-11-05,rabbit,22
 2012-11-05,raccoon,7
 2012-11-06,rabbit,19
 ...
-~~~
+```
 
 
 The `uniq` command has a `-c` option which gives a count of the number of 
@@ -316,23 +316,23 @@ Option 4. is the correct answer.
 in the `north-pacific-gyre` directory described earlier. Let's check the 
 integrity of this data:
 
-~~~
+```
 cd ~/shell-lesson-data/north-pacific-gyre
 ls -l 
-~~~
+```
 
 - How do we check for data integrity? Imagine if you have thousands of files?
 
-~~~
+```
 wc -l *.txt | sort -n | head -n 5
-~~~
+```
 
 - This is possible by looking at metadata (line counts, word counts, etc)
 - There are also files containing `Z` in their names, 
 
-~~~
+```
 ls *Z.txt
-~~~
+```
 
 - It is important to be careful when using wildcards if we don't want to 
 include these strange files in our calculations. 
@@ -356,10 +356,10 @@ presented on the first three lines
 Let's look at the files:
 
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/creatures/
 head -n 5 basilisk.dat minotaur.dat unicorn.dat
-~~~
+```
 
 :::{image} fig/09-scripting-linux/loop-creatures.png
 :alt: Viewing DNA contents of mystical creatures
@@ -374,21 +374,21 @@ the second line of each file.
 - For each file, we would need to execute the command `head -n 2` and pipe this to `tail -n 1`.
 - We’ll use a loop to solve this problem, but first let’s look at the general form of a loop:
 
-~~~
+```
 for thing in list_of_things
 do
     operation_using $thing    # Indentation within the loop is not required, but aids legibility
 done
-~~~
+```
 
 and we can apply this to our example like this:
 
-~~~
+```
 for filename in basilisk.dat minotaur.dat unicorn.dat
 > do
 >   head -n 2 $filename | tail -n 1
 > done
-~~~
+```
 
 :::{image} fig/09-scripting-linux/loop-classifications.png
 :alt: Looping through the dat files to view creature classifications
@@ -456,12 +456,12 @@ braces to clearly delimit the variable name:
 - How would you write a loop that echoes all 10 numbers from 0 to 9?
 
 :::{dropdown} Solution
-~~~
+```
 for loop_variable in 0 1 2 3 4 5 6 7 8 9
 > do
 >   echo $loop_variable
 > done
-~~~
+```
 :::
 ::::
 
@@ -471,28 +471,28 @@ for loop_variable in 0 1 2 3 4 5 6 7 8 9
 - This exercise refers to the `shell-lesson-data/exercise-data/proteins` directory.
 - Run the following commands, observe the outputs, and answer the questions:
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/proteins/
 ls *.pdb
-~~~
+```
 
 - What is the output of the following code?
 
-~~~
+```
 for datafile in *.pdb
 > do
 >   ls *.pdb
 > done
-~~~
+```
 
 - Now, what is the output of the following code?
 
-~~~
+```
 for datafile in *.pdb
 > do
 >   ls $datafile
 > done
-~~~
+```
 
 - Why do these two loops give different outputs?
 
@@ -513,13 +513,13 @@ and then listed using `ls`.
 - What would be the output of running the following loop in the
 `shell-lesson-data/exercise-data/proteins` directory?
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/proteins/
 for filename in c*
 > do
 >   ls $filename
 > done
-~~~
+```
 
 1.  No files are listed.
 2.  All files are listed.
@@ -528,13 +528,13 @@ for filename in c*
 
 - How would the output differ from using this command instead?
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/proteins/
 for filename in *c*
 > do
 >   ls $filename
 > done
-~~~
+```
 
 5.  The same files would be listed.
 6.  All the files are listed this time.
@@ -557,14 +557,14 @@ characters before a letter c and zero or more characters after the letter c will
 - In the `shell-lesson-data/exercise-data/proteins` directory, what is the 
 effect of this loop?
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/proteins/
 for alkanes in *.pdb
 > do
 >   echo $alkanes
 >   cat $alkanes > alkanes.pdb
 > done
-~~~
+```
 
 1.  Prints `cubane.pdb`, `ethane.pdb`, `methane.pdb`, `octane.pdb`, `pentane.pdb` and 
 `propane.pdb`, and the text from `propane.pdb` will be saved to a file called `alkanes.pdb`.
@@ -577,13 +577,13 @@ and the text from `propane.pdb` will be saved to a file called `alkanes.pdb`.
 - Also in the `shell-lesson-data/exercise-data/proteins` directory,
 what would be the output of the following loop?
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/proteins/
 for datafile in *.pdb
 > do
 >   cat $datafile >> all.pdb
 > done
-~~~
+```
 
 5. All of the text from `cubane.pdb`, `ethane.pdb`, `methane.pdb`, `octane.pdb`, and 
 `pentane.pdb` would be concatenated and saved to a file called `all.pdb`.
@@ -619,37 +619,37 @@ redirected, nothing is printed to the screen.
     - Finally, the `head` and `tail` combination selects lines 81-100 
     from whatever file is being processed (assuming the file has at least 100 lines).
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/creatures
 for filename in *.dat
 > do
 >   echo $filename
 >   head -n 100 $filename | tail -n 20
 > done
-~~~
+```
 
 - We would like to modify each of the files in `shell-lesson-data/exercise-data/creatures`,
 but also save a version of the original files, naming the copies `original-basilisk.dat` 
 and `original-unicorn.dat`.
 - We can't use:
 
-~~~
+```
 cp *.dat original-*.dat
-~~~
+```
 {: .language-bash}
 
 because that would expand to:
 
-~~~
+```
 cp basilisk.dat minotaur.dat unicorn.dat original-*.dat
-~~~
+```
 {: .language-bash}
 
 This wouldn't back up our files, instead we get an error:
 
-~~~
+```
 cp: target `original-*.dat' is not a directory
-~~~
+```
 {: .error}
 
 - This problem arises when `cp` receives more than two inputs. When this happens, it
@@ -658,12 +658,12 @@ Since there is no directory named `original-*.dat` in the `creatures` directory 
 error.
 - Instead, we can use a loop:
 
-~~~
+```
 for filename in *.dat
 > do
 >   cp $filename original-$filename
 > done
-~~~
+```
 {: .language-bash}
 
 - Since the `cp` command does not normally produce any output, it's hard to check
@@ -694,25 +694,25 @@ Her first step is to make sure that she can select the right input files --- rem
 these are ones whose names end in 'A' or 'B', rather than 'Z'.
 Starting from her home directory, Nelle types:
 
-~~~
+```
 cd ~/shell-lesson-data/north-pacific-gyre
 for datafile in NENE*A.txt NENE*B.txt
 > do
 >     echo $datafile
 > done
-~~~
+```
 
 Her next step is to decide
 what to call the files that the `goostats.sh` analysis program will create.
 Prefixing each input file's name with 'stats' seems simple,
 so she modifies her loop to do that:
 
-~~~
+```
 for datafile in NENE*A.txt NENE*B.txt
 > do
 >     echo $datafile stats-$datafile
 > done
-~~~
+```
 
 She hasn't actually run `goostats.sh` yet,
 but now she's sure she can select the right files and generate the right output filenames.
@@ -722,16 +722,16 @@ though, and Nelle is worried about making mistakes, so instead of re-entering he
 she presses <kbd>↑</kbd>. In response, the shell redisplays the whole loop on one line
 (using semi-colons to separate the pieces):
 
-~~~
+```
 for datafile in NENE*A.txt NENE*B.txt; do echo $datafile stats-$datafile; done
-~~~
+```
 
 Using the left arrow key,
 Nelle backs up and changes the command `echo` to `bash goostats.sh`:
 
-~~~
+```
 for datafile in NENE*A.txt NENE*B.txt; do bash goostats.sh $datafile stats-$datafile; done
-~~~
+```
 
 When she presses <kbd>Enter</kbd>, the shell runs the modified command.
 However, nothing appears to happen --- there is no output. After a moment, Nelle realizes 
@@ -740,10 +740,10 @@ it is running, much less how quickly. She kills the running command by typing
 <kbd>Ctrl</kbd>+<kbd>C</kbd>, uses <kbd>↑</kbd> to repeat the command,
 and edits it to read:
 
-~~~
+```
 for datafile in NENE*A.txt NENE*B.txt; do echo $datafile;
 bash goostats.sh $datafile stats-$datafile; done
-~~~
+```
 
 ::::{admonition} Beginning and End
 :class: note
@@ -768,14 +768,14 @@ get a list of the last few hundred commands that have been executed, and
 then to use `!123` (where '123' is replaced by the command number) to 
 repeat one of those commands. For example, if Nelle types this:
 
-~~~
+```
 history | tail -n 5
    456  ls -l NENE0*.txt
    457  rm stats-NENE01729B.txt.txt
    458  bash goostats.sh NENE01729B.txt stats-NENE01729B.txt
    459  ls -l NENE0*.txt
    460  history
-~~~
+```
 
 then she can re-run `goostats.sh` on `NENE01729B.txt` simply by typing
 `!458`.
@@ -790,31 +790,31 @@ is to `echo` the commands it would run instead of actually running them.
 - Suppose we want to preview the commands the following loop will execute
 without actually running those commands:
 
-~~~
+```
 for datafile in *.pdb
 > do
 >   cat $datafile >> all.pdb
 > done
-~~~
+```
 
 - What is the difference between the two loops below, and which one would we
 want to run?
 
-~~~
+```
 # Version 1
 for datafile in *.pdb
 > do
 >   echo cat $datafile >> all.pdb
 > done
-~~~
+```
 
-~~~
+```
 # Version 2
 for datafile in *.pdb
 > do
 >   echo "cat $datafile >> all.pdb"
 > done
-~~~
+```
 
 :::{dropdown} Solution
 - The second version is the one we want to run.
@@ -839,7 +839,7 @@ proper directory and open `all.pdb` file to view its contents.
 some experiments measuring reaction rate constants with different compounds 
 *and* different temperatures.  What would be the result of the following code:
 
-~~~
+```
 for species in cubane ethane methane
 > do
 >    for temperature in 25 30 37 40
@@ -847,7 +847,7 @@ for species in cubane ethane methane
 >       mkdir $species-$temperature
 >     done
 > done
-~~~
+```
 
 :::{dropdown} Solution
 - We have a nested loop, i.e. contained within another loop, so for each species
@@ -866,20 +866,20 @@ temperatures, and creates a new directory for each combination.
 - Let's start by going back to `~/shell-lesson-data/exercise-data/proteins$` and creating a new file, 
 `middle.sh` which will become our shell script:
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/proteins
 nano middle.sh
 cat middle.sh
-~~~
+```
 
 - Add the following line to `middle.sh` and save:
   - `head -n 15 octane.pdb | tail -n 5`
 - Once we have saved the file, we can ask the shell to execute the commands it contains.
 Our shell is called `bash`, so we run the following command:
 
-~~~
+```
 bash middle.sh
-~~~
+```
 
 :::{image} fig/09-scripting-linux/script-middle.png
 :alt: First simple script
@@ -912,12 +912,12 @@ and make it more versatile:
     - Wrap `$1` inside double quotes: `"$1"`. 
   - `$1` means 'the first filename (or other argument) on the command line'.
 
-~~~
+```
 nano middle.sh
 cat middle.sh
 bash middle.sh octane.pdb
 bash middle.sh pentane.pdb
-~~~
+```
 {: .language-bash}
 
 :::{image} fig/09-scripting-linux/script-arguments.png
@@ -935,18 +935,18 @@ provide will be accessible via the special variables `$1`, `$2`, `$3`,
 which refer to the first, second, third command-line arguments, respectively.
 - Edit `middle.sh` and replace `15` with `"$2"` and `5` with `"$3"`
 
-~~~
+```
 nano middle.sh
 cat middle.sh
 bash middle.sh pentane.pdb 15 5
-~~~
+```
 
 - By changing the arguments to our command we can change our script's
 behaviour:
 
-~~~
+```
 bash middle.sh pentane.pdb 20 5
-~~~
+```
 {: .language-bash}
 
 - This works, but it may take the next person who reads `middle.sh` a moment to 
@@ -960,9 +960,9 @@ For example, if we want to sort our `.pdb` files by length, we would type
 the following command because `wc -l` lists the number of lines in the files 
 and `sort -n` sorts things numerically.
 
-~~~
+```
 wc -l *.pdb | sort -n
-~~~
+```
 
 - We could put this in a file, but then it would only ever sort a list of `.pdb` files 
 in the current directory. If we want to be able to get a sorted list of other kinds of files,
@@ -976,41 +976,41 @@ containing spaces (`"$@"` is special syntax and is equivalent to `"$1"` `"$2"` .
 the following contents:
 
 
-~~~
+```
 # Sort files by their length.
 # Usage: bash sorted.sh one_or_more_filenames
 wc -l "$@" | sort -n
-~~~
+```
 
 - Observe the following commands:
 
-~~~
+```
 cd ~/shell-lesson-data/exercise-data/proteins
 nano sorted.sh
 cat sorted.sh
 bash sorted.sh *.pdb ../creatures/*.dat
-~~~
+```
 {: .language-bash}
 
 - To turn your script into an `executable file` (run without `bash` command), the 
 following line must be at the top of your script:
-~~~
+```
 #!/bin/bash
-~~~
+```
 
 - and your script file must have executable permission:
 
-~~~
+```
 chmod 755 sorted.sh
 ./sorted.sh
-~~~
+```
 
 ::::{admonition} Challenge: list unique species
 :class: note
 
 - Leah has several hundred data files, each of which is formatted like this:
 
-~~~
+```
 2013-11-05,deer,5
 2013-11-05,rabbit,22
 2013-11-05,raccoon,7
@@ -1019,7 +1019,7 @@ chmod 755 sorted.sh
 2013-11-06,fox,1
 2013-11-07,rabbit,18
 2013-11-07,bear,1
-~~~
+```
 
 - An example of this type of file is given in 
 `shell-lesson-data/exercise-data/animal-counts/animals.csv`.
@@ -1032,7 +1032,7 @@ filenames as command-line arguments, and uses a variation of the above command
 to print a list of the unique species appearing in each of those files separately.
 
 :::{dropdown} Solution
-~~~
+```
 #!/bin/bash
 # Script to find unique species in csv files where species is the second data field
 # This script accepts any number of file names as command line arguments
@@ -1043,7 +1043,7 @@ do
   # Extract species names
   cut -d , -f 2 $file | sort | uniq
 done
-~~~
+```
 :::
 ::::
 
@@ -1052,19 +1052,19 @@ that created a graph we'd like to use in a paper. We'd like to be able to re-cre
 graph later if we need to, so we want to save the commands in a file. 
 - Instead of typing them in again (and potentially getting them wrong) we can do this:
 
-~~~
+```
 history | tail -n 5 > redo-figure-3.sh
-~~~
+```
 
 The file `redo-figure-3.sh` now *could* contains:
 
-~~~
+```
 297 bash goostats.sh NENE01729B.txt stats-NENE01729B.txt
 298 bash goodiff.sh stats-NENE01729B.txt /data/validated/01729.txt > 01729-differences.txt
 299 cut -d ',' -f 2-3 01729-differences.txt > 01729-time-series.txt
 300 ygraph --format scatter --color bw --borders none 01729-time-series.txt figure-3.png
 301 history | tail -n 5 > redo-figure-3.sh
-~~~
+```
 
 - After a moment's work in an editor to remove the serial numbers on the commands,
 and to remove the final line where we called the `history` command, 
@@ -1087,19 +1087,19 @@ The easiest way to capture all the steps is in a script.
 
 - First we return to Nelle's project directory:
 
-~~~
+```
 cd ../../north-pacific-gyre/
-~~~
+```
 
 - then creates a file using `nano` ...
 
-~~~
+```
 nano do-stats.sh
-~~~
+```
 
 - ...which contains the following:
 
-~~~
+```
 #!/bin/bash
 # Calculate stats for data files.
 for datafile in "$@"
@@ -1107,26 +1107,26 @@ do
     echo $datafile
     bash goostats.sh $datafile stats-$datafile
 done
-~~~
+```
 
 - ... saves this in a file called `do-stats.sh` and set executable mode so that
 she can now re-do the first stage of her analysis by typing:
 
-~~~
+```
 ./do-stats.sh NENE*A.txt NENE*B.txt
-~~~
+```
 
 - She can also do the following so that the output is just the number of files processed
 rather than the names of the files that were processed.
 
-~~~
+```
 ./do-stats.sh NENE*A.txt NENE*B.txt | wc -l
-~~~
+```
 
 - One thing to note about Nelle's script is that it lets the person running it decide what 
 files to process. She could have written it as:
 
-~~~
+```
 #!/bin/bash
 # Calculate stats for Site A and Site B data files.
 for datafile in NENE*A.txt NENE*B.txt
@@ -1134,7 +1134,7 @@ do
     echo $datafile
     bash goostats.sh $datafile stats-$datafile
 done
-~~~
+```
 
 - The advantage is that this always selects the right files: 
   - she doesn't have to remember to exclude the 'Z' files.
@@ -1150,17 +1150,17 @@ if none were provided. Of course, this introduces another tradeoff between flexi
 - In the `proteins` directory, imagine you have a shell script called `script.sh` 
 containing the following commands:
 
-~~~
+```
 #!/bin/bash
 head -n $2 $1
 tail -n $3 $1
-~~~
+```
 
 While you are in the `proteins` directory, you type the following command:
 
-~~~
+```
 ./script.sh '*.pdb' 1 1
-~~~
+```
 
 Which of the following outputs would you expect to see?
 
@@ -1175,10 +1175,10 @@ Which of the following outputs would you expect to see?
 - The special variables $1, $2 and $3 represent the command line arguments given to the 
 script, such that the commands run are: 
 
-~~~
+```
 head -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
 tail -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
-~~~
+```
 
 - The shell does not expand `'*.pdb'` because it is enclosed by quote marks.
 - As such, the first argument to the script is `'*.pdb'` which gets expanded within the
@@ -1195,21 +1195,21 @@ directory and a filename extension as its arguments, and prints
 out the name of the file with the most lines in that directory 
 with that extension. For example: 
 
-~~~
+```
 ./longest.sh shell-lesson-data/data/pdb pdb
-~~~
+```
 
 would print the name of the `.pdb` file in `shell-lesson-data/data/pdb` that has
 the most lines.
 
 Feel free to test your script on another directory e.g.
-~~~
+```
 bash longest.sh shell-lesson-data/writing/data txt
-~~~
+```
 
 
 :::{dropdown} Solution
-~~~
+```
 #!/bin/bash
 # Shell script which takes two arguments:
 #    1. a directory name
@@ -1217,7 +1217,7 @@ bash longest.sh shell-lesson-data/writing/data txt
 # and prints the name of the file in that directory
 # with the most lines which matches the file extension.
 wc -l $1/*.$2 | sort -n | tail -n 2 | head -n 1
-~~~
+```
 - The first part of the pipeline, `wc -l $1/*.$2 | sort -n`, counts 
 the lines in each file and sorts them numerically (largest last). When 
 there's more than one file, `wc` also outputs a final summary line, 
@@ -1238,23 +1238,23 @@ files you may have created.
 - Explain what each of the following three scripts would do when run as 
 `bash script1.sh *.pdb`, `bash script2.sh *.pdb`, and `bash script3.sh *.pdb` respectively.
 
-~~~
+```
 # Script 1
 echo *.*
-~~~
+```
 
-~~~
+```
 # Script 2
 for filename in $1 $2 $3
 do
   cat $filename
 done
-~~~
+```
 
-~~~
+```
 # Script 3
 echo $@.pdb
-~~~
+```
 
 :::{dropdown} Solution
 In each case, the shell expands the wildcard in `*.pdb` before passing the resulting 
@@ -1266,9 +1266,9 @@ The arguments passed to the script are not actually used anywhere in the script.
 - Script 3 would print all the arguments to the script (i.e. all the `.pdb` files), 
 followed by `.pdb`. `$@` refers to *all* the arguments given to a shell script.
 
-~~~
+```
  cubane.pdb ethane.pdb methane.pdb octane.pdb pentane.pdb propane.pdb.pdb
-~~~
+```
 :::
 ::::
 
@@ -1279,27 +1279,27 @@ followed by `.pdb`. `$@` refers to *all* the arguments given to a shell script.
 - Suppose you have saved the following script in a file called 
 `do-errors.sh` in Nelle's `north-pacific-gyre/scripts` directory:
 
-~~~
+```
 # Calculate stats for data files.
 for datafile in "$@"
 do
   echo $datfile
   bash goostats.sh $datafile stats-$datafile
 done
-~~~
+```
 
 - When you run it from the `north-pacific-gyre` directory, the output
 is blank. 
 
-~~~
+```
 bash do-errors.sh NENE*A.txt NENE*B.txt
-~~~
+```
 
 - To figure out why, re-run the script using the `-x` option:
 
-~~~
+```
 bash -x do-errors.sh NENE*A.txt NENE*B.txt
-~~~
+```
 
 - What is the output showing you?
 - Which line is responsible for the error?

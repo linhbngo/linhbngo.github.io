@@ -81,9 +81,9 @@ type in the word `Terminal`.
 in classes using GitHub classroom, it is likely that you already setup your SSH keys. 
   - Run the following command
 
-~~~bash
+```bash
 cat ~/.ssh/id_rsa.pub
-~~~
+```
 
 - If you have the SSH keys, you will see the following:
 
@@ -95,18 +95,18 @@ cat ~/.ssh/id_rsa.pub
 - Launch your terminal (Windows Terminal or Mac) and run the following command: 
 - Hit `Enter` for all questions. **Do not enter a password or change the default location of the files**. 
 
-~~~bash
+```bash
 cd
 ssh-keygen -t rsa
-~~~
+```
 
 {% include figure.liquid path="fig/cloudlab/03.png" alt="Generate SSH keys" %}
 
 - Run the following command to display the public key
 
-~~~bash
+```bash
 cat ~/.ssh/id_rsa.pub
-~~~
+```
 
 {% include figure.liquid path="fig/cloudlab/04.png" alt="Public key generated" %}
 

@@ -14,10 +14,6 @@ toc:
   - name: Goals of memory virtualization
 ---
 
-# Memory virtualization
-
----
-
 ## In the beginning ...
 
 - Users didn't expect much. 
@@ -32,11 +28,9 @@ toc:
 
 {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/01.png" width="50%" zoomable=true %}
 
-
-
 {% enddetails %}
-{% details Multiprogramming and time sharing %}
 
+{% details Multiprogramming and time sharing %}
 
 - Demands for
     - Utilization
@@ -50,7 +44,7 @@ toc:
 
 
 {% enddetails %}
----
+
 
 ## Multiprogramming and time sharing
 
@@ -76,7 +70,6 @@ mechanism.
 {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/02.png" width="50%" zoomable=true %}
 
 {% enddetails %}
----
 
 ## Address space
 
@@ -106,8 +99,6 @@ mechanism.
     {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/04.png" width="50%" zoomable=true %}
     *Image taken from [Geeksforgeeks](https://www.geeksforgeeks.org/memory-layout-of-c-program/)*
 </div>
-
----
  
 
 ## Hands on: Where the stack grows?
@@ -116,39 +107,38 @@ mechanism.
 
 {% details stacktest.c %}
 
-
-~~~c
+```c
 // user/stacktest.c
 #include "kernel/types.h"
 #include "user/user.h"
 
 void f2() {
-int a = 5, b = 6;
-printf("In f2: &a = 0x%lx, &b = 0x%lx\n", (uint64)&a, (uint64)&b);
+  int a = 5, b = 6;
+  printf("In f2: &a = 0x%lx, &b = 0x%lx\n", (uint64)&a, (uint64)&b);
 }
 
 void f1() {
-int x = 3, y = 4;
-int arr[5];
-printf("In f1: &x = 0x%lx, &y = 0x%lx\n", (uint64)&x, (uint64)&y);
-printf("Address of arr       = 0x%lx\n", (uint64)arr);
-printf("Address of arr[0]    = 0x%lx\n", (uint64)&arr[0]);
-printf("Address of arr[1]    = 0x%lx\n", (uint64)&arr[1]);  f2();
+  int x = 3, y = 4;
+  int arr[5];
+  printf("In f1: &x = 0x%lx, &y = 0x%lx\n", (uint64)&x, (uint64)&y);
+  printf("Address of arr       = 0x%lx\n", (uint64)arr);
+  printf("Address of arr[0]    = 0x%lx\n", (uint64)&arr[0]);
+  printf("Address of arr[1]    = 0x%lx\n", (uint64)&arr[1]);  f2();
 }
 
 int main() {
-int m = 1, n = 2;
-printf("In main: &m = 0x%lx, &n = 0x%lx\n", (uint64)&m, (uint64)&n);
-f1();
-exit(0);
+  int m = 1, n = 2;
+  printf("In main: &m = 0x%lx, &n = 0x%lx\n", (uint64)&m, (uint64)&n);
+  f1();
+  exit(0);
 }
 
-~~~
+```
 
 {% enddetails %}
 - Run `stacktest`. 
 
-~~~bash
+```bash
 stacktest
 
 {% details Observe and discuss output %}
@@ -167,7 +157,7 @@ stacktest
 {% details arraytest.c %}
 
 
-~~~c
+```c
 // user/arraytest.c
 #include "kernel/types.h"
 #include "user/user.h"
@@ -185,14 +175,14 @@ printf("[Heap]   h2          = 0x%016lx\n", (uint64)h2);
 printf("[Heap]   h3          = 0x%016lx\n", (uint64)h3);
 exit(0);
 }
-~~~
+```
 
 {% enddetails %}
 - Run `arraytest`. 
 
-~~~bash
+```bash
 arraytest
-~~~
+```
 
 {% details Observe and discuss output %}
 
@@ -249,7 +239,6 @@ retval = setup_arg_pages(bprm, randomize_stack_top(STACK_TOP), executable_stack)
 
 {% enddetails %}
 {% enddetails %}
----
 
 ## What is address space, really?
 
@@ -258,8 +247,6 @@ running program.
 - How can the OS build this abstraction of a private, potentially large 
 address space for multiple running processes on top of a single physical memory?
   - This is called **memory virtualization**.
-
----
 
 ## Goals of memory virtualization
 

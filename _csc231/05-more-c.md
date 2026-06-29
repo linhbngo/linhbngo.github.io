@@ -47,11 +47,11 @@ address in hex format. See [Other Output Conversions](https://www.gnu.org/softwa
 details.
 - Compile and run `pointer-1.c`
 
-~~~
+```
 ls
 gcc -o pointer-1 pointer-1.c
 ./pointer-1
-~~~
+```
 
 :::{image} fig/02-c/08.png
 :alt: Compile and run pointer-1.c

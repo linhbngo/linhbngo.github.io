@@ -99,11 +99,11 @@ evaluation purposes
 - Inside `csc466`, create a directory named `intro-mpi`
 - Change into `intro-mpi`
 
-~~~bash
+```bash
 cd
 mkdir intro-mpi
 cd intro-mpi
-~~~
+```
 
 - Inside `intro-mpi`, create a file named `first.c` with the following
 contents
@@ -112,12 +112,12 @@ contents
 
 - Compile and run `first.c`:
 
-~~~bash
+```bash
 mpicc -o first first.c
 mpirun -np 1 ./first
 mpirun -np 2 ./first
 mpirun -np 4 ./first
-~~~
+```
 
 
 {% enddetails %}
@@ -172,12 +172,12 @@ contents
 
 - Compile and run `hello.c`:
 
-~~~bash
+```bash
 mpicc -o hello hello.c
 mpirun -np 1 ./hello
 mpirun -np 2 ./hello
 mpirun -np 4 ./hello
-~~~
+```
 
 {% enddetails %}
 {% details evenodd.c %}
@@ -192,12 +192,12 @@ contents
 
 - Compile and run `evenodd.c`:
 
-~~~bash
+```bash
 mpicc -o evenodd evenodd.c
 mpirun -np 1 ./evenodd
 mpirun -np 2 ./evenodd
 mpirun -np 4 ./evenodd
-~~~
+```
 
 {% enddetails %}
 {% details rank_size.c %}
@@ -212,11 +212,11 @@ contents
 
 - Compile and run `rank_size.c`:
 
-~~~bash
+```bash
 mpicc -o rank_size rank_size.c
 mpirun -np 1 ./rank_size
 mpirun -np 2 ./rank_size
 mpirun -np 4 ./rank_size
-~~~
+```
 
 {% enddetails %}

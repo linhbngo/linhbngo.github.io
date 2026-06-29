@@ -82,7 +82,7 @@ protection of its memory and its filesystem.
 
 
 {% enddetails %}
-~~~bash
+```bash
 
 id
 which id
@@ -93,26 +93,26 @@ sudo chown root myid
 sudo chmod 4755 myid
 ./myid
 
-~~~
+```
 
 - We want to use `cat` to view `/etc/shadow` as a normal user. 
 
-~~~bash
+```bash
 
 cat /etc/shadow
 
-~~~
+```
 
 - Standard execution is not possible. We need more privileges
 
-~~~bash
+```bash
 
 cp $(which cat) ./mycat
 sudo chown root mycat
 sudo chmod 4755 mycat
 ./mycat /etc/shadow 
 
-~~~
+```
 
 - `cp $(which cat) ./mycat`: Create a copy of `cat` called `mycat`
 - `sudo chown root mycat`: Set the owner of `mycat` to be `root`
@@ -150,35 +150,35 @@ to create this file with the following content:
   - `This is quality content!`
 - A normal user cannot attempt to edit this file. 
 
-~~~bash
+```bash
 
 ls -l /etc/zzz
 cat /etc/zzz
 echo 'insert bad data' >> /etc/zzz
 
-~~~
+```
 
 - Make a copy of a file `cap_leak.c` into `seed` directory. 
 
-~~~bash
+```bash
 
 gcc -w -o cap_leak /local/repository/setup_scripts/software/setuid/cap_leak.c
 sudo chown root cap_leak
 sudo chmod 4755 cap_leak
 ls -l cap_leak
 
-~~~
+```
 
 - How about now?
 
-~~~bash
+```bash
 
 ./cap_leak
 echo 'insert bad data' >&3
 exit
 cat /etc/zzz
 
-~~~
+```
 
 
 {% details Hands-on: Questions ... %}
@@ -207,37 +207,37 @@ cat /etc/zzz
 - [What does system() do?](http://man7.org/linux/man-pages/man3/system.3.html)
 - Switch shell (**CAREFUL!!!**)
 
-~~~bash
+```bash
 
 ls -l /bin/sh
 sudo rm /bin/sh
 sudo ln -s /bin/zsh /bin/sh
 ls -l /bin/sh
 
-~~~
+```
 
 - Make a copy of a file `catall.c` into `seed` directory. 
 
-~~~bash
+```bash
 
 gcc -w -o catall /local/repository/setup_scripts/software/setuid/catall.c
 sudo chown root catall
 sudo chmod 4755 catall
 ls -l catall
 
-~~~
+```
 
 - Normal operation
   - `cat` cannot access `/etc/shadow`
   - But `cat` called from `catall` with elevated 
   privilege can access `/etc/shadow`
 
-~~~bash
+```bash
 
 cat /etc/shadow
 ./catall /etc/shadow
 
-~~~
+```
 
 - Bad stuff!!!
   - What just happened?
@@ -251,14 +251,14 @@ and uncomment line 23.
   - [execve](https://man7.org/linux/man-pages/man2/execve.2.html)
 - Very carefully, switch `/bin/sh` back to `/bin/dash`
 
-~~~bash
+```bash
 
 ls -l /bin/sh
 sudo rm /bin/sh
 sudo ln -s /bin/dash /bin/sh
 ls -l /bin/sh
 
-~~~
+```
 
 - [Dash bug](https://bugs.launchpad.net/ubuntu/+source/dash/+bug/1215660)
 - [Bash correction](https://unix.stackexchange.com/questions/451048/from-which-version-does-bash-drop-privileges)

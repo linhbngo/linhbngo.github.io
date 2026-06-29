@@ -53,26 +53,26 @@ Link to workshop page: [https://cs.wcupa.edu/LNGO/courses/workshops/intro-python
 Python notebook. 
 - Run the followings inside a cell to download and unzip the data for this workshop. 
 
-~~~bash
+```bash
 !wget https://swcarpentry.github.io/python-novice-inflammation/data/python-novice-inflammation-data.zip
 !wget https://swcarpentry.github.io/python-novice-inflammation/files/code/python-novice-inflammation-code.zip
 !unzip python-novice-inflammation-data.zip
 !unzip python-novice-inflammation-code.zip
 !ls data/
 !ls code/ 
-~~~
+```
 
 - Run the following command inside a cell to find out **where you are**
 
-~~~bash
+```bash
 !pwd
-~~~
+```
 
 - Run the following to confirm that **the data is located where you are**
 
-~~~bash
+```bash
 !ls -lh /content
-~~~
+```
 
 
 {% enddetails %}
@@ -351,17 +351,17 @@ distance = 10.5
 
 {% details success Solution %}
 
-~~~python
+```python
 print(type(planet))
 print(type(apples))
 print(type(distance))
-~~~
+```
 
-~~~output
+```output
 <class 'str'>
 <class 'int'>
 <class 'float'>
-~~~
+```
 
 {% enddetails %}
 {% enddetails %}
@@ -451,9 +451,9 @@ In general, you should use this library when you want to do fancy things with lo
 especially if you have matrices or arrays. To tell Python that we'd like to start using NumPy,
 we need to **import** it:
 
-~~~python
+```python
 import numpy
-~~~
+```
 
 Importing a library is like getting a piece of lab equipment out of a storage locker and setting it
 up on the bench. Libraries provide additional functionality to the basic Python package, much like

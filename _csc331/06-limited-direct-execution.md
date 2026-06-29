@@ -10,9 +10,7 @@ toc:
   - name: "Problem: switching processes"
 ---
 
-# Limited Direct Execution
 
----
 
 ## CPU virtualization recall
 
@@ -54,7 +52,6 @@ How to **efficiently** virtualize the CPU with **control**?
 instructions in main(), thus defeating the purposes of time-sharing.
 
 {% enddetails %}
----
 
 ## Problem: working with restricted operations
 
@@ -166,21 +163,21 @@ the privileged operation, and then switch back.
 
 - Edit `usertrap()` in `kernel/trap.c`. 
 
-~~~c
+```c
 if (r_scause() == 8) {
     printf("usertrap: syscall from pid %d, syscall number = %ld\n", p->pid, p->trapframe->a7);
     ...
 }
-~~~
+```
 
 - Edit syscall() in kernel/syscall.c:
 
-~~~c
+```c
 if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     printf("syscall(): number = %d, a0 = %ld, a1 = %ld, a2 = %ld\n", num, p->trapframe->a0, p->trapframe->a1, p->trapframe->a2);
     ...
 }
-~~~
+```
 
 - Rebuild and run xv6.
 
@@ -190,7 +187,6 @@ if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
 
 {% enddetails %}
 {% enddetails %}
----
 
 ## Problem: switching processes
 

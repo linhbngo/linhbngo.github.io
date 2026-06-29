@@ -182,12 +182,12 @@ into this directory.
 - Run the following commands 
 *It is capital o, not number 0*
 
-~~~bash
+```bash
 $ gcc -Og -S mstore.c
 $ cat mstore.s
 $ gcc -Og -c mstore.c
 $ objdump -d mstore.o
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/04-machine/05.png" width="50%" zoomable=true alt="Assembly code" %}
 
@@ -364,10 +364,10 @@ through `%rsp`. Eight new registered were added: `%r8` through `%r15`.
 
 - Run the following commands 
 
-~~~bash
+```bash
 $ gcc -Og -c swap.c
 $ objdump -d swap.o
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/04-machine/07.png" width="50%" zoomable=true alt="swapping via single-valued pointers" %}
 
@@ -390,10 +390,10 @@ $ objdump -d swap.o
 
 - Run the following commands 
 
-~~~
+```
 $ gcc -Og -c swap_dsp.c
 $ objdump -d swap_dsp.o
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/04-machine/08.png" width="50%" zoomable=true alt="swapping position in an array via pointers" %}
 
@@ -446,10 +446,10 @@ $ objdump -d swap_dsp.o
 
 - Run the following commands 
 
-~~~
+```
 $ gcc -Og -c m12.c
 $ objdump -d m12.o
-~~~
+```
 
 {% include figure.liquid path="assets/img/courses/csc231/04-machine/09.png" width="50%" zoomable=true alt="demonstrating load effective address" %}
 
@@ -512,10 +512,10 @@ $ objdump -d m12.o
 
 - Run the following commands 
 
-~~~bash
+```bash
 $ gcc -Og -c scale.c
 $ objdump -d scale.o
-~~~
+```
 
 
 {% include figure.liquid path="assets/img/courses/csc231/04-machine/10.png" width="50%" zoomable=true alt="Scale.c" %}
@@ -546,10 +546,10 @@ $ objdump -d scale.o
 
 - Run the following commands 
 
-~~~
+```
 $ gcc -Og -c arith.c
 $ objdump -d arith.o
-~~~
+```
 
 
 - Understand how the Assembly code represents the actual arithmetic operation in the C code. 
@@ -648,10 +648,10 @@ $ objdump -d arith.o
 
 - Run the following commands 
 
-~~~
+```
 $ gcc -Og -c jump.c
 $ objdump -d jump.o
-~~~
+```
 
 - Understand how the Assembly code enables jump across instructions to support conditional workflow. 
 
@@ -673,10 +673,10 @@ $ objdump -d jump.o
 
 - Run the following commands 
 
-~~~
+```
 $ gcc -Og -c factorial.c
 $ objdump -d factorial.o
-~~~
+```
 
 - Understand how the Assembly code enables jump across instructions to support loop. 
 
@@ -806,10 +806,10 @@ stack pointer (`$rsp`).
 
 - Compile with `-g` flag and run `gdb` on the resulting executable.  
 
-~~~
+```
 $ gcc -g -o mult mult.c
 $ gdb mult
-~~~
+```
 
 
 - Setup gdb with a breakpoint at `main` and start running. 

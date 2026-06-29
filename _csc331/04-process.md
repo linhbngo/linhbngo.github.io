@@ -14,15 +14,12 @@ toc:
   - name: The Shell
   - name: Other system calls ...
 ---
-# Abstraction: Process and Process API
-
----
 
 ## Program and process
 
 {% details What is a program? %}
 
-- A program is a static list of intsructions and data.
+- A program is a static list of instructions and data.
 - When a program runs, the OS takes this list and asks the CPU to execute them. 
 - If we only have one CPU, how can we run more than one program at a time. 
 
@@ -142,7 +139,7 @@ make
 - [Documentation for fork()](https://www.man7.org/linux/man-pages/man2/fork.2.html)    
 - Some important points:
 - fork() creates a new process by duplicating the calling process. 
-The new process is referred to as the child process.  The calling proces
+The new process is referred to as the child process.  The calling process
 is referred to as the parent process.
 - The child process and the parent process run in separate memory
 spaces.  **At the time of fork() both memory spaces have the same 
@@ -173,8 +170,7 @@ for the following points:
 
 - Line 5-6: No idea why the author sets up the source code that way ...
 - Line 8: prints out hello world and the process identifier (pid) of the current process.
-- Line 9: calls `fork()`, which initiate the creation of a new process. The return of this fuction 
-call is assigned to variable `rc`. 
+- Line 9: calls `fork()`, which initiate the creation of a new process. The return of this function call is assigned to variable `rc`. 
 - Line 10: If `rc` is negative, the function call failed and the program exits with return value 1. 
 This line is evaluated within the parent process (since the child process creation failed).
 - Line 14: If `rc` is non-negative
@@ -270,8 +266,8 @@ This line is evaluated within the parent process (since the child process creati
 - Line 1-5: Pay attention to the libraries included. 
 - Line 7-8: `main`
 - Line 10: prints out hello world and the process identifier (pid) of the current process.
-- Line 11: calls `fork()`, which initiate the creation of a new process. The return of this fuction 
-call is assigned to variable `rc`. 
+- Line 11: calls `fork()`, which initiate the creation of a new process. The return of this function 
+call is assigned to variable `rc`.
 - Line 12: If `rc` is negative, the function call failed and the program exits with return value 1. 
 This line is evaluated within the parent process (since the child process creation failed).
 - Line 16: If `rc` is equal to `0`.
@@ -289,9 +285,9 @@ out when `exec` replaces the current child process with the new process for `wc`
 {% enddetails %}
 - Run p3.
 
-~~~bash
+```bash
 ./p3
-~~~
+```
 
 - What is not being printed? Why?
 
