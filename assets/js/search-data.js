@@ -135,7 +135,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-ankle-weight-for-the-mind-migration-to-lazyvim",
+            },{id: "post-just-do-it",
+        
+          title: "Just Do It",
+        
+        description: "Close your eyes and take the first step.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/just-do-it/";
+          
+        },
+      },{id: "post-ankle-weight-for-the-mind-migration-to-lazyvim",
         
           title: "Ankle Weight for the Mind: Migration to Lazyvim",
         

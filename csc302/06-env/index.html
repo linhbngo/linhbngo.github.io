@@ -4,7 +4,7 @@
       {
             "title": "Environmen Variables",
             "description": "",
-            "published": "June 28, 2026",
+            "published": "June 29, 2026",
             "authors": [
               
             ],
@@ -189,199 +189,6 @@ strings /proc/<span class="nv">$$</span>/environ | <span class="nb">grep </span>
 73
 74
 75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
 </pre></td> <td class="rouge-code"><pre>
 ## Attack surface caused by environment variables
 
@@ -451,205 +258,159 @@ program and links the code to the program (think import in Java).
   - Requires a lot of memory
   - Compiled external functions are static and cannot be updated/patched
 
-~~~bash
+```bash
 
 gcc -o my_envp my_envp.c
 gcc -static -o my_envp_static my_envp.c
 ls -lh my_envp*
 
-~~~
-
-- Linking can be done on the fly
-  - External functions are linked at run time, called `shared libraries`.
-  - `.so` on Unix system, `.dll` on Windows system
-   - `ldd` can be used to see what shared libraries a program depends on. 
-
-~~~bash
-
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Linking can be done on the fly <ul> <li>External functions are linked at run time, called <code class="language-plaintext highlighter-rouge">shared libraries</code>.</li> <li> <code class="language-plaintext highlighter-rouge">.so</code> on Unix system, <code class="language-plaintext highlighter-rouge">.dll</code> on Windows system</li> <li> <code class="language-plaintext highlighter-rouge">ldd</code> can be used to see what shared libraries a program depends on.</li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>
 ldd my_envp_static
 ldd my_envp
 
-~~~
-
-
-
-- Part of what is being executed is undecided during compilation time, when 
-the developer has full control.
-- Instead, the binaries rely on linked libraries, which are determined during 
-runtime, under users' control.
-- Examples: **LD_PRELOAD** and **LD_LIBRARY_PATH**
-  - During the linking stage, the Linux system search for library 
-  functions from default locations.
-  - These locations are determined via **LD_PRELOAD** and **LD_LIBRARY_PATH**
-
-~~~bash
-
-echo $LD_PRELOAD
-echo $LD_LIBRARY_PATH
-cp /local/repository/setup_scripts/software/env/linking.c .
-gcc -o linking linking.c
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Part of what is being executed is undecided during compilation time, when the developer has full control.</li> <li>Instead, the binaries rely on linked libraries, which are determined during runtime, under users’ control.</li> <li>Examples: <strong>LD_PRELOAD</strong> and <strong>LD_LIBRARY_PATH</strong> <ul> <li>During the linking stage, the Linux system search for library functions from default locations.</li> <li>These locations are determined via <strong>LD_PRELOAD</strong> and <strong>LD_LIBRARY_PATH</strong> </li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td> <td class="rouge-code"><pre>
+<span class="nb">echo</span> <span class="nv">$LD_PRELOAD</span>
+<span class="nb">echo</span> <span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">cp</span> /local/repository/setup_scripts/software/env/linking.c <span class="nb">.</span>
+gcc <span class="nt">-o</span> linking linking.c
 ./linking
-cp /local/repository/setup_scripts/software/env/sleep.c .
-gcc -c sleep.c
-gcc -shared -o libmylib.so.1.0.1 sleep.o
-export LD_PRELOAD=./libmylib.so.1.0.1
-echo $LD_PRELOAD
+<span class="nb">cp</span> /local/repository/setup_scripts/software/env/sleep.c <span class="nb">.</span>
+gcc <span class="nt">-c</span> sleep.c
+gcc <span class="nt">-shared</span> <span class="nt">-o</span> libmylib.so.1.0.1 sleep.o
+<span class="nb">export </span><span class="nv">LD_PRELOAD</span><span class="o">=</span>./libmylib.so.1.0.1
+<span class="nb">echo</span> <span class="nv">$LD_PRELOAD</span>
 ./linking
-export LD_PRELOAD=""
+<span class="nb">export </span><span class="nv">LD_PRELOAD</span><span class="o">=</span><span class="s2">""</span>
 ./linking
 
-~~~
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Linux system libraries, <code class="language-plaintext highlighter-rouge">ld.so</code> or <code class="language-plaintext highlighter-rouge">ld-linux.so</code>, implement a countermeasure, which ignores <strong>LD_PRELOAD</strong> and <strong>LD_LIBRARY_PATH</strong> when there is a difference in a process’ real and effective user IDs or group IDs.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> <td class="rouge-code"><pre>
+<span class="nb">cp</span> <span class="si">$(</span>which <span class="nb">env</span><span class="si">)</span> myenv
+<span class="nb">export </span><span class="nv">LD_PRELOAD</span><span class="o">=</span>./libmylib.so.1.0.1
+<span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nb">.</span>
+<span class="nb">export </span><span class="nv">LD_MYOWN</span><span class="o">=</span><span class="s2">"my own EV"</span>
+<span class="nb">env
+env</span> | <span class="nb">grep </span>LD_
+myenv | <span class="nb">grep </span>LD_
+<span class="nb">sudo chown </span>root myenv
+<span class="nb">sudo chmod </span>4755 myenv
+myenv | <span class="nb">grep </span>LD_
 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">PATH</code> environment variable</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>
+<span class="nb">echo</span> <span class="nv">$PATH</span>
 
-
-- Linux system libraries, `ld.so` or `ld-linux.so`, implement a countermeasure, which 
-ignores **LD_PRELOAD** and **LD_LIBRARY_PATH** when there is a difference in a process' real 
-and effective user IDs or group IDs.
-
-~~~bash
-
-cp $(which env) myenv
-export LD_PRELOAD=./libmylib.so.1.0.1
-export LD_LIBRARY_PATH=.
-export LD_MYOWN="my own EV"
-env
-env | grep LD_
-myenv | grep LD_
-sudo chown root myenv
-sudo chmod 4755 myenv
-myenv | grep LD_
-
-~~~
-
-
-
-
-- `PATH` environment variable
-
-~~~bash
-
-echo $PATH
-
-~~~
-
-- Many system commands are placed in `/usr/bin` or `/bin`, which are 
-mapped in `PATH`
-
-~~~bash
-
-cp /local/repository/setup_scripts/software/env/vul.c .
-gcc -o vul vul.c
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Many system commands are placed in <code class="language-plaintext highlighter-rouge">/usr/bin</code> or <code class="language-plaintext highlighter-rouge">/bin</code>, which are mapped in <code class="language-plaintext highlighter-rouge">PATH</code> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre>
+<span class="nb">cp</span> /local/repository/setup_scripts/software/env/vul.c <span class="nb">.</span>
+gcc <span class="nt">-o</span> vul vul.c
 ./vul
-cp /local/repository/setup_scripts/software/env/cal.c .
-gcc -o cal cal.c
-sudo chown root vul
-sudo chmod 4755 vul
-export PATH=.:$PATH
+<span class="nb">cp</span> /local/repository/setup_scripts/software/env/cal.c <span class="nb">.</span>
+gcc <span class="nt">-o</span> cal cal.c
+<span class="nb">sudo chown </span>root vul
+<span class="nb">sudo chmod </span>4755 vul
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>.:<span class="nv">$PATH</span>
 vul
-$ id
-$ exit
+<span class="nv">$ </span><span class="nb">id</span>
+<span class="nv">$ </span><span class="nb">exit</span>
 
-~~~
-
-- Open a new terminator shell to reset `PATH` to default. 
-- What happens when you switch the order of the new `PATH` 
-export for the previous exercise?
-- Why?
-
-~~~bash
-
-cp /local/repository/setup_scripts/software/env/vul.c .
-gcc -o vul vul.c
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Open a new terminator shell to reset <code class="language-plaintext highlighter-rouge">PATH</code> to default.</li> <li>What happens when you switch the order of the new <code class="language-plaintext highlighter-rouge">PATH</code> export for the previous exercise?</li> <li>Why?</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> <td class="rouge-code"><pre>
+<span class="nb">cp</span> /local/repository/setup_scripts/software/env/vul.c <span class="nb">.</span>
+gcc <span class="nt">-o</span> vul vul.c
 ./vul
-cp /local/repository/setup_scripts/software/env/cal.c .
-gcc -o cal cal.c
-sudo chown root vul
-sudo chmod 4755 vul
-export PATH=$PATH:.
+<span class="nb">cp</span> /local/repository/setup_scripts/software/env/cal.c <span class="nb">.</span>
+gcc <span class="nt">-o</span> cal cal.c
+<span class="nb">sudo chown </span>root vul
+<span class="nb">sudo chmod </span>4755 vul
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:.
 vul
-$ id
-$ exit
+<span class="nv">$ </span><span class="nb">id</span>
+<span class="nv">$ </span><span class="nb">exit</span>
 
-~~~
-
-
-
-
-- Happens when application uses environment variables, 
-which can be manipulated. 
-
-
-~~~bash
-
-cp /local/repository/setup_scripts/software/env/pwd.c .
-echo $PWD
-gcc -o pwd pwd.c
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Happens when application uses environment variables, which can be manipulated.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre>
+<span class="nb">cp</span> /local/repository/setup_scripts/software/env/pwd.c <span class="nb">.</span>
+<span class="nb">echo</span> <span class="nv">$PWD</span>
+gcc <span class="nt">-o</span> <span class="nb">pwd </span>pwd.c
 ./pwd
-cd /tmp
+<span class="nb">cd</span> /tmp
 ~/pwd
-PWD=randomdir
+<span class="nv">PWD</span><span class="o">=</span>randomdir
 ~/pwd
 
-~~~
-
-
-
-
-
-
-
-
-&lt;figure
-  
-&gt;
-  &lt;picture&gt;
-    &lt;!-- Auto scaling with imagemagick --&gt;
-    &lt;!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc302/env/service_based-480.webp 480w,/assets/img/courses/csc302/env/service_based-800.webp 800w,/assets/img/courses/csc302/env/service_based-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
-    &lt;img
-      src="/assets/img/courses/csc302/env/service_based.png"
-      
-      
-        width="50%"
-      
-      
-        height="auto"
-      
-      
-      
-        alt="Service-based approach"
-      
-      
-      
-        data-zoomable
-      
-      
-        loading="lazy"
-      
-      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
-    &gt;
-  &lt;/picture&gt;
-
-  
-&lt;/figure&gt;
-
-
-</pre></td> </tr></tbody></table></code></pre></div></div> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/env/service_based-480.webp 480w,/assets/img/courses/csc302/env/service_based-800.webp 800w,/assets/img/courses/csc302/env/service_based-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/env/service_based.png" width="50%" height="auto" alt="Service-based approach" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>```</p> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>

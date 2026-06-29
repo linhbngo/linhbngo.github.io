@@ -4,7 +4,7 @@
       {
             "title": "Code optimization",
             "description": "",
-            "published": "June 28, 2026",
+            "published": "June 29, 2026",
             "authors": [
               
             ],
@@ -62,144 +62,6 @@
 36
 37
 38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
 </pre></td> <td class="rouge-code"><pre>
 
 ## Debugging
@@ -235,148 +97,18 @@
 - Compile and run the following `bad_fib.c` program:
 - `fib(1)` returns an incorrect result. Why?
 
-~~~bash
+```bash
 $ gcc -o bad_fib bad_fib.c
 $ ./bad_fib
-~~~
- 
-::::
-::::{tab-item} Scientific debugging
-
-- Before debugging, you need to construct a hypothesis as to the defect.
-  - Propose a possible defect and why it explains the failure conditions
-- `Ockham’s Razor`: given several hypotheses, pick the simplest/closest to current work
-
-
-
-
-
-&lt;figure
-  
-&gt;
-  &lt;picture&gt;
-    &lt;!-- Auto scaling with imagemagick --&gt;
-    &lt;!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/06-optimization/01-480.webp 480w,/assets/img/courses/csc231/06-optimization/01-800.webp 800w,/assets/img/courses/csc231/06-optimization/01-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
-    &lt;img
-      src="/assets/img/courses/csc231/06-optimization/01.png"
-      
-      
-        width="50%"
-      
-      
-        height="auto"
-      
-      
-      
-        alt="Scientific debugging"
-      
-      
-      
-        data-zoomable
-      
-      
-        loading="lazy"
-      
-      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
-    &gt;
-  &lt;/picture&gt;
-
-  
-&lt;/figure&gt;
-
-
-- Make predictions based on your hypothesis
-  - What do you expect to happen under new conditions
-  - What data could confirm or refute your hypothesis
-- How can I collect that data?
-  - What experiments?
-  - What collection mechanism?
-- Does the data refute the hypothesis?
-  - Refine the hypothesis based on the new inputs
-::::
-::::{tab-item} SD: Bad Fib!
-- Constructing a hypothesis: 
-  - `while (n 1)`: did we mess up the loop in fib?
-  - `int f`: did we forget to initialize `f`?
-- Propose a new condition or conditions
-  - What will logically happen if your hypothesis is correct?
-  - What data can be 
-  - fib(1) failed		// Hypothesis
-    - Loop check is incorrect: Change to n &gt;= 1 and run again.
-    - f is uninitialized: Change to int f = 1;
-- Experiment
-  - Only change one condition at a time. 
-  - fib(1) failed		// Hypothesis
-    - Change to `n &gt;= 1`: ???
-    - Change to `int f = 1`: Works.  Sometimes a prediction can be a fix.
-::::
-::::{tab-item} Brute force
-
-- Strict compilation flags: `-Wall`, `-Werror`. 
-- Include optimization flags (**capital letter o**): `-O3` or `-O0`. 
-
-~~~bash
-$ gcc -Wall -Werror -O3 -o bad_fib bad_fib.c
-~~~
- 
-- Use `valgrind`, memory analyzer. 
-
-~~~bash
-$ gcc -Wall -Werror -o bad_fib bad_fib.c
-$ valgrind ./bad_fib
-~~~
-::::
-::::{tab-item} Observation
-
-- What is the observed result?
-  - Factual observation, such as `Calling fib(1) will return 1.`
-  - The conclusion will interpret the observation(s)
-- Don’t interfere.
-  - Sometimes `printf()` can interfere
-  - Like quantum physics, sometimes observations are part of the experiment
-- Proceed systematically.
-  - Update the conditions incrementally so each observation relates to a specific change
-- Do NOT ever proceed past first bug.
-::::
-:::::
-
-
-
-
-- Common failures and insights
-  - Why did the code fail?
-  - What are my common defects?
-- Assertions and invariants
-  - Add checks for expected behavior
-  - Extend checks to detect the fixed failure
-- Testing
-  - Every successful set of conditions is added to the test suite
-
-
-- Not every problem needs scientific debugging
-- Set a time limit: (for example)
-  - 0 minutes – -Wall, valgrind
-  - 1 – 10 minutes – Informal Debugging
-  - 10 – 60 minutes – Scientific Debugging
-  - 60 minutes – Take a break / Ask for help
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="performance-realities">Performance realities</h2> <ul> <li>There’s more to performance than asymptotic complexity.</li> <li>Constant factors matter too! <ul> <li>Easily see 10:1 performance range depending on how code is written</li> <li>Must optimize at multiple levels: algorithm, data representations, procedures, and loops</li> </ul> </li> <li>Must understand system to optimize performance <ul> <li>How programs are compiled and executed</li> <li>How modern processors + memory systems operate</li> <li>How to measure program performance and identify bottlenecks</li> <li>How to improve performance without destroying code modularity and generality.</li> </ul> </li> <li>Create the following two files called <code class="language-plaintext highlighter-rouge">matrix_mult.c</code> and <code class="language-plaintext highlighter-rouge">block_matrix_mult.c</code> </li> </ul> <p>:::::{tab-set} ::::{tab-item} matrix_mult.c</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=matrix_mult.c"></script> <p>:::: ::::{tab-item} block_matrix_mult.c</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=block_matrix_mult.c"></script> <p>:::: :::::</p> <ul> <li>The difference between <code class="language-plaintext highlighter-rouge">matrix_mult.c</code> and <code class="language-plaintext highlighter-rouge">block_matrix_mult.c</code>lays with how the loops are broken up to align with cache size.</li> </ul> <p>:::::{tab-set} ::::{tab-item} Cache blocks</p> <ul> <li>Check the size of cache blocks</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: ::::{tab-item} Scientific debugging</p> <ul> <li>Before debugging, you need to construct a hypothesis as to the defect. <ul> <li>Propose a possible defect and why it explains the failure conditions</li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">Ockham’s Razor</code>: given several hypotheses, pick the simplest/closest to current work</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/01-480.webp 480w,/assets/img/courses/csc231/06-optimization/01-800.webp 800w,/assets/img/courses/csc231/06-optimization/01-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/01.png" width="50%" height="auto" alt="Scientific debugging" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Make predictions based on your hypothesis <ul> <li>What do you expect to happen under new conditions</li> <li>What data could confirm or refute your hypothesis</li> </ul> </li> <li>How can I collect that data? <ul> <li>What experiments?</li> <li>What collection mechanism?</li> </ul> </li> <li>Does the data refute the hypothesis? <ul> <li>Refine the hypothesis based on the new inputs :::: ::::{tab-item} SD: Bad Fib!</li> </ul> </li> <li>Constructing a hypothesis: <ul> <li> <code class="language-plaintext highlighter-rouge">while (n 1)</code>: did we mess up the loop in fib?</li> <li> <code class="language-plaintext highlighter-rouge">int f</code>: did we forget to initialize <code class="language-plaintext highlighter-rouge">f</code>?</li> </ul> </li> <li>Propose a new condition or conditions <ul> <li>What will logically happen if your hypothesis is correct?</li> <li>What data can be</li> <li>fib(1) failed // Hypothesis <ul> <li>Loop check is incorrect: Change to n &gt;= 1 and run again.</li> <li>f is uninitialized: Change to int f = 1;</li> </ul> </li> </ul> </li> <li>Experiment <ul> <li>Only change one condition at a time.</li> <li>fib(1) failed // Hypothesis <ul> <li>Change to <code class="language-plaintext highlighter-rouge">n &gt;= 1</code>: ???</li> <li>Change to <code class="language-plaintext highlighter-rouge">int f = 1</code>: Works. Sometimes a prediction can be a fix. :::: ::::{tab-item} Brute force</li> </ul> </li> </ul> </li> <li>Strict compilation flags: <code class="language-plaintext highlighter-rouge">-Wall</code>, <code class="language-plaintext highlighter-rouge">-Werror</code>.</li> <li>Include optimization flags (<strong>capital letter o</strong>): <code class="language-plaintext highlighter-rouge">-O3</code> or <code class="language-plaintext highlighter-rouge">-O0</code>.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>gcc <span class="nt">-Wall</span> <span class="nt">-Werror</span> <span class="nt">-O3</span> <span class="nt">-o</span> bad_fib bad_fib.c
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Use <code class="language-plaintext highlighter-rouge">valgrind</code>, memory analyzer.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>gcc <span class="nt">-Wall</span> <span class="nt">-Werror</span> <span class="nt">-o</span> bad_fib bad_fib.c
+<span class="nv">$ </span>valgrind ./bad_fib
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>:::: ::::{tab-item} Observation</p> <ul> <li>What is the observed result? <ul> <li>Factual observation, such as <code class="language-plaintext highlighter-rouge">Calling fib(1) will return 1.</code> </li> <li>The conclusion will interpret the observation(s)</li> </ul> </li> <li>Don’t interfere. <ul> <li>Sometimes <code class="language-plaintext highlighter-rouge">printf()</code> can interfere</li> <li>Like quantum physics, sometimes observations are part of the experiment</li> </ul> </li> <li>Proceed systematically. <ul> <li>Update the conditions incrementally so each observation relates to a specific change</li> </ul> </li> <li> <p>Do NOT ever proceed past first bug. :::: :::::</p> </li> <li>Common failures and insights <ul> <li>Why did the code fail?</li> <li>What are my common defects?</li> </ul> </li> <li>Assertions and invariants <ul> <li>Add checks for expected behavior</li> <li>Extend checks to detect the fixed failure</li> </ul> </li> <li>Testing <ul> <li>Every successful set of conditions is added to the test suite</li> </ul> </li> <li>Not every problem needs scientific debugging</li> <li>Set a time limit: (for example) <ul> <li>0 minutes – -Wall, valgrind</li> <li>1 – 10 minutes – Informal Debugging</li> <li>10 – 60 minutes – Scientific Debugging</li> <li>60 minutes – Take a break / Ask for help ```</li> </ul> </li> </ul> <h2 id="performance-realities">Performance realities</h2> <ul> <li>There’s more to performance than asymptotic complexity.</li> <li>Constant factors matter too! <ul> <li>Easily see 10:1 performance range depending on how code is written</li> <li>Must optimize at multiple levels: algorithm, data representations, procedures, and loops</li> </ul> </li> <li>Must understand system to optimize performance <ul> <li>How programs are compiled and executed</li> <li>How modern processors + memory systems operate</li> <li>How to measure program performance and identify bottlenecks</li> <li>How to improve performance without destroying code modularity and generality.</li> </ul> </li> <li>Create the following two files called <code class="language-plaintext highlighter-rouge">matrix_mult.c</code> and <code class="language-plaintext highlighter-rouge">block_matrix_mult.c</code> </li> </ul> <p>:::::{tab-set} ::::{tab-item} matrix_mult.c</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=matrix_mult.c"></script> <p>:::: ::::{tab-item} block_matrix_mult.c</p> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=block_matrix_mult.c"></script> <p>:::: :::::</p> <ul> <li>The difference between <code class="language-plaintext highlighter-rouge">matrix_mult.c</code> and <code class="language-plaintext highlighter-rouge">block_matrix_mult.c</code>lays with how the loops are broken up to align with cache size.</li> </ul> <p>:::::{tab-set} ::::{tab-item} Cache blocks</p> <ul> <li>Check the size of cache blocks</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>getconf <span class="nt">-a</span> | <span class="nb">grep </span>CACHE
 </pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/02-480.webp 480w,/assets/img/courses/csc231/06-optimization/02-800.webp 800w,/assets/img/courses/csc231/06-optimization/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/02.png" width="50%" height="auto" alt="Cache size" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>We focus on cache blocks for optimization: <ul> <li>If calculations can be performed using smaller matrices of A, B, and C (blocks) that all fit in cache, we can further minimize the amount of cache misses per calculation.</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/06-optimization/03-480.webp 480w,/assets/img/courses/csc231/06-optimization/03-800.webp 800w,/assets/img/courses/csc231/06-optimization/03-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/06-optimization/03.png" width="50%" height="auto" alt="Block division" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>3 blocks are needed (for A, B, and C).</li> <li>Each block has dimension B, so the total block size is $B^2$</li> <li>Therefore: $3B^{2} &lt; cache_size$</li> <li>Based on the information above: B = 8 (so that <code class="language-plaintext highlighter-rouge">8 * 8 = 64</code> fits in cache line).</li> <li> <p><code class="language-plaintext highlighter-rouge">3 * 8 * 8 &lt; 32768</code>. :::: ::::{tab-item} Without cache</p> </li> <li>Compile and run <code class="language-plaintext highlighter-rouge">matrix_mult.c</code>.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>

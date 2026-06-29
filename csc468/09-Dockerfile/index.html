@@ -4,7 +4,7 @@
       {
             "title": "Dockerfile",
             "description": "",
-            "published": "June 28, 2026",
+            "published": "June 29, 2026",
             "authors": [
               
             ],
@@ -84,11 +84,11 @@ docker run <span class="nt">-it</span> linhbngo/ubuntu_figlet:3.0
 - Rebuild the image with the tag `linhbngo/ubuntu_figlet:4.0`.  
 - Run the followings:
 
-~~~bash
+```bash
 docker build -t linhbngo/ubuntu_figlet:4.0 .
 docker run linhbngo/ubuntu_figlet:4.0
 docker run linhbngo/ubuntu_figlet:4.0 golden rams
-~~~
+```
 
 - Notice that the first `docker run`, without any input parameters, does not generate any text. 
 - The second `docker run` takes `golden rams` and feeds it to the figlet command specified by `ENTRYPOINT`. 
@@ -116,11 +116,11 @@ docker run linhbngo/ubuntu_figlet:4.0 golden rams
 - Rebuild the image with the tag `linhbngo/ubuntu_figlet:5.0`. 
 - Run the followings:
 
-~~~bash
+```bash
 docker build -t linhbngo/ubuntu_figlet:5.0 .
 docker run linhbngo/ubuntu_figlet:5.0
 docker run linhbngo/ubuntu_figlet:5.0 golden rams
-~~~
+```
 </pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc468/docker/image-cmd-entrypoint-480.webp 480w,/assets/img/courses/csc468/docker/image-cmd-entrypoint-800.webp 800w,/assets/img/courses/csc468/docker/image-cmd-entrypoint-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc468/docker/image-cmd-entrypoint.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -133,11 +133,11 @@ docker run linhbngo/ubuntu_figlet:5.0 golden rams
 </pre></td> <td class="rouge-code"><pre>- Caveat with `ENTRYPOINT`: `/bin/bash` does not work as expected.  
     - Need to override with `--entrypoint` flag.
 
-~~~bash
+```bash
 docker run -it linhbngo/ubuntu_figlet:5.0
 docker run -it --entrypoint bash linhbngo/ubuntu_figlet:5.0
 exit
-~~~
+```
 </pre></td> </tr></tbody></table></code></pre></div></div> </details> <hr> <h2 id="ioc-storage">IoC Storage</h2> <details class="details details--default" data-variant="default"><summary>Overview</summary> <ul> <li>Docker images are immutable (read-only)</li> <li>Docker containers are mutable, but are available only for the running duration of the containers. <ul> <li>Once containers are shutdown, to retain modifications, they need to be made immutable.</li> </ul> </li> <li>How do we reconcile new data into Docker images/containers? <ul> <li>Copy data into images during the building process</li> <li>Mount storage directory from host machines into containers at run time</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>COPY</summary> <ul> <li><code class="language-plaintext highlighter-rouge">COPY src dst</code></li> <li>Copy contents into the image prior to the installation steps.</li> <li>Need to be done prior to <code class="language-plaintext highlighter-rouge">RUN</code> statements.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Hands on: Importing and building external code using COPY</summary> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -165,10 +165,10 @@ exit
 
 - You can build an image with a specific Dockerfile
 
-~~~bash
+```bash
 docker build -t linhbngo/hello:1.0 -f Dockerfile.hello .
 docker run linhbngo/hello:1.0
-~~~
+```
 </pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc468/docker/image-docker-build-copy-480.webp 480w,/assets/img/courses/csc468/docker/image-docker-build-copy-800.webp 800w,/assets/img/courses/csc468/docker/image-docker-build-copy-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc468/docker/image-docker-build-copy.png" width="50%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <details class="details details--default" data-variant="default"><summary>Hands on: Mounting external storage to running containers</summary> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -192,19 +192,19 @@ docker run linhbngo/hello:1.0
 </pre></td> <td class="rouge-code"><pre>- Create a directory called `src` inside `myimage`.
 - Copy `hello.c` into this directory.
 
-~~~bash
+```bash
 mkdir src
 cp hello.c src/
-~~~
+```
 
 - Create the following Dockerfile called `Dockerfile.gcc`:
 
 &lt;script src="https://gist.github.com/linhbngo/b9f794bed306562f2eb85da310ae7b5e.js?file=Dockerfile.8"&gt;&lt;/script&gt;
 
-~~~bash
+```bash
 docker build -t linhbngo/gcc:1.0 -f Dockerfile.gcc .
 docker run -it -v ./src:/ext_src linhbngo/gcc:1.0
-~~~
+```
 
 - From the screenshot below, notice that after exiting out of the container, the newly 
 created binary file `hello` still persists. 

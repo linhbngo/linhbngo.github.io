@@ -4,7 +4,7 @@
       {
             "title": "Memory hierarchy and cache memories",
             "description": "",
-            "published": "June 28, 2026",
+            "published": "June 29, 2026",
             "authors": [
               
             ],
@@ -561,280 +561,6 @@ known as a memory hierarchy.
 89
 90
 91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
 </pre></td> <td class="rouge-code"><pre>
 ## Write cache friendly code
 
@@ -916,7 +642,7 @@ our understanding of cache memories.
 
 :::::{tab-set}
 ::::{tab-item} Case 1
-~~~c
+```c
 /* ijk */
 for (i=0; i&lt;n; i++)  {
   for (j=0; j&lt;n; j++) {
@@ -926,280 +652,40 @@ for (i=0; i&lt;n; i++)  {
     c[i][j] = sum;
   }
 } 
-~~~
-
-- Miss rate for inner loop iterations:
-- Block size = 32 bytes (4 doubles)
-  - A = 8 / 32 = 0.25
-  - B = 1
-  - C = 0
-  - Average miss per iteration = 1.25
-  
-
-
-
-
-&lt;figure
-  
-&gt;
-  &lt;picture&gt;
-    &lt;!-- Auto scaling with imagemagick --&gt;
-    &lt;!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/16-480.webp 480w,/assets/img/courses/csc231/05-memory/16-800.webp 800w,/assets/img/courses/csc231/05-memory/16-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
-    &lt;img
-      src="/assets/img/courses/csc231/05-memory/16.png"
-      
-      
-        width="50%"
-      
-      
-        height="auto"
-      
-      
-      
-        alt="Miss rate 1"
-      
-      
-      
-        data-zoomable
-      
-      
-        loading="lazy"
-      
-      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
-    &gt;
-  &lt;/picture&gt;
-
-  
-&lt;/figure&gt;
-
-::::
-::::{tab-item} Case 2
-~~~c
-/* kij */
-for (k=0; k&lt;n; k++)  {
-  for (i=0; i&lt;n; i++) {
-    r = a[i][k];
-    for (j=0; j&lt;n; j++) 
-      c[i][j] += r * b[k][j];
-  }
-} 
-~~~
-
-- Miss rate for inner loop iterations:
-- Block size = 32 bytes (4 doubles)
-  - A = 0
-  - B = 8 / 32 = 0.25
-  - C = 8 / 32 = 0.25
-  - Average miss per iteration = 0.5
-
-
-
-
-
-&lt;figure
-  
-&gt;
-  &lt;picture&gt;
-    &lt;!-- Auto scaling with imagemagick --&gt;
-    &lt;!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/17-480.webp 480w,/assets/img/courses/csc231/05-memory/17-800.webp 800w,/assets/img/courses/csc231/05-memory/17-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
-    &lt;img
-      src="/assets/img/courses/csc231/05-memory/17.png"
-      
-      
-        width="50%"
-      
-      
-        height="auto"
-      
-      
-      
-        alt="Miss rate 2"
-      
-      
-      
-        data-zoomable
-      
-      
-        loading="lazy"
-      
-      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
-    &gt;
-  &lt;/picture&gt;
-
-  
-&lt;/figure&gt;
-
-::::
-::::{tab-item} Case 3
-~~~c
-/* jki */
-for (j=0; j&lt;n; j++)  {
-  for (k=0; k&lt;n; k++) {
-    r = b[k][j];
-    for (i=0; i&lt;n; i++) 
-      c[i][j] += a[i][k] * r;
-  }
-} 
-~~~
-
-- Miss rate for inner loop iterations:
-- Block size = 32 bytes (4 doubles)
-  - A = 1
-  - B = 0
-  - C = 1
-  - Average miss per iteration = 2
-
-
-
-
-
-&lt;figure
-  
-&gt;
-  &lt;picture&gt;
-    &lt;!-- Auto scaling with imagemagick --&gt;
-    &lt;!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/18-480.webp 480w,/assets/img/courses/csc231/05-memory/18-800.webp 800w,/assets/img/courses/csc231/05-memory/18-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
-    &lt;img
-      src="/assets/img/courses/csc231/05-memory/18.png"
-      
-      
-        width="50%"
-      
-      
-        height="auto"
-      
-      
-      
-        alt="Miss rate 3"
-      
-      
-      
-        data-zoomable
-      
-      
-        loading="lazy"
-      
-      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
-    &gt;
-  &lt;/picture&gt;
-
-  
-&lt;/figure&gt;
-
-::::
-
-
-- This is the cover of the book. 
-- Y-axis: Read throughput (read bandwidth)
-  - Number of bytes read from memory per second (MB/s)
-- Memory mountain: Measured read throughput as a function of spatial and temporal locality.
-- Compact way to characterize memory system performance. 
-
-
-
-
-
-&lt;figure
-  
-&gt;
-  &lt;picture&gt;
-    &lt;!-- Auto scaling with imagemagick --&gt;
-    &lt;!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/05-memory/19-480.webp 480w,/assets/img/courses/csc231/05-memory/19-800.webp 800w,/assets/img/courses/csc231/05-memory/19-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
-    &lt;img
-      src="/assets/img/courses/csc231/05-memory/19.png"
-      
-      
-        width="50%"
-      
-      
-        height="auto"
-      
-      
-      
-        alt="memory mountain"
-      
-      
-      
-        data-zoomable
-      
-      
-        loading="lazy"
-      
-      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
-    &gt;
-  &lt;/picture&gt;
-
-  
-&lt;/figure&gt;
-
-</pre></td> </tr></tbody></table></code></pre></div></div> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Miss rate for inner loop iterations:</li> <li>Block size = 32 bytes (4 doubles) <ul> <li>A = 8 / 32 = 0.25</li> <li>B = 1</li> <li>C = 0</li> <li>Average miss per iteration = 1.25</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/16-480.webp 480w,/assets/img/courses/csc231/05-memory/16-800.webp 800w,/assets/img/courses/csc231/05-memory/16-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/16.png" width="50%" height="auto" alt="Miss rate 1" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} Case 2</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="cm">/* kij */</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">k</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> 
+      <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span> 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Miss rate for inner loop iterations:</li> <li>Block size = 32 bytes (4 doubles) <ul> <li>A = 0</li> <li>B = 8 / 32 = 0.25</li> <li>C = 8 / 32 = 0.25</li> <li>Average miss per iteration = 0.5</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/17-480.webp 480w,/assets/img/courses/csc231/05-memory/17-800.webp 800w,/assets/img/courses/csc231/05-memory/17-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/17.png" width="50%" height="auto" alt="Miss rate 2" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>:::: ::::{tab-item} Case 3</p> <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="cm">/* jki */</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">k</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> 
+      <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span> 
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Miss rate for inner loop iterations:</li> <li>Block size = 32 bytes (4 doubles) <ul> <li>A = 1</li> <li>B = 0</li> <li>C = 1</li> <li>Average miss per iteration = 2</li> </ul> </li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/18-480.webp 480w,/assets/img/courses/csc231/05-memory/18-800.webp 800w,/assets/img/courses/csc231/05-memory/18-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/18.png" width="50%" height="auto" alt="Miss rate 3" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>::::</p> <ul> <li>This is the cover of the book.</li> <li>Y-axis: Read throughput (read bandwidth) <ul> <li>Number of bytes read from memory per second (MB/s)</li> </ul> </li> <li>Memory mountain: Measured read throughput as a function of spatial and temporal locality.</li> <li>Compact way to characterize memory system performance.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/05-memory/19-480.webp 480w,/assets/img/courses/csc231/05-memory/19-800.webp 800w,/assets/img/courses/csc231/05-memory/19-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/05-memory/19.png" width="50%" height="auto" alt="memory mountain" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <p>```</p> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>

@@ -4,7 +4,7 @@
       {
             "title": "Operating System Security",
             "description": "",
-            "published": "June 28, 2026",
+            "published": "June 29, 2026",
             "authors": [
               
             ],
@@ -110,32 +110,6 @@
 84
 85
 86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
 </pre></td> <td class="rouge-code"><pre>
 ## Privileged Program
 
@@ -211,7 +185,7 @@
 
 
 
-~~~bash
+```bash
 
 id
 which id
@@ -222,42 +196,188 @@ sudo chown root myid
 sudo chmod 4755 myid
 ./myid
 
-~~~
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>We want to use <code class="language-plaintext highlighter-rouge">cat</code> to view <code class="language-plaintext highlighter-rouge">/etc/shadow</code> as a normal user.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>
+<span class="nb">cat</span> /etc/shadow
 
-- We want to use `cat` to view `/etc/shadow` as a normal user. 
-
-~~~bash
-
-cat /etc/shadow
-
-~~~
-
-- Standard execution is not possible. We need more privileges
-
-~~~bash
-
-cp $(which cat) ./mycat
-sudo chown root mycat
-sudo chmod 4755 mycat
-./mycat /etc/shadow 
-
-~~~
-
-- `cp $(which cat) ./mycat`: Create a copy of `cat` called `mycat`
-- `sudo chown root mycat`: Set the owner of `mycat` to be `root`
-- `sudo chmod 4755 mycat`: This is a setuid mechanism - run `mycat` as its owner, 
-not as the user. 
-
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="set-uid-what-can-go-wrong">Set UID: what can go wrong?</h2> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc302/os-security/02-480.webp 480w,/assets/img/courses/csc302/os-security/02-800.webp 800w,/assets/img/courses/csc302/os-security/02-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc302/os-security/02.png" width="50%" height="auto" alt="Attack surfaces of Set UID" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>User inputs (explicit inputs): Failure of input sanitization <ul> <li>Buffer overflow</li> <li>SQL injection</li> </ul> </li> <li>System inputs: System-provided inputs that were faked by other users <ul> <li>Race condition</li> </ul> </li> <li>Environment variables: inputs that can be manipulated by others</li> <li> <p>Non-privileged process: capability leaking</p> </li> <li>Creates a file called <code class="language-plaintext highlighter-rouge">/etc/zzz</code>. You will need to use <code class="language-plaintext highlighter-rouge">sudo</code> to create this file with the following content: <ul> <li><code class="language-plaintext highlighter-rouge">This is quality content!</code></li> </ul> </li> <li>A normal user cannot attempt to edit this file.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Standard execution is not possible. We need more privileges</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
+6
 </pre></td> <td class="rouge-code"><pre>
-<span class="nb">ls</span> <span class="nt">-l</span> /etc/zzz
-<span class="nb">cat</span> /etc/zzz
-<span class="nb">echo</span> <span class="s1">'insert bad data'</span> <span class="o">&gt;&gt;</span> /etc/zzz
+<span class="nb">cp</span> <span class="si">$(</span>which <span class="nb">cat</span><span class="si">)</span> ./mycat
+<span class="nb">sudo chown </span>root mycat
+<span class="nb">sudo chmod </span>4755 mycat
+./mycat /etc/shadow 
+
+</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li> <code class="language-plaintext highlighter-rouge">cp $(which cat) ./mycat</code>: Create a copy of <code class="language-plaintext highlighter-rouge">cat</code> called <code class="language-plaintext highlighter-rouge">mycat</code> </li> <li> <code class="language-plaintext highlighter-rouge">sudo chown root mycat</code>: Set the owner of <code class="language-plaintext highlighter-rouge">mycat</code> to be <code class="language-plaintext highlighter-rouge">root</code> </li> <li> <code class="language-plaintext highlighter-rouge">sudo chmod 4755 mycat</code>: This is a setuid mechanism - run <code class="language-plaintext highlighter-rouge">mycat</code> as its owner, not as the user.</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+</pre></td> <td class="rouge-code"><pre>
+## Set UID: what can go wrong?
+
+
+
+
+
+
+&lt;figure
+  
+&gt;
+  &lt;picture&gt;
+    &lt;!-- Auto scaling with imagemagick --&gt;
+    &lt;!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    --&gt;
+    
+      
+        &lt;source
+          class="responsive-img-srcset"
+          
+            srcset="/assets/img/courses/csc302/os-security/02-480.webp 480w,/assets/img/courses/csc302/os-security/02-800.webp 800w,/assets/img/courses/csc302/os-security/02-1400.webp 1400w,"
+            type="image/webp"
+          
+          
+            sizes="95vw"
+          
+        &gt;
+      
+    
+    &lt;img
+      src="/assets/img/courses/csc302/os-security/02.png"
+      
+      
+        width="50%"
+      
+      
+        height="auto"
+      
+      
+      
+        alt="Attack surfaces of Set UID"
+      
+      
+      
+        data-zoomable
+      
+      
+        loading="lazy"
+      
+      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
+    &gt;
+  &lt;/picture&gt;
+
+  
+&lt;/figure&gt;
+
+
+- User inputs (explicit inputs): Failure of input sanitization
+  - Buffer overflow
+  - SQL injection
+- System inputs: System-provided inputs that were faked by other users
+  - Race condition
+- Environment variables: inputs that can be manipulated by others
+- Non-privileged process: capability leaking
+
+
+
+
+- Creates a file called `/etc/zzz`. You will need to use `sudo` 
+to create this file with the following content:
+  - `This is quality content!`
+- A normal user cannot attempt to edit this file. 
+
+```bash
+
+ls -l /etc/zzz
+cat /etc/zzz
+echo 'insert bad data' &gt;&gt; /etc/zzz
 
 </pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Make a copy of a file <code class="language-plaintext highlighter-rouge">cap_leak.c</code> into <code class="language-plaintext highlighter-rouge">seed</code> directory.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1

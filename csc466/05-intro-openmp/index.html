@@ -4,7 +4,7 @@
       {
             "title": "Introduction to OpenMP",
             "description": "",
-            "published": "June 28, 2026",
+            "published": "June 29, 2026",
             "authors": [
               
             ],
@@ -41,16 +41,24 @@
   <span class="n">parallel</span> <span class="n">statement</span> <span class="mi">2</span><span class="p">;</span>
   <span class="p">...</span>
 <span class="p">}</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Hands-on: create hello_omp.c</summary> <ul> <li>Log into <code class="language-plaintext highlighter-rouge">molly</code> </li> <li>Inside your <code class="language-plaintext highlighter-rouge">csc466</code> directory, create a file called <code class="language-plaintext highlighter-rouge">hello_omp.c</code> with the following contents:</li> </ul> <p><code class="language-plaintext highlighter-rouge">c linenums="1" --8&lt;-- "docs/csc466/lectures/data/openmp/hello_openmp.c" </code></p> <ul> <li>Compile and run:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Hands-on: create hello_omp.c</summary> <ul> <li>Log into <code class="language-plaintext highlighter-rouge">molly</code> </li> <li>Inside your <code class="language-plaintext highlighter-rouge">csc466</code> directory, create a file called <code class="language-plaintext highlighter-rouge">hello_omp.c</code> with the following contents:</li> </ul> <p>```c linenums=”1” –8&lt;– “docs/csc466/lectures/data/openmp/hello_openmp.c”</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-</pre></td> <td class="rouge-code"><pre>gcc <span class="nt">-o</span> hello_omp hello_omp.c <span class="nt">-fopenmp</span>
-<span class="nb">export </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span>4
+6
+7
+8
+9
+</pre></td> <td class="rouge-code"><pre>
+- Compile and run:
+
+```bash
+gcc -o hello_omp hello_omp.c -fopenmp
+export OMP_NUM_THREADS=4
 ./hello_omp
-<span class="nb">export </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span>8
+export OMP_NUM_THREADS=8
 ./hello_omp
 </pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Line 1: Include <code class="language-plaintext highlighter-rouge">omp.h</code> to have libraries that support OpenMP.</li> <li>Line 7: Declare the beginning of the <code class="language-plaintext highlighter-rouge">parallel</code> region. <strong>Pay attention to how the curly bracket is setup, comparing to the other curly brackets.</strong> </li> <li>Line 10: <code class="language-plaintext highlighter-rouge">omp_get_thread_num</code> gets the ID assigned to the thread and then assign it to a variable named <code class="language-plaintext highlighter-rouge">tid</code> of type <code class="language-plaintext highlighter-rouge">int</code>.</li> <li>Line 15: <code class="language-plaintext highlighter-rouge">omp_get_num_threads</code> gets the value assigned to <code class="language-plaintext highlighter-rouge">OMP_NUM_THREADS</code> and return it to a variable named <code class="language-plaintext highlighter-rouge">nthreads</code> of type <code class="language-plaintext highlighter-rouge">int</code>.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>What’s important?</summary> <ul> <li> <code class="language-plaintext highlighter-rouge">tid</code> and <code class="language-plaintext highlighter-rouge">nthreads</code>.</li> <li>They allow us to coordinate the parallel workloads.</li> <li>Specify the environment variable <strong>OMP_NUM_THREADS</strong>.</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1

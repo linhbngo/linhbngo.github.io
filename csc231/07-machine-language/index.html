@@ -4,7 +4,7 @@
       {
             "title": "Machine language",
             "description": "",
-            "published": "June 28, 2026",
+            "published": "June 29, 2026",
             "authors": [
               
             ],
@@ -502,155 +502,6 @@ microarchitecture's machine code instructions
 65
 66
 67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
 </pre></td> <td class="rouge-code"><pre>
 ## Data movement
 
@@ -715,86 +566,164 @@ microarchitecture's machine code instructions
 
 - Run the following commands 
 
-~~~bash
+```bash
 $ gcc -Og -c swap.c
 $ objdump -d swap.o
-~~~
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/07-480.webp 480w,/assets/img/courses/csc231/04-machine/07-800.webp 800w,/assets/img/courses/csc231/04-machine/07-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/07.png" width="50%" height="auto" alt="swapping via single-valued pointers" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li><a href="http://6.s081.scripts.mit.edu/sp18/x86-64-architecture-guide.html" rel="external nofollow noopener" target="_blank">Why <code class="language-plaintext highlighter-rouge">%rsi</code> and <code class="language-plaintext highlighter-rouge">%rdi</code>?</a></li> <li>Procedure Data Flow: <ul> <li>First six parameters of a function will be placed into <code class="language-plaintext highlighter-rouge">rdi</code>, <code class="language-plaintext highlighter-rouge">rsi</code>, <code class="language-plaintext highlighter-rouge">rdx</code>, <code class="language-plaintext highlighter-rouge">rcx</code>, <code class="language-plaintext highlighter-rouge">r8</code>, <code class="language-plaintext highlighter-rouge">r9</code>.</li> <li>The remaining parameters will be pushed on to the stack of the calling function.</li> </ul> </li> <li>Create a file named <code class="language-plaintext highlighter-rouge">swap_dsp.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=swap_dsp.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>$ gcc -Og -c swap_dsp.c
+$ objdump -d swap_dsp.o
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/08-480.webp 480w,/assets/img/courses/csc231/04-machine/08-800.webp 800w,/assets/img/courses/csc231/04-machine/08-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/08.png" width="50%" height="auto" alt="swapping position in an array via pointers" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li> <p>What is the meaning of <code class="language-plaintext highlighter-rouge">0x190</code>?</p> </li> <li>Most General Form <ul> <li> <code class="language-plaintext highlighter-rouge">D(Rb,Ri,S)</code>: <code class="language-plaintext highlighter-rouge">Mem[Reg[Rb]+S*Reg[Ri]+ D]</code> </li> <li>D: Constant <strong>displacement</strong> 1, 2, or 4 bytes</li> <li>Rb: Base register: Any of 16 integer registers</li> <li>Ri: Index register: Any, except for <code class="language-plaintext highlighter-rouge">%rsp</code> </li> <li>S: Scale: 1, 2, 4, or 8</li> </ul> </li> <li>Special Cases <ul> <li> <code class="language-plaintext highlighter-rouge">(Rb,Ri)</code>: <code class="language-plaintext highlighter-rouge">Mem[Reg[Rb]+Reg[Ri]]</code> </li> <li> <code class="language-plaintext highlighter-rouge">D(Rb,Ri)</code>: <code class="language-plaintext highlighter-rouge">Mem[Reg[Rb]+Reg[Ri]+D]</code> </li> <li> <code class="language-plaintext highlighter-rouge">(Rb,Ri,S)</code>: <code class="language-plaintext highlighter-rouge">Mem[Reg[Rb]+S*Reg[Ri]]</code> </li> <li> <code class="language-plaintext highlighter-rouge">(,Ri,S)</code>: <code class="language-plaintext highlighter-rouge">Mem[S*Reg[Ri]]</code> </li> <li> <code class="language-plaintext highlighter-rouge">D(,Ri,S)</code>: <code class="language-plaintext highlighter-rouge">Mem[S*Reg[Ri] + D]</code> </li> </ul> </li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td> <td class="rouge-code"><pre>
+
+## Arithmetic operations
+
+
+- `lea`: load effective address
+- A form of `movq` intsruction
+  - `lea S, D`: Write `&amp;S` to `D`. 
+  - can be used to generate pointers
+  - can also be used to describe common arithmetic operations. 
 
 
 
+- Create a file named `m12.c` in `04-machine` with the following contents:
 
-
-&lt;figure
-  
-&gt;
-  &lt;picture&gt;
-    &lt;!-- Auto scaling with imagemagick --&gt;
-    &lt;!--
-      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
-      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
-    --&gt;
-    
-      
-        &lt;source
-          class="responsive-img-srcset"
-          
-            srcset="/assets/img/courses/csc231/04-machine/07-480.webp 480w,/assets/img/courses/csc231/04-machine/07-800.webp 800w,/assets/img/courses/csc231/04-machine/07-1400.webp 1400w,"
-            type="image/webp"
-          
-          
-            sizes="95vw"
-          
-        &gt;
-      
-    
-    &lt;img
-      src="/assets/img/courses/csc231/04-machine/07.png"
-      
-      
-        width="50%"
-      
-      
-        height="auto"
-      
-      
-      
-        alt="swapping via single-valued pointers"
-      
-      
-      
-        data-zoomable
-      
-      
-        loading="lazy"
-      
-      onerror="this.onerror=null; $('.responsive-img-srcset').remove();"
-    &gt;
-  &lt;/picture&gt;
-
-  
-&lt;/figure&gt;
-
-
-- [Why `%rsi` and `%rdi`?](http://6.s081.scripts.mit.edu/sp18/x86-64-architecture-guide.html)
-- Procedure Data Flow:
-  - First six parameters of a function will be placed into 
-  `rdi`, `rsi`, `rdx`, `rcx`, `r8`, `r9`. 
-  - The remaining parameters will be pushed on to the stack of the calling function.
-
-
-
-
-- Create a file named `swap_dsp.c` in `04-machine` with the following contents:
-
-&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=swap_dsp.c"&gt;&lt;/script&gt;
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=m12.c"&gt;&lt;/script&gt;
 
 - Run the following commands 
 
-~~~
-$ gcc -Og -c swap_dsp.c
-$ objdump -d swap_dsp.o
-~~~
-
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>$ gcc -Og -c m12.c $ objdump -d m12.o</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+</pre></td> <td class="rouge-code"><pre>
 
 
 
@@ -813,7 +742,7 @@ $ objdump -d swap_dsp.o
         &lt;source
           class="responsive-img-srcset"
           
-            srcset="/assets/img/courses/csc231/04-machine/08-480.webp 480w,/assets/img/courses/csc231/04-machine/08-800.webp 800w,/assets/img/courses/csc231/04-machine/08-1400.webp 1400w,"
+            srcset="/assets/img/courses/csc231/04-machine/09-480.webp 480w,/assets/img/courses/csc231/04-machine/09-800.webp 800w,/assets/img/courses/csc231/04-machine/09-1400.webp 1400w,"
             type="image/webp"
           
           
@@ -823,7 +752,7 @@ $ objdump -d swap_dsp.o
       
     
     &lt;img
-      src="/assets/img/courses/csc231/04-machine/08.png"
+      src="/assets/img/courses/csc231/04-machine/09.png"
       
       
         width="50%"
@@ -833,7 +762,7 @@ $ objdump -d swap_dsp.o
       
       
       
-        alt="swapping position in an array via pointers"
+        alt="demonstrating load effective address"
       
       
       
@@ -850,33 +779,59 @@ $ objdump -d swap_dsp.o
 &lt;/figure&gt;
 
 
-- What is the meaning of `0x190`?
+- Assembly code explanation of `m12.c`:
+  - `%rdi`: x
+  - `(%rdi, %rdi,2)` = x + 2 * x 
+  - The above result is moved to `%rdx` with `lea`. 
+  - `0x0(,%rdx,4)` = 4 * (x + 2 * x) = 12*x
+  - The above result is moved to `%rax` with `lea`. 
 
 
 
-- Most General Form
-  - `D(Rb,Ri,S)`: `Mem[Reg[Rb]+S*Reg[Ri]+ D]`
-  - D: 	Constant **displacement** 1, 2, or 4 bytes
-  - Rb: Base register: Any of 16 integer registers
-  - Ri:	Index register: Any, except for `%rsp`
-  - S: Scale: 1, 2, 4, or 8 
-- Special Cases
-  - `(Rb,Ri)`:	`Mem[Reg[Rb]+Reg[Ri]]`
-  - `D(Rb,Ri)`: `Mem[Reg[Rb]+Reg[Ri]+D]`
-  - `(Rb,Ri,S)`: `Mem[Reg[Rb]+S*Reg[Ri]]`
-  - `(,Ri,S)`: `Mem[S*Reg[Ri]]`
-  - `D(,Ri,S)`: `Mem[S*Reg[Ri] + D]`
+- Omitting suffixes comparing to the book. 
+- `Src`: `S`
+- `Dest`: `D`
 
-</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="arithmetic-operations">Arithmetic operations</h2> <ul> <li> <code class="language-plaintext highlighter-rouge">lea</code>: load effective address</li> <li>A form of <code class="language-plaintext highlighter-rouge">movq</code> intsruction <ul> <li> <code class="language-plaintext highlighter-rouge">lea S, D</code>: Write <code class="language-plaintext highlighter-rouge">&amp;S</code> to <code class="language-plaintext highlighter-rouge">D</code>.</li> <li>can be used to generate pointers</li> <li>can also be used to describe common arithmetic operations.</li> </ul> </li> <li>Create a file named <code class="language-plaintext highlighter-rouge">m12.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=m12.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>$ gcc -Og -c m12.c
-$ objdump -d m12.o
-</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/09-480.webp 480w,/assets/img/courses/csc231/04-machine/09-800.webp 800w,/assets/img/courses/csc231/04-machine/09-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/09.png" width="50%" height="auto" alt="demonstrating load effective address" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Assembly code explanation of <code class="language-plaintext highlighter-rouge">m12.c</code>: <ul> <li> <code class="language-plaintext highlighter-rouge">%rdi</code>: x</li> <li> <code class="language-plaintext highlighter-rouge">(%rdi, %rdi,2)</code> = x + 2 * x</li> <li>The above result is moved to <code class="language-plaintext highlighter-rouge">%rdx</code> with <code class="language-plaintext highlighter-rouge">lea</code>.</li> <li> <code class="language-plaintext highlighter-rouge">0x0(,%rdx,4)</code> = 4 * (x + 2 * x) = 12*x</li> <li>The above result is moved to <code class="language-plaintext highlighter-rouge">%rax</code> with <code class="language-plaintext highlighter-rouge">lea</code>.</li> </ul> </li> <li>Omitting suffixes comparing to the book.</li> <li> <code class="language-plaintext highlighter-rouge">Src</code>: <code class="language-plaintext highlighter-rouge">S</code> </li> <li> <code class="language-plaintext highlighter-rouge">Dest</code>: <code class="language-plaintext highlighter-rouge">D</code> </li> </ul> <p>:::::{tab-set} ::::{tab-item} Arithmetic operations | Format | Computation | Description | | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">add Src,Dest</code> | D &lt;- D + S | add | <br> | <code class="language-plaintext highlighter-rouge">sub Src,Dest</code> | D &lt;- D - S | subtract |<br> | <code class="language-plaintext highlighter-rouge">imul Src,Dest</code> | D &lt;- D * S | multiply |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">shl Src,Dest</code> | D &lt;- D « S | shift left |<br> | <code class="language-plaintext highlighter-rouge">sar Src,Dest</code> | D &lt;- D &gt;S | arith. shift right |<br> | <code class="language-plaintext highlighter-rouge">shr Src,Dest</code> | D &lt;- D &gt;S | shift right |<br> | <code class="language-plaintext highlighter-rouge">sal Src,Dest</code> | D &lt;- D « S | arith. shift left |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">xor Src,Dest</code> | D &lt;- D ^ S | exclusive or |<br> | <code class="language-plaintext highlighter-rouge">and Src,Dest</code> | D &lt;- D &amp; S | and |<br> | <code class="language-plaintext highlighter-rouge">or Src,Dest</code> | D &lt;- D | S | or |<br> | ————— | ———– | —————— |<br> | <code class="language-plaintext highlighter-rouge">inc Src</code> | D &lt;- D + 1 | increment |<br> | <code class="language-plaintext highlighter-rouge">dec Src</code> | D &lt;- D - 1 | decrement |<br> | <code class="language-plaintext highlighter-rouge">neg Src</code> | D &lt;- -D | negate |<br> | <code class="language-plaintext highlighter-rouge">not Src</code> | D &lt;- -D | complement |<br> :::: :::::</p> <ul> <li>Watch out for argument order (ATT versus Intel)</li> <li>No distinction between signed and unsigned int. <ul> <li>Exception: arithmetic right shift (<code class="language-plaintext highlighter-rouge">sar</code>) where the significant bit is retained.</li> </ul> </li> <li>Create a file named <code class="language-plaintext highlighter-rouge">scale.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=scale.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre><span class="nv">$ </span>gcc <span class="nt">-Og</span> <span class="nt">-c</span> scale.c
-<span class="nv">$ </span>objdump <span class="nt">-d</span> scale.o
+:::::{tab-set}
+::::{tab-item} Arithmetic operations
+| Format          | Computation |  Description       |
+| --------------- | ----------- | ------------------ |  
+| `add Src,Dest`  | D &lt;- D + S  | add                |   
+| `sub Src,Dest`  | D &lt;- D - S  | subtract           |  
+| `imul Src,Dest` | D &lt;- D * S  | multiply           |  
+| --------------- | ----------- | ------------------ |  
+| `shl Src,Dest`  | D &lt;- D &lt;&lt; S | shift left         |  
+| `sar Src,Dest`  | D &lt;- D &gt;S   | arith. shift right |  
+| `shr Src,Dest`  | D &lt;- D &gt;S   | shift right        |  
+| `sal Src,Dest`  | D &lt;- D &lt;&lt; S | arith. shift left  |  
+| --------------- | ----------- | ------------------ |  
+| `xor Src,Dest`  | D &lt;- D ^ S  | exclusive or       |  
+| `and Src,Dest`  | D &lt;- D &amp; S  | and                |  
+| `or Src,Dest`   | D &lt;- D \| S | or                 |  
+| --------------- | ----------- | ------------------ |  
+| `inc Src`       | D &lt;- D + 1  | increment          |  
+| `dec Src`       | D &lt;- D - 1  | decrement          |  
+| `neg Src`       | D &lt;- -D     | negate             |  
+| `not Src`       | D &lt;- -D     | complement         |  
+::::
+:::::
+
+- Watch out for argument order (ATT versus Intel)
+- No distinction between signed and unsigned int. 
+  - Exception: arithmetic right shift (`sar`) where the 
+  significant bit is retained. 
+
+
+
+- Create a file named `scale.c` in `04-machine` with the following contents:
+
+&lt;script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=scale.c"&gt;&lt;/script&gt;
+
+- Run the following commands 
+
+```bash
+$ gcc -Og -c scale.c
+$ objdump -d scale.o
 </pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc231/04-machine/10-480.webp 480w,/assets/img/courses/csc231/04-machine/10-800.webp 800w,/assets/img/courses/csc231/04-machine/10-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc231/04-machine/10.png" width="50%" height="auto" alt="Scale.c" data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>Identify the registers holding x, y, and z.</li> <li>Which register contains the final return value?</li> </ul> <p>:::{admonition} Solution</p> <ul> <li> <code class="language-plaintext highlighter-rouge">%rdi</code>: x</li> <li> <code class="language-plaintext highlighter-rouge">%rsi</code>: y</li> <li> <code class="language-plaintext highlighter-rouge">%rdx</code>: z</li> <li> <code class="language-plaintext highlighter-rouge">%rax</code> contains the final return value.</li> </ul> <p>:::</p> <ul> <li>Create a file named <code class="language-plaintext highlighter-rouge">arith.c</code> in <code class="language-plaintext highlighter-rouge">04-machine</code> with the following contents:</li> </ul> <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=arith.c"></script> <ul> <li>Run the following commands</li> </ul> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -1007,45 +962,6 @@ $ objdump -d arith.o
 122
 123
 124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
 </pre></td> <td class="rouge-code"><pre>
 
 
@@ -1170,11 +1086,25 @@ $ objdump -d arith.o
 
 - Run the following commands 
 
-~~~
-$ gcc -Og -c jump.c
-$ objdump -d jump.o
-~~~
-
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>$ gcc -Og -c jump.c $ objdump -d jump.o</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td> <td class="rouge-code"><pre>
 - Understand how the Assembly code enables jump across instructions to support conditional workflow. 
 
 &gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/OSZggdT9hgY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
@@ -1191,11 +1121,22 @@ $ objdump -d jump.o
 
 - Run the following commands 
 
-~~~
-$ gcc -Og -c factorial.c
-$ objdump -d factorial.o
-~~~
-
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>$ gcc -Og -c factorial.c $ objdump -d factorial.o</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td> <td class="rouge-code"><pre>
 - Understand how the Assembly code enables jump across instructions to support loop. 
 
 &lt;iframe width="560" height="315" src="https://www.youtube.com/embed/0N2srmuKcVs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
