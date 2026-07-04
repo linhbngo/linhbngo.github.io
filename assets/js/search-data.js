@@ -135,7 +135,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-just-do-it",
+            },{id: "post-my-father",
+        
+          title: "My father",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/my-father/";
+          
+        },
+      },{id: "post-just-do-it",
         
           title: "Just Do It",
         
