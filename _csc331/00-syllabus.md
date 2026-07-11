@@ -6,7 +6,7 @@ collection: csc331
 title: "Syllabus"
 toc:
   - name: General Information
-  - name: Course Description
+  - name: Course Information
   - name: Learning Objectives
   - name: Prerequisites
   - name: Required Text (either print or e-book)
@@ -23,7 +23,7 @@ toc:
 
 {% include courses/instructor_info.md %}
 
-## Course Description
+## Course Information
 
 This course will introduce three fundamental concepts in operating system (OS): Virtualization, 
 Concurrency, and Persistence.

@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc568
-title: "Syllabus: CSC 568 - Cloud Computing Fundamentals"
+title: Syllabus
 hide:
   - toc
 toc:
@@ -17,7 +17,6 @@ toc:
   - name: Course Schedules
 ---
 
-# Syllabus: CSC 568 - Cloud Computing Fundamentals
 
 ## General Information
 
@@ -26,7 +25,6 @@ toc:
 
 {!assets/text/instructor_info.md!}
 
----
 
 ## Course Information
 
@@ -34,7 +32,6 @@ toc:
   - The distance learning modality of the course is 100% online synchronous. 
   - All class materials and recorded links to the lectures will be provided via D2L. 
 
----
 
 ## Required Materials:
 
@@ -43,7 +40,6 @@ made available in D2L.
 - Access to a laptop or desktop computer is required for the learning 
 activities in this course. 
 
----
 
 ## Resources and Accessibility:
 
@@ -56,7 +52,6 @@ inside D2L. Technical questions specific to online competition platforms
 used in the course can be sent via email to the instructor or posted on 
 the Discord server.
 
----
 
 ## Course Description
 
@@ -67,7 +62,6 @@ students are expected to demonstrate a deeper critical understanding of cloud te
 approaches and relating them to current research or industry practices. Projects will contain components such as scalability 
 analysis, security considerations, or integration of recent scholarly or industrial advances.
 
----
 
 ## Course Student Learning Outcomes (CSLO)
 
@@ -85,7 +79,6 @@ containerization, and orchestration.
 2. Be able to apply their course learnings to research career in an industrial setting.
 3. Be exposed to the latest, cutting-edge technology.
 
----
 
 ### Course Topics:
 
@@ -103,13 +96,11 @@ containerization, and orchestration.
 - Comparative analysis of containerization platforms (Docker, Podman, Apptainer)
 - Survey of emerging research or industry practices in container runtime design, isolation models, and reproducibility. 
 
----
 
 ## Prerequisites
 
 - CSC 535: Data Communications and Networking
 
----
 
 ## Evaluation Policy:
 
@@ -123,6 +114,21 @@ containerization, and orchestration.
 | Exams          | 30%              |         1,2                |             1               |
 
 ### Grade Scale:
+
+
+<table
+  data-toggle="table"
+  data-url="{{ '/assets/json/grade_grad.json' | relative_url }}">
+  <thead>
+    <tr>
+      <th data-field="grade">Grade</th>
+      <th data-field="gpa">Quality Points</th>
+      <th data-field="numeric">Numeric</th>
+      <th data-field="interpretation">Interpretation</th>
+    </tr>
+  </thead>
+</table>
+
 
 
 ### Assessments:
@@ -148,10 +154,7 @@ Saturday and Sunday are each days.
 - Quizzes are typically disseminated once a week. 
 
 
----
-
 {!assets/text/policy.md!}
 
----
 
 {!assets/text/distance_education.md!}

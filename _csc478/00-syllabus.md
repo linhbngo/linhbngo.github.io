@@ -2,37 +2,39 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-title: "Syllabus: CSC 478 - Cloud Engineering"
+title: Syllabus
+toc:
 toc:
   - name: General Information
-  - name: Course Description
-  - name: Course Student Learning Outcomes (CSLO)
-  - name: Prerequisites
-  - name: Required Text (either print or e-book)
+  - name: Course Information
+  - name: Learning Objectives
+  - name: Required Materials
   - name: Evaluation Policy
-  - name: Course Schedules
+  - name: Course Topics and Schedules
+  - name: University Policies
 ---
 
-# Syllabus: CSC 478 - Cloud Engineering
 
 ## General Information
 
 - **Semester**: Fall 2026
 
-{!assets/text/instructor_info.md!}
+{% include courses/instructor_info.md %}
 
-## Course Description
+## Course Information
 
 This course provides students with more in-depth understanding of 
 advanced cloud computing technical concepts. Through the perspective of 
 infrastructure-as-code and project-based learning activities, we will study 
-how cloud computing orchestation works to enable the deployment of large-scale 
+how cloud computing orchestration works to enable the deployment of large-scale 
 complex services in business and academic environments. 
 
-## Course Student Learning Outcomes (CSLO)
+## Learning Objectives
+
+### Course Student Learning Outcomes (CSLO)
   1. Be able to write programs that describe the deployment, installation, 
   and configuration of complex services in the cloud. 
-  2. Be able to demonstrate understading of -as-a-service (networking, firewall, storage).
+  2. Be able to demonstrate understanding of -as-a-service (networking, firewall, storage).
   3. Be able to develop a complex infrastructure that support a full-stack set of services 
   inside the cloud. 
   
@@ -52,11 +54,13 @@ complex services in business and academic environments.
   3. ABET 5: Function effectively as a member or leader of a team engaged in 
   activities appropriate to the program’s discipline (CSLO 2, 3).
 
-## Prerequisites
-- CSC 468: Introduction to Cloud Computing
+## Required Materials
 
-## Required Text (either print or e-book):
 There is no required text for this class. 
+
+### Prerequisites
+
+- CSC 468: Introduction to Cloud Computing
 
 ## Evaluation Policy:
 
@@ -71,9 +75,21 @@ There is no required text for this class.
 | Quizzes        | 10%              |         1                  |             1               |        1        |
 | Exams          | 30%              |         1,2                |             1               |        1        |
 
-
-
 ### Grade Scale:
+
+
+<table
+  data-toggle="table"
+  data-url="{{ '/assets/json/grade_undergrad.json' | relative_url }}">
+  <thead>
+    <tr>
+      <th data-field="grade">Grade</th>
+      <th data-field="gpa">Quality Points</th>
+      <th data-field="numeric">Numeric</th>
+      <th data-field="interpretation">Interpretation</th>
+    </tr>
+  </thead>
+</table>
 
 
 ### Assessments:
@@ -86,17 +102,36 @@ There is no required text for this class.
 - Project: Design, implement, and deploy various services and applications inside small 
 containers.
 - Quizzes and Exams: Assessing understanding of theoretical concepts
-necessary to support the tasks decribed in the assignments and projects.
+necessary to support the tasks described in the assignments and projects.
 
 ### Lateness Policy:
 Assignments that are late are assessed a 10% per day late penalty.
 Saturday and Sunday are each days.
 
-{!assets/text/ai_policy.md!}
-{!assets/text/policy.md!}
+## Course Topics and Schedules
 
-## Course Schedules
 
-- Quizzes are typically disseminated once a week. 
+| Week | Topic             | Assessments              |
+| ---- | ----------------- | ------------------------ |
+| 1    | Introduction to Big Data  | - |
+|      | MapReduce Programming Paradigm | - |
+|      | Data Parallel Computing with Spark | - |
+| 2    | Frequent Itemsets  | - |
+|      | Locality-Sensitive Hashing | - |
+|      | Similar Items              | - |
+| 3    | Clustering                 | - |
+|      | Dimensionality Reduction | - | 
+|      | Recommendation Systems | - |
+| 4    | Link Analysis          | - |
+|      | Page Rank | - |
+| 5    | Decision Trees | - | 
+
+
+{% include courses/ai_policy.md %}
+
+{% include courses/policy.md %}
+
+
+
 
 

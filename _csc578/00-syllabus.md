@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc578
-title: "Syllabus: CSC 578 - Cloud Systems Engineering"
+title: Syllabus
 hide:
   - toc
 toc:
@@ -17,16 +17,12 @@ toc:
   - name: Course Schedule
 ---
 
-# Syllabus: CSC 578 - Cloud Systems Engineering
-
 ## General Information
 
 - **Semester**: Fall 2026
 - **Class Meeting Time**: Tuesday, Thursday from 7:15PM to 8:30PM
 
-{!assets/text/instructor_info.md!}
-
----
+{% include courses/instructor_info.md %}
 
 ## Course Information
 
@@ -34,16 +30,12 @@ toc:
 - The distance learning modality of the course is 100% online synchronous. 
 - All class materials and recorded links to the lectures will be provided via D2L. 
 
----
-
 ## Required Materials:
 
 - There is no required textbook for this course. Reading materials will be 
 made available in D2L. 
 - Access to a laptop or desktop computer is required for the learning 
 activities in this course. 
-
----
 
 ## Resources and Accessibility:
 
@@ -56,8 +48,6 @@ inside D2L. Technical questions specific to online competition platforms
 used in the course can be sent via email to the instructor or posted on 
 the Discord server.
 
----
-
 ## Course Description
 
 This course provides students with more in-depth understanding of 
@@ -68,8 +58,6 @@ complex services in business and academic environments. As a graduate level cour
 expected to demonstrate a deeper critical 
 understanding of orchestration and infrastructure-as-code, evaluating trade-offs 
 among different platforms, and connecting practices to research and emerging technologies.
-
----
 
 ## Course Student Learning Outcomes (CSLO)
 1. Be able to write programs that describe the deployment, installation, 
@@ -97,13 +85,9 @@ producing a synthesis that highlights future trends.
 - Load Balancing
 - TLS in the Cloud
 
----
-
 ## Prerequisites
 
 - CSC 568: Cloud Computing Fundamentals
-
----
 
 ## Evaluation Policy
 
@@ -118,6 +102,20 @@ producing a synthesis that highlights future trends.
 
 
 ### Grade Scale:
+
+
+<table
+  data-toggle="table"
+  data-url="{{ '/assets/json/grade_grad.json' | relative_url }}">
+  <thead>
+    <tr>
+      <th data-field="grade">Grade</th>
+      <th data-field="gpa">Quality Points</th>
+      <th data-field="numeric">Numeric</th>
+      <th data-field="interpretation">Interpretation</th>
+    </tr>
+  </thead>
+</table>
 
 
 ### Assessments:
@@ -142,12 +140,12 @@ Saturday and Sunday are each days.
 
 - Quizzes are typically disseminated once a week. 
 
+{% include courses/ai_policy.md %}
 
 
----
+{% include courses/policy.md %}
 
-{!assets/text/policy.md!}
+{% include courses/distance_education.md %}
 
----
 
-{!assets/text/distance_education.md!}
+
