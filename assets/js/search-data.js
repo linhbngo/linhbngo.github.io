@@ -1142,8 +1142,8 @@ ninja.data = [{
           description: "",
           section: "Csc468",handler: () => {
               window.location.href = "/csc468/17-docker-podman-singularity/";
-            },},{id: "csc478-syllabus-csc-478-cloud-engineering",
-          title: 'Syllabus: CSC 478 - Cloud Engineering',
+            },},{id: "csc478-syllabus",
+          title: 'Syllabus',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/00-syllabus/";
@@ -1327,8 +1327,8 @@ ninja.data = [{
           description: "",
           section: "Csc496",handler: () => {
               window.location.href = "/csc496/index/";
-            },},{id: "csc568-syllabus-csc-568-cloud-computing-fundamentals",
-          title: 'Syllabus: CSC 568 - Cloud Computing Fundamentals',
+            },},{id: "csc568-syllabus",
+          title: 'Syllabus',
           description: "",
           section: "Csc568",handler: () => {
               window.location.href = "/csc568/00-syllabus/";
@@ -1402,8 +1402,8 @@ ninja.data = [{
           description: "",
           section: "Csc574",handler: () => {
               window.location.href = "/csc574/12-full-cycle/";
-            },},{id: "csc578-syllabus-csc-578-cloud-systems-engineering",
-          title: 'Syllabus: CSC 578 - Cloud Systems Engineering',
+            },},{id: "csc578-syllabus",
+          title: 'Syllabus',
           description: "",
           section: "Csc578",handler: () => {
               window.location.href = "/csc578/00-syllabus/";
