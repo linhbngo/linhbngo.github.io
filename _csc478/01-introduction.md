@@ -13,22 +13,15 @@ toc:
   - name: Course Plan
 ---
 
-# From Prototype to Production: Deploying in the Cloud
-
----
-
 ## Welcome to Cloud Engineering
 
-{% details info Details %}
-
-From working prototypes to production infrastructure
-
-{% enddetails %}
-- You built something that works. Now comes the hard part: **making it work reliably, at scale**
-- This course takes you 
-    - from developer to cloud engineer
-    - from local services to orchestrated microservices
-    - from Docker to Kubernetes
+- From working prototype to infrastructure production
+    - *Working prototype*
+    - Production: 
+        - reliably
+        - at scale
+- In other words:
+    - from local services (Docker) to orchestrated microservices (Kubernetes)
 
 {% details You have built the app %}
 
@@ -40,9 +33,10 @@ From working prototypes to production infrastructure
         - `redis`: backend store
         - `webui`: frontend dashboard
 
-{% include figure.liquid path="assets/img/courses/csc478/intro/01-ram-coin.png" width="50%" zoomable=true alt="Components of a coin mining infrastructure" %}
+{% include figure.liquid path="assets/img/courses/csc478/intro/01-ram-coin.png" max-width="50%" zoomable=true alt="Components of a coin mining infrastructure" %}
 
 {% enddetails %}
+
 {% details Now you need to deploy it %}
 
 {% details warning Problem: Prototype != Production %}
@@ -51,7 +45,9 @@ From working prototypes to production infrastructure
 - How do you recover from failure?
 - How do you update without downtime?
 - How do you manage logs, secrets, access controls?
+
 {% enddetails %}
+
 - We have options (but not all are equal)
 
 {% details note Docker Compose %}
@@ -60,12 +56,14 @@ From working prototypes to production infrastructure
 - But no self-healing, no scaling (single node scaling only), no declarative control
 
 {% enddetails %}
+
 {% details note Docker Swarm %}
 
 - Lightweight orchestration
 - But nearly deprecated and not widely supported
 
 {% enddetails %}
+
 {% details note Kubernetes %}
 
 - Designed for large-scale, production deployments
@@ -73,20 +71,14 @@ From working prototypes to production infrastructure
 - Built for resilience, scaling, and management
 
 {% enddetails %}
-{% enddetails %}
-{% details tip Details %}
-
-If Docker Compose is your local test bed, Kubernetes is your data center.
 
 {% enddetails %}
----
 
 ## What is Kubernetes?
 
 - Open-source container orchestration platform
 - Maintains **desired state** using declarative configuration (YAML)
 - Core resources:
-
   - **Pods**: smallest deployable unit
   - **Services**: expose pods
   - **Deployments**: manage pod replicas
@@ -107,7 +99,6 @@ If Docker Compose is your local test bed, Kubernetes is your data center.
     - Is the management process the same as a cluster management system? 
 
 {% enddetails %}
----
 
 ## Kubernetes in Context
 
@@ -133,6 +124,7 @@ design decision in creating Kubernetes.
           than developing a new management system (UC Berkeley's Mesos and Twitter's Aurora) 
 
 {% enddetails %}
+
 - Borg runs:
     - Gmail
     - YouTube
@@ -143,7 +135,7 @@ design decision in creating Kubernetes.
 Kubernetes is Borg’s spiritual child but open, modular, extensible
 
 {% enddetails %}
----
+
 
 ## Inside Borg (2003-2015)
 
@@ -194,17 +186,18 @@ high-performance datacenter-scale network fabric connecting them.
     - manage many thousands machines in a cell
     - several cells have arrival rates of more than 10,000 tasks per minute. 
   - 2020 Borg analysis report:
-    - (Muhamad Tirmazi, Adam Barker, Nan Deng, Md E. Haque, Zhijing Gene Qin, Steven Hand, 
-    Mor Harchol-Balter, and John Wilkes. "Borg: the next generation." In Proceedings of the fifteenth European conference on computer systems)[https://dl.acm.org/doi/pdf/10.1145/3342195.3387517]
+    - [Muhamad Tirmazi, Adam Barker, Nan Deng, Md E. Haque, Zhijing Gene Qin, Steven Hand, 
+    Mor Harchol-Balter, and John Wilkes. "Borg: the next generation." In Proceedings of the fifteenth European conference on computer systems](https://dl.acm.org/doi/pdf/10.1145/3342195.3387517)
   - 2011 log data: 1 cell, 12000 machines (40 GB compressed)
   - 2020 log data: 8 cells, 96000 machines (350 GB compressed)
 - The below graph show fraction of CPU and memory **allocation** of each category
-of priority queue **relative to cell's capacity". 
+of priority queue **relative to cell's capacity**. 
 - What is special about this?
 
 {% include figure.liquid path="assets/img/courses/csc478/intro/03-scalability.png" width="50%" zoomable=true alt="Borg architecture" %}
 
 {% enddetails %}
+
 {% details Benefits of Borg %}
 
 - Hides the details of resource management and failure handling so its users can 
@@ -216,7 +209,6 @@ that have similar requirements.
 can do it at such scale. 
 
 {% enddetails %}
----
 
 ## What Kubernetes Learned from Borg
 
@@ -230,8 +222,6 @@ can do it at such scale.
 
 {% enddetails %}
 We will cover these concepts through the course!
-
----
 
 ## Kubernetes Architecture Overview
 
@@ -255,7 +245,7 @@ We will cover these concepts through the course!
 distributed system. 
 
 {% enddetails %}
----
+
 
 ## Course Plan
 
