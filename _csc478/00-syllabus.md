@@ -113,18 +113,18 @@ Saturday and Sunday are each days.
 
 | Week | Topic             | Assessments              |
 | ---- | ----------------- | ------------------------ |
-| 1    | Introduction to Big Data  | - |
-|      | MapReduce Programming Paradigm | - |
-|      | Data Parallel Computing with Spark | - |
-| 2    | Frequent Itemsets  | - |
-|      | Locality-Sensitive Hashing | - |
-|      | Similar Items              | - |
-| 3    | Clustering                 | - |
-|      | Dimensionality Reduction | - | 
-|      | Recommendation Systems | - |
-| 4    | Link Analysis          | - |
-|      | Page Rank | - |
-| 5    | Decision Trees | - | 
+| 1    | Deploying in the Cloud  | - |
+|      | Introduction to FABRIC | - |
+| 2    | Pod, Service, and Deployment | - |
+|      | Course Project Discussion    | - |
+| 3    | Rancher RKE2                 | - |
+| 4    | ClusterIP, NodePort, and Multi-Service Communication | - |
+| 5    | Storage Volumes in Kubernetes                        | - |
+|      | PV/PVC and NSF | - | 
+| 6    | Resource Units and Management | - |
+| 7    | Load Balancer and Ingress          | - |
+|      | RBAC Model Taxonomy | - |
+| 5    | Cloud Security | - | 
 
 
 {% include courses/ai_policy.md %}

@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-title: "From Prototype to Production: Deploying in the Cloud"
+title: "Deploying in the Cloud"
 toc:
   - name: Welcome to Cloud Engineering
   - name: What is Kubernetes?
