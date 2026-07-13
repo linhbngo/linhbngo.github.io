@@ -1147,8 +1147,8 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/00-syllabus/";
-            },},{id: "csc478-from-prototype-to-production-deploying-in-the-cloud",
-          title: 'From Prototype to Production: Deploying in the Cloud',
+            },},{id: "csc478-deploying-in-the-cloud",
+          title: 'Deploying in the Cloud',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/01-introduction/";
@@ -1212,11 +1212,6 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/16-programmatic-deployment/";
-            },},{id: "csc478-csc478-cloud-engineering",
-          title: 'CSC478: Cloud Engineering',
-          description: "",
-          section: "Csc478",handler: () => {
-              window.location.href = "/csc478/index/";
             },},{id: "csc495-preparing-for-this-class",
           title: 'Preparing for this class',
           description: "",
@@ -1407,11 +1402,6 @@ ninja.data = [{
           description: "",
           section: "Csc578",handler: () => {
               window.location.href = "/csc578/00-syllabus/";
-            },},{id: "csc578-csc578-cloud-systems-engineering",
-          title: 'CSC578: Cloud Systems Engineering',
-          description: "",
-          section: "Csc578",handler: () => {
-              window.location.href = "/csc578/index/";
             },},{id: "news-a-simple-inline-announcement",
           title: 'A simple inline announcement.',
           description: "",
