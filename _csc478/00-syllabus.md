@@ -111,21 +111,37 @@ Saturday and Sunday are each days.
 ## Course Topics and Schedules
 
 
-| Week | Topic             | Assessments              |
-| ---- | ----------------- | ------------------------ |
-| 1    | Deploying in the Cloud  | - |
-|      | Introduction to FABRIC | - |
-| 2    | Pod, Service, and Deployment | - |
-|      | Course Project Discussion    | - |
-| 3    | Rancher RKE2                 | - |
-| 4    | ClusterIP, NodePort, and Multi-Service Communication | - |
-| 5    | Storage Volumes in Kubernetes                        | - |
-|      | PV/PVC and NSF | - | 
-| 6    | Resource Units and Management | - |
-| 7    | Load Balancer and Ingress          | - |
-|      | RBAC Model Taxonomy | - |
-| 5    | Cloud Security | - | 
-
+| Week  | Topic                         | Assessments              |
+| ----- | ----------------------------- | ------------------------ |
+| 08/24 | Deploying in the Cloud        | - |
+|       | Introduction to FABRIC        | - |
+| 08/31 | Pod, Service, and Deployment  | - |
+|       | Course Project Discussion     | - |
+| 09/07 | Rancher RKE2                  | - |
+|       |                               | - |
+| 09/14 | Multi-Service Communication   | - |
+|       |                               | - |
+| 09/21 | Storage Volumes in Kubernetes | - |
+|       |                               | - |
+| 09/28 | PV/PVC and NSF                | - | 
+|       |                               | - |  
+| 10/05 | Midterm Exam                  | - |
+|       | Midpoint Project Updates      | - |
+| 10/12 | Fall Break                    | - |
+|       |                               | - |
+| 10/19 | Load Balancer                 | - |
+|       |                               | - |
+| 10/26 | Ingress                       | - |
+|       |                               | - | 
+| 11/02 | Cloud Security                | - | 
+|       |                               | - |
+| 11/09 | RBAC Model Taxonomy           | - |
+|       |                               | - |
+| 11/16 |                               | - |
+|       |                               | - |
+| 11/23 | Thanksgiving Break            | - |
+|       |                               | - |
+| 11/30 | Project Presentations         | - |
 
 {% include courses/ai_policy.md %}
 
