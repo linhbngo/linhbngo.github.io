@@ -1207,11 +1207,6 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/14-cloud-security/";
-            },},{id: "csc478-programmatic-deployment-of-infrastructures",
-          title: 'Programmatic Deployment of Infrastructures',
-          description: "",
-          section: "Csc478",handler: () => {
-              window.location.href = "/csc478/16-programmatic-deployment/";
             },},{id: "csc495-preparing-for-this-class",
           title: 'Preparing for this class',
           description: "",
