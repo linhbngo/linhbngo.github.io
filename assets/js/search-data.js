@@ -1067,6 +1067,11 @@ ninja.data = [{
           description: "",
           section: "Csc468",handler: () => {
               window.location.href = "/csc468/02-cloudlab/";
+            },},{id: "csc468-introduction-to-fabric",
+          title: 'Introduction to FABRIC',
+          description: "",
+          section: "Csc468",handler: () => {
+              window.location.href = "/csc468/02-fabrics/";
             },},{id: "csc468-course-project",
           title: 'Course Project',
           description: "",
@@ -1112,11 +1117,6 @@ ninja.data = [{
           description: "",
           section: "Csc468",handler: () => {
               window.location.href = "/csc468/11-docker-compose-cd-ci/";
-            },},{id: "csc468-introduction-to-fabric",
-          title: 'Introduction to FABRIC',
-          description: "",
-          section: "Csc468",handler: () => {
-              window.location.href = "/csc468/12-fabrics/";
             },},{id: "csc468-declarative-configuration-management",
           title: 'Declarative Configuration Management',
           description: "",
@@ -1147,66 +1147,71 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/00-syllabus/";
+            },},{id: "csc478-introduction-to-fabric",
+          title: 'Introduction to FABRIC',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/02-fabrics/";
             },},{id: "csc478-deploying-in-the-cloud",
           title: 'Deploying in the Cloud',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/01-introduction/";
+              window.location.href = "/csc478/02-introduction/";
             },},{id: "csc478-rancher-desktop",
           title: 'Rancher Desktop',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/02-rancher/";
-            },},{id: "csc478-pod-service-and-deployment",
-          title: 'Pod, Service, and Deployment',
-          description: "",
-          section: "Csc478",handler: () => {
-              window.location.href = "/csc478/03-pod-service-deployment/";
+              window.location.href = "/csc478/03-rancher/";
             },},{id: "csc478-course-project-multi-pod-multi-container-pipeline-on-kubernetes",
           title: 'Course Project: Multi-Pod Multi-Container Pipeline on Kubernetes',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/04-project/";
+            },},{id: "csc478-pod-service-and-deployment",
+          title: 'Pod, Service, and Deployment',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/05-pod-service-deployment/";
             },},{id: "csc478-rancher-rke2",
           title: 'Rancher RKE2',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/05-rancher-cloudlab/";
+              window.location.href = "/csc478/08-rancher-cloudlab/";
             },},{id: "csc478-clusterip-nodeport-and-multi-service-communication",
           title: 'ClusterIP, NodePort, and Multi-Service Communication',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/06-clusterip/";
+              window.location.href = "/csc478/09-clusterip/";
             },},{id: "csc478-storage-volumes-in-kubernetes",
           title: 'Storage Volumes in Kubernetes',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/07-volumes/";
+              window.location.href = "/csc478/10-volumes/";
             },},{id: "csc478-kubernetes-pv-pvc-hands-on-lab-with-nfs",
           title: 'Kubernetes PV/PVC Hands-On Lab with NFS',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/08-pv-lab/";
+              window.location.href = "/csc478/11-pv-lab/";
             },},{id: "csc478-resource-units-and-management-in-kubernetes",
           title: 'Resource Units and Management in Kubernetes',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/09-resource-management/";
+              window.location.href = "/csc478/12-resource-management/";
             },},{id: "csc478-loadbalancer-and-ingress",
           title: 'LoadBalancer and Ingress',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/10-load-balancer/";
+              window.location.href = "/csc478/13-load-balancer/";
             },},{id: "csc478-rbac-model-taxonomy",
           title: 'RBAC Model Taxonomy',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/13-core-rbac/";
+              window.location.href = "/csc478/14-core-rbac/";
             },},{id: "csc478-cloud-security",
           title: 'Cloud Security',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/14-cloud-security/";
+              window.location.href = "/csc478/15-cloud-security/";
             },},{id: "csc495-preparing-for-this-class",
           title: 'Preparing for this class',
           description: "",
