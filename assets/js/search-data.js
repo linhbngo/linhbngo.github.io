@@ -135,9 +135,20 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-my-father",
+            },{id: "post-my-mother",
         
-          title: "My father",
+          title: "My Mother",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/my-mother/";
+          
+        },
+      },{id: "post-my-father",
+        
+          title: "My Father",
         
         description: "",
         section: "Posts",
@@ -1151,12 +1162,12 @@ ninja.data = [{
           title: 'Introduction to FABRIC',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/02-fabrics/";
+              window.location.href = "/csc478/01-fabrics/";
             },},{id: "csc478-deploying-in-the-cloud",
           title: 'Deploying in the Cloud',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/02-introduction/";
+              window.location.href = "/csc478/02-deploy-cloud/";
             },},{id: "csc478-rancher-desktop",
           title: 'Rancher Desktop',
           description: "",
