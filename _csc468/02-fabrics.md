@@ -14,7 +14,7 @@ chart:
   vega_lite: true
 tikzjax: true
 typograms: true
-last_updated: 2026-03-24
+last_updated: 2026-07-20
 
 toc:
   - name: What is FABRIC
@@ -39,8 +39,6 @@ toc:
 
 {% enddetails %}
 
-
-
 {% details Why FABRIC %}
 
 – `Internet is showing its age.`
@@ -52,13 +50,12 @@ toc:
   - Advances in Machine Learning/AI
   - Emergence of 5G, IoT, various flavors of cloud technologies
 - Opportunity for the community to push the boundaries of distributed, stateful,‘everywhere’ programmable infrastructure
-  - More control or dataplane state, or some combination? Multiple architectures (co)exist in thisspace.
+  - More control or data plane state, or some combination? Multiple architectures (co)exist in this space.
   - Network as a big-data instrument? Autonomous network control?
   - New protocols and applications that program the network?
   - Security as an integral component
 
 {% enddetails %}
-
 
 {% details Nationwide Topology and Connected Facilities %}
 
@@ -97,11 +94,7 @@ toc:
 {% enddetails %}
 
 
----
-
 ## Slices, Sites, and Resource Thinking
-
-
 
 {% details Node Design %}
 
@@ -128,7 +121,7 @@ toc:
 
 {% details FABRIC Features %}
 - `Facility Ports`: ability to add external facilities to slices using on-demand L2 connections
-- Mirror Ports : ability to mirror traffic from the dataplane switch into slice
+- Mirror Ports : ability to mirror traffic from the data plane switch into slice
 - Support for on-demand public connectivity
   - Slices with L3 IPv4 or IPv6 can connect on-demand with public internet
   - This is in testing
