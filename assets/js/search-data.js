@@ -704,7 +704,7 @@ ninja.data = [{
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/04-process/";
             },},{id: "csc331-process-in-xv6",
-          title: 'Process in XV6',
+          title: 'Process in xv6',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/05-process-xv6/";
