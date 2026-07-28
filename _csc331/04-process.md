@@ -7,13 +7,19 @@ title: "Abstraction: Process and Process API"
 toc:
   - name: Program and process
   - name: Process API
-  - name: Process creation
-  - name: "Loading: from program to process"
-  - name: "Process: data structure"
-  - name: Process API
+  - name: Hands-on
   - name: The Shell
   - name: Other system calls ...
 ---
+
+{% include quiz.liquid
+   id="process-intro-1"
+   question="In a C program, when you call a function, the CPU jumps to a new address and executes code there. If you want to run a completely different executable file from your program, can you just 'call' it like a function?"
+   choices="Yes, you can call any binary file as if it were a function|No, because the other program is not part of the current running memory space|No, but only if the second program is written in a different language|Yes, provided you have a pointer to its main function"
+   answer="1"
+   hint="Think about how memory is organized when a single program is running."
+   explanation="Unlike a function call (which jumps within the same allocated memory space), another executable file resides on disk and requires its own separate environment—memory, registers, and state—to run. This need for a 'container' for a running program is why the OS provides the Process abstraction."
+%}
 
 ## Program and process
 
@@ -42,8 +48,7 @@ toc:
 
 ## Process API
 
-The operating system provides an API to help managing processes. Minimally, the followings 
-are provided:
+{% details Minimal API capabilities %}
 
 - Create: an OS must have some methods to create new processes to run programs. 
 - Destroy: interface to destroy process forcefully.    
@@ -55,7 +60,9 @@ are provided:
   - Frame pointer.
   - I/O devices. 
 
-## Process creation
+{% enddetails %}
+
+{% details Process creation %}
 
 When a program is run, the OS performs the following steps: 
 
@@ -70,8 +77,9 @@ of the process).
   - *In Linux, everything is a file.*
 - Begin executing from **main()**. 
 
+{% enddetails %}
 
-## Loading: from program to process
+{% details From program to process %}
 
 {% include figure.liquid path="assets/img/courses/csc331/process/01.png" width="50%" zoomable=true %}
 
@@ -83,7 +91,6 @@ of the process).
     to disk) that makes it not ready to run. 
 
 {% include figure.liquid path="assets/img/courses/csc331/process/02.png" width="50%" zoomable=true %}
-
 
 - State transition
     - When a process moves from **ready** to **running**, this means
@@ -97,7 +104,10 @@ of the process).
 
 {% include figure.liquid path="assets/img/courses/csc331/process/03.png" width="50%" zoomable=true %}
 
-## Process: data structure
+{% enddetails %}
+
+
+{% details Process data structure %}
 
 - The OS is a program, and will data structures to track different pieces of information.
 that it has been **scheduled** by the OS. 
@@ -106,17 +116,22 @@ that it has been **scheduled** by the OS.
   - additional information for running process.  
   - status of blocked process, from **blocked** to **ready**, to wait to be scheduled by the OS. 
 - Example: xv6
-    - [kernel/proc.h](https://github.com/mit-pdos/xv6-riscv/blob/riscv/kernel/proc.h)
+    - [kernel/proc.h](https://github.com/ngo-classes/xv6-riscv/blob/riscv/kernel/proc.h)
 
----
+{% enddetails %}
 
-## Process API
+{% details Key function calls %}
 
 Include three function calls:
 
 - fork()
 - exec()  
 - wait()  
+
+{% enddetails %}
+
+
+## Hands-on
 
 {% details Hands-on: setup %}
 
@@ -312,6 +327,8 @@ is, the shell prompt or command prompt), the shell is analogous to DOS and serve
 to graphical interfaces like Windows, Mac, and the X Window System. 
 
 {% enddetails %}
+
+{% details Why is the shell a process? %}
 - **In Unix, the shell is a program ...** 
     - Therefore, the running shell is **a process**.
     - In other words, inside a running shell, if we want to run another program, we are essentially
@@ -325,8 +342,9 @@ to graphical interfaces like Windows, Mac, and the X Window System.
     - call `wait()` to wait for the child process to finish (now with new process content) before
     giving user the **shell prompt** again. 
 
-{% details Hands-on: redirection %}
+{% enddetails %}
 
+{% details Hands-on: redirection %}
 
 - Run the following command
 

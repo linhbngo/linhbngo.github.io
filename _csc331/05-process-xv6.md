@@ -3,13 +3,33 @@ layout: lecture
 pretty_table: true
 collection: csc331
 
-title: "Process in XV6"
+title: "Process in xv6"
 toc:
+  - name: Editing files in xv6
   - name: How does fork() behave in xv6?
   - name: What about wait()?
   - name: The implementation of fork() in xv6
 ---
 
+## Editing files in xv6
+
+Since the `csc331` container mounts the `workspace` directory on the host machine into `/workspace`, you are able to edit the files directly from the host machine via an IDE. The screenshot belows show a VSCode IDE session into the host machine's `workspace` folder and editing a file called `xv6-test.txt`. 
+
+{% details Screenshot: Open workspace folder with VSCode on host machine %}
+
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/vscode-workspace.png" max-width="50%" zoomable=true %}   
+
+{% enddetails %}
+
+This file also shows up inside the `csc331` container. 
+
+{% details Screenshot: Contents of /workspace inside container %}
+
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/csc331-workspace.png" max-width="50%" zoomable=true %}   
+
+{% enddetails %}
+
+Going forward, you can edit all files in the `workspace` directory from your host computer and they will be reflected immediately inside the container. This will help with all hands-on activities, labs, and assignments for the class. 
 
 ## How does fork() behave in xv6?
 
@@ -29,12 +49,14 @@ int main() {
   }
   exit(0);
 }
+```
 
 {% details Screenshot: creating p1.c inside xv6-riscv/user %}
 
 {% include figure.liquid path="assets/img/courses/csc331/process-xv6/01.png" width="50%" zoomable=true %}   
 
 {% enddetails %}
+
 - In `Makefile` under `xv6-riscv`, find the section `UPROGS=` and edit to include the `$U/_p1\` line. 
 
 {% details Screenshot: Edit xv6-riscv/Makefile %}
@@ -87,6 +109,7 @@ int main() {
   }
   exit(0);
 }
+```
 
 {% details Screenshot: creating p2.c inside xv6-riscv/user %}
 
@@ -257,8 +280,6 @@ release(&np->lock);
 
 {% enddetails %}
 - Done modifying the child; release its lock temporarily.
-
----
 
 {% details info Details %}
 

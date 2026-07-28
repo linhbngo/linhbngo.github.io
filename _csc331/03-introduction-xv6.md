@@ -19,6 +19,7 @@ toc:
 {% details What is xv6? %}
 
 - [Educational reimplementation of Unix V6 by MIT](https://github.com/mit-pdos/xv6-riscv)
+    - For this class, we will use [a fork of the MIT repository](https://github.com/ngo-classes/xv6-riscv.git) (so that the repository's content is frozen through the semester)
 - MIT Operating System Engineering: 6.1810
 - Approximately 10K lines of C and Assembly
 - Clean, modular, readable
@@ -38,7 +39,7 @@ toc:
     - Complex bootstrapping
     - Modern system no longer supports x86
         - Not by default, had to install from custom libraries
-        - Rockly Linux 10 drops completely. 
+        - Rocky Linux 10 drops completely. 
 - In 2020
     - MIT ported xv6 to RISC-V architecture
     - Open source alternative to x86 and ARM
@@ -84,9 +85,9 @@ toc:
 - Open a terminal into your container. This can be done by either launch the terminal tab inside your Code browser, or SSH into the container. 
 
 ```bash
-ssh -p 22331 student@localhost #if SSH into container
-cd
-git clone https://github.com/mit-pdos/xv6-riscv.git
+docker exec -u student -it csc331 /bin/bash #if SSH into container
+cd /workspace
+git clone https://github.com/ngo-classes/xv6-riscv.gitc
 cd xv6-riscv
 make
 make qemu

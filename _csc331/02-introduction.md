@@ -37,9 +37,10 @@ toc:
 {% details How do the OS help? %}
 
 - Each physical component in a computing system is considered a resource. 
-- The OS **manages** these resources so that multiple programs can access
-these resources (through the corresponding virtual interface) at the same time.  
-- This is called **concurrency**. 
+- The OS **manages** these resources so that:
+  - Different programs can access these resources through the corresponding virtual interfaces: `virtualization`
+  - Different programs can access these resources at the same time: `concurrency`
+  - Modifying accesses (write) can be made permanent: `persistence`.   
 
 {% enddetails %}
 
@@ -59,7 +60,6 @@ these resources (through the corresponding virtual interface) at the same time.
 
 {% details info Preparation %}
 
-
 - The source code examples from the OSTEP book is located inside the container at `/home/student/ostep-code`
 - For this lecture, we will build the source codes inside the `intro` subdirectory. 
 - Launch the `csc331` container if necessary, then open a bash terminal into the container. 
@@ -68,13 +68,12 @@ these resources (through the corresponding virtual interface) at the same time.
 ```bash
 cpuset: "0-1"
 ```
-
 - View the file list
 - Compile all the files using `make`
 
 ```bash
 docker compose up -d
-docker compose exec -it csc331 /bin/bash
+docker compose exec -u student -it csc331 /bin/bash
 cd ~/ostep-code/intro
 ls
 make
@@ -101,7 +100,6 @@ int main(int argc, char *argv[])
 	exit(1);
     }
     char *str = argv[1];
-
     while (1) {
 	printf("%s\n", str);
 	Spin(1);
@@ -111,14 +109,11 @@ int main(int argc, char *argv[])
 ```
 
 - Open two terminals, and connect to the running container from these two terminals
-
-
 - In the left terminal pane, run the following command. 
 
 ```bash
 ./cpu A & ./cpu B & ./cpu C &./cpu D 
 ```
-
 
 - To stop the running processes on the left pane, move to the right pane and running the
 following commands:
@@ -163,7 +158,7 @@ Do programs running concurrently occupy the same memory locations (addresses)?
 The illusion of dedicated memory resources
 
 - Many running program share the physical memory space. 
-- Each runnning program is presented with the illusion that they have access to their own private
+- Each running program is presented with the illusion that they have access to their own private
 memory. This is called **virtual address space**, which is mapped to physical memory space
 by the OS.  
 - Making memory references within one running program (within one's own virtual address space) 
@@ -171,7 +166,7 @@ does not affect the private virtual address space of others.
 - Without the `setarch` command, the location of variable `p` will be 
 randomize within the virtual address space of a process. This is a security mechanism to 
 prevent others from guessing and applying direct manipulation techniques to the physical 
-memory location that acually contains `p`. 
+memory location that actually contains `p`. 
 
 {% enddetails %}
 
@@ -183,7 +178,6 @@ wants to manage many running programs at the same time.
 - This is called **concurrency**, and it leads to a number of interesting challenges 
 in designing and implementing various management mechanisms within the OS.
 - This can be observed through the following hands-on exercise. 
-
 - Type exit to close one of the two terminal panes. 
 - Run the following commands in the remaining terminal:
 
@@ -210,7 +204,6 @@ the final value of counter should be twice that of the command line argument.
 
 {% details Problem with concurrency %}
 
-
 - Naive concurrency gives you wrong results.  
 - Naive concurrency gives you wrong and inconsistent results. 
 
@@ -233,9 +226,9 @@ the final value of counter should be twice that of the command line argument.
 {% enddetails %}
 
 
-## Persistency
+## Persistency 
 
-- When the programs stop, everything in memory goes away: counter, p, str.
+- When the programs stop, everything in memory goes away: `counter`, `p`, `str`.
 - Physical components to store information persistently are needed.
 - Input/output or I/O devices:
     - Hard drives
