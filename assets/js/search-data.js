@@ -135,7 +135,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-my-mother",
+            },{id: "post-the-academic-advisor-as-fiduciary",
+        
+          title: "The Academic Advisor as Fiduciary",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/advising/";
+          
+        },
+      },{id: "post-my-mother",
         
           title: "My Mother",
         
