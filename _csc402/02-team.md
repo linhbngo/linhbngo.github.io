@@ -53,6 +53,7 @@ toc:
 - Brooks’s law: `adding manpower to a late software project makes it later`
 
 {% enddetails %}
+
 ## Aspects of software engineering teams
 
 {% details Team member roles %}
@@ -75,6 +76,7 @@ toc:
     - Recorder
 
 {% enddetails %}
+
 {% details Developer strengths and motivations %}
 
 - Developer growth through
@@ -102,6 +104,7 @@ toc:
     - Prioritize addressing the largest technical risks
 
 {% enddetails %}
+
 {% details Setting expectations %}
 
 - Avoid misunderstandings, disappointment by setting clear expectations
@@ -112,6 +115,7 @@ toc:
 - Communicate often, ask for help if stuck
 
 {% enddetails %}
+
 ## Examples of conflict resolutions in Team
 
 {% details Original email A %}
@@ -363,7 +367,23 @@ Please let us know at your earliest convenience what dates and times work for yo
 
 Best regards, 
 
+## Discussion: What is software engineering?
 
+{% details note Form groups %}
+
+- For this discussion, groups of five to six are to be 
+randomly formed
+- Reintroduce yourselves to one another: Names, Years
+
+{% enddetails %}
+{% details Example: Discussion %}
+
+- Designate one person as a note taker/final reporter 
+for the group. 
+- Discuss the following question: 
+    - What makes **software engineering** different from **programming**?
+
+{% enddetails %}
 
 
 

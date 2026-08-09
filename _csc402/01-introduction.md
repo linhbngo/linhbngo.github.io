@@ -24,20 +24,9 @@ toc:
   - name: Challenges
 ---
 
-# Introduction
-
-*This class is based on Cornell's Software Engineering course.* 
+*This class has originally been built based on Cornell's Software Engineering in Fall 2023.* 
 
 ## Course overview
-
-{% details note Self introduction %}
-
-- Name
-- Preferred programming language (or one you are most proficient with)
-- Preferred operating systems and platforms/libraries (or one you are most familiar with)
-- Anything else? 
-
-{% enddetails %}
 
 {% details note Goals %}
 
@@ -91,7 +80,6 @@ larger and the stakes are higher
 - [Wiki](https://en.wikipedia.org/wiki/Ariane_flight_V88)
 - [The Worst Computer Bugs in History: Ariane 5 Disaster](data/arianne5.pdf)
 
-
 {% enddetails %}
 
 {% details Failure: Boeing 737 MAX (2017) %}
@@ -106,33 +94,15 @@ larger and the stakes are higher
 
 {% enddetails %}
 
-## Discussion: What is software engineering?
-
-{% details note Form groups %}
-
-- For this discussion, groups of five to six are to be 
-randomly formed
-- Reintroduce yourselves to one another: Names, Years
-
-{% enddetails %}
-{% details Example: Discussion %}
-
-- Designate one person as a note taker/final reporter 
-for the group. 
-- Discuss the following question: 
-    - What makes **software engineering** different from **programming**?
-
-{% enddetails %}
 ## The course project
 
 {% details note Teams %}
 
 - Teams
-    - External projects: 6-8 students
-    - Personal projects: 4-6 students
+    - 4-8 students
+    - Ideal number is a team of 6, but depend on scope
 - Check for compatible schedules and work styles
-- Try to include members with both frontend and 
-backend experience (well-rounded team)
+- Try to include members with both frontend and backend experience (well-rounded team)
 - Students can form complete or partial team on their own
 - For partial teams or students without team
     - Utilize the Discord server to specify that you are looking for 
@@ -145,6 +115,7 @@ backend experience (well-rounded team)
 the subject of Teamwork and collaboration
 
 {% enddetails %}
+
 {% details note Projects %}
 
 - Projects from the course instructor
@@ -156,6 +127,8 @@ the subject of Teamwork and collaboration
 - Timeline: four 3-week sessions
 
 {% enddetails %}
+
+
 {% details note Project deliverables %}
 
 - Session reports
@@ -169,6 +142,16 @@ the subject of Teamwork and collaboration
 - Requirements
 - Code and code reviews
 - User documentation
+
+{% enddetails %}
+
+
+{% details note Self introduction %}
+
+- Name
+- Preferred programming language (or one you are most proficient with)
+- Preferred operating systems and platforms/libraries (or one you are most familiar with)
+- Anything else? 
 
 {% enddetails %}
 
