@@ -164,6 +164,28 @@ the subject of Teamwork and collaboration
 
 {% enddetails %}
 
+{% details note WCUPA HR Rammy AI Chatbot Enhancement %}
+
+- Client: [WCU HR](https://www.wcupa.edu/hr/)
+- Description: his CSC 402 Capstone project will modernize the HR Rammy AI Chatbot by replacing its current single-model setup with an advanced dual-model framework. To ensure a smooth transition, the project begins by building an isolated staging environment restricted to HR staff, giving the team a safe space to test updates without risking production uptime. To measure success, the team will create a standardized testing benchmark using real HR questions paired with human-approved answers. Using this benchmark, the project will evaluate a dual-model RAG architecture, separating query orchestration from response generation, across both fully local and hybrid setups against the current OpenAI model. Upon proving that a dual-model approach improves performance, privacy, and control- the team will deploy the upgraded system to production and deliver complete process documentation.
+
+{% enddetails %}
+
+{% details Jetson Tracking Sensor Package %}
+    - Client: [SME Solutions Inc.](https://smexpertsolutions.com/)
+    - Description:
+        - The system is centered around an NVIDIA Jetson, which serves as the primary computing and control platform for the vehicle. A camera and other supported sensors connect directly to the Jetson using standard interfaces such as USB, Ethernet, or GPIO. The Jetson collects and processes sensor data, performs object detection and tracking, determines the desired vehicle motion, and generates commands to control the vehicle.
+        - The architecture is intentionally modular so that sensors and software components can be added, removed, or replaced as the project evolves. Individual software modules may handle functions such as camera processing, object detection, sensor fusion, Guidance, Navigation, and Control (GNC), and vehicle control, while exchanging data through well-defined software interfaces.
+        - The initial prototype will focus on integrating a small set of sensors and demonstrating an autonomous vehicle capable of detecting, tracking, and following a selected object. This provides a foundation that can later be expanded with additional sensors, algorithms, and autonomous behaviors.
+{% enddetails %}
+
+{% details Hiring Process Modernization %}
+    - Client: [Chester County Department of Human Services](https://www.chesco.org/226/Human-Services)
+    - Description: 
+        - The Chester County Department of Human Services plans to update their existing candidate evaluation matrix to modernize and strengthen the county's hiring process. Building on the functionality of a data driven ranking system, this project will expand the use of a matrix to incorporate scoring criteria, improve usability for hiring managers, streamline documentation, and support more consistent, data‑driven assessments across all interviews. The updated scoring tool will need to align with established Departmental workflows, existing technological stacks, and other to-be-identified administrative and financial constraints.
+
+{% enddetails %}
+
 ## Challenges
 
 {% details What do you like the least about this class %}
@@ -173,6 +195,7 @@ the subject of Teamwork and collaboration
 - The lack of project choices and independent scoring in projects
 
 {% enddetails %}
+
 {% details Additional comments %}
 
 - There were a lot of unrealistic expectations for this class. We only had about 12 weeks to work on the project, and the professor expected us to have a lot more done even though we all have 3 – 5 additional classes on top of this one. If this class is only 3 credits, expect only 3 credits worth of work! 
