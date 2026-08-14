@@ -165,17 +165,17 @@ the subject of Teamwork and collaboration
 {% enddetails %}
 
 {% details Jetson Tracking Sensor Package %}
-    - Client: [SME Solutions Inc.](https://smexpertsolutions.com/)
-    - Description:
-        - The system is centered around an NVIDIA Jetson, which serves as the primary computing and control platform for the vehicle. A camera and other supported sensors connect directly to the Jetson using standard interfaces such as USB, Ethernet, or GPIO. The Jetson collects and processes sensor data, performs object detection and tracking, determines the desired vehicle motion, and generates commands to control the vehicle.
-        - The architecture is intentionally modular so that sensors and software components can be added, removed, or replaced as the project evolves. Individual software modules may handle functions such as camera processing, object detection, sensor fusion, Guidance, Navigation, and Control (GNC), and vehicle control, while exchanging data through well-defined software interfaces.
-        - The initial prototype will focus on integrating a small set of sensors and demonstrating an autonomous vehicle capable of detecting, tracking, and following a selected object. This provides a foundation that can later be expanded with additional sensors, algorithms, and autonomous behaviors.
+- Client: [SME Solutions Inc.](https://smexpertsolutions.com/)
+- Description:
+    - The system is centered around an NVIDIA Jetson, which serves as the primary computing and control platform for the vehicle. A camera and other supported sensors connect directly to the Jetson using standard interfaces such as USB, Ethernet, or GPIO. The Jetson collects and processes sensor data, performs object detection and tracking, determines the desired vehicle motion, and generates commands to control the vehicle.
+    - The architecture is intentionally modular so that sensors and software components can be added, removed, or replaced as the project evolves. Individual software modules may handle functions such as camera processing, object detection, sensor fusion, Guidance, Navigation, and Control (GNC), and vehicle control, while exchanging data through well-defined software interfaces.
+    - The initial prototype will focus on integrating a small set of sensors and demonstrating an autonomous vehicle capable of detecting, tracking, and following a selected object. This provides a foundation that can later be expanded with additional sensors, algorithms, and autonomous behaviors.
 {% enddetails %}
 
 {% details Hiring Process Modernization %}
-    - Client: [Chester County Department of Human Services](https://www.chesco.org/226/Human-Services)
-    - Description: 
-        - The Chester County Department of Human Services plans to update their existing candidate evaluation matrix to modernize and strengthen the county's hiring process. Building on the functionality of a data driven ranking system, this project will expand the use of a matrix to incorporate scoring criteria, improve usability for hiring managers, streamline documentation, and support more consistent, data‑driven assessments across all interviews. The updated scoring tool will need to align with established Departmental workflows, existing technological stacks, and other to-be-identified administrative and financial constraints.
+- Client: [Chester County Department of Human Services](https://www.chesco.org/226/Human-Services)
+- Description: 
+    - The Chester County Department of Human Services plans to update their existing candidate evaluation matrix to modernize and strengthen the county's hiring process. Building on the functionality of a data driven ranking system, this project will expand the use of a matrix to incorporate scoring criteria, improve usability for hiring managers, streamline documentation, and support more consistent, data‑driven assessments across all interviews. The updated scoring tool will need to align with established Departmental workflows, existing technological stacks, and other to-be-identified administrative and financial constraints.
 
 {% enddetails %}
 
