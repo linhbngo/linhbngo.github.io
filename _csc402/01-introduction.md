@@ -164,13 +164,6 @@ the subject of Teamwork and collaboration
 
 {% enddetails %}
 
-{% details note WCUPA HR Rammy AI Chatbot Enhancement %}
-
-- Client: [WCU HR](https://www.wcupa.edu/hr/)
-- Description: his CSC 402 Capstone project will modernize the HR Rammy AI Chatbot by replacing its current single-model setup with an advanced dual-model framework. To ensure a smooth transition, the project begins by building an isolated staging environment restricted to HR staff, giving the team a safe space to test updates without risking production uptime. To measure success, the team will create a standardized testing benchmark using real HR questions paired with human-approved answers. Using this benchmark, the project will evaluate a dual-model RAG architecture, separating query orchestration from response generation, across both fully local and hybrid setups against the current OpenAI model. Upon proving that a dual-model approach improves performance, privacy, and control- the team will deploy the upgraded system to production and deliver complete process documentation.
-
-{% enddetails %}
-
 {% details Jetson Tracking Sensor Package %}
     - Client: [SME Solutions Inc.](https://smexpertsolutions.com/)
     - Description:
