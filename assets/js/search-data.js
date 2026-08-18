@@ -65,6 +65,13 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc578/";
               },
+            },{id: "dropdown-ai-for-all-fundamentals-of-intelligent-systems",
+              title: "AI For All: Fundamentals of Intelligent Systems",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc117/";
+              },
             },{id: "dropdown-tiny-machine-learning-tinyml-su26",
               title: "Tiny Machine Learning (tinyML) (SU26)",
               description: "",
@@ -554,6 +561,11 @@ ninja.data = [{
           description: "",
           section: "Csc-workshops",handler: () => {
               window.location.href = "/csc-workshops/more-bash/";
+            },},{id: "csc117-syllabus",
+          title: 'Syllabus',
+          description: "",
+          section: "Csc117",handler: () => {
+              window.location.href = "/csc117/00-syllabus/";
             },},{id: "csc231-csc-231-computer-systems",
           title: 'CSC 231: Computer Systems',
           description: "",
