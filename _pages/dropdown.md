@@ -20,6 +20,9 @@ children:
   - title: <strong>Cloud Systems Engineering (FA26)</strong>
     permalink: /csc578/
   - title: divider
+  - title: "AI For All: Fundamentals of Intelligent Systems"
+    permalink: /csc117/
+  - title: divider
   - title: Tiny Machine Learning (tinyML) (SU26)
     permalink: /csc574/
   - title: divider

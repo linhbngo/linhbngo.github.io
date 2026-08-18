@@ -80,7 +80,7 @@ are run by the computer hardware. This will lead to more efficient, stable, and 
 - **Operating Systems: Three Easy Pieces** by Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau.
     - The authors offer free downloadable PDF of all the book's chapters on [the book's website][ostep]. 
 
-**xv6: a simple, Unix-like teaching operating system** by Russ Cox, Frans Kasshoek, and Robert Morris. 
+- **xv6: a simple, Unix-like teaching operating system** by Russ Cox, Frans Kasshoek, and Robert Morris. 
     - The book is available as [a free PDF copy](https://pdos.csail.mit.edu/6.1810/2025/xv6/book-riscv-rev5.pdf).
     - The LaTEX source code of the book is available via [GitHub](https://github.com/mit-pdos/xv6-riscv-book.git).
 

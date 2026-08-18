@@ -12,7 +12,6 @@ toc:
   - name: Learning Objectives
   - name: Assessments and Grading
 ---
-# CSC 231: Computer Systems
 
 **Syllabus**
 
