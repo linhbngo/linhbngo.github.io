@@ -191,12 +191,14 @@ the subject of Teamwork and collaboration
 {% enddetails %}
 
 
-{% details Hiring Process Modernization %}
+{% details Self-Choice Food Delivery Management System %}
 - Client: [Oxford SILO](https://oxfordsilo.com/about/)
 - Description:  Help a local nonprofit organization remove barriers to families receiving the food they need. SILO's food delivery program helps households with limited transportation in our rural community and those who work during the day when traditional food pantries are open by delivers fresh and shelf stable food directly to the front door of recipients in the evening hours. 
     - We currently deliver identical bags of food to our recipients and would like to shift to a self choice model and allow recipients to choose the food in their bags each month that match their dietary restrictions and cultural preferences. We are looking to design and launch an app where friends (clients) can create and sign into an account, confirm their address and phone number, see when their next delivery date is (food is delivered monthly) and choose the food they would like in their next delivery. On the organizational side, we would need to be able to see updated contact information to import into our database, as well as a packing list for staff and volunteers when they prepare the bags. Ideally these could be printed on stickers that are attached to the food bags.
 
 {% enddetails %}
+
+
 
 ## Challenges
 
