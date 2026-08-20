@@ -160,7 +160,7 @@ the subject of Teamwork and collaboration
 {% details note WCUPA HR Rammy AI Chatbot Enhancement %}
 
 - Client: [WCU HR](https://www.wcupa.edu/hr/)
-- Description: his CSC 402 Capstone project will modernize the HR Rammy AI Chatbot by replacing its current single-model setup with an advanced dual-model framework. To ensure a smooth transition, the project begins by building an isolated staging environment restricted to HR staff, giving the team a safe space to test updates without risking production uptime. To measure success, the team will create a standardized testing benchmark using real HR questions paired with human-approved answers. Using this benchmark, the project will evaluate a dual-model RAG architecture, separating query orchestration from response generation, across both fully local and hybrid setups against the current OpenAI model. Upon proving that a dual-model approach improves performance, privacy, and control- the team will deploy the upgraded system to production and deliver complete process documentation.
+- Description: This CSC 402 Capstone project will modernize the HR Rammy AI Chatbot by replacing its current single-model setup with an advanced dual-model framework. To ensure a smooth transition, the project begins by building an isolated staging environment restricted to HR staff, giving the team a safe space to test updates without risking production uptime. To measure success, the team will create a standardized testing benchmark using real HR questions paired with human-approved answers. Using this benchmark, the project will evaluate a dual-model RAG architecture, separating query orchestration from response generation, across both fully local and hybrid setups against the current OpenAI model. Upon proving that a dual-model approach improves performance, privacy, and control- the team will deploy the upgraded system to production and deliver complete process documentation.
 
 {% enddetails %}
 
@@ -176,6 +176,25 @@ the subject of Teamwork and collaboration
 - Client: [Chester County Department of Human Services](https://www.chesco.org/226/Human-Services)
 - Description: 
     - The Chester County Department of Human Services plans to update their existing candidate evaluation matrix to modernize and strengthen the county's hiring process. Building on the functionality of a data driven ranking system, this project will expand the use of a matrix to incorporate scoring criteria, improve usability for hiring managers, streamline documentation, and support more consistent, data‑driven assessments across all interviews. The updated scoring tool will need to align with established Departmental workflows, existing technological stacks, and other to-be-identified administrative and financial constraints.
+
+{% enddetails %}
+
+{% details Crime Prevention and Personal Safety Application %}
+- Client: Dr. Jaeyong Choi, Criminal Justice Department
+- Description: 
+    - This project will develop a crime prevention and personal safety application that uses publicly available crime data to provide users with location- and time-based crime risk information. The application will analyze historical crime patterns and other relevant geographic and temporal factors to estimate the relative risk of crime in a selected area and time period.
+    - The system will incorporate a crime risk forecasting component that identifies patterns based on factors such as location, time of day, day of the week, and historical crime trends. Rather than attempting to predict individual criminal events, the application will present users with understandable risk levels or safety information that can help them make more informed decisions about their surroundings.
+    - The application will also include several personal safety features. Users will be able to activate a loud emergency alarm designed to attract attention in a potentially dangerous situation. The application will provide easily accessible emergency contact information, including options for contacting 911, campus or local law enforcement, and designated personal emergency contacts.
+    - An additional safety-information component will provide users with practical crime prevention and personal safety guidance, including situational awareness strategies, information about responding to threatening situations, and general self-defense information.
+    - The project will emphasize usability, responsible use of crime data, privacy, and clear communication of uncertainty. The application will be designed so that crime risk estimates are presented as informational tools rather than guarantees of whether a particular location is safe or dangerous. The initial prototype will demonstrate crime-data integration, geographic risk visualization, time-based risk estimation, emergency alarm functionality, emergency contacts, and personal safety resources.
+
+{% enddetails %}
+
+
+{% details Hiring Process Modernization %}
+- Client: [Oxford SILO](https://oxfordsilo.com/about/)
+- Description:  Help a local nonprofit organization remove barriers to families receiving the food they need. SILO's food delivery program helps households with limited transportation in our rural community and those who work during the day when traditional food pantries are open by delivers fresh and shelf stable food directly to the front door of recipients in the evening hours. 
+    - We currently deliver identical bags of food to our recipients and would like to shift to a self choice model and allow recipients to choose the food in their bags each month that match their dietary restrictions and cultural preferences. We are looking to design and launch an app where friends (clients) can create and sign into an account, confirm their address and phone number, see when their next delivery date is (food is delivered monthly) and choose the food they would like in their next delivery. On the organizational side, we would need to be able to see updated contact information to import into our database, as well as a packing list for staff and volunteers when they prepare the bags. Ideally these could be printed on stickers that are attached to the food bags.
 
 {% enddetails %}
 
