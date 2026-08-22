@@ -4,7 +4,7 @@
       {
             "title": "ClusterIP, NodePort, and Multi-Service Communication",
             "description": "",
-            "published": "August 20, 2026",
+            "published": "August 22, 2026",
             "authors": [
               
             ],
@@ -141,7 +141,7 @@ curl backend-svc
 </pre></td> <td class="rouge-code"><pre><span class="c"># NODE_IP should be the hostname/IP address of the CloudLab node you are on. </span>
 <span class="c"># NODE_PORT is the value between 30000 and 32767 that Kubernetes give your backend-nodeport service</span>
 curl NODE_IP:NODE_PORT
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <hr> <h2 id="multi-service-communication">Multi-Service Communication</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <ul> <li>In a real apps, multiple services are talking to each other.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Quote of the Day App</summary> <details class="details details--info" data-variant="info"><summary>Architecture</summary> <ul> <li>API Service: returns some random quotes</li> <li>Time Service: return current server time</li> <li>Frontend Service: aggregate both responses and presents a combined message to the user.</li> </ul> </details> <details class="details details--info" data-variant="info"><summary>API Service: quote</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">quote-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <hr> <h2 id="multi-service-communication">Multi-Service Communication</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <ul> <li>In a real apps, multiple services are talking to each other.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Quote of the Day App</summary> <details class="details details--info" data-variant="info"><summary><span class="details-label">Info</span>Architecture</summary> <ul> <li>API Service: returns some random quotes</li> <li>Time Service: return current server time</li> <li>Frontend Service: aggregate both responses and presents a combined message to the user.</li> </ul> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">Info</span>API Service: quote</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">quote-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -214,7 +214,7 @@ curl NODE_IP:NODE_PORT
   <span class="na">ports</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
     <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary>Time Service</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">time-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">Info</span>Time Service</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">time-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -289,7 +289,7 @@ curl NODE_IP:NODE_PORT
   <span class="na">ports</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
     <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary>Frontend Service</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">time-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">Info</span>Frontend Service</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">time-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
