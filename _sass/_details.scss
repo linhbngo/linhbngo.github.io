@@ -1,0 +1,82 @@
+/*******************************************************************************
+ * Collapsible details blocks (Liquid {% details %} tag).
+ *
+ * Colors come from --global-details-* tokens in _themes.scss so light and
+ * dark themes stay independently AA-compliant. Layout-only Distill overrides
+ * remain in _distill.scss.
+ ******************************************************************************/
+
+$details-variants: note, tip, warning, info, success, danger, comm, critical,
+  career, tech;
+
+details.details {
+  color: var(--global-text-color);
+  background-color: var(--global-details-bg);
+  border-left: 4px solid var(--global-details-border);
+  margin-top: 0;
+  padding: 8px 12px;
+  position: relative;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 20px;
+  overflow: auto;
+  max-width: 100%;
+
+  summary {
+    color: var(--global-details-summary);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--global-theme-color);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  summary + * {
+    margin-top: 0.75rem;
+  }
+
+  p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  ul,
+  ol {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    padding-left: 1.2rem;
+  }
+
+  li {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+  }
+}
+
+.details-label {
+  display: inline-block;
+  margin-right: 0.5em;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: 0.08em;
+  color: inherit;
+}
+
+@each $variant in $details-variants {
+  details.details--#{$variant} {
+    border-left-color: var(--global-details-#{$variant}-border);
+    background-color: var(--global-details-#{$variant}-bg);
+
+    summary {
+      color: var(--global-details-#{$variant}-summary);
+    }
+  }
+}

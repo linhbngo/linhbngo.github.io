@@ -4,7 +4,20 @@ module Jekyll
   module Tags
     class DetailsTag < Liquid::Block
 
-      VARIANTS = %w[default note tip warning info success danger].freeze
+      VARIANTS = %w[default note tip warning info success danger comm critical career tech].freeze
+
+      LABELS = {
+        "note"     => "Note",
+        "tip"      => "Tip",
+        "warning"  => "Warning",
+        "info"     => "Info",
+        "success"  => "Success",
+        "danger"   => "Danger",
+        "comm"     => "Communication",
+        "critical" => "Critical thinking",
+        "career"   => "Career",
+        "tech"     => "Technology"
+      }.freeze
 
       def initialize(tag_name, markup, tokens)
         super
@@ -20,20 +33,23 @@ module Jekyll
           @variant = "default"
           @caption = markup
         end
-        #@caption = markup
       end
 
       def render(context)
         site = context.registers[:site]
         converter = site.find_converter_instance(::Jekyll::Converters::Markdown)
-        #caption = converter.convert(@caption).gsub(/<\/?p[^>]*>/, '').chomp
         caption = converter.convert(@caption)
                            .gsub(/<\/?p[^>]*>/, '')
                            .chomp
         body = converter.convert(super(context))
         klass = "details details--#{@variant}"
-        %(<details class="#{klass}" data-variant="#{@variant}"><summary>#{caption}</summary>#{body}</details>)
-        #"<details><summary>#{caption}</summary>#{body}</details>"
+        label = LABELS[@variant]
+        summary = if label
+                    %(<span class="details-label">#{label}</span>#{caption})
+                  else
+                    caption
+                  end
+        %(<details class="#{klass}" data-variant="#{@variant}"><summary>#{summary}</summary>#{body}</details>)
       end
 
     end

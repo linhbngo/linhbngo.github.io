@@ -8,6 +8,9 @@
 // Colors
 $red-color: #ff3636 !default;
 $red-color-dark: #b71c1c !default;
+// Do not use $orange-color, $yellow-color, $green-color-lime, or
+// $green-color-bright as text or as the only border of a control:
+// none of them meet 4.5:1 (and some fail 3:1) on white. See ACCESSIBILITY.md.
 $orange-color: #f29105 !default;
 $blue-color: #0076df !default;
 $blue-color-dark: #00369f !default;
@@ -29,12 +32,28 @@ $grey-color-light: color.adjust($grey-color, $lightness: 40%);
 $grey-color-dark: #1c1c1d;
 $grey-900: #212529;
 
+// Muted text that meets WCAG AA on the corresponding page background.
+$grey-color-muted-light: #595959 !default;
+$grey-color-muted-dark: #a3a3a3 !default;
+
+// Solid accent fills that support white (light) or white (dark) label text.
+$theme-on-color-light: $purple-color !default;
+$theme-on-color-dark: #1a7a96 !default;
+
+// Inline/block code text. Dark theme uses a lighter cyan than $cyan-color
+// so code on --global-code-bg-color meets 4.5:1.
+$code-color-light: $purple-color !default;
+$code-color-dark: #4ec3e0 !default;
+
+$footer-hover-color-light: #e8a0e4 !default;
+$footer-hover-color-dark: #155e75 !default;
+
 $white-color: #ffffff !default;
 $black-color: #000000 !default;
 
 // Theme colors
 
-$details-bg-color-light: rgba($green-color, 0.3);
+$details-bg-color-light: #f4f4f4 !default;
 $details-bg-color-dark: #2c3237 !default;
 
 $code-bg-color-light: rgba($grey-color-light, 0.5);

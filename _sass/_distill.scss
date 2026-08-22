@@ -51,8 +51,14 @@ d-article {
   }
   a {
     color: var(--global-theme-color) !important;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
     &:hover {
       color: var(--global-theme-color) !important;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--global-theme-color);
+      outline-offset: 2px;
     }
   }
   b i {
@@ -66,65 +72,10 @@ d-article {
     margin-bottom: 1rem;
   }
 
-  // Style taken from code blocks
+  // Color and variant styles live in _details.scss. Distill only needs
+  // the article grid placement.
   details {
-    color: var(--global-text-color);
-    background-color: var(--global-details-bg-color);
-    margin-top: 0;
-    padding: 8px 12px;
-    position: relative;
-    border-radius: 6px;
-    display: block;
-    margin-bottom: 20px;
     grid-column: text;
-    overflow: auto;
-    max-width: 100%;
-    summary {
-      color: var(--global-theme-color);
-    }
-    summary + * {
-      margin-top: 0.75rem;
-    }
-    p {
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    ul,
-    ol {
-      margin-top: 0.4rem;
-      margin-bottom: 0.4rem;
-      padding-left: 1.2rem;
-    }
-    li {
-      margin-top: 0.1rem;
-      margin-bottom: 0.1rem;
-    }
-  }
- 
-  details.details--warning {
-    border-left: 4px solid #f1c40f;
-    background: rgba(241, 196, 15, 0.12);
-    summary { color: #b07d00; }
-  }
-  details.details--info {
-    border-left: 4px solid #2b7cff;
-    background: rgba(43, 124, 255, 0.10);
-    summary { color: #1f5fbf; }
-  }
-  details.details--success {
-    border-left: 4px solid #00c853;
-    background: rgba(0, 200, 83, 0.12);
-    summary { color: #008b3d; }
-  }
-  details.details--danger {
-    border-left: 4px solid #d9534f;
-    background: rgba(217, 83, 79, 0.12);
-    summary { color: #b52b27; }
-  }
-  details.details--tip {
-    border-left: 4px solid #00bcd4;
-    background: rgba(0, 188, 212, 0.12);
-    summary { color: #008fa1; }
   }
 
   d-contents {
@@ -149,8 +100,13 @@ d-article {
       grid-column: toc;
       a {
         border-bottom: none !important;
+        text-decoration: none !important;
         &:hover {
           border-bottom: 1px solid var(--global-text-color) !important;
+        }
+        &:focus-visible {
+          outline: 2px solid var(--global-theme-color);
+          outline-offset: 2px;
         }
       }
       h3 {
@@ -161,7 +117,7 @@ d-article {
         display: block;
         outline: none;
         margin-bottom: 0.8em;
-        color: rgba(0, 0, 0, 0.8);
+        color: var(--global-text-color);
         font-weight: bold;
       }
       ul {

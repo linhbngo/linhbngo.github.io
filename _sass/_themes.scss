@@ -1,5 +1,9 @@
 /*******************************************************************************
  * Themes
+ *
+ * Color tokens are documented in ACCESSIBILITY.md. When changing a hex value,
+ * run `python3 scripts/check_contrast.py` and keep text pairs at ≥ 4.5:1
+ * (WCAG 2.2 AA) against their intended background.
  ******************************************************************************/
 
 @use "sass:color";
@@ -9,40 +13,92 @@
   --global-bg-color: #{$white-color};
   --global-details-bg-color: #{$details-bg-color-light};
   --global-code-bg-color: #{$code-bg-color-light};
+  --global-code-color: #{$code-color-light};
   --global-text-color: #{$black-color};
-  --global-text-color-light: #{$grey-color};
+  --global-text-color-light: #{$grey-color-muted-light};
   --global-theme-color: #{$purple-color};
+  --global-theme-on-color: #{$theme-on-color-light};
   --global-hover-color: #{$purple-color};
   --global-hover-text-color: #{$white-color};
   --global-footer-bg-color: #{$grey-color-dark};
   --global-footer-text-color: #{$grey-color-light};
   --global-footer-link-color: #{$white-color};
-  --global-distill-app-color: #{$grey-color};
+  --global-footer-hover-color: #{$footer-hover-color-light};
+  --global-distill-app-color: #{$grey-color-muted-light};
   --global-divider-color: rgba(0, 0, 0, 0.1);
   --global-card-bg-color: #{$white-color};
   --global-highlight-color: #{$red-color-dark};
-  --global-back-to-top-bg-color: rgba(
-    #{color.channel($black-color, "red", $space: rgb)},
-    #{color.channel($black-color, "green", $space: rgb)},
-    #{color.channel($black-color, "blue", $space: rgb)},
-    0.4
-  );
+  --global-highlight-search-bg: #8e0788;
+  --global-highlight-search-text: #{$white-color};
+  --global-back-to-top-bg-color: #5c5c5c;
   --global-back-to-top-text-color: #{$white-color};
   --global-newsletter-bg-color: #{$white-color};
   --global-newsletter-text-color: #{$black-color};
 
-  --global-tip-block: #42b983;
+  --global-tip-block: #1d6b4a;
   --global-tip-block-bg: #e2f5ec;
   --global-tip-block-text: #215d42;
-  --global-tip-block-title: #359469;
-  --global-warning-block: #e7c000;
+  --global-tip-block-title: #215d42;
+  --global-warning-block: #8a7000;
   --global-warning-block-bg: #fff8d8;
   --global-warning-block-text: #6b5900;
-  --global-warning-block-title: #b29400;
+  --global-warning-block-title: #6b5900;
   --global-danger-block: #c00;
   --global-danger-block-bg: #ffe0e0;
   --global-danger-block-text: #600;
-  --global-danger-block-title: #c00;
+  --global-danger-block-title: #900;
+
+  // Default / unstyled details (neutral grey, theme-colored edge)
+  --global-details-border: #{$purple-color};
+  --global-details-bg: #{$details-bg-color-light};
+  --global-details-summary: #7a0676;
+
+  --global-details-note-border: #4b5563;
+  --global-details-note-bg: #f3f4f6;
+  --global-details-note-summary: #1f2937;
+
+  --global-details-tip-border: #007a88;
+  --global-details-tip-bg: #e0f7fa;
+  --global-details-tip-summary: #006f7c;
+
+  --global-details-warning-border: #8a7000;
+  --global-details-warning-bg: #fff8d8;
+  --global-details-warning-summary: #6b5900;
+
+  --global-details-info-border: #1558c0;
+  --global-details-info-bg: #eaf2ff;
+  --global-details-info-summary: #1f5fbf;
+
+  --global-details-success-border: #007a33;
+  --global-details-success-bg: #e0f8ea;
+  --global-details-success-summary: #006b30;
+
+  --global-details-danger-border: #c00;
+  --global-details-danger-bg: #ffe0e0;
+  --global-details-danger-summary: #900;
+
+  --global-details-comm-border: #4338ca;
+  --global-details-comm-bg: #eef2ff;
+  --global-details-comm-summary: #3730a3;
+
+  --global-details-critical-border: #9a3412;
+  --global-details-critical-bg: #fff7ed;
+  --global-details-critical-summary: #7c2d12;
+
+  --global-details-career-border: #9d174d;
+  --global-details-career-bg: #fdf2f8;
+  --global-details-career-summary: #831843;
+
+  --global-details-tech-border: #334155;
+  --global-details-tech-bg: #f1f5f9;
+  --global-details-tech-summary: #1e293b;
+
+  --global-quiz-correct-border: #2e7d32;
+  --global-quiz-correct-bg: #e8f5e9;
+  --global-quiz-correct-text: #1b5e20;
+  --global-quiz-wrong-border: #c62828;
+  --global-quiz-wrong-bg: #ffebee;
+  --global-quiz-wrong-text: #b71c1c;
 
   #light-toggle-system {
     padding-left: 10px;
@@ -82,17 +138,22 @@ html[data-theme="dark"] {
   --global-bg-color: #{$grey-color-dark};
   --global-details-bg-color: #{$details-bg-color-dark};
   --global-code-bg-color: #{$code-bg-color-dark};
+  --global-code-color: #{$code-color-dark};
   --global-text-color: #{$grey-color-light};
-  --global-text-color-light: #{$grey-color};
+  --global-text-color-light: #{$grey-color-muted-dark};
   --global-theme-color: #{$cyan-color};
+  --global-theme-on-color: #{$theme-on-color-dark};
   --global-hover-color: #{$cyan-color};
   --global-hover-text-color: #{$white-color};
   --global-footer-bg-color: #{$grey-color-light};
   --global-footer-text-color: #{$grey-color-dark};
   --global-footer-link-color: #{$black-color};
+  --global-footer-hover-color: #{$footer-hover-color-dark};
   --global-distill-app-color: #{$grey-color-light};
-  --global-divider-color: #424246;
+  --global-divider-color: #6e6e75;
   --global-card-bg-color: #{$grey-900};
+  --global-highlight-search-bg: #{$code-color-dark};
+  --global-highlight-search-text: #{$grey-color-dark};
   --global-back-to-top-bg-color: rgba(
     #{color.channel($white-color, "red", $space: rgb)},
     #{color.channel($white-color, "green", $space: rgb)},
@@ -103,18 +164,69 @@ html[data-theme="dark"] {
   --global-newsletter-bg-color: #{$grey-color-light};
   --global-newsletter-text-color: #{$grey-color-dark};
 
-  --global-tip-block: #42b983;
-  --global-tip-block-bg: #e2f5ec;
-  --global-tip-block-text: #215d42;
-  --global-tip-block-title: #359469;
-  --global-warning-block: #e7c000;
-  --global-warning-block-bg: #fff8d8;
-  --global-warning-block-text: #6b5900;
-  --global-warning-block-title: #b29400;
-  --global-danger-block: #c00;
-  --global-danger-block-bg: #ffe0e0;
-  --global-danger-block-text: #600;
-  --global-danger-block-title: #c00;
+  --global-tip-block: #5eead4;
+  --global-tip-block-bg: #152e30;
+  --global-tip-block-text: #e8e8e8;
+  --global-tip-block-title: #99f6e4;
+  --global-warning-block: #fbbf24;
+  --global-warning-block-bg: #2a2408;
+  --global-warning-block-text: #e8e8e8;
+  --global-warning-block-title: #fde68a;
+  --global-danger-block: #fca5a5;
+  --global-danger-block-bg: #3b1515;
+  --global-danger-block-text: #e8e8e8;
+  --global-danger-block-title: #fecaca;
+
+  --global-details-border: #{$code-color-dark};
+  --global-details-bg: #{$details-bg-color-dark};
+  --global-details-summary: #{$code-color-dark};
+
+  --global-details-note-border: #9ca3af;
+  --global-details-note-bg: #25262b;
+  --global-details-note-summary: #d1d5db;
+
+  --global-details-tip-border: #5eead4;
+  --global-details-tip-bg: #152e30;
+  --global-details-tip-summary: #99f6e4;
+
+  --global-details-warning-border: #fbbf24;
+  --global-details-warning-bg: #2a2408;
+  --global-details-warning-summary: #fde68a;
+
+  --global-details-info-border: #8ab4ff;
+  --global-details-info-bg: #1e2634;
+  --global-details-info-summary: #8ab4ff;
+
+  --global-details-success-border: #6ee7b7;
+  --global-details-success-bg: #143326;
+  --global-details-success-summary: #a7f3d0;
+
+  --global-details-danger-border: #fca5a5;
+  --global-details-danger-bg: #3b1515;
+  --global-details-danger-summary: #fecaca;
+
+  --global-details-comm-border: #a5b4fc;
+  --global-details-comm-bg: #1c2038;
+  --global-details-comm-summary: #c7d2fe;
+
+  --global-details-critical-border: #fdba74;
+  --global-details-critical-bg: #2a1d14;
+  --global-details-critical-summary: #fed7aa;
+
+  --global-details-career-border: #f9a8d4;
+  --global-details-career-bg: #2a1522;
+  --global-details-career-summary: #fbcfe8;
+
+  --global-details-tech-border: #94a3b8;
+  --global-details-tech-bg: #222830;
+  --global-details-tech-summary: #cbd5e1;
+
+  --global-quiz-correct-border: #66bb6a;
+  --global-quiz-correct-bg: #203422;
+  --global-quiz-correct-text: #a5d6a7;
+  --global-quiz-wrong-border: #ef5350;
+  --global-quiz-wrong-bg: #461f20;
+  --global-quiz-wrong-text: #ef9a9a;
 
   .only-light {
     display: none;
