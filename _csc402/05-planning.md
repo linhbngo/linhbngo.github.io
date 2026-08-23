@@ -23,8 +23,6 @@ toc:
   - name: Initial preparation steps
 ---
 
-# Working in a Team
-
 ## Objectives
 
 {% details Assess project feasibility %}

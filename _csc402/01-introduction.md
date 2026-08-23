@@ -198,6 +198,13 @@ the subject of Teamwork and collaboration
 
 {% enddetails %}
 
+{% details Polaris Brand Promotions Operations Database %}
+- Client: [Polaris Brand Promotion](https://polarisbrandpromotions.com/)
+- Description: The project will involve continuing the work started by the Spring 2026 West Chester University Capstone Course:
+    - This project asks the team to modernize a real operations workflow at Polaris Brand Promotions by replacing worksheet-based storage solutions, one for scheduling shifts/events and one for client billing & contractor payroll, with a secure, cloud-based web application backed by a database. You’ll design the data model so shared fields can flow reliably from scheduling into billing/payroll. You will also work on adding more advanced features such as searchable client and staff profiles, single-shift entry forms plus bulk CSV/Excel import, reporting dashboards/exports for operations and finance, automatic daily backup emails of the data as Excel/CSV, and an audit trail that records which logged-in corporate user created or edited each record.
+    - Our agency’s main operational functions are performed using two Google Sheets: our BA Shift Scheduling - Master File and our Client Billing & Payroll File. These files do not directly interface and are prone to human error, so we’re looking for an AWS based online platform that is customizable for our needs and eliminates the functionality issues from our current Google Sheet-based system. See attached example files that we will review during our first meeting.
+
+{% enddetails %}
 
 
 ## Challenges
