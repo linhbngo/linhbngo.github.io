@@ -14,7 +14,6 @@ toc:
   - name: Course Schedules
 ---
 
-
 ## General Information
 
 - **Semester**: Fall 2026

@@ -24,7 +24,7 @@ toc:
   - name: Challenges
 ---
 
-*This class has originally been built based on Cornell's Software Engineering in Fall 2023.* 
+*This class has originally been built based on Cornell's Software Engineering version Fall 2023.* 
 
 ## Course overview
 
