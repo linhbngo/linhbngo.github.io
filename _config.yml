@@ -218,8 +218,10 @@ kramdown:
 include: ["_pages", "_scripts"]
 exclude:
   - bin/
+  - ACCESSIBILITY.md
   - CONTRIBUTING.md
   - CUSTOMIZE.md
+  - DETAILS-SUM.md
   - Dockerfile
   - docker-compose.yml
   - docker-compose-slim.yml
