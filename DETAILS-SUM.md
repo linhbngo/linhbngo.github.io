@@ -1,6 +1,6 @@
 # Distill `details` variants
 
-Lecture, Distill, and other pages support collapsible blocks through the Liquid tag `{% details %}`. The first word of the tag is an optional **variant**. If it is not a known variant name, the whole string is used as the caption and the block is styled as `default`.
+Lecture, Distill, and other pages support collapsible blocks through the Liquid tag `details`. The first word of the tag is an optional **variant**. If it is not a known variant name, the whole string is used as the caption and the block is styled as `default`.
 
 Markup is implemented in `_plugins/details.rb`. Colors come from `--global-details-*` tokens in `_sass/_themes.scss`. Shared chrome lives in `_sass/_details.scss` (global, not Distill-only). Distill/lecture articles only add `grid-column: text` in `_sass/_distill.scss`.
 
@@ -331,7 +331,7 @@ Label: **Technology**. Hue: **slate**.
 
 ## Authoring notes
 
-1. The variant word must be the **first token** and must match the list above exactly (lowercase). `{% details Communication ... %}` is not `comm`; it becomes a default block whose caption starts with “Communication”.
+1. The variant word must be the **first token** and must match the list above exactly (lowercase). 
 2. The plugin already prefixes a text label. You do not need to repeat “Warning:” in the caption unless you want it in the title twice.
 3. Nested `details` are allowed. There is no `question` or `example` variant; those names currently render as `default`.
 4. Styles apply site-wide via `_details.scss`. Distill articles additionally place the block on the text grid column.
