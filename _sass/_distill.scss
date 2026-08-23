@@ -283,4 +283,16 @@ d-appendix {
   d-article > d-contents toc-line {
     display: none;
   }
+
+  d-appendix {
+    border-top: none !important;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  d-appendix + d-article {
+    border-top: none !important;
+    padding-top: 0;
+  }
 }
