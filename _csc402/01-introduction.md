@@ -164,7 +164,7 @@ the subject of Teamwork and collaboration
 
 {% enddetails %}
 
-{% details Jetson Tracking Sensor Package %}
+{% details note Jetson Tracking Sensor Package %}
 - Client: [SME Solutions Inc.](https://smexpertsolutions.com/)
 - Description:
     - The system is centered around an NVIDIA Jetson, which serves as the primary computing and control platform for the vehicle. A camera and other supported sensors connect directly to the Jetson using standard interfaces such as USB, Ethernet, or GPIO. The Jetson collects and processes sensor data, performs object detection and tracking, determines the desired vehicle motion, and generates commands to control the vehicle.
@@ -172,14 +172,14 @@ the subject of Teamwork and collaboration
     - The initial prototype will focus on integrating a small set of sensors and demonstrating an autonomous vehicle capable of detecting, tracking, and following a selected object. This provides a foundation that can later be expanded with additional sensors, algorithms, and autonomous behaviors.
 {% enddetails %}
 
-{% details Hiring Process Modernization %}
+{% details note Hiring Process Modernization %}
 - Client: [Chester County Department of Human Services](https://www.chesco.org/226/Human-Services)
 - Description: 
     - The Chester County Department of Human Services plans to update their existing candidate evaluation matrix to modernize and strengthen the county's hiring process. Building on the functionality of a data driven ranking system, this project will expand the use of a matrix to incorporate scoring criteria, improve usability for hiring managers, streamline documentation, and support more consistent, data‑driven assessments across all interviews. The updated scoring tool will need to align with established Departmental workflows, existing technological stacks, and other to-be-identified administrative and financial constraints.
 
 {% enddetails %}
 
-{% details Crime Prevention and Personal Safety Application %}
+{% details note Crime Prevention and Personal Safety Application %}
 - Client: Dr. Jaeyong Choi, Criminal Justice Department
 - Description: 
     - This project will develop a crime prevention and personal safety application that uses publicly available crime data to provide users with location- and time-based crime risk information. The application will analyze historical crime patterns and other relevant geographic and temporal factors to estimate the relative risk of crime in a selected area and time period.
@@ -191,14 +191,14 @@ the subject of Teamwork and collaboration
 {% enddetails %}
 
 
-{% details Self-Choice Food Delivery Management System %}
+{% details note Self-Choice Food Delivery Management System %}
 - Client: [Oxford SILO](https://oxfordsilo.com/about/)
 - Description:  Help a local nonprofit organization remove barriers to families receiving the food they need. SILO's food delivery program helps households with limited transportation in our rural community and those who work during the day when traditional food pantries are open by delivers fresh and shelf stable food directly to the front door of recipients in the evening hours. 
     - We currently deliver identical bags of food to our recipients and would like to shift to a self choice model and allow recipients to choose the food in their bags each month that match their dietary restrictions and cultural preferences. We are looking to design and launch an app where friends (clients) can create and sign into an account, confirm their address and phone number, see when their next delivery date is (food is delivered monthly) and choose the food they would like in their next delivery. On the organizational side, we would need to be able to see updated contact information to import into our database, as well as a packing list for staff and volunteers when they prepare the bags. Ideally these could be printed on stickers that are attached to the food bags.
 
 {% enddetails %}
 
-{% details Polaris Brand Promotions Operations Database %}
+{% details note Polaris Brand Promotions Operations Database %}
 - Client: [Polaris Brand Promotion](https://polarisbrandpromotions.com/)
 - Description: The project will involve continuing the work started by the Spring 2026 West Chester University Capstone Course:
     - This project asks the team to modernize a real operations workflow at Polaris Brand Promotions by replacing worksheet-based storage solutions, one for scheduling shifts/events and one for client billing & contractor payroll, with a secure, cloud-based web application backed by a database. You’ll design the data model so shared fields can flow reliably from scheduling into billing/payroll. You will also work on adding more advanced features such as searchable client and staff profiles, single-shift entry forms plus bulk CSV/Excel import, reporting dashboards/exports for operations and finance, automatic daily backup emails of the data as Excel/CSV, and an audit trail that records which logged-in corporate user created or edited each record.
