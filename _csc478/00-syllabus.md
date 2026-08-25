@@ -1,6 +1,5 @@
 ---
 layout: lecture
-pretty_table: true
 collection: csc478
 title: Syllabus
 toc:
@@ -13,7 +12,6 @@ toc:
   - name: Course Topics and Schedules
   - name: University Policies
 ---
-
 
 ## General Information
 
@@ -109,7 +107,6 @@ Assignments that are late are assessed a 10% per day late penalty.
 Saturday and Sunday are each days.
 
 ## Course Topics and Schedules
-
 
 | Week  | Topic                         | Assessments              |
 | ----- | ----------------------------- | ------------------------ |
