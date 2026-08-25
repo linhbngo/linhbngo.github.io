@@ -84,13 +84,6 @@ table.table a {
   }
 }
 
-// Body copy: underline so links are not color-only (WCAG 1.4.1).
-.post a:not(.btn):not(.nav-link):not(.page-link):not(.cover-link),
-.page a:not(.btn):not(.nav-link):not(.page-link) {
-  text-decoration: underline;
-  text-underline-offset: 0.12em;
-}
-
 .table-dark {
   background-color: transparent;
   &.table-bordered {
