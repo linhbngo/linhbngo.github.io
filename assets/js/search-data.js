@@ -37,6 +37,13 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-workshops/";
               },
+            },{id: "dropdown-lt-strong-gt-programming-amp-data-science-fa26-lt-strong-gt",
+              title: "&lt;strong&gt;Programming &amp; Data Science (FA26)&lt;/strong&gt;",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/csc112/";
+              },
             },{id: "dropdown-lt-strong-gt-operating-systems-fa26-lt-strong-gt",
               title: "&lt;strong&gt;Operating Systems (FA26)&lt;/strong&gt;",
               description: "",
@@ -561,6 +568,61 @@ ninja.data = [{
           description: "",
           section: "Csc-workshops",handler: () => {
               window.location.href = "/csc-workshops/more-bash/";
+            },},{id: "csc112-syllabus",
+          title: 'Syllabus',
+          description: "CSC 112 Fall 2026: programming, data science, Excel, and Python for business computing.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/00-syllabus/";
+            },},{id: "csc112-how-computers-think-and-store-information",
+          title: 'How Computers Think and Store Information',
+          description: "Computers follow instructions and store typed values. Excel cells are memory you can see.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/01-how-computers-think/";
+            },},{id: "csc112-data-literacy-before-excel",
+          title: 'Data Literacy Before Excel',
+          description: "Ask a question, name the rows and columns, and clean types before you SUM anything.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/02-data-literacy/";
+            },},{id: "csc112-formulas-as-reusable-thinking",
+          title: 'Formulas as Reusable Thinking',
+          description: "A formula is an algorithm. Relative and absolute references say what should move when you copy.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/03-formulas/";
+            },},{id: "csc112-functions-and-logical-expressions",
+          title: 'Functions and Logical Expressions',
+          description: "Functions are named algorithms. IF is a decision you can test at the boundary.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/04-functions-logic/";
+            },},{id: "csc112-charts-as-arguments",
+          title: 'Charts as Arguments',
+          description: "A chart makes one claim. Choose a type, title the claim, and keep it linked to the data.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/05-charts/";
+            },},{id: "csc112-datasets-and-tables",
+          title: 'Datasets and Tables',
+          description: "A Table is a living rectangle: structured references, sort, filter, and formatting that follows the data.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/06-datasets-tables/";
+            },},{id: "csc112-subtotals-pivottables-and-pivotcharts",
+          title: 'Subtotals, PivotTables, and PivotCharts',
+          description: "Pivots are grouped questions. If the pivot surprises you, check the source Table.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/07-pivottables/";
+            },},{id: "csc112-what-if-analysis-and-specialized-functions",
+          title: 'What-If Analysis and Specialized Functions',
+          description: "Treat weights and rates as parameters. Look up descriptions; Goal Seek and scenarios record experiments.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/08-what-if-functions/";
+            },},{id: "csc112-statistical-functions-and-copilot-as-a-checked-assistant",
+          title: 'Statistical Functions and Copilot as a Checked Assistant',
+          description: "Describe a distribution honestly, then let Copilot draft formulas you can still verify.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/09-stats-copilot/";
+            },},{id: "csc112-python-as-an-automation-layer",
+          title: 'Python as an Automation Layer',
+          description: "Repeat an Excel analysis in Python and check that both answers match.",
+          section: "Csc112",handler: () => {
+              window.location.href = "/csc112/10-python-automation/";
             },},{id: "csc117-syllabus",
           title: 'Syllabus',
           description: "",
