@@ -806,86 +806,71 @@ ninja.data = [{
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/01-introduction/";
-            },},{id: "csc402-working-in-a-team",
-          title: 'Working in a Team',
+            },},{id: "csc402-team-work-and-client-interaction",
+          title: 'Team Work and Client Interaction',
           description: "",
           section: "Csc402",handler: () => {
               window.location.href = "/csc402/02-team/";
-            },},{id: "csc402-client-interactions",
-          title: 'Client interactions',
-          description: "",
-          section: "Csc402",handler: () => {
-              window.location.href = "/csc402/03-client-interactions/";
-            },},{id: "csc402-software-projects-and-process-models",
-          title: 'Software Projects and Process Models',
-          description: "",
-          section: "Csc402",handler: () => {
-              window.location.href = "/csc402/04-projects-process/";
-            },},{id: "csc402-working-in-a-team",
-          title: 'Working in a Team',
-          description: "",
-          section: "Csc402",handler: () => {
-              window.location.href = "/csc402/05-planning/";
             },},{id: "csc402-requirements-i",
           title: 'Requirements I',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/06-requirements-I/";
+              window.location.href = "/csc402/03-requirements-I/";
             },},{id: "csc402-requirements-ii-orientation",
           title: 'Requirements II, orientation',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/07-requirements-II/";
+              window.location.href = "/csc402/04-requirements-II/";
+            },},{id: "csc402-software-projects-and-process-models",
+          title: 'Software Projects and Process Models',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/05-projects-process/";
+            },},{id: "csc402-planning",
+          title: 'Planning',
+          description: "",
+          section: "Csc402",handler: () => {
+              window.location.href = "/csc402/06-planning/";
             },},{id: "csc402-reflection-observations-fall-2025",
           title: 'Reflection Observations (Fall 2025)',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/08-reflections/";
+              window.location.href = "/csc402/07-reflections/";
             },},{id: "csc402-presentation",
           title: 'Presentation',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/09-presentation/";
+              window.location.href = "/csc402/08-presentation/";
             },},{id: "csc402-licensing-and-legal-considerations",
           title: 'Licensing and Legal Considerations',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/10-legal/";
+              window.location.href = "/csc402/09-legal/";
             },},{id: "csc402-testing",
           title: 'Testing',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/11-testing/";
+              window.location.href = "/csc402/10-testing/";
             },},{id: "csc402-architectures",
           title: 'Architectures',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/12-architectures/";
+              window.location.href = "/csc402/11-architectures/";
             },},{id: "csc402-more-architectures-styles",
           title: 'More Architectures Styles',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/13-architectures-2/";
+              window.location.href = "/csc402/12-architectures-2/";
             },},{id: "csc402-user-experience",
           title: 'User Experience',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/14-ux/";
+              window.location.href = "/csc402/13-ux/";
             },},{id: "csc402-models",
           title: 'Models',
           description: "",
           section: "Csc402",handler: () => {
-              window.location.href = "/csc402/15-models/";
-            },},{id: "csc402-csc-402-software-engineering",
-          title: 'CSC 402: Software Engineering.',
-          description: "",
-          section: "Csc402",handler: () => {
-              window.location.href = "/csc402/index/";
-            },},{id: "csc402-project-showcases",
-          title: 'Project Showcases',
-          description: "",
-          section: "Csc402",handler: () => {
-              window.location.href = "/csc402/projects/";
+              window.location.href = "/csc402/14-models/";
             },},{id: "csc418-587-syllabus",
           title: 'Syllabus',
           description: "",
