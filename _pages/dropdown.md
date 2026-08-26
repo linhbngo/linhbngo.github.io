@@ -8,6 +8,9 @@ children:
   - title: Workshops and Tutorials
     permalink: /csc-workshops/
   - title: divider
+  - title: <strong>Programming & Data Science (FA26)</strong>
+    permalink: /csc112/
+  - title: divider
   - title: <strong>Operating Systems (FA26)</strong>
     permalink: /csc331/
   - title: divider

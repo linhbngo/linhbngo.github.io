@@ -154,6 +154,9 @@ collections:
   cs-agentic-ai:
     output: true
     permalink: /cs-agentic-ai/:path/
+  csc112:
+    output: true
+    permalink: /csc112/:path/
   csc117:
     output: true
     permalink: /csc117/:path/
