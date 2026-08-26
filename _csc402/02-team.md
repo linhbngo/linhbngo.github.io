@@ -1,8 +1,6 @@
 ---
 layout: lecture
-pretty_table: true
-order: 3
-title: "Working in a Team"
+title: "Team Work and Client Interaction"
 mermaid:
   enabled: true
   zoomable: true
@@ -18,12 +16,10 @@ typograms: true
 toc:
   - name: Overview
   - name: Aspects of software engineering teams
-  - name: Examples of conflict resolutions in Team
-  - name: Client meeting.
   - name: Team preparation checklist
+  - name: Conflict resolutions in Team
+  - name: Client meeting
 ---
-
-# Working in a Team
 
 ## Overview
 
@@ -116,7 +112,41 @@ toc:
 
 {% enddetails %}
 
-## Examples of conflict resolutions in Team
+## Team preparation checklist
+
+{% details Team Charter %}
+
+- Identify Project Objective and Timeline
+- Identify Goals
+- Identify Team commitment (hrs/week) - [please be mindful of all the team members' time, with
+consideration of their course loads and the holidays]
+    - Housekeeping rules regarding team meetings/interactions 
+    - Team tools/processes preferred
+    - Assignment of roles and responsibilities
+
+{% enddetails %}
+
+
+{% details Peer review rubric %}
+
+- Professionalism
+    - Attendance/promptness
+    - Preparation for meetings
+    - Respectful interactions
+- Quality of contributions
+- Effective communication
+    - Reports problems early
+    - Communicates clearly
+- Initiative
+    - Contributes to brainstorming
+    - Volunteers for tasks
+- Healthy team dynamics
+    - Raises and resolves conflicts
+    - Trusts other members, helps them grow
+
+{% enddetails %}
+
+## Conflict resolutions in Team
 
 {% details Original email A %}
 
@@ -218,7 +248,9 @@ was looking for when we decided to address the situation, and I would highly rec
 approach performance issues like this in a similar way. 
 
 {% enddetails %}
-## Client meeting.
+
+
+## Client meeting
 
 {% details Meetings %}
 
@@ -226,6 +258,7 @@ approach performance issues like this in a similar way.
 - Expensive in terms of person-hours
 
 {% enddetails %}
+
 {% details What to do %}
 
 - Have an agenda
@@ -237,6 +270,7 @@ approach performance issues like this in a similar way.
 - Beware slides
 
 {% enddetails %}
+
 {% details Communicating with client %}
 
 - Respect client's time
@@ -252,6 +286,7 @@ approach performance issues like this in a similar way.
     - Separate moderator from recorder
 
 {% enddetails %}
+
 {% details Retrospectives %}
 
 - Process improvement
@@ -261,49 +296,15 @@ approach performance issues like this in a similar way.
     - Discussed in Google reading
 
 {% enddetails %}
-{% details Breakout %}
 
-- What makes a good team player?
 
-{% enddetails %}
 {% details Collaboration tools %}
 
 - Make sure entire team and client are onboard if using external services
     - Remember confidentiality obligation
 
 {% enddetails %}
-{% details Peer review rubric %}
 
-- Professionalism
-    - Attendance/promptness
-    - Preparation for meetings
-    - Respectful interactions
-- Quality of contributions
-- Effective communication
-    - Reports problems early
-    - Communicates clearly
-- Initiative
-    - Contributes to brainstorming
-    - Volunteers for tasks
-- Healthy team dynamics
-    - Raises and resolves conflicts
-    - Trusts other members, helps them grow
-
-
-
-{% enddetails %}
-## Team preparation checklist
-
-{% details Team Charter %}
-
-- Identify Project Objective and Timeline
-- Identify Goals
-- Identify Team commitment (hrs/week) - [please be mindful of all the team members' time, with
-{% enddetails %}
-consideration of their course loads and the holidays]
-    - Housekeeping rules regarding team meetings/interactions 
-    - Team tools/processes preferred
-    - Assignment of roles and responsibilities
 
 {% details External kick-off with Client %}
 
@@ -325,6 +326,7 @@ consideration of their course loads and the holidays]
     decision made, and action items. 
 
 {% enddetails %}
+
 {% details Introductory email 1 %}
 
 Hi ..., 
@@ -352,6 +354,7 @@ Thank you very much for the opportunity to work on this project. We’re looking
 Best regards, 
 
 {% enddetails %}
+
 {% details Introductory email 2 %}
 
 Greetings everyone, 
@@ -367,35 +370,41 @@ Please let us know at your earliest convenience what dates and times work for yo
 
 Best regards, 
 
-## Discussion: What is software engineering?
-
-{% details note Form groups %}
-
-- For this discussion, groups of five to six are to be 
-randomly formed
-- Reintroduce yourselves to one another: Names, Years
-
-{% enddetails %}
-{% details Example: Discussion %}
-
-- Designate one person as a note taker/final reporter 
-for the group. 
-- Discuss the following question: 
-    - What makes **software engineering** different from **programming**?
-
 {% enddetails %}
 
 
+{% details Client meetings feedback %}
 
+- Future meetings may be smaller
+    - Rotate team members
+- Arrive on time
+- Separate moderator and recorder 
+- Devs should drive meeting (following agenda)  
+- Reserve sufficient time
 
+{% enddetails %}
 
+{% details Tips for remote meetings %}
 
+- Cameras on if possible
+- If multiple devs in one location, use one connection (or else headphones)
+- Charge device
+- Eliminate distractions if sharing screen
+- Moderator role is extra important
+- Follow agenda
+- Call on speakers
+- Announce decisions
 
+{% enddetails %}
 
+{% details Recordings %}
 
-
-
-
-
-
+- Not allowed in many contexts
+    - Banned in secure facilities
+    - May violate privacy law/regulations
+    - May violate copyright, trade secret, export law
+- Not welcome by many parties
+    - Do not assume recordings are okay; plan to not rely on them 
+    – notetaking is a professional skill
+- Must ask for permission before recording 
 {% enddetails %}

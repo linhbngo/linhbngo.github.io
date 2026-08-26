@@ -2,7 +2,7 @@
 layout: lecture
 pretty_table: true
 order: 6
-title: "Working in a Team"
+title: "Planning"
 mermaid:
   enabled: true
   zoomable: true
