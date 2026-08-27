@@ -87,7 +87,7 @@ toc:
 ```bash
 docker exec -u student -it csc331 /bin/bash #if SSH into container
 cd /workspace
-git clone https://github.com/ngo-classes/xv6-riscv.gitc
+git clone https://github.com/ngo-classes/xv6-riscv.git
 cd xv6-riscv
 make
 make qemu
