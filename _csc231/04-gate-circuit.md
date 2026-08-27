@@ -15,12 +15,10 @@ toc:
 {% details Relevant Reading %}
 
 {% enddetails %}
-:class: tip
 
 This lecture will cover sections 5.1 through 5.4 
 from [Chapter 5](https://diveintosystems.org/book/C5-Arch/index.html) of the book. 
 
-```
 
 ## In the beginning ...
 
@@ -79,7 +77,6 @@ any circuit can be constructed.
 | 1 | 0 | 0        | 1       | 0     | 1     |
 | 1 | 1 | 1        | 1       | 0     | 0     |  
 
-```
 
 ### 2.2 Electronic Circuit
 
@@ -101,8 +98,6 @@ any circuit can be constructed.
 | 0 | 1 |     1     |    0     |   1     |
 | 1 | 0 |     1     |    0     |   1     |
 | 1 | 1 |     0     |    0     |   0     |  
-
-```
 
 ## Circuits
 
@@ -207,8 +202,6 @@ $1110=(-1)*(1)*(8)+(1)*(4)+(1)*(2)+(0)*1=(-8)+4+2=(-2)$
 
 - Compile and run `signed_addition.c`.
 - Confirm that calculated values are correct. 
-
-```
 
 ### 3.2. Arithmetic: Multiplication
 

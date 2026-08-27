@@ -23,7 +23,6 @@ toc:
 
 This lecture will cover contents from [Chapter 4](https://diveintosystems.org/book/C4-Binary/index.html) of the book. 
 
-```
 
 ## How do we "see" things?
 

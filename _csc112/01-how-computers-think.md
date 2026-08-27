@@ -10,35 +10,45 @@ mermaid:
   zoomable: true
 
 toc:
-  - name: This week
-  - name: Objectives
-  - name: Computers do not think
-  - name: Instructions, memory, and files
-  - name: Workbook anatomy
+  - name: Origin of modern computing architectures
+  - name: Introduction to Excel
   - name: Types of information
   - name: What Excel is really storing
   - name: Try this in Excel
-  - name: Takeaways
 ---
 
-## This week
+## Origin of modern computing architectures
 
-Week 1 · Excel Ch. 1 · Excel Project 1. Next: data literacy (lecture 2).
+- `computer` = `the one who computes`
 
-## Objectives
+{% details Jacquard Loom %}
 
-{% details After this lecture you should be able to %}
-
-- Explain, in plain language, what a computer does with input, instructions, memory, and output
-- Distinguish a *value* from a *display format* (the same idea in RAM and in an Excel cell)
-- Recognize common data types you will meet all semester: numbers, text, dates, and true/false
-- Create a simple Excel workbook, save it to OneDrive, and inspect what is actually stored in a cell
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MQzpLLhN0fY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 {% enddetails %}
 
-## Computers do not think
+{% details Charles Babbage's Analytical Machine %}
 
-{% details A useful myth to retire %}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XSkGY6LchJs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% enddetails %}
+
+
+{% details Hollerith Census Machine (eventually becomes IBM) %}
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9HXjLW7v-II" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% enddetails %}
+
+
+{% details  ENIAC: First computer %}
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k4oGI_dNaPc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+{% enddetails %}
+
+
+{% details tip Computers do not think %}
 
 - Everyday speech: "the computer thinks", "Excel calculated that", "my phone knows"
 - More accurate: a computer **follows instructions** on **data**
@@ -64,46 +74,26 @@ flowchart LR
 
 {% enddetails %}
 
-{% details Why this belongs in an Excel course %}
+{% details tip Why Excel? %}
 
-- A formula is a tiny program living in a cell
-- A cell is a named memory location (`B2`, `Grade`, `Total`)
-- If you do not know what is *stored* versus what is *shown*, later charts and pivots will lie politely
+... and not Words or Adobe Acrobat or other applications?
 
-{% enddetails %}
-
-## Instructions, memory, and files
-
-{% details Hardware, very briefly %}
-
-- **CPU**: executes instructions, one after another (very fast, not magic)
-- **RAM**: working memory; disappears when the machine (or the unsaved file) goes away
-- **Storage**: SSD, USB drive, OneDrive; survives after you close Excel
-- **Operating system**: the program that shares the machine among Excel, the browser, and everything else
+- This course is called `Programming and Data Science`.
+  - What is Charles Babbage's Analytical Machine used for?
+  - What is Hollerith Census Machine used for?
+  - What is ENIAC used for?
+- Mathematical calculations provide the fundamental drive for automatic computation. 
+  - Modern computers: still computations, only much bigger and much faster.
+- Excel is the perfect application:
+  - Driven by business motivation
+  - Easy access for the general population
 
 {% enddetails %}
 
-{% details Files are containers, not the data itself %}
 
-- A `.xlsx` workbook is a file: a packaged collection of worksheets, charts, and metadata
-- Closing Excel without saving is throwing away RAM, not the last version on disk
-- AutoSave (OneDrive / SharePoint) is persistence happening in the background
-- Same idea in Word (`.docx`) and PowerPoint (`.pptx`): the file is the long-term copy
+## Introduction to Excel
 
-{% enddetails %}
-
-{% details Bits and bytes, only as far as we need %}
-
-- Computers store everything as bits (`0` and `1`)
-- A **byte** is 8 bits; enough for a small integer or one character in older encodings
-- You will not count bits in this course
-- You *will* care that the machine must be told whether a pile of bits is a number, text, or a date
-
-{% enddetails %}
-
-## Workbook anatomy
-
-{% details Excel Ch. 1 — the objects you will click all semester %}
+{% details Core concepts of an Excel application (online or offline) %}
 
 - **Workbook**: the `.xlsx` file (the container)
 - **Worksheet**: one grid inside the workbook (`Sheet1`, `Data`, `Notes`)
@@ -115,11 +105,48 @@ flowchart LR
 
 {% enddetails %}
 
+{% details Where the wild things are? %}
+
+{% include figure.liquid path="assets/img/courses/csc112/intro/computers.png" max-width="50%" zoomable=true %}
+
+- **Chip/CPU/Processor**: executes an application's instructions, one after another
+- **Memory/RAM**: contains instructions and data of an application *when* that application is running. Goes way when the computer is shutdown or the application is closed. 
+- **Storage/SSD/HDD**: persistent storage of an application and its data. 
+
+{% enddetails %}
+
+{% details Online versus offline %}
+
+{% include figure.liquid path="assets/img/courses/csc112/intro/workflow.png" max-width="50%" zoomable=true %}
+
+- A `.xlsx` workbook is a file: a packaged collection of worksheets, charts, and metadata
+  - It's all 0s and 1s!
+- Immediate edits are stored in memory
+  - Closing Excel without saving is throwing these edits
+  - Need autosave or explicit Save/Save As to write to storage (persistence)
+
+{% include figure.liquid path="assets/img/courses/csc112/intro/workflow.png" max-width="50%" zoomable=true %}
+
+- Edits make to online access are saved as a slower rate. 
+
+{% enddetails %}
+
+
+{% details What the raw data looks like? %}
+
+- Computers store everything as bits (`0` and `1`)
+- A **byte** is 8 bits; enough for a small integer or one character in older encodings
+- You will not count bits in this course
+- You *will* care that the machine must be told whether a pile of bits is a number, text, or a date
+
+{% enddetails %}
+
+
 {% details Good first habits %}
 
 - Rename sheets (`Data`, `Notes`, `Checks`) instead of leaving `Sheet1`
 - Freeze the header row when the list grows (`View → Freeze Panes`)
-- Save to OneDrive so AutoSave is persistence, not a hope
+- Save to OneDrive so AutoSave is persistence
 - One idea per sheet when you can: raw data stays raw
 
 {% enddetails %}
@@ -147,26 +174,19 @@ flowchart LR
 
 {% enddetails %}
 
-{% details Office parallel: Word and PowerPoint also store typed stuff %}
-
-- Word: a heading is not just big bold text; it is a *style* the document model understands
-- PowerPoint: a chart pasted as a picture cannot be updated when the Excel data changes
-- Theme of the course: **structure first, decoration second**
-
-{% enddetails %}
 
 ## What Excel is really storing
 
-{% details Look at the formula bar, not only the cell %}
+{% details Formula bar versus Cell %}
 
-- The cell *display* is a costume
-- The formula bar is closer to memory
+- The cell *display* the *final interpreted value*
+- The formula bar is closer to what is stored in memory
 - Example: cell shows `50%`; formula bar may show `0.5`
 - Example: cell shows `9/1/2026`; Excel may be storing `45901` (a date serial)
 
 {% enddetails %}
 
-{% details Number formats are costumes %}
+{% details Number formats: how data should be viewed %}
 
 - `General`, `Number`, `Currency`, `Percentage`, `Date`, `Text` change how a value looks
 - Changing the format does **not** change the underlying value (usually)
@@ -175,7 +195,7 @@ flowchart LR
 
 {% enddetails %}
 
-{% details Formulas are instructions stored in cells %}
+{% details Formulas: how data should be calculated/created %}
 
 - `=B2+C2` means: *when asked, fetch B2 and C2, add, put the result here*
 - Recalculation is the computer running that instruction again
@@ -186,7 +206,7 @@ flowchart LR
 
 ## Try this in Excel
 
-{% details Lab 1 — Build a tiny memory map %}
+{% details Lab 1: Build a tiny memory map %}
 
 1. Create a new workbook and save it to OneDrive as `week01-memory.xlsx`
 2. In `A1:A4` enter labels: `Quantity`, `ZIP`, `Date`, `Share`
@@ -194,11 +214,11 @@ flowchart LR
 4. In `B2` enter `08052` and format the cell as **Text** *before* or immediately after typing; confirm the leading zero stays
 5. In `B3` enter today's date; change the format between Short Date and Number; watch the serial
 6. In `B4` enter `0.25` and format as Percentage
-7. In `C1` enter `=B1*B4` and explain in a Word comment or adjacent cell what instruction you wrote
+7. In `C1` enter `=B1*B4` and explain in an adjacent cell what instruction you wrote
 
 {% enddetails %}
 
-{% details Lab 1b — Persistence %}
+{% details Lab 1b: Persistence %}
 
 - Close the file, reopen it: RAM was discarded; the file restored the cells
 - Turn AutoSave off temporarily (if you can), type a value, force-quit Excel: that value was only in RAM
@@ -206,29 +226,10 @@ flowchart LR
 
 {% enddetails %}
 
-{% details Discussion %}
+{% details Lab 1b: Persistence %}
 
-- Designate one note-taker
-- Where have you seen a computer "get the type wrong" in real life (grades, money, IDs, dates)?
-- If Copilot writes `=B2+C2` for you, what would you inspect before trusting the total?
-
-{% enddetails %}
-
-## Takeaways
-
-{% details Carry these into next week %}
-
-- Computers follow instructions; Excel formulas *are* instructions
-- Storage has types; display formats can hide those types
-- A workbook file is persistence; an unsaved grid is not
-- Next lecture: before writing formulas, decide what a *row* and a *column* mean
-
-{% enddetails %}
-
-{% details Placeholder notes for expansion %}
-
-- Screenshot walkthrough of Format Cells vs formula bar
-- Binary/place-value optional appendix for curious students
-- Short Word activity: styles vs manual formatting, same "type vs appearance" idea
+- Close the file, reopen it: RAM was discarded and the file restored the cells
+- Turn AutoSave off temporarily (if you can), type a value, force-quit Excel: that value was only in RAM
+  - *(Do this on a throwaway copy.)*
 
 {% enddetails %}
