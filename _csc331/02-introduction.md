@@ -204,8 +204,17 @@ the final value of counter should be twice that of the command line argument.
 
 {% details Problem with concurrency %}
 
+{% details success the good %}
+- Naive concurrency on very naive data **could** give you performance boost up to a certain limit
+{% enddetails %}
+
+{% details warning the bad %}
 - Naive concurrency gives you wrong results.  
-- Naive concurrency gives you wrong and inconsistent results. 
+{% enddetails %}
+
+{% details danger the ugly %}
+- Naive concurrency gives you wrong **and** inconsistent results. 
+{% enddetails %}
 
 {% enddetails %}
 
