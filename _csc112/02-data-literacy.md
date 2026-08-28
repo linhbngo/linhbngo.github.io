@@ -10,8 +10,6 @@ mermaid:
   zoomable: true
 
 toc:
-  - name: This week
-  - name: Objectives
   - name: A spreadsheet is a model of the world
   - name: Rows, columns, and a question
   - name: Messy data is the default
@@ -19,21 +17,6 @@ toc:
   - name: Try this in Excel
   - name: Takeaways
 ---
-
-## This week
-
-Week 2 · Excel Ch. 1–2 · Excel Project 2. Next: formulas and references (lecture 3).
-
-## Objectives
-
-{% details After this lecture you should be able to %}
-
-- Describe a dataset as observations (rows) and variables (columns)
-- State a question *before* opening a workbook
-- Spot common data problems: mixed types, missing values, merged cells, extra header rows
-- Import a CSV into Excel and turn a range into a proper Table
-
-{% enddetails %}
 
 ## A spreadsheet is a model of the world
 

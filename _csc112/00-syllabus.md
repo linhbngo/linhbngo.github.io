@@ -99,8 +99,9 @@ There is no prerequisite for this course.
 
 | Assessment | % of Final Grade |
 | ---------- | ---------------- |
-| Excel Projects (15) | 70% |
+| Excel Labs (15) | 50% |
 | Excel Exams (2) | 20% |
+| Excel Projects (3) | 20% |
 | Python Programming Projects (2) | 10% |
 
 ### Assessing Student Learning Outcomes
