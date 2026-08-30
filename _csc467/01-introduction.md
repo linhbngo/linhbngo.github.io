@@ -229,33 +229,6 @@ at the same hotel on the same day
 
 ## Things Useful to Know
 
-{% details TF.IDF %}
-TF.IDF are measures of word importance
-- Measure how concentrated into relatively few documents are the occurrences of a given word.
-- Suppose we have a collection of $N$ documents. 
-- $f_{ij}$ to be the frequency (number of occurrences) of term (word) i in document j. 
-- The term frequency (TF): 
-
-$
-TF_{ij}=\frac{f_{ij}}{max_{k}f_{kj}}
-$
-
-- The inverse document frequency (IDF) with term i appears in $n_i$ of the N documents. 
-
-$
-IDF_i=log_2(N/n_i)
-$
-
-- The TF.IDF score for term is 
-
-$
-TF_{ij}\times IDF_i
-$
-
-- The terms with the highest TF.IDF score are often the terms that best characterize the topic of the document.
-
-{% enddetails %}
-
 {% details Hash functions %}
 - Given $B$ buckets, 
 - A hash function uses a data value to produce a bucket number $b$ that is in the range of 0 to $B-1$
@@ -275,16 +248,115 @@ $
 - Understand data placement on secondary storage is important
 {% enddetails %}
 
-## Setup Computing Environment
+## Setup Computing Environment (Google Colab)
 
-We will set up a local computing environment for this class that supports Spark and other big 
-data engineering/analytics tools. The steps to set up are as follows. 
+We will be using several computing environments for this class, both on your personal computers and remote servers to highlight the versatility and capability of Spark, one of the most popular big data engineering/analytics tools. The steps to set up the first variety of Spark on Google Colab are as follows. 
 
-This setup instruction uses Anaconda to create virtual environment. If you are comfortable with 
-virtual environments in Python, feel free to adapt the `environment.yml` file into a `requirements.txt`
 
-If you don't already have one, [download and install Anaconda](https://www.anaconda.com/download/success?reg=skipped) for your computing device. 
+{% details note Google Colab %}
 
-Carry out [the setup instructions for your specific platfoms in the README.md](https://github.com/ngo-classes/big-data-engineering/blob/main/README.md).
+[Google Colab](https://colab.research.google.com) is an online platform for learning and 
+practicing data science and engineering. You can link Google Colab to your existing 
+Google account. 
 
-Going forward, you are to run the `conda activate pyspark-3.5.1` command prior to carrying out coding tasks for the class. 
+{% enddetails %}
+
+
+{% details warning Coding Cell %}
+
+Each segment of codes in this lecture is meant to be run on a separate notebook cell. The ordering is important!
+
+{% enddetails %}
+
+
+{% details Step 1: Prepare Java and Spark %}
+
+```bash
+!gdown --fuzzy https://drive.google.com/file/d/1ac5p-GUI35s49CDf2cFCliUqSLep2VPM/view?usp=sharing
+!tar xzf OpenJDK11U-jdk_x64_linux_hotspot_11.0.24_8.tar.gz
+!rm OpenJDK11U-jdk_x64_linux_hotspot_11.0.24_8.tar.gz
+!gdown --fuzzy https://drive.google.com/file/d/1W9-Nb_IP3qiCtHo6BeuluwY3u-Ni2F5C/view?usp=sharing
+!tar xzf spark-3.5.6-bin-hadoop3.tgz
+!rm spark-3.5.6-bin-hadoop3.tgz
+```
+
+{% enddetails %}
+
+
+{% details Step 2: Setup Spark library path in Python %}
+
+```python 
+import os
+import sys
+import subprocess
+
+working_dir = subprocess.run(['pwd'], stdout = subprocess.PIPE).stdout.strip().decode("utf-8")
+print(working_dir)
+os.environ["JAVA_HOME"] = working_dir + "/jdk-11.0.24+8/"
+os.environ["SPARK_HOME"] = working_dir + "/spark-3.5.6-bin-hadoop3/"
+spark_path = os.environ['SPARK_HOME']
+sys.path.append(spark_path + "/bin")
+sys.path.append(spark_path + "/python")
+sys.path.append(spark_path + "/python/pyspark/")
+sys.path.append(spark_path + "/python/lib")
+sys.path.append(spark_path + "/python/lib/pyspark.zip")
+sys.path.append(spark_path + "/python/lib/py4j-0.10.9.7-src.zip")
+```
+{% enddetails %}
+
+{% details Step 3: Deploy Local Spark Cluster and initialize Spark context %}
+
+```python 
+import pyspark
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .master('local[*]') \
+    .appName("WordCount_SparkSession") \
+    .getOrCreate()
+
+sc = spark.sparkContext
+```
+
+{% enddetails %}
+
+
+{% details Step 4: Download the test data %}
+
+```bash
+!wget http://www.gutenberg.org/files/100/100-0.txt
+```
+{% enddetails %}
+
+
+{% details Step 5: Spark Test %}
+
+```python
+# Input and output paths
+input_path = "100-0.txt"
+output_path = "output-wordcount-01"
+
+textFile = sc.textFile(input_path)
+wordcount = textFile.flatMap(lambda line: line.split(" ")) \
+    .map(lambda word: (word, 1)) \
+    .reduceByKey(lambda a, b: a + b)
+wordcount.saveAsTextFile(output_path)
+
+# Stop the SparkSession
+spark.stop()
+```
+
+- Note that `/content` is the current working directory inside 
+Kaggle VM. If you expand the `folder` icon on the left side, you will 
+see the content of this directory. You might need to refresh for this to 
+show up. Open `output-wordcount-01`, you will 
+see the `_SUCCESS` file. 
+
+
+{% include figure.liquid loading="eager" path="assets/img/courses/csc467/setup/colab_output.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true alt="data parallel programming"%}
+
+
+- You should attempt to launch your own Google Colab and carry out the above steps, as it is part of the first assignment as well. However, in the case that you run into an issue, you can look at [this notebook](https://colab.research.google.com/drive/1vgbwN91exCxcXvxGSZFaeEk-rcCzhJEl?usp=sharing).
+- All future assignments/class activities that include Spark will need to use this setup. 
+
+{% enddetails %}
