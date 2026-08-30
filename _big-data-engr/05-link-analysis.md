@@ -30,12 +30,12 @@ toc:
 - Web pages were manually curated and organized. 
 - Does not scale. 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/05-pagerank/01.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/05-pagerank/01.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Next, web search engines were developed: information retrieval
 - Information retrieval focuses on finding documents from a trusted set. 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/05-pagerank/02.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/05-pagerank/02.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details Challenges for web search %}
 - Who to trust given the massive variety of information sources?
@@ -230,7 +230,7 @@ $$r = M \cdot r$$
 - Suppose page *i* has importance $r_{i}$ and has outgoing links
 to three other pages, including page *j*. 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/05-pagerank/09.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/05-pagerank/09.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}

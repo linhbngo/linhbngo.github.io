@@ -339,7 +339,7 @@ found to be `frequent`.
 {% enddetails %}
 {% details Frequent triples %}
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/07-frequent-items/01.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/07-frequent-items/01.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - For each k, we construct two sets of k-tuples  (sets of size k):
     - $C_k$ = candidate k-tuples = those that might be frequent sets 
@@ -407,7 +407,7 @@ pair consists of 2 frequent items)
     - Both conditions are necessary for the pair to have a chance of 
     being frequent
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/07-frequent-items/pcy.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/07-frequent-items/pcy.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 ---
 {% enddetails %}

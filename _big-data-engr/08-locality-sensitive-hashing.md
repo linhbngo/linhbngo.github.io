@@ -97,7 +97,7 @@ some distance threshold $d(x_i,x_j) \leq s$
 - The `Jaccard similiarity` of two sets is the size of their 
 intersection divided by the size of their union.
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/02.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/06-locality/02.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details Three essential techniques for similar documents %}
 - Shingling : convert documents, emails, etc., to sets.
@@ -106,7 +106,7 @@ similarity.
 - Locality sensitive hashing : focus on pairs of signatures likely to be 
 similar.
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/01.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/06-locality/01.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 ---
 {% enddetails %}
@@ -226,7 +226,7 @@ the value of `1`.
 - Typically sparse. 
 - This gives you another way to calculate similarity: column similarity = Jaccard similarity. 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/03.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/06-locality/03.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details Finding similar columns %}
 - Naïve approach:
@@ -471,7 +471,7 @@ elements  where similarity must be evaluated.
 only similar columns are likely to hash to the same bucket. 
 - Reality: we don't need to study the entire column. 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/06-locality/07.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/06-locality/07.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Divide matrix M into `b` bands of `r` rows each. 
 - For each band, hash its portion of each column to a hash table with `k` buckets, 

@@ -34,7 +34,7 @@ toc:
     - Recommendation engines
     - How Into Thin Air made Touching the Void a bestseller: http://www.wired.com/wired/archive/12.10/tail.html
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/examples.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/examples.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details Types of recommendations %}
 - Editorial and hand curated
@@ -107,7 +107,7 @@ toc:
     - Movie recommendations: Recommend movies with same actor(s), director, genre, …
     - Websites, blogs, news: Recommend other sites with `similar` content
 
-    {% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/main-idea.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/main-idea.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
    <figcaption>J. Leskovec, A. Rajaraman, J. Ullman: Mining of Massive Datasets</figcaption>
 {% enddetails %}
 {% details Item profiles %}
@@ -163,7 +163,7 @@ toc:
 - Find set N of other users whose ratings are `similar` to x’s ratings
 - Estimate x’s ratings based on ratings of users in N
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/CF-overview.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/CF-overview.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details How do we find similar users %}
 - Assume:
@@ -434,7 +434,7 @@ $$
 {% enddetails %}
 {% details Evaluation %}
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/cf_evaluation.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/cf_evaluation.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Compare predictions with known ratings
 - Root-mean-square error (RMSE)
@@ -547,7 +547,7 @@ $$
 {% details Performance %}
 - Optimization via gradient descent
     - Not there yet
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_1.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/netflix_1.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details Latent factor models (singular value decomposition - SVD) %}
 
@@ -570,7 +570,7 @@ $$
         - We can calculate the missing rating as a dot product of these two matrices. 
         - Optimization/estimation of U and V using Stochastic Gradient Descent. 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_2.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/netflix_2.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details Bringing everything together %}
 - Baseline predictor
@@ -609,9 +609,9 @@ $$
 {% enddetails %}
 {% details Still not there yet %}
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_3.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/netflix_3.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 - Continuous calibration of models
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/14-recommendation/netflix_4.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/14-recommendation/netflix_4.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}

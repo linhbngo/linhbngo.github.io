@@ -79,7 +79,7 @@ spark-submit --master="local[*]" .\data-parallel\matrix-vector.py 4
 
 {% details Screenshot: output %}
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/04-data-parallel/mat-vec.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Example output" %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/04-data-parallel/mat-vec.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Example output" %}
 
 {% enddetails %}
 

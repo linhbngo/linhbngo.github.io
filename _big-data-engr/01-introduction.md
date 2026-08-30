@@ -57,7 +57,7 @@ For datasets that are:
     - Too noisy
     - Too heterogeneous
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/01-intro/big_analytics.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true %}
 
 {% enddetails %}
 
@@ -146,7 +146,7 @@ your data.
 are beginning to be analyzed to produce business insights.
 - Example general paradigm:
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true alt="data parallel programming"%}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/01-intro/data_parallel_programming.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true alt="data parallel programming"%}
 
 {% enddetails %}
 
@@ -353,7 +353,7 @@ show up. Open `output-wordcount-01`, you will
 see the `_SUCCESS` file. 
 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/setup/colab_output.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true alt="data parallel programming"%}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/setup/colab_output.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="25%" zoomable=true alt="data parallel programming"%}
 
 
 - You should attempt to launch your own Google Colab and carry out the above steps, as it is part of the first assignment as well. However, in the case that you run into an issue, you can look at [this notebook](https://colab.research.google.com/drive/1vgbwN91exCxcXvxGSZFaeEk-rcCzhJEl?usp=sharing).

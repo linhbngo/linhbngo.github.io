@@ -142,9 +142,9 @@ collections:
   csc418-587:
     output: true
     permalink: /csc418-587/:path/
-  csc467:
+  big-data-engr:
     output: true
-    permalink: /csc467/:path/
+    permalink: /big-data-engr/:path/
   csc574:
     output: true
     permalink: /csc574/:path/
@@ -401,7 +401,7 @@ imagemagick:
     - 1400
   input_directories:
     - assets/img/courses/csc418
-    - assets/img/courses/csc467
+    - assets/img/courses/big-data-engr
     - assets/img/courses/csc468
     - assets/img/courses/csc574
   input_formats:

@@ -51,7 +51,7 @@ toc:
 - A catalog of 2 billion **sky objects** represents objects by their radiation in 7 dimensions (frequency bands)
 - Problem: cluster into similar objects, e.g., galaxies, stars, quasars, etc.
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/sn_gallery24.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true caption="36 of the 500+ Type Ia supernovae discovered by the Sloan Supernova Survey" %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/08-clustering/sn_gallery24.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true caption="36 of the 500+ Type Ia supernovae discovered by the Sloan Supernova Survey" %}
 
 {% enddetails %}
 {% details Clustering music albums %}
@@ -106,7 +106,7 @@ lead to different distance measures.
 ## Overview: methods of clustering
 
 === "Hierarchical"
-    {% include figure.liquid loading="lazy" path="assets/img/courses/csc467/08-clustering/hierarchical_dendo.png" class="img-fluid rounded z-depth-1 float-start me-3 mb-2" max-width="300px" zoomable=true alt="Hierrarchical" %}
+    {% include figure.liquid loading="lazy" path="assets/img/courses/big-data-engr/08-clustering/hierarchical_dendo.png" class="img-fluid rounded z-depth-1 float-start me-3 mb-2" max-width="300px" zoomable=true alt="Hierrarchical" %}
 
     - Agglomerative (bottom up): each point is a cluster, 
     repeatedly combining two nearest cluster.
@@ -115,7 +115,7 @@ lead to different distance measures.
     - Key operation: repeatedly combine two nearest clusters. 
 
 === "Point assignment"
-    {% include figure.liquid loading="lazy" path="assets/img/courses/csc467/08-clustering/point_assignment.png" class="img-fluid rounded z-depth-1 float-start me-3 mb-2" max-width="300px" height="200" zoomable=true alt="Point assignment" %}
+    {% include figure.liquid loading="lazy" path="assets/img/courses/big-data-engr/08-clustering/point_assignment.png" class="img-fluid rounded z-depth-1 float-start me-3 mb-2" max-width="300px" height="200" zoomable=true alt="Point assignment" %}
 
     - Maintain a set of clusters
     - Points belong to `nearest` cluster
@@ -195,7 +195,7 @@ to centroid, as `k` increases.
 {% details Too few %}
 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_few.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Too few" %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/08-clustering/kmean_few.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Too few" %}
 
 - Many long distances to centroid
 
@@ -203,7 +203,7 @@ to centroid, as `k` increases.
 {% details Just right %}
 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_right.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Just right" %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/08-clustering/kmean_right.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Just right" %}
 
 - Distances are relatively short
 
@@ -211,7 +211,7 @@ to centroid, as `k` increases.
 {% details Too many %}
 
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_many.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Too many" %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/08-clustering/kmean_many.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Too many" %}
 
 - Little improvement in avaerage distance
 
@@ -247,7 +247,7 @@ some sensible approach:
 {% enddetails %}
 {% details Three classes of points %}
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/kmean_point_class.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Point classes" %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/08-clustering/kmean_point_class.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Point classes" %}
 
 {% details Discard set (DS) %}
 
@@ -336,7 +336,7 @@ BFR suggests two approaches
     - Allows clusters to assume any shape
     - Uses a collection of representative points to represent clusters
 
-{% include figure.liquid loading="eager" path="assets/img/courses/csc467/08-clustering/cure_example.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/08-clustering/cure_example.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
 {% details Two-pass algorithm %}
 - Pass 1:

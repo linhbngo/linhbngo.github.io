@@ -30,7 +30,7 @@ children:
     permalink: /csc574/
   - title: divider
   - title: Big Data Engineering (SU26)
-    permalink: /csc467/
+    permalink: /big-data-engr/
   - title: divider
   - title: CSC 418/587 (WI25)
     permalink: /csc418-587/
