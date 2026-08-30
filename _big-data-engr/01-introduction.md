@@ -273,8 +273,8 @@ Each segment of codes in this lecture is meant to be run on a separate notebook 
 
 ```bash
 !gdown --fuzzy https://drive.google.com/file/d/1WPBsCGftdN1qnND-iC4yefB6wO21HIsV/view?usp=sharing
-!tar xzf spark-3.5.6-bin-hadoop3.tgz
-!rm spark-3.5.6-bin-hadoop3.tgz
+!tar xzf spark-4.2.0-bin-hadoop3.tgz
+!rm spark-4.2.0-bin-hadoop3.tgz
 ```
 
 {% enddetails %}
