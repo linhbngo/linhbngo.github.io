@@ -91,7 +91,7 @@ ninja.data = [{
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/csc467/";
+                window.location.href = "/big-data-engr/";
               },
             },{id: "dropdown-csc-418-587-wi25",
               title: "CSC 418/587 (WI25)",
@@ -523,7 +523,67 @@ ninja.data = [{
             window.location.href = "/blog/2025/tryingout-ollama/";
           
         },
-      },{id: "cs-agentic-ai-syllabus",
+      },{id: "big-data-engr-syllabus",
+          title: 'Syllabus',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/00-syllabus/";
+            },},{id: "big-data-engr-introduction",
+          title: 'Introduction',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/01-introduction/";
+            },},{id: "big-data-engr-mapreduce-programming-paradigm",
+          title: 'MapReduce Programming Paradigm',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/02-mapreduce/";
+            },},{id: "big-data-engr-spark-computing-environment",
+          title: 'Spark Computing Environment',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/03-spark/";
+            },},{id: "big-data-engr-data-parallel-computing-with-spark",
+          title: 'Data Parallel Computing with Spark',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/04-data-parallel/";
+            },},{id: "big-data-engr-link-analysis",
+          title: 'Link Analysis',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/05-link-analysis/";
+            },},{id: "big-data-engr-project",
+          title: 'Project',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/06-project/";
+            },},{id: "big-data-engr-frequent-itemsets",
+          title: 'Frequent Itemsets',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/07-frequent-itemsets/";
+            },},{id: "big-data-engr-locality-sensitive-hashing",
+          title: 'Locality Sensitive Hashing',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/08-locality-sensitive-hashing/";
+            },},{id: "big-data-engr-clustering",
+          title: 'Clustering',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/09-clustering/";
+            },},{id: "big-data-engr-recommendation-systems",
+          title: 'Recommendation Systems',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/10-recommendation-systems/";
+            },},{id: "big-data-engr-distributed-machine-learning-with-spark",
+          title: 'Distributed Machine Learning with Spark',
+          description: "",
+          section: "Big-data-engr",handler: () => {
+              window.location.href = "/big-data-engr/11-large-scale-machine-learning/";
+            },},{id: "cs-agentic-ai-syllabus",
           title: 'Syllabus',
           description: "",
           section: "Cs-agentic-ai",handler: () => {
@@ -1073,66 +1133,6 @@ ninja.data = [{
           description: "",
           section: "Csc466",handler: () => {
               window.location.href = "/csc466/index/";
-            },},{id: "csc467-syllabus",
-          title: 'Syllabus',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/00-syllabus/";
-            },},{id: "csc467-introduction",
-          title: 'Introduction',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/01-introduction/";
-            },},{id: "csc467-mapreduce-programming-paradigm",
-          title: 'MapReduce Programming Paradigm',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/02-mapreduce/";
-            },},{id: "csc467-spark-computing-environment",
-          title: 'Spark Computing Environment',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/03-spark/";
-            },},{id: "csc467-data-parallel-computing-with-spark",
-          title: 'Data Parallel Computing with Spark',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/04-data-parallel/";
-            },},{id: "csc467-link-analysis",
-          title: 'Link Analysis',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/05-link-analysis/";
-            },},{id: "csc467-project",
-          title: 'Project',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/06-project/";
-            },},{id: "csc467-frequent-itemsets",
-          title: 'Frequent Itemsets',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/07-frequent-itemsets/";
-            },},{id: "csc467-locality-sensitive-hashing",
-          title: 'Locality Sensitive Hashing',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/08-locality-sensitive-hashing/";
-            },},{id: "csc467-clustering",
-          title: 'Clustering',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/09-clustering/";
-            },},{id: "csc467-recommendation-systems",
-          title: 'Recommendation Systems',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/10-recommendation-systems/";
-            },},{id: "csc467-distributed-machine-learning-with-spark",
-          title: 'Distributed Machine Learning with Spark',
-          description: "",
-          section: "Csc467",handler: () => {
-              window.location.href = "/csc467/11-large-scale-machine-learning/";
             },},{id: "csc468-syllabus",
           title: 'Syllabus',
           description: "",
