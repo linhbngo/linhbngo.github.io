@@ -27,13 +27,7 @@
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
-5
-6
-</pre></td> <td class="rouge-code"><pre><span class="o">!</span>gdown <span class="nt">--fuzzy</span> https://drive.google.com/file/d/1ac5p-GUI35s49CDf2cFCliUqSLep2VPM/view?usp<span class="o">=</span>sharing
-<span class="o">!</span><span class="nb">tar </span>xzf OpenJDK11U-jdk_x64_linux_hotspot_11.0.24_8.tar.gz
-<span class="o">!</span><span class="nb">rm </span>OpenJDK11U-jdk_x64_linux_hotspot_11.0.24_8.tar.gz
-<span class="o">!</span>gdown <span class="nt">--fuzzy</span> https://drive.google.com/file/d/1W9-Nb_IP3qiCtHo6BeuluwY3u-Ni2F5C/view?usp<span class="o">=</span>sharing
+</pre></td> <td class="rouge-code"><pre><span class="o">!</span>gdown <span class="nt">--fuzzy</span> https://drive.google.com/file/d/1WPBsCGftdN1qnND-iC4yefB6wO21HIsV/view?usp<span class="o">=</span>sharing
 <span class="o">!</span><span class="nb">tar </span>xzf spark-3.5.6-bin-hadoop3.tgz
 <span class="o">!</span><span class="nb">rm </span>spark-3.5.6-bin-hadoop3.tgz
 </pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Step 2: Setup Spark library path in Python</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
@@ -58,15 +52,15 @@
 
 <span class="n">working_dir</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="nf">run</span><span class="p">([</span><span class="sh">'</span><span class="s">pwd</span><span class="sh">'</span><span class="p">],</span> <span class="n">stdout</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">).</span><span class="n">stdout</span><span class="p">.</span><span class="nf">strip</span><span class="p">().</span><span class="nf">decode</span><span class="p">(</span><span class="sh">"</span><span class="s">utf-8</span><span class="sh">"</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">working_dir</span><span class="p">)</span>
-<span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">JAVA_HOME</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">working_dir</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/jdk-11.0.24+8/</span><span class="sh">"</span>
-<span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">SPARK_HOME</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">working_dir</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/spark-3.5.6-bin-hadoop3/</span><span class="sh">"</span>
+<span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">JAVA_HOME</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span>  <span class="sh">"</span><span class="s">/usr/lib/jvm/java-21-openjdk-amd64/</span><span class="sh">"</span>
+<span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">SPARK_HOME</span><span class="sh">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">working_dir</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/spark-4.2.0-bin-hadoop3/</span><span class="sh">"</span>
 <span class="n">spark_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">'</span><span class="s">SPARK_HOME</span><span class="sh">'</span><span class="p">]</span>
 <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">spark_path</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/bin</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">spark_path</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/python</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">spark_path</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/python/pyspark/</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">spark_path</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/python/lib</span><span class="sh">"</span><span class="p">)</span>
 <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">spark_path</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/python/lib/pyspark.zip</span><span class="sh">"</span><span class="p">)</span>
-<span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">spark_path</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/python/lib/py4j-0.10.9.7-src.zip</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">spark_path</span> <span class="o">+</span> <span class="sh">"</span><span class="s">/python/lib/py4j-0.10.9.9-src.zip</span><span class="sh">"</span><span class="p">)</span>
 </pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Step 3: Deploy Local Spark Cluster and initialize Spark context</summary> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
