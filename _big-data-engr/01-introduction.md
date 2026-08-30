@@ -272,10 +272,7 @@ Each segment of codes in this lecture is meant to be run on a separate notebook 
 {% details Step 1: Prepare Java and Spark %}
 
 ```bash
-!gdown --fuzzy https://drive.google.com/file/d/1ac5p-GUI35s49CDf2cFCliUqSLep2VPM/view?usp=sharing
-!tar xzf OpenJDK11U-jdk_x64_linux_hotspot_11.0.24_8.tar.gz
-!rm OpenJDK11U-jdk_x64_linux_hotspot_11.0.24_8.tar.gz
-!gdown --fuzzy https://drive.google.com/file/d/1W9-Nb_IP3qiCtHo6BeuluwY3u-Ni2F5C/view?usp=sharing
+!gdown --fuzzy https://drive.google.com/file/d/1WPBsCGftdN1qnND-iC4yefB6wO21HIsV/view?usp=sharing
 !tar xzf spark-3.5.6-bin-hadoop3.tgz
 !rm spark-3.5.6-bin-hadoop3.tgz
 ```
@@ -292,15 +289,15 @@ import subprocess
 
 working_dir = subprocess.run(['pwd'], stdout = subprocess.PIPE).stdout.strip().decode("utf-8")
 print(working_dir)
-os.environ["JAVA_HOME"] = working_dir + "/jdk-11.0.24+8/"
-os.environ["SPARK_HOME"] = working_dir + "/spark-3.5.6-bin-hadoop3/"
+os.environ["JAVA_HOME"] =  "/usr/lib/jvm/java-21-openjdk-amd64/"
+os.environ["SPARK_HOME"] = working_dir + "/spark-4.2.0-bin-hadoop3/"
 spark_path = os.environ['SPARK_HOME']
 sys.path.append(spark_path + "/bin")
 sys.path.append(spark_path + "/python")
 sys.path.append(spark_path + "/python/pyspark/")
 sys.path.append(spark_path + "/python/lib")
 sys.path.append(spark_path + "/python/lib/pyspark.zip")
-sys.path.append(spark_path + "/python/lib/py4j-0.10.9.7-src.zip")
+sys.path.append(spark_path + "/python/lib/py4j-0.10.9.9-src.zip")
 ```
 {% enddetails %}
 
