@@ -269,7 +269,7 @@ Each segment of codes in this lecture is meant to be run on a separate notebook 
 {% enddetails %}
 
 
-{% details Step 1: Prepare Java and Spark %}
+{% details Step 1: Prepare Spark %}
 
 ```bash
 !gdown --fuzzy https://drive.google.com/file/d/1WPBsCGftdN1qnND-iC4yefB6wO21HIsV/view?usp=sharing
