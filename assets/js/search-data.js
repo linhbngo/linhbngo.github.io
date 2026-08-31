@@ -635,12 +635,12 @@ ninja.data = [{
               window.location.href = "/csc112/00-syllabus/";
             },},{id: "csc112-how-computers-think-and-store-information",
           title: 'How Computers Think and Store Information',
-          description: "Computers follow instructions and store typed values. Excel cells are memory you can see.",
+          description: "",
           section: "Csc112",handler: () => {
               window.location.href = "/csc112/01-how-computers-think/";
             },},{id: "csc112-data-literacy-before-excel",
           title: 'Data Literacy Before Excel',
-          description: "Ask a question, name the rows and columns, and clean types before you SUM anything.",
+          description: "",
           section: "Csc112",handler: () => {
               window.location.href = "/csc112/02-data-literacy/";
             },},{id: "csc112-formulas-as-reusable-thinking",
