@@ -4,7 +4,7 @@ pretty_table: true
 collection: csc112
 order: 3
 title: "Data Literacy Before Excel"
-description: "Ask a question, name the rows and columns, and clean types before you SUM anything."
+
 mermaid:
   enabled: true
   zoomable: true
@@ -13,7 +13,7 @@ toc:
   - name: A spreadsheet is a model of the world
   - name: Rows, columns, and a question
   - name: Messy data is the default
-  - name: Ethics and what gets counted
+  - name: What gets counted
   - name: Try this in Excel
   - name: Takeaways
 ---
@@ -22,161 +22,354 @@ toc:
 
 {% details Excel is not a poster %}
 
-- Color, clip art, and merged title cells can make a sheet look finished
-- Analysis needs a **rectangle of data**: one header row, one observation per row, one variable per column
-- If the sheet is laid out for printing, it is often a poor layout for formulas, charts, and PivotTables
+- A spreadsheet is useful because it turns part of the world into a **rectangle of observations and variables**
+- Analysis works best with one header row, one observation per row, and one variable per column
+- A sheet can look clean and still contain ambiguous, missing, or incorrect data
+- Formatting can make data easier to read; it cannot make bad measurements correct
 
 {% enddetails %}
 
-{% details Two sheets, two jobs %}
+{% details Our running dataset: Open Food Facts %}
 
-| Sheet role | Looks like | Good for |
-| --- | --- | --- |
-| Data | Plain table, no merged cells | Formulas, sorts, pivots, Python later |
-| Presentation | Titles, colors, charts, Word/PowerPoint paste | Humans reading a story |
+- For this lecture we will use an extract from **Open Food Facts**, a community-contributed database of food products.
+  - `4,535,554` rows from raw text data. 
+  - a csv file containing `10,000` random samples (and a smaller portions of columns) was created. 
+- [Typical fields](https://github.com/openfoodfacts/api-documentation/issues/64) in the extract include things such as:
+  - a product identifier such as `code` / barcode
+  - `product_name`
+  - `brands`
+  - `quantity` or serving information
+  - product/category text
+  - nutrition measurements such as calories, fat, sugar, or protein per 100 g
 
-- Keep them separate when you can
-- This is the same idea as "content vs slide design" in PowerPoint
+This is useful precisely because it is **real data entered and maintained by people**. Some fields are complete and standardized; others may be missing, inconsistent, or questionable.
 
 {% enddetails %}
 
-{% details A running example %}
+{% details Before writing a formula %}
 
-Question: *Among these campus events, which category had the highest attendance in September?*
+- What is one row?
+- Is a barcode a number or an identifier?
+- Is sugar measured per serving, per package, or per 100 g?
+- What does a blank sugar value mean?
+- Are all products equally well documented?
 
-You cannot answer that until you know:
-
-- What is one row? (one event? one ticket? one day?)
-- What does `Attendance` include? (students only? no-shows?)
-- What timezone or calendar is `Date` using?
+The spreadsheet cannot answer a question until we understand what its cells represent.
 
 {% enddetails %}
 
 ## Rows, columns, and a question
 
-{% details Vocabulary %}
+{% details Vocabulary using the food data %}
 
-- **Observation / record**: one row (one student, one sale, one sensor reading)
-- **Variable / field**: one column (id, date, amount, section)
-- **Value**: the typed contents of one cell
-- **Missing**: blank is not the same as zero, and not the same as `"N/A"`
+- **Observation / record**: one row representing one product record
+- **Variable / field**: one column, such as product name, barcode, quantity, or sugar per 100 g
+- **Value**: the contents of one cell for one product and one variable
+- **Identifier**: a value used to distinguish records; it may contain only digits without being a quantity
+- **Missing**: a value that was not recorded or is not available
+
+Important:
+
+> A blank cell is not automatically zero.
 
 {% enddetails %}
 
-{% details Write the question in a cell %}
+{% details What exactly is one row? %}
 
-- Put the question in `A1` of a `Notes` sheet, in a Word outline, or in the assignment header
-- Good: "What is the average lab score for students who submitted on time?"
-- Vague: "Do something with this spreadsheet"
-- SLO1 starts here: comprehend the problem before designing the solution
+At first glance, one row may look like "one food."
+
+A better description is:
+
+> **One row is one product record identified by a product code/barcode.**
+
+
+- Two package sizes of a similar product may have different barcodes
+- Similar products from different brands are different records
+- A product record is not the same thing as a unique type of food
+
+When we later count rows, we are counting **records**, not necessarily distinct foods in the everyday sense.
+
+{% enddetails %}
+
+{% details A barcode looks numeric — but is it a number? %}
+
+A barcode may contain only digits.
+
+But ask what arithmetic would mean:
+
+- barcode + barcode?
+- average barcode?
+- twice a barcode?
+
+Those calculations make no sense.
+
+So a barcode is better treated as **Text / an identifier**, even if every character is a digit.
+
+This is the same reason ZIP codes and student IDs should usually not be treated as measurements.
 
 {% enddetails %}
 
 {% details Units and definitions %}
 
-- `Time` in minutes or hours?
-- `Cost` with or without tax?
-- `Grade` as percent or letter?
-- If two people use different definitions, both can "calculate correctly" and still disagree
+Compare these possible fields:
+
+| Field | Looks like | What it really means |
+| --- | --- | --- |
+| `code` | digits | identifier |
+| `product_name` | text | product label/name |
+| `quantity` | `340 g`, `12 oz`, etc. | amount **plus a unit** |
+| sugar per 100 g | number | standardized measurement |
+| serving size | number/text | amount whose meaning depends on the unit |
+
+The number alone is not enough. **Units are part of the data.**
+
+A value of `12` could mean 12 g, 12 oz, 12 servings, or something else entirely.
+
+{% enddetails %}
+
+{% details Write the question before the formula %}
+
+Good:
+
+> "For products with a reported sugar-per-100-g value, how much sugar would a 30 g portion contain?"
+
+Less useful:
+
+> "Do something with this spreadsheet."
+
+The first question tells us:
+
+- which column matters
+- what unit we need
+- what calculation we expect
+- which rows may not be answerable because data are missing
+
+SLO1: comprehend the problem before designing the solution.
 
 {% enddetails %}
 
 ## Messy data is the default
 
-{% details Classic spreadsheet problems %}
+{% details Real-world mess is often inside the cells %}
 
-- Header in row 1 *and* a title in row 1 of a merged range
-- Blank rows used as visual spacing
-- Numbers stored as text (`'15` or a leading apostrophe)
-- Dates typed as `Fall 26` (text) instead of a real date
-- Two variables in one column (`"MW 3:00 UNA 161"`)
-- Totals mixed into the data (`SUM` rows in the middle of a list)
+This dataset may already look like a clean rectangle. That does **not** mean the data are clean.
 
-{% enddetails %}
+Look for problems such as:
 
-{% details Why this is a science issue, not just a software issue %}
+- missing product names or nutrition values
+- inconsistent capitalization or spelling in text fields
+- multiple ideas stored inside one text field
+- quantities that combine a number and a unit
+- products using different serving sizes
+- values that look numeric but are actually identifiers
+- suspicious or impossible-looking nutrition values caused by entry errors
 
-- GE Goal 3: quantitative methods only work if the measurements mean what you think they mean
-- A tidy table is closer to a lab notebook than to a flyer
-- Garbage in, formatted-nicely garbage out
-
-{% enddetails %}
-
-{% details CSV is a lowest-common-denominator file %}
-
-- CSV = comma-separated values: plain text, not an Excel workbook
-- Opening a CSV in Notepad/TextEdit shows the raw observations
-- Opening it in Excel *interprets* types (and can mangle ZIP codes and dates)
-- Later, Python will read the same CSV with different default guesses
-- Always check a few rows after import
+The hard part is often not fixing the spreadsheet layout. It is deciding what the values mean.
 
 {% enddetails %}
 
-## Ethics and what gets counted
+{% details Missing does not mean zero %}
 
-{% details Data literacy includes what is missing %}
+Suppose `sugars_100g` is blank for a product.
 
-- Who is not in the dataset?
-- Was participation voluntary?
-- Can a person be identified from a "anonymous" sheet (name + section + rare major)?
-- Course work: do not publish real student identifiers; use sample or de-identified files
+Possible meanings include:
+
+- nobody entered the value
+- the nutrition label was unavailable
+- the contributor skipped that field
+- the product record is incomplete
+
+It does **not** necessarily mean the food contains zero sugar.
+
+This becomes important when Excel performs arithmetic: a formula can produce a perfectly valid-looking number from an invalid assumption.
+
+{% enddetails %}
+
+{% details Standardized fields are easier to compare %}
+
+A field measured **per 100 g** gives us a common denominator.
+
+That means two products with different package sizes can still be compared using the same unit.
+
+By contrast:
+
+- `quantity = 12 oz`
+- `quantity = 340 g`
+
+cannot be compared directly without interpreting and converting the units.
+
+Standardization is part of the model, not merely formatting.
 
 {% enddetails %}
 
-{% details Discussion %}
+{% details Community-contributed data can contain errors %}
 
-- Designate a note-taker
-- If a club spreadsheet omits events with zero attendance, what happens to the average?
-- When is it honest to drop a row, and when is it cooking the data?
+Open Food Facts is useful because it reflects how real datasets are created:
+
+- people contribute records
+- some products receive more attention than others
+- contributors can interpret labels differently
+- fields can be left blank
+- data-entry mistakes can occur
+
+A value being present in a spreadsheet does not guarantee that it is correct.
+
+`Does this value make sense in the real world?`
 
 {% enddetails %}
+
+{% details Raw data versus presentation %}
+
+Keep different jobs separate when possible.
+
+| Sheet role | Purpose |
+| --- | --- |
+| `Raw` | Preserve the original downloaded data |
+| `Work` | Make formatting changes and add calculations |
+| `Notes` | Record the question, definitions, assumptions, and observations |
+
+The `Raw` sheet is evidence of where you started.
+
+Do not "clean" the only copy and then forget what was changed.
+
+{% enddetails %}
+
+## What gets counted
+
+{% details This is not a random sample of every food people eat %}
+
+A community-contributed product database reflects what has been entered into it.
+
+Ask:
+
+- Which products are included?
+- Which products are missing?
+- Are popular brands more completely documented?
+- Are some countries, stores, or categories represented more heavily than others?
+- Are products with missing nutrition information systematically different from products with complete information?
+
+A large dataset can still be an incomplete picture of the world.
+
+{% enddetails %}
+
+{% details Records are not necessarily foods, purchases, or people %}
+
+If the dataset contains 10,000 rows, we can safely say:
+
+> "This extract contains 10,000 product records."
+
+We should **not** automatically say:
+
+- "These are the 10,000 most common foods"
+- "These represent what 10,000 people eat"
+- "These are 10,000 unique kinds of food"
+
+Those claims require information the rows do not provide.
+
+{% enddetails %}
+
 
 ## Try this in Excel
 
-{% details Lab 2 — From messy grid to Table %}
+{% details Guided exercise — Inspect before calculating %}
 
-1. Download (or type) a small messy list: extra title row, mixed date formats, a blank row, a total row
-2. Delete the decorative title from the data rectangle (move it to a `Notes` sheet)
-3. Remove blank rows and the total row from the data
-4. Make sure each column has a short, unique header (`date`, `category`, `attendance`)
-5. Select the rectangle → **Insert → Table** (or `Ctrl/Cmd + T`)
-6. Set column types: Date, Number, Text
-7. Sort by date; filter one category
-8. On a `Notes` sheet, write one sentence: the question this table could answer, and one it cannot
+Work with the provided Open Food Facts workbook.
 
-{% enddetails %}
+1. Rename the original worksheet `Raw`.
+2. Make a copy of it and rename the copy `Work`.
+3. Add a third worksheet named `Notes`.
+4. In `Notes!A1`, write:
+   - **Question:** `For products with a reported sugar-per-100-g value, how much sugar would a 30 g portion contain?` 
+5. In the `Work` sheet, identify:
+   - the product identifier column
+   - the product-name column
+   - one text field
+   - one numeric nutrition field
+   - at least one column containing missing values
+6. Adjust column widths and use **Wrap Text** where needed so the records are readable.
+7. Format the product identifier/barcode column as **Text**.
+8. Format nutrition measurements as **Number** with a sensible number of decimal places.
 
-{% details Lab 2b — Import a CSV without trusting Auto %}
-
-- Data → From Text/CSV
-- Check the preview: did Excel turn IDs into numbers?
-- If needed, set the ID column to Text before loading
-- Save as `.xlsx` so you keep Table formatting; keep the original CSV as the raw source
-
-{% enddetails %}
-
-{% details Optional Word companion %}
-
-- In Word, write a 5-line **data dictionary**: column name, type, allowed values, missing-value code
-- That document is the specification your Excel (and later Python) work should obey
+Do not delete rows simply because they look inconvenient.
 
 {% enddetails %}
 
-## Takeaways
+{% details Guided formula — Normalize to a 30 g portion %}
 
-{% details Carry these into formulas week %}
+Suppose a product reports sugar as grams per 100 g.
 
-- Question first, table second, formula third, chart last
-- One observation per row; one variable per column; no totals inside the data
-- Types and missing values are part of the science, not housekeeping
-- Next lecture: formulas as reusable thinking (relative vs absolute references)
+Insert a new column named something like:
+
+`Sugar_in_30g`
+
+For the first product row with a valid sugar value, create a formula equivalent to:
+
+```text
+=sugar_per_100g_cell*30/100
+```
+
+Then use the **fill handle** to copy the formula down the column.
+
+This uses only:
+
+- cell references
+- multiplication
+- division
+- copied formulas
+
+Now inspect the results carefully.
 
 {% enddetails %}
 
-{% details Placeholder notes for expansion %}
+{% details The important failure case %}
 
-- Screenshot set: bad "report layout" vs good Table
-- One historical cautionary tale (spreadsheet error) as a reading
-- Power Query mention only as a "later, if we have time" cleaner
+Find a row where the original sugar-per-100-g value is blank.
+
+Ask:
+
+- What result did the copied formula produce?
+- Does that result mean the product contains zero sugar?
+- Is the formula wrong, or is our assumption wrong?
+
+This is the key lesson:
+
+> **A spreadsheet can calculate correctly from data that do not support the conclusion.**
+
+We will learn more sophisticated formula techniques later. For now, recognizing the problem is the important skill.
+
+{% enddetails %}
+
+{% details Build a small presentation sheet %}
+
+Create a worksheet named `Example`.
+
+1. Copy the headers and about 5–10 interesting product rows from `Work`.
+2. Include the original sugar-per-100-g value and your calculated 30 g value.
+3. Add a descriptive title above the copied range.
+4. Adjust widths, alignment, number formats, borders, and font emphasis so the result is easy to read.
+
+Compare the jobs:
+
+- `Raw` preserves the source
+- `Work` supports calculation
+- `Example` communicates a small result to a human reader
+
+{% enddetails %}
+
+{% details Notes sheet — What can and cannot be concluded? %}
+
+In the `Notes` sheet, write two sentences:
+
+**Can answer:**
+
+> "For records with valid sugar-per-100-g data, we can calculate the sugar content of a standardized 30 g portion."
+
+**Cannot answer from this dataset alone:**
+
+> "Which product is healthiest?"
+
+Why not?
+
+"Healthiest" requires a definition and possibly variables that are not represented by one sugar calculation.
 
 {% enddetails %}

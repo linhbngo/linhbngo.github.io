@@ -16,8 +16,6 @@ tikzjax: true
 typograms: true
 ---
 
-# Requirements I
-
 {% details Purpose of requirements %}
 
 - What should a product do?

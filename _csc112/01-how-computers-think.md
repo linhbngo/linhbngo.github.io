@@ -4,7 +4,6 @@ pretty_table: true
 collection: csc112
 order: 2
 title: "How Computers Think and Store Information"
-description: "Computers follow instructions and store typed values. Excel cells are memory you can see."
 mermaid:
   enabled: true
   zoomable: true
