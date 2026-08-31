@@ -250,7 +250,5 @@ distributed system.
 ## Course Plan
 
 - Project-based cloud engineering
-    - Will depend on projects that you (or members of your group) worked on in CSC 468, Introduction to Cloud Computing
-- Local testbed: Moving from Docker Desktop to Rancher Desktop
-- Cloud testbed: CloudLab
-- Rancher Desktop, minikube, or kind (local clusters)
+    - Will depend on projects that you worked on in CSC 468, Introduction to Cloud Computing
+- Cloud testbed: FABRIC
