@@ -3,7 +3,6 @@ layout: lecture
 collection: csc478
 title: Syllabus
 toc:
-toc:
   - name: General Information
   - name: Course Information
   - name: Learning Objectives

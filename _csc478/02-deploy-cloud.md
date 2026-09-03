@@ -3,6 +3,10 @@ layout: lecture
 pretty_table: true
 collection: csc478
 title: "Deploying in the Cloud"
+mermaid:
+  enabled: true
+  zoomable: true
+  
 toc:
   - name: Welcome to Cloud Engineering
   - name: What is Kubernetes?
