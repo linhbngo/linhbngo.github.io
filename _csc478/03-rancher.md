@@ -2,167 +2,111 @@
 layout: lecture
 pretty_table: true
 collection: csc478
-title: "Rancher Desktop"
+title: "Rancher RKE2"
 toc:
-  - name: Welcome to Rancher Desktop
-  - name: Setting Up Rancher Desktop
-  - name: Container runtimes
-  - name: Kubernetes Readiness Check
-  - name: Docker Practice
-  - name: What’s Next
+  - name: What is RKE2?
+  - name: Key Features
+  - name: "Hands-on: Typical Installation Workflow"
 ---
-# Rancher Desktop
+# Rancher RKE2
 
 ---
 
-## Welcome to Rancher Desktop
+## What is RKE2?
 
-{% details info Details %}
+{% details RKE2 %}
 
-- A modern, Kubernetes-native replacement for Docker Desktop
-- Rancher Desktop provides:
-    - Container runtime (via `containerd`)
-    - Kubernetes cluster (via `k3s`)
-    - Open source and license-free
-    - Local cloud-in-a-box: Build, run, push, and deploy
-- Rancher Desktop is part of [SUSE' Rancher: Enterprise Kubernetes Management Ecosystem](https://www.rancher.com/).
-
+- Rancher Kubernetes Engine 2
+- A CNCF-certified Kubernetes distribution developed by SUSE Rancher.
+- Designed as the next generation of RKE, focusing on:
+    - Security first (FIPS 140-2 compliance, SELinux, CIS hardening profiles).
+    - Simplicity of deployment (single binary installer).
+    - Production-ready for on-premise, edge, and cloud environments.
 
 {% enddetails %}
-{% details tip Details %}
+{% details CNCF %}
 
-- The goal of this lecture is to get you to become familiar with Rancher Desktop and its container operations. 
-- This lecture uses hands-on activities that are similar to [CSC468](https://www.cs.wcupa.edu/LNGO/courses/csc468/lectures/06-docker/).
+- Cloud Native Computing Foundation, part of the Linux Foundation
+- To support and advance cloud-native technologies, especially Kubernetes. 
+- Other projects:
+    - Prometheus: open-source monitoring and alerting system designed for reliability and scalabiliaty. 
+    - Envoy: a high-performance service proxy and communication bus designed for microservices
+    - Helm: a package manager for Kubernetes, aims to simplify the deployment and management of applications using reusable configuration templates (`charts`)
+    - Containerd: lightweight container runtime. 
 
-{% enddetails %}
-{% details Rancher vs Docker Desktop %}
+```mermaid
+flowchart TD
+subgraph Kubernetes["Kubernetes Cluster"]
+    direction TB
 
+    subgraph ControlPlane["Control Plane"]
+        Helm["Helm\n(Package Manager)"]
+        Prometheus["Prometheus\n(Monitoring & Alerting)"]
+    end
 
-| Feature          | Docker Desktop          | Rancher Desktop                    |
-| ---------------- | ----------------------- | ---------------------------------- |
-| Docker CLI       | Built-in                | Nerdctl (alias to Docker commands) |
-| Kubernetes       | Optional, single-node   | Built-in K3s, enabled by default   |
-| Licensing        | Commercial for business | Free, open-source                  |
-| Registry login   | Native                  | nerdctl login required             |
-| Resource control | GUI                     | GUI with YAML config               |
+    subgraph DataPlane["Data Plane"]
+        Containerd["Containerd\n(Container Runtime)"]
+        Envoy["Envoy\n(Service Proxy / Networking)"]
+    end
+end
 
-{% enddetails %}
-{% details tip Details %}
-
-Rancher Desktop is designed with Kubernetes in mind from day one
-
-{% enddetails %}
----
-
-## Setting Up Rancher Desktop
-
-- Ideally, you should uninstall Docker Desktop before starting to install Rancher Desktop. 
-    - Rancher Desktop can do the same tasks as Docker Desktop (with less GUI tools).
-    - Rancher Desktop provides more support for Kubernetes (focus of this class).
-- Install from [rancherdesktop.io](https://rancherdesktop.io)
-- On first launch, Rancher Desktop will bring up the `Settings` tab:
-
-    {% details On Virtual Machine, select the appropriate Memory and CPUs amount %}
-
-{% include figure.liquid path="assets/img/courses/csc478/rancher/01.png" width="50%" zoomable=true %}
-
-    {% enddetails %}
-    {% details On Container Engine, select containerd %}
-
-{% include figure.liquid path="assets/img/courses/csc478/rancher/02.png" width="50%" zoomable=true %}
-
-    {% enddetails %}
-    {% details On Kubernetes, check Enable Kubernetes %}
-
-{% include figure.liquid path="assets/img/courses/csc478/rancher/03.png" width="50%" zoomable=true %}
-
-
-    {% enddetails %}
-- Confirm setup in terminal:
-
-```bash
-docker version
-kubectl version
+Helm -->|Deploys apps| Containerd
+Prometheus -->|Monitors| ControlPlane
+Envoy -->|Routes traffic| Containerd
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/rancher/04.png" width="50%" zoomable=true %}
-
+{% enddetails %}
 ---
 
-## Container runtimes
+## Key Features
 
-{% details What is a container runtime? %}
+{% details Security Enhancements %}
 
-- A runtime is the low-level component responsible for managing container lifecycle: create, start, stop, and delete containers.
-- It sits below tools like Docker CLI or Kubernetes.
-
-{% enddetails %}
-{% details Common runtimes %}
-
-
-| Runtime      | Used By                           | Notes                                                                                                                                  |
-| ------------ | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `dockerd`    | Docker CLI                        | The original Docker daemon. Handles image builds, networks, volumes, and calls `containerd` internally for actual container execution. |
-| `containerd` | Docker (since v1.11+), Kubernetes | A lightweight runtime daemon. Docker delegates runtime operations to containerd. Kubernetes uses it directly via the CRI.              |
-| `cri-o`      | OpenShift, Kubernetes             | A runtime that interfaces directly with Kubernetes, focusing only on running containers (no builds or volumes).                        |
-| `runc`       | containerd, cri-o                 | The actual binary that creates containers from OCI bundles. Very low-level.                                                            |
+- Built-in support for CIS benchmarks (kube-bench ready).
+    - CIS: Center for Internet Security
+- SELinux policies enforced by default.
+- Containerd (not Docker) as runtime for security and performance.
 
 {% enddetails %}
-{% details How Docker uses dockerd and containerd %}
+{% details Operational Simplicity %}
 
-- When you run `docker run`:
-    - The Docker CLI talks to the `dockerd` daemon
-    - `dockerd` builds images, manages networking, and oversees the container lifecycle
-    - For actual execution, `dockerd` delegates container lifecycle tasks to `containerd`
-    - `containerd` then uses `runc` to spawn the container
-- In modern Docker, `containerd` is embedded and managed by `dockerd`. You rarely see it unless you use advanced tooling.
+- Single binary distribution (rke2).
+- Automated etcd management.
+- Rancher integration for centralized multi-cluster management.
 
 {% enddetails %}
-{% details What about Nix* systems? %}
+{% details Flexibility %}
 
-- **NixOS / nixpkgs**: use a purely functional package and system configuration model
-- While container runtimes like `docker` and `containerd` are supported in Nix-based systems, users often prefer reproducible builds via `nix build`, `nix-shell`, or `nix develop`
-- Containers on Nix:
-    - You can build container images with `nix` and export them to Docker/OCI
-    - Popular for CI/CD pipelines or reproducible scientific workflows 
-    - Nix is not a container runtime, but complements them by ensuring immutable container definitions
+- Works in data centers, cloud, and at the edge.
+- Supports air-gapped environments.
 
 {% enddetails %}
-{% details tip Details %}
+{% details Architecture Overview %}
 
-- Docker = monolith with features + embedded containerd. 
-- Kubernetes = speaks directly to `containerd` or `cri-o`.
+
+- Server Nodes: Run the Kubernetes control plane + etcd.
+- Agent Nodes: Run workloads (similar to workers).
+- Runtime: Containerd, not Docker.
+- Networking: Uses CNI plugins (default: Canal, but others supported).
+- Ingress: NGINX ingress controller by default.
+
+{% enddetails %}
+{% details Why RKE2 Matters %}
+
+
+- A production-grade Kubernetes distro hardened out-of-the-box.
+- Ideal for regulated industries (finance, healthcare, government).
+- Designed for multi-cluster management with Rancher.
+- Future-facing: aligns with CNCF standards and cloud-native practices.
 
 {% enddetails %}
 ---
 
-## Kubernetes Readiness Check
+## Hands-on: Typical Installation Workflow
 
-```bash
-kubectl get nodes
-kubectl get pods -A
-```
+{% details Fabric %}
 
-You’re ready for Week 2: Kubernetes deployments
-
----
-
-## Docker Practice
-
-- Complete section 2 and 3 of the [Docker lecture in CSC 468](https://www.cs.wcupa.edu/LNGO/courses/csc468/lectures/06-docker/) to quickly review and also to confirm that Docker of Rancher Desktop works properly. 
-
----
-
-## What’s Next
-
-- Week 2: Kubernetes core objects
-
-  - Pods, Services, Deployments
-  - Apply with `kubectl`
-- Rancher Desktop gives you local Kubernetes + container runtime all in one
-
-{% details tip Details %}
-
-Familiar tasks from Docker Desktop now live in Rancher, ready for Kubernetes.
+Run a `git pull` (run `git stash` if necessary) on your `fabric-examples` repository. Navigate to `478-examples` and open up the notebook. Run the notebook!
 
 {% enddetails %}
+

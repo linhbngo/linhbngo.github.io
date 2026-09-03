@@ -6,8 +6,8 @@ title: "Course Project: Multi-Pod Multi-Container Pipeline on Kubernetes"
 toc:
   - name: Introduction
   - name: Example Project Idea
-  - name: "Milestone 1: Team Formation & Architecture (Design Only)"
-  - name: "Milestone 2: Core Implementation:"
+  - name: "Milestone 1: Architecture (Design Only)"
+  - name: "Milestone 2: Core Implementation"
   - name: "Milestone 3: Persistence & Full Integration (Demo)"
   - name: Constraints & Hints
 ---
@@ -27,6 +27,7 @@ start with a top-down project idea and gradually acquire the necessary
 knowledge to implement this project over the duration of the course. 
 
 {% enddetails %}
+
 {% details Project idea %}
 
 The project idea should evolve around a full stack pipeline that involves multiple pods with at least one of which contains multiple containers. 
@@ -38,7 +39,7 @@ skills.
 
 ## Example Project Idea
 
-While groups are free to select their own project ideas, these selections need to reflect the complexity of the pipeline. To that end, we have the following template project idea: **Image Classification Pipeline on Kubernetes**
+While students are free to select their own project ideas, these selections need to reflect the complexity of the pipeline. To that end, we have the following template project idea: **Image Classification Pipeline on Kubernetes**
 
 {% details Project Overview %}
 
@@ -49,23 +50,22 @@ Design and deploy a simplified image classification pipeline on Kubernetes. The 
 - Storage Service (persists original/processed images and results)
 
 {% enddetails %}
+
 It is possible to have in-depth projects that veer away from the multi-pod/multi-container requirements. All project selections need to be approved by the professor. 
 
 ---
 
-## Milestone 1: Team Formation & Architecture (Design Only)
+## Milestone 1: Architecture (Design Only)
 
 {% details Goal %}
 
-- Form a team, 
 - Define the pipeline architecture, and 
 - Make clear technical choices before building.
 
 {% enddetails %}
+
 {% details Requirements %}
 
-- Form teams between 3-5 students. 
-- Learn about your teammates' capabilities and define roles (Lead/PM, DevOps, Backend/Inference, Preprocessing, QA/Docs).
 - Develop use cases and workflow: 
     - Write 2–3 user stories and draw data-flow diagram. 
     - Example:
@@ -80,6 +80,7 @@ It is possible to have in-depth projects that veer away from the multi-pod/multi
     - List top risks (e.g., model size, timeouts) and a basic test matrix (happy path, large image, invalid image).
 
 {% enddetails %}
+
 {% details Deliverables %}
 
 - Technical report:
@@ -97,7 +98,7 @@ It is possible to have in-depth projects that veer away from the multi-pod/multi
 {% enddetails %}
 ---
 
-## Milestone 2: Core Implementation:
+## Milestone 2: Core Implementation
 
 {% details Goal %}
 
@@ -131,6 +132,7 @@ Stand up the pipeline with proper service discovery and resilience. No persisten
         - Sidecar rationale (2–3 sentences)
 
 {% enddetails %}
+
 ## Milestone 3: Persistence & Full Integration (Demo)
 
 {% details Goal %}
@@ -153,6 +155,7 @@ Add persistent storage, verify data survives restarts, and deliver a clean demo.
     - Basic logs/metrics evidence.
 
 {% enddetails %}
+
 {% details Deliverables %}
 
 - Update project repository with manifests for storage/ YAMLs (PV/PVC, or StatefulSet if you go that route)
@@ -162,7 +165,7 @@ Add persistent storage, verify data survives restarts, and deliver a clean demo.
     - Content:
         - Front matter (names, title)
         - Overview (marketing!)
-        - 4–5 page (undergraduates) or 6-7 page (team containing graduate students)
+        - 4–5 page (undergraduates) or 6-7 page (graduate students)
             - Architecture recap, data-flow diagram (updates if changed)
             - Pod grouping & any sidecar choices
             - Services and routing

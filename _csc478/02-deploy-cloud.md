@@ -173,6 +173,7 @@ high-performance datacenter-scale network fabric connecting them.
     - How is this different that the traditional cluster model?
 
 {% enddetails %}
+
 {% details Borg's architecture %}
 
 - Borg Master

@@ -267,3 +267,16 @@ kubectl get svc
 {% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod.png" width="50%" zoomable=true %}        
 
     {% enddetails %}
+
+
+{% details Hands-on %}
+
+- Part 1:
+    - Repeat the deployment exercise from the Pod-Service-Deployment lecture. 
+- Part 2:
+    - Explore the usage of `kubectl exec -it` and attempt to open a shell terminal into your running pods/containers from part 1. 
+    - Who are you inside the container?
+    - Can you ping other pods/containers?
+    - Can you download/install software (apt-get/yum/wget ...) inside the pods/containers?
+
+{% enddetails %}
