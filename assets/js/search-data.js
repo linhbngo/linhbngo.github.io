@@ -1238,8 +1238,8 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/02-deploy-cloud/";
-            },},{id: "csc478-rancher-desktop",
-          title: 'Rancher Desktop',
+            },},{id: "csc478-rancher-rke2",
+          title: 'Rancher RKE2',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/03-rancher/";
@@ -1253,11 +1253,6 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/05-pod-service-deployment/";
-            },},{id: "csc478-rancher-rke2",
-          title: 'Rancher RKE2',
-          description: "",
-          section: "Csc478",handler: () => {
-              window.location.href = "/csc478/08-rancher-cloudlab/";
             },},{id: "csc478-clusterip-nodeport-and-multi-service-communication",
           title: 'ClusterIP, NodePort, and Multi-Service Communication',
           description: "",
