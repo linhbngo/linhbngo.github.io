@@ -15,17 +15,19 @@ chart:
 tikzjax: true
 typograms: true
 toc:
-  - name: Setup
-  - name: Introduction to Docker
-  - name: Docker Images
-  - name: Infrastructure as Code
-  - name: "Infrastructure as Code: Storage"
-  - name: "Infrastructure as Code: Networking"
-
+  - name: 1. Overview
+  - name: 2. Python Fundamentals
+  - name: 3. Analyzing Patient Data
+  - name: 4. Storing Multiple Values in Lists
+  - name: 5. Repeating Actions with Loops
+  - name: 6. Analyzing Data from Multiple Files
+  - name: 7. Making Choices
+  - name: 8. Creating Functions
+  - name: 9. Errors and Exceptions
+  - name: 10. Defensive Programming
+  - name: 11. Debugging
+  - name: 12. Command-Line Programs
 ---
-
-
-# Introduction to Python Programming
 
 
 ## 1. Overview
@@ -43,9 +45,10 @@ including loops, conditions, functions, and testing and debugging.
 The workshop uses materials from [Software Carpentry](https://software-carpentry.org/)'s 
 Programming with Python lesson. 
 
-Link to workshop page: [https://cs.wcupa.edu/LNGO/courses/workshops/intro-python](https://cs.wcupa.edu/LNGO/courses/workshops/intro-python)
+Link to workshop page: [https://linhbngo.github.io/csc-workshops/intro-python/](https://linhbngo.github.io/csc-workshops/intro-python/)
 
 {% enddetails %}
+
 {% details note Setup on Google Colab %}
 
 
@@ -74,17 +77,10 @@ Python notebook.
 !ls -lh /content
 ```
 
-
 {% enddetails %}
 ## 2. Python Fundamentals
 
-{% details Abstract: Objectives %}
-
-- Assign values to variables.
-
-
-{% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 - What basic data types can I work with in Python?
 - How can I create a new variable in Python?
@@ -92,6 +88,7 @@ Python notebook.
 - Can I change the value associated with a variable after I create it?
 
 {% enddetails %}
+
 {% details note Variables %}
 
 - Any Python interpreter can be used as a calculator:
@@ -130,6 +127,7 @@ This means that, for example:
 - `weight` and `Weight` are different variables
 
 {% enddetails %}
+
 {% details note Types of data %}
 
 Python knows various types of data. Three common ones are:
@@ -256,7 +254,7 @@ weight in kilograms is now: 65.0
 A variable in Python is analogous to a sticky note with a name written on it:
 assigning a value to a variable is like putting that sticky note on a particular value.
 
-{% include figure.liquid path="fig/python_programming/01-intro/python-sticky-note-variables-01.svg" alt="Value of 65.0 with weight\_kg label stuck on it" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/01-intro/python-sticky-note-variables-01.svg" alt="Value of 65.0 with weight\_kg label stuck on it" max-width="50%" zoomable=true %}
 
 Using this analogy, we can investigate how assigning a value to one variable
 does **not** change values of other, seemingly related, variables.  For
@@ -277,7 +275,7 @@ comment that is ignored by Python.
 Comments allow programmers to leave explanatory notes for other
 programmers or their future selves.
 
-{% include figure.liquid path="fig/python_programming/01-intro/python-sticky-note-variables-02.svg" alt="Value of 65.0 with weight\_kg label stuck on it, and value of 143.0 with weight\_lb label stuck on it" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/01-intro/python-sticky-note-variables-02.svg" alt="Value of 65.0 with weight\_kg label stuck on it, and value of 143.0 with weight\_lb label stuck on it" max-width="50%" zoomable=true %}
 
 Similar to above, the expression `2.2 * weight_kg` is evaluated to `143.0`,
 and then this value is assigned to the variable `weight_lb` (i.e. the sticky
@@ -295,13 +293,13 @@ print('weight in kilograms is now:', weight_kg, 'and weight in pounds is still:'
 weight in kilograms is now: 100.0 and weight in pounds is still: 143.0
 ```
 
-{% include figure.liquid path="fig/python_programming/01-intro/python-sticky-note-variables-03.svg" alt="Value of 100.0 with label weight\_kg stuck on it, and value of 143.0 with label weight\_lbstuck on it" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/01-intro/python-sticky-note-variables-03.svg" alt="Value of 100.0 with label weight\_kg stuck on it, and value of 143.0 with label weight\_lbstuck on it" max-width="50%" zoomable=true %}
 
 Since `weight_lb` doesn't "remember" where its value comes from,
 it is not updated when we change `weight_kg`.
 
 {% enddetails %}
-{% details question Challenge 1: Check Your Understanding %}
+{% details Challenge 1: Check Your Understanding %}
 
 What values do the variables `mass` and `age` have after each of the following statements?
 Test your answer by executing the lines.
@@ -322,7 +320,7 @@ age = age - 20
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Sorting Out References %}
+{% details Challenge 2: Sorting Out References %}
 
 Python allows you to assign multiple values to multiple variables in one line by separating
 the variables and values with commas. What does the following program print out?
@@ -339,7 +337,7 @@ Hopper Grace
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3: Seeing Data Types %}
+{% details Challenge 3: Seeing Data Types %}
 
 What are the data types of the following variables?
 
@@ -385,14 +383,15 @@ print(type(distance))
 - Select individual values and subsections from data.
 - Perform operations on arrays of data.
 ```
-
 {% enddetails %}
-{% details question Questions %}
+
+{% details Questions %}
 
 - How can I process tabular data files in Python?
 
 {% enddetails %}
-{% details example Scenario: A Miracle Arthiritis Inflamation Cure %}
+
+{% details Scenario: A Miracle Arthiritis Inflamation Cure %}
 
 Our imaginary colleague **Dr. Maverick** has invented a new miracle drug that promises to
 cure arthritis inflammation flare-ups after only 3 weeks since initially taking the
@@ -411,7 +410,7 @@ To see how effective the treatment is we would like to:
 1. Calculate the average inflammation per day across all patients.
 2. Plot the result to discuss and share with colleagues.
 
-{% include figure.liquid path="fig/python_programming/02-numpy/lesson-overview.svg" alt="3-step flowchart shows inflammation data records for patients moving to the Analysis stepwhere a heat map of provided data is generated moving to the Conclusion step that asks thequestion, How does the medication affect patients?" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/02-numpy/lesson-overview.svg" alt="3-step flowchart shows inflammation data records for patients moving to the Analysis stepwhere a heat map of provided data is generated moving to the Conclusion step that asks thequestion, How does the medication affect patients?" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details note Data Format %}
@@ -607,7 +606,7 @@ As a result, if we have an M×N array in Python, its indices go from 0 to M-1 on
 and 0 to N-1 on the second. It takes a bit of getting used to, but one way to remember the rule is that
 the index is how many steps we have to take from the start to get the item we want.
 
-!['data' is a 3 by 3 numpy array containing row 0: \['A', 'B', 'C'\], row 1: \['D', 'E', 'F'\], androw 2: \['G', 'H', 'I'\]. Starting in the upper left hand corner, data\[0, 0\] = 'A', data\[0, 1\] = 'B',data\[0, 2\] = 'C', data\[1, 0\] = 'D', data\[1, 1\] = 'E', data\[1, 2\] = 'F', data\[2, 0\] = 'G',data\[2, 1\] = 'H', and data\[2, 2\] = 'I', in the bottom right hand corner.](fig/python_programming/02-numpy/python-zero-index.svg)
+!['data' is a 3 by 3 numpy array containing row 0: \['A', 'B', 'C'\], row 1: \['D', 'E', 'F'\], androw 2: \['G', 'H', 'I'\]. Starting in the upper left hand corner, data\[0, 0\] = 'A', data\[0, 1\] = 'B',data\[0, 2\] = 'C', data\[1, 0\] = 'D', data\[1, 1\] = 'E', data\[1, 2\] = 'F', data\[2, 0\] = 'G',data\[2, 1\] = 'H', and data\[2, 2\] = 'I', in the bottom right hand corner.](assets/img/courses/workshops/python_programming/02-numpy/python-zero-index.svg)
 
 {% enddetails %}
 {% details warning In the Corner %}
@@ -781,7 +780,7 @@ What if we need the maximum inflammation for each patient over all days (as in t
 next diagram on the left) or the average for each day (as in the
 diagram on the right)? As the diagram below shows, we want to perform the operation across an axis:
 
-{% include figure.liquid path="fig/python_programming/01-intro/python-operations-across-axes.png" alt="Per-patient maximum inflammation is computed row-wise across all columns usingnumpy.amax(data, axis=1). Per-day average inflammation is computed column-wise across all rows usingnumpy.mean(data, axis=0)." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/01-intro/python-operations-across-axes.png" alt="Per-patient maximum inflammation is computed row-wise across all columns usingnumpy.amax(data, axis=1). Per-day average inflammation is computed column-wise across all rows usingnumpy.mean(data, axis=0)." max-width="50%" zoomable=true %}
 
 To support this functionality,
 most array functions allow us to specify the axis we want to work on.
@@ -832,7 +831,7 @@ print(numpy.mean(data, axis=1))
 which is the average inflammation per patient across all days.
 
 {% enddetails %}
-{% details question Challenge 1: Slicing Strings %}
+{% details Challenge 1: Slicing Strings %}
 
 
 A section of an array is called a **slice**. We can take slices of character strings as well:
@@ -908,7 +907,7 @@ last three characters: hi
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Thin Slices %}
+{% details Challenge 2: Thin Slices %}
 
 
 The expression `element[3:3]` produces an **empty string**, i.e., a string that contains no characters.
@@ -923,7 +922,7 @@ array([], shape=(0, 40), dtype=float64)
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3: Stacking Arrays %}
+{% details Challenge 3: Stacking Arrays %}
 
 
 Arrays can be concatenated and stacked on top of one another,
@@ -1011,7 +1010,7 @@ D =
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 4: Change In Inflammation %}
+{% details Challenge 4: Change In Inflammation %}
 
 The patient data is *longitudinal* in the sense that each row represents a
 series of observations relating to one individual.  This means that
@@ -1144,7 +1143,7 @@ array([ 12.,  14.,  11.,  13.,  11.,  13.,  10.,  12.,  10.,  10.,  10.,
 - Plot multiple graphs in a single figure.
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 - How can I visualize tabular data in Python?
 - How can I group several plots together?
@@ -1178,7 +1177,7 @@ image = matplotlib.pyplot.imshow(data)
 matplotlib.pyplot.show()
 ```
 
-{% include figure.liquid path="fig/python_programming/03-matplotlib/inflammation-01-imshow.png" alt="Heat map representing the data variable. Each cell is colored by value along a color gradientfrom blue to yellow." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-matplotlib/inflammation-01-imshow.svg" alt="Heat map representing the data variable. Each cell is colored by value along a color gradientfrom blue to yellow." max-width="50%" zoomable=true %}
 
 Each row in the heat map corresponds to a patient in the clinical trial dataset, and each column
 corresponds to a day in the dataset.  Blue pixels in this heat map represent low values, while
@@ -1200,7 +1199,7 @@ ave_plot = matplotlib.pyplot.plot(ave_inflammation)
 matplotlib.pyplot.show()
 ```
 
-{% include figure.liquid path="fig/python_programming/03-matplotlib/inflammation-01-average.svg" alt="A line graph showing the average inflammation across all patients over a 40-day period." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-matplotlib/inflammation-01-average.svg" alt="A line graph showing the average inflammation across all patients over a 40-day period." max-width="50%" zoomable=true %}
 
 Here, we have put the average inflammation per day across all patients in the variable
 `ave_inflammation`, then asked `matplotlib.pyplot` to create and display a line graph of those
@@ -1213,14 +1212,14 @@ max_plot = matplotlib.pyplot.plot(numpy.amax(data, axis=0))
 matplotlib.pyplot.show()
 ```
 
-{% include figure.liquid path="fig/python_programming/03-matplotlib/inflammation-01-maximum.svg" alt="A line graph showing the maximum inflammation across all patients over a 40-day period." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-matplotlib/inflammation-01-maximum.svg" alt="A line graph showing the maximum inflammation across all patients over a 40-day period." max-width="50%" zoomable=true %}
 
 ```python
 min_plot = matplotlib.pyplot.plot(numpy.amin(data, axis=0))
 matplotlib.pyplot.show()
 ```
 
-{% include figure.liquid path="fig/python_programming/03-matplotlib/inflammation-01-minimum.svg" alt="A line graph showing the minimum inflammation across all patients over a 40-day period." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-matplotlib/inflammation-01-minimum.svg" alt="A line graph showing the minimum inflammation across all patients over a 40-day period." max-width="50%" zoomable=true %}
 
 The maximum value rises and falls linearly, while the minimum seems to be a step function.
 Neither trend seems particularly likely, so either there's a mistake in our calculations or
@@ -1269,7 +1268,7 @@ matplotlib.pyplot.savefig('data/inflammation.png')
 matplotlib.pyplot.show()
 ```
 
-{% include figure.liquid path="fig/python_programming/03-matplotlib/inflammation-01-group-plot.svg" alt="Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-matplotlib/inflammation-01-group-plot.svg" alt="Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period." max-width="50%" zoomable=true %}
 
 The **call** to `loadtxt` reads our data,
 and the rest of the program tells the plotting library
@@ -1310,7 +1309,7 @@ is important you agree on how libraries are imported.
 
 
 {% enddetails %}
-{% details question Challenge 1: Plot Scaling %}
+{% details Challenge 1: Plot Scaling %}
 
 Why do all of our plots stop just short of the upper end of our graph?
 
@@ -1352,7 +1351,7 @@ axes3.set_ylim(numpy.amin(min_data), numpy.amax(min_data) * 1.1)
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Drawing Straight Lines %}
+{% details Challenge 2: Drawing Straight Lines %}
 
 In the center and right subplots above, we expect all lines to look like step functions because
 non-integer value are not realistic for the minimum and maximum values. However, you can see
@@ -1390,11 +1389,11 @@ fig.tight_layout()
 matplotlib.pyplot.show()
 ```
 
-{% include figure.liquid path="fig/python_programming/03-matplotlib/inflammation-01-line-styles.svg" alt="Three line graphs, with step lines connecting the points, showing the daily average, maximumand minimum inflammation over a 40-day period." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/inflammation-01-line-styles.svg" alt="Three line graphs, with step lines connecting the points, showing the daily average, maximumand minimum inflammation over a 40-day period." max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3:  Make Your Own Plot %}
+{% details Challenge 3:  Make Your Own Plot %}
 
 
 Create a plot showing the standard deviation (`numpy.std`)
@@ -1410,7 +1409,7 @@ matplotlib.pyplot.show()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 4: Moving Plots Around %}
+{% details Challenge 4: Moving Plots Around %}
 
 
 Modify the program to display the three plots on top of one another
@@ -1454,7 +1453,7 @@ matplotlib.pyplot.show()
 - Use the `pyplot` module from the `matplotlib` library for creating simple visualizations.
 
 {% enddetails %}
-## 5. Storing Multiple Values in Lists
+## 4. Storing Multiple Values in Lists
 
 {% details Abstract: Objectives %}
 
@@ -1467,7 +1466,7 @@ matplotlib.pyplot.show()
 
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 - How can I store many values together?
 
@@ -1604,6 +1603,7 @@ than to create a modified copy for every small change. You should consider both 
 when writing your code.
 
 {% enddetails %}
+
 {% details note Nested Lists %}
 
 Since a list can contain any Python variables, it can even contain other lists.
@@ -1611,7 +1611,7 @@ Since a list can contain any Python variables, it can even contain other lists.
 For example, you could represent the products on the shelves of a small grocery shop
 as a nested list called `veg`:
 
-{% include figure.liquid path="fig/python_programming/04_groceries_veg.png" %}{alt='veg is represented as a shelf full of produce. There are three rows of vegetableson the shelf, and each row contains three baskets of vegetables. We can labeleach basket according to the type of vegetable it contains, so the top rowcontains (from left to right) lettuce, lettuce, and peppers.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/04_groceries_veg.png" max-width="50%" zoomable=true alt='veg is represented as a shelf full of produce. There are three rows of vegetableson the shelf, and each row contains three baskets of vegetables. We can labeleach basket according to the type of vegetable it contains, so the top rowcontains (from left to right) lettuce, lettuce, and peppers.' %}
 
 To store the contents of the shelf in a nested list, you write it this way:
 
@@ -1625,7 +1625,7 @@ Here are some visual examples of how indexing a list of lists `veg` works. First
 you can reference each row on the shelf as a separate list. For example, `veg[2]`
 represents the bottom row, which is a list of the baskets in that row.
 
-{% include figure.liquid path="fig/python_programming/04_groceries_veg0.png" %}{alt='veg is now shown as a list of three rows, with veg\[0\] representing the top row ofthree baskets, veg\[1\] representing the second row, and veg\[2\] representing the bottom row.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/04_groceries_veg0.png" max-width="50%" zoomable=true alt='veg is now shown as a list of three rows, with veg\[0\] representing the top row ofthree baskets, veg\[1\] representing the second row, and veg\[2\] representing the bottom row.' %}
 
 Index operations using the image would work like this:
 
@@ -1647,7 +1647,7 @@ print(veg[0])
 
 To reference a specific basket on a specific shelf, you use two indexes. The first
 index represents the row (from top to bottom) and the second index represents the specific basket (from left to right).
-{% include figure.liquid path="fig/python_programming/04_groceries_veg00.png" %}{alt='veg is now shown as a two-dimensional grid, with each basket labeled according toits index in the nested list. The first index is the row number and the secondindex is the basket number, so veg\[1\]\[3\] represents the basket on the far rightside of the second row (basket 4 on row 2): zucchini'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/04_groceries_veg00.png" max-width="50%" zoomable=true alt='veg is now shown as a two-dimensional grid, with each basket labeled according toits index in the nested list. The first index is the row number and the secondindex is the basket number, so veg\[1\]\[3\] represents the basket on the far rightside of the second row (basket 4 on row 2): zucchini' %}
 
 ```python
 print(veg[0][0])
@@ -1771,7 +1771,7 @@ last: 4
 ```
 
 {% enddetails %}
-{% details question Challenge 1: Slicing From the End %}
+{% details Challenge 1: Slicing From the End %}
 
 Use slicing to access only the last four characters of a string or entries of a list.
 
@@ -1806,7 +1806,7 @@ list_for_slicing[-4:]
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Non-Continuous Slices %}
+{% details Challenge 2: Non-Continuous Slices %}
 
 
 So far we've seen how to use slicing to take single blocks
@@ -1916,7 +1916,7 @@ Omitting ending index: ['sep', 'oct', 'nov', 'dec']
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3: Overloading %}
+{% details Challenge 3: Overloading %}
 
 `+` usually means addition, but when used on strings or lists, it means "concatenate".
 Given that, what do you think the multiplication operator `*` does on lists?
@@ -1964,7 +1964,7 @@ counts + counts
 
 
 {% enddetails %}
-## 6. Repeating Actions with Loops
+## 5. Repeating Actions with Loops
 
 {% details Abstract: Objectives %}
 
@@ -1974,7 +1974,7 @@ counts + counts
 - Trace changes to other variables as they are updated by a `for` loop.
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 - How can I do the same operations on many different values?
 
@@ -1985,7 +1985,7 @@ In the episode about visualizing data,
 we wrote Python code that plots values of interest from our first
 inflammation dataset (`inflammation-01.csv`), which revealed some suspicious features in it.
 
-{% include figure.liquid path="fig/python_programming/05-loop/03-loop_2_0.png" alt="Line graphs showing average, maximum and minimum inflammation across all patients over a 40-dayperiod." %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/05-loop/03-loop_2_0.png" alt="Line graphs showing average, maximum and minimum inflammation across all patients over a 40-dayperiod." max-width="50%" zoomable=true %}
 
 We have a dozen data sets right now and potentially more on the way if Dr. Maverick
 can keep up their surprisingly fast clinical trial rate. We want to create plots for all of
@@ -2104,7 +2104,7 @@ for variable in collection:
 
 Using the odds example above, the loop might look like this:
 
-{% include figure.liquid path="fig/python_programming/05-loop/05-loops_image_num.png" alt="Loop variable 'num' being assigned the value of each element in the list odds in turn andthen being printed" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/05-loop/05-loops_image_num.png" alt="Loop variable 'num' being assigned the value of each element in the list odds in turn andthen being printed" max-width="50%" zoomable=true %}
 
 where each number (`num`) in the variable `odds` is looped through and printed one number after
 another. The other numbers in the diagram denote which loop cycle the number was printed in (1
@@ -2201,7 +2201,7 @@ it will also give us the length of many other things that we haven't met yet,
 so we should always use it when we can.
 
 {% enddetails %}
-{% details question Challenge 1: From 1 to N %}
+{% details Challenge 1: From 1 to N %}
 
 Python has a built-in function called `range` that generates a sequence of numbers. `range` can
 accept 1, 2, or 3 parameters.
@@ -2234,7 +2234,7 @@ for number in range(1, 4):
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Understanding the loops %}
+{% details Challenge 2: Understanding the loops %}
 
 
 Given the following loop:
@@ -2260,7 +2260,7 @@ The body of the loop is executed 6 times.
 
 
 {% enddetails %}
-{% details question Challenge 3: Computing Powers With Loops %}
+{% details Challenge 3: Computing Powers With Loops %}
 
 Exponentiation is built into Python:
 
@@ -2285,7 +2285,7 @@ for number in range(0, 3):
 print(result)
 ```
 {% enddetails %}
-{% details question Challenge 4: Summing a list %}
+{% details Challenge 4: Summing a list %}
 
 Write a loop that calculates the sum of elements in a list
 by adding each element and printing the final value,
@@ -2303,7 +2303,7 @@ print(summed)
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 5: Computing the Value of a Polynomial %}
+{% details Challenge 5: Computing the Value of a Polynomial %}
 
 The built-in function `enumerate` takes a sequence (e.g. a list) and
 generates a new sequence of the same length. Each element of the new sequence is a pair composed
@@ -2352,7 +2352,7 @@ for idx, coef in enumerate(coefs):
 - Use `len(thing)` to determine the length of something that contains other values.
 
 {% enddetails %}
-## 7. Analyzing Data from Multiple Files
+## 6. Analyzing Data from Multiple Files
 
 {% details Abstract: Objectives %}
 
@@ -2361,7 +2361,7 @@ for idx, coef in enumerate(coefs):
 
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 - How can I do the same operations on many different files?
 
@@ -2432,19 +2432,19 @@ for filename in filenames:
 inflammation-01.csv
 ```
 
-{% include figure.liquid path="fig/python_programming/03-loop_49_1.png" %}{alt='Output from the first iteration of the for loop. Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period for all patients in the first dataset.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-loop_49_1.png" max-width="50%" zoomable=true alt='Output from the first iteration of the for loop. Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period for all patients in the first dataset.'%}
 
 ```output
 inflammation-02.csv
 ```
 
-{% include figure.liquid path="fig/python_programming/03-loop_49_3.png" %}{alt='Output from the second iteration of the for loop. Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period for all patients in the seconddataset.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-loop_49_3.png" max-width="50%" zoomable=true alt='Output from the second iteration of the for loop. Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period for all patients in the seconddataset.' %}
 
 ```output
 inflammation-03.csv
 ```
 
-{% include figure.liquid path="fig/python_programming/03-loop_49_5.png" %}{alt='Output from the third iteration of the for loop. Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period for all patients in the thirddataset.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/03-loop_49_5.png" max-width="50%" zoomable=true alt='Output from the third iteration of the for loop. Three line graphs showing the daily average, maximum and minimum inflammation over a 40-day period for all patients in the thirddataset.' %}
 
 The plots generated for the second clinical trial file look very similar to the plots for
 the first file: their average plots show similar "noisy" rises and falls; their maxima plots
@@ -2456,7 +2456,7 @@ the first two datasets, however the minima plot shows that the third dataset min
 consistently zero across every day of the trial. If we produce a heat map for the third data file
 we see the following:
 
-{% include figure.liquid path="fig/python_programming/inflammation-03-imshow.svg" %}{alt='Heat map of the third inflammation dataset. Note that there are sporadic zero values throughoutthe entire dataset, and the last patient only has zero values over the 40 day study.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/inflammation-03-imshow.svg" max-width="50%" zoomable=true alt='Heat map of the third inflammation dataset. Note that there are sporadic zero values throughoutthe entire dataset, and the last patient only has zero values over the 40 day study.' %}
 
 We can see that there are zero values sporadically distributed across all patients and days of the
 clinical trial, suggesting that there were potential issues with data collection throughout the
@@ -2464,7 +2464,7 @@ trial. In addition, we can see that the last patient in the study didn't have an
 flare-ups at all throughout the trial, suggesting that they may not even suffer from arthritis!
 
 {% enddetails %}
-{% details question Challenge 1: Plotting Differences %}
+{% details Challenge 1: Plotting Differences %}
 
 
 Plot the difference between the average inflammations reported in the first and second datasets
@@ -2494,7 +2494,7 @@ matplotlib.pyplot.show()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Generate Composite Statistics %}
+{% details Challenge 2: Generate Composite Statistics %}
 
 Use each of the files once to generate a dataset containing values averaged over all patients by completing the code inside the loop given below:
 
@@ -2582,7 +2582,7 @@ how to program.
 - Use `*` in a pattern to match zero or more characters, and `?` to match any single character.
 
 {% enddetails %}
-## 8. Making Choices
+## 7. Making Choices
 
 {% details Abstract: Objectives %}
 
@@ -2591,7 +2591,7 @@ how to program.
 - Correctly evaluate expressions containing `and` and `or`.
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 
 - How can my programs do different things based on data values?
@@ -2629,7 +2629,7 @@ If the test is false,
 the body of the `else` is executed instead, and "not greater" is printed.
 Only one or the other is ever executed before continuing on with program execution to print "done":
 
-{% include figure.liquid path="fig/python_programming/python-flowchart-conditional.png" %}{alt='A flowchart diagram of the if-else construct that tests if variable num is greater than 100'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/python-flowchart-conditional.png" max-width="50%" zoomable=true alt='A flowchart diagram of the if-else construct that tests if variable num is greater than 100' %}
 
 Conditional statements don't have to include an `else`.
 If there isn't one,
@@ -2802,7 +2802,7 @@ Here we printed messages in all cases, but we could also imagine not using the `
 so that messages are only printed when something is wrong, freeing us from having to manually examine every plot for features we've seen before.
 
 {% enddetails %}
-{% details question Challenge 1: How Many Paths? %}
+{% details Challenge 1: How Many Paths? %}
 
 Consider this code:
 
@@ -2831,10 +2831,10 @@ In this case only one of these conditions can be true for at a time, but in othe
 scenarios multiple `elif` conditions could be met. In these scenarios only the action
 associated with the first true `elif` condition will occur, starting from the top of the
 conditional section.
-{% include figure.liquid path="fig/python_programming/python-else-if.png" %}{alt='A flowchart diagram of a conditional section with multiple elif conditions and some possible outcomes.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/python-else-if.png" max-width="50%" zoomable=true alt='A flowchart diagram of a conditional section with multiple elif conditions and some possible outcomes.' %}
 This contrasts with the case of multiple `if` statements, where every action can occur
 as long as their condition is met.
-{% include figure.liquid path="fig/python_programming/python-multi-if.png" %}{alt='A flowchart diagram of a conditional section with multiple if statements and some possible outcomes.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/python-multi-if.png" max-width="50%" zoomable=true alt='A flowchart diagram of a conditional section with multiple if statements and some possible outcomes.' %}
 
 {% enddetails %}
 {% enddetails %}
@@ -2879,7 +2879,7 @@ if not not True:
 ```
 
 {% enddetails %}
-{% details question Challenge 2: Close Enough %}
+{% details Challenge 2: Close Enough %}
 
 Write some conditions that print `True` if the variable `a` is within 10% of the variable `b`
 and `False` otherwise.
@@ -2922,7 +2922,7 @@ have string representations which can be printed.
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3: In-Place Operators %}
+{% details Challenge 3: In-Place Operators %}
 
 Python (and most other languages in the C family) provides
 in-place operators that work like this:
@@ -2965,7 +2965,7 @@ sum needs to change, but it illustrates the use of `elif` and `pass`.
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 4: Sorting a List Into Buckets %}
+{% details Challenge 4: Sorting a List Into Buckets %}
 
 In our `data` folder, large data sets are stored in files whose names start with
 "inflammation-" and small data sets -- in files whose names start with "small-". We
@@ -3041,7 +3041,7 @@ print('other_files:', other_files)
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 5: Counting Vowels %}
+{% details Challenge 5: Counting Vowels %}
 
 
 1. Write a loop that counts the number of vowels in a character string.
@@ -3079,7 +3079,7 @@ print('The number of vowels in this string is ' + str(count))
 - `True` and `False` represent truth values.
 
 {% enddetails %}
-## 9. Creating Functions
+## 8. Creating Functions
 
 {% details Abstract: Objectives %}
 
@@ -3090,7 +3090,7 @@ print('The number of vowels in this string is ' + str(count))
 - Explain why we should divide programs into small, single-purpose functions.
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 - How can I define new functions?
 - What's the difference between defining and calling a function?
@@ -3139,7 +3139,7 @@ def fahr_to_celsius(temp):
     return ((temp - 32) * (5/9))
 ```
 
-{% include figure.liquid path="fig/python_programming/python-function.svg" %}{alt='Labeled parts of a Python function definition'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/python-function.svg" max-width="50%" zoomable=true alt='Labeled parts of a Python function definition' %}
 
 The function definition opens with the keyword `def` followed by the
 name of the function (`fahr_to_celsius`) and a parenthesized list of parameter names (`temp`). The
@@ -3746,7 +3746,7 @@ haven't thought about since then, you will appreciate the value of
 readable code!
 
 {% enddetails %}
-{% details question Challenge 1: Combining Strings %}
+{% details Challenge 1: Combining Strings %}
 
 "Adding" two strings produces their concatenation:
 `'a' + 'b'` is `'ab'`.
@@ -3772,7 +3772,7 @@ def fence(original, wrapper):
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Return versus print %}
+{% details Challenge 2: Return versus print %}
 
 
 Note that `return` and `print` are not interchangeable.
@@ -3808,7 +3808,7 @@ None
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3: Selecting Characters From Strings %}
+{% details Challenge 3: Selecting Characters From Strings %}
 
 If the variable `s` refers to a string,
 then `s[0]` is the string's first character
@@ -3835,7 +3835,7 @@ def outer(input_string):
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 4: Rescaling an Array %}
+{% details Challenge 4: Rescaling an Array %}
 
 Write a function `rescale` that takes an array as input
 and returns a corresponding array of values scaled to lie in the range 0.0 to 1.0.
@@ -3855,7 +3855,7 @@ def rescale(input_array):
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 5: Testing and Documenting Your Function %}
+{% details Challenge 5: Testing and Documenting Your Function %}
 
 Run the commands `help(numpy.arange)` and `help(numpy.linspace)`
 to see how to use these functions to generate regularly-spaced values,
@@ -3880,7 +3880,7 @@ array([ 0.  ,  0.25,  0.5 ,  0.75,  1.  ])
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 6: Defining Defaults %}
+{% details Challenge 6: Defining Defaults %}
 
 
 Rewrite the `rescale` function so that it scales data to lie between `0.0` and `1.0` by default,
@@ -3903,7 +3903,7 @@ def rescale(input_array, low_val=0.0, high_val=1.0):
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 7: Variables Inside and Outside Functions %}
+{% details Challenge 7: Variables Inside and Outside Functions %}
 
 What does the following piece of code display when run --- and why?
 
@@ -3944,7 +3944,7 @@ global `k` value.
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 8: Mixing Default and Non-Default Parameters %}
+{% details Challenge 8: Mixing Default and Non-Default Parameters %}
 
 Given the following code:
 
@@ -4023,7 +4023,7 @@ could be further improved to make them more readable.
 
 
 {% enddetails %}
-## 10. Errors and Exceptions
+## 9. Errors and Exceptions
 
 {% details Abstract: Objectives %}
 
@@ -4034,7 +4034,7 @@ could be further improved to make them more readable.
 
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 
 - How does Python report errors?
@@ -4132,7 +4132,7 @@ as it is possible to create custom errors. In that case,
 hopefully the custom error message is informative enough to help you figure out what went wrong.
 
 {% enddetails %}
-{% details question Challenge 1: Reading Error Messages %}
+{% details Challenge 1: Reading Error Messages %}
 
 Read the Python code and the resulting traceback below, and answer the following questions:
 
@@ -4496,7 +4496,7 @@ searching the Internet for that error type
 often reveals common reasons why you might get that error.
 
 {% enddetails %}
-{% details question Challenge 1: Identifying Syntax Errors %}
+{% details Challenge 1: Identifying Syntax Errors %}
 
 1. Read the code below, and (without running it) try to identify what the errors are.
 2. Run the code, and read the error message. Is it a `SyntaxError` or an `IndentationError`?
@@ -4525,7 +4525,7 @@ def another_function():
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Identifying Variable Name Errors %}
+{% details Challenge 2: Identifying Variable Name Errors %}
 
 
 1. Read the code below, and (without running it) try to identify what the errors are.
@@ -4567,7 +4567,7 @@ print(message)
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3: Identifying Index Errors %}
+{% details Challenge 3: Identifying Index Errors %}
 
 
 1. Read the code below, and (without running it) try to identify what the errors are.
@@ -4601,7 +4601,7 @@ print('My favorite season is ', seasons[-1])
 - Trying to read a file that does not exist will give you an `FileNotFoundError`. Trying to read a file that is open for writing, or writing to a file that is open for reading, will give you an `IOError`.
 
 {% enddetails %}
-## 11. Defensive Programming
+## 10. Defensive Programming
 
 {% details Abstract: Objectives %}
 
@@ -4612,7 +4612,7 @@ print('My favorite season is ', seasons[-1])
 - Explain why variables should be initialized using actual data values rather than arbitrary constants.
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 - How can I make my programs more reliable?
 
@@ -4849,7 +4849,7 @@ For example, suppose we need to find where two or more time series overlap.
 The range of each time series is represented as a pair of numbers,
 which are the time the interval started and ended. The output is the largest range that they all include:
 
-{% include figure.liquid path="fig/python_programming/python-overlapping-ranges.svg" %}{alt='Graph showing three number lines and, at the bottom, the interval that they overlap.'}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/python-overlapping-ranges.svg" max-width="50%" zoomable=true alt='Graph showing three number lines and, at the bottom, the interval that they overlap.' %}
 
 Most novice programmers would solve this problem like this:
 
@@ -5036,7 +5036,7 @@ This violates another important rule of programming:
 *always initialize from data*.
 
 {% enddetails %}
-{% details question Challenge 1: Pre- and Post-Conditions %}
+{% details Challenge 1: Pre- and Post-Conditions %}
 
 Suppose you are writing a function called `average` that calculates
 the average of the numbers in a list.
@@ -5056,7 +5056,7 @@ assert numpy.amin(input_list) <= average <= numpy.amax(input_list),
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Testing Assertions %}
+{% details Challenge 2: Testing Assertions %}
 
 
 Given a sequence of a number of cars, the function `get_total_cars` returns
@@ -5119,7 +5119,7 @@ Input such as `[-10, 2, 3]` will make it fail.
 
 
 {% enddetails %}
-## 12. Debugging
+## 11. Debugging
 
 {% details Abstract: Objectives %}
 
@@ -5130,7 +5130,7 @@ Input such as `[-10, 2, 3]` will make it fail.
 
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 
 - How can I debug my program?
@@ -5362,7 +5362,7 @@ it will actually take us *less* time to produce working programs,
 not more.
 
 {% enddetails %}
-{% details question Challenge 1: Debug With a Neighbor %}
+{% details Challenge 1: Debug With a Neighbor %}
 
 Take a function that you have written today, and introduce a tricky bug.
 Your function should still run, but will give the wrong output.
@@ -5372,7 +5372,7 @@ Which of the principles discussed above did you find helpful?
 
 
 {% enddetails %}
-{% details question Challenge 2: Not Supposed to be the Same %}
+{% details Challenge 2: Not Supposed to be the Same %}
 
 You are assisting a researcher with Python code that computes the
 Body Mass Index (BMI) of patients.  The researcher is concerned because
@@ -5426,7 +5426,7 @@ Patient's BMI is: 0.000367
 - Be humble.
 
 {% enddetails %}
-## 13. Command-Line Programs
+## 12. Command-Line Programs
 
 {% details Abstract: Objectives %}
 
@@ -5436,7 +5436,7 @@ Patient's BMI is: 0.000367
 - Read data from standard input in a program so that it can be used in a pipeline.
 
 {% enddetails %}
-{% details question Questions %}
+{% details Questions %}
 
 
 - How can I write Python programs that will work like Unix command-line tools?
@@ -6052,7 +6052,7 @@ $ python ../code/readings_06.py --mean < small-01.csv
 That's better. In fact, that's done: the program now does everything we set out to do.
 
 {% enddetails %}
-{% details question Challenge 1: Arithmetic on the Command Line %}
+{% details Challenge 1: Arithmetic on the Command Line %}
 
 Write a Python program that adds, subtracts, multiplies, or divides two numbers provided on the command line:
 
@@ -6109,7 +6109,7 @@ main()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 2: Finding Particular Files %}
+{% details Challenge 2: Finding Particular Files %}
 
 Using the `glob` module introduced earlier, write a simple version of `ls` that shows files in the current directory
 with a particular suffix.
@@ -6148,7 +6148,7 @@ main()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 3: Changing Flags %}
+{% details Challenge 3: Changing Flags %}
 
 Rewrite `readings.py` so that it uses `-n`, `-m`, and `-x`
 instead of `--min`, `--mean`, and `--max` respectively.
@@ -6194,7 +6194,7 @@ main()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 4: Adding a Help Message %}
+{% details Challenge 4: Adding a Help Message %}
 
 
 Separately, modify `readings.py` so that if no parameters are given
@@ -6249,7 +6249,7 @@ if __name__ == '__main__':
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 5: Adding a Default Action %}
+{% details Challenge 5: Adding a Default Action %}
 
 
 Separately,
@@ -6299,7 +6299,7 @@ main()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 6: A File-Checker %}
+{% details Challenge 6: A File-Checker %}
 
 
 Write a program called `check.py` that takes the names of one or more
@@ -6346,7 +6346,7 @@ main()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 7: Counting Lines %}
+{% details Challenge 7: Counting Lines %}
 
 Write a program called `line_count.py` that works like the Unix `wc` command:
 
@@ -6397,7 +6397,7 @@ main()
 
 {% enddetails %}
 {% enddetails %}
-{% details question Challenge 8: Generate an Error Message %}
+{% details Challenge 8: Generate an Error Message %}
 
 
 Write a program called `check_arguments.py` that prints usage
