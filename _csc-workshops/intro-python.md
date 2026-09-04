@@ -606,7 +606,7 @@ As a result, if we have an M×N array in Python, its indices go from 0 to M-1 on
 and 0 to N-1 on the second. It takes a bit of getting used to, but one way to remember the rule is that
 the index is how many steps we have to take from the start to get the item we want.
 
-!['data' is a 3 by 3 numpy array containing row 0: \['A', 'B', 'C'\], row 1: \['D', 'E', 'F'\], androw 2: \['G', 'H', 'I'\]. Starting in the upper left hand corner, data\[0, 0\] = 'A', data\[0, 1\] = 'B',data\[0, 2\] = 'C', data\[1, 0\] = 'D', data\[1, 1\] = 'E', data\[1, 2\] = 'F', data\[2, 0\] = 'G',data\[2, 1\] = 'H', and data\[2, 2\] = 'I', in the bottom right hand corner.](assets/img/courses/workshops/python_programming/02-numpy/python-zero-index.svg)
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/02-numpy/python-zero-index.svg" alt="data is a 3 by 3 numpy array containing row 0: \['A', 'B', 'C'\], row 1: \['D', 'E', 'F'\], androw 2: \['G', 'H', 'I'\]. Starting in the upper left hand corner, data\[0, 0\] = 'A', data\[0, 1\] = 'B',data\[0, 2\] = 'C', data\[1, 0\] = 'D', data\[1, 1\] = 'E', data\[1, 2\] = 'F', data\[2, 0\] = 'G',data\[2, 1\] = 'H', and data\[2, 2\] = 'I', in the bottom right hand corner." max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details warning In the Corner %}
