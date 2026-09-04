@@ -4,6 +4,7 @@ pretty_table: true
 collection: csc331
 
 title: "Process in xv6"
+
 toc:
   - name: Editing files in xv6
   - name: How does fork() behave in xv6?
@@ -13,13 +14,17 @@ toc:
 
 ## Editing files in xv6
 
-Since the `csc331` container mounts the `workspace` directory on the host machine into `/workspace`, you are able to edit the files directly from the host machine via an IDE. The screenshot belows show a VSCode IDE session into the host machine's `workspace` folder and editing a file called `xv6-test.txt`. 
+Since the `csc331` container mounts the `workspace` directory on the host machine into `/workspace`, you are able to edit contents directly from the host machine via an IDE. The screenshot belows show a VSCode IDE session into the `xv6-riscv` repo that had been cloned into the host machine's `workspace` folder and editing a file called `xv6-test.txt`. 
 
-{% details Screenshot: Open workspace folder with VSCode on host machine %}
+{% details warning Do not open git repository of parent folder %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process-xv6/vscode-workspace.png" max-width="50%" zoomable=true %}   
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/parent-git-warn.png" max-width="50%" zoomable=true %}   
 
 {% enddetails %}
+
+You can also leverage the `Terminal` space of VSCode to `docker exec` into the container and test your code modifications. 
+
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/vscode-workspace.png" max-width="50%" zoomable=true %}   
 
 This file also shows up inside the `csc331` container. 
 
