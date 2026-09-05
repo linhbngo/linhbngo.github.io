@@ -66,7 +66,7 @@ var friendlyWelcome = "Bonjour"
 print("The current value of friendlyWelcome is \(friendlyWelcome)")
 ```
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/printVar.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/printVar.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Semicolons %}
@@ -118,7 +118,7 @@ var c = Car(make: "BMW", model: "X3", year: 2022)
 print (c.make)
 ```
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/custom_types.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/custom_types.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Operators %}

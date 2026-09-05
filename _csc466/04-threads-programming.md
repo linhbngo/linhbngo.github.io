@@ -19,11 +19,11 @@ toc:
 
     - Dell PowerEdge M600 Blade Server. 
 
-    {% include figure.liquid path="assets/img/courses/csc466/04-threads/01.jpg" width="50%" zoomable=true alt="Multi-socket motherboards" %}
+    {% include figure.liquid path="assets/img/courses/csc466/04-threads/01.jpg" max-width="50%" zoomable=true alt="Multi-socket motherboards" %}
 
     - Intel Sandy Bridge CPU. 
 
-    {% include figure.liquid path="assets/img/courses/csc466/04-threads/02.jpg" width="50%" zoomable=true alt="Intel Sandy Bridge CPU" %}
+    {% include figure.liquid path="assets/img/courses/csc466/04-threads/02.jpg" max-width="50%" zoomable=true alt="Intel Sandy Bridge CPU" %}
 
 - In summary
     - Node with multiple sockets.
@@ -41,7 +41,7 @@ single PC (program counter).
 - Each thread is very much like a separate process, except for one difference:
     - All threads of the same process share the same address space and thus can access the same data.
 
-{% include figure.liquid path="assets/img/courses/csc466/04-threads/threads.png" width="50%" zoomable=true alt="Threads memory model" %}
+{% include figure.liquid path="assets/img/courses/csc466/04-threads/threads.png" max-width="50%" zoomable=true alt="Threads memory model" %}
 
 {% enddetails %}
 {% details POXIS threads (pthreads) %}
@@ -72,14 +72,14 @@ single PC (program counter).
 
 {% details info File/Open Folder %}
 
-{% include figure.liquid path="assets/img/courses/csc466/04-threads/code-server-01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/04-threads/code-server-01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 - Make sure that you have `/home/student` in the box then press `OK`
 
 {% details info /home/student %}
 
-{% include figure.liquid path="assets/img/courses/csc466/04-threads/code-server-02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/04-threads/code-server-02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 - Use the terminal or the icons (see the red box) to create a new folder and 
@@ -87,7 +87,7 @@ new files (in the future)
 
 {% details info Create new folder/file %}
 
-{% include figure.liquid path="assets/img/courses/csc466/04-threads/code-server-03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/04-threads/code-server-03.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 - Create `thread_hello.c` with the following contents:
@@ -162,7 +162,7 @@ that we can reason about program behavior, in a sane way
   - We need **synchronization**.
 - What is shared/not shared in a multithreaded program?
 
-{% include figure.liquid path="assets/img/courses/csc466/04-threads/shared-not-shared.png" width="50%" zoomable=true alt="Multi-socket motherboards" %}
+{% include figure.liquid path="assets/img/courses/csc466/04-threads/shared-not-shared.png" max-width="50%" zoomable=true alt="Multi-socket motherboards" %}
 
 {% enddetails %}
 {% details Key definitions %}

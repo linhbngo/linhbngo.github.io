@@ -68,7 +68,7 @@ docker build -t linhbngo/ubuntu_figlet:2.0 .
 - `-t` indicates a tag named `figlet` will be applied to the image. 
 - `.` indicates that the `Dockerfile` file is in the current directory. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-build.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-build.png" max-width="50%" zoomable=true %}
 
 - Running `docker image ls` and examining the GUI's Image tab, you will 
 see that there are now two tags for the same repository name. If you run 
@@ -79,7 +79,7 @@ tag now stored in the same repository
 docker push linhbngo/ubuntu_figlet:2.0
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-push.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-push.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Exercise: test new image %}
@@ -97,7 +97,7 @@ figlet hello world
 exit
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-test-image.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-test-image.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
@@ -142,7 +142,7 @@ docker build -t linhbngo/ubuntu_figlet:3.0 .
 docker run -it linhbngo/ubuntu_figlet:3.0
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-create-cmd.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-create-cmd.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Exercise: storage consumption %}
@@ -160,7 +160,7 @@ docker image ls
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-storage.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-storage.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Hands on: ENTRYPOINT %}
@@ -180,7 +180,7 @@ docker image ls
     - Notice that the first `docker run`, without any input parameters, does not generate any text. 
     - The second `docker run` takes `golden rams` and feeds it to the figlet command specified by `ENTRYPOINT`. 
 
-    {% include figure.liquid path="assets/img/courses/csc468/docker/image-entrypoint.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc468/docker/image-entrypoint.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -202,7 +202,7 @@ docker image ls
     docker run linhbngo/ubuntu_figlet:5.0 golden rams
     ```
 
-    {% include figure.liquid path="assets/img/courses/csc468/docker/image-cmd-entrypoint.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc468/docker/image-cmd-entrypoint.png" max-width="50%" zoomable=true %}
 
     - Caveat with `ENTRYPOINT`: `/bin/bash` does not work as expected.  
         - Need to override with `--entrypoint` flag.
@@ -259,7 +259,7 @@ of the containers.
     docker run linhbngo/hello:1.0
     ```
 
-    {% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-build-copy.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-build-copy.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -285,6 +285,6 @@ of the containers.
     - From the screenshot below, notice that after exiting out of the container, the newly 
     created binary file `hello` still persists. 
 
-    {% include figure.liquid path="assets/img/courses/csc468/docker/image-volume.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc468/docker/image-volume.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}

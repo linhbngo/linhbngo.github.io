@@ -370,7 +370,7 @@ different **priority level**.
 with the highest priority
 - If **multiple** jobs are chosen, run them in **Round-Robin**
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-01.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -382,7 +382,7 @@ with the highest priority
 
 {% details Does it work well? %}
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-01.png" max-width="50%" zoomable=true %}
 
 With only these two rules, A and B will keep alternating via RR, 
 and C and D will never get to run.  
@@ -415,7 +415,7 @@ priority from high to low: Q2, Q1, and Q0.
 {% details info Initial: A single long-running job %}
 
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-02.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -429,7 +429,7 @@ know about the job, it first assumes that is might be a short
 job (higher priority). If it is not a short job, it will 
 gradually be moved down the queues.
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-03.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -441,7 +441,7 @@ performing an I/O. MLFQ keeps B at the highest priority before
 B keep releasing the CPU.
 - What are potentially problems?
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-04.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -450,7 +450,7 @@ B keep releasing the CPU.
 - If new interactive jobs keep arriving, long running job will 
 stay at the bottom queue and never get any work done. 
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-05.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -461,7 +461,7 @@ stay at the bottom queue and never get any work done.
 long running program that relinquishes the CPU just before the 
 time-slice is up (Job B). 
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-06.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -483,7 +483,7 @@ the topmost queue.
 Rule 5 help guaranteeing that processes will not be 
 staved. It also helps with CPU-bound jobs that become interactive
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-07.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-07.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details What S should be set to? %}
@@ -503,7 +503,7 @@ staved. It also helps with CPU-bound jobs that become interactive
 (regardless of how many time it has given up the CPU), its priority 
 is reduced. 
 
-{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-08.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-08.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}

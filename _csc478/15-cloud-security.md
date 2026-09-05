@@ -79,7 +79,7 @@ are considered authenticated.
 kubectl get nodes
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/cloud-security/get-nodes.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/cloud-security/get-nodes.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details info Extract configuration information %}
@@ -112,7 +112,7 @@ kubectl get nodes
 kubectl get svc
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/cloud-security/student-not-auth.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/cloud-security/student-not-auth.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details info Setup authorization to access K8S %}
@@ -156,7 +156,7 @@ kubectl get nodes
 kubectl get svc
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/cloud-security/student-auth.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/cloud-security/student-auth.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}

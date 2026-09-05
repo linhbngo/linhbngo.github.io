@@ -26,6 +26,6 @@ In preparation for this lecture, you are to:
 - One head node: where users interact with the backend computing cluster
 - Two compute nodes: where actual computations are carried out (in a traditional HPC model)
 
-{% include figure.liquid path="assets/img/courses/csc466/parallel-environment/architecture.jpg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/parallel-environment/architecture.jpg" max-width="50%" zoomable=true %}
 
 {% enddetails %}

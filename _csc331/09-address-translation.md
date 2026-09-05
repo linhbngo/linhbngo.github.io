@@ -47,7 +47,7 @@ to keep track of and maintain control over free and used memory locations.
 - Each address space is **exactly the same size**.
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc331/address-translation/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/address-translation/03.png" max-width="50%" zoomable=true %}
 
 
 {% details Early attempt: dynamic relocation %}
@@ -67,12 +67,12 @@ physical address = virtual address + base
 
 {% details note What happen after boot? %}
 
-{% include figure.liquid path="assets/img/courses/csc331/address-translation/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/address-translation/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details note What happen during process run? %}
 
-{% include figure.liquid path="assets/img/courses/csc331/address-translation/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/address-translation/05.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Summary: Details %}
@@ -106,7 +106,7 @@ between the stack and the heap?*
     - Stack
     - Heap
 
-{% include figure.liquid path="assets/img/courses/csc331/address-translation/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/address-translation/06.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Example: Details %}
@@ -156,7 +156,7 @@ between the stack and the heap?*
 
 - Computationally expensive
 
-{% include figure.liquid path="assets/img/courses/csc331/address-translation/07.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/address-translation/07.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Algorithmic allocation %}

@@ -110,11 +110,11 @@ cd
 docker swarm init --advertise-addr eth1:7777 --listen-addr eth1:7777
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-swarm/swarm-init.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-swarm/swarm-init.png" max-width="50%" zoomable=true %}
 
 - Read the output and use the provided commands on the worker nodes to have these nodes joining the swarm.
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-swarm/swarm-join.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-swarm/swarm-join.png" max-width="50%" zoomable=true %}
 
 - On the head node, run the following command to view the swarm nodes
 
@@ -122,7 +122,7 @@ docker swarm init --advertise-addr eth1:7777 --listen-addr eth1:7777
 docker node ls
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-swarm/swarm-nodes.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-swarm/swarm-nodes.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 

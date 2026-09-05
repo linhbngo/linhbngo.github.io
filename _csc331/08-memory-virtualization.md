@@ -26,7 +26,7 @@ toc:
 - The OS was preloaded into memory and consisted of a set of routines. 
 - There was one running program that uses the rest of memory. 
 
-{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -67,7 +67,7 @@ toc:
 mechanism. 
 - A new demand: **protection** (through isolation)
 
-{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -92,11 +92,11 @@ mechanism.
 
 -   __Address high to low__
 
-    {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/03.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/03.png" max-width="50%" zoomable=true %}
 
 -   __Address low to high__ 
 
-    {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/04.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/04.png" max-width="50%" zoomable=true %}
     *Image taken from [Geeksforgeeks](https://www.geeksforgeeks.org/memory-layout-of-c-program/)*
 </div>
  
@@ -144,7 +144,7 @@ stacktest
 {% details Observe and discuss output %}
 
 
-{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/05.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ---
@@ -187,7 +187,7 @@ arraytest
 {% details Observe and discuss output %}
 
 
-{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/06.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details How the heap grows %}

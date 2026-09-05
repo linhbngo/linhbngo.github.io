@@ -66,7 +66,7 @@ the program jump to where there are executable codes.
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc302/libc/libc_design.png" width="50%" zoomable=true alt="Overview of libc attack" %}
+{% include figure.liquid path="assets/img/courses/csc302/libc/libc_design.png" max-width="50%" zoomable=true alt="Overview of libc attack" %}
 
 
 {% details The vulnerable program, again %}
@@ -188,7 +188,7 @@ its corresponding arguments on the stack for execution.
 - How can we place the corresponding arguments onto the stack?
   - `$esp`: Stack register
 
-{% include figure.liquid path="assets/img/courses/csc302/libc/function_prologue_1.png" width="50%" zoomable=true alt="Function prologue 1" %}
+{% include figure.liquid path="assets/img/courses/csc302/libc/function_prologue_1.png" max-width="50%" zoomable=true alt="Function prologue 1" %}
 
 - What happens just before a function is called?
 
@@ -204,7 +204,7 @@ subl $N, %esp
 - Move the stack pointer by several bytes, leaving spaces for the 
 local variables of the function.
 
-{% include figure.liquid path="assets/img/courses/csc302/libc/function_prologue_2.png" width="50%" zoomable=true alt="Function prologue 2" %}
+{% include figure.liquid path="assets/img/courses/csc302/libc/function_prologue_2.png" max-width="50%" zoomable=true alt="Function prologue 2" %}
 
 
 {% details Function Epilogue %}
@@ -227,7 +227,7 @@ point to the previous frame pointer.
 - Pops the return address from the stack, then 
 jump to it, and move `%esp` to the top of the previous stack frame
 
-{% include figure.liquid path="assets/img/courses/csc302/libc/function_epilogue.png" width="50%" zoomable=true alt="Function epilogue" %}
+{% include figure.liquid path="assets/img/courses/csc302/libc/function_epilogue.png" max-width="50%" zoomable=true alt="Function epilogue" %}
 
 
 
@@ -248,7 +248,7 @@ jump to it, and move `%esp` to the top of the previous stack frame
   - `$esp` and `$ebp` are values from vul_func(), but they are changed due to 
   the procedural execution of vul_func()'s epilogue and system()'s prologue.
 
-{% include figure.liquid path="assets/img/courses/csc302/libc/vul_func.png" width="50%" zoomable=true alt="How changes are made" %}
+{% include figure.liquid path="assets/img/courses/csc302/libc/vul_func.png" max-width="50%" zoomable=true alt="How changes are made" %}
 
 ```
 
@@ -284,7 +284,7 @@ gdb-peda$ quit
   - Offset of 2 is distance + 8: address of `exit()`
   - Offset of 1 is distance plus 12: address of `/bin/sh`
 
-{% include figure.liquid path="assets/img/courses/csc302/libc/distance.png" width="50%" zoomable=true alt="Distance and offsets" %}
+{% include figure.liquid path="assets/img/courses/csc302/libc/distance.png" max-width="50%" zoomable=true alt="Distance and offsets" %}
 
 
 {% details Create ret_to_libc_exploit.c %}

@@ -97,13 +97,13 @@ $FLOPS = sockets \times \frac{cores}{socket} \times \frac{cycles}{second} \times
 - affected 24 states, with particularly severe damage in New Jersey and New York,
 - hit New York City on October 29, flooding streets, tunnels and subway lines and cutting power in and around the city.
 
-{% include figure.liquid path="assets/img/courses/csc466/01-introduction/sandy.png" width="50%" zoomable=true alt="Forecast of hurricane sandy on October 26, 2012" %}
+{% include figure.liquid path="assets/img/courses/csc466/01-introduction/sandy.png" max-width="50%" zoomable=true alt="Forecast of hurricane sandy on October 26, 2012" %}
 
 {% enddetails %}
 {% details Various forecasts of Sandy %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/01-introduction/computer_models_sandy.png" width="50%" zoomable=true alt="Various predictions model for Sandy" %}
+{% include figure.liquid path="assets/img/courses/csc466/01-introduction/computer_models_sandy.png" max-width="50%" zoomable=true alt="Various predictions model for Sandy" %}
 
 - Geophysical Fluid Dynamic Laboratory hurricane model (National Oceanic and Atmospheric Administration)
 - Hurricane Weather Research and Forecasting model (NOAA/Naval Research Laboratory/Florida State University)
@@ -116,7 +116,7 @@ $FLOPS = sockets \times \frac{cores}{socket} \times \frac{cycles}{second} \times
 {% details One of the contributing factors %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/01-introduction/weathercomputernw.gif" width="50%" zoomable=true alt="Computational power for weather forecast in 2013" %}
+{% include figure.liquid path="assets/img/courses/csc466/01-introduction/weathercomputernw.gif" max-width="50%" zoomable=true alt="Computational power for weather forecast in 2013" %}
 
 - *http://blogs.agu.org/wildwildscience/2013/02/17/seriously-behind-the-numerical-weather-prediction-gap/*
 

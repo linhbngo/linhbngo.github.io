@@ -52,7 +52,7 @@ or assembly is completed.
 - The boundary between them is flexible.
 - Both can grow until all available memory is used.
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/segment.png" width="50%" zoomable=true alt="Memory segment allocations" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/segment.png" max-width="50%" zoomable=true alt="Memory segment allocations" %}
 
 
 {% details Hands-on: mem_layout.c %}
@@ -98,7 +98,7 @@ gcc -m32 -o mem_layout_print mem_layout_print.o
 - Can you relate the variables’ position in memory to their respective position 
 in a program’s memory layout?
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/print_mem_layout.png" width="50%" zoomable=true alt="Mapping process memory to memory layout" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/print_mem_layout.png" max-width="50%" zoomable=true alt="Mapping process memory to memory layout" %}
 
 ```
 
@@ -121,7 +121,7 @@ be pushed onto the top of stack.
 - When the program first starts, the stack contains only one frame, 
 that of the main function.
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/stack_mem_layout.png" width="50%" zoomable=true alt="Stack memory layout" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/stack_mem_layout.png" max-width="50%" zoomable=true alt="Stack memory layout" %}
 
 
 {% details Previous frame pointer and function call chain %}
@@ -133,7 +133,7 @@ that of the main function.
 - Any time we enter a function, a stack from is allocated on top of the stack. 
   - When the function returns, the allocated space is released. 
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/call_chain.png" width="50%" zoomable=true alt="Chain of function calls" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/call_chain.png" max-width="50%" zoomable=true alt="Chain of function calls" %}
 
 ```
 
@@ -225,7 +225,7 @@ gdb gdb_strcpy_overflow
 - This file has a clear buffer overflow issue. 
   - How can we exploit this?
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/design_exploit.png" width="50%" zoomable=true alt="Design a buffer overflow exploit" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/design_exploit.png" max-width="50%" zoomable=true alt="Design a buffer overflow exploit" %}
 
 
 {% details Preparations %}
@@ -314,7 +314,7 @@ quit
 - What is the result of the subtraction? 
   - Either `108` (decimal) or `0x6C` (hex)?
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/why_108.png" width="50%" zoomable=true alt="Why 108" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/why_108.png" max-width="50%" zoomable=true alt="Why 108" %}
 
 
 {% details Third try %}
@@ -325,7 +325,7 @@ quit
 - Payload: A shellcode containing the `/bin/sh` command
 - Use Assembly's NOP to improve the attack chance
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/nop.png" width="50%" zoomable=true alt="NOP to improve attach chance" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/nop.png" max-width="50%" zoomable=true alt="NOP to improve attach chance" %}
 
 - Create and run exploit.c
 
@@ -336,7 +336,7 @@ quit
   - If hang, Ctrl-C to quit out of the hanging stack program.
   - Need to modify added hex value (increment multiples of 4 at a time) 
 
-{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/buffer_overflow.png" width="50%" zoomable=true alt="NOP to improve attach chance" %}
+{% include figure.liquid path="assets/img/courses/csc302/buffer-overflow/buffer_overflow.png" max-width="50%" zoomable=true alt="NOP to improve attach chance" %}
 
 
 {% details Countermeasures %}

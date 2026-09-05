@@ -113,7 +113,7 @@ gcc -w -o passenv /local/repository/setup_scripts/software/env/passenv.c
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc302/env/env_memory.png" width="50%" zoomable=true alt="Memory placement of environment variables in process" %}
+{% include figure.liquid path="assets/img/courses/csc302/env/env_memory.png" max-width="50%" zoomable=true alt="Memory placement of environment variables in process" %}
 
 - Recompile `my_envp.c` with GDB flag and check the 
 location of the environment variables
@@ -161,7 +161,7 @@ strings /proc/$$/environ | grep LOGNAME
 
 ```
 
-{% include figure.liquid path="assets/img/courses/csc302/env/env_shell.png" width="50%" zoomable=true alt="Shell variables" %}
+{% include figure.liquid path="assets/img/courses/csc302/env/env_shell.png" max-width="50%" zoomable=true alt="Shell variables" %}
 
 ```
 
@@ -173,7 +173,7 @@ strings /proc/$$/environ | grep LOGNAME
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc302/env/attack_surface.png" width="50%" zoomable=true alt="Attack surface caused by environment variables" %}
+{% include figure.liquid path="assets/img/courses/csc302/env/attack_surface.png" max-width="50%" zoomable=true alt="Attack surface caused by environment variables" %}
 
 
 {% details Attacks via dynAmic linkers and libraries %}
@@ -352,7 +352,7 @@ PWD=randomdir
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc302/env/service_based.png" width="50%" zoomable=true alt="Service-based approach" %}
+{% include figure.liquid path="assets/img/courses/csc302/env/service_based.png" max-width="50%" zoomable=true alt="Service-based approach" %}
 
 ```
 

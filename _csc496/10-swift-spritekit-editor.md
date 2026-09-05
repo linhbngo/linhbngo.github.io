@@ -35,7 +35,7 @@ and assign values to them.
 - Choose `iOS/Game` template and click `Next`
     - **Do not choose Multiplatform**
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/01.png" max-width="50%" zoomable=true %}
 
 - Enter `Pokemon2D` for `Product Name`
 - Enter `Swift` for `Language`, 
@@ -43,7 +43,7 @@ and assign values to them.
 - Select `None` for `Testing System`
 - Make sure the option for Integrate GameplayKit is checked.
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Clean up default template %}
@@ -101,7 +101,7 @@ class GameScene: SKScene {
 
 - Unzip `Pokemon2D_Assets_1.zip` and drag the **files** into `Assets`
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/add_assets_01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/add_assets_01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ## Using Scene Editor to Add Nodes
@@ -118,23 +118,23 @@ class GameScene: SKScene {
 - Select `GameScene.sks`
 - Remove the existing node, `helloLabel`
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/removeHello.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/removeHello.png" max-width="50%" zoomable=true %}
 
 - Click the “+” sign
 - Drag and drop the “Color Sprite” to the Scene
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/addSprite.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/addSprite.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Modifying your node %}
 
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/newSprite_default_background.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/newSprite_default_background.png" max-width="50%" zoomable=true %}
 
 - Click on `Textture` and select `background_grass`
     - Set X and Y positions to 0 and 0
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/newSprite_grass.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/newSprite_grass.png" max-width="50%" zoomable=true %}
 
 - Run the simulator to test
 
@@ -144,7 +144,7 @@ class GameScene: SKScene {
 
 - Right click the SKSpriteNode (background) and lock it. 
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/lockSprite.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/lockSprite.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Adding control buttons %}
@@ -153,22 +153,22 @@ class GameScene: SKScene {
 - Add an Empty node
     - Make sure you set the zPosition to 1 (above zPosition 0 of the background_grass)
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodeEmpty.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodeEmpty.png" max-width="50%" zoomable=true %}
 
 - Add for more "Color Sprite" to the Scene and drag them under the SKNode
     - This is to group the up. 
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/groupNodes.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/groupNodes.png" max-width="50%" zoomable=true %}
 
 
 - Change the texture of all four Color Sprite Nodes to `arrow`
     - adjust the size and rotation to make it like an on-screen controller (directional pad, aka D-Pad)
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/dpad.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/dpad.png" max-width="50%" zoomable=true %}
 
 - Add another color sprite node, place it in the middle of the dpad and change the texture `player_back`. 
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/controller_stop.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/controller_stop.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Add player node %}
@@ -178,23 +178,23 @@ class GameScene: SKScene {
 You can adjust the size if you want.
     - Make sure you set the zPosition to 1 (above zPosition 0 of the background_grass)
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/playerNode.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/playerNode.png" max-width="50%" zoomable=true %}
 
 - Change the `name` of the dpad buttons to `controller_up`, `controller_down`, `controller_left`, 
 and `controller_right` accordingly. 
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/dpad_names.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/dpad_names.png" max-width="50%" zoomable=true %}
 
 - Click the Player node, change the `Body Type` to Bounding Circle, select `Dynamic` and 
 deselect the allows rotation and affected by gravity options.
 - Change Fraction, restitution, Lin. Damping and Ang. damping to 0.
 - Set Category mask to 1, collision mask to 0, the field mask to 0 and the contact mask to 0
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodePlayer_2.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodePlayer_2.png" max-width="50%" zoomable=true %}
 
 - Run the game once to test/confirm
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/test_ipad.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/test_ipad.png" max-width="50%" zoomable=true %}
 
 - Create a Player class (`Player.swift`) with the following codes
 
@@ -223,7 +223,7 @@ class Player: SKSpriteNode {
 
 - Assign Player node to Player class using Custom Class
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -261,7 +261,7 @@ func touchDown(atPoint pos : CGPoint) {
 
 - Run and test movement (based on the print statement)
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/testMovement.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/testMovement.png" max-width="50%" zoomable=true %}
 
 - Modify functions `move` and `stop` inside class `Player` with the following contents. 
 

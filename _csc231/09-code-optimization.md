@@ -77,7 +77,7 @@ $ ./bad_fib
   - Propose a possible defect and why it explains the failure conditions
 - `Ockham’s Razor`: given several hypotheses, pick the simplest/closest to current work
 
-{% include figure.liquid path="assets/img/courses/csc231/06-optimization/01.png" width="50%" zoomable=true alt="Scientific debugging" %}
+{% include figure.liquid path="assets/img/courses/csc231/06-optimization/01.png" max-width="50%" zoomable=true alt="Scientific debugging" %}
 
 - Make predictions based on your hypothesis
   - What do you expect to happen under new conditions
@@ -214,14 +214,14 @@ how the loops are broken up to align with cache size.
 $ getconf -a | grep CACHE
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/06-optimization/02.png" width="50%" zoomable=true alt="Cache size" %}
+{% include figure.liquid path="assets/img/courses/csc231/06-optimization/02.png" max-width="50%" zoomable=true alt="Cache size" %}
 
 - We focus on cache blocks for optimization:
   - If calculations can be performed using smaller matrices of
   A, B, and C (blocks) that all fit in cache, we can further
   minimize the amount of cache misses per calculation. 
 
-{% include figure.liquid path="assets/img/courses/csc231/06-optimization/03.png" width="50%" zoomable=true alt="Block division" %}
+{% include figure.liquid path="assets/img/courses/csc231/06-optimization/03.png" max-width="50%" zoomable=true alt="Block division" %}
 
 - 3 blocks are needed (for A, B, and C). 
 - Each block has dimension B, so the total block size is $B^2$
@@ -241,7 +241,7 @@ $ ./mm 1024
 $ ./mm 2048
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/06-optimization/04.png" width="50%" zoomable=true alt="Matrix with block optimization" %}
+{% include figure.liquid path="assets/img/courses/csc231/06-optimization/04.png" max-width="50%" zoomable=true alt="Matrix with block optimization" %}
 
 ::::
 ::::{tab-item} With cache
@@ -255,7 +255,7 @@ $ ./bmm 1024
 $ ./bmm 2048
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/06-optimization/05.png" width="50%" zoomable=true alt="Matrix with block and compiler optimization" %}
+{% include figure.liquid path="assets/img/courses/csc231/06-optimization/05.png" max-width="50%" zoomable=true alt="Matrix with block and compiler optimization" %}
 
 ::::
 :::::
@@ -299,7 +299,7 @@ $ ./eval.sh block_matrix_mult_3
 ::::
 ::::{tab-item} Outcome
 
-{% include figure.liquid path="assets/img/courses/csc231/06-optimization/06.png" width="50%" zoomable=true alt="Other optimizations" %}
+{% include figure.liquid path="assets/img/courses/csc231/06-optimization/06.png" max-width="50%" zoomable=true alt="Other optimizations" %}
 
 ::::
 :::::
@@ -346,7 +346,7 @@ $ ./imm 33554432
 ::::
 ::::{tab-item} Outcome
 
-{% include figure.liquid path="assets/img/courses/csc231/06-optimization/intrinsic_sum.png" width="50%" zoomable=true alt="Other optimizations" %}
+{% include figure.liquid path="assets/img/courses/csc231/06-optimization/intrinsic_sum.png" max-width="50%" zoomable=true alt="Other optimizations" %}
 
 ::::
 :::::

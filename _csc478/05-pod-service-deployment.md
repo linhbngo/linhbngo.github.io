@@ -3,13 +3,15 @@ layout: lecture
 pretty_table: true
 collection: csc478
 title: "Pod, Service, and Deployment"
+mermaid:
+  enabled: true
+  zoomable: true
 toc:
   - name: Big Picture
   - name: "Pods: Containers and Node Abstraction"
   - name: "Services: Stable Access to Pods"
   - name: Deployment
 ---
-# Pod, Service, and Deployment
 
 ## Big Picture
 
@@ -17,8 +19,6 @@ toc:
     - Docker Swarm manages containers
 - In Kubernetes, you run **pods**, which wrap account containers. 
     - A **node** is a machine (physical or virtual) where **pods** live. 
-
----
 
 ## Pods: Containers and Node Abstraction
 
@@ -91,10 +91,9 @@ kubectl apply -f nginx-pod.yaml
 kubectl get pods -o wide
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-pod.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-pod.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
----
 
 ## Services: Stable Access to Pods
 
@@ -127,6 +126,7 @@ kubectl get nodes
 ```
 
 {% enddetails %}
+
 {% details Hands-on with Rancher Desktop: Adding service to pod %}
 
 - Create a file called `nginx-svc.yaml` with the following content
@@ -147,10 +147,8 @@ spec:
       nodePort: 30007
 ```
 
-
-
 {% enddetails %}
----
+
 
 ## Deployment
 
@@ -165,13 +163,13 @@ spec:
     - Combine with `Service` to maintain stable networking access. 
 
 {% enddetails %}
+
 {% details Example: Details %}
 
 
 {% details Step 1: Delete existing pods and services %}
 
 
-{% enddetails %}
 - Assuming that you have been working on this lecture continuously, you will have one `nginx` pod and one `nginx` service running. 
 Use the following commmands to check the existence of the pod and service, then to delete the pod and service. After deletion, check again to confirm that the pod and service are gone. 
 
@@ -184,11 +182,11 @@ kubectl get pods -o wide
 kubectl get svc -o wide
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc.png" max-width="50%" zoomable=true %}
 
-    {% enddetails %}
-    {% details Step 2: Create deployment %}
+{% enddetails %}
 
+{% details Step 2: Create deployment %}
 
 - In Kubernetes, `Deployment` and `Service` are distinct objects, usually defined in separate YAML files. 
     - `Deployment`: workload management (replicas, rolling updates, Pod templates).
@@ -232,8 +230,9 @@ ports:
   nodePort: 30007
 ```
 
-    {% enddetails %}
-    {% details Step 3: Deployment %}
+{% enddetails %}
+
+{% details Step 3: Deployment %}
 
 
 {% details info How does this work? %}
@@ -248,6 +247,7 @@ ports:
     - Expose port `30007` on every node. 
 
 {% enddetails %}
+
 ```bash
 kubectl apply -f nginx-deployment.yaml
 kubectl get deployments
@@ -255,18 +255,19 @@ kubectl get pods -o wide
 kubectl get svc
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-deployment.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-deployment.png" max-width="50%" zoomable=true %}
 
-    {% enddetails %}
-    {% details Step 4: Test recovery %}
+{% enddetails %}
 
+
+{% details Step 4: Test recovery %}
 
 - From the outcomes of `kubectl get pods -o wide`, delete one pod. 
 - Check again and observe how `nginx-deployment` immediately create a replacement pod. 
 
-{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod.png" width="50%" zoomable=true %}        
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod.png" max-width="50%" zoomable=true %}        
 
-    {% enddetails %}
+{% enddetails %}
 
 
 {% details Hands-on %}
@@ -278,5 +279,7 @@ kubectl get svc
     - Who are you inside the container?
     - Can you ping other pods/containers?
     - Can you download/install software (apt-get/yum/wget ...) inside the pods/containers?
+
+{% enddetails %}
 
 {% enddetails %}

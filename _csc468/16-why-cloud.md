@@ -169,13 +169,13 @@ toc:
 {% details Flexibility-effort-constraints %}
 
 
-{% include figure.liquid path="assets/img/courses/csc468/why-cloud/service-models.png" width="50%" zoomable=true alt="Comparing service models" %}
+{% include figure.liquid path="assets/img/courses/csc468/why-cloud/service-models.png" max-width="50%" zoomable=true alt="Comparing service models" %}
 
 {% enddetails %}
 {% details Sharing of controls: Organization versus Provider %}
 
 
-{% include figure.liquid path="assets/img/courses/csc468/why-cloud/control-levels.png" width="50%" zoomable=true alt="Comparing control level of various service models" %}
+{% include figure.liquid path="assets/img/courses/csc468/why-cloud/control-levels.png" max-width="50%" zoomable=true alt="Comparing control level of various service models" %}
 
 {% enddetails %}
 {% details XaaS: Everything-as-a-Service %}
@@ -237,11 +237,11 @@ toc:
 - The cloud provider is responsible for the security **OF** the Cloud.
 - The cloud consumer (users) is responsible for the security **IN** the Cloud.
 
-{% include figure.liquid path="assets/img/courses/csc468/why-cloud/aws_shared_responsibility.jpg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/why-cloud/aws_shared_responsibility.jpg" max-width="50%" zoomable=true %}
 
 - Responsibility scale according to control level
 
-{% include figure.liquid path="assets/img/courses/csc468/why-cloud/aws_shared_responsibility_2.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/why-cloud/aws_shared_responsibility_2.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Cloud consumer %}

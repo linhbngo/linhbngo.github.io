@@ -64,7 +64,7 @@ toc:
 - Block of messages are chain-compresed with an IV to generate 
 a final hashed value
 
-{% include figure.liquid path="assets/img/courses/csc302/hash/merkle-damgard.png" width="50%" zoomable=true alt="Merkle-Damgard" %}
+{% include figure.liquid path="assets/img/courses/csc302/hash/merkle-damgard.png" max-width="50%" zoomable=true alt="Merkle-Damgard" %}
 
 ### One-Way Hash Commands
 - Aavilable via Linux utility programs

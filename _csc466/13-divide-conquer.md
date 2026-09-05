@@ -43,9 +43,9 @@ problem. Further divisions into still smaller sub-problems, usually done by recu
 - Recursive divide and conquer amenable to parallelization because separate processes 
 can be used for divided pairs. Also usually data is naturally localized.
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/dc01.png" width="50%" zoomable=true alt="Divide process" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/dc01.png" max-width="50%" zoomable=true alt="Divide process" %}
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/divide.png" width="50%" zoomable=true alt="Divide process with process ID" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/divide.png" max-width="50%" zoomable=true alt="Divide process with process ID" %}
 
 
 {% enddetails %}
@@ -63,7 +63,7 @@ mpicc -lm -o divide divide.c
 mpirun -np 8 divide
 ```
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/divide_mpi.png" width="50%" zoomable=true alt="Run divide" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/divide_mpi.png" max-width="50%" zoomable=true alt="Run divide" %}
 
 {% enddetails %}
 {% details Conquer %}
@@ -78,7 +78,7 @@ mpicc -lm -o conquer conquer.c
 mpirun -np 8 conquer
 ```
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/conquer_mpi.png" width="50%" zoomable=true alt="Run conquer" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/conquer_mpi.png" max-width="50%" zoomable=true alt="Run conquer" %}
 
 
 **Many sorting algorithms can be parallelized by partitioning using divide and conquer**
@@ -89,14 +89,14 @@ mpirun -np 8 conquer
 {% details Overview %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/bucketsort1.png" width="50%" zoomable=true alt="Overview of Bucket Sort" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/bucketsort1.png" max-width="50%" zoomable=true alt="Overview of Bucket Sort" %}
 
 
 {% enddetails %}
 {% details Simple approach %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/bucketsort2.png" width="50%" zoomable=true alt="A simple approach to Bucket Sort" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/bucketsort2.png" max-width="50%" zoomable=true alt="A simple approach to Bucket Sort" %}
 
 - Broadcast data
 - Sort only those elements that fit in local interval bucket (determined by rank)
@@ -153,7 +153,7 @@ mpicc -o scatterv scatterv.c
 mpirun -np 4 scatterv
 ```
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/scatterv.png" width="50%" zoomable=true alt="Run Scatterv" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/scatterv.png" max-width="50%" zoomable=true alt="Run Scatterv" %}
 
 
 {% enddetails %}
@@ -207,7 +207,7 @@ mpicc -o gatherv gatherv.c
 mpirun -np 4 gatherv
 ```
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/gatherv.png" width="50%" zoomable=true alt="Run Gatherv" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/gatherv.png" max-width="50%" zoomable=true alt="Run Gatherv" %}
 
 
 {% enddetails %}
@@ -230,13 +230,13 @@ mpirun -np 8 bucket1
 
 - The data might be too large to be distributed via MPI_Bcast
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/bucketsort3.png" width="50%" zoomable=true alt="Complex approach to Bucket Sort" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/bucketsort3.png" max-width="50%" zoomable=true alt="Complex approach to Bucket Sort" %}
 
 - The necessary communication pattern: all to all
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2all.png" width="50%" zoomable=true alt="All to all" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2all.png" max-width="50%" zoomable=true alt="All to all" %}
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2all_2.png" width="50%" zoomable=true alt="All to all explanation" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2all_2.png" max-width="50%" zoomable=true alt="All to all explanation" %}
 
 
 {% enddetails %}
@@ -274,7 +274,7 @@ mpicc -o alltoall alltoall.c
 mpirun -np 4 alltoall
 ```
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2all_mpi.png" width="50%" zoomable=true alt="Run All to all" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2all_mpi.png" max-width="50%" zoomable=true alt="Run All to all" %}
 
 
 {% enddetails %}
@@ -316,7 +316,7 @@ mpicc -o alltoallv alltoallv.c
 mpirun -np 4 alltoallv
 ```
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2allv_mpi.png" width="50%" zoomable=true alt="Run All to allv" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/all2allv_mpi.png" max-width="50%" zoomable=true alt="Run All to allv" %}
 
 
 {% enddetails %}
@@ -348,7 +348,7 @@ mpirun -np 8 bucket2
 - Individual time steps are significantly smaller than the total simulation time. 
 - Time complexity can be reduced by approximating a cluster of distant bodies as a single distant body with mass sited at the center of the mass of the cluster
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/mass-bodies.png" width="50%" zoomable=true alt="Mass of multiple bodies" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/mass-bodies.png" max-width="50%" zoomable=true alt="Mass of multiple bodies" %}
 
 {% enddetails %}
 {% details Barnes-Hut Algorithm (2-D) %}
@@ -363,7 +363,7 @@ Start with whole region in which one square contains the bodies (or particles).
 - The leaves represent cells each containing one body.
 - After the tree has been constructed, the total mass and center of mass of the subregion is stored at each node.
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/barnes-hut.png" width="50%" zoomable=true alt="Barnes-Hut algorithm" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/barnes-hut.png" max-width="50%" zoomable=true alt="Barnes-Hut algorithm" %}
 
 {% enddetails %}
 {% details Orthogonal Recursive Bisection %}
@@ -373,6 +373,6 @@ Start with whole region in which one square contains the bodies (or particles).
 - For each area, a horizontal line found that divides it into two areas, each with equal number of bodies. 
 - Repeated as required. 
 
-{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/orthogonal.png" width="50%" zoomable=true alt="Orthogonal bisection" %}
+{% include figure.liquid path="assets/img/courses/csc466/divide-conquer/orthogonal.png" max-width="50%" zoomable=true alt="Orthogonal bisection" %}
 
 {% enddetails %}

@@ -43,7 +43,7 @@ to develop and implement a common standard for message passing.
 - Follow-up first meeting of the working group hosted at Supercomputing 1992 in 
 Minnesota. 
 
-{% include figure.liquid path="assets/img/courses/csc466/07-intro-mpi/01.png" width="50%" zoomable=true alt="MPI letters" %}
+{% include figure.liquid path="assets/img/courses/csc466/07-intro-mpi/01.png" max-width="50%" zoomable=true alt="MPI letters" %}
 
 - After the finalization of working technical draft
     - MPI becomes the *de-facto* standard for distributed memory parallel 

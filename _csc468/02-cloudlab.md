@@ -30,7 +30,7 @@ toc:
 - Wait for a confirmation email to arrive in your wcupa.edu mailbox. You might have to 
 resubmit a new request if you don't see this email in about half an hour. 
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/01.png" width="50%" zoomable=true alt="Account creation forms" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/01.png" max-width="50%" zoomable=true alt="Account creation forms" %}
 
 - After your account is confirmed, the instructor will be able to see your application 
 and can grant you access to CloudLab. 
@@ -45,7 +45,7 @@ your username, then select `Join Existing Project` and provide the name `cloud-e
 - Diverse, distributed resources at large scale
 - Allow repeatable and scientific design of experiments
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/02.png" width="50%" zoomable=true alt="CloudLab GENI" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/02.png" max-width="50%" zoomable=true alt="CloudLab GENI" %}
 
 {% enddetails %}
 
@@ -124,7 +124,7 @@ cd
 ssh-keygen -t rsa
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/03.png" width="50%" zoomable=true alt="Generate SSH keys" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/03.png" max-width="50%" zoomable=true alt="Generate SSH keys" %}
 
 
 - Run the following command to display the public key
@@ -135,15 +135,15 @@ character)
 cat ~/.ssh/id_rsa.pub
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/04.png" width="50%" zoomable=true alt="Public key generated" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/04.png" max-width="50%" zoomable=true alt="Public key generated" %}
 
 - Log into CloudLab, click on your username (top right) and select `Manage SSH Keys`:
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/05.png" width="50%" zoomable=true alt="Manage SSH Keys box" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/05.png" max-width="50%" zoomable=true alt="Manage SSH Keys box" %}
 
 - Paste the key into the `Key` box and click `Add Key`: 
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/06.png" width="50%" zoomable=true alt="Paste SSH keys" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/06.png" max-width="50%" zoomable=true alt="Paste SSH keys" %}
 
 {% enddetails %}
 ---
@@ -155,14 +155,14 @@ cat ~/.ssh/id_rsa.pub
 
 - Go to your GitHub account, under `Repositories`, select `New`. 
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/07.png" width="50%" zoomable=true alt="Button to create new repository" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/07.png" max-width="50%" zoomable=true alt="Button to create new repository" %}
 
 - You can select any name for your repo. 
 - Repository must be `public`. 
 - The `Add a README file` box must be checked. 
 - Click `Create repository` when done.  
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/08.png" width="50%" zoomable=true alt="Create new repository" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/08.png" max-width="50%" zoomable=true alt="Create new repository" %}
 
 {% enddetails %}
 {% details Create first profile file %}
@@ -170,7 +170,7 @@ cat ~/.ssh/id_rsa.pub
 
 - Click `Add file` and select `Create new file`
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/09.png" width="50%" zoomable=true alt="Button to create new file in repository" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/09.png" max-width="50%" zoomable=true alt="Button to create new file in repository" %}
 
 - Type `profile.py` for the file name and enter the content below into the text editor. 
 - Click `Commit new file` when done. 
@@ -186,35 +186,35 @@ cat ~/.ssh/id_rsa.pub
 - Login to your CloudLab account, click `Experiments` on top left, 
 select `Create Experiment Profile`. 
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/11.png" width="50%" zoomable=true alt="Create a CloudLab profile" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/11.png" max-width="50%" zoomable=true alt="Create a CloudLab profile" %}
 
 - Click on `Git Repo`
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/12.png" width="50%" zoomable=true alt="Create a CloudLab profile using Git Repo" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/12.png" max-width="50%" zoomable=true alt="Create a CloudLab profile using Git Repo" %}
 
 - Paste the URL of **your** previously created Git repo here and click `Confirm`
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/13.png" width="50%" zoomable=true alt="HTTPS Git URL" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/13.png" max-width="50%" zoomable=true alt="HTTPS Git URL" %}
 
 - Enter the name for your profile, put in some words for the Description. 
 - You will not have a drop-down list of Project. 
 - Click `Create` when done. 
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/14.png" width="50%" zoomable=true alt="Fill in name and description of a CloudLab profile" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/14.png" max-width="50%" zoomable=true alt="Fill in name and description of a CloudLab profile" %}
 
 - Click `Instantiate` to launch an experiment from your profile. 
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/15.png" width="50%" zoomable=true alt="CloudLab profile description and instantiation" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/15.png" max-width="50%" zoomable=true alt="CloudLab profile description and instantiation" %}
 
 - Select a Cluster from Wisconsin, Clemson, or Emulab, then click `Next`. 
 - Do not do anything on the next `Start on date/time` screen. Click `Finish`.  
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/16.png" width="50%" zoomable=true alt="Cluster selection" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/16.png" max-width="50%" zoomable=true alt="Cluster selection" %}
 
 - Your experiment is now being `provision`, and then `booting`  
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/17.png" width="50%" zoomable=true alt="CloudLab experiment provisioning" %}
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/18.png" width="50%" zoomable=true alt="CloudLab experiment booting" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/17.png" max-width="50%" zoomable=true alt="CloudLab experiment provisioning" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/18.png" max-width="50%" zoomable=true alt="CloudLab experiment booting" %}
 
 {% enddetails %}
 {% details Experiment validation %}
@@ -224,7 +224,7 @@ select `Create Experiment Profile`.
 your key was set up correctly). 
 - The command is in the **List View** tab. 
 
-{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/19.png" width="50%" zoomable=true alt="CloudLab experiment status" %}
+{% include figure.liquid path="assets/img/courses/csc468/02-cloudlab/19.png" max-width="50%" zoomable=true alt="CloudLab experiment status" %}
 
 
 {% enddetails %}

@@ -126,7 +126,7 @@ toc:
   - `O(n + k)` Counting Sort
   - `O(d * (n + k))` Radix Sort
 
-{% include figure.liquid path="assets/img/courses/csc495/02-ds-algo/inversion_index.png" width="50%" zoomable=true alt="Inversion Index Example" %}
+{% include figure.liquid path="assets/img/courses/csc495/02-ds-algo/inversion_index.png" max-width="50%" zoomable=true alt="Inversion Index Example" %}
 
 
 
@@ -235,7 +235,7 @@ toc:
   - What is the pattern here?
     - Do not look at the value of the bits, it is the output, not the pattern. 
 
-{% include figure.liquid path="assets/img/courses/csc495/02-ds-algo/11173.png" width="50%" zoomable=true alt="Bits patterns for 11173" %}
+{% include figure.liquid path="assets/img/courses/csc495/02-ds-algo/11173.png" max-width="50%" zoomable=true alt="Bits patterns for 11173" %}
 
 - If an even bit is set, the flip the next bit?
   - Not good enough. 
@@ -296,7 +296,7 @@ toc:
   - The question: is the number of possible grid arrangement finite or infinite?  
     - Recall: Bitmask and Array
 
-{% include figure.liquid path="assets/img/courses/csc495/02-ds-algo/11581.png" width="50%" zoomable=true alt="Bits patterns for 11581" %}
+{% include figure.liquid path="assets/img/courses/csc495/02-ds-algo/11581.png" max-width="50%" zoomable=true alt="Bits patterns for 11581" %}
 
 - With 9 bits, maximum possible grid arrangements = $2^9$ = 512
 

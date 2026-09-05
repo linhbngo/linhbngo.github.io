@@ -74,7 +74,7 @@ protection of its memory and its filesystem.
   - Meaning that the program is owned by root but executable by users.
   - Grant privilege to the task (process), not the user (using effective user ID)
 
-{% include figure.liquid path="assets/img/courses/csc302/os-security/01.png" width="50%" zoomable=true alt="Two-tiered access control" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-security/01.png" max-width="50%" zoomable=true alt="Two-tiered access control" %}
 
 
 {% details Hands-on: Set UID %}
@@ -128,7 +128,7 @@ not as the user.
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc302/os-security/02.png" width="50%" zoomable=true alt="Attack surfaces of Set UID" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-security/02.png" max-width="50%" zoomable=true alt="Attack surfaces of Set UID" %}
 
 - User inputs (explicit inputs): Failure of input sanitization
   - Buffer overflow

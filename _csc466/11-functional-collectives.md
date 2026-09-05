@@ -23,7 +23,7 @@ not participate.
     - Data movement: broadcast, scatter/gather
     - Collective computation (aggregate data to perform computation): Reduce
 
-{% include figure.liquid path="assets/img/courses/csc466/09-collectives/01.png" width="50%" zoomable=true alt="Types of collective communications" %}
+{% include figure.liquid path="assets/img/courses/csc466/09-collectives/01.png" max-width="50%" zoomable=true alt="Types of collective communications" %}
 
 {% enddetails %}
 {% details MPI_Bcast %}

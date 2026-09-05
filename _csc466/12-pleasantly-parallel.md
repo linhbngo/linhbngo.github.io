@@ -34,7 +34,7 @@ the other processes, therefore, ...
 `f`, the x-axis, and two vertical lines `x=a` and `x=b`. 
 - We can estimate this area by dividing it into infinitesimal trapezoids.
 
-{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/trapezoids.png" width="50%" zoomable=true alt="Trapezoid example" %}
+{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/trapezoids.png" max-width="50%" zoomable=true alt="Trapezoid example" %}
 
 - Divide the area under the curve into 8 trapezoids with equal base `h`. 
     - `N` = 8
@@ -47,7 +47,7 @@ the other processes, therefore, ...
     - Calculation workload assignment manually for each count of processes.
     - Generalize assignment for process i based on sample calculations.
 
-{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/trapezoids-processes.png" width="50%" zoomable=true alt="Trapezoid example with process division" %}
+{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/trapezoids-processes.png" max-width="50%" zoomable=true alt="Trapezoid example with process division" %}
 
 - 4 processes: `P0`, `P1`, `P2`, `P3`: `size` = 4
 - `N` = 8
@@ -170,7 +170,7 @@ squeue -u $USER
 {% details Static workload assignment %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/mandelbrot_static.png" width="50%" zoomable=true alt="Static workload assignment visualization via mandelbrot" %}
+{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/mandelbrot_static.png" max-width="50%" zoomable=true alt="Static workload assignment visualization via mandelbrot" %}
 
 - Is this fair?
 - On PSC, create a copy of `trapezoid.c` called `trapezoid_static.c` and modify `trapezoid_static.c`
@@ -186,7 +186,7 @@ to have the following contents
 {% details Cyclic workload assignment %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/mandelbrot_cyclic.png" width="50%" zoomable=true alt="Cyclic workload assignment visualization via mandelbro" %}
+{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/mandelbrot_cyclic.png" max-width="50%" zoomable=true alt="Cyclic workload assignment visualization via mandelbro" %}
 
 - On PSC, create a copy of `trapezoid_static.c` called `trapezoid_cyclic.c` and modify `trapezoid_cyclic.c` 
 to have the following contents
@@ -201,7 +201,7 @@ to have the following contents
 {% details Dynamic workload assignment %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/mandelbrot_dynamic.png" width="50%" zoomable=true alt="Dynamic workload assignment visualization via mandelbro" %}
+{% include figure.liquid path="assets/img/courses/csc466/pleasantly-parallel/mandelbrot_dynamic.png" max-width="50%" zoomable=true alt="Dynamic workload assignment visualization via mandelbro" %}
 
 - Create a file called `trapezoid_dynamic_.c` with the following contents:
 

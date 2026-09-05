@@ -67,7 +67,7 @@ for (int i=0; i<N; i++) {
 
 {% details info Execution flow %}
 
-{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/parallel-do.jpeg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/parallel-do.jpeg" max-width="50%" zoomable=true %}
 
 - The `do` and `for` pragmas do not create a team of threads: 
     - they take the team of threads that is active, and divide the loop iterations over them. 
@@ -97,7 +97,7 @@ no changes to it inside the loop are allowed.
     - Static
     - Dynamic
 
-{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/scheduling.jpeg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/scheduling.jpeg" max-width="50%" zoomable=true %}
 
 ```c
 #pragma omp for schedule(...)
@@ -105,7 +105,7 @@ no changes to it inside the loop are allowed.
 
 The schedules can be setup in a more fine-grained manner
 
-{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/schedules.jpeg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/schedules.jpeg" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -197,12 +197,12 @@ gcc -o for_dynamic_rand for_dynamic_rand.c -fopenmp
 {% enddetails %}
 {% details info 32 portions, 4 threads %}
 
-{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/dynamic_static_32_4.png" width="50%" zoomable=true %}    
+{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/dynamic_static_32_4.png" max-width="50%" zoomable=true %}    
 
 {% enddetails %}
 {% details info 128 portions, 4 threads %}
 
-{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/dynamic_static_128_4.png" width="50%" zoomable=true %}    
+{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/dynamic_static_128_4.png" max-width="50%" zoomable=true %}    
 
 
 {% enddetails %}
@@ -264,7 +264,7 @@ gcc -o nested_loops_collapse nested_loops_collapse.c -fopenmp
 - Given the following outputs of an OpenMP program done with collapsed nested loop, 
 reconstruct the source code
 
-{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/collapse_3.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/06-loop-parallelism/collapse_3.png" max-width="50%" zoomable=true %}
 
 {% details Solution %}
 

@@ -38,7 +38,7 @@ This lecture will cover contents from [Chapter 11](https://diveintosystems.org/b
   - `Load` operation
 - Physical representation of this abstraction:
 
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/01.png" max-width="50%" zoomable=true %}
 
 
 
@@ -120,7 +120,7 @@ This lecture will cover contents from [Chapter 11](https://diveintosystems.org/b
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/02.png" width="50%" zoomable=true alt="CPU memory gap" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/02.png" max-width="50%" zoomable=true alt="CPU memory gap" %}
 
 - The key to bridging this gap is a fundamental property of computer programs known as **locality**:
   - Principle of Locality: Programs tend to use data and instructions with addresses near or equal 
@@ -152,7 +152,7 @@ return sum;
 key skills for a professional programmer.
 - Example: array layout in memory is row-major order
 
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/03.png" width="50%" zoomable=true alt="Array layout in memory" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/03.png" max-width="50%" zoomable=true alt="Array layout in memory" %}
 
 :::::{tab-set}
 
@@ -228,7 +228,7 @@ $ ./sum
 ```
 ::::
 ::::{tab-item} Result
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/04.png" width="50%" zoomable=true alt="Differences in performance due to access pattern" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/04.png" max-width="50%" zoomable=true alt="Differences in performance due to access pattern" %}
 ::::
 
 ```
@@ -250,7 +250,7 @@ $ ./sum
 - They suggest an approach for organizing memory and storage systems 
 known as a memory hierarchy.
 
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/05.png" width="50%" zoomable=true alt="Memory hierarchy" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/05.png" max-width="50%" zoomable=true alt="Memory hierarchy" %}
 ```
 
 ## Caching
@@ -280,13 +280,13 @@ storage near the bottom, but that serves data to programs at the rate of the fas
 {% enddetails %}
 :::::{tab-set}
 ::::{tab-item} Cache
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/06.png" width="50%" zoomable=true alt="Cache concepts" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/06.png" max-width="50%" zoomable=true alt="Cache concepts" %}
 ::::
 ::::{tab-item} Cache hits
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/07.png" width="50%" zoomable=true alt="Cache hits" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/07.png" max-width="50%" zoomable=true alt="Cache hits" %}
 ::::
 ::::{tab-item} Cache misses
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/08.png" width="50%" zoomable=true alt="Cache misses" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/08.png" max-width="50%" zoomable=true alt="Cache misses" %}
 
 - Cold (compulsory) miss
   - Cold misses occur because the cache starts empty and this is the first reference to the block.
@@ -329,10 +329,10 @@ storage near the bottom, but that serves data to programs at the rate of the fas
 
 :::::{tab-set}
 ::::{tab-item} L2/L3
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/09.png" width="50%" zoomable=true alt="Example of L2 and L3 cache" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/09.png" max-width="50%" zoomable=true alt="Example of L2 and L3 cache" %}
 ::::
 ::::{tab-item} L1/L2/L3
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/10.png" width="50%" zoomable=true alt="Example of L1, L2, and L3 cache" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/10.png" max-width="50%" zoomable=true alt="Example of L1, L2, and L3 cache" %}
 ::::
 
 {% details Cache performance metrics %}
@@ -404,7 +404,7 @@ our understanding of cache memories.
 
 <script src="https://gist.github.com/linhbngo/d1e9336a82632c528ea797210ed0f553.js?file=mm.c"></script>
 
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/15.png" width="50%" zoomable=true alt="Index increment directions in matrix multiplication" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/15.png" max-width="50%" zoomable=true alt="Index increment directions in matrix multiplication" %}
 
 
 {% details Various matrix multiplication performance analysis %}
@@ -433,7 +433,7 @@ for (i=0; i<n; i++)  {
   - C = 0
   - Average miss per iteration = 1.25
   
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/16.png" width="50%" zoomable=true alt="Miss rate 1" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/16.png" max-width="50%" zoomable=true alt="Miss rate 1" %}
 ::::
 ::::{tab-item} Case 2
 ```c
@@ -454,7 +454,7 @@ for (k=0; k<n; k++)  {
   - C = 8 / 32 = 0.25
   - Average miss per iteration = 0.5
 
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/17.png" width="50%" zoomable=true alt="Miss rate 2" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/17.png" max-width="50%" zoomable=true alt="Miss rate 2" %}
 ::::
 ::::{tab-item} Case 3
 ```c
@@ -475,7 +475,7 @@ for (j=0; j<n; j++)  {
   - C = 1
   - Average miss per iteration = 2
 
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/18.png" width="50%" zoomable=true alt="Miss rate 3" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/18.png" max-width="50%" zoomable=true alt="Miss rate 3" %}
 ::::
 
 {% details The memory mountain %}
@@ -489,6 +489,6 @@ for (j=0; j<n; j++)  {
 - Memory mountain: Measured read throughput as a function of spatial and temporal locality.
 - Compact way to characterize memory system performance. 
 
-{% include figure.liquid path="assets/img/courses/csc231/05-memory/19.png" width="50%" zoomable=true alt="memory mountain" %}
+{% include figure.liquid path="assets/img/courses/csc231/05-memory/19.png" max-width="50%" zoomable=true alt="memory mountain" %}
 ```
 

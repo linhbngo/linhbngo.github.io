@@ -252,7 +252,7 @@ docker volume ls
 docker volume inspect myrepo
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-volume/volume-create.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-volume/volume-create.png" max-width="50%" zoomable=true %}
 
 - Create two containers called `point1` and `point2` in interactive mode
 - Container `point1` is an alpine container and will mount `myrepo` as directory `/point1`
@@ -326,7 +326,7 @@ df -h
 exit
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-volume/tmpfs.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-volume/tmpfs.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}

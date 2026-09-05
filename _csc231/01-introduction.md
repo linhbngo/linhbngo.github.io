@@ -88,7 +88,7 @@ gcc -Wno-overflow nums.c
 ./a.out
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/01-intro/01.png" width="50%" zoomable=true alt="Compile and run nums.c" %}
+{% include figure.liquid path="assets/img/courses/csc231/01-intro/01.png" max-width="50%" zoomable=true alt="Compile and run nums.c" %}
 
 
 ## Computer arithmetic
@@ -144,7 +144,7 @@ gcc mem1.c
 ./a.out
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/01-intro/02.png" width="50%" zoomable=true alt="Compile and run mem1.c" %}
+{% include figure.liquid path="assets/img/courses/csc231/01-intro/02.png" max-width="50%" zoomable=true alt="Compile and run mem1.c" %}
 
 ## Memory referencing errors
  
@@ -184,7 +184,7 @@ gcc mem2.c
 ./a.out
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/01-intro/03.png" width="50%" zoomable=true alt="Compile and run mem2.c" %}
+{% include figure.liquid path="assets/img/courses/csc231/01-intro/03.png" max-width="50%" zoomable=true alt="Compile and run mem2.c" %}
 
 ## Does computer just execute arithmetic and control flow operations?
  
@@ -211,4 +211,4 @@ through:
   - are complex
   - meets specific requirements in aspects such as performance, security, or fault tolerance.
 
-{% include figure.liquid path="assets/img/courses/csc231/01-intro/04.png" width="50%" zoomable=true alt="Layered service design.c" %}
+{% include figure.liquid path="assets/img/courses/csc231/01-intro/04.png" max-width="50%" zoomable=true alt="Layered service design.c" %}

@@ -51,7 +51,7 @@ This lecture will cover contents from [Chapter 6](https://diveintosystems.org/bo
 - Building blocks modern electronics 
 - Two transistors used to design an AND gate:
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/TransistorANDgate.png" width="50%" zoomable=true alt="AND gate created using transistors" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/TransistorANDgate.png" max-width="50%" zoomable=true alt="AND gate created using transistors" %}
 
 
 {% details Intel and AMD %}
@@ -125,7 +125,7 @@ This lecture will cover contents from [Chapter 6](https://diveintosystems.org/bo
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/03.png" width="50%" zoomable=true alt="Level of abstraction" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/03.png" max-width="50%" zoomable=true alt="Level of abstraction" %}
 
 - `Architecture`: (also `ISA`: instruction set architecture) The parts of a processor 
 design that one needs to understand for writing correct machine/assembly code
@@ -164,7 +164,7 @@ are now visible.
     - Contains code and user data
     - Stack to support procedures
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/04.png" width="50%" zoomable=true alt="Assembly programmer" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/04.png" max-width="50%" zoomable=true alt="Assembly programmer" %}
 
 
 
@@ -189,7 +189,7 @@ $ gcc -Og -c mstore.c
 $ objdump -d mstore.o
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/05.png" width="50%" zoomable=true alt="Assembly code" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/05.png" max-width="50%" zoomable=true alt="Assembly code" %}
 
 - x86_64 instructions range in length from 1 to 15 bytes
 - The disassembler determines the assembly code based purely on the 
@@ -212,7 +212,7 @@ byte-sequence in the machine-code file.
 microarchitecture's machine code instructions
 - ../figure from **Programming the IBM 1401 Manual** (1962)
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/assembly-01.png" width="50%" zoomable=true alt="Programming the IBM 1401" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/assembly-01.png" max-width="50%" zoomable=true alt="Programming the IBM 1401" %}
 
 ````
 
@@ -260,7 +260,7 @@ through `%rsp`. Eight new registered were added: `%r8` through `%r15`.
 - Instructions can operate on data of different sizes stored in low-order bytes of the
 16 registers. 
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/06.png" width="50%" zoomable=true alt="General purpose registers" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/06.png" max-width="50%" zoomable=true alt="General purpose registers" %}
 
 *Bryant and O' Hallaron, Computer Systems: A Programmer's Perspective, Third Edition*
 
@@ -369,7 +369,7 @@ $ gcc -Og -c swap.c
 $ objdump -d swap.o
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/07.png" width="50%" zoomable=true alt="swapping via single-valued pointers" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/07.png" max-width="50%" zoomable=true alt="swapping via single-valued pointers" %}
 
 - [Why `%rsi` and `%rdi`?](http://6.s081.scripts.mit.edu/sp18/x86-64-architecture-guide.html)
 - Procedure Data Flow:
@@ -395,7 +395,7 @@ $ gcc -Og -c swap_dsp.c
 $ objdump -d swap_dsp.o
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/08.png" width="50%" zoomable=true alt="swapping position in an array via pointers" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/08.png" max-width="50%" zoomable=true alt="swapping position in an array via pointers" %}
 
 - What is the meaning of `0x190`?
 
@@ -451,7 +451,7 @@ $ gcc -Og -c m12.c
 $ objdump -d m12.o
 ```
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/09.png" width="50%" zoomable=true alt="demonstrating load effective address" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/09.png" max-width="50%" zoomable=true alt="demonstrating load effective address" %}
 
 - Assembly code explanation of `m12.c`:
   - `%rdi`: x
@@ -518,7 +518,7 @@ $ objdump -d scale.o
 ```
 
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/10.png" width="50%" zoomable=true alt="Scale.c" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/10.png" max-width="50%" zoomable=true alt="Scale.c" %}
 
 
 - Identify the registers holding x, y, and z.  
@@ -554,7 +554,7 @@ $ objdump -d arith.o
 
 - Understand how the Assembly code represents the actual arithmetic operation in the C code. 
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/11.png" width="50%" zoomable=true alt="arith.c" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/11.png" max-width="50%" zoomable=true alt="arith.c" %}
 
 ```
 
@@ -573,7 +573,7 @@ $ objdump -d arith.o
   - location of current code control point (`%rip`,...)
   - status of recent tests (`CF`, `ZF`, `SF`, `OF` in `%EFLAGS`)
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/12.png" width="50%" zoomable=true alt="processor state" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/12.png" max-width="50%" zoomable=true alt="processor state" %}
 
 
 
@@ -736,7 +736,7 @@ These choices make up the **Application Binary Interface (ABI).**
   - Register `%rsp` contains **lowest stack address**. 
   - address of "top" element
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/16.png" width="50%" zoomable=true alt="Stack frames" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/16.png" max-width="50%" zoomable=true alt="Stack frames" %}
 
 
 {% details Stack push and pop %}
@@ -753,7 +753,7 @@ These choices make up the **Application Binary Interface (ABI).**
   - Increment `%rsp` by 8
   - Store value at Dest (usually a register)
 
-{% include figure.liquid path="assets/img/courses/csc231/04-machine/17.png" width="50%" zoomable=true alt="Stack push and pop" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-machine/17.png" max-width="50%" zoomable=true alt="Stack push and pop" %}
 
 
 {% details What really happens in memory/registers at the beginning and the end of a function %}

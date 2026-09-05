@@ -18,7 +18,7 @@ toc:
 
 {% details Final GPA calculation %}
 
-{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/grading_problem.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/grading_problem.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -53,7 +53,7 @@ from the main processors (GPU), or
 {% enddetails %}
 {% details Parallelizing final GPA calculations %}
 
-{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/grading_parallel.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/grading_parallel.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ## Parallel and distributed computing systems
@@ -123,7 +123,7 @@ fraction ($1-f$).
 - Assume no overhead, this means that we reduce the speed by half as we double the number of processor.
 - And so on ...
 
-{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/08.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/08.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Amdahl's Law %}
@@ -262,7 +262,7 @@ $S \leq p$
 {% details Streaming SIMD %}
 
 
-{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/09.png" width="50%" zoomable=true alt="Streaming SIMD" %}
+{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/09.png" max-width="50%" zoomable=true alt="Streaming SIMD" %}
 
 
 {% enddetails %}
@@ -275,7 +275,7 @@ $S \leq p$
     - OpenMP: compiler extensions handle. 
     - Vendor libraries: (Intel MKL - math kernel libraries)
 
-{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/10.png" width="50%" zoomable=true alt="shared memory" %}
+{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/10.png" max-width="50%" zoomable=true alt="shared memory" %}
 
 {% enddetails %}
 {% details Heterogeneous computing %}
@@ -296,7 +296,7 @@ $S \leq p$
     - OpenAMP: Extension to Visual C++ to direct computation to GPU. 
     - OpenCL: Public standard by the group the developed OpenGL. 
 
-{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/11.png" width="50%" zoomable=true alt="GPU" %}
+{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/11.png" max-width="50%" zoomable=true alt="GPU" %}
 
 {% enddetails %}
 {% details FPGA - field programmable array %}
@@ -329,7 +329,7 @@ $S \leq p$
     - MPI + OpenMP: hybrid model. 
     - MapReduce programming model for big data processing.  
 
-{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/12.png" width="50%" zoomable=true alt="Message passing" %}
+{% include figure.liquid path="assets/img/courses/csc466/intro-parallel/12.png" max-width="50%" zoomable=true alt="Message passing" %}
 
 {% enddetails %}
 ## Benchmarking

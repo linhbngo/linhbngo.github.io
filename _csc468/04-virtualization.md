@@ -32,7 +32,7 @@ computer system problems such as security, performance, and reliability by decou
 architecture and user-perceived behavior of hardware and software resources from their physical 
 implementation.** (*https:/www.computer.org/csdl/mags/co/2005/05/r5028.html/*)
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/01.png" width="50%" zoomable=true alt="Overview of virtualization" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/01.png" max-width="50%" zoomable=true alt="Overview of virtualization" %}
 
 {% enddetails %}
 {% details Virtualization requirements %}
@@ -45,7 +45,7 @@ implementation.** (*https:/www.computer.org/csdl/mags/co/2005/05/r5028.html/*)
     - Efficiency
     - Complete control of system resources (with regard to the processes running inside the VM)
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/02.png" width="50%" zoomable=true alt="Overview of virtualization" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/02.png" max-width="50%" zoomable=true alt="Overview of virtualization" %}
 
 
 {% enddetails %}
@@ -57,7 +57,7 @@ provides an interface between hardware and virtual operating systems.
     - Bare-metal
     - Hosted
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/03.png" width="50%" zoomable=true alt="Types of virtualizations" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/03.png" max-width="50%" zoomable=true alt="Types of virtualizations" %}
 
 
 {% enddetails %}
@@ -73,7 +73,7 @@ provides an interface between hardware and virtual operating systems.
 {% details Virtualization versus multitasking versus multicore/hyperthreading %}
 
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/04.png" width="50%" zoomable=true alt="Virtualization versus multitasking versus multicore/hyperthreading" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/04.png" max-width="50%" zoomable=true alt="Virtualization versus multitasking versus multicore/hyperthreading" %}
 
 {% enddetails %}
 ---
@@ -108,7 +108,7 @@ privileged instructions.
 and manage the VM
 - Sensitive instructions must be executed in ring 0 
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/05.png" width="50%" zoomable=true alt="Levels of privilege in x86 architecture" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/05.png" max-width="50%" zoomable=true alt="Levels of privilege in x86 architecture" %}
 
 {% enddetails %}
 {% details Full virtualization %}
@@ -119,7 +119,7 @@ and manage the VM
 - Runtime translation of critical non-virtualizable instructions happens in the hypervisor.
 - Provide best isolation and security at the cost of performance.
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/06.png" width="50%" zoomable=true alt="x86's levels of privilege for full virtualization" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/06.png" max-width="50%" zoomable=true alt="x86's levels of privilege for full virtualization" %}
 
 {% enddetails %}
 {% details Para virtualization %}
@@ -130,7 +130,7 @@ and manage the VM
 - Superior in performance.
 - Requires expertise to patch the kernels.
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/07.png" width="50%" zoomable=true alt="x86's levels of privilege for para virtualization" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/07.png" max-width="50%" zoomable=true alt="x86's levels of privilege for para virtualization" %}
 
 {% enddetails %}
 {% details Hardware-assisted virtualization %}
@@ -143,7 +143,7 @@ and manage the VM
 - Better performance in comparison to other variants.
 - Greater stability
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/08.png" width="50%" zoomable=true alt="x86's levels of privilege for hardware-assisted virtualization" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/08.png" max-width="50%" zoomable=true alt="x86's levels of privilege for hardware-assisted virtualization" %}
 
 {% enddetails %}
 {% details Virtualization at OS level %}
@@ -161,7 +161,7 @@ and manage the VM
 - VMM translates physical memory space (of VM) to physical memory space (of main machine), 
 but also enables direct mapping (shadow table) to avoid overhead.
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/09.png" width="50%" zoomable=true alt="Memory virtualization" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/09.png" max-width="50%" zoomable=true alt="Memory virtualization" %}
 
 {% enddetails %}
 {% details Summary %}
@@ -270,7 +270,7 @@ by the Linux Foundation
     - Script: installs a virtual environment and runs tests.
     - Command-line interface (CLI): enables users to submit API calls to OpenStack services
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/10.png" width="50%" zoomable=true alt="Openstack Logical Architecture" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/10.png" max-width="50%" zoomable=true alt="Openstack Logical Architecture" %}
 
 - Compute: Provision compute instances
 - Keystone: Identity and authentication
@@ -295,14 +295,14 @@ by the Linux Foundation
     - VMWare vSphere
     - zVM
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/openstack-compute.svg" width="50%" zoomable=true alt="Compute Nova: Architecture" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/openstack-compute.svg" max-width="50%" zoomable=true alt="Compute Nova: Architecture" %}
 
 {% enddetails %}
 {% details Openstack: Cinder %}
 
 - Providing volumes to VMs, baremetal hosts, containers, etc. 
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/13.png" width="50%" zoomable=true alt="Compute Nova: Architecture" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/13.png" max-width="50%" zoomable=true alt="Compute Nova: Architecture" %}
 
 {% enddetails %}
 {% details Openstack: Neutron %}
@@ -313,5 +313,5 @@ data center.
 - External: Provide VM with Internet access.
 - API: Exposed all the Stack’s API to the public.
 
-{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/14.png" width="50%" zoomable=true alt="Compute Nova: Architecture" %}
+{% include figure.liquid path="assets/img/courses/csc468/04-virtualization/14.png" max-width="50%" zoomable=true alt="Compute Nova: Architecture" %}
 {% enddetails %}

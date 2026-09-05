@@ -81,7 +81,7 @@ of the process).
 
 {% details From program to process %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process/01.png" max-width="50%" zoomable=true %}
 
 - A process can be in one of the three states. 
     - Running: the CPU is executing a process' instructions.
@@ -90,7 +90,7 @@ of the process).
     - Blocked: the process has to perform some operation (e.g., I/O request
     to disk) that makes it not ready to run. 
 
-{% include figure.liquid path="assets/img/courses/csc331/process/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process/02.png" max-width="50%" zoomable=true %}
 
 - State transition
     - When a process moves from **ready** to **running**, this means
@@ -102,7 +102,7 @@ of the process).
     Upon receiving the I/O completion signal, the OS moves the process' state
     from **blocked** to **ready**, to wait to be scheduled by the OS. 
 
-{% include figure.liquid path="assets/img/courses/csc331/process/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process/03.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -143,7 +143,7 @@ cd ~/ostep-code/cpu-api
 make
 ```
 
-{% include figure.liquid path="assets/img/courses/csc331/process/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -210,7 +210,7 @@ process ID and the parent process prints out the `rc` value. These two values sh
 
 - What is one point of inconsistency in this screenshot?
 
-{% include figure.liquid path="assets/img/courses/csc331/process/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process/05.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
@@ -259,7 +259,7 @@ This line is evaluated within the parent process (since the child process creati
 {% details What do you notice? %}
 
 
-{% include figure.liquid path="assets/img/courses/csc331/process/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process/06.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 

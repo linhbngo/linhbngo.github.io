@@ -39,7 +39,7 @@ following contents:
 
 <script src="https://gist.github.com/linhbngo/05955842d2a7ce40c9723292a2ded118.js?file=hello_sections.c"></script>
 
-{% include figure.liquid path="assets/img/courses/csc466/06-work-sharing/work_01.png" width="50%" zoomable=true alt="Compile and run hello_sections.c" %}
+{% include figure.liquid path="assets/img/courses/csc466/06-work-sharing/work_01.png" max-width="50%" zoomable=true alt="Compile and run hello_sections.c" %}
 
 {% enddetails %}
 {% details Challenge: section %}
@@ -82,7 +82,7 @@ before moving on.
 
 - Compile and run the above files:
 
-{% include figure.liquid path="assets/img/courses/csc466/06-work-sharing/work_02.png" width="50%" zoomable=true alt="Compile and run singles" %}
+{% include figure.liquid path="assets/img/courses/csc466/06-work-sharing/work_02.png" max-width="50%" zoomable=true alt="Compile and run singles" %}
 
 {% enddetails %}
 ## Shared and Private Data
@@ -98,7 +98,7 @@ following contents:
 --8<-- "docs/csc466/lectures/data/openmp/counter_openmp.c"
 ```
 
-{% include figure.liquid path="assets/img/courses/csc466/06-work-sharing/work_03.png" width="50%" zoomable=true alt="shared and private data" %}
+{% include figure.liquid path="assets/img/courses/csc466/06-work-sharing/work_03.png" max-width="50%" zoomable=true alt="shared and private data" %}
 
 {% enddetails %}
 {% details Shared and Private %}

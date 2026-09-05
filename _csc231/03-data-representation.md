@@ -36,7 +36,7 @@ This lecture will cover contents from [Chapter 4](https://diveintosystems.org/bo
   - Easy to store with bistable elements.
   - Reliably transmitted on noisy and inaccurate wires. 
 
-{% include figure.liquid path="assets/img/courses/csc231/03-data-representation/data_01.png" width="50%" zoomable=true alt="Electronic representation of bits" %}
+{% include figure.liquid path="assets/img/courses/csc231/03-data-representation/data_01.png" max-width="50%" zoomable=true alt="Electronic representation of bits" %}
 
 ### 1.3 Encoding byte values 
 
@@ -100,7 +100,7 @@ This lecture will cover contents from [Chapter 4](https://diveintosystems.org/bo
   - Operation applied bitwise. 
   - All properties of boolean algebra apply.  
 
-{% include figure.liquid path="assets/img/courses/csc231/03-data-representation/data_02.png" width="50%" zoomable=true alt="bitwise boolean operations" %}
+{% include figure.liquid path="assets/img/courses/csc231/03-data-representation/data_02.png" max-width="50%" zoomable=true alt="bitwise boolean operations" %}
 
 - Operation and notation  
   - Boolean operations: `&`, `|`, `^`, `~`.
@@ -644,7 +644,7 @@ that takes in a number of type `short` to be negated.
   - Address of first byte in word.
   - Address of successive words differ by 4 (32-bit) or 8 (64-bit). 
 
-{% include figure.liquid path="assets/img/courses/csc231/03-data-representation/data_08.png" width="50%" zoomable=true alt="word-oriented memory organization" %}
+{% include figure.liquid path="assets/img/courses/csc231/03-data-representation/data_08.png" max-width="50%" zoomable=true alt="word-oriented memory organization" %}
 
 
 {% details Byte ordering in memory %}

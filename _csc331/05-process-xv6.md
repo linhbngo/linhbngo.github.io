@@ -58,7 +58,7 @@ int main() {
 
 {% details Screenshot: creating p1.c inside xv6-riscv/user %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process-xv6/01.png" width="50%" zoomable=true %}   
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/01.png" max-width="50%" zoomable=true %}   
 
 {% enddetails %}
 
@@ -66,7 +66,7 @@ int main() {
 
 {% details Screenshot: Edit xv6-riscv/Makefile %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process-xv6/02.png" width="50%" zoomable=true %}  
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/02.png" max-width="50%" zoomable=true %}  
 
 {% enddetails %}
 - Let's rebuild and relaunch xv6. In a terminal, run the followings
@@ -84,12 +84,12 @@ make qemu
 
 {% details Screenshot: content of ls %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process-xv6/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/03.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details What do you expect to see, and what do you have? Why? %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process-xv6/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/04.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -118,14 +118,14 @@ int main() {
 
 {% details Screenshot: creating p2.c inside xv6-riscv/user %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process-xv6/05.png" width="50%" zoomable=true %}   
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/05.png" max-width="50%" zoomable=true %}   
 
 {% enddetails %}
 - In `Makefile` under `xv6-riscv`, find the section `UPROGS=` and edit to include the `$U/_p2\` line. 
 
 {% details Screenshot: Edit xv6-riscv/Makefile %}
 
-{% include figure.liquid path="assets/img/courses/csc331/process-xv6/06.png" width="50%" zoomable=true %}  
+{% include figure.liquid path="assets/img/courses/csc331/process-xv6/06.png" max-width="50%" zoomable=true %}  
 
 {% enddetails %}
 - Let's rebuild and relaunch xv6. In a terminal, run the followings

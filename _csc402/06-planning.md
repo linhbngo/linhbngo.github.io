@@ -202,7 +202,7 @@ requirements were well understood.
 
 - Critical path analysis
 
-{% include figure.liquid path="assets/img/courses/csc402/critical_path.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/critical_path.png" max-width="50%" zoomable=true %}
 
 - Gannt charts
     - In combination with milestones

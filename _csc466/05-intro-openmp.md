@@ -25,7 +25,7 @@ toc:
   - Once the parallel tasks are done, `threads` are `joined` back to the original 
   process and return to sequential execution.  
 
-{% include figure.liquid path="assets/img/courses/csc466/05-intro-openmp/fork-join.jpeg" width="50%" zoomable=true alt="Fork/join model for threads" %}
+{% include figure.liquid path="assets/img/courses/csc466/05-intro-openmp/fork-join.jpeg" max-width="50%" zoomable=true alt="Fork/join model for threads" %}
 
 - The threads have access to all data in the `master` thread. This is `shared` data. 
 - The threads also have their own private memory stack. 
@@ -118,7 +118,7 @@ four threads.
   - How to decide which thread will handle which segment?
   - How to get all results back together?    
 
-{% include figure.liquid path="assets/img/courses/csc466/05-intro-openmp/06.png" width="50%" zoomable=true alt="Trapezoidal" %}
+{% include figure.liquid path="assets/img/courses/csc466/05-intro-openmp/06.png" max-width="50%" zoomable=true alt="Trapezoidal" %}
 
 {% enddetails %}
 {% details Implementation %}

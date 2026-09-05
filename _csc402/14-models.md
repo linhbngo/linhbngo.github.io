@@ -185,7 +185,7 @@ and objects
 {% enddetails %}
 {% details Example: university admissions %}
 
-{% include figure.liquid path="assets/img/courses/csc402/behavioral.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/behavioral.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details How to specify logic? %}

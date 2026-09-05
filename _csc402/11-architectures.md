@@ -148,7 +148,7 @@ maintaining cohesion
 - General grouping of system elements
 - Appropriate for denoting subsystem at conceptual level
 
-{% include figure.liquid path="assets/img/courses/csc402/uml_package.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/uml_package.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details UML: Component %}
@@ -162,12 +162,12 @@ maintaining cohesion
     - Classes may have fields, are assembled into programs
     - Components realize interfaces, are assembled into systems
 
-{% include figure.liquid path="assets/img/courses/csc402/uml_component.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/uml_component.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Interface diagram %}
 
-{% include figure.liquid path="assets/img/courses/csc402/uml_interface_diagram.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/uml_interface_diagram.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details UML: Node %}
@@ -178,12 +178,12 @@ maintaining cohesion
     - Network router
 - Components live on nodes
 
-{% include figure.liquid path="assets/img/courses/csc402/uml_node.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/uml_node.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Example: deployment diagram %}
 
-{% include figure.liquid path="assets/img/courses/csc402/deployment_diagram.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/deployment_diagram.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -203,7 +203,7 @@ maintaining cohesion
 - Communication follows a protocol
 - If protocol is fixed, either side can be replaced independently
 - Peer-to-peer: same component can act as both client and server
-{% include figure.liquid path="assets/img/courses/csc402/server_client.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/server_client.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Layered %}
@@ -259,7 +259,7 @@ maintaining cohesion
 {% enddetails %}
 {% details Oscillatory: layered model %}
 
-{% include figure.liquid path="assets/img/courses/csc402/layered_models.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/layered_models.png" max-width="50%" zoomable=true %}
 
 - Model design
     - The core layer represented the signal manipulation functions that 
@@ -284,7 +284,7 @@ maintaining cohesion
 {% enddetails %}
 {% details Oscillatory: pipe and filter %}
 
-{% include figure.liquid path="assets/img/courses/csc402/pipeline.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/pipeline.png" max-width="50%" zoomable=true %}
 
 - Model design
     - Oscilloscope functions were viewed as incremental transformers of data. 
@@ -315,7 +315,7 @@ maintaining cohesion
 - Dangers:
     - Bottleneck / single point of failure
 
-{% include figure.liquid path="assets/img/courses/csc402/repository.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/repository.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Repository: flexibility through indirection %}
@@ -323,5 +323,5 @@ maintaining cohesion
 - Repository is highly coupled – difficult to change data store
 - By defining higher-level storage access interface, data store is now lightly coupled
 
-{% include figure.liquid path="assets/img/courses/csc402/repository_indirection.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/repository_indirection.png" max-width="50%" zoomable=true %}
 {% enddetails %}

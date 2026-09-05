@@ -58,7 +58,7 @@ which can be accessed using some easy-to-use APIs (ls, rm, cp …).
 - File system does NOT care about what type of file it is (C code, picture 
 or video, it just makes sure to store all bytes in a file **persistently**.
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Abstraction: files and directories %}
@@ -70,7 +70,7 @@ or video, it just makes sure to store all bytes in a file **persistently**.
     - which are the files and directories *under* this directory
 - Directory tree / hierarchy
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ---
@@ -147,7 +147,7 @@ offset according to how many bytes are read/written
 - We will study a very simple example file system named VSFS: Very Simple File System
 - Analogy
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details How to implement a simple file system? %}
@@ -172,7 +172,7 @@ of course!).
 {% details Unformatted raw disk %}
 
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/05.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Overall organization %}
@@ -183,7 +183,7 @@ of course!).
 - Number of blocks: 64
 - Total size: 256KB
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/06.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -194,7 +194,7 @@ of course!).
 other things like metadata
 - In VSFS, we reserve the last 56 blocks as data region.
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/07.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/07.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Metadata: inode table %}
@@ -204,7 +204,7 @@ other things like metadata
 - In VSFS, we keep the info of each file in a struct called inode. And we use 5 blocks for storing all the inodes.
 - Maximum number of inodes it can hold: 5 * 4KB / 128B = 160, i.e., this VSFS can store at most 160 files.
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/08.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/08.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -215,7 +215,7 @@ other things like metadata
 - We use a data structure called bitmap for this purpose, which is just a sequence of bits, and each bit indicates whether one block is free (0) or in-use (1).
 - We have one bitmap for the data region and one bitmap for the inode region, and reserve one block for each bitmap. (4KB = 32K bits, can keep track of 32K blocks)
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Superblock %}
@@ -229,7 +229,7 @@ other things like metadata
 - When mounting a file system, the OS first reads the superblock, identify its type and other parameters, 
 then attach the volume to the file system tree with proper settings.
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Example implementations %}
@@ -248,7 +248,7 @@ then attach the volume to the file system tree with proper settings.
     - 12KB + 32 * 128B = 16K
 So we have the inode, but which blocks have the data?
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -260,7 +260,7 @@ to calculate where on the disk the corresponding inode is located.
     - `blk = (inumber * sizeof(inode_t)) / blockSize` 
     - `sector = ((blk * blockSize) + inodeStartAddr) / sectorSize`
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/10.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/10.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ---
@@ -281,7 +281,7 @@ idea of indirect pointer.
     - So total size supported: 4K * (14 + 1K) = 4152KB
 - Bigger?
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/11.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/11.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Reasoning %}
@@ -294,7 +294,7 @@ time they find certain “truths” that hold across the decades.
     makes sense to optimize for this case.
     - [A five-year study of file system metadata, 2007](http://static.usenix.org/event/fast07/tech/full_papers/agrawal/agrawal.pdf)
 
-    {% include figure.liquid path="assets/img/courses/csc331/file-system/12.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc331/file-system/12.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -317,7 +317,7 @@ the first data block of the file, then the first block points to the second bloc
 allocation table which is indexed by address of data block, so finding a block can be faster.
 - This is the FAT file system, used by Windows before NTFS.
 
-{% include figure.liquid path="assets/img/courses/csc331/file-system/13.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/file-system/13.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}

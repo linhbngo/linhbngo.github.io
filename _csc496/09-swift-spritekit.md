@@ -19,7 +19,7 @@ toc:
 - Add a high-performance 2D content with smooth animtions to your app, 
 or create a game with a high-levle set of 2D game-based tools
 
-{% include figure.liquid path="assets/img/courses/csc496/09-sprite/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/09-sprite/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Create a New Project %}
@@ -29,7 +29,7 @@ or create a game with a high-levle set of 2D game-based tools
     - Select `New Project`
 - Choose `iOS/Game` template and click `Next`
 
-{% include figure.liquid path="assets/img/courses/csc496/09-sprite/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/09-sprite/02.png" max-width="50%" zoomable=true %}
 
 - Enter `Pikachu` for `Product Name`
 - Enter `Swift` for `Language`, 
@@ -37,11 +37,11 @@ or create a game with a high-levle set of 2D game-based tools
 - Select `None` for `Testing System`
 - Make sure the option for Integrate GameplayKit is checked.
 
-{% include figure.liquid path="assets/img/courses/csc496/09-sprite/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/09-sprite/03.png" max-width="50%" zoomable=true %}
 
 - Select `iPhone 16` and start the simulation
 
-{% include figure.liquid path="assets/img/courses/csc496/09-sprite/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/09-sprite/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ## Create A New Example Game
@@ -183,7 +183,7 @@ override func didMove(to view: SKView) {
 }
 ```
 
-{% include figure.liquid path="assets/img/courses/csc496/09-sprite/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/09-sprite/05.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Add a player %}

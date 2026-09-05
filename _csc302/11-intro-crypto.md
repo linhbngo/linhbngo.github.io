@@ -73,7 +73,7 @@ groups of letters in a ciphertext.
   - Common 3-letter combinations (trigrams): `THE`, `AND`, and `ING`
 - Perform frequency analysis on cipher text to guess frequency!
 
-{% include figure.liquid path="assets/img/courses/csc302/cryptography/frequency.png" width="50%" zoomable=true alt="Frequency analysis" %}
+{% include figure.liquid path="assets/img/courses/csc302/cryptography/frequency.png" max-width="50%" zoomable=true alt="Frequency analysis" %}
 
 - Create the following python script
 
@@ -160,7 +160,7 @@ an encryption algorithm different.
 
 - Blocks are encrypted separatedly
 
-{% include figure.liquid path="assets/img/courses/csc302/cryptography/ecb.png" width="50%" zoomable=true alt="ECB" %}
+{% include figure.liquid path="assets/img/courses/csc302/cryptography/ecb.png" max-width="50%" zoomable=true alt="ECB" %}
 
 ```bash
 echo "Hello Golden Rams!" > plain.txt
@@ -178,7 +178,7 @@ cat plain2.txt
 
 - Naive and unsafe method
 
-{% include figure.liquid path="assets/img/courses/csc302/cryptography/encryption_modes.png" width="50%" zoomable=true alt="Encryption modes" %}
+{% include figure.liquid path="assets/img/courses/csc302/cryptography/encryption_modes.png" max-width="50%" zoomable=true alt="Encryption modes" %}
 
 
 ### 4.2. Cipher Block Chaining (CBC) Mode
@@ -189,7 +189,7 @@ because different IVs will be used.
   - Decryption can be parallelized
   - Encryption cannot be parallelized
 
-{% include figure.liquid path="assets/img/courses/csc302/cryptography/cbc.png" width="50%" zoomable=true alt="CBC" %}
+{% include figure.liquid path="assets/img/courses/csc302/cryptography/cbc.png" max-width="50%" zoomable=true alt="CBC" %}
 
 ```bash
 openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.txt -K 00112233445566778899AABBCCDDEEFF -iv 000102030405060708090a0b0c0d0e0f
@@ -212,7 +212,7 @@ cat cipher2.txt
 - Decryption using the CFB mode can be parallelized, while 
 encryption can only be conducted sequentially
 
-{% include figure.liquid path="assets/img/courses/csc302/cryptography/cfb.png" width="50%" zoomable=true alt="CFB" %}
+{% include figure.liquid path="assets/img/courses/csc302/cryptography/cfb.png" max-width="50%" zoomable=true alt="CFB" %}
 
 ```bash
 openssl enc -aes-128-cbc -e -in plain.txt -out cipher1.txt -K 00112233445566778899AABBCCDDEEFF -iv 000102030405060708090a0b0c0d0e0f
@@ -230,7 +230,7 @@ ls -l plain.txt cipher1.txt cipher2.txt
   - Decryption can parallelized
 - Encryption in the OFB mode can be parallelized
 
-{% include figure.liquid path="assets/img/courses/csc302/cryptography/ofb.png" width="50%" zoomable=true alt="OFB" %}
+{% include figure.liquid path="assets/img/courses/csc302/cryptography/ofb.png" max-width="50%" zoomable=true alt="OFB" %}
 
 ### 4.5. Counter (CTR) Mode
 
@@ -242,7 +242,7 @@ encryption modes.
 - Both encryption and decryption can be parallelized the key stream 
 in the CTR mode can be calculated in parallel during the encryption
 
-{% include figure.liquid path="assets/img/courses/csc302/cryptography/ctr.png" width="50%" zoomable=true alt="CTR" %}
+{% include figure.liquid path="assets/img/courses/csc302/cryptography/ctr.png" max-width="50%" zoomable=true alt="CTR" %}
 
 ## Modes for Authenticated Encryption
 

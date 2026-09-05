@@ -189,11 +189,11 @@ struct ContentView: View {
 {% details Adding third party packages %}
 
 
-{% include figure.liquid path="assets/img/courses/csc496/08-views/addpkg.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/08-views/addpkg.png" max-width="50%" zoomable=true %}
 
 - Enter the GitHub URL of the 3rd party library into the search box
 
-{% include figure.liquid path="assets/img/courses/csc496/08-views/addpkg2.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/08-views/addpkg2.png" max-width="50%" zoomable=true %}
 
 - Press `Add Package`
 

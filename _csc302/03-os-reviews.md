@@ -26,7 +26,7 @@ title: "Introduction to Operating Systems"
 
 
 {% enddetails %}
-{% include figure.liquid path="assets/img/courses/csc302/os-review/01.png" width="50%" zoomable=true alt="Codes to hardware to screen" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-review/01.png" max-width="50%" zoomable=true alt="Codes to hardware to screen" %}
 
 - When the shell loaded and ran the HelloWorld program, 
 and when the HelloWorld program prints its message, neither 
@@ -175,7 +175,7 @@ it is, and prioritize it accordingly.
   - Blocked: the process has to perform some operation (e.g., I/O request
   to disk) that makes it not ready to run. 
 
-{% include figure.liquid path="assets/img/courses/csc302/os-review/03.png" width="50%" zoomable=true alt="Process state transition" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-review/03.png" max-width="50%" zoomable=true alt="Process state transition" %}
 
 - When a process moves from **ready** to **running**, this means
 that it has been **scheduled** by the OS. 
@@ -219,12 +219,12 @@ of processes.
 :::::{tab-set}
 ::::{tab-item} low-to-high view
 
-{% include figure.liquid path="assets/img/courses/csc302/os-review/04.png" width="50%" zoomable=true alt="Address space 1" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-review/04.png" max-width="50%" zoomable=true alt="Address space 1" %}
 
 ::::
 ::::{tab-item} high-to-low view
 
-{% include figure.liquid path="assets/img/courses/csc302/os-review/05.png" width="50%" zoomable=true alt="Address space 2" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-review/05.png" max-width="50%" zoomable=true alt="Address space 2" %}
 
 ::::
 :::::
@@ -263,7 +263,7 @@ to the number and jump execution to that address.
 - File system does NOT care about what type of file it is (C code, picture 
 or video, it just makes sure to store all bytes in a file **persistently**.
 
-{% include figure.liquid path="assets/img/courses/csc302/os-review/06.png" width="50%" zoomable=true alt="Files and inodes" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-review/06.png" max-width="50%" zoomable=true alt="Files and inodes" %}
 
 
 {% details 14. Threads %}
@@ -279,7 +279,7 @@ multiple PCs.
   - All threads of the same process share the same address space and thus can 
   access the same data. 
 
-{% include figure.liquid path="assets/img/courses/csc302/os-review/07.png" width="50%" zoomable=true alt="Pages" %}
+{% include figure.liquid path="assets/img/courses/csc302/os-review/07.png" max-width="50%" zoomable=true alt="Pages" %}
 
 - Each thread has its own PC.
 - Each thread has its own private set of registers for computation.

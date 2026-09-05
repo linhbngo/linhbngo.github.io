@@ -18,9 +18,9 @@ toc:
     - The tasks can be completely different from one another in term of instructions, datasets, durations, etc.
 - Apple's processors have multiple cores
 
-{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/a17bionic.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/a17bionic.png" max-width="50%" zoomable=true %}
 
-{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/a17stats.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/a17stats.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Apple A-series chips %}
@@ -53,7 +53,7 @@ listen for events
     - Move all the heavy computations to background threads and then move the result back to 
     the main thread once done. 
 
-{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/multithreads.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/multithreads.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Analogy %}
@@ -145,7 +145,7 @@ DispatchQueue.global(qos: .background).async {
 print("⏳ Main thread continues executing without waiting...")
 ```
 
-{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/gcd1.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/07-concurrency/gcd1.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Drawback of GCD: callback hell %}

@@ -50,7 +50,7 @@ will be higher. That would be a good thing!
     - [Linux](https://docs.docker.com/desktop/setup/install/linux/)
 - Successful installation and startup of Docker will show the following application
     - Screenshot is taken on a Mac, but the GUI should be the same across platforms
-    {% include figure.liquid path="assets/img/courses/csc468/docker/docker-desktop-mac.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc468/docker/docker-desktop-mac.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Docker Desktop Terminal %}
@@ -60,7 +60,7 @@ will be higher. That would be a good thing!
 available on the lower right corner of the GUI. 
 - For earlier versions, this could show up as a beta feature. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/docker-desktop-mac-terminal.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/docker-desktop-mac-terminal.png" max-width="50%" zoomable=true %}
 
 - The remainder of this workshop will use the Docker Desktop Terminal app for 
 consistency purpose. All the CLI docker commands can be executed on the standard 
@@ -102,7 +102,7 @@ GitHub account to GitHub Desktop, if you use GitHub Desktop).
 docker version
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/docker-version.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/docker-version.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Overview of Docker %}
@@ -125,12 +125,12 @@ docker image ls
 docker container ls
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/docker-ls.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/docker-ls.png" max-width="50%" zoomable=true %}
 
 - If you click on the `Images` and `Container` tabs, you can also confirm 
 that there is no existing container or image on your Docker environment. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/gui-container-image.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/gui-container-image.png" max-width="50%" zoomable=true %}
 
 - We want to issue the following to start a service that will echo 
 `hello world` to the screen. 
@@ -151,7 +151,7 @@ docker container ls --all
     then executes the `echo hello, world` command. 
     - The container is shutdown after the execution. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run.png" max-width="50%" zoomable=true %}
 
 - `docker run alpine echo hello world`
     - `docker`: invoke the container engine. 
@@ -176,7 +176,7 @@ docker container ls --all
 docker run -it ubuntu bash
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-interactive.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-interactive.png" max-width="50%" zoomable=true %}
 
 - You are now in a new prompt: a shell inside the container
     - **notice the changes in the prompt comparing to the previous prompt where you 
@@ -202,7 +202,7 @@ apt install -y -qq figlet
 figlet hello
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-figlet.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-figlet.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -219,7 +219,7 @@ running `figlet` again.
 - Notice the recently shutdown container and the newly created container 
 from the upper half of the GUI. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-figlet-exercise.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-figlet-exercise.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
@@ -235,7 +235,7 @@ back to the host machine environment.
 docker run ubuntu /bin/sh -c "while date; do sleep 1; done"
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-date.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-date.png" max-width="50%" zoomable=true %}
 
 - Run the following command 
 
@@ -251,7 +251,7 @@ and in the GUI's container tab.
 - The hash string, underlined by the red line, is a unique identifier 
 for containers. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-date-BG.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-run-date-BG.png" max-width="50%" zoomable=true %}
 
 - Use the first four characters of your container ID to view the 
 log of the running Docker container
@@ -262,7 +262,7 @@ log of the running Docker container
 docker logs --tail 5 cd16
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-logs.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/cli-docker-logs.png" max-width="50%" zoomable=true %}
 
 - To kill a running container, you can use `docker kill` with the container 
 ID or click on the `Stop` or `Trash Can` icons on the container's line inside the 
@@ -320,7 +320,7 @@ stress --vm 1 --vm-bytes 101M --vm-keep
 {% enddetails %}
 {% details The read-write layer %}
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/rw-layer.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/rw-layer.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Containers versus images %}
@@ -331,7 +331,7 @@ read-write copy of that filesystem.
 - To optimize container boot time, copy-on-write is used instead of regular copy.
 - `docker run` starts a container from a given image. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/container-image.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/container-image.png" max-width="50%" zoomable=true %}
 
 - Object-oriented analogy
     - Images are conceptually similar to classes
@@ -375,7 +375,7 @@ docker image ls
 - You should also see the images listed in the `Image` tab 
 of Docker Desktop, on the top portion of the GUI. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/docker-image.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/docker-image.png" max-width="50%" zoomable=true %}
 
 - We can search for available images in the public Docker Hub 
 
@@ -383,7 +383,7 @@ of Docker Desktop, on the top portion of the GUI.
 docker search mysql
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/docker-search.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/docker-search.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details General steps to create an image %}
@@ -395,7 +395,7 @@ docker search mysql
 - Turn the container into a new image
 - Tag the image
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-create.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-create.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -418,7 +418,7 @@ figlet hellp
 exit
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-create-container.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-create-container.png" max-width="50%" zoomable=true %}
 
 - From the screenshot above, next to the top container (the one that just got 
 started and stopped 56 seconds ago), you can see the ID `cb2149...`
@@ -429,7 +429,7 @@ the base image with the ID and `docker diff`
 docker diff cb21
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-diff.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-diff.png" max-width="50%" zoomable=true %}
 
 - A: A file or directory was added
 - C: A file or directory was changed
@@ -459,7 +459,7 @@ combination (`linhbngo/ubuntu_figlet`) is called a repository, and has the tag `
 - The `docker image ls` command shows this image and other images available locally 
 for Docker. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-commit.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker/image-docker-commit.png" max-width="50%" zoomable=true %}
 
 - In reviewing the previous screenshot, you can se that a new image has been 
 created with a size of 144MB. 

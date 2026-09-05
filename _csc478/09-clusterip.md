@@ -3,6 +3,9 @@ layout: lecture
 pretty_table: true
 collection: csc478
 title: "ClusterIP, NodePort, and Multi-Service Communication"
+mermaid:
+  enabled: true
+  zoomable: true
 toc:
   - name: Motivation
   - name: Services Overview
@@ -143,7 +146,7 @@ curl backend-svc
 
 - Observe how curl can return results from different pods. 
 
-{% include figure.liquid path="assets/img/courses/csc478/clusterip/multi-pods.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/clusterip/multi-pods.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ---
@@ -174,7 +177,7 @@ kubectl get svc backend-nodeport
 
 - You wil be assigned a random port between 30000 and 32767. An example output could be:
 
-{% include figure.liquid path="assets/img/courses/csc478/clusterip/expose-nodeport.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/clusterip/expose-nodeport.png" max-width="50%" zoomable=true %}
 
 - On a different node, or even a node from a different experiment, runs:
 

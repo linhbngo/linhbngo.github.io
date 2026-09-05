@@ -94,14 +94,14 @@ RBAC is implemented.
     - For distributed systems: RBAC needs to be implemented at the LDAP/server level to support 
     SSO/Shibboleth Authentication. 
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/global-local-mapping.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/global-local-mapping.png" max-width="50%" zoomable=true %}
 
 - First step for enterprise-level RBAC
     - Create and maintain direct associations between RBAC users and local user IDs. 
     - Local resources are protected via local users IDs and groups. 
 - Operations and resources are created as abstractions.   
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/system-level-mapping.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/system-level-mapping.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ---
@@ -130,7 +130,7 @@ multiple subordinate roles.
     - Accounts receivable clerk does not inherit from or is inherited by any
     of the above roles. 
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/example-hierarchy.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/example-hierarchy.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Inheritance schemes %}
@@ -145,7 +145,7 @@ multiple subordinate roles.
     - Greater opportutinies for redundant authorization of permissions to a user
     exist. 
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/privilege-graph.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/privilege-graph.png" max-width="50%" zoomable=true %}
 
 - User containment and indirect privilege inheritance
     - Used in distributed RBAC implementations
@@ -172,7 +172,7 @@ multiple subordinate roles.
         - Accounts receivable clerk does not inherit 
         from or is inherited by any of the above roles. 
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/example-hierarchy-connector.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/example-hierarchy-connector.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Organization chart hierarchies %}
@@ -182,7 +182,7 @@ multiple subordinate roles.
   - departments, divisions, groups, and teams. 
   - OU: organizational units.
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/example-ou.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/example-ou.png" max-width="50%" zoomable=true %}
 
 - Means of precisely describe (delineate)
     - line of authority
@@ -214,8 +214,8 @@ multiple subordinate roles.
     - Object-oriented approach to management enterprise's distribution of permissions. 
     - recognizes various layers of abstractions: entitlements, tasks, functions, roles
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/stanford-model-2.png" width="50%" zoomable=true %}
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/stanford-model.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/stanford-model-2.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/stanford-model.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -245,7 +245,7 @@ individual can compromise security.
     - In the presence of a hierarchy, inherited roles are also considered when enforcing constraints. 
     - For example, a billing clerk role cannot also be a account receivable clerk role. 
 
-{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/static-sod.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/csc603/09-core-rbac/static-sod.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Dynamic SoD %}

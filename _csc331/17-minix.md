@@ -54,7 +54,7 @@ toc:
     - Reincarnation server polls all other server for health report and kill/respawn 
     faulty processes as needed.
 
-{% include figure.liquid path="assets/img/courses/csc331/minix/01.png" width="50%" zoomable=true alt="MINIX" %}
+{% include figure.liquid path="assets/img/courses/csc331/minix/01.png" max-width="50%" zoomable=true alt="MINIX" %}
 
 ---
 
@@ -88,7 +88,7 @@ toc:
     security levels. A poor communications implement would negatively impact on the 
     performance of the system.
 
-{% include figure.liquid path="assets/img/courses/csc331/minix/01.png" width="50%" zoomable=true alt="MINIX" %}
+{% include figure.liquid path="assets/img/courses/csc331/minix/01.png" max-width="50%" zoomable=true alt="MINIX" %}
 
 ---
 

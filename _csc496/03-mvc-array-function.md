@@ -107,7 +107,7 @@ Communication: A controller object interprets user actions made in view objects 
 {% details Code designs %}
 
 
-{% include figure.liquid path="assets/img/courses/csc496/03-mvc/repos_mvc.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/03-mvc/repos_mvc.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Challenge 1 %}

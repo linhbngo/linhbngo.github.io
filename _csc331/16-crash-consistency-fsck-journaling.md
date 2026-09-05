@@ -35,7 +35,7 @@ we guarantee that data on disk are still consistent?
 - An additional 4KB is written to the file (one more data block added). 
 - If everything went well:
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 
 
@@ -53,7 +53,7 @@ What are all the possible inconsistent states that the FS can be in after the cr
     - Case 5: `inode` and `data block` updated, but not `data bitmap`
     - Case 6: `data bitmap` and `data block` updated, but not `inode`  
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ## Crash Scenarios
@@ -66,7 +66,7 @@ What are all the possible inconsistent states that the FS can be in after the cr
 - The file system itself is still consistent, it is just like nothing happened
 - No need to fix anything   
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -79,7 +79,7 @@ What are all the possible inconsistent states that the FS can be in after the cr
     - `inode` says that the `data block #5` is used, but `data bitmap` say it is not.
     - if not fixed, could allocate `block #5` again and overwrite its data by mistake  
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -91,7 +91,7 @@ What are all the possible inconsistent states that the FS can be in after the cr
 - `data block #5` will never be used again
 - This is called a **space leak**.  
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -102,7 +102,7 @@ What are all the possible inconsistent states that the FS can be in after the cr
 - The file system doesn’t even realized anything wrong, because the inode and the 
 data bitmap are consistent with each other.  
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Case 5: Only inode and data block updated %}
@@ -113,7 +113,7 @@ data bitmap are consistent with each other.
     - `inode` says that the data block #5 is used, but `data bitmap` say it is not
     - if not fixed, could allocate `block #5` again and overwrite its data by mistake
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -123,7 +123,7 @@ data bitmap are consistent with each other.
 - Inconsistency between inode and data bitmap.
 - We know `data block #5` is used, but will never know which file uses it
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/01.png" max-width="50%" zoomable=true %}
 
 
 
@@ -144,7 +144,7 @@ a file system update.
 {% details Solution 1: FSCK %}
 
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/02.png" max-width="50%" zoomable=true %}
 
 - A tool that scans the whole disk, finds inconsistencies ands repair them.
     - It runs before the file system is mounted, e.g., when booting
@@ -174,7 +174,7 @@ really care about lost data (e.g., Case 1 and Case 4)
 
 - Additional space in the on-disk data structure
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/03.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ## Journaling
@@ -205,7 +205,7 @@ the actual write has NOT happened at all, nothing is inconsistent.
         - logical logging: putting more compact logical representation
 - ends with a `transaction end` (TxE) block, containing the TID.
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Sequence of operations %}
@@ -221,7 +221,7 @@ in the file system.
     - When having a batch of writes, the disk may perform some disk scheduling, so 
     the writes in the batch can happen in any order.
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/05.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details A better sequence of operations %}
@@ -278,7 +278,7 @@ writes and cause jump-back-and-forth between journal and data region.
 that we only write metadata (NOT data) to the journal.
 - The journal looks like ...
 
-{% include figure.liquid path="assets/img/courses/csc331/fsck/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/fsck/06.png" max-width="50%" zoomable=true %}
 
 - If we write data after checkpointing metadata, then write data, if crash 
 occurs before all data is written, the `inodes` will point to garbage data.

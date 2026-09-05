@@ -155,7 +155,7 @@ kubectl get namespace
 kubectl get ns
 ```
 
-{% include figure.liquid path="assets/img/courses/csc478/resource-management/namespaces.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/resource-management/namespaces.png" max-width="50%" zoomable=true %}
 
 - `default`: Default namespace for user-created resources without namespace specified.
 - `kube-system`: Special, reserved namespace for system components.

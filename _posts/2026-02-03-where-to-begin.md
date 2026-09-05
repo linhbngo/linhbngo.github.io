@@ -26,7 +26,7 @@ learning trajectory on a new potential research topic across different stages of
 cycle. 
 
 <div class="row mt-3 justify-content-center">
-    {% include figure.liquid loading="eager" path="assets/img/blogs/2026-02-03/gartner.png" class="img-fluid rounded z-depth-1 mx-auto d-block" width="50%" zoomable=true %}
+    {% include figure.liquid loading="eager" path="assets/img/blogs/2026-02-03/gartner.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 </div>
 
 ## Technology Trigger

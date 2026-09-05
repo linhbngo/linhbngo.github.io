@@ -60,13 +60,13 @@ inspectors and then switch to the Component Inspector.
 - Click the `+` button to reveal the list of available components. Add the 
 HealthComponent
 
-{% include figure.liquid path="assets/img/courses/csc496/11-entity-component/health1.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/11-entity-component/health1.png" max-width="50%" zoomable=true %}
 
 
 - Test the build. You should see the health bar attached to your player and 
 move with the player. 
 
-{% include figure.liquid path="assets/img/courses/csc496/11-entity-component/health2.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/11-entity-component/health2.png" max-width="50%" zoomable=true %}
 
 
 
@@ -95,7 +95,7 @@ class Player: SKSpriteNode {
 
 - Assign Player node to Player class using Custom Class
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/nodeCustomPlayer.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -133,7 +133,7 @@ func touchDown(atPoint pos : CGPoint) {
 
 - Run and test movement (based on the print statement)
 
-{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/testMovement.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/10-sprite-editor/testMovement.png" max-width="50%" zoomable=true %}
 
 - Modify functions `move` and `stop` inside class `Player` with the following contents. 
 

@@ -41,7 +41,7 @@ toc:
 
 <script src="https://gist.github.com/linhbngo/d2f3a0b28b73a3f48c751410c6c91fd6.js?file=threads.c"></script>
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/01.png" max-width="50%" zoomable=true %}
 
 - Two concurrent threads manipulated a shared resource (the counter variable) 
 without any synchronization.
@@ -55,7 +55,7 @@ that we can reason about program behavior, in a sane way
 
 ## What is shared/not shared in a multithreaded program?
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/02.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -161,7 +161,7 @@ behaves like a single atomic instruction.
 - Performance:
     - The waiting threads need to keep checking the condition of the flag (spin-waiting)
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/03.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -183,7 +183,7 @@ behaves like a single atomic instruction.
   - TestAndSet keeps setting the lock but also spinning inside the while loop until the 
   lock is released. 
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/06.png" max-width="50%" zoomable=true %}
 ---
 
 ## Evaluating the basic spin lock
@@ -197,7 +197,7 @@ behaves like a single atomic instruction.
 
 ## Scenario: one thread waiting on another
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/07.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/07.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -206,7 +206,7 @@ behaves like a single atomic instruction.
 - How to implement a lock-based solution? 
 - What is the issue?
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/08.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/08.png" max-width="50%" zoomable=true %}
 ---
 
 ## How to wait for a condition?
@@ -223,7 +223,7 @@ more) of the waiting threads to continue.
 
 ## Lock and conditional variable
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/09.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/09.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -232,7 +232,7 @@ more) of the waiting threads to continue.
 - Infinite sleep for parent thread. 
 - Why?
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/10.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/10.png" max-width="50%" zoomable=true %}
 ---
 
 ## The producer/consumer (bounded buffer) problem
@@ -255,7 +255,7 @@ threads.
 
 ## Vanilla: not thread-safe
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/11.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/11.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -265,13 +265,13 @@ threads.
 - Work with 1 producer and 1 consumer. 
 - What happens if we have more consumers?
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/12.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/12.png" max-width="50%" zoomable=true %}
 
 ---
 
 ## First implementation: broken
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/13.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/13.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -294,7 +294,7 @@ but does not guarantee maintaining a desired state.
 
 ## Second implementation: slightly less broken
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/14.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/14.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -304,11 +304,11 @@ but does not guarantee maintaining a desired state.
 - Two condition variables are needed. 
 - Not yet generalized. 
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/15.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/15.png" max-width="50%" zoomable=true %}
 
 ---
 
 ## A generalized solution
 
-{% include figure.liquid path="assets/img/courses/csc331/lock/16.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/lock/16.png" max-width="50%" zoomable=true %}
 

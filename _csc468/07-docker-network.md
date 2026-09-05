@@ -45,14 +45,14 @@ toc:
 
 {% details docker network %}
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-network/docker-network.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-network/docker-network.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 - `docker network ls` will list all possible networks
 
 {% details docker network ls %}
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-network/docker-network-ls-windows.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-network/docker-network-ls-windows.png" max-width="50%" zoomable=true %}
 
 - Default network: `bridge`
 - `compute`, `csc418env_default`, `docker-spark_default`, and `docker_default`: Dr. Ngo's custom networks
@@ -62,7 +62,7 @@ toc:
 
 {% details docker network inspect bridge %}
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-network/network-inspect-bridge.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-network/network-inspect-bridge.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 - By default, new containers are attached to the `bridge` network
@@ -117,7 +117,7 @@ docker ps
 docker exec -it my_nodejs sh
 ```
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-network/network-nodejs-1.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-network/network-nodejs-1.png" max-width="50%" zoomable=true %}
 
 - Inside the `my_nodejs` container, install `nano` and `curl`:
 
@@ -167,7 +167,7 @@ node server.js
 - Stop the `my_nodejs` container. 
 - Commit the container into an image called `my_nodejs:1.0`. This is for the next step of the hands-on
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-network/network-nodejs-2.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-network/network-nodejs-2.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
@@ -195,7 +195,7 @@ node server.js
 {% details Where are the ports? %}
 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-network/container-networking.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-network/container-networking.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
@@ -228,7 +228,7 @@ inside the container is still reachable.
 - You should see a branch called `docker` added to the `Repository Branches and Tags` of your CloudLab profile. 
 - Click on the `Instantiate` button for this branch. 
 
-{% include figure.liquid path="assets/img/courses/csc468/docker-network/docker-branch.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc468/docker-network/docker-branch.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Hands-on exercise %}

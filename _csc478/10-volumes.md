@@ -3,6 +3,9 @@ layout: lecture
 pretty_table: true
 collection: csc478
 title: "Storage Volumes in Kubernetes"
+mermaid:
+  enabled: true
+  zoomable: true
 toc:
   - name: Motivation & Problem Setup
   - name: "Kubernetes Volumes: The Basics"

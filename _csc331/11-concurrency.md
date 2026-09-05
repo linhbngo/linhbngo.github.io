@@ -72,7 +72,7 @@ i.e, a single PC (program counter).
     - All threads of the same process share the same address space and thus can 
     access the same data. 
 
-{% include figure.liquid path="assets/img/courses/csc331/10-concurrency/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/10-concurrency/01.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -142,7 +142,7 @@ gcc -o thread_hello thread_hello.c -lpthread
 ./thread_hello 4
 ```
 
-{% include figure.liquid path="assets/img/courses/csc331/10-concurrency/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/10-concurrency/02.png" max-width="50%" zoomable=true %}
 
 ---
 

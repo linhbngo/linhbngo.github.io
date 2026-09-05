@@ -28,7 +28,7 @@ toc:
 {% details note Constraints of TF Lite Micro %}
 
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/limits.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/limits.png" max-width="50%" zoomable=true %}
 
 {% details note Hardware %}
 
@@ -60,7 +60,7 @@ systems result in diverse sets of hardware products with different tradeoffs.
 {% details note Overview %}
 
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/usage.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/usage.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details note Example: hello, world %}
@@ -88,14 +88,14 @@ systems result in diverse sets of hardware products with different tradeoffs.
 
 {% details note Interpreter %}
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/interpreter.gif" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/interpreter.gif" max-width="50%" zoomable=true %}
 
 - TFL Micro uses an interpreter design
     - Store the model as data and loop through its ops at runtime
 
 - On Desktop, compiler is generally faster than interpreted code (see Python vs. C/C++)
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/compiler.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/compiler.png" max-width="50%" zoomable=true %}
 
 - However, for Machine Learning task, it is different.
     - Each layer like Conv or Softwmax can take tens of thousands 
@@ -142,7 +142,7 @@ if (model->version() != TFLITE_SCHEMA_VERSION) {
         - ProtoBuf
         - FlatBuffer
 
-    {% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/serialization.png" width="50%" zoomable=true %}
+    {% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/serialization.png" max-width="50%" zoomable=true %}
 
 - TFL Micro uses FlatBuffers due to:
     - Memory efficiency
@@ -179,7 +179,7 @@ constexpr int kTensorArenaSize = 2000;
 uint8_t tensor_arena[kTensorArenaSize];
 ```
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/tensor_arena.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/tensor_arena.png" max-width="50%" zoomable=true %}
 
 - How to determine area size?
     - It depends!
@@ -196,17 +196,17 @@ uint8_t tensor_arena[kTensorArenaSize];
     - ~1400 and growing number of operators in TF
     - Not all are used or even needed for inference
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/op_resolvers_all.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/op_resolvers_all.png" max-width="50%" zoomable=true %}
 
 - Help reduce the amount of space that library code takes up:
     - Not all operators are used or
     - Only load operations that are absolutely necessary.
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/op_resolvers.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/op_resolvers.png" max-width="50%" zoomable=true %}
 
 - Allow developers to specify which ops they want to be included in the library
 
-{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/simple_kws.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc574/tf-lite-micro/simple_kws.png" max-width="50%" zoomable=true %}
 
 - How to know: [https://netron.app](https://netron.app/)
 - You can also load everything if memory is not an issue!

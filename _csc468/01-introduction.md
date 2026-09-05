@@ -32,7 +32,7 @@ toc:
 - Mining infrastructure:
     - `worker`, `rng`, `hasher`, `redis`, `webui`. 
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-1.png" width="50%" zoomable=true alt="Components of a coin mining infrastructure" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-1.png" max-width="50%" zoomable=true alt="Components of a coin mining infrastructure" %}
 
 {% enddetails %}
 {% details How does this work? %}
@@ -44,7 +44,7 @@ toc:
 - `webui` queries `redis` to acquire the rate, then compute and visualize the rate on a web page. 
 - This is only the **design** stage
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-2.png" width="50%" zoomable=true alt="Connection types between components of a coin mining infrastructure" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-2.png" max-width="50%" zoomable=true alt="Connection types between components of a coin mining infrastructure" %}
 
 {% enddetails %}
 {% details Commonality %}
@@ -65,7 +65,7 @@ toc:
 
 - How does the startup implement their design?
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-3.png" width="50%" zoomable=true alt="Coin mining infrastructure with updated information on connection and language requirements" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-3.png" max-width="50%" zoomable=true alt="Coin mining infrastructure with updated information on connection and language requirements" %}
 
 
 {% enddetails %}
@@ -74,7 +74,7 @@ toc:
 
 - Deploy one component per Linux machine!
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-4.png" width="50%" zoomable=true alt="Coin mining infrastructure with updated information on connection, operating systems, and language requirements" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-4.png" max-width="50%" zoomable=true alt="Coin mining infrastructure with updated information on connection, operating systems, and language requirements" %}
 
 - **Is this really everything?**
 
@@ -90,7 +90,7 @@ and other physical limitations (spaces, power, cooling).
 - Cost of personnel. 
 - True on-site deployment would have hindered many new startups. 
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-5.png" width="50%" zoomable=true alt="What is the reality of deployment of infrastructure with updated information on connection, operating systems, and language requirements" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-5.png" max-width="50%" zoomable=true alt="What is the reality of deployment of infrastructure with updated information on connection, operating systems, and language requirements" %}
 
 
 {% enddetails %}
@@ -101,7 +101,7 @@ and other physical limitations (spaces, power, cooling).
 - Hardware configurations are feasible, but physical management is not required. 
 - Dynamic scaling of resources
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-6.png" width="50%" zoomable=true alt="A example of a complete deployment of infrastructure with updated information on connection, operating systems, and language requirements" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-6.png" max-width="50%" zoomable=true alt="A example of a complete deployment of infrastructure with updated information on connection, operating systems, and language requirements" %}
 
 {% enddetails %}
 ---
@@ -117,7 +117,7 @@ pool of configurable computing resources (e.g., networks, servers, storage, appl
 that can be rapidly provisioned and released with minimal management effort or service provider 
 interaction. 
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-7.png" width="50%" zoomable=true alt="A example of a complete deployment of infrastructure with updated information on connection, operating systems, and language requirements in the cloud" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/ram-coin-7.png" max-width="50%" zoomable=true alt="A example of a complete deployment of infrastructure with updated information on connection, operating systems, and language requirements in the cloud" %}
 
 - This cloud model is composed of 
     - Five essential characteristics 
@@ -134,7 +134,7 @@ interaction.
 - C4. Rapid elasticity
 - C5. Measured service
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/cloud-computing-1.png" width="50%" zoomable=true alt="Five essential characteristics of cloud computing" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/cloud-computing-1.png" max-width="50%" zoomable=true alt="Five essential characteristics of cloud computing" %}
 
 {% enddetails %}
 {% details NIST: Enabling technologies (equal order of importance) %}
@@ -146,7 +146,7 @@ interaction.
 - Web technology
 - Multi-tenant technology
 
-{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/cloud-computing-2.png" width="50%" zoomable=true alt="Enabling technologies for cloud computing" %}
+{% include figure.liquid path="assets/img/courses/csc468/intro-cloud/cloud-computing-2.png" max-width="50%" zoomable=true alt="Enabling technologies for cloud computing" %}
 
 {% enddetails %}
 ---

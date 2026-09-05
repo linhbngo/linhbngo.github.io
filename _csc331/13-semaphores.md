@@ -96,7 +96,7 @@ sem_post(&m);
 
 {% details Code tracing %}
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/semaphores/03.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ---
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
 
 {% details Code tracking %}
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/semaphores/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ---
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
 - What is currently missing from this implementation?
     - Mutual exclusion
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/semaphores/05.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
     - Consumer runs first, then wait on `full` (but still holding `mutex`). 
     - Producer sees negative mutex, decreases it further, then goes to sleep. 
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/semaphores/06.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
     - `full` and `empty` are for producers and consumers to wait on one another. 
     - `mutex` for producers and consumers to wait among each group. 
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/07.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/semaphores/07.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
     - Two forks are needed to eat (one to the left and one to the right). 
     - How to schedule fork grabbing pattern so that no one starves?
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/08.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/semaphores/08.png" max-width="50%" zoomable=true %}
 
 ---
 
@@ -179,5 +179,5 @@ int main(int argc, char *argv[]) {
 
 - Which one works?
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/09.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/semaphores/09.png" max-width="50%" zoomable=true %}
 

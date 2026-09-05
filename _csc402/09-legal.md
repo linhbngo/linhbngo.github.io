@@ -229,7 +229,7 @@ leverage copyright law
 {% details Permissive and copyleft licenses %}
 
 
-{% include figure.liquid path="assets/img/courses/csc402/copyright.png" width="50%" zoomable=true %}    
+{% include figure.liquid path="assets/img/courses/csc402/copyright.png" max-width="50%" zoomable=true %}    
 
 {% enddetails %}
 {% details Copyleft %}

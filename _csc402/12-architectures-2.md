@@ -36,23 +36,23 @@ toc:
 
 - Naive client/server
 
-{% include figure.liquid path="assets/img/courses/csc402/client_server.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/client_server.png" max-width="50%" zoomable=true %}
 
 - Data store extension
 
-{% include figure.liquid path="assets/img/courses/csc402/client_server_data.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/client_server_data.png" max-width="50%" zoomable=true %}
 
 - Data store extension with component diagrams:
     - Any web browser can access the website
     - Database can be replaced by another that supports the same interface
 
-{% include figure.liquid path="assets/img/courses/csc402/3_tier.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/3_tier.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Architectural style %}
 
 
-{% include figure.liquid path="assets/img/courses/csc402/3_tier_architecture.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/3_tier_architecture.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -60,7 +60,7 @@ toc:
 
 - As long as same interface, this is still a binary-replaceable component
 
-{% include figure.liquid path="assets/img/courses/csc402/3_tier_presentation.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/3_tier_presentation.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -69,7 +69,7 @@ toc:
 {% details Component diagram %}
 
 
-{% include figure.liquid path="assets/img/courses/csc402/mvc_diagram.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc402/mvc_diagram.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Features %}

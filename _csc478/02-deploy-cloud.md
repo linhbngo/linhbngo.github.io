@@ -183,7 +183,7 @@ high-performance datacenter-scale network fabric connecting them.
 - Borg Master
 - Borglet
 
-{% include figure.liquid path="assets/img/courses/csc478/intro/02-borg.png" width="50%" zoomable=true alt="Borg architecture" %}
+{% include figure.liquid path="assets/img/courses/csc478/intro/02-borg.png" max-width="50%" zoomable=true alt="Borg architecture" %}
 
 - Scalability of Borg Master
   - Reported in the 2015 paper: `Unsure of the ultimate scalability limit` (flex anyone?)
@@ -199,7 +199,7 @@ high-performance datacenter-scale network fabric connecting them.
 of priority queue **relative to cell's capacity**. 
 - What is special about this?
 
-{% include figure.liquid path="assets/img/courses/csc478/intro/03-scalability.png" width="50%" zoomable=true alt="Borg architecture" %}
+{% include figure.liquid path="assets/img/courses/csc478/intro/03-scalability.png" max-width="50%" zoomable=true alt="Borg architecture" %}
 
 {% enddetails %}
 
@@ -230,7 +230,7 @@ We will cover these concepts through the course!
 
 ## Kubernetes Architecture Overview
 
-{% include figure.liquid path="assets/img/courses/csc478/intro/04-k8s.svg" width="50%" zoomable=true alt="Kubernetes architecture diagram" %}
+{% include figure.liquid path="assets/img/courses/csc478/intro/04-k8s.svg" max-width="50%" zoomable=true alt="Kubernetes architecture diagram" %}
 
 - Control Plane: `api-server`, `scheduler`, `controller`, `etcd`
 - Node Agent: `kubelet`, `kube-proxy`, container runtime

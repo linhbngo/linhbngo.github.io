@@ -45,7 +45,7 @@ is more than 30 years old, and C is more than 40 years old.
 
 - In 2020, the percentage of Swift was 1.88%.
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/language_2024.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/language_2024.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Pros and Cons of Swift %}
@@ -68,7 +68,7 @@ is more than 30 years old, and C is more than 40 years old.
 {% enddetails %}
 {% details Apps built using Swift %}
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_app.jpeg" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_app.jpeg" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Swift language features %}
@@ -118,7 +118,7 @@ sudo xcodebuild -license
 swift repl
 ```
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_hello.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_hello.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details User Interface design in Swift %}
@@ -133,7 +133,7 @@ swift repl
 {% enddetails %}
 {% details Model-View-Controller %}
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/mvc.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/mvc.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 ## Coding Swift: Xcode IDE
@@ -146,7 +146,7 @@ swift repl
 - First time launch:
     - Additinal downloads might be needed
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_xcode.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_xcode.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details First project %}
@@ -160,7 +160,7 @@ swift repl
 - Select `App`
 - Click `Next`
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_ios.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_ios.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details info Choose the following options for your project %}
@@ -170,7 +170,7 @@ swift repl
 - Keep everything else as default
 - Click `Next`
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_proj_options.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_proj_options.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 - Follow the instructions to identify the location of a directory where the 
@@ -180,7 +180,7 @@ template project called `hello` generated.
 
 {% details info Swift IDE %}
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_ide.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/swift_ide.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 - To run this project, clock on the `Play` icon on the tool bar. 
@@ -193,12 +193,12 @@ template project called `hello` generated.
 
 {% details Default home screen %}
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/hello_closed.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/hello_closed.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details App launched %}
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/hello_launched.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/hello_launched.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
@@ -217,14 +217,14 @@ to unzip
 
 {% details info AppIcon %}
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/appicon.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/appicon.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details info Local storage %}
 
 The icon pictures will show up inside your app's local directory.
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/appicon_storage.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/appicon_storage.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details info New Icon! %}
@@ -232,7 +232,7 @@ The icon pictures will show up inside your app's local directory.
 
 Rerun the simulator and observe the new icon
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/newicon.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/newicon.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% enddetails %}
@@ -262,7 +262,7 @@ Rerun the simulator and observe the new icon
 
 {% details More images in Assets %}
 
-{% include figure.liquid path="assets/img/courses/csc496/01-introduction/images.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc496/01-introduction/images.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
  - Modify the `ContentView: View` struct code as follows to

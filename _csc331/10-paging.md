@@ -29,7 +29,7 @@ toc:
 - Physical memory is viewed as an array of fixed-size slots called page frames.
     - Each frame can contain a single virtual memory page
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details After allocation %}
@@ -41,7 +41,7 @@ toc:
 This allows us to allocate page frame for the virtual pages across the entire available 
 physical memory space. 
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details What data structure is needed? %}
@@ -54,7 +54,7 @@ physical memory space.
     - VP3 - PF2
 - Each process has its own page table
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/02.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Address translation with paging %}
@@ -64,20 +64,20 @@ physical memory space.
     - Virtual page number (VPN)
     - The offset within the page
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/01.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/01.png" max-width="50%" zoomable=true %}
 
 - For the 64-bit virtual address space, 6 bytes are needed ($2^6=64$)
     - There are four pages (2 bytes for VPN)
     - Each page stores 16 bytes (4 bytes to describe offset of these 16 bytes). 
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/03.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/03.png" max-width="50%" zoomable=true %}
 
 - The physical memory has 128 bit, so the physical address will be 7 bytes. 
     - The 2-byte VPN (virtual page number) will be translated to a corresponding 
     3-byte PFN (page frame number). 
     - The offset remains the same (virtual page has the same size as page frame). 
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/04.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details New questions! %}
@@ -104,7 +104,7 @@ physical memory space.
 - `D`: dirty bit, whether this page has been modified
 - `PWT, PCD, PAT, G`: [how hardware caching works for this page](https://xem.github.io/minix86/manual/intel-x86-and-64-manual-vol3/o_fe12b1e2a880e0ce-425.html)
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/05.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -180,7 +180,7 @@ of the page table at all (reduce memory space).
 the entry points to (via the PFN) is valid. 
 - If the PDE is not valid, the rest of the PDE is not defined. 
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/06.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/06.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details Advantages %}
@@ -229,7 +229,7 @@ page-table look up.
 - Lookup entries: VPN -PFN plus some other bits
 - A TLB typically has 32, 64, or 128 entries
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/07.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/07.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -327,7 +327,7 @@ gcc -o memory_access_v2 memory_access_v2.c
 time ./memory_access_v2
 ```  
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/08.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/08.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -361,7 +361,7 @@ time ./memory_access_v2
 - When the page is loaded into memory, P is set to 1, and the appropriate PTE contents 
 are updated. 
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/05.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/05.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -441,7 +441,7 @@ when designing computing systems.
 - Which approach is faster?
 - Why?
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/09.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/09.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}
@@ -468,10 +468,10 @@ gcc -o matrix_compare matrix_compare.c
 ./matrix_compare 2000
 ```
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/10.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/10.png" max-width="50%" zoomable=true %}
 
 
-{% include figure.liquid path="assets/img/courses/csc331/paging/11.png" width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/paging/11.png" max-width="50%" zoomable=true %}
 
 
 {% enddetails %}

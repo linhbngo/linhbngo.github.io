@@ -84,7 +84,7 @@ any circuit can be constructed.
 - Electrical currents activate/deactivate other current flows. 
 - Example of AND gate
 
-{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/and-circuit.png" width="50%" zoomable=true alt="word-oriented memory organization" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/and-circuit.png" max-width="50%" zoomable=true alt="word-oriented memory organization" %}
 
 ### 2.3 Other gates
 
@@ -270,16 +270,16 @@ that takes in a number of type `short` to be negated.
   - Execute
   - WriteBack
 
-{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/instruction-format.png" width="50%" zoomable=true alt="Add instruction example" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/instruction-format.png" max-width="50%" zoomable=true alt="Add instruction example" %}
 *https://diveintosystems.org/book/C5-Arch/instrexec.html*
 
 - PC: Program Counter
 - IR: Instruction Register
 
-{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/fetch.png" width="50%" zoomable=true alt="Fetch" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/fetch.png" max-width="50%" zoomable=true alt="Fetch" %}
 
-{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/decode.png" width="50%" zoomable=true alt="Decode" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/decode.png" max-width="50%" zoomable=true alt="Decode" %}
 
-{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/execution.png" width="50%" zoomable=true alt="Execution" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/execution.png" max-width="50%" zoomable=true alt="Execution" %}
 
-{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/writeback.png" width="50%" zoomable=true alt="WriteBack" %}
+{% include figure.liquid path="assets/img/courses/csc231/04-gate-circuit/writeback.png" max-width="50%" zoomable=true alt="WriteBack" %}
