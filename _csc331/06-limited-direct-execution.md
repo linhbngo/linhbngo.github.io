@@ -14,7 +14,7 @@ toc:
 
 ## CPU virtualization recall
 
-- To support the illusion of having multple processes running concurrently on 
+- To support the illusion of having multiple processes running concurrently on 
 a single physical CPU, we can have the CPU run one process for a while, then run
 another, and so on.
 - This is called **time sharing**. 

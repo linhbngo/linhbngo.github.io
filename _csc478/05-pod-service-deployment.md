@@ -20,6 +20,32 @@ toc:
 - In Kubernetes, you run **pods**, which wrap account containers. 
     - A **node** is a machine (physical or virtual) where **pods** live. 
 
+
+{% details Delete existing pods and services %}
+
+
+- Assuming that you have been completed launching K8S via FABRIC, you will have one `nginx` pod and one `nginx` service running as part of the 
+validation scheme. 
+- First, SSH into `node1` using the generated ssh command. 
+
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/ssh-fabric.png" width="50%" zoomable=true %}
+
+- Use the following commands to check the existence of the pod and service, then to delete the pod and service. 
+- After deletion, check again to confirm that the pod and service are gone. 
+
+```bash
+kubectl get deployment -o wide
+kubectl get pods -o wide
+kubectl get svc -o wide
+kubectl delete deployment nginx-demo
+kubectl delete svc nginx-demo
+```
+
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc.png" width="50%" zoomable=true %}
+
+{% enddetails %}
+
+
 ## Pods: Containers and Node Abstraction
 
 {% details What is a Pod? %}
@@ -30,8 +56,8 @@ toc:
 - Pods are scheduled onto `nodes` by the kube-scheduler. 
 
 {% enddetails %}
-{% details Pod and physical (virtual) node %}
 
+{% details Pod and physical (virtual) node %}
 
 - Each node runs a kubelet agent. 
 - Kubelet talks to the container runtime (containerd in Rancher Desktop). 
@@ -58,10 +84,10 @@ graph TD
 ```
 
 {% enddetails %}
-{% details Hands-on with Rancher Desktop %}
 
+{% details Hands-on with FABRIC %}
 
-- Verify that your Rancher Desktop is up and running
+- Verify that your FABRIC experiment is up and running, then get into the server node and run the followings
 
 ```bash
 kubectl get nodes -o wide
@@ -87,11 +113,10 @@ spec:
 - Run `kubectl` and provide path to your `nginx-pod.yaml`. In the example below, I am in the same directory as my file. 
 
 ```bash
-kubectl apply -f nginx-pod.yaml
+kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -f nginx-pod.yaml
 kubectl get pods -o wide
+curl 127.0.0.1:80
 ```
-
-{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-pod.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -108,6 +133,7 @@ At this point, if we try to access the above pod using the `containerPort` 80, i
 - Docker: `-P` and `-p` is not adequate for this. 
 
 {% enddetails %}
+
 {% details Solution %}
 
 - Kubernetes Service
@@ -115,6 +141,7 @@ At this point, if we try to access the above pod using the `containerPort` 80, i
 - `Service` load-balances traffic to all matching Pods via `label`. 
 
 {% enddetails %}
+
 {% details Connection to Physical Node %}
 
 - A `ClusterIP` service gives access only inside the cluster. 
@@ -127,7 +154,7 @@ kubectl get nodes
 
 {% enddetails %}
 
-{% details Hands-on with Rancher Desktop: Adding service to pod %}
+{% details Hands-on: Adding service to pod %}
 
 - Create a file called `nginx-svc.yaml` with the following content
 
@@ -149,11 +176,7 @@ spec:
 
 {% enddetails %}
 
-
 ## Deployment
-
-{% details note Details %}
-
 
 - Pods creation using `kubectl` and Pods-only YAML files is a manual process. 
     - Pod IP addresses will be ephemeral and changed when a Pod crashes/is deleted/is rescheduled. 
@@ -161,30 +184,6 @@ spec:
     - Avoid creating bare Pods in production
     - Use `Deployment` (or `StatefulSets`, `DaemonSets`) to manage Pods 
     - Combine with `Service` to maintain stable networking access. 
-
-{% enddetails %}
-
-{% details Example: Details %}
-
-
-{% details Step 1: Delete existing pods and services %}
-
-
-- Assuming that you have been working on this lecture continuously, you will have one `nginx` pod and one `nginx` service running. 
-Use the following commmands to check the existence of the pod and service, then to delete the pod and service. After deletion, check again to confirm that the pod and service are gone. 
-
-```bash
-kubectl get pods -o wide
-kubectl get svc -o wide
-kubectl delete pod nginx
-kubectl delete svc nginx
-kubectl get pods -o wide
-kubectl get svc -o wide
-```
-
-{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/delete-nginx-pod-svc.png" max-width="50%" zoomable=true %}
-
-{% enddetails %}
 
 {% details Step 2: Create deployment %}
 
@@ -198,44 +197,44 @@ kubectl get svc -o wide
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: nginx-deployment
+  name: nginx-deployment
 spec:
-replicas: 2
-selector:
+  replicas: 2
+  selector:
     matchLabels:
-    app: nginx
-template:
+      app: nginx
+  template:
     metadata:
-    labels:
+      labels:
         app: nginx
     spec:
-    containers:
-    - name: nginx
-      image: nginx:latest
-      ports:
-      - containerPort: 80
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+          - containerPort: 80
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
-name: nginx-service
+  name: nginx-service
 spec:
-type: NodePort
-selector:
+  type: NodePort
+  selector:
     app: nginx
-ports:
-- protocol: TCP
-  port: 80
-  targetPort: 80
-  nodePort: 30007
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    nodePort: 30007
 ```
 
 {% enddetails %}
 
+
 {% details Step 3: Deployment %}
-
-
-{% details info How does this work? %}
 
 
 - Deployment
@@ -245,8 +244,6 @@ ports:
     - Select all Pods with `app: nginx`. 
     - Provide a stable virual IP and DNS name (`nginx-service`)
     - Expose port `30007` on every node. 
-
-{% enddetails %}
 
 ```bash
 kubectl apply -f nginx-deployment.yaml
@@ -259,6 +256,7 @@ kubectl get svc
 
 {% enddetails %}
 
+{% details Step 4: Test recovery %}
 
 {% details Step 4: Test recovery %}
 
