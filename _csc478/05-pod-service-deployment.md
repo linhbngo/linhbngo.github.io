@@ -45,7 +45,6 @@ kubectl delete svc nginx-demo
 
 {% enddetails %}
 
-
 ## Pods: Containers and Node Abstraction
 
 {% details What is a Pod? %}
@@ -113,10 +112,13 @@ spec:
 - Run `kubectl` and provide path to your `nginx-pod.yaml`. In the example below, I am in the same directory as my file. 
 
 ```bash
-kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml apply -f nginx-pod.yaml
+kubectl apply -f nginx-pod.yaml
 kubectl get pods -o wide
 curl 127.0.0.1:80
+kubectl exec -it nginx -- curl 127.0.0.1:80
 ```
+
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-pod.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -171,8 +173,27 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30007
+      nodePort: 30080
 ```
+
+Run the following
+
+```bash
+kubectl apply -f nginx-svc.yaml
+kubectl get svc -o wide
+curl 127.0.0.1:80
+curl 127.0.0.1:30080
+```
+
+{% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-svc.png" max-width="50%" zoomable=true %}
+
+{% enddetails %}
+
+
+{% details Challenge: Cleaning up %}
+
+- Use `kubectl delete` to clean up the previously launched `nginx` pod and `nginx` service. 
+- Use `kubectl get` to confirm that everything is gone. 
 
 {% enddetails %}
 
@@ -185,7 +206,7 @@ spec:
     - Use `Deployment` (or `StatefulSets`, `DaemonSets`) to manage Pods 
     - Combine with `Service` to maintain stable networking access. 
 
-{% details Step 2: Create deployment %}
+{% details Hands-on: Create deployment %}
 
 - In Kubernetes, `Deployment` and `Service` are distinct objects, usually defined in separate YAML files. 
     - `Deployment`: workload management (replicas, rolling updates, Pod templates).
@@ -228,14 +249,8 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 30007
+    nodePort: 30080
 ```
-
-{% enddetails %}
-
-
-{% details Step 3: Deployment %}
-
 
 - Deployment
     - Ensures 2 replics of `nginx` Pods always run
@@ -256,28 +271,28 @@ kubectl get svc
 
 {% enddetails %}
 
-{% details Step 4: Test recovery %}
-
-{% details Step 4: Test recovery %}
+{% details Test recovery %}
 
 - From the outcomes of `kubectl get pods -o wide`, delete one pod. 
-- Check again and observe how `nginx-deployment` immediately create a replacement pod. 
+
+```bash
+kubectl get deployments
+kubectl get pods
+kubectl delete pods POD_NAME
+kubectl get pods
+```
+
+- Check again and observe how `nginx-deployment` **immediately** create a replacement pod. 
 
 {% include figure.liquid path="assets/img/courses/csc478/pod-service-deployment/nginx-deployment-delete-pod.png" max-width="50%" zoomable=true %}        
 
 {% enddetails %}
 
+{% details Challenge: Navigation inside the containers %}
 
-{% details Hands-on %}
-
-- Part 1:
-    - Repeat the deployment exercise from the Pod-Service-Deployment lecture. 
-- Part 2:
-    - Explore the usage of `kubectl exec -it` and attempt to open a shell terminal into your running pods/containers from part 1. 
-    - Who are you inside the container?
-    - Can you ping other pods/containers?
-    - Can you download/install software (apt-get/yum/wget ...) inside the pods/containers?
-
-{% enddetails %}
+- Explore the usage of `kubectl exec -it` and attempt to open a shell terminal into your running pods/containers from part 1. 
+- Who are you inside the container?
+- Can you ping other pods/containers?
+- Can you download/install software (apt-get/yum/wget ...) inside the pods/containers?
 
 {% enddetails %}
