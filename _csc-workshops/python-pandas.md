@@ -45,6 +45,9 @@ Link to workshop page: [https://linhbngo.github.io/csc-workshops/python-pandas/]
 
 {% details note Data Preparation %}
 
+- You will specify the followings for requesting resources:
+    - `--ntasks-per-node=10 --mem=16G`
+
 - Run the following inside a cell to download the data files used in this workshop.
 
 ```bash
