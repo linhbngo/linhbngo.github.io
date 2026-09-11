@@ -628,6 +628,11 @@ ninja.data = [{
           description: "",
           section: "Csc-workshops",handler: () => {
               window.location.href = "/csc-workshops/more-bash/";
+            },},{id: "csc-workshops-data-science-with-python-and-pandas",
+          title: 'Data Science with Python and Pandas',
+          description: "",
+          section: "Csc-workshops",handler: () => {
+              window.location.href = "/csc-workshops/python-pandas/";
             },},{id: "csc112-syllabus",
           title: 'Syllabus',
           description: "CSC 112 Fall 2026: programming, data science, Excel, and Python for business computing.",
