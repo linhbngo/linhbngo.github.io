@@ -282,6 +282,14 @@ Each segment of codes in this lecture is meant to be run on a separate notebook 
 
 {% details Step 2: Setup Spark library path in Python %}
 
+First, run the following cell to identify the version of JVM on your machine
+
+```bash
+!ls /usr/lib/jvm/java-*-openjdk-amd64
+```
+
+Fill in the correct path for `JAVA_HOME`:
+
 ```python 
 import os
 import sys
@@ -289,7 +297,7 @@ import subprocess
 
 working_dir = subprocess.run(['pwd'], stdout = subprocess.PIPE).stdout.strip().decode("utf-8")
 print(working_dir)
-os.environ["JAVA_HOME"] =  "/usr/lib/jvm/java-21-openjdk-amd64/"
+os.environ["JAVA_HOME"] =  "/usr/lib/jvm/java-17-openjdk-amd64/"
 os.environ["SPARK_HOME"] = working_dir + "/spark-4.2.0-bin-hadoop3/"
 spark_path = os.environ['SPARK_HOME']
 sys.path.append(spark_path + "/bin")

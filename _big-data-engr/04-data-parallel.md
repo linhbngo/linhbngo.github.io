@@ -20,64 +20,46 @@ toc:
   - name: Analyzing text data (not using Spark SQL)
 ---
 
+{% details tip Lecture notebook %}
+
+This is the link to this lecture's [Colab notebook](https://colab.research.google.com/drive/1mFqL3lRJxCm-10KrlmdGBRYkNHbaa_I3?usp=sharing)
+
+**This notebook has its setup cells merged to simplify the initial run process!**
+
+{% enddetails %}
 
 ## Matrix-vector multiplication I
 
-- Run `git pull` on the `big-data-engineering` repository.
-- Source Code
+- Initial assumption: Vector V fits into memory
 
 ```python
-import sys
 import numpy as np
-from pyspark.sql import SparkSession
 
 np.random.seed(123)
+N = 4 # set matrix and vector dimension
 
-def matvec(N: int):
-  try:
-    spark = SparkSession.builder.appName("Vector and Matrix Multiplication").getOrCreate()
-    sc = spark.sparkContext
-    M = np.random.randint(5, size = (N, N))
-    V = np.random.randint(5, size = N)
-        
-    P = np.matmul(M, V)
+M = np.random.randint(5, size = (N, N))
+V = np.random.randint(5, size = N)
+P = np.matmul(M, V)
 
-    # Print the matrices
-    print(f"Matrix M:\n {M}")
-    print(f"Vector N:\n {V}")
-    print(f"Dot Product P:\n {P}")
-    
-    mspark = sc.parallelize(M)
-    print(f"Parallelize M inside Spark Context:\n {mspark.take(4)}")
+# Print the matrices
+print(f"Matrix M:\n {M}")
+print(f"Vector V:\n {V}")
+print(f"Dot Product P:\n {P}")
 
-    mspark = sc.parallelize(M).zipWithIndex()
-    print(f"Parallelize M inside Spark Context with Index:\n {mspark.take(4)}")
+mspark = sc.parallelize(M)
+print(f"Parallelize M inside Spark Context:\n {mspark.take(4)}")
 
-    mspark = (sc
-              .parallelize(M)
-              .zipWithIndex()
-              .map(lambda item: item[0].dot(V))
-    )
+mspark = sc.parallelize(M).zipWithIndex()
+print(f"Parallelize M inside Spark Context with Index:\n {mspark.take(4)}")
 
-    print(f"MapReduce Dot Product:\n {np.array(mspark.take(4))}")
-    print(f"Serial Dot Product P for comparison purposes:\n {P}")
+mspark = (sc.parallelize(M).zipWithIndex().map(lambda item: item[0].dot(V)))
 
-    spark.stop()
-
-  except Exception as e:
-    print(f"Spark failed to start: {e}")
-
-if __name__ == "__main__":
-    matvec(int(sys.argv[1]))
+print(f"MapReduce Dot Product:\n {np.array(mspark.take(4))}")
+print(f"Serial Dot Product P for comparison purposes:\n {P}")
 ```
 
-Run the following command
-
-```bash
-spark-submit --master="local[*]" .\data-parallel\matrix-vector.py 4
-```
-
-{% details Screenshot: output %}
+{% details tip Screenshot: Output %}
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/04-data-parallel/mat-vec.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Example output" %}
 
@@ -85,43 +67,47 @@ spark-submit --master="local[*]" .\data-parallel\matrix-vector.py 4
 
 {% details Data initialization %}
 
-- Lines 11-12: We initialize matrix M of size N by N, and vector V of size N. 
-- Line 14: We carry out a dot product using the builtin function of numpy. 
-
-{% details Initial assumption %}
-
-Vector V fits into memory
+- Lines 6-7: We initialize matrix M of size N by N, and vector V of size N. 
+- Line 8: We carry out a dot product using the builtin function of numpy for later validation.
 
 {% enddetails %}
-
-{% enddetails %}
-
 
 {% details Parallelizing data in Spark cluster %}
 
-- Lines 21-22: Data can be generated on the driver side, then `parallelize` into 
+- Lines 15-16: Data can be generated on the driver side, then `parallelize` into 
 RDD objects on the cluster. 
     - This will not work well, as we no longer have an indicator of row order. We need to provide some additional information as we parallelize our local data. 
-- Lines 24-25: This is possible with [zipWithIndex](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html)
+- Lines 18-19: This is possible with [zipWithIndex](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.zipWithIndex.html)
 
 {% enddetails %}
 
 
 {% details Direct multiplication %}
 
-- Lines 27-31: We can take each data element of `mspark` and perform a dot product between the element and Vector V. 
+- Lines 21: We can take each data element of `mspark` and perform a dot product between the element and Vector V. 
 - **What happens if Vector V no longer fits into memory?**
 
 {% enddetails %}
 
 ## Matrix-vector multiplication II
 
-```python
-import sys
-import numpy as np
-from pyspark.sql import SparkSession
+In this scenario, V no longer fits into memory and we also need to parallelize V in Spark. 
 
+```python
+import numpy as np
 np.random.seed(123)
+N = 8
+M = np.random.randint(5, size = (N, N))
+V = np.random.randint(5, size = N)   
+P = np.matmul(M, V)
+print(f"Matrix M:\n {M}")
+print(f"Vector V:\n {V}")
+print(f"Dot Product P:\n {P}")
+
+mspark = sc.parallelize(M).zipWithIndex().map(lambda item: (item[1],item[0].tolist()))
+print(f"Parallelize M inside Spark Context with Index: {mspark.collect()}")
+vspark = sc.parallelize(V).zipWithIndex().map(lambda item: (item[1],item[0].tolist()))
+print(f"Parallelize V inside Spark Context with Index: {vspark.collect()}")
 
 def getPos(t):
   res = []
@@ -142,70 +128,27 @@ def arrayMul(t):
       res.append((row_index, matrix_value * vectorVal))
   return res
 
-def matvec(N: int):
-  try:
-    spark = SparkSession.builder.appName("Vector and Matrix Multiplication").getOrCreate()
-    sc = spark.sparkContext
-    M = np.random.randint(5, size = (N, N))
-    V = np.random.randint(5, size = N)
-        
-    P = np.matmul(M, V)
+pspark = (mspark.flatMap(getPos)
+          .union(vspark)
+          .groupByKey()
+          .mapValues(list)
+          .flatMap(arrayMul)
+          .reduceByKey(lambda a, b: a + b))
 
-    # Print the matrices
-    print(f"Matrix M:\n {M}")
-    print(f"Vector V:\n {V}")
-    print(f"Dot Product P:\n {P}")
-    
-    mspark = sc.parallelize(M).zipWithIndex().map(lambda item: (item[1],item[0].tolist()))
-    print(f"Parallelize M inside Spark Context with Index:")
-    local_mspark = mspark.collect()
-    for item in local_mspark:
-      print(item)
-
-    vspark = sc.parallelize(V).zipWithIndex().map(lambda item: (item[1],item[0].tolist()))
-    print(f"Parallelize V inside Spark Context with Index:")
-    local_vspark = vspark.collect()
-    for item in local_vspark:
-      print(item)
-
-    pspark = (mspark
-              .flatMap(getPos)
-              .union(vspark)
-              .groupByKey()
-              .mapValues(list)
-              .flatMap(arrayMul)
-              .reduceByKey(lambda a, b: a + b)
-    )
-    
-    print(f"MapReduce Dot Product:")
-    local_pspark = pspark.collect()
-    for item in local_pspark:
-      print(item)
-
-    #flatMap(arrayMul)
-
-    #print(f"MapReduce Dot Product:\n {np.array(pspark.take(16))}")
-    print(f"Serial Dot Product P for comparison purposes:\n {P}")
-
-    spark.stop()
-
-  except Exception as e:
-    print(f"Spark failed to start: {e}")
-
-if __name__ == "__main__":
-    matvec(int(sys.argv[1]))
+print(f"MapReduce Dot Product: {pspark.collect()}")
+print(f"Serial Dot Product P for comparison purposes:\n {P}")
 ```
 
-Run the following command
+{% details tip Screenshot: Output %}
 
-```bash
-spark-submit --master="local[*]" .\data-parallel\matrix-big-vector.py 16
-```
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/04-data-parallel/mat-vec.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Example output" %}
+
+{% enddetails %}
 
 {% details Data processing for multiplication %}
 
-- Lines 40-50: Both matrix M and vector V are loaded onto Spark
-    - Line 40 and line 50: We want to use indices as keys
+- Lines 11-14: Both matrix M and vector V are loaded onto Spark
+- Line 11 and line 13: The extra `map` is so that we flip the indices and use them as keys
 
 {% enddetails %}
 

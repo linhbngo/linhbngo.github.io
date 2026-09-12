@@ -6,8 +6,8 @@
  * remain in _distill.scss.
  ******************************************************************************/
 
-$details-variants: note, tip, warning, info, success, danger, comm, critical,
-  career, tech;
+$details-variants: note, tip, warning, info, success, danger, challenge,
+  solution, question, comm, critical, career, tech;
 
 details.details {
   color: var(--global-text-color);

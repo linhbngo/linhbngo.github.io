@@ -19,7 +19,7 @@ The renderer emits (non-default variants include a visible label so the type is 
 </details>
 ```
 
-Known variant names: `default`, `note`, `tip`, `warning`, `info`, `success`, `danger`, `comm`, `critical`, `career`, `tech`.
+Known variant names: `default`, `note`, `tip`, `warning`, `info`, `success`, `danger`, `challenge`, `solution`, `question`, `comm`, `critical`, `career`, `tech`.
 
 Palettes below are the **live** values as of 21 August 2026. They meet WCAG 2.2 AA for summary and body text in both themes (`python3 scripts/check_contrast.py`). See `ACCESSIBILITY.md` §7.
 
@@ -209,6 +209,78 @@ Label: **Danger**.
 
 ---
 
+### `challenge`
+
+A student exercise or problem to attempt before seeing a solution.
+
+```liquid
+{% details challenge Listing files in reverse chronological order %}
+Use `ls` flags to reverse the default time order.
+{% enddetails %}
+```
+
+Label: **Challenge**. Hue: **orange** (brighter than `critical` umber).
+
+| Theme | Summary | Background | Border |
+|---|---|---|---|
+| Light | `#9a3412` | `#fff4e5` | `#c2410c` |
+| Dark | `#fdba74` | `#2c1a0e` | `#fb923c` |
+
+| Pair | Ratio | WCAG |
+|---|---|---|
+| Light summary | 6.72:1 | AA |
+| Dark summary | 9.87:1 | AAA |
+
+---
+
+### `solution`
+
+The worked answer to a challenge. Green like `success`, but the label is **Solution**.
+
+```liquid
+{% details solution %}
+`ls -r` lists in reverse order.
+{% enddetails %}
+```
+
+Label: **Solution**. Hue: **green**.
+
+| Theme | Summary | Background | Border |
+|---|---|---|---|
+| Light | `#14532d` | `#f0fdf4` | `#166534` |
+| Dark | `#86efac` | `#16351f` | `#4ade80` |
+
+| Pair | Ratio | WCAG |
+|---|---|---|
+| Light summary | 8.70:1 | AAA |
+| Dark summary | 9.57:1 | AAA |
+
+---
+
+### `question`
+
+A prompt or discussion question. Yellow-gold like `warning`, but the label is **Question**.
+
+```liquid
+{% details question What does this output imply? %}
+Compare the printed addresses before answering.
+{% enddetails %}
+```
+
+Label: **Question**. Hue: **yellow**.
+
+| Theme | Summary | Background | Border |
+|---|---|---|---|
+| Light | `#854d0e` | `#fefce8` | `#a16207` |
+| Dark | `#fde047` | `#292006` | `#facc15` |
+
+| Pair | Ratio | WCAG |
+|---|---|---|
+| Light summary | 6.62:1 | AA |
+| Dark summary | 12.22:1 | AAA |
+
+---
+
 ## NACE competency variants
 
 These four map to [NACE Career Readiness](https://www.naceweb.org/career-readiness/competencies/career-readiness-defined) competencies. Palettes stay on distinct axes from the semantic set (indigo, umber, wine, slate — not warning-yellow, info-blue, success-green, danger-red, or tip-cyan).
@@ -322,6 +394,9 @@ Label: **Technology**. Hue: **slate**.
 | `info` | Info | `#1f5fbf` | `#eaf2ff` | `#8ab4ff` | `#1e2634` | AA / AAA |
 | `success` | Success | `#006b30` | `#e0f8ea` | `#a7f3d0` | `#143326` | AA / AAA |
 | `danger` | Danger | `#990000` | `#ffe0e0` | `#fecaca` | `#3b1515` | AAA |
+| `challenge` | Challenge | `#9a3412` | `#fff4e5` | `#fdba74` | `#2c1a0e` | AA / AAA |
+| `solution` | Solution | `#14532d` | `#f0fdf4` | `#86efac` | `#16351f` | AAA |
+| `question` | Question | `#854d0e` | `#fefce8` | `#fde047` | `#292006` | AA / AAA |
 | `comm` | Communication | `#3730a3` | `#eef2ff` | `#c7d2fe` | `#1c2038` | AAA |
 | `critical` | Critical thinking | `#7c2d12` | `#fff7ed` | `#fed7aa` | `#2a1d14` | AAA |
 | `career` | Career | `#831843` | `#fdf2f8` | `#fbcfe8` | `#2a1522` | AAA |
@@ -333,6 +408,6 @@ Label: **Technology**. Hue: **slate**.
 
 1. The variant word must be the **first token** and must match the list above exactly (lowercase). `{% details Communication ... %}` is not `comm`; it becomes a default block whose caption starts with “Communication”.
 2. The plugin already prefixes a text label. You do not need to repeat “Warning:” in the caption unless you want it in the title twice.
-3. Nested `details` are allowed. There is no `question` or `example` variant; those names currently render as `default`.
+3. Nested `details` are allowed (workshops often nest `solution` inside `challenge` or `question`). There is no `example` variant; that name currently renders as `default`.
 4. Styles apply site-wide via `_details.scss`. Distill articles additionally place the block on the text grid column.
 5. After changing a hex in `_themes.scss`, run `python3 scripts/check_contrast.py`.

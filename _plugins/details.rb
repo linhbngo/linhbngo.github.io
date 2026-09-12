@@ -4,19 +4,22 @@ module Jekyll
   module Tags
     class DetailsTag < Liquid::Block
 
-      VARIANTS = %w[default note tip warning info success danger comm critical career tech].freeze
+      VARIANTS = %w[default note tip warning info success danger challenge solution question comm critical career tech].freeze
 
       LABELS = {
-        "note"     => "Note",
-        "tip"      => "Tip",
-        "warning"  => "Warning",
-        "info"     => "Info",
-        "success"  => "Success",
-        "danger"   => "Danger",
-        "comm"     => "Communication",
-        "critical" => "Critical thinking",
-        "career"   => "Career",
-        "tech"     => "Technology"
+        "note"      => "Note",
+        "tip"       => "Tip",
+        "warning"   => "Warning",
+        "info"      => "Info",
+        "success"   => "Success",
+        "danger"    => "Danger",
+        "challenge" => "Challenge",
+        "solution"  => "Solution",
+        "question"  => "Question",
+        "comm"      => "Communication",
+        "critical"  => "Critical thinking",
+        "career"    => "Career",
+        "tech"      => "Technology"
       }.freeze
 
       def initialize(tag_name, markup, tokens)

@@ -20,9 +20,15 @@ toc:
   - name: Word Count in Spark
 ---
 
+{% details tip Lecture notebook %}
+
+This is the link to this lecture's [Colab notebook](https://colab.research.google.com/drive/1fLyCM1eW1pG45KnGWS2Tab1KYtniijHa?usp=sharing)
+
+{% enddetails %}
+
 ## What is Spark?
 
-{% details Overview and design philosophy %}
+{% details Design philosophy %}
 
 - A unified compute engine and a set of libraries for parallel
 data processing on computer clusters. 
@@ -39,7 +45,8 @@ data processing on computer clusters.
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/spark_env.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Spark Computing Environment" %}
 
 {% enddetails %}
-{% details A brief history of Spark %}
+
+{% details info A brief history of Spark %}
 
 - Research project at UC Berkeley AMP Lab in 2009 to address drawbacks of 
 Hadoop MapReduce. 
@@ -52,15 +59,16 @@ contributors from more than 30 organizations outside UC Berkeley.
 
 {% enddetails %}
 
-{% details A workflow system %}
+{% details tip A workflow system %}
 
 - A more advanced workflow system
-- Efficient way to cope with failures
-- Efficient way of group tasks among computing nodes and scheduling
+    - Efficient way to cope with failures
+    - Efficient way of group tasks among computing nodes and scheduling
 execution of tasks
 - Integration of programming language features and libraries
 
 {% enddetails %}
+
 {% details RDD: Resilient distributed dataset %}
 
 - Immutable file of objects of one type (e.g., files of key-value pairs)
@@ -70,6 +78,7 @@ compute nodes.
 of an RDD. 
 
 {% enddetails %}
+
 {% details Spark applications %}
 
 - Typically consists of a `driver` process and a set of `executor` processes. 
@@ -88,45 +97,52 @@ of an RDD.
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/driver_executor.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Spark application architecture" %}
 
-- Spark also has a local mode (what we are using for this class), where driver 
+- Spark also has a local mode, where driver 
 and executors are simply processes on the same machine. 
 - Spark application developed in local mode can be carried over almost `as-is` 
 to run in cluster mode (one of the attractiveness of Spark).
 - Spark supports the following language APIs: Scala, Java, Python, SQL 
 (ANSI SQL 2003 standard), and R.
 
---- 
-
 {% enddetails %}
+
 ## Programming for Spark Computing Environment
 
-{% details Overview %}
+Programming operations applied on RDDs:
 
-- Operations applied on RDDs:
-    - 'transformations': applying some functions on an RDD to create another RDD
-        - In Spark, the core data structures are `immutable`, meaning 
-        they cannot be changed after creation. 
-        - To `change` a data collection means to `create` a new data 
-        collection that is a `transformation` from the old one. 
-        - There are two types of transformation:
-            - Narrow dependencies (1-to-1 transformation). 
-            - Wide dependencies (1-to-N transformation). 
-    - 'actions': storing RDDs to a file system or creating a result that is 
-    made available to the Spark application on the `driver` process. There 
-    are three kind of actions:
-        - Actions to view data in the console (e.g., `take`). 
-        - Action to collect data to native objects (e.g., `collect`).
-        - Action to write to output data sources (e.g., `saveAsTextFile`). 
-- Lazy evaluation:   
-    - `Transformations`are logical plan only. 
-    - Spark will wait until the very last moment to execute the graph 
-    of computation instructions (the logical plan).
-    - To trigger the computation, we run an `action`. 
+{% details note Transformations %}
 
+- Applying some functions on an RDD to create another RDD
+- In Spark, the core data structures are `immutable`, meaning they cannot be changed after creation. 
+    - To `change` a data collection means to `create` a new data 
+    collection that is a `transformation` from the old one. 
+- There are two types of transformation:
+    - Narrow dependencies (1-to-1 transformation). 
+    - Wide dependencies (1-to-N transformation). 
+
+{% enddetails %}
+
+{% details note Actions %}
+
+- Storing RDDs to a file system or creating a result that is made available to the Spark application on the `driver` process. 
+- There are three kind of actions:
+    - Actions to view data in the console (e.g., `take`). 
+    - Action to collect data to native objects (e.g., `collect`).
+    - Action to write to output data sources (e.g., `saveAsTextFile`). 
+
+{% enddetails %}
+
+
+{% details note Lazy Evaluation %}   
+
+- `Transformations`are logical plan only. 
+    - Spark will wait until the very last moment to execute the graph of computation instructions (the logical plan).
+- To trigger the computation, we run an `action`. 
 - Detailed syntax can be found via [Spark Python API](https://spark.apache.org/docs/latest/api/python/reference/pyspark.html)
 
 {% enddetails %}
-{% details Common Spark transformations %}
+
+{% details tip Common Spark Transformations %}
 - `map`: Return a new distributed dataset formed by passing each element of the source 
 through a function.
 - `filter`:	Return a new dataset formed by selecting those elements of the source 
@@ -158,7 +174,8 @@ supported through leftOuterJoin, rightOuterJoin, and fullOuterJoin.
 bash script. RDD elements are written to the process's stdin and lines output to its stdout are returned as an RDD of strings.
 
 {% enddetails %}
-{% details Common Spark actions %}
+
+{% details tip Common Spark actions %}
 - `reduce`: Aggregate the elements of the dataset using a function func (which takes 
 two arguments and returns one). The function should be commutative and associative 
 so that it can be computed correctly in parallel.
@@ -178,75 +195,47 @@ Hadoop-supported file system. Spark will call toString on each element to conver
 to a line of text in the file.
 
 {% enddetails %}
+
 ## Word Count in Spark
 
-{% details Preparation %}
+Let's revisit the WordCount example from the inititial setup in [Introduction]({{ '/big-data-engr/01-introduction/' | relative_url }}#setup-computing-environment). 
 
-Assuming that you have complete the setup mentioned in [Introduction]({{ '/big-data-engr/01-introduction/' | relative_url }}#setup-computing-environment), the example code and data in the remainder of this lecture and 
-the subsequent lectures will be available in the `big-data-engineering` directory. You will need to make 
-sure that:
-    - The terminal prompt is inside `big-data-engineering`
-    - The conda environment `pyspark-3.5.1` is activated. 
-
-
-```bash
-pwd 
-conda activate pyspark-3.5.1
-```
-
-Run the setup scripts
-
-- `setup-pyspark-win.ps1` for Windows
-- `source setup-pyspark-mac.sh` for Mac/Linux
-
-{% enddetails %}
 
 {% details Running WordCount %}
 
-This is the source code for `wordcount.py` inside the `wordcount` directory:
+This is the source code for the cell running Word Count
 
 ```python
-import sys
-from pyspark.sql import SparkSession
+# Input and output paths
+input_path = "100-0.txt"
+output_path = "output-wordcount-01"
 
-def wordcount(input_path: str, output_path: str):
-    try:
-        spark = SparkSession.builder.appName("WordCount").getOrCreate()
-        sc = spark.sparkContext
-        wordcount = sc.textFile(input_path) \
-            .flatMap(lambda line: line.split(" ")) \
-            .filter(lambda word: word != "") \
-            .map(lambda word: (word, 1)) \
-            .reduceByKey(lambda a, b: a + b) 
-        wordcount.saveAsTextFile(output_path)
-        spark.stop()
-    except Exception as e:
-        print(f"Spark failed to start: {e}")
+# If output path exists, then delete the output directory first
+import shutil
+if os.path.exists(output_path):
+    shutil.rmtree(output_path)
 
-if __name__ == "__main__":
-    wordcount(sys.argv[1], sys.argv[2])
+# The logic remains the same.
+# We use the SparkContext's textFile method, which is the same as the old sc.textFile
+textFile = sc.textFile(input_path)
+
+# Perform the word count
+wordcount = textFile.flatMap(lambda line: line.split(" ")) \
+    .map(lambda word: (word, 1)) \
+    .reduceByKey(lambda a, b: a + b)
+
+# Save the results
+wordcount.saveAsTextFile(output_path)
+
 ```
 
 - Pay attention to `input_path` and `output_path` variables. They are used to 
 provide a path to the location of the input file, and the directory containing the output files. 
-- Run the program with the following command
-
-```bash
-spark-submit --master="local[*]" ./wordcount/wordcount.py ./wordcount/data/100-0.txt ./wordcount/out-wc-1
-```
-
-{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/wordcount_output.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
-
 - A successful run will generate the resulting output directory that contain `_SUCCESS` flag file (size 0). 
     - There will be several `*.crc` files, these are the check files to confirm data validity. 
     - The output of the word counting process is stored in two files: `part-00000` and `part-00001`. 
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/wordcount_output_dir.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
-
-- **For Windows users**: You might have an error message at the end. If the output files are generated correctly, 
-feel free to ignore that error. 
-
-{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/wordcount_output_err.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -255,58 +244,33 @@ feel free to ignore that error.
 - Let's breakdown the WordCount Python statements by save each stage individually. 
 
 ```python
-import sys
-from pyspark.sql import SparkSession
+# Input and output paths
+input_path = "100-0.txt"
+output_path = "output-wordcount-02"
 
-def wordcount(input_path: str, output_path: str):
-    try:
-        spark = SparkSession.builder.appName("WordCount").getOrCreate()
-        sc = spark.sparkContext
-        wordcount = sc.textFile(input_path)
+# If output path exists, then delete the output directory first
+import shutil
+if os.path.exists(output_path):
+    shutil.rmtree(output_path)
 
-        wordcount_flatMap = wordcount.flatMap(lambda line: line.split(" "))
-        wordcount_flatMap.saveAsTextFile(output_path + "_flatMap")
+textFile = sc.textFile(input_path)
+print(f"Loaded content: {textFile.take(10)}")
 
-        wordcount_filter = wordcount_flatMap.filter(lambda word: word != "")
-        wordcount_filter.saveAsTextFile(output_path + "_filter")
+# Perform the word count
+wc_flatMap = textFile.flatMap(lambda line: line.split(" "))
+print(f"Flat Map: {wc_flatMap.take(5)}")
 
-        wordcount_map = wordcount_filter.map(lambda word: (word, 1))
-        wordcount_map.saveAsTextFile(output_path + "_map")
+wc_map = wc_flatMap.map(lambda word: (word, 1)) 
+print(f"Map: {wc_map.take(5)}")
 
-        wordcount_reduceByKey = wordcount_map.reduceByKey(lambda a, b: a + b)
-        wordcount_reduceByKey.saveAsTextFile(output_path + "_reduceByKey")
-        
-        spark.stop()
-    except Exception as e:
-        print(f"Spark failed to start: {e}")
+wc_reduce = wc_map.reduceByKey(lambda a, b: a + b)
+print(f"Reduce: {wc_reduce.take(5)}")
 
-if __name__ == "__main__":
-    wordcount(sys.argv[1], sys.argv[2])
-```
-
-Run the program
-
-```bash
-spark-submit --master="local[*]" ./wordcount/wordcount-stages.py ./wordcount/data/100-0.txt ./wordcount/out-wc
+# Save the results
+wc_reduce.saveAsTextFile(output_path)
 ```
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/spark_wordcount.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
-
-- Try to save the RDD file in the output path  is going to create 
-an error: `org.apache.hadoop.mapred.FileAlreadyExistsException`. 
-
-```python
-step3.saveAsTextFile(output_path)
-```
-
-{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/spark_output_error.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
-
-```python
-output_path="output-wordcount-02"
-step3.saveAsTextFile(output_path)
-```
-
-{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/spark_output_correct.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -318,34 +282,28 @@ step3.saveAsTextFile(output_path)
     - This value can be reset and change. 
 
 ```python
-import sys
-from pyspark.sql import SparkSession
+# Input and output paths
+input_path = "100-0.txt"
+output_path = "output-wordcount-03"
 
-def wordcount(input_path: str, output_path: str):
-    try:
-        spark = SparkSession.builder.appName("WordCount").getOrCreate()
-        sc = spark.sparkContext
-        sc.setLogLevel("ERROR")
-        wordcount = sc.textFile(input_path)
+# If output path exists, then delete the output directory first
+import shutil
+if os.path.exists(output_path):
+    shutil.rmtree(output_path)
 
-        print(f"Number of partitions before repartitioning: {wordcount.getNumPartitions()}")
+textFile = sc.textFile(input_path)
+print(f"The file has {textFile.getNumPartitions()} partitions")
 
-        wordcount_repartitions = wordcount.repartition(4)
-        print(f"Number of partitions after repartitioning: {wordcount_repartitions.getNumPartitions()}")
+textFile_4 = textFile.repartition(4)
+print(f"The new RDD of the file has {textFile_4.getNumPartitions()} partitions")
 
-        output = (wordcount_repartitions.flatMap(lambda line: line.split(" "))
-                  .filter(lambda word: word != "")
-                  .map(lambda word: (word, 1))
-                  .reduceByKey(lambda a, b: a + b)
-                  )
-        
-        output.saveAsTextFile(output_path)
-        spark.stop()
-    except Exception as e:
-        print(f"Spark failed to start: {e}")
+# Perform the word count
+wordcount = textFile_4.flatMap(lambda line: line.split(" ")) \
+    .map(lambda word: (word, 1)) \
+    .reduceByKey(lambda a, b: a + b)
 
-if __name__ == "__main__":
-    wordcount(sys.argv[1], sys.argv[2])
+# Save the results
+wordcount.saveAsTextFile(output_path)
 ```
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/03-spark/spark_nums.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
