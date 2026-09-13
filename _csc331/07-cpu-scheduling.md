@@ -7,7 +7,11 @@ title: "CPU Scheduling"
 toc:
   - name: What is CPU scheduling?
   - name: Basic Scheduling Algorithms (Non-preemptive)
+  - name: "Algorithm 1: First Come First Serve/First In First Out(FCFS/FIFO)"
+  - name: "Algorithm 2: Shortest Job First (SJF)"
+  - name: "Algorithm 3: Shortest Time-to-Completion First (STCF)"
   - name: Preemptive vs Non-preemptive
+  - name: "Algorithm 4: Round Robin (RR)"
   - name: Multi-level Feedback Queue (MLFQ)
 ---
 
@@ -44,8 +48,11 @@ turn_around_time = job_completion_time - job_arrival_time
 
 
 {% enddetails %}
-{% details Algorithm 1: First Come First Serve/First In First Out(FCFS/FIFO) %}
 
+
+## Algorithm 1: First Come First Serve/First In First Out(FCFS/FIFO)
+
+{% details info Job Information %}
 
 | Job | Arrival Time | Service Time |
 | --- | --- | --- |
@@ -53,9 +60,13 @@ turn_around_time = job_completion_time - job_arrival_time
 | B | 0 | 3 |
 | C | 0 | 3 |
 
+{% enddetails %}
+
 - For FCFS, jobs are executed in the order of their arrival. 
 - When jobs with same arrival time arrive, let's assume a simple alphabetic
 ordering based on jobs' names. 
+
+{% details FCFS/FIFO %}
 
 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -63,12 +74,13 @@ ordering based on jobs' names.
 |  |  |  | B | B | B |  |  |  |  |  |  |
 |  |  |  |  |  |  | C | C | C |  |  |  |
 
+
 - Average_turn_around_time = (3 + 6 + 9) / 3 = **6** 
 
-
 {% enddetails %}
-{% details Initial set of simple assumptions: first adjustment %}
 
+
+{% details Initial set of simple assumptions: first adjustment %}
 
 1. ~~Each job (process/thread) runs the same amount of time.~~
 2. All jobs arrive at the same time.
@@ -77,15 +89,14 @@ ordering based on jobs' names.
 5. The run time of each job is known.
 
 {% enddetails %}
-{% details FCFS/FIFO Performance %}
 
+{% details FCFS/FIFO Performance %}
 
 | Job | Arrival Time | Service Time |
 | --- | --- | --- |
 | A | 0 | 8 |
 | B | 0 | 3 |
 | C | 0 | 3 |
-
 
 - For first come first server, jobs are executed in the order of their arrival. 
 - When jobs with same arrival time arriva, let's assume a simple alphabetic
@@ -97,14 +108,14 @@ ordering based on jobs' names.
 |  |  |  |  |  |  |  |  | B | B | B |  |  |  |  |  |
 |  |  |  |  |  |  |  |  |  |  |  | C | C | C |  |  |
 
-
 - Average_turn_around_time = (8 + 11 + 14) / 3 = **11**
 - This is worse than the metric from the initial set of assumptions. 
 
-
 {% enddetails %}
-{% details Algorithm 2: Shortest Job First (SJF) %}
 
+## Algorithm 2: Shortest Job First (SJF)
+
+{% details info Job Information %}
 
 | Job | Arrival Time | Service Time |
 | --- | --- | --- |
@@ -112,10 +123,13 @@ ordering based on jobs' names.
 | B | 0 | 3 |
 | C | 0 | 3 |
 
+{% enddetails %}
 
 - For SJF, jobs are executed in the order of their arrival. 
-- When jobs with same arrival time arriva, jobs with shorter service time 
+- When jobs with same arrival time arrive, jobs with shorter service time 
 are executed first. 
+
+{% details SJF %}
 
 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -126,10 +140,9 @@ are executed first.
 - Average_turn_around_time = (3 + 6 + 14) / 3 = 7.67
 - This is better than FCFS. 
 
-
 {% enddetails %}
-{% details Initial set of simple assumptions: second adjustment %}
 
+{% details Initial set of simple assumptions: second adjustment %}
 
 1. ~~Each job (process/thread) runs the same amount of time.~~
 2. ~~All jobs arrive at the same time.~~
@@ -140,15 +153,14 @@ are executed first.
 - Without the second assumption, SJF does not apply and we are back to FCFS only. 
 
 {% enddetails %}
-{% details FCFS/FIFO Performance %}
 
+{% details Comparing to FCFS/FIFO Performance %}
 
 | Job | Arrival Time | Service Time |
 | --- | --- | --- |
 | A | 0 | 8 |
 | B | 2 | 3 |
 | C | 2 | 3 |
-
 
 - For FCFS, jobs are executed in the order of their arrival time.
 - When jobs with same arrival time arrive, let’s assume a simple 
@@ -160,14 +172,13 @@ alphabetic ordering based on jobs’ names.
 |  |  |  |  |  |  |  |  | B | B | B |  |  |  |  |  |
 |  |  |  |  |  |  |  |  |  |  |  | C | C | C |  |  |
 
-
 - Average_turn_around_time = (8 + 9 + 12) / 3 = 9.67
 - B and C suffer from a long waiting time, but A already got the CPU. 
 
-
 {% enddetails %}
-{% details Initial set of simple assumptions: third adjustment %}
 
+
+{% details Initial set of simple assumptions: third adjustment %}
 
 1. ~~Each job (process/thread) runs the same amount of time.~~
 2. ~~All jobs arrive at the same time.~~
@@ -193,16 +204,18 @@ alphabetic ordering based on jobs’ names.
 
 {% details Second performance metric %}
 
-
 - **Average response time of all jobs**:
     - The time from when the job arrives to when it is first scheduled. 
 
 response_time = first_scheduled_time - job_arrival_time
 
 {% enddetails %}
-{% details Algorithm 3: Shortest Time-to-Completion First (STCF) %}
+
+## Algorithm 3: Shortest Time-to-Completion First (STCF)
 
 - Also known as **Preemptive Shortest Job First (PSJF)**
+
+{% details info Job Information %}
 
 | Job | Arrival Time | Service Time |
 | --- | --- | --- |
@@ -210,17 +223,19 @@ response_time = first_scheduled_time - job_arrival_time
 | B | 2 | 3 |
 | C | 2 | 3 |
 
+{% enddetails %}
 
 - For FCFS, jobs are executed in the order of their arrival time.
 - When jobs with same arrival time arrive, let’s assume a simple 
 alphabetic ordering based on jobs’ names. 
+
+{% details PSFJ %}
 
 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | A | A |  |  |  |  |  |  | A | A | A | A | A | A |  |  |
 |  |  | B | B | B |  |  |  |  |  |  |  |  |  |  |  |
 |  |  |  |  |  | C | C | C |  |  |  |  |  |  |  |
-
 
 - Average_turn_around_time = (14 + 3 + 6) / 3 = 7.67
 - This is better than FCFS. 
@@ -234,10 +249,12 @@ alphabetic ordering based on jobs’ names.
 
 - Average_response_time = (0 + 0 + 3) / 3 = 1 
 
-
 {% enddetails %}
-{% details Algorithm 4: Round Robin (RR) %}
 
+
+## Algorithm 4: Round Robin (RR)
+
+{% details info Job Information %}
 
 | Job | Arrival Time | Service Time |
 | --- | --- | --- |
@@ -245,18 +262,20 @@ alphabetic ordering based on jobs’ names.
 | B | 2 | 3 |
 | C | 2 | 3 |
 
+{% enddetails %}
 
 - All jobs are placed into a circular run queue.
 - Each job is allowed to run for a time quantum `q` before
 being preempted and put back on the queue. 
 - Example: `q=1` 
 
+{% details RR %}
+
 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | A | A |  |  | A |  |  | A |  |  | A | A | A | A |  |  |
 |  |  | B |  |  | B |  |  | B |  |  |  |  |  |  |  |
 |  |  |  | C |  |  | C |  |  | C |  |  |  |  |  |  |
-
 
 - Average_response_time = (0 + 0 + 1) / 3 = 0.33 
 - The choice of `q` is important. 
@@ -266,8 +285,8 @@ being preempted and put back on the queue.
     - `q` should be a multiple of the timer interrupt interval
 
 {% enddetails %}
-{% details Initial set of simple assumptions: fourth adjustment %}
 
+{% details Initial set of simple assumptions: fourth adjustment %}
 
 1. ~~Each job (process/thread) runs the same amount of time.~~
 2. ~~All jobs arrive at the same time.~~
@@ -276,22 +295,21 @@ being preempted and put back on the queue.
 5. The run time of each job is known.
 
 {% enddetails %}
-{% details (Almost) all processes perform I/O %}
 
+{% details (Almost) all processes perform I/O %}
 
 - When a job is performing I/O, it is not using the CPU. 
 In other words, it is blocked waiting for I/O to complete.
 - It makes sense to use this time to run some other jobs. 
 
 {% enddetails %}
-{% details Jobs with I/O %}
 
+{% details Jobs with I/O %}
 
 | Job | Arrival Time | CPU Time | I/O |
 | --- | --- | --- | --- |
 | A | 0 | 5 | One per 1 sec |
 | B | 0 | 5 | none |
-
 
 - Normal STCF treating A as a single job
 
@@ -310,14 +328,12 @@ In other words, it is blocked waiting for I/O to complete.
 | A | I/O | A | I/O | A | I/O | A | I/O | A |  |  |  |  |  |  |  |
 |  | B |  | B |  | B |  | B |  | B |  |  |  |  |  |  |
 
-
 - Average_turn_around_time = (9 + 10) / 2 = 9.5
 - Average_response_time = (0 + 1) / 2 = 0.5
 
-
 {% enddetails %}
-{% details Initial set of simple assumptions: No more assumption %}
 
+{% details Initial set of simple assumptions: No more assumption %}
 
 1. ~~Each job (process/thread) runs the same amount of time.~~
 2. ~~All jobs arrive at the same time.~~
@@ -330,6 +346,7 @@ In other words, it is blocked waiting for I/O to complete.
     - Yet, without it, SJF/STCF becomes invalid. 
 
 {% enddetails %}
+
 {% details The question %}
 
 How do we schedule jobs **without knowing** their run time
@@ -358,10 +375,9 @@ hardware branch predictors and caching algorithms.
 - Long-running CPU-bound jobs
 - Interactive I/O-bound jobs
 
-
 {% enddetails %}
-{% details MLFQ: the queues %}
 
+{% details MLFQ: the queues %}
 
 - Consists of a number of distinct **queues**, each assigned a 
 different **priority level**.
@@ -372,10 +388,9 @@ with the highest priority
 
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-01.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details MLFQ's feedback rules 1 and 2 %}
 
+{% details MLFQ's feedback rules 1 and 2 %}
 
 - Rule 1: If Priority(A) > Priority(B), A runs and B doesn't
 - Rule 2: If Priority(A) == Priority(B), RR(A, B)
@@ -393,8 +408,8 @@ What other rule(s) do we need to add?
 - We need to understand how job **priority** changes over time.
 
 {% enddetails %}
-{% details Attempt 1: How to change priority? %}
 
+{% details Attempt 1: How to change priority? %}
 
 - Rule 3: When a job enter the system, it is placed at the 
 highest priority (the top most queue).
@@ -403,10 +418,9 @@ its priority is reduced (it moves down one queue).
 - Rule 4b: If a job gives up the CPU (voluntarily) before the 
 time slice is up, it stays at the same priority level.
 
-
 {% enddetails %}
-{% details Example %}
 
+{% details Example %}
 
 - System maintains three queues, in the order of 
 priority from high to low: Q2, Q1, and Q0. 
@@ -414,13 +428,11 @@ priority from high to low: Q2, Q1, and Q0.
 
 {% details info Initial: A single long-running job %}
 
-
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-02.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details info Along came a short job %}
 
+{% details info Along came a short job %}
 
 - Job A (Dark): long-running CPU intensive 
 - Job B (Gray): short-running interactive
@@ -431,10 +443,9 @@ gradually be moved down the queues.
 
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-03.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details info What about I/O? %}
 
+{% details info What about I/O? %}
 
 - The interactive job (gray) only needs the CPU for 1 ms before 
 performing an I/O. MLFQ keeps B at the highest priority before 
@@ -443,8 +454,8 @@ B keep releasing the CPU.
 
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-04.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
+
 {% details Problem 1: Starvation %}
 
 - If new interactive jobs keep arriving, long running job will 
@@ -452,10 +463,9 @@ stay at the bottom queue and never get any work done.
 
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-05.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details Problem 2: Gaming the system %}
 
+{% details Problem 2: Gaming the system %}
 
 - What if some industrious programmers intentionally write a 
 long running program that relinquishes the CPU just before the 
@@ -463,16 +473,17 @@ time-slice is up (Job B).
 
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-06.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
+
 {% details Problem 3: What if a program changes behavior? %}
 
 - Starting out as a long running job
 - Turn into an interactive job
 
+{% enddetails %}
 
 {% enddetails %}
-{% enddetails %}
+
 {% details Attempt 2: Priority boost %}
 
 - Rule 5: After some time period `S`, move all the jobs in the system to 
@@ -486,6 +497,7 @@ staved. It also helps with CPU-bound jobs that become interactive
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-07.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details What S should be set to? %}
 
 - S is considered a voodoo constants (John Ousterhout)
@@ -494,9 +506,10 @@ staved. It also helps with CPU-bound jobs that become interactive
 - Too low: interactive jobs will not get a proper share of the CPU. 
 
 {% enddetails %}
-{% enddetails %}
-{% details Attempt 3: Better accounting %}
 
+{% enddetails %}
+
+{% details Attempt 3: Better accounting %}
 
 - Rewrite of Rule 4 to address the issue of gaming the system. 
 - Rule 5: Once a job uses up its time allotment at a given level 
@@ -505,10 +518,9 @@ is reduced.
 
 {% include figure.liquid path="assets/img/courses/csc331/cpu-scheduling/cpu-scheduling-08.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details Summary %}
 
+{% details Summary %}
 
 - Rule 1: If Priority(A) > Priority(B), A runs (B doesn’t)
 - Rule 2: If Priority(A) = Priority(B), RR(A, B)
@@ -520,13 +532,12 @@ is reduced.
 - Rule 5: After some time period S, move all the jobs in the system to 
 the topmost queue.
 
-
 {% enddetails %}
+
 MLFQ observes the execution of a  job and gradually learns what type of job 
 it is, and prioritize it accordingly. 
 
 - Excellent performance for interactive I/O bound jobs: good response time.
 - Fair for long-running CPU-bound jobs: good turnaround time without starvation.
-
 - Used by many systems, including FreeBSD, MacOS X, Solaris, Linux 2.6, and Windows NT
 
