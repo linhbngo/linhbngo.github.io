@@ -141,7 +141,7 @@ print(f"Serial Dot Product P for comparison purposes:\n {P}")
 
 {% details tip Screenshot: Output %}
 
-{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/04-data-parallel/mat-vec.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Example output" %}
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/04-data-parallel/mat-vec-2.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Example output" %}
 
 {% enddetails %}
 
@@ -155,17 +155,24 @@ print(f"Serial Dot Product P for comparison purposes:\n {P}")
 {% details Matrix multiplication %}
 
 - Because V no longer fits into memory, it can be reasoned that each of these numpy arrays also does not fit in memory. 
-- Line 53: Need to extract column identifier from each numpy array and turn them into individual values, similar to the vector's values with `getPos`
-- Line 54: Combine individual items of M and V, and group them together with `groupBy`. 
-    - Line 56: Convert data into `list` type instead of Spark's `iterables`
+- Line 35: Need to extract column identifier from each numpy array and turn them into individual values, similar to the vector's values with `getPos`
+- Line 36: Combine individual items of M and V via `union`, 
+- Line 37: Group pair with the same key (position in the resulting vector) together with `groupBy`, 
+- Line 38: Convert data into `list` type instead of Spark's `iterables`,
     - Each element in this frame after `groupBy` is a key/value pair:
-    - The key is the row index 
-    - The value is a (N+1)-element array: 
-        - N elements belong to a row of the matrix M, each of this element is a tuple with the key representing the column index and the value represent the corresponding matrix cell value. 
+        - The key is the row index 
+        - The value is a (N+1)-element array: 
+            - N elements belong to a row of the matrix M, each of this element is a tuple with the key representing the column index and the value represent the corresponding matrix cell value. 
         - One remaining element belong to the value of the vector V at that row index position. 
-- Line 57: As shown in the previous output, we cannot assume proper order after union, especially for large scale data
+- Line 39: As shown in the previous output, we cannot assume proper order after union, especially for large scale data
     - Need to flatten the final results (list of tupples instead of list of lists of tuples)
-- Line 58: Add elements together with `reduceByKey`. 
+- Line 40: Add elements together with `reduceByKey`. 
+
+{% enddetails %}
+
+{% details challenge Printing partial results %}
+
+- Create partial results for the transformations between lines 36-40 and print out. 
 
 {% enddetails %}
 
@@ -201,24 +208,18 @@ ratings.cache()
 ratings.count()
 ```
 
-{% details Output %}
-
-
 ```output
 CPU times: user 252 ms, sys: 28.2 ms, total: 280 ms
 Wall time: 1min 40s
 32000205
 ```
 
-{% enddetails %}
 - Second count, preloaded
 
 ```python
 %%time
 ratings.count()
 ```
-{% details Output %}
-
 
 ```output
 CPU times: user 147 ms, sys: 19.8 ms, total: 167 ms
@@ -226,7 +227,6 @@ Wall time: 58.4 s
 32000205
 ```
 
-{% enddetails %}
 - Third count, preloaded
 
 ```python
@@ -234,9 +234,6 @@ Wall time: 58.4 s
 ratings.count()
 ```
 
-{% details Output %}
-
-
 ```output
 CPU times: user 147 ms, sys: 19.8 ms, total: 167 ms
 Wall time: 58.4 s
@@ -244,28 +241,18 @@ Wall time: 58.4 s
 ```
 
 {% enddetails %}
-{% details Hands-on 1 %}
+
+{% details challenge Average Rating %}
 
 - What are the average ratings over the years of each movie?    
 - Note: don't forget to filter!
 
 {% enddetails %}
-{% details Hands-on 2 %}
+
+{% details challenge Average Rating with Movie Titles %}
 
 - What are the average ratings over the years of each movie?
     - Display the results with movie titles instead of movie IDs
 - Assumption: **movies.csv does not fit in memory**
 
-{% enddetails %}
-{% details Hands-on 3 %}
-
-- Identify movies that can be considered cult-classic?
-
-{% enddetails %}
-{% details Hands-on 4 %}
-
-- What are the average ratings over the years of each genre
-- Assumption: **movies.csv does not fit in memory**
-
-{% enddetails %}
 {% enddetails %}

@@ -6,31 +6,40 @@ module Jekyll
 
       VARIANTS = %w[default note tip warning info success danger challenge solution question comm critical career tech].freeze
 
+      ALIASES = {
+        "challenges" => "challenge"
+      }.freeze
+
+      # Already uppercase so the badge does not depend on CSS text-transform.
       LABELS = {
-        "note"      => "Note",
-        "tip"       => "Tip",
-        "warning"   => "Warning",
-        "info"      => "Info",
-        "success"   => "Success",
-        "danger"    => "Danger",
-        "challenge" => "Challenge",
-        "solution"  => "Solution",
-        "question"  => "Question",
-        "comm"      => "Communication",
-        "critical"  => "Critical thinking",
-        "career"    => "Career",
-        "tech"      => "Technology"
+        "note"      => "NOTE",
+        "tip"       => "TIP",
+        "warning"   => "WARNING",
+        "info"      => "INFO",
+        "success"   => "SUCCESS",
+        "danger"    => "DANGER",
+        "challenge" => "CHALLENGE",
+        "solution"  => "SOLUTION",
+        "question"  => "QUESTION",
+        "comm"      => "COMMUNICATION",
+        "critical"  => "CRITICAL THINKING",
+        "career"    => "CAREER",
+        "tech"      => "TECHNOLOGY"
       }.freeze
 
       def initialize(tag_name, markup, tokens)
+        raw = markup.to_s
         super
+        parse_markup(raw)
+      end
 
+      def parse_markup(markup)
         markup = markup.to_s.strip
-
-        # Parse first word as optional variant
         first, rest = markup.split(/\s+/, 2)
-        if VARIANTS.include?(first)
-          @variant = first
+        key = first.to_s.downcase.gsub(/:+$/, "")
+        key = ALIASES[key] if ALIASES.key?(key)
+        if VARIANTS.include?(key)
+          @variant = key
           @caption = (rest || "").strip
         else
           @variant = "default"

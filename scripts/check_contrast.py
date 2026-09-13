@@ -99,7 +99,7 @@ PAIRS = [
     ("text", "light critical summary", "#7c2d12", "#fff7ed"),
     ("text", "light career summary", "#831843", "#fdf2f8"),
     ("text", "light tech summary", "#1e293b", "#f1f5f9"),
-    ("text", "light challenge summary", "#9a3412", "#fff4e5"),
+    ("text", "light challenge summary", "#9a3412", "#ffd8a8"),
     ("text", "light solution summary", "#14532d", "#f0fdf4"),
     ("text", "light question summary", "#854d0e", "#fefce8"),
     # Dark details
@@ -113,7 +113,7 @@ PAIRS = [
     ("text", "dark critical summary", "#fed7aa", "#2a1d14"),
     ("text", "dark career summary", "#fbcfe8", "#2a1522"),
     ("text", "dark tech summary", "#cbd5e1", "#222830"),
-    ("text", "dark challenge summary", "#fdba74", "#2c1a0e"),
+    ("text", "dark challenge summary", "#fdba74", "#3a1a08"),
     ("text", "dark solution summary", "#86efac", "#16351f"),
     ("text", "dark question summary", "#fde047", "#292006"),
     # Quiz + badges

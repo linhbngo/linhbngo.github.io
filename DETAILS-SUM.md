@@ -223,13 +223,13 @@ Label: **Challenge**. Hue: **orange** (brighter than `critical` umber).
 
 | Theme | Summary | Background | Border |
 |---|---|---|---|
-| Light | `#9a3412` | `#fff4e5` | `#c2410c` |
-| Dark | `#fdba74` | `#2c1a0e` | `#fb923c` |
+| Light | `#9a3412` | `#ffd8a8` | `#ea580c` |
+| Dark | `#fdba74` | `#3a1a08` | `#fb923c` |
 
 | Pair | Ratio | WCAG |
 |---|---|---|
-| Light summary | 6.72:1 | AA |
-| Dark summary | 9.87:1 | AAA |
+| Light summary | 5.44:1 | AA |
+| Dark summary | 9.35:1 | AAA |
 
 ---
 
@@ -394,7 +394,7 @@ Label: **Technology**. Hue: **slate**.
 | `info` | Info | `#1f5fbf` | `#eaf2ff` | `#8ab4ff` | `#1e2634` | AA / AAA |
 | `success` | Success | `#006b30` | `#e0f8ea` | `#a7f3d0` | `#143326` | AA / AAA |
 | `danger` | Danger | `#990000` | `#ffe0e0` | `#fecaca` | `#3b1515` | AAA |
-| `challenge` | Challenge | `#9a3412` | `#fff4e5` | `#fdba74` | `#2c1a0e` | AA / AAA |
+| `challenge` | Challenge | `#9a3412` | `#ffd8a8` | `#fdba74` | `#3a1a08` | AA / AAA |
 | `solution` | Solution | `#14532d` | `#f0fdf4` | `#86efac` | `#16351f` | AAA |
 | `question` | Question | `#854d0e` | `#fefce8` | `#fde047` | `#292006` | AA / AAA |
 | `comm` | Communication | `#3730a3` | `#eef2ff` | `#c7d2fe` | `#1c2038` | AAA |

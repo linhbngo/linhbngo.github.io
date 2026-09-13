@@ -6,10 +6,25 @@
  * remain in _distill.scss.
  ******************************************************************************/
 
-$details-variants: note, tip, warning, info, success, danger, challenge,
-  solution, question, comm, critical, career, tech;
+$details-variants: (
+  "note",
+  "tip",
+  "warning",
+  "info",
+  "success",
+  "danger",
+  "challenge",
+  "solution",
+  "question",
+  "comm",
+  "critical",
+  "career",
+  "tech"
+);
 
-details.details {
+details.details,
+d-article details.details,
+d-article details[data-variant] {
   color: var(--global-text-color);
   background-color: var(--global-details-bg);
   border-left: 4px solid var(--global-details-border);
@@ -59,24 +74,28 @@ details.details {
   }
 }
 
-.details-label {
-  display: inline-block;
+.details-label,
+d-article .details-label {
+  display: inline-block !important;
   margin-right: 0.5em;
   font-size: 0.72em;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   vertical-align: 0.08em;
-  color: inherit;
+  color: inherit !important;
 }
 
 @each $variant in $details-variants {
-  details.details--#{$variant} {
-    border-left-color: var(--global-details-#{$variant}-border);
-    background-color: var(--global-details-#{$variant}-bg);
+  details.details--#{$variant},
+  details[data-variant="#{$variant}"],
+  d-article details.details--#{$variant},
+  d-article details[data-variant="#{$variant}"] {
+    border-left: 4px solid var(--global-details-#{$variant}-border) !important;
+    background-color: var(--global-details-#{$variant}-bg) !important;
 
-    summary {
-      color: var(--global-details-#{$variant}-summary);
+    > summary {
+      color: var(--global-details-#{$variant}-summary) !important;
     }
   }
 }
