@@ -4,7 +4,7 @@
       {
             "title": "Concurrency and Threading, Asynchronous Programming",
             "description": "",
-            "published": "September 12, 2026",
+            "published": "September 13, 2026",
             "authors": [
               
             ],
@@ -129,7 +129,7 @@ fetchUser { user in
     }
 }
 
-</code></pre> <ul> <li>Why was this necessary? <ul> <li>When tasks must be performed one after another asynchronously, each subsequent task depends on the previous task’s result. <ul> <li>Fetch User</li> <li>Then Fetch Orders (requires User)</li> <li>Then Fetch Order Details (requires Orders)</li> <li>Then Update UI after all previous tasks</li> </ul> </li> <li>To maintain this sequence clearly, you must place each next call inside the completion handler of the previous one:</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Solution for callback hell: async/await</summary> <ul> <li>async/await introduced in Swift 5.5</li> <li>In Swift, the async/await feature enables you to write cleaner asynchronous code. It’s like saying, “Hey, you go do this task, but let me know when you’re finished so I can use the result.”</li> </ul> <pre><code class="language-Swift">import PlaygroundSupport
+</code></pre> <ul> <li>Why was this necessary? <ul> <li>When tasks must be performed one after another asynchronously, each subsequent task depends on the previous task’s result. <ul> <li>Fetch User</li> <li>Then Fetch Orders (requires User)</li> <li>Then Fetch Order Details (requires Orders)</li> <li>Then Update UI after all previous tasks</li> </ul> </li> <li>To maintain this sequence clearly, you must place each next call inside the completion handler of the previous one:</li> </ul> </li> </ul> </details> <details class="details details--solution" data-variant="solution"><summary><span class="details-label">SOLUTION</span>for callback hell: async/await</summary> <ul> <li>async/await introduced in Swift 5.5</li> <li>In Swift, the async/await feature enables you to write cleaner asynchronous code. It’s like saying, “Hey, you go do this task, but let me know when you’re finished so I can use the result.”</li> </ul> <pre><code class="language-Swift">import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
 
 // Async functions using Swift concurrency
