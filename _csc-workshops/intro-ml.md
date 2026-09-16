@@ -15,12 +15,9 @@ chart:
 tikzjax: true
 typograms: true
 toc:
-  - name: Setup
-  - name: Introduction to Docker
-  - name: Docker Images
-  - name: Infrastructure as Code
-  - name: "Infrastructure as Code: Storage"
-  - name: "Infrastructure as Code: Networking"
+  - name: 1. Review
+  - name: 2. Introduction to ML Concepts
+  - name: 3. Supervised Learning Model Evaluation Metrics
 
 ---
 
@@ -344,7 +341,7 @@ flowchart TD
 
 E.g.:
 
-{% include figure.liquid path="fig/python_ml/img_sklearn/hp.png" alt="Home price data" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/hp.png" alt="Home price data" max-width="50%" zoomable=true %}
 
 Our *target* (or dependent variable, or output) is the variable we would like to predict/estimate.
 
@@ -361,11 +358,11 @@ $Home \approx f(Sq. ft., \#bed, \#bath,\ldots)$
 Supervised learning can be divided into regression and classification. 
 In the case of **regression**, we estimate a *quantity*.
 
-{% include figure.liquid path="fig/python_ml/img_sklearn/reg.png" alt="regression" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/reg.png" alt="regression" max-width="50%" zoomable=true %}
 
 In the case of **classification**, we predict a *label* (i.e. a category).
 
-{% include figure.liquid path="fig/python_ml/img_sklearn/class.png" alt="classification" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/class.png" alt="classification" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 {% details info Linear Regression %}
@@ -677,11 +674,11 @@ plt.show()
 
 Support Vector Machines (SVMs) are a powerful supervised learning algorithm used for classification or regression tasks. They are based on the idea of finding the hyperplane that best divides a dataset into two classes. The hyperplane is the line that best separates the two classes. The SVM algorithm finds the hyperplane that maximizes the margin between the two classes.
 
-![hyperplanes](img/svm_hp.png)
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/svm_hp.png" alt="hyperplanes" max-width="50%" zoomable=true %}
 
 In cases where the data cannot be linearly separated, SVMs can use a *kernel trick* to transform the data into a higher-dimensional space where it can be separated. This is a very powerful technique that allows SVMs to work well on a wide variety of datasets.
 
-![kernel](img/svm_hd.png)
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/svm_hd.png" alt="kernel" max-width="50%" zoomable=true %}
 
 
 ```python
@@ -856,11 +853,11 @@ How do we evaluate the performance of a machine learning model? There are many d
 
 But how do we apply these metrics? We can split our data into a training set and a test set. We train our model on the training set and then evaluate its performance on the test set. If we're tuning hyperparameters, we might use a validation set as well.
 
-{% include figure.liquid path="fig/python_ml/img_sklearn/tr_ts.png" alt="train_test" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/tr_ts.png" alt="train_test" max-width="50%" zoomable=true %}
 
 Even better than a single train/test split is to use *cross-validation*. In cross-validation, the data is split into K folds, and the model is trained and evaluated K times, each time using a different fold as the test set. This gives us a more robust estimate of the model's performance.
 
-{% include figure.liquid path="fig/python_ml/img_sklearn/cvl.png" alt="cross_val" %}
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/cvl.png" alt="cross_val" max-width="50%" zoomable=true %}
 
 {% details info Regression Metrics %}
 
@@ -946,12 +943,11 @@ In a classification problem, we are trying to predict a label. Some common metri
 * F1 Score - the harmonic mean of precision and recall $\left(F_1 = 2 \times \frac{\text{precision} \times \text{recall}}{\text{precision} + \text{recall}}\right)$
 * ROC AUC - the area under the Receiver Operating Characteristic curve
 
-<img src="img/prec_rec.png" alt="precision_recall" style="width:30%">
+{% include figure.liquid path="assets/img/courses/workshops/python_ml/img_sklearn/prec_rec.png" alt="precision_recall" max-width="50%" zoomable=true %}
 
 Note that all of the above *except* for ROC AUC depend on your choice of threshold for classification. ROC AUC is a metric that is threshold-independent, and is often used when you want to compare models across different thresholds. 
 
 Let's look at this in action, after fitting a logistic regression model on the UCI Ionosphere dataset. In this dataset, we are trying to predict whether a radar return is "good" or "bad" based on features such as the signal's amplitude and frequency.
-
 
 
 ```python
