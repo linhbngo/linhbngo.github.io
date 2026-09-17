@@ -149,7 +149,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-embracing-chaos-lessons-from-four-semesters-of-capstone-projects",
+            },{id: "post-tbd",
+        
+          title: "TBD",
+        
+        description: "Knowledge and Skills, Why Not Both",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/ai-revisit/";
+          
+        },
+      },{id: "post-embracing-chaos-lessons-from-four-semesters-of-capstone-projects",
         
           title: "Embracing Chaos: Lessons From Four Semesters of Capstone Projects",
         
@@ -1273,17 +1284,17 @@ ninja.data = [{
           title: 'ClusterIP, NodePort, and Multi-Service Communication',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/09-clusterip/";
+              window.location.href = "/csc478/06-clusterip/";
             },},{id: "csc478-storage-volumes-in-kubernetes",
           title: 'Storage Volumes in Kubernetes',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/10-volumes/";
+              window.location.href = "/csc478/07-volumes/";
             },},{id: "csc478-kubernetes-pv-pvc-hands-on-lab-with-nfs",
           title: 'Kubernetes PV/PVC Hands-On Lab with NFS',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/11-pv-lab/";
+              window.location.href = "/csc478/08-pv-lab/";
             },},{id: "csc478-resource-units-and-management-in-kubernetes",
           title: 'Resource Units and Management in Kubernetes',
           description: "",
