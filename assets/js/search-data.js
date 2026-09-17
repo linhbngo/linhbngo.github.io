@@ -149,7 +149,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-the-academic-advisor-as-fiduciary",
+            },{id: "post-embracing-chaos-lessons-from-four-semesters-of-capstone-projects",
+        
+          title: "Embracing Chaos: Lessons From Four Semesters of Capstone Projects",
+        
+        description: "Learning through the productive chaos in software engineering capstones.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/embracing-chaos/";
+          
+        },
+      },{id: "post-the-academic-advisor-as-fiduciary",
         
           title: "The Academic Advisor as Fiduciary",
         
