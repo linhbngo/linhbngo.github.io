@@ -160,8 +160,8 @@ curl backend-svc
 - Kubernetes opens a static port (30000–32767) on all nodes.
 
 {% enddetails %}
-{% details NodePort %}
 
+{% details NodePort %}
 
 - Manually expose the backend service externally:
 
@@ -188,7 +188,6 @@ curl NODE_IP:NODE_PORT
 ```
 
 {% enddetails %}
----
 
 ## Multi-Service Communication
 
