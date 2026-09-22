@@ -699,7 +699,7 @@ kubectl run curl-test \
   -it --rm -- sh
 ```
 
-Inside:
+Inside the temporary curl pod
 
 ```bash
 curl http://quote-svc
