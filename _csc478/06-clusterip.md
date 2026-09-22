@@ -501,8 +501,6 @@ kubectl get endpointslices \
 
 {% enddetails %}
 
----
-
 ## Multi-Service Communication
 
 {% details Concept %}
