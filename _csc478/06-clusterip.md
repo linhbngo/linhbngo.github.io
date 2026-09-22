@@ -139,6 +139,8 @@ Kubernetes YAML is unforgiving about indentation and field placement. Before app
 If `yamllint` is installed:
 
 ```bash
+sudo apt update
+sudo apt install -y yamllint
 yamllint echo-deployment.yaml
 ```
 
@@ -342,10 +344,7 @@ kubectl get pods --show-labels
 Create a temporary curl Pod:
 
 ```bash
-kubectl run curl-test \
-  --image=curlimages/curl \
-  --restart=Never \
-  -it --rm -- sh
+kubectl run curl-test --image=curlimages/curl --restart=Never -it --rm -- sh
 ```
 
 Inside the Pod:
@@ -372,7 +371,7 @@ Get the Pod addresses:
 kubectl get pods -l app=backend -o wide
 ```
 
-From a temporary curl Pod, compare:
+Launch the temporary curl pod above again and compare:
 
 ```bash
 curl http://<POD-IP>:80
@@ -423,11 +422,7 @@ For our FABRIC RKE2 environment, test NodePort against the deliberately configur
 ### Option 1: Create a NodePort imperatively
 
 ```bash
-kubectl expose deployment backend \
-  --name=backend-nodeport \
-  --type=NodePort \
-  --port=80 \
-  --target-port=80
+kubectl expose deployment backend --name=backend-nodeport --type=NodePort --port=80 --target-port=80
 ```
 
 Inspect the assigned port:
@@ -458,7 +453,7 @@ curl http://192.168.1.1:31642
 
 ### Option 2: Specify a fixed NodePort
 
-For repeatable labs, a fixed port can be easier:
+For repeatable labs, a fixed port can be easier. Create the following file called `backend-nodeport.yaml`. 
 
 ```yaml
 apiVersion: v1
@@ -472,7 +467,7 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30080
+      nodePort: 38080
 ```
 
 Validate before deployment:
@@ -485,16 +480,14 @@ kubectl apply -f backend-nodeport.yaml
 Then:
 
 ```bash
-curl -v --connect-timeout 5 http://192.168.1.1:30080/
+curl -v --connect-timeout 5 http://192.168.1.1:38088/
 ```
 
 ### Inspect what backs the Service
 
 ```bash
 kubectl get svc backend-nodeport -o wide
-kubectl get endpointslices \
-  -l kubernetes.io/service-name=backend-nodeport \
-  -o wide
+kubectl get endpointslices -l kubernetes.io/service-name=backend-nodeport -o wide
 ```
 
 {% include figure.liquid path="assets/img/courses/csc478/clusterip/expose-nodeport.png" max-width="50%" zoomable=true %}
