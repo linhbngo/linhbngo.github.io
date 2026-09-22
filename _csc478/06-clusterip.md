@@ -8,18 +8,15 @@ mermaid:
   zoomable: true
 toc:
   - name: Motivation
-  - name: Services Overview
-  - name: Validate Before Deploying
+  - name: Deployment Validation
   - name: ClusterIP Services
   - name: NodePort Services
   - name: Multi-Service Communication
   - name: A Layered Troubleshooting Workflow
-  - name: FABRIC and RKE2 Networking Case Study
   - name: Kubernetes Networking Theory
-  - name: Cleanup and Review
 ---
 
-## Motivation
+## Overview
 
 - We already know how to create Pods and how Deployments keep the desired number of Pods running.
 - The next problem is connectivity:
@@ -39,7 +36,7 @@ Deployment  -> keeps Pods running
 Service     -> keeps applications connected to those Pods
 ```
 
-## Services Overview
+{% details Services overview %}
 
 Pods are intentionally replaceable. Consider a Deployment with two replicas:
 
@@ -64,7 +61,9 @@ ClusterIP: 10.43.140.207
 
 The Service selects Pods using labels.
 
-### Common Service types
+{% enddetails %}
+
+{% details Common Service types %}
 
 | Type | Reachability | Typical use |
 |---|---|---|
@@ -92,8 +91,6 @@ flowchart TB
     C1 --> B1
     C1 --> B2
 ```
-
-### Four ports that students frequently confuse
 
 Suppose we have:
 
@@ -131,13 +128,13 @@ The traffic path is:
 NodeIP:30080 -> Service:80 -> Pod:8080
 ```
 
----
+{% enddetails %}
 
-## Validate Before Deploying
+## Deployment Validation
 
 Kubernetes YAML is unforgiving about indentation and field placement. Before applying a manifest, validate it.
 
-### YAML syntax only
+{% details info YAML syntax %}
 
 If `yamllint` is installed:
 
@@ -145,7 +142,9 @@ If `yamllint` is installed:
 yamllint echo-deployment.yaml
 ```
 
-### Kubernetes client-side validation
+{% enddetails %}
+
+{% details info Kubernetes client-side validation %}
 
 ```bash
 kubectl apply --dry-run=client -f echo-deployment.yaml
@@ -153,7 +152,9 @@ kubectl apply --dry-run=client -f echo-deployment.yaml
 
 This parses the YAML and checks the resource structure known to `kubectl`.
 
-### Validate against the actual API server
+{% enddetails %}
+
+{% details info API server validation %}
 
 Once the cluster is running:
 
@@ -171,6 +172,11 @@ kubectl apply --dry-run=server -f app.yaml
 kubectl apply -f app.yaml
 ```
 
+{% enddetails %}
+
+
+{% details info Final validation %}
+
 After applying, do not assume success simply because `kubectl apply` returned without an error:
 
 ```bash
@@ -179,7 +185,8 @@ kubectl get pods -o wide
 kubectl describe deployment backend
 ```
 
----
+{% enddetails %}
+
 
 ## ClusterIP Services
 
@@ -209,7 +216,7 @@ are progressively more explicit DNS names.
 
 {% details ClusterIP Demo %}
 
-### Step 1: Create the backend Deployment
+{% details info Step 1: Create the backend Deployment %}
 
 Create `echo-deployment.yaml`:
 
@@ -253,9 +260,11 @@ Observe the Pods:
 kubectl get pods -l app=backend -o wide
 ```
 
-Record the Pod IP addresses. These addresses are useful for debugging, but they should not be used as permanent application endpoints.
+Record the Pod IP addresses for debugging purposes.
 
-### Step 2: Create a ClusterIP Service
+{% enddetails %}
+
+{% details info Step 2: Create a ClusterIP Service %}
 
 Create `echo-svc.yaml`:
 
@@ -287,7 +296,9 @@ kubectl get svc backend-svc -o wide
 kubectl describe svc backend-svc
 ```
 
-### Step 3: Verify that the Service found the Pods
+{% enddetails %}
+
+{% details info Step 3: Verify that the Service found the Pods %}
 
 Modern Kubernetes represents Service backends using **EndpointSlices**:
 
@@ -323,7 +334,10 @@ Inspect labels with:
 kubectl get pods --show-labels
 ```
 
-### Step 4: Test Service DNS from inside the cluster
+{% enddetails %}
+
+
+{% details info Step 4: Test Service DNS from inside the cluster %}
 
 Create a temporary curl Pod:
 
@@ -348,7 +362,9 @@ Exit when finished:
 exit
 ```
 
-### Step 5: Compare Service and direct-Pod connectivity
+{% enddetails %}
+
+{% details info Step 5: Compare Service and direct-Pod connectivity %}
 
 Get the Pod addresses:
 
@@ -369,7 +385,7 @@ The first tests CNI Pod networking directly. The second also tests Service routi
 
 {% enddetails %}
 
----
+{% enddetails %}
 
 ## NodePort Services
 
@@ -710,7 +726,6 @@ curl -v --connect-timeout 5 http://192.168.1.1:30080/
 
 {% enddetails %}
 
----
 
 ## A Layered Troubleshooting Workflow
 
@@ -829,284 +844,6 @@ For kube-proxy rules on an iptables-based cluster:
 sudo iptables-save | grep KUBE
 sudo iptables-save | grep 30080
 ```
-
----
-
-## FABRIC and RKE2 Networking Case Study
-
-This section is based on failures observed while deploying RKE2/Canal across multiple FABRIC sites. The purpose is not to memorize workarounds; it is to learn how to reason from packet paths and system state.
-
-{% details RKE2 Canal: two networking components %}
-
-RKE2 uses Canal by default. Canal combines:
-
-- **Flannel**: overlay connectivity between nodes, normally using VXLAN.
-- **Calico**: local workload networking and network policy.
-
-A simplified path is:
-
-```text
-Pod on node1
-   |
- cali* veth
-   |
-node1
-   |
-flannel.1 VXLAN
-   |
-FABRIC dataplane network
-   |
-node2
-   |
- cali* veth
-   |
-Pod on node2
-```
-
-Useful inspection:
-
-```bash
-ip link | grep -E 'cali|flannel'
-ip route | grep 10.42
-```
-
-A VXLAN device often reports:
-
-```text
-state UNKNOWN
-```
-
-This is not automatically an error. For a virtual interface, focus instead on flags such as:
-
-```text
-UP, LOWER_UP
-```
-
-and on actual connectivity.
-
-{% enddetails %}
-
-{% details Failure 1: Flannel selected loopback %}
-
-The FABRIC nodes have more than one network identity:
-
-```text
-management network        -> SSH / infrastructure access
-FABRIC L2 dataplane       -> 192.168.1.0/24 for the Kubernetes cluster
-```
-
-A problematic Flannel configuration used:
-
-```text
---iface-can-reach=192.168.1.1
-```
-
-On `node1`, however:
-
-```bash
-ip route get 192.168.1.1
-```
-
-returned:
-
-```text
-local 192.168.1.1 dev lo src 192.168.1.1
-```
-
-Flannel therefore selected `lo` instead of the FABRIC dataplane NIC.
-
-The resulting clue was:
-
-```text
-lo          mtu 65536
-flannel.1   mtu 65486
-```
-
-VXLAN subtracts roughly 50 bytes of overhead, so `65486` was a strong sign that the overlay had been built on loopback.
-
-A better route-selection probe is an unused address on the dataplane subnet:
-
-```bash
-ip route get 192.168.1.254
-```
-
-which should produce something like:
-
-```text
-192.168.1.254 dev enp7s0 src 192.168.1.1
-```
-
-Then Flannel can use:
-
-```text
---iface-can-reach=192.168.1.254
-```
-
-A healthy result on a 1500-byte underlay is typically:
-
-```text
-enp7s0      mtu 1500
-flannel.1   mtu 1450
-```
-
-The general lesson is:
-
-> On a multi-interface system, never assume automatic interface selection chose the network you intended.
-
-{% enddetails %}
-
-{% details Failure 2: Local Pod receives traffic but cannot reply %}
-
-A particularly useful test is direct Pod connectivity:
-
-```bash
-curl http://10.42.0.10:80
-```
-
-In one failure, `tcpdump` on the host-side Calico veth showed:
-
-```text
-host -> pod: ICMP request / TCP SYN
-pod  -> ?:   ARP who-has 169.254.1.1
-```
-
-The Pod had this routing table:
-
-```text
-default via 169.254.1.1 dev eth0
-169.254.1.1 dev eth0 scope link
-```
-
-Calico intentionally uses `169.254.1.1` as a virtual next-hop gateway. The host-side `cali*` interface normally has:
-
-```bash
-sysctl net.ipv4.conf.<cali-interface>.proxy_arp
-```
-
-set to:
-
-```text
-1
-```
-
-The host can therefore answer the Pod's ARP request without literally assigning `169.254.1.1` to each interface.
-
-On some FABRIC sites:
-
-```bash
-ip route get 169.254.1.1
-```
-
-worked immediately.
-
-On others it returned:
-
-```text
-RTNETLINK answers: Network is unreachable
-```
-
-A diagnostic route made Linux's proxy-ARP behavior work, after which the Pod could return traffic.
-
-Useful commands:
-
-```bash
-ip route get 169.254.1.1
-
-for f in /proc/sys/net/ipv4/conf/cali*/proxy_arp; do
-    echo "$f = $(cat "$f")"
-done
-```
-
-Packet capture is especially useful:
-
-```bash
-sudo tcpdump -nni <cali-interface> 'arp or icmp or tcp port 80'
-```
-
-Healthy proxy-ARP behavior looks like:
-
-```text
-ARP Request who-has 169.254.1.1 tell 10.42.0.x
-ARP Reply   169.254.1.1 is-at ee:ee:ee:ee:ee:ee
-```
-
-{% enddetails %}
-
-{% details Failure 3: Canal cannot initialize because it needs the Service network %}
-
-Another failure occurred before the CNI was initialized. The Canal `install-cni` init container reported:
-
-```text
-Unable to create token for CNI kubeconfig
-Post "https://10.43.0.1:443/...":
-dial tcp 10.43.0.1:443: connect: network is unreachable
-```
-
-This is a bootstrap dependency:
-
-```text
-install-cni needs Kubernetes API
-        |
-        v
-tries Kubernetes Service IP 10.43.0.1
-        |
-        v
-Service networking is not usable yet
-        |
-        v
-CNI cannot finish initializing
-```
-
-Inspect this type of failure with:
-
-```bash
-kubectl -n kube-system get pods -o wide
-kubectl -n kube-system describe pod <rke2-canal-pod>
-kubectl -n kube-system logs <rke2-canal-pod> -c install-cni --previous
-```
-
-In the FABRIC RKE2 provisioning used for this course, the bootstrap can be made deterministic by pointing Canal at the Kubernetes API through the known dataplane server address rather than relying on the Service ClusterIP during initialization.
-
-The general lesson is:
-
-> A component may fail not because its final network design is wrong, but because it needs that network before the network itself has finished bootstrapping.
-
-{% enddetails %}
-
-{% details Failure 4: Resource checks can become stale %}
-
-FABRIC resources are shared and dynamic. A site can appear to have enough cores when checked, but reservation can still fail moments later:
-
-```text
-Insufficient resources : [core]
-```
-
-This is a classic check-then-use race. A resource check is useful, but `slice.submit()` must still be treated as an operation that can fail.
-
-For automated site testing:
-
-```python
-try:
-    slice.submit(progress=False)
-except Exception as e:
-    if "Insufficient resources" in str(e):
-        print(f"{siteName}: insufficient resources, skipping")
-    else:
-        print(f"{siteName}: submission failed: {e}")
-    continue
-```
-
-Keep infrastructure availability separate from Kubernetes compatibility:
-
-```text
-PASS      -> slice launched and RKE2/network test succeeded
-SKIPPED   -> FABRIC lacked resources
-FAIL      -> slice launched but Kubernetes/network test failed
-```
-
-{% enddetails %}
-
----
 
 ## Kubernetes Networking Theory
 
@@ -1285,39 +1022,3 @@ flannel.1  -> remote Pod subnet over the overlay
 - **Canal**: combines Flannel networking with Calico policy/workload integration; this is the default CNI in RKE2.
 
 {% enddetails %}
-
-{% details Suggested Readings %}
-
-- [Kubernetes Services](https://kubernetes.io/docs/concepts/services-networking/service/)
-- [Kubernetes Networking Model](https://kubernetes.io/docs/concepts/services-networking/)
-- [Container Network Interface specification](https://github.com/containernetworking/cni)
-- [RKE2 Network Options](https://docs.rke2.io/networking/basic_network_options)
-- [RKE2 Known Issues](https://docs.rke2.io/known_issues)
-- [Calico FAQ: 169.254.1.1 and proxy ARP](https://docs.tigera.io/calico/latest/reference/faq)
-
-{% enddetails %}
-
----
-
-## Cleanup and Review
-
-Delete the lab resources when finished:
-
-```bash
-kubectl delete deployment backend quote time frontend --ignore-not-found
-kubectl delete service backend-svc backend-nodeport quote-svc time-svc frontend-svc --ignore-not-found
-kubectl delete pod curl-test nginx-node1 nginx-node2 --ignore-not-found
-```
-
-### Review questions
-
-1. Why should an application normally call `backend-svc` instead of a backend Pod IP?
-2. What is the difference between `port`, `targetPort`, and `nodePort`?
-3. If `curl <PodIP>:80` works but `curl <ClusterIP>:80` fails, which layer should you investigate next?
-4. If a NodePort Service displays `80:30080/TCP`, which port should be used with the Pod IP? Which with the node IP?
-5. Why can `flannel.1` show `state UNKNOWN` without being broken?
-6. What did an MTU of `65486` reveal when Flannel accidentally selected loopback?
-7. Why does Calico use `169.254.1.1` inside Pods?
-8. Why can a CNI bootstrap failure involving `10.43.0.1` create a circular dependency?
-9. Why is a FABRIC resource check not a guarantee that `slice.submit()` will succeed?
-10. Why is direct Pod connectivity a better first networking test than immediately debugging NodePort?
