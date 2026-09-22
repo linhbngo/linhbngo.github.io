@@ -102,7 +102,11 @@ nodePort      = 30080  Port exposed on eligible Kubernetes node addresses
 </pre></td> <td class="rouge-code"><pre>NodeIP:30080 -&gt; Service:80 -&gt; Pod:8080
 </pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="deployment-validation">Deployment Validation</h2> <p>Kubernetes YAML is unforgiving about indentation and field placement. Before applying a manifest, validate it.</p> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>YAML syntax</summary> <p>If <code class="language-plaintext highlighter-rouge">yamllint</code> is installed:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>yamllint echo-deployment.yaml
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">-y</span> yamllint
+yamllint echo-deployment.yaml
 </pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Kubernetes client-side validation</summary> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-f</span> echo-deployment.yaml
@@ -238,13 +242,7 @@ kubectl describe svc backend-svc
 </pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">--show-labels</span>
 </pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 4: Test Service DNS from inside the cluster</summary> <p>Create a temporary curl Pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td> <td class="rouge-code"><pre>kubectl run curl-test <span class="se">\</span>
-  <span class="nt">--image</span><span class="o">=</span>curlimages/curl <span class="se">\</span>
-  <span class="nt">--restart</span><span class="o">=</span>Never <span class="se">\</span>
-  <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--</span> sh
+</pre></td> <td class="rouge-code"><pre>kubectl run curl-test <span class="nt">--image</span><span class="o">=</span>curlimages/curl <span class="nt">--restart</span><span class="o">=</span>Never <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--</span> sh
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>Inside the Pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -258,7 +256,7 @@ curl http://backend-svc.default.svc.cluster.local
 </pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 5: Compare Service and direct-Pod connectivity</summary> <p>Get the Pod addresses:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>backend <span class="nt">-o</span> wide
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>From a temporary curl Pod, compare:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Launch the temporary curl pod above again and compare:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td> <td class="rouge-code"><pre>curl http://&lt;POD-IP&gt;:80
@@ -289,15 +287,7 @@ ClusterIP:port
 selected Pod:targetPort
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>For our FABRIC RKE2 environment, test NodePort against the deliberately configured <strong>dataplane node IP</strong>, such as <code class="language-plaintext highlighter-rouge">192.168.1.1</code>, rather than assuming that <code class="language-plaintext highlighter-rouge">127.0.0.1</code> is equivalent. Loopback NodePort behavior depends on kube-proxy mode and configuration.</p> </details> <details class="details details--default" data-variant="default"><summary>NodePort Hands-On</summary> <h3 id="option-1-create-a-nodeport-imperatively">Option 1: Create a NodePort imperatively</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td> <td class="rouge-code"><pre>kubectl expose deployment backend <span class="se">\</span>
-  <span class="nt">--name</span><span class="o">=</span>backend-nodeport <span class="se">\</span>
-  <span class="nt">--type</span><span class="o">=</span>NodePort <span class="se">\</span>
-  <span class="nt">--port</span><span class="o">=</span>80 <span class="se">\</span>
-  <span class="nt">--target-port</span><span class="o">=</span>80
+</pre></td> <td class="rouge-code"><pre>kubectl expose deployment backend <span class="nt">--name</span><span class="o">=</span>backend-nodeport <span class="nt">--type</span><span class="o">=</span>NodePort <span class="nt">--port</span><span class="o">=</span>80 <span class="nt">--target-port</span><span class="o">=</span>80
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect the assigned port:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>kubectl get svc backend-nodeport
@@ -314,7 +304,7 @@ NodePort       = 31642
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>Test from a node or another reachable host:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>curl http://192.168.1.1:31642
-</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="option-2-specify-a-fixed-nodeport">Option 2: Specify a fixed NodePort</h3> <p>For repeatable labs, a fixed port can be easier:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="option-2-specify-a-fixed-nodeport">Option 2: Specify a fixed NodePort</h3> <p>For repeatable labs, a fixed port can be easier. Create the following file called <code class="language-plaintext highlighter-rouge">backend-nodeport.yaml</code>.</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -338,7 +328,7 @@ NodePort       = 31642
   <span class="na">ports</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
       <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
-      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30080</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">38080</span>
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate before deployment:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -346,16 +336,12 @@ NodePort       = 31642
 kubectl apply <span class="nt">-f</span> backend-nodeport.yaml
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>Then:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://192.168.1.1:30080/
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://192.168.1.1:38088/
 </pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="inspect-what-backs-the-service">Inspect what backs the Service</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
-3
-4
 </pre></td> <td class="rouge-code"><pre>kubectl get svc backend-nodeport <span class="nt">-o</span> wide
-kubectl get endpointslices <span class="se">\</span>
-  <span class="nt">-l</span> kubernetes.io/service-name<span class="o">=</span>backend-nodeport <span class="se">\</span>
-  <span class="nt">-o</span> wide
+kubectl get endpointslices <span class="nt">-l</span> kubernetes.io/service-name<span class="o">=</span>backend-nodeport <span class="nt">-o</span> wide
 </pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/clusterip/expose-nodeport-480.webp 480w,/assets/img/courses/csc478/clusterip/expose-nodeport-800.webp 800w,/assets/img/courses/csc478/clusterip/expose-nodeport-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/clusterip/expose-nodeport.png" width="100%" height="auto" style=" max-width: 50%; " data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <h2 id="multi-service-communication">Multi-Service Communication</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <p>Real applications usually contain multiple services. The important design principle is:</p> <blockquote> <p>Internal components communicate through Service names, not through Pod IP addresses.</p> </blockquote> <p>We will build three components:</p> <ul> <li> <strong>Quote Service</strong>: provides text.</li> <li> <strong>Time Service</strong>: provides the current server time.</li> <li> <strong>Frontend Service</strong>: calls both internal Services and combines their responses.</li> </ul> <p>Only the frontend needs external exposure.</p> </details> <details class="details details--default" data-variant="default"><summary>Quote of the Day App</summary> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Architecture</summary> <pre><code class="language-mermaid">flowchart TB
     User["External client"] --&gt;|"NodeIP:NodePort"| FS["frontend-svc\nNodePort"]
     FS --&gt; FE["Frontend Pod\n:8080"]
