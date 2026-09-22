@@ -11,9 +11,6 @@ toc:
   - name: External fragmentation
 ---
 
-# Memory virtualization mechanism: address translation
-
----
 
 ## The questions
 
@@ -35,7 +32,6 @@ application can access?
 to keep track of and maintain control over free and used memory locations.
 
 {% enddetails %}
----
 
 
 ## Initial assumptions
@@ -87,7 +83,7 @@ physical address = virtual address + base
 
 {% enddetails %}
 {% enddetails %}
----
+
 
 ## Initial assumptions
 
@@ -147,7 +143,7 @@ between the stack and the heap?*
     - **External fragmentation** 
 
 {% enddetails %}
----
+
 
 ## External fragmentation:
 

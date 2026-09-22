@@ -9,68 +9,174 @@ mermaid:
 toc:
   - name: Motivation
   - name: Services Overview
+  - name: Validate Before Deploying
   - name: ClusterIP Services
   - name: NodePort Services
   - name: Multi-Service Communication
+  - name: A Layered Troubleshooting Workflow
+  - name: FABRIC and RKE2 Networking Case Study
   - name: Kubernetes Networking Theory
----
-# ClusterIP, NodePort, and Multi-Service Communication
-
+  - name: Cleanup and Review
 ---
 
 ## Motivation
 
-- We learned about Pods and Deployments, the unit of execution and how to scale/manage them.
-- We also briefly touched on Services. 
-    - How do we move move from `running apps` to  `connecting apps`.
-- Services in Kubernetes provide stable networking endpoints for ephemeral pods.
-- Two important service types:
-    - ClusterIP: Internal access within the cluster.
-    - NodePort: External access to services from outside the cluster.
+- We already know how to create Pods and how Deployments keep the desired number of Pods running.
+- The next problem is connectivity:
+    - Pod IP addresses are ephemeral.
+    - A restarted Pod may receive a new IP address.
+    - A scaled Deployment may have several interchangeable Pods.
+- Applications therefore should not normally connect directly to a particular Pod IP.
+- Kubernetes **Services** provide stable network identities in front of changing sets of Pods.
+- In this lecture we focus on two Service types:
+    - **ClusterIP**: stable access from inside the cluster.
+    - **NodePort**: access through a port on a Kubernetes node.
 
----
+A useful mental model is:
+
+```text
+Deployment  -> keeps Pods running
+Service     -> keeps applications connected to those Pods
+```
 
 ## Services Overview
 
-- Pods get dynamic IPs that can change when restarted.
-- Services provide:
-    - Stable DNS names (e.g., my-service.default.svc.cluster.local)
-    - Load balancing across pod replicas
-- Service types:
-    - ClusterIP: Internal only (default).
-    - NodePort: Exposes service on a static port on each node.
-    - LoadBalancer: Cloud provider managed (beyond today’s scope).
+Pods are intentionally replaceable. Consider a Deployment with two replicas:
 
+```text
+backend Deployment
+    |
+    +-- backend Pod A   10.42.0.8
+    +-- backend Pod B   10.42.1.4
+```
+
+If Pod A is recreated, its replacement may become `10.42.0.12`. A frontend that hard-codes `10.42.0.8` will break.
+
+A Service provides a stable abstraction:
+
+```text
+backend-svc
+ClusterIP: 10.43.140.207
+        |
+        +--> backend Pod A
+        +--> backend Pod B
+```
+
+The Service selects Pods using labels.
+
+### Common Service types
+
+| Type | Reachability | Typical use |
+|---|---|---|
+| `ClusterIP` | Inside the cluster | Backend APIs, databases, internal services |
+| `NodePort` | Through a port on node IPs | Labs, simple external exposure, debugging |
+| `LoadBalancer` | External load balancer | Cloud-provider production exposure |
+
+`ClusterIP` is the default Service type. A `NodePort` Service also receives a ClusterIP; NodePort adds another way to reach the same Service.
 
 ```mermaid
 flowchart TB
     subgraph Cluster["Kubernetes Cluster"]
-        subgraph Pods["Pods"]
-            B1["Backend Pod 1"]
-            B2["Backend Pod 2"]
+        subgraph Pods["Backend Pods"]
+            B1["Backend Pod 1\n10.42.0.x:80"]
+            B2["Backend Pod 2\n10.42.1.x:80"]
         end
-        subgraph ClusterIPService["Service: ClusterIP"]
-            C1["Virtual IP\n(10.x.x.x)"]
-        end
-        subgraph NodePortService["Service: NodePort"]
-            N1["ClusterIP\n+ NodePort"]
-        end
+
+        C1["ClusterIP Service\n10.43.x.x:80"]
+        N1["NodePort\nNodeIP:30080"]
     end
 
-    %% ClusterIP flow
-    ClientIn["Internal Pod (curl)"] -->|"DNS: backend-svc"| C1 --> B1
+    Internal["Internal Pod"] -->|"backend-svc:80"| C1
+    External["External client"] -->|"NodeIP:30080"| N1
+    N1 --> C1
+    C1 --> B1
     C1 --> B2
+```
 
-    %% NodePort flow
-    ExternalClient["External Client\n(Browser or curl)"] -->|"http://NodeIP:Port"| N1 --> B1
-    N1 --> B2
+### Four ports that students frequently confuse
 
-    %% Styling
-    classDef cluster fill:#f0f8ff,stroke:#4682b4,stroke-width:2px;
-    classDef service fill:#ffe4b5,stroke:#d2691e,stroke-width:2px;
-    class Cluster,Pods cluster
-    class ClusterIPService,NodePortService service
+Suppose we have:
 
+```yaml
+containers:
+  - name: backend
+    ports:
+      - containerPort: 8080
+```
+
+and:
+
+```yaml
+ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30080
+```
+
+Then:
+
+```text
+containerPort = 8080   Documentation of the application's container port
+
+targetPort    = 8080   Port on the selected Pods to which the Service forwards
+
+port          = 80     Port exposed by the Service / ClusterIP
+
+nodePort      = 30080  Port exposed on eligible Kubernetes node addresses
+```
+
+The traffic path is:
+
+```text
+NodeIP:30080 -> Service:80 -> Pod:8080
+```
+
+---
+
+## Validate Before Deploying
+
+Kubernetes YAML is unforgiving about indentation and field placement. Before applying a manifest, validate it.
+
+### YAML syntax only
+
+If `yamllint` is installed:
+
+```bash
+yamllint echo-deployment.yaml
+```
+
+### Kubernetes client-side validation
+
+```bash
+kubectl apply --dry-run=client -f echo-deployment.yaml
+```
+
+This parses the YAML and checks the resource structure known to `kubectl`.
+
+### Validate against the actual API server
+
+Once the cluster is running:
+
+```bash
+kubectl apply --dry-run=server -f echo-deployment.yaml
+```
+
+This asks the API server to validate the object without storing it.
+
+A useful workflow is:
+
+```bash
+kubectl apply --dry-run=client -f app.yaml
+kubectl apply --dry-run=server -f app.yaml
+kubectl apply -f app.yaml
+```
+
+After applying, do not assume success simply because `kubectl apply` returned without an error:
+
+```bash
+kubectl get deployments
+kubectl get pods -o wide
+kubectl describe deployment backend
 ```
 
 ---
@@ -79,13 +185,33 @@ flowchart TB
 
 {% details Concept %}
 
-- Internal communication between pods.
-- Example: Frontend pod calls a backend service by DNS.
+A ClusterIP Service provides:
+
+- a stable virtual IP address;
+- a stable DNS name;
+- a logical endpoint in front of one or more Pods;
+- traffic distribution among healthy endpoints.
+
+Applications normally use the Service DNS name, not the ClusterIP itself.
+
+For a Service named `backend-svc` in the `default` namespace:
+
+```text
+backend-svc
+backend-svc.default
+backend-svc.default.svc
+backend-svc.default.svc.cluster.local
+```
+
+are progressively more explicit DNS names.
 
 {% enddetails %}
+
 {% details ClusterIP Demo %}
 
-- Create and deploy a backend Pod Deployment (simple HTTP echo app) called `echo-deployment.yaml`:
+### Step 1: Create the backend Deployment
+
+Create `echo-deployment.yaml`:
 
 ```yaml
 apiVersion: apps/v1
@@ -94,27 +220,44 @@ metadata:
   name: backend
 spec:
   replicas: 2
-selector:
-  matchLabels:
-    app: backend
-template:
-  metadata:
-    labels:
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
         app: backend
-  spec:
-    containers:
-    - name: backend
-      image: nginxdemos/hello:plain-text
-      ports:
-      - containerPort: 80
+    spec:
+      containers:
+        - name: backend
+          image: nginxdemos/hello:plain-text
+          ports:
+            - containerPort: 80
 ```
+
+Validate it first:
+
+```bash
+kubectl apply --dry-run=client -f echo-deployment.yaml
+```
+
+Then deploy:
 
 ```bash
 kubectl apply -f echo-deployment.yaml
 ```
 
-- Let's expose it with a ClusterIP service. 
-    - Create and deploy a service manifest called `echo-svc.yaml`. 
+Observe the Pods:
+
+```bash
+kubectl get pods -l app=backend -o wide
+```
+
+Record the Pod IP addresses. These addresses are useful for debugging, but they should not be used as permanent application endpoints.
+
+### Step 2: Create a ClusterIP Service
+
+Create `echo-svc.yaml`:
 
 ```yaml
 apiVersion: v1
@@ -126,89 +269,264 @@ spec:
     app: backend
   ports:
     - port: 80
-    targetPort: 80
+      targetPort: 80
 ```
+
+Validate and deploy:
 
 ```bash
-kubectl apply -f echo-deployment.yaml
+kubectl apply --dry-run=client -f echo-svc.yaml
+kubectl apply --dry-run=server -f echo-svc.yaml
+kubectl apply -f echo-svc.yaml
 ```
 
-- Verify DNS-based resolution inside the cluster:
-    - Calling the servce `backend-svc` links us to the Pod. 
+Inspect the Service:
 
 ```bash
-kubectl run curl --image=alpine -it --rm
-# inside pod:
-apk update
-apk add curl
-curl backend-svc
+kubectl get svc backend-svc -o wide
+kubectl describe svc backend-svc
 ```
 
-- Observe how curl can return results from different pods. 
+### Step 3: Verify that the Service found the Pods
+
+Modern Kubernetes represents Service backends using **EndpointSlices**:
+
+```bash
+kubectl get endpointslices -l kubernetes.io/service-name=backend-svc -o wide
+```
+
+Compare those addresses with:
+
+```bash
+kubectl get pods -l app=backend -o wide
+```
+
+If the Service has no endpoints, the most common cause is a mismatch between:
+
+```yaml
+spec:
+  selector:
+    app: backend
+```
+
+and the Pod labels:
+
+```yaml
+metadata:
+  labels:
+    app: backend
+```
+
+Inspect labels with:
+
+```bash
+kubectl get pods --show-labels
+```
+
+### Step 4: Test Service DNS from inside the cluster
+
+Create a temporary curl Pod:
+
+```bash
+kubectl run curl-test \
+  --image=curlimages/curl \
+  --restart=Never \
+  -it --rm -- sh
+```
+
+Inside the Pod:
+
+```bash
+nslookup backend-svc
+curl http://backend-svc
+curl http://backend-svc.default.svc.cluster.local
+```
+
+Exit when finished:
+
+```bash
+exit
+```
+
+### Step 5: Compare Service and direct-Pod connectivity
+
+Get the Pod addresses:
+
+```bash
+kubectl get pods -l app=backend -o wide
+```
+
+From a temporary curl Pod, compare:
+
+```bash
+curl http://<POD-IP>:80
+curl http://backend-svc:80
+```
+
+The first tests CNI Pod networking directly. The second also tests Service routing and DNS.
 
 {% include figure.liquid path="assets/img/courses/csc478/clusterip/multi-pods.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 ---
 
 ## NodePort Services
 
 {% details Concept %}
 
+A NodePort Service exposes a Service through a port on eligible node addresses.
 
-- Makes service accessible from outside cluster.
-- Kubernetes opens a static port (30000–32767) on all nodes.
+The default NodePort range is:
+
+```text
+30000-32767
+```
+
+A NodePort Service still has a ClusterIP. Conceptually:
+
+```text
+client
+  |
+  v
+NodeIP:NodePort
+  |
+  v
+ClusterIP:port
+  |
+  v
+selected Pod:targetPort
+```
+
+For our FABRIC RKE2 environment, test NodePort against the deliberately configured **dataplane node IP**, such as `192.168.1.1`, rather than assuming that `127.0.0.1` is equivalent. Loopback NodePort behavior depends on kube-proxy mode and configuration.
 
 {% enddetails %}
 
-{% details NodePort %}
+{% details NodePort Hands-On %}
 
-- Manually expose the backend service externally:
+### Option 1: Create a NodePort imperatively
 
 ```bash
-kubectl expose deployment backend --name=backend-nodeport --type=NodePort --port=80 --target-port=80
+kubectl expose deployment backend \
+  --name=backend-nodeport \
+  --type=NodePort \
+  --port=80 \
+  --target-port=80
 ```
 
-- Check service details:
+Inspect the assigned port:
 
 ```bash
 kubectl get svc backend-nodeport
 ```
 
-- You wil be assigned a random port between 30000 and 32767. An example output could be:
+Example:
+
+```text
+NAME               TYPE       CLUSTER-IP      PORT(S)
+backend-nodeport   NodePort   10.43.120.50    80:31642/TCP
+```
+
+Here:
+
+```text
+ClusterIP port = 80
+NodePort       = 31642
+```
+
+Test from a node or another reachable host:
+
+```bash
+curl http://192.168.1.1:31642
+```
+
+### Option 2: Specify a fixed NodePort
+
+For repeatable labs, a fixed port can be easier:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: backend
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
+```
+
+Validate before deployment:
+
+```bash
+kubectl apply --dry-run=server -f backend-nodeport.yaml
+kubectl apply -f backend-nodeport.yaml
+```
+
+Then:
+
+```bash
+curl -v --connect-timeout 5 http://192.168.1.1:30080/
+```
+
+### Inspect what backs the Service
+
+```bash
+kubectl get svc backend-nodeport -o wide
+kubectl get endpointslices \
+  -l kubernetes.io/service-name=backend-nodeport \
+  -o wide
+```
 
 {% include figure.liquid path="assets/img/courses/csc478/clusterip/expose-nodeport.png" max-width="50%" zoomable=true %}
 
-- On a different node, or even a node from a different experiment, runs:
-
-```bash
-# NODE_IP should be the hostname/IP address of the CloudLab node you are on. 
-# NODE_PORT is the value between 30000 and 32767 that Kubernetes give your backend-nodeport service
-curl NODE_IP:NODE_PORT
-```
-
 {% enddetails %}
+
+---
 
 ## Multi-Service Communication
 
 {% details Concept %}
 
-- In a real apps, multiple services are talking to each other.
+Real applications usually contain multiple services. The important design principle is:
+
+> Internal components communicate through Service names, not through Pod IP addresses.
+
+We will build three components:
+
+- **Quote Service**: provides text.
+- **Time Service**: provides the current server time.
+- **Frontend Service**: calls both internal Services and combines their responses.
+
+Only the frontend needs external exposure.
 
 {% enddetails %}
+
 {% details Quote of the Day App %}
 
 {% details info Architecture %}
 
-- API Service: returns some random quotes
-- Time Service: return current server time
-- Frontend Service: aggregate both responses and presents a combined message to the user. 
+```mermaid
+flowchart TB
+    User["External client"] -->|"NodeIP:NodePort"| FS["frontend-svc\nNodePort"]
+    FS --> FE["Frontend Pod\n:8080"]
+    FE -->|"http://quote-svc"| QS["quote-svc\nClusterIP :80"]
+    FE -->|"http://time-svc"| TS["time-svc\nClusterIP :80"]
+    QS --> Q1["Quote Pod 1 :80"]
+    QS --> Q2["Quote Pod 2 :80"]
+    TS --> T1["Time Pod :8080"]
+```
+
+Notice that the frontend does **not** know the Pod IPs for quote or time. It only knows their Service names.
 
 {% enddetails %}
-{% details info API Service: quote %}
 
+{% details info Quote Service %}
 
-- Create and deploy a deployment manifest called `quote-deployment.yaml`
+Create `quote.yaml`:
 
 ```yaml
 apiVersion: apps/v1
@@ -226,16 +544,10 @@ spec:
         app: quote
     spec:
       containers:
-      - name: quote
-        image: ealen/echo-server
-        env:
-        - name: QUOTES
-          value: |
-            "The journey of a thousand miles begins with a single step."
-            "What you do today can improve all your tomorrows."
-            "In the middle of difficulty lies opportunity."
-        ports:
-        - containerPort: 80
+        - name: quote
+          image: nginxdemos/hello:plain-text
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -245,14 +557,20 @@ spec:
   selector:
     app: quote
   ports:
-  - port: 80
-    targetPort: 80
+    - port: 80
+      targetPort: 80
+```
+
+```bash
+kubectl apply --dry-run=server -f quote.yaml
+kubectl apply -f quote.yaml
 ```
 
 {% enddetails %}
+
 {% details info Time Service %}
 
-- Create and deploy a deployment manifest called `time-deployment.yaml`
+Create `time.yaml`:
 
 ```yaml
 apiVersion: apps/v1
@@ -264,23 +582,23 @@ spec:
   selector:
     matchLabels:
       app: time
-template:
+  template:
     metadata:
       labels:
         app: time
     spec:
       containers:
-      - name: time
-        image: busybox
-        command: ["sh","-c"]
-        args:
-          - |
-            while true; do
-            printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n$(date)\n" \
-            | nc -l -p 8080 -s 0.0.0.0;
-            done
-        ports:
-        - containerPort: 8080
+        - name: time
+          image: busybox
+          command: ["sh", "-c"]
+          args:
+            - |
+              while true; do
+                printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nConnection: close\r\n\r\n$(date)\n" \
+                | nc -l -p 8080 -s 0.0.0.0;
+              done
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -290,15 +608,20 @@ spec:
   selector:
     app: time
   ports:
-  - port: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 8080
+```
+
+```bash
+kubectl apply --dry-run=server -f time.yaml
+kubectl apply -f time.yaml
 ```
 
 {% enddetails %}
+
 {% details info Frontend Service %}
 
-
-- Create and deploy a deployment manifest called `time-deployment.yaml`
+Create `frontend.yaml`:
 
 ```yaml
 apiVersion: apps/v1
@@ -316,19 +639,19 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend
-        image: busybox
-        command: ["sh","-c"]
-        args:
-          - |
-            while true; do
-            Q=$(wget -qO- http://quote-svc);
-            T=$(wget -qO- http://time-svc);
-            printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nQuote: $Q\nTime: $T\n" \
-            | nc -l -p 8080 -s 0.0.0.0 ;
-            done
-        ports:
-        - containerPort: 8080
+        - name: frontend
+          image: busybox
+          command: ["sh", "-c"]
+          args:
+            - |
+              while true; do
+                Q=$(wget -qO- http://quote-svc);
+                T=$(wget -qO- http://time-svc);
+                printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nConnection: close\r\n\r\nQuote service:\n$Q\nTime: $T\n" \
+                | nc -l -p 8080 -s 0.0.0.0;
+              done
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -339,157 +662,662 @@ spec:
   selector:
     app: frontend
   ports:
-  - port: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 8080
+      nodePort: 30080
 ```
 
-{% enddetails %}
-Test these services with the following:
+Validate and deploy:
 
 ```bash
-kubectl get svc frontend-svc
-curl http://<NODE-IP>:<NODEPORT>
+kubectl apply --dry-run=server -f frontend.yaml
+kubectl apply -f frontend.yaml
 ```
 
-```mermaid
-flowchart TB
-%% User
-U["External User<br/>curl http://NodeIP:NodePort"]
+Inspect everything:
 
-%% NodePort Service
-subgraph Node["frontend-svc (Service: NodePort)"]
-    NP["NodePort: 31080<br/>(maps → targetPort 8080)"]
-end
+```bash
+kubectl get deployments
+kubectl get pods -o wide
+kubectl get svc
+kubectl get endpointslices
+```
 
-%% Frontend Pod
-subgraph Frontend["Frontend Pod"]
-    FE["containerPort: 8080<br/>(aggregator)"]
-end
+Test internal Services first:
 
-%% ClusterIP Services
-subgraph Services["ClusterIP Services (internal only)"]
-    QS["quote-svc<br/>targetPort 80"]
-    TS["time-svc<br/>targetPort 80"]
-end
+```bash
+kubectl run curl-test \
+  --image=curlimages/curl \
+  --restart=Never \
+  -it --rm -- sh
+```
 
-%% Quote Pods
-subgraph QuotePods["Quote Pods"]
-    Q1["containerPort: 80"]
-    Q2["containerPort: 80"]
-end
+Inside:
 
-%% Time Pod
-subgraph TimePod["Time Pod"]
-    T1["containerPort: 80"]
-end
+```bash
+curl http://quote-svc
+curl http://time-svc
+curl http://frontend-svc
+```
 
-%% Connections
-U --> NP --> FE
-FE --> QS
-FE --> TS
-QS --> Q1
-QS --> Q2
-TS --> T1
+Then test the NodePort from a FABRIC node:
 
-%% Styling
-classDef user fill:#f0f8ff,stroke:#4169e1,stroke-width:2px;
-classDef service fill:#fffacd,stroke:#daa520,stroke-width:2px;
-classDef pod fill:#f0fff0,stroke:#2e8b57,stroke-width:2px;
-class U user
-class Node,Services service
-class Frontend,QuotePods,TimePod pod
+```bash
+curl -v --connect-timeout 5 http://192.168.1.1:30080/
 ```
 
 {% enddetails %}
+
+{% enddetails %}
+
+---
+
+## A Layered Troubleshooting Workflow
+
+When a Service fails, do not begin by changing random firewall, MTU, or offload settings. Test one layer at a time.
+
+Suppose:
+
+```text
+Pod IP:      10.42.0.10
+ClusterIP:   10.43.140.207
+Node IP:     192.168.1.1
+NodePort:    30080
+```
+
+### Layer 1: Is the application actually running?
+
+```bash
+kubectl get pods -o wide
+kubectl logs <pod-name>
+kubectl exec <pod-name> -- wget -qO- http://127.0.0.1:80/
+```
+
+If localhost inside the Pod fails, the problem is the application/container, not Kubernetes networking.
+
+### Layer 2: Can the node reach a Pod directly?
+
+```bash
+curl -v --connect-timeout 5 http://10.42.0.10:80/
+```
+
+If this fails, investigate CNI/routing before looking at Services.
+
+### Layer 3: Can the ClusterIP Service be reached?
+
+```bash
+curl -v --connect-timeout 5 http://10.43.140.207:80/
+```
+
+Also verify Service endpoints:
+
+```bash
+kubectl get endpointslices \
+  -l kubernetes.io/service-name=backend-svc \
+  -o wide
+```
+
+If direct Pod access works but ClusterIP fails, investigate kube-proxy / Service rules.
+
+### Layer 4: Can the NodePort be reached?
+
+```bash
+curl -v --connect-timeout 5 http://192.168.1.1:30080/
+```
+
+If Pod and ClusterIP work but NodePort fails, investigate NodePort rules, eligible node addresses, and host firewall behavior.
+
+### Do not confuse ports
+
+For:
+
+```text
+80:30080/TCP
+```
+
+correct tests are:
+
+```bash
+curl http://<POD-IP>:80
+curl http://<CLUSTER-IP>:80
+curl http://<NODE-IP>:30080
+```
+
+These are **not** equivalent:
+
+```bash
+curl http://<POD-IP>:30080       # usually wrong
+curl http://<CLUSTER-IP>:30080   # usually wrong
+```
+
+### `curl` HTTP code `000`
+
+A command such as:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' http://192.168.1.1:30080/
+```
+
+returns `000` when curl never receives an HTTP response. During debugging, remove `-s` and use:
+
+```bash
+curl -v --connect-timeout 5 http://192.168.1.1:30080/
+```
+
+Distinguish:
+
+- `Connection refused`
+- `Connection timed out`
+- `Network is unreachable`
+
+They point to different layers.
+
+### Useful inspection commands
+
+```bash
+kubectl get pods -o wide
+kubectl get svc -o wide
+kubectl get endpointslices -o wide
+kubectl get nodes -o wide
+ip route
+ip addr
+```
+
+For kube-proxy rules on an iptables-based cluster:
+
+```bash
+sudo iptables-save | grep KUBE
+sudo iptables-save | grep 30080
+```
+
+---
+
+## FABRIC and RKE2 Networking Case Study
+
+This section is based on failures observed while deploying RKE2/Canal across multiple FABRIC sites. The purpose is not to memorize workarounds; it is to learn how to reason from packet paths and system state.
+
+{% details RKE2 Canal: two networking components %}
+
+RKE2 uses Canal by default. Canal combines:
+
+- **Flannel**: overlay connectivity between nodes, normally using VXLAN.
+- **Calico**: local workload networking and network policy.
+
+A simplified path is:
+
+```text
+Pod on node1
+   |
+ cali* veth
+   |
+node1
+   |
+flannel.1 VXLAN
+   |
+FABRIC dataplane network
+   |
+node2
+   |
+ cali* veth
+   |
+Pod on node2
+```
+
+Useful inspection:
+
+```bash
+ip link | grep -E 'cali|flannel'
+ip route | grep 10.42
+```
+
+A VXLAN device often reports:
+
+```text
+state UNKNOWN
+```
+
+This is not automatically an error. For a virtual interface, focus instead on flags such as:
+
+```text
+UP, LOWER_UP
+```
+
+and on actual connectivity.
+
+{% enddetails %}
+
+{% details Failure 1: Flannel selected loopback %}
+
+The FABRIC nodes have more than one network identity:
+
+```text
+management network        -> SSH / infrastructure access
+FABRIC L2 dataplane       -> 192.168.1.0/24 for the Kubernetes cluster
+```
+
+A problematic Flannel configuration used:
+
+```text
+--iface-can-reach=192.168.1.1
+```
+
+On `node1`, however:
+
+```bash
+ip route get 192.168.1.1
+```
+
+returned:
+
+```text
+local 192.168.1.1 dev lo src 192.168.1.1
+```
+
+Flannel therefore selected `lo` instead of the FABRIC dataplane NIC.
+
+The resulting clue was:
+
+```text
+lo          mtu 65536
+flannel.1   mtu 65486
+```
+
+VXLAN subtracts roughly 50 bytes of overhead, so `65486` was a strong sign that the overlay had been built on loopback.
+
+A better route-selection probe is an unused address on the dataplane subnet:
+
+```bash
+ip route get 192.168.1.254
+```
+
+which should produce something like:
+
+```text
+192.168.1.254 dev enp7s0 src 192.168.1.1
+```
+
+Then Flannel can use:
+
+```text
+--iface-can-reach=192.168.1.254
+```
+
+A healthy result on a 1500-byte underlay is typically:
+
+```text
+enp7s0      mtu 1500
+flannel.1   mtu 1450
+```
+
+The general lesson is:
+
+> On a multi-interface system, never assume automatic interface selection chose the network you intended.
+
+{% enddetails %}
+
+{% details Failure 2: Local Pod receives traffic but cannot reply %}
+
+A particularly useful test is direct Pod connectivity:
+
+```bash
+curl http://10.42.0.10:80
+```
+
+In one failure, `tcpdump` on the host-side Calico veth showed:
+
+```text
+host -> pod: ICMP request / TCP SYN
+pod  -> ?:   ARP who-has 169.254.1.1
+```
+
+The Pod had this routing table:
+
+```text
+default via 169.254.1.1 dev eth0
+169.254.1.1 dev eth0 scope link
+```
+
+Calico intentionally uses `169.254.1.1` as a virtual next-hop gateway. The host-side `cali*` interface normally has:
+
+```bash
+sysctl net.ipv4.conf.<cali-interface>.proxy_arp
+```
+
+set to:
+
+```text
+1
+```
+
+The host can therefore answer the Pod's ARP request without literally assigning `169.254.1.1` to each interface.
+
+On some FABRIC sites:
+
+```bash
+ip route get 169.254.1.1
+```
+
+worked immediately.
+
+On others it returned:
+
+```text
+RTNETLINK answers: Network is unreachable
+```
+
+A diagnostic route made Linux's proxy-ARP behavior work, after which the Pod could return traffic.
+
+Useful commands:
+
+```bash
+ip route get 169.254.1.1
+
+for f in /proc/sys/net/ipv4/conf/cali*/proxy_arp; do
+    echo "$f = $(cat "$f")"
+done
+```
+
+Packet capture is especially useful:
+
+```bash
+sudo tcpdump -nni <cali-interface> 'arp or icmp or tcp port 80'
+```
+
+Healthy proxy-ARP behavior looks like:
+
+```text
+ARP Request who-has 169.254.1.1 tell 10.42.0.x
+ARP Reply   169.254.1.1 is-at ee:ee:ee:ee:ee:ee
+```
+
+{% enddetails %}
+
+{% details Failure 3: Canal cannot initialize because it needs the Service network %}
+
+Another failure occurred before the CNI was initialized. The Canal `install-cni` init container reported:
+
+```text
+Unable to create token for CNI kubeconfig
+Post "https://10.43.0.1:443/...":
+dial tcp 10.43.0.1:443: connect: network is unreachable
+```
+
+This is a bootstrap dependency:
+
+```text
+install-cni needs Kubernetes API
+        |
+        v
+tries Kubernetes Service IP 10.43.0.1
+        |
+        v
+Service networking is not usable yet
+        |
+        v
+CNI cannot finish initializing
+```
+
+Inspect this type of failure with:
+
+```bash
+kubectl -n kube-system get pods -o wide
+kubectl -n kube-system describe pod <rke2-canal-pod>
+kubectl -n kube-system logs <rke2-canal-pod> -c install-cni --previous
+```
+
+In the FABRIC RKE2 provisioning used for this course, the bootstrap can be made deterministic by pointing Canal at the Kubernetes API through the known dataplane server address rather than relying on the Service ClusterIP during initialization.
+
+The general lesson is:
+
+> A component may fail not because its final network design is wrong, but because it needs that network before the network itself has finished bootstrapping.
+
+{% enddetails %}
+
+{% details Failure 4: Resource checks can become stale %}
+
+FABRIC resources are shared and dynamic. A site can appear to have enough cores when checked, but reservation can still fail moments later:
+
+```text
+Insufficient resources : [core]
+```
+
+This is a classic check-then-use race. A resource check is useful, but `slice.submit()` must still be treated as an operation that can fail.
+
+For automated site testing:
+
+```python
+try:
+    slice.submit(progress=False)
+except Exception as e:
+    if "Insufficient resources" in str(e):
+        print(f"{siteName}: insufficient resources, skipping")
+    else:
+        print(f"{siteName}: submission failed: {e}")
+    continue
+```
+
+Keep infrastructure availability separate from Kubernetes compatibility:
+
+```text
+PASS      -> slice launched and RKE2/network test succeeded
+SKIPPED   -> FABRIC lacked resources
+FAIL      -> slice launched but Kubernetes/network test failed
+```
+
+{% enddetails %}
+
 ---
 
 ## Kubernetes Networking Theory
 
 {% details Review: NAT %}
 
-- Network Address Translation (NAT) is a technique where a network device (typically a router or firewall) rewrites the source or destination IP address of packets as they pass through.
-- Why it exists:
-    - IPv4 has a limited address space: NAT lets many internal devices share a single public IP.
-    - Provides a layer of isolation/security by hiding internal addresses.
-- Types of NAT:
-    - SNAT (Source NAT): Rewrites the source IP of outbound traffic (e.g., your laptop 192.168.1.10 to public IP 203.0.113.5).
-    - DNAT (Destination NAT): Rewrites the destination IP of inbound traffic (e.g., packets to 203.0.113.5 to 192.168.1.10).
-- PAT (Port Address Translation, aka `masquerading`): Multiple devices share one public IP by mapping connections to different ports.   
-- In Kubernetes context:
-    - Kube-proxy may use NAT (via iptables/ipvs) to redirect Service ClusterIP to Pod IP.
-    - The Kubernetes networking model tries to minimize NAT inside the cluster: every Pod gets a unique, routable IP so pods can talk directly, no hidden rewrites. NAT is mostly used only at the cluster boundary (e.g., NodePort, LoadBalancer, egress to the Internet).
+Network Address Translation rewrites network-layer addressing as packets cross a boundary.
+
+Common forms:
+
+- **SNAT**: change the source address.
+- **DNAT**: change the destination address.
+- **PAT / masquerading**: combine address and port translation so multiple clients can share an address.
+
+Example:
 
 ```mermaid
 flowchart LR
-subgraph Private["Private Network (LAN)"]
-    A["Pod / Host<br/>192.168.1.10"]
-    B["Pod / Host<br/>192.168.1.11"]
-end
+    A["Host\n192.168.1.10"] -->|"Src=192.168.1.10"| SNAT["SNAT / masquerade"]
+    SNAT -->|"Src=203.0.113.5"| S["Internet server"]
+    S -->|"Dst=203.0.113.5"| DNAT["Connection tracking / reverse translation"]
+    DNAT -->|"Dst=192.168.1.10"| A
+```
 
-subgraph Router["Router / NAT Device"]
-    N1["Source NAT (SNAT)<br/>Change source 192.168.x.x → 203.0.113.5"]
-    N2["Destination NAT (DNAT)<br/>Change destination 203.0.113.5 → 192.168.1.10"]
-end
+In Kubernetes, NAT commonly appears in Service and egress handling. The Pod networking model itself aims to make Pod addresses directly meaningful within the cluster rather than placing every Pod behind a separate NAT boundary.
 
-subgraph Internet["Public Internet"]
-    S["Public Server<br/>198.51.100.20"]
-end
+{% enddetails %}
 
-%% Outbound
-A -->|"Outbound packet<br/>Src=192.168.1.10, Dst=198.51.100.20"| N1
-N1 -->|"Translated packet<br/>Src=203.0.113.5, Dst=198.51.100.20"| S
+{% details The Kubernetes Network Model %}
 
-%% Inbound
-S -->|"Inbound packet<br/>Dst=203.0.113.5"| N2
-N2 -->|"Translated packet<br/>Dst=192.168.1.10"| A
+At a conceptual level, Kubernetes expects:
 
-%% Styling
-classDef private fill:#f0fff0,stroke:#2e8b57,stroke-width:2px;
-classDef nat fill:#fffacd,stroke:#daa520,stroke-width:2px;
-classDef internet fill:#f0f8ff,stroke:#4169e1,stroke-width:2px;
-class Private private
-class Router nat
-class Internet internet
+- Pods can communicate with other Pods across nodes.
+- Nodes can communicate with Pods.
+- A Pod sees its own IP as the same IP other cluster participants use to address it.
+- Services provide stable virtual identities in front of changing Pod endpoints.
+
+That model allows application developers to think in terms of:
+
+```text
+frontend -> backend-svc
+```
+
+rather than:
+
+```text
+frontend -> discover Pod -> inspect host -> translate address -> connect
 ```
 
 {% enddetails %}
-{% details The Four Networking Requirements %}
 
-- NAT: Network Address Translation
-- [Per K8s design](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model), Kubernetes assumes a flat, non-NATted network between all entities:
-    - All pods can communicate with all other pods without NAT.
-    - All nodes can communicate with all pods without NAT.
-    - Pod IPs are the same inside and outside the pod. (No masquerading from the pod’s perspective).
-    - Services (ClusterIP, NodePort, LoadBalancer) are implemented via virtual IPs and iptables/ipvs rules that redirect traffic to backing pods.
-- This model makes things simple at the app level: each pod just gets an IP and DNS name, no special networking code.
-
-{% enddetails %}
 {% details How Services Work Under the Hood %}
 
-- ClusterIP: The kube-proxy component sets up iptables or ipvs rules to redirect traffic from the service’s virtual IP to one of the pod IPs behind it.
-- NodePort: Kube-proxy additionally opens a port (30000–32767) on each node, then DNATs traffic to the service ClusterIP.
+A Service object does not normally create a process that listens on the ClusterIP.
+
+Instead:
+
+1. The Service selector identifies matching Pods.
+2. Kubernetes maintains EndpointSlices containing backend addresses.
+3. kube-proxy (or another implementation of Service routing) programs the node dataplane.
+4. Packets addressed to the Service are redirected to one of the endpoints.
+
+For a NodePort Service:
+
+```text
+NodeIP:30080
+      |
+      v
+Service virtual IP:80
+      |
+      v
+PodIP:targetPort
+```
+
+Depending on the kube-proxy mode, rules may be implemented with iptables, nftables, or another dataplane mechanism.
+
+Inspect an iptables-based node with:
+
+```bash
+sudo iptables-save | grep KUBE-SERVICES
+sudo iptables-save | grep KUBE-NODEPORTS
+sudo iptables-save | grep 30080
+```
+
+Do not depend on `127.0.0.1:<NodePort>` as your primary NodePort test. Loopback NodePort support depends on kube-proxy mode and configuration. In this course, test the known FABRIC dataplane IP instead.
 
 {% enddetails %}
-{% details Container Networking Interface (CNI) %}
 
-- Kubernetes itself does not implement networking.
-- It relies on CNI plugins to configure pod networking.
-- CNI is a specification: containers call CNI when they’re created, and CNI sets up network interfaces, IP assignment, and routing.
-    - kubelet launches a pod and calls the configured CNI plugin.
-    - The plugin sets up a veth pair (virtual Ethernet) to connect the pod’s network namespace to the host.
-    - IP address is assigned (via IPAM plugin or cluster-wide allocator).
-    - Routes and bridges are created to connect pod-to-pod and pod-to-node traffic.
+{% details Container Network Interface (CNI) %}
+
+Kubernetes delegates Pod network setup to CNI plugins.
+
+When a Pod is created, the networking stack typically must:
+
+1. create a network namespace;
+2. create a veth pair;
+3. place one end in the Pod namespace;
+4. assign the Pod an IP address;
+5. install routes;
+6. connect the Pod to local and inter-node networking;
+7. remove that configuration when the Pod is deleted.
+
+A useful troubleshooting distinction is:
+
+```text
+Pod is Running
+```
+
+versus:
+
+```text
+Pod networking is actually functional
+```
+
+A container can be running while return routing, Service routing, or the overlay network is broken.
+
+If Pod deletion hangs with an error such as:
+
+```text
+KillPodSandboxError
+failed to destroy network for sandbox
+cni plugin not initialized
+```
+
+inspect CNI configuration and the CNI DaemonSet before assuming the workload itself is responsible.
 
 {% enddetails %}
+
+{% details RKE2 Canal %}
+
+For the RKE2 clusters used in this course, Canal combines:
+
+- Flannel for the inter-node overlay;
+- Calico for workload networking and policy.
+
+Useful commands:
+
+```bash
+kubectl -n kube-system get pods -o wide
+ip link | grep -E 'cali|flannel'
+ip route | grep 10.42
+```
+
+On a healthy two-node example:
+
+```text
+node1 local Pod subnet:  10.42.0.0/24
+node2 local Pod subnet:  10.42.1.0/24
+```
+
+Node1 may contain direct routes such as:
+
+```text
+10.42.0.10 dev caliXXXXXXXX scope link
+```
+
+and a remote route such as:
+
+```text
+10.42.1.0/24 via 10.42.1.0 dev flannel.1 onlink
+```
+
+The two route types represent different pieces of the path:
+
+```text
+cali*      -> local Pod attachment
+flannel.1  -> remote Pod subnet over the overlay
+```
+
+{% enddetails %}
+
 {% details Popular CNI Implementations %}
 
-- Flannel: Simple overlay network (VXLAN), flat layer-3 fabric.
-- Calico: Pure layer-3 networking with BGP; supports network policies.
-- Cilium: Uses eBPF for dataplane efficiency and fine-grained security.
-- Weave Net: Simple mesh overlay, encrypted by default.
+- **Flannel**: simple overlay networking, commonly VXLAN.
+- **Calico**: routed networking and network policy; may use several dataplane modes depending on configuration.
+- **Cilium**: eBPF-based networking, observability, and policy.
+- **Canal**: combines Flannel networking with Calico policy/workload integration; this is the default CNI in RKE2.
 
 {% enddetails %}
+
 {% details Suggested Readings %}
 
-- [The CNI Spec (Container Network Interface, CNCF project)](https://github.com/containernetworking/cni)
+- [Kubernetes Services](https://kubernetes.io/docs/concepts/services-networking/service/)
+- [Kubernetes Networking Model](https://kubernetes.io/docs/concepts/services-networking/)
+- [Container Network Interface specification](https://github.com/containernetworking/cni)
+- [RKE2 Network Options](https://docs.rke2.io/networking/basic_network_options)
+- [RKE2 Known Issues](https://docs.rke2.io/known_issues)
+- [Calico FAQ: 169.254.1.1 and proxy ARP](https://docs.tigera.io/calico/latest/reference/faq)
+
 {% enddetails %}
+
+---
+
+## Cleanup and Review
+
+Delete the lab resources when finished:
+
+```bash
+kubectl delete deployment backend quote time frontend --ignore-not-found
+kubectl delete service backend-svc backend-nodeport quote-svc time-svc frontend-svc --ignore-not-found
+kubectl delete pod curl-test nginx-node1 nginx-node2 --ignore-not-found
+```
+
+### Review questions
+
+1. Why should an application normally call `backend-svc` instead of a backend Pod IP?
+2. What is the difference between `port`, `targetPort`, and `nodePort`?
+3. If `curl <PodIP>:80` works but `curl <ClusterIP>:80` fails, which layer should you investigate next?
+4. If a NodePort Service displays `80:30080/TCP`, which port should be used with the Pod IP? Which with the node IP?
+5. Why can `flannel.1` show `state UNKNOWN` without being broken?
+6. What did an MTU of `65486` reveal when Flannel accidentally selected loopback?
+7. Why does Calico use `169.254.1.1` inside Pods?
+8. Why can a CNI bootstrap failure involving `10.43.0.1` create a circular dependency?
+9. Why is a FABRIC resource check not a guarantee that `slice.submit()` will succeed?
+10. Why is direct Pod connectivity a better first networking test than immediately debugging NodePort?

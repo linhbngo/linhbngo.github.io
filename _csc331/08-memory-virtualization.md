@@ -21,7 +21,6 @@ toc:
 
 {% details Early systems %}
 
-
 - Computers run **one job** at a time. 
 - The OS was preloaded into memory and consisted of a set of routines. 
 - There was one running program that uses the rest of memory. 
@@ -42,7 +41,6 @@ toc:
 (just like the early days ...).
 - This requires switching processes from memory.
 
-
 {% enddetails %}
 
 
@@ -61,6 +59,7 @@ toc:
 | DDR RAM      | 4GB-1TB | 80ns    |  
 
 {% enddetails %}
+
 {% details What we want to do %}
 
 - Leave processes in memory and let OS implement an efficient time sharing/switching 
@@ -88,19 +87,16 @@ mechanism.
     by the programmer.
     - `Code` (binary) of the program.
 
-<div class="grid cards" markdown>
+{% details info Address high to low %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/03.png" max-width="50%" zoomable=true %}
+{% enddetails %}
 
--   __Address high to low__
+{% details info Address low to high %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/04.png" max-width="50%" zoomable=true %}
+*Image taken from [Geeksforgeeks](https://www.geeksforgeeks.org/memory-layout-of-c-program/)*
+{% enddetails %}
 
-    {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/03.png" max-width="50%" zoomable=true %}
-
--   __Address low to high__ 
-
-    {% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/04.png" max-width="50%" zoomable=true %}
-    *Image taken from [Geeksforgeeks](https://www.geeksforgeeks.org/memory-layout-of-c-program/)*
-</div>
  
-
 ## Hands on: Where the stack grows?
 
 - Create `stacktest.c` inside the `user` directory, rebuild xv6.  
@@ -136,21 +132,16 @@ int main() {
 ```
 
 {% enddetails %}
-- Run `stacktest`. 
 
-```bash
-stacktest
+- Recompile `xv6-riscv` and run `stacktest`. 
 
 {% details Observe and discuss output %}
 
-
-{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/05.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/stacktest.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
----
 
 ## Hands on: where the heap grows?
-
 
 - Create `arraytest.c` inside the `user` directory, rebuild xv6.  
 
@@ -178,18 +169,15 @@ exit(0);
 ```
 
 {% enddetails %}
-- Run `arraytest`. 
 
-```bash
-arraytest
-```
+- Recompile `xv6-riscv` and run `arraytest`. 
 
 {% details Observe and discuss output %}
 
-
-{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/06.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc331/memory-virtualization/arraytest.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details How the heap grows %}
 
 {% details success Acknowledgement %}

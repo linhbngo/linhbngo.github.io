@@ -8,9 +8,9 @@ categories: technical
 hidden: true
 ---
 
-Illusion of Support
+I recently read an article that supported how AI was being fully integrated in a degree program. The article pointed out that cognitive offloading, which AI is `accused` of doing, has always been done before along side new technological advances. AI is just another tool in the shed that students need to learn how to fully control. While I agree with the statement that students need to learn how to work with and to control AI. On the other hand, I think that this relative comparison contains more nuances that cannot be conveyed as a quote in a short article. 
 
-cognitive extension
+## Cognitive offloading
 
 old tools are deterministic, AI tools are not. 
 High level of uncertainties. How to manage that in high stakes/high risks environment. 
