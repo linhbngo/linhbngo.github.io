@@ -4,7 +4,7 @@
       {
             "title": "ClusterIP, NodePort, and Multi-Service Communication",
             "description": "",
-            "published": "September 17, 2026",
+            "published": "September 22, 2026",
             "authors": [
               
             ],
@@ -23,35 +23,116 @@
               ]
             }
           }
-    </script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Linh</span> B. Ngo </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">teaching </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/csc-workshops/">Workshops and Tutorials</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc112/"><strong>Programming &amp; Data Science (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc331/"><strong>Operating Systems (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc402/"><strong>Software Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc478/"><strong>Cloud Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc578/"><strong>Cloud Systems Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc117/">AI For All: Fundamentals of Intelligent Systems</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc574/">Tiny Machine Learning (tinyML) (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/big-data-engr/">Big Data Engineering (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc418-587/">CSC 418/587 (WI25)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc468/">Introduction to Cloud (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc231/">Computer Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc302/">Computer Security II (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc466/">Distributed and Parallel Computing (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc496/">iOS App Development (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc568/">Cloud Computing Fundamentals (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc-agentic-ai/">Agentic AI (dev)</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill lecture-layout"> <d-title> <h1>ClusterIP, NodePort, and Multi-Service Communication</h1> <p></p> </d-title> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div> <a href="#motivation">Motivation</a> </div> <div> <a href="#services-overview">Services Overview</a> </div> <div> <a href="#clusterip-services">ClusterIP Services</a> </div> <div> <a href="#nodeport-services">NodePort Services</a> </div> <div> <a href="#multi-service-communication">Multi-Service Communication</a> </div> <div> <a href="#kubernetes-networking-theory">Kubernetes Networking Theory</a> </div> </nav> </d-contents> <h1 id="clusterip-nodeport-and-multi-service-communication">ClusterIP, NodePort, and Multi-Service Communication</h1> <hr> <h2 id="motivation">Motivation</h2> <ul> <li>We learned about Pods and Deployments, the unit of execution and how to scale/manage them.</li> <li>We also briefly touched on Services. <ul> <li>How do we move move from <code class="language-plaintext highlighter-rouge">running apps</code> to <code class="language-plaintext highlighter-rouge">connecting apps</code>.</li> </ul> </li> <li>Services in Kubernetes provide stable networking endpoints for ephemeral pods.</li> <li>Two important service types: <ul> <li>ClusterIP: Internal access within the cluster.</li> <li>NodePort: External access to services from outside the cluster.</li> </ul> </li> </ul> <hr> <h2 id="services-overview">Services Overview</h2> <ul> <li>Pods get dynamic IPs that can change when restarted.</li> <li>Services provide: <ul> <li>Stable DNS names (e.g., my-service.default.svc.cluster.local)</li> <li>Load balancing across pod replicas</li> </ul> </li> <li>Service types: <ul> <li>ClusterIP: Internal only (default).</li> <li>NodePort: Exposes service on a static port on each node.</li> <li>LoadBalancer: Cloud provider managed (beyond today’s scope).</li> </ul> </li> </ul> <pre><code class="language-mermaid">flowchart TB
+    </script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Linh</span> B. Ngo </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">teaching </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/csc-workshops/">Workshops and Tutorials</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc112/"><strong>Programming &amp; Data Science (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc331/"><strong>Operating Systems (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc402/"><strong>Software Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc478/"><strong>Cloud Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc578/"><strong>Cloud Systems Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc117/">AI For All: Fundamentals of Intelligent Systems</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc574/">Tiny Machine Learning (tinyML) (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/big-data-engr/">Big Data Engineering (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc418-587/">CSC 418/587 (WI25)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc468/">Introduction to Cloud (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc231/">Computer Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc302/">Computer Security II (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc466/">Distributed and Parallel Computing (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc496/">iOS App Development (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc568/">Cloud Computing Fundamentals (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc-agentic-ai/">Agentic AI (dev)</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill lecture-layout"> <d-title> <h1>ClusterIP, NodePort, and Multi-Service Communication</h1> <p></p> </d-title> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div> <a href="#motivation">Motivation</a> </div> <div> <a href="#services-overview">Services Overview</a> </div> <div> <a href="#validate-before-deploying">Validate Before Deploying</a> </div> <div> <a href="#clusterip-services">ClusterIP Services</a> </div> <div> <a href="#nodeport-services">NodePort Services</a> </div> <div> <a href="#multi-service-communication">Multi-Service Communication</a> </div> <div> <a href="#a-layered-troubleshooting-workflow">A Layered Troubleshooting Workflow</a> </div> <div> <a href="#fabric-and-rke2-networking-case-study">FABRIC and RKE2 Networking Case Study</a> </div> <div> <a href="#kubernetes-networking-theory">Kubernetes Networking Theory</a> </div> <div> <a href="#cleanup-and-review">Cleanup and Review</a> </div> </nav> </d-contents> <h2 id="motivation">Motivation</h2> <ul> <li>We already know how to create Pods and how Deployments keep the desired number of Pods running.</li> <li>The next problem is connectivity: <ul> <li>Pod IP addresses are ephemeral.</li> <li>A restarted Pod may receive a new IP address.</li> <li>A scaled Deployment may have several interchangeable Pods.</li> </ul> </li> <li>Applications therefore should not normally connect directly to a particular Pod IP.</li> <li>Kubernetes <strong>Services</strong> provide stable network identities in front of changing sets of Pods.</li> <li>In this lecture we focus on two Service types: <ul> <li> <strong>ClusterIP</strong>: stable access from inside the cluster.</li> <li> <strong>NodePort</strong>: access through a port on a Kubernetes node.</li> </ul> </li> </ul> <p>A useful mental model is:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>Deployment  -&gt; keeps Pods running
+Service     -&gt; keeps applications connected to those Pods
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="services-overview">Services Overview</h2> <p>Pods are intentionally replaceable. Consider a Deployment with two replicas:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>backend Deployment
+    |
+    +-- backend Pod A   10.42.0.8
+    +-- backend Pod B   10.42.1.4
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If Pod A is recreated, its replacement may become <code class="language-plaintext highlighter-rouge">10.42.0.12</code>. A frontend that hard-codes <code class="language-plaintext highlighter-rouge">10.42.0.8</code> will break.</p> <p>A Service provides a stable abstraction:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>backend-svc
+ClusterIP: 10.43.140.207
+        |
+        +--&gt; backend Pod A
+        +--&gt; backend Pod B
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The Service selects Pods using labels.</p> <h3 id="common-service-types">Common Service types</h3> <table> <thead> <tr> <th>Type</th> <th>Reachability</th> <th>Typical use</th> </tr> </thead> <tbody> <tr> <td><code class="language-plaintext highlighter-rouge">ClusterIP</code></td> <td>Inside the cluster</td> <td>Backend APIs, databases, internal services</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">NodePort</code></td> <td>Through a port on node IPs</td> <td>Labs, simple external exposure, debugging</td> </tr> <tr> <td><code class="language-plaintext highlighter-rouge">LoadBalancer</code></td> <td>External load balancer</td> <td>Cloud-provider production exposure</td> </tr> </tbody> </table> <p><code class="language-plaintext highlighter-rouge">ClusterIP</code> is the default Service type. A <code class="language-plaintext highlighter-rouge">NodePort</code> Service also receives a ClusterIP; NodePort adds another way to reach the same Service.</p> <pre><code class="language-mermaid">flowchart TB
     subgraph Cluster["Kubernetes Cluster"]
-        subgraph Pods["Pods"]
-            B1["Backend Pod 1"]
-            B2["Backend Pod 2"]
+        subgraph Pods["Backend Pods"]
+            B1["Backend Pod 1\n10.42.0.x:80"]
+            B2["Backend Pod 2\n10.42.1.x:80"]
         end
-        subgraph ClusterIPService["Service: ClusterIP"]
-            C1["Virtual IP\n(10.x.x.x)"]
-        end
-        subgraph NodePortService["Service: NodePort"]
-            N1["ClusterIP\n+ NodePort"]
-        end
+
+        C1["ClusterIP Service\n10.43.x.x:80"]
+        N1["NodePort\nNodeIP:30080"]
     end
 
-    %% ClusterIP flow
-    ClientIn["Internal Pod (curl)"] --&gt;|"DNS: backend-svc"| C1 --&gt; B1
+    Internal["Internal Pod"] --&gt;|"backend-svc:80"| C1
+    External["External client"] --&gt;|"NodeIP:30080"| N1
+    N1 --&gt; C1
+    C1 --&gt; B1
     C1 --&gt; B2
+</code></pre> <h3 id="four-ports-that-students-frequently-confuse">Four ports that students frequently confuse</h3> <p>Suppose we have:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="na">containers</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">backend</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8080</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>and:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre><span class="na">ports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+    <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30080</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Then:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>containerPort = 8080   Documentation of the application's container port
 
-    %% NodePort flow
-    ExternalClient["External Client\n(Browser or curl)"] --&gt;|"http://NodeIP:Port"| N1 --&gt; B1
-    N1 --&gt; B2
+targetPort    = 8080   Port on the selected Pods to which the Service forwards
 
-    %% Styling
-    classDef cluster fill:#f0f8ff,stroke:#4682b4,stroke-width:2px;
-    classDef service fill:#ffe4b5,stroke:#d2691e,stroke-width:2px;
-    class Cluster,Pods cluster
-    class ClusterIPService,NodePortService service
+port          = 80     Port exposed by the Service / ClusterIP
 
-</code></pre> <hr> <h2 id="clusterip-services">ClusterIP Services</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <ul> <li>Internal communication between pods.</li> <li>Example: Frontend pod calls a backend service by DNS.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>ClusterIP Demo</summary> <ul> <li>Create and deploy a backend Pod Deployment (simple HTTP echo app) called <code class="language-plaintext highlighter-rouge">echo-deployment.yaml</code>:</li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+nodePort      = 30080  Port exposed on eligible Kubernetes node addresses
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The traffic path is:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>NodeIP:30080 -&gt; Service:80 -&gt; Pod:8080
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="validate-before-deploying">Validate Before Deploying</h2> <p>Kubernetes YAML is unforgiving about indentation and field placement. Before applying a manifest, validate it.</p> <h3 id="yaml-syntax-only">YAML syntax only</h3> <p>If <code class="language-plaintext highlighter-rouge">yamllint</code> is installed:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>yamllint echo-deployment.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="kubernetes-client-side-validation">Kubernetes client-side validation</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-f</span> echo-deployment.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>This parses the YAML and checks the resource structure known to <code class="language-plaintext highlighter-rouge">kubectl</code>.</p> <h3 id="validate-against-the-actual-api-server">Validate against the actual API server</h3> <p>Once the cluster is running:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> echo-deployment.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>This asks the API server to validate the object without storing it.</p> <p>A useful workflow is:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-f</span> app.yaml
+kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> app.yaml
+kubectl apply <span class="nt">-f</span> app.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>After applying, do not assume success simply because <code class="language-plaintext highlighter-rouge">kubectl apply</code> returned without an error:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl get deployments
+kubectl get pods <span class="nt">-o</span> wide
+kubectl describe deployment backend
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="clusterip-services">ClusterIP Services</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <p>A ClusterIP Service provides:</p> <ul> <li>a stable virtual IP address;</li> <li>a stable DNS name;</li> <li>a logical endpoint in front of one or more Pods;</li> <li>traffic distribution among healthy endpoints.</li> </ul> <p>Applications normally use the Service DNS name, not the ClusterIP itself.</p> <p>For a Service named <code class="language-plaintext highlighter-rouge">backend-svc</code> in the <code class="language-plaintext highlighter-rouge">default</code> namespace:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>backend-svc
+backend-svc.default
+backend-svc.default.svc
+backend-svc.default.svc.cluster.local
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>are progressively more explicit DNS names.</p> </details> <details class="details details--default" data-variant="default"><summary>ClusterIP Demo</summary> <h3 id="step-1-create-the-backend-deployment">Step 1: Create the backend Deployment</h3> <p>Create <code class="language-plaintext highlighter-rouge">echo-deployment.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -77,23 +158,29 @@
   <span class="na">name</span><span class="pi">:</span> <span class="s">backend</span>
 <span class="na">spec</span><span class="pi">:</span>
   <span class="na">replicas</span><span class="pi">:</span> <span class="m">2</span>
-<span class="na">selector</span><span class="pi">:</span>
-  <span class="na">matchLabels</span><span class="pi">:</span>
-    <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
-<span class="na">template</span><span class="pi">:</span>
-  <span class="na">metadata</span><span class="pi">:</span>
-    <span class="na">labels</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
         <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
-  <span class="na">spec</span><span class="pi">:</span>
-    <span class="na">containers</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">backend</span>
-      <span class="na">image</span><span class="pi">:</span> <span class="s">nginxdemos/hello:plain-text</span>
-      <span class="na">ports</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">backend</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">nginxdemos/hello:plain-text</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate it first:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-f</span> echo-deployment.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Then deploy:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> echo-deployment.yaml
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Let’s expose it with a ClusterIP service. <ul> <li>Create and deploy a service manifest called <code class="language-plaintext highlighter-rouge">echo-svc.yaml</code>.</li> </ul> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Observe the Pods:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>backend <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Record the Pod IP addresses. These addresses are useful for debugging, but they should not be used as permanent application endpoints.</p> <h3 id="step-2-create-a-clusterip-service">Step 2: Create a ClusterIP Service</h3> <p>Create <code class="language-plaintext highlighter-rouge">echo-svc.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -113,35 +200,171 @@
     <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
   <span class="na">ports</span><span class="pi">:</span>
     <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
-    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate and deploy:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> echo-deployment.yaml
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Verify DNS-based resolution inside the cluster: <ul> <li>Calling the servce <code class="language-plaintext highlighter-rouge">backend-svc</code> links us to the Pod.</li> </ul> </li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-f</span> echo-svc.yaml
+kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> echo-svc.yaml
+kubectl apply <span class="nt">-f</span> echo-svc.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect the Service:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get svc backend-svc <span class="nt">-o</span> wide
+kubectl describe svc backend-svc
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="step-3-verify-that-the-service-found-the-pods">Step 3: Verify that the Service found the Pods</h3> <p>Modern Kubernetes represents Service backends using <strong>EndpointSlices</strong>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get endpointslices <span class="nt">-l</span> kubernetes.io/service-name<span class="o">=</span>backend-svc <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Compare those addresses with:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>backend <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If the Service has no endpoints, the most common cause is a mismatch between:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="na">spec</span><span class="pi">:</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>and the Pod labels:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect labels with:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">--show-labels</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="step-4-test-service-dns-from-inside-the-cluster">Step 4: Test Service DNS from inside the cluster</h3> <p>Create a temporary curl Pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl run curl-test <span class="se">\</span>
+  <span class="nt">--image</span><span class="o">=</span>curlimages/curl <span class="se">\</span>
+  <span class="nt">--restart</span><span class="o">=</span>Never <span class="se">\</span>
+  <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--</span> sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inside the Pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>nslookup backend-svc
+curl http://backend-svc
+curl http://backend-svc.default.svc.cluster.local
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Exit when finished:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">exit</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="step-5-compare-service-and-direct-pod-connectivity">Step 5: Compare Service and direct-Pod connectivity</h3> <p>Get the Pod addresses:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>backend <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>From a temporary curl Pod, compare:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>curl http://&lt;POD-IP&gt;:80
+curl http://backend-svc:80
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The first tests CNI Pod networking directly. The second also tests Service routing and DNS.</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/clusterip/multi-pods-480.webp 480w,/assets/img/courses/csc478/clusterip/multi-pods-800.webp 800w,/assets/img/courses/csc478/clusterip/multi-pods-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/clusterip/multi-pods.png" width="100%" height="auto" style=" max-width: 50%; " data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <hr> <h2 id="nodeport-services">NodePort Services</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <p>A NodePort Service exposes a Service through a port on eligible node addresses.</p> <p>The default NodePort range is:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>30000-32767
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>A NodePort Service still has a ClusterIP. Conceptually:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
-</pre></td> <td class="rouge-code"><pre>kubectl run curl <span class="nt">--image</span><span class="o">=</span>alpine <span class="nt">-it</span> <span class="nt">--rm</span>
-<span class="c"># inside pod:</span>
-apk update
-apk add curl
-curl backend-svc
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Observe how curl can return results from different pods.</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/clusterip/multi-pods-480.webp 480w,/assets/img/courses/csc478/clusterip/multi-pods-800.webp 800w,/assets/img/courses/csc478/clusterip/multi-pods-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/clusterip/multi-pods.png" width="100%" height="auto" style=" max-width: 50%; " data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <hr> <h2 id="nodeport-services">NodePort Services</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <ul> <li>Makes service accessible from outside cluster.</li> <li>Kubernetes opens a static port (30000–32767) on all nodes.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>NodePort</summary> <ul> <li>Manually expose the backend service externally:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl expose deployment backend <span class="nt">--name</span><span class="o">=</span>backend-nodeport <span class="nt">--type</span><span class="o">=</span>NodePort <span class="nt">--port</span><span class="o">=</span>80 <span class="nt">--target-port</span><span class="o">=</span>80
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>Check service details:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl get svc backend-nodeport
-</pre></td> </tr></tbody></table></code></pre></div></div> <ul> <li>You wil be assigned a random port between 30000 and 32767. An example output could be:</li> </ul> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/clusterip/expose-nodeport-480.webp 480w,/assets/img/courses/csc478/clusterip/expose-nodeport-800.webp 800w,/assets/img/courses/csc478/clusterip/expose-nodeport-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/clusterip/expose-nodeport.png" width="100%" height="auto" style=" max-width: 50%; " data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> <ul> <li>On a different node, or even a node from a different experiment, runs:</li> </ul> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre>client
+  |
+  v
+NodeIP:NodePort
+  |
+  v
+ClusterIP:port
+  |
+  v
+selected Pod:targetPort
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>For our FABRIC RKE2 environment, test NodePort against the deliberately configured <strong>dataplane node IP</strong>, such as <code class="language-plaintext highlighter-rouge">192.168.1.1</code>, rather than assuming that <code class="language-plaintext highlighter-rouge">127.0.0.1</code> is equivalent. Loopback NodePort behavior depends on kube-proxy mode and configuration.</p> </details> <details class="details details--default" data-variant="default"><summary>NodePort Hands-On</summary> <h3 id="option-1-create-a-nodeport-imperatively">Option 1: Create a NodePort imperatively</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td> <td class="rouge-code"><pre><span class="c"># NODE_IP should be the hostname/IP address of the CloudLab node you are on. </span>
-<span class="c"># NODE_PORT is the value between 30000 and 32767 that Kubernetes give your backend-nodeport service</span>
-curl NODE_IP:NODE_PORT
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <h2 id="multi-service-communication">Multi-Service Communication</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <ul> <li>In a real apps, multiple services are talking to each other.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Quote of the Day App</summary> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Architecture</summary> <ul> <li>API Service: returns some random quotes</li> <li>Time Service: return current server time</li> <li>Frontend Service: aggregate both responses and presents a combined message to the user.</li> </ul> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>API Service: quote</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">quote-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+4
+5
+</pre></td> <td class="rouge-code"><pre>kubectl expose deployment backend <span class="se">\</span>
+  <span class="nt">--name</span><span class="o">=</span>backend-nodeport <span class="se">\</span>
+  <span class="nt">--type</span><span class="o">=</span>NodePort <span class="se">\</span>
+  <span class="nt">--port</span><span class="o">=</span>80 <span class="se">\</span>
+  <span class="nt">--target-port</span><span class="o">=</span>80
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect the assigned port:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl get svc backend-nodeport
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Example:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>NAME               TYPE       CLUSTER-IP      PORT(S)
+backend-nodeport   NodePort   10.43.120.50    80:31642/TCP
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Here:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>ClusterIP port = 80
+NodePort       = 31642
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Test from a node or another reachable host:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl http://192.168.1.1:31642
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="option-2-specify-a-fixed-nodeport">Option 2: Specify a fixed NodePort</h3> <p>For repeatable labs, a fixed port can be easier:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">backend-nodeport</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">backend</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30080</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate before deployment:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> backend-nodeport.yaml
+kubectl apply <span class="nt">-f</span> backend-nodeport.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Then:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://192.168.1.1:30080/
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="inspect-what-backs-the-service">Inspect what backs the Service</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl get svc backend-nodeport <span class="nt">-o</span> wide
+kubectl get endpointslices <span class="se">\</span>
+  <span class="nt">-l</span> kubernetes.io/service-name<span class="o">=</span>backend-nodeport <span class="se">\</span>
+  <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/courses/csc478/clusterip/expose-nodeport-480.webp 480w,/assets/img/courses/csc478/clusterip/expose-nodeport-800.webp 800w,/assets/img/courses/csc478/clusterip/expose-nodeport-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/courses/csc478/clusterip/expose-nodeport.png" width="100%" height="auto" style=" max-width: 50%; " data-zoomable="" loading="lazy" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </picture> </figure> </details> <hr> <h2 id="multi-service-communication">Multi-Service Communication</h2> <details class="details details--default" data-variant="default"><summary>Concept</summary> <p>Real applications usually contain multiple services. The important design principle is:</p> <blockquote> <p>Internal components communicate through Service names, not through Pod IP addresses.</p> </blockquote> <p>We will build three components:</p> <ul> <li> <strong>Quote Service</strong>: provides text.</li> <li> <strong>Time Service</strong>: provides the current server time.</li> <li> <strong>Frontend Service</strong>: calls both internal Services and combines their responses.</li> </ul> <p>Only the frontend needs external exposure.</p> </details> <details class="details details--default" data-variant="default"><summary>Quote of the Day App</summary> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Architecture</summary> <pre><code class="language-mermaid">flowchart TB
+    User["External client"] --&gt;|"NodeIP:NodePort"| FS["frontend-svc\nNodePort"]
+    FS --&gt; FE["Frontend Pod\n:8080"]
+    FE --&gt;|"http://quote-svc"| QS["quote-svc\nClusterIP :80"]
+    FE --&gt;|"http://time-svc"| TS["time-svc\nClusterIP :80"]
+    QS --&gt; Q1["Quote Pod 1 :80"]
+    QS --&gt; Q2["Quote Pod 2 :80"]
+    TS --&gt; T1["Time Pod :8080"]
+</code></pre> <p>Notice that the frontend does <strong>not</strong> know the Pod IPs for quote or time. It only knows their Service names.</p> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Quote Service</summary> <p>Create <code class="language-plaintext highlighter-rouge">quote.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -172,12 +395,6 @@ curl NODE_IP:NODE_PORT
 28
 29
 30
-31
-32
-33
-34
-35
-36
 </pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
 <span class="na">metadata</span><span class="pi">:</span>
@@ -193,16 +410,10 @@ curl NODE_IP:NODE_PORT
         <span class="na">app</span><span class="pi">:</span> <span class="s">quote</span>
     <span class="na">spec</span><span class="pi">:</span>
       <span class="na">containers</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">quote</span>
-        <span class="na">image</span><span class="pi">:</span> <span class="s">ealen/echo-server</span>
-        <span class="na">env</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">QUOTES</span>
-          <span class="na">value</span><span class="pi">:</span> <span class="pi">|</span>
-            <span class="s">"The journey of a thousand miles begins with a single step."</span>
-            <span class="s">"What you do today can improve all your tomorrows."</span>
-            <span class="s">"In the middle of difficulty lies opportunity."</span>
-        <span class="na">ports</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">quote</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">nginxdemos/hello:plain-text</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
 <span class="nn">---</span>
 <span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
@@ -212,9 +423,14 @@ curl NODE_IP:NODE_PORT
   <span class="na">selector</span><span class="pi">:</span>
     <span class="na">app</span><span class="pi">:</span> <span class="s">quote</span>
   <span class="na">ports</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
-    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Time Service</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">time-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> quote.yaml
+kubectl apply <span class="nt">-f</span> quote.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Time Service</summary> <p>Create <code class="language-plaintext highlighter-rouge">time.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -261,23 +477,23 @@ curl NODE_IP:NODE_PORT
   <span class="na">selector</span><span class="pi">:</span>
     <span class="na">matchLabels</span><span class="pi">:</span>
       <span class="na">app</span><span class="pi">:</span> <span class="s">time</span>
-<span class="na">template</span><span class="pi">:</span>
+  <span class="na">template</span><span class="pi">:</span>
     <span class="na">metadata</span><span class="pi">:</span>
       <span class="na">labels</span><span class="pi">:</span>
         <span class="na">app</span><span class="pi">:</span> <span class="s">time</span>
     <span class="na">spec</span><span class="pi">:</span>
       <span class="na">containers</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">time</span>
-        <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
-        <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span><span class="s2">"</span><span class="s">-c"</span><span class="pi">]</span>
-        <span class="na">args</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="pi">|</span>
-            <span class="s">while true; do</span>
-            <span class="s">printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n$(date)\n" \</span>
-            <span class="s">| nc -l -p 8080 -s 0.0.0.0;</span>
-            <span class="s">done</span>
-        <span class="na">ports</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8080</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">time</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+          <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">]</span>
+          <span class="na">args</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="pi">|</span>
+              <span class="s">while true; do</span>
+                <span class="s">printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nConnection: close\r\n\r\n$(date)\n" \</span>
+                <span class="s">| nc -l -p 8080 -s 0.0.0.0;</span>
+              <span class="s">done</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8080</span>
 <span class="nn">---</span>
 <span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
@@ -287,9 +503,14 @@ curl NODE_IP:NODE_PORT
   <span class="na">selector</span><span class="pi">:</span>
     <span class="na">app</span><span class="pi">:</span> <span class="s">time</span>
   <span class="na">ports</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
-    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Frontend Service</summary> <ul> <li>Create and deploy a deployment manifest called <code class="language-plaintext highlighter-rouge">time-deployment.yaml</code> </li> </ul> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> time.yaml
+kubectl apply <span class="nt">-f</span> time.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Frontend Service</summary> <p>Create <code class="language-plaintext highlighter-rouge">frontend.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -330,6 +551,7 @@ curl NODE_IP:NODE_PORT
 38
 39
 40
+41
 </pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
 <span class="na">metadata</span><span class="pi">:</span>
@@ -345,19 +567,19 @@ curl NODE_IP:NODE_PORT
         <span class="na">app</span><span class="pi">:</span> <span class="s">frontend</span>
     <span class="na">spec</span><span class="pi">:</span>
       <span class="na">containers</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">frontend</span>
-        <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
-        <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span><span class="s2">"</span><span class="s">-c"</span><span class="pi">]</span>
-        <span class="na">args</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="pi">|</span>
-            <span class="s">while true; do</span>
-            <span class="s">Q=$(wget -qO- http://quote-svc);</span>
-            <span class="s">T=$(wget -qO- http://time-svc);</span>
-            <span class="s">printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nQuote: $Q\nTime: $T\n" \</span>
-            <span class="s">| nc -l -p 8080 -s 0.0.0.0 ;</span>
-            <span class="s">done</span>
-        <span class="na">ports</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8080</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">frontend</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
+          <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">]</span>
+          <span class="na">args</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="pi">|</span>
+              <span class="s">while true; do</span>
+                <span class="s">Q=$(wget -qO- http://quote-svc);</span>
+                <span class="s">T=$(wget -qO- http://time-svc);</span>
+                <span class="s">printf "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nConnection: close\r\n\r\nQuote service:\n$Q\nTime: $T\n" \</span>
+                <span class="s">| nc -l -p 8080 -s 0.0.0.0;</span>
+              <span class="s">done</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8080</span>
 <span class="nn">---</span>
 <span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
@@ -368,89 +590,370 @@ curl NODE_IP:NODE_PORT
   <span class="na">selector</span><span class="pi">:</span>
     <span class="na">app</span><span class="pi">:</span> <span class="s">frontend</span>
   <span class="na">ports</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
-    <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <p>Test these services with the following:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30080</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate and deploy:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td> <td class="rouge-code"><pre>kubectl get svc frontend-svc
-curl http://&lt;NODE-IP&gt;:&lt;NODEPORT&gt;
-</pre></td> </tr></tbody></table></code></pre></div></div> <pre><code class="language-mermaid">flowchart TB
-%% User
-U["External User&lt;br/&gt;curl http://NodeIP:NodePort"]
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> frontend.yaml
+kubectl apply <span class="nt">-f</span> frontend.yaml
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect everything:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl get deployments
+kubectl get pods <span class="nt">-o</span> wide
+kubectl get svc
+kubectl get endpointslices
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Test internal Services first:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl run curl-test <span class="se">\</span>
+  <span class="nt">--image</span><span class="o">=</span>curlimages/curl <span class="se">\</span>
+  <span class="nt">--restart</span><span class="o">=</span>Never <span class="se">\</span>
+  <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">--</span> sh
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inside:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>curl http://quote-svc
+curl http://time-svc
+curl http://frontend-svc
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Then test the NodePort from a FABRIC node:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://192.168.1.1:30080/
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> </details> <hr> <h2 id="a-layered-troubleshooting-workflow">A Layered Troubleshooting Workflow</h2> <p>When a Service fails, do not begin by changing random firewall, MTU, or offload settings. Test one layer at a time.</p> <p>Suppose:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>Pod IP:      10.42.0.10
+ClusterIP:   10.43.140.207
+Node IP:     192.168.1.1
+NodePort:    30080
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="layer-1-is-the-application-actually-running">Layer 1: Is the application actually running?</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-o</span> wide
+kubectl logs &lt;pod-name&gt;
+kubectl <span class="nb">exec</span> &lt;pod-name&gt; <span class="nt">--</span> wget <span class="nt">-qO-</span> http://127.0.0.1:80/
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If localhost inside the Pod fails, the problem is the application/container, not Kubernetes networking.</p> <h3 id="layer-2-can-the-node-reach-a-pod-directly">Layer 2: Can the node reach a Pod directly?</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://10.42.0.10:80/
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If this fails, investigate CNI/routing before looking at Services.</p> <h3 id="layer-3-can-the-clusterip-service-be-reached">Layer 3: Can the ClusterIP Service be reached?</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://10.43.140.207:80/
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Also verify Service endpoints:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl get endpointslices <span class="se">\</span>
+  <span class="nt">-l</span> kubernetes.io/service-name<span class="o">=</span>backend-svc <span class="se">\</span>
+  <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If direct Pod access works but ClusterIP fails, investigate kube-proxy / Service rules.</p> <h3 id="layer-4-can-the-nodeport-be-reached">Layer 4: Can the NodePort be reached?</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://192.168.1.1:30080/
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If Pod and ClusterIP work but NodePort fails, investigate NodePort rules, eligible node addresses, and host firewall behavior.</p> <h3 id="do-not-confuse-ports">Do not confuse ports</h3> <p>For:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>80:30080/TCP
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>correct tests are:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>curl http://&lt;POD-IP&gt;:80
+curl http://&lt;CLUSTER-IP&gt;:80
+curl http://&lt;NODE-IP&gt;:30080
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>These are <strong>not</strong> equivalent:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>curl http://&lt;POD-IP&gt;:30080       <span class="c"># usually wrong</span>
+curl http://&lt;CLUSTER-IP&gt;:30080   <span class="c"># usually wrong</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="curl-http-code-000"> <code class="language-plaintext highlighter-rouge">curl</code> HTTP code <code class="language-plaintext highlighter-rouge">000</code> </h3> <p>A command such as:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-s</span> <span class="nt">-o</span> /dev/null <span class="nt">-w</span> <span class="s1">'%{http_code}\n'</span> http://192.168.1.1:30080/
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>returns <code class="language-plaintext highlighter-rouge">000</code> when curl never receives an HTTP response. During debugging, remove <code class="language-plaintext highlighter-rouge">-s</code> and use:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-v</span> <span class="nt">--connect-timeout</span> 5 http://192.168.1.1:30080/
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Distinguish:</p> <ul> <li><code class="language-plaintext highlighter-rouge">Connection refused</code></li> <li><code class="language-plaintext highlighter-rouge">Connection timed out</code></li> <li><code class="language-plaintext highlighter-rouge">Network is unreachable</code></li> </ul> <p>They point to different layers.</p> <h3 id="useful-inspection-commands">Useful inspection commands</h3> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-o</span> wide
+kubectl get svc <span class="nt">-o</span> wide
+kubectl get endpointslices <span class="nt">-o</span> wide
+kubectl get nodes <span class="nt">-o</span> wide
+ip route
+ip addr
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>For kube-proxy rules on an iptables-based cluster:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>iptables-save | <span class="nb">grep </span>KUBE
+<span class="nb">sudo </span>iptables-save | <span class="nb">grep </span>30080
+</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="fabric-and-rke2-networking-case-study">FABRIC and RKE2 Networking Case Study</h2> <p>This section is based on failures observed while deploying RKE2/Canal across multiple FABRIC sites. The purpose is not to memorize workarounds; it is to learn how to reason from packet paths and system state.</p> <details class="details details--default" data-variant="default"><summary>RKE2 Canal: two networking components</summary> <p>RKE2 uses Canal by default. Canal combines:</p> <ul> <li> <strong>Flannel</strong>: overlay connectivity between nodes, normally using VXLAN.</li> <li> <strong>Calico</strong>: local workload networking and network policy.</li> </ul> <p>A simplified path is:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td> <td class="rouge-code"><pre>Pod on node1
+   |
+ cali* veth
+   |
+node1
+   |
+flannel.1 VXLAN
+   |
+FABRIC dataplane network
+   |
+node2
+   |
+ cali* veth
+   |
+Pod on node2
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Useful inspection:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>ip <span class="nb">link</span> | <span class="nb">grep</span> <span class="nt">-E</span> <span class="s1">'cali|flannel'</span>
+ip route | <span class="nb">grep </span>10.42
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>A VXLAN device often reports:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>state UNKNOWN
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>This is not automatically an error. For a virtual interface, focus instead on flags such as:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>UP, LOWER_UP
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>and on actual connectivity.</p> </details> <details class="details details--default" data-variant="default"><summary>Failure 1: Flannel selected loopback</summary> <p>The FABRIC nodes have more than one network identity:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>management network        -&gt; SSH / infrastructure access
+FABRIC L2 dataplane       -&gt; 192.168.1.0/24 for the Kubernetes cluster
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>A problematic Flannel configuration used:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>--iface-can-reach=192.168.1.1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>On <code class="language-plaintext highlighter-rouge">node1</code>, however:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>ip route get 192.168.1.1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>returned:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>local 192.168.1.1 dev lo src 192.168.1.1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Flannel therefore selected <code class="language-plaintext highlighter-rouge">lo</code> instead of the FABRIC dataplane NIC.</p> <p>The resulting clue was:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>lo          mtu 65536
+flannel.1   mtu 65486
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>VXLAN subtracts roughly 50 bytes of overhead, so <code class="language-plaintext highlighter-rouge">65486</code> was a strong sign that the overlay had been built on loopback.</p> <p>A better route-selection probe is an unused address on the dataplane subnet:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>ip route get 192.168.1.254
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>which should produce something like:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>192.168.1.254 dev enp7s0 src 192.168.1.1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Then Flannel can use:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>--iface-can-reach=192.168.1.254
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>A healthy result on a 1500-byte underlay is typically:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>enp7s0      mtu 1500
+flannel.1   mtu 1450
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The general lesson is:</p> <blockquote> <p>On a multi-interface system, never assume automatic interface selection chose the network you intended.</p> </blockquote> </details> <details class="details details--default" data-variant="default"><summary>Failure 2: Local Pod receives traffic but cannot reply</summary> <p>A particularly useful test is direct Pod connectivity:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>curl http://10.42.0.10:80
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>In one failure, <code class="language-plaintext highlighter-rouge">tcpdump</code> on the host-side Calico veth showed:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>host -&gt; pod: ICMP request / TCP SYN
+pod  -&gt; ?:   ARP who-has 169.254.1.1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The Pod had this routing table:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>default via 169.254.1.1 dev eth0
+169.254.1.1 dev eth0 scope link
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Calico intentionally uses <code class="language-plaintext highlighter-rouge">169.254.1.1</code> as a virtual next-hop gateway. The host-side <code class="language-plaintext highlighter-rouge">cali*</code> interface normally has:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>sysctl net.ipv4.conf.&lt;cali-interface&gt;.proxy_arp
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>set to:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The host can therefore answer the Pod’s ARP request without literally assigning <code class="language-plaintext highlighter-rouge">169.254.1.1</code> to each interface.</p> <p>On some FABRIC sites:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>ip route get 169.254.1.1
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>worked immediately.</p> <p>On others it returned:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>RTNETLINK answers: Network is unreachable
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>A diagnostic route made Linux’s proxy-ARP behavior work, after which the Pod could return traffic.</p> <p>Useful commands:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>ip route get 169.254.1.1
 
-%% NodePort Service
-subgraph Node["frontend-svc (Service: NodePort)"]
-    NP["NodePort: 31080&lt;br/&gt;(maps → targetPort 8080)"]
-end
-
-%% Frontend Pod
-subgraph Frontend["Frontend Pod"]
-    FE["containerPort: 8080&lt;br/&gt;(aggregator)"]
-end
-
-%% ClusterIP Services
-subgraph Services["ClusterIP Services (internal only)"]
-    QS["quote-svc&lt;br/&gt;targetPort 80"]
-    TS["time-svc&lt;br/&gt;targetPort 80"]
-end
-
-%% Quote Pods
-subgraph QuotePods["Quote Pods"]
-    Q1["containerPort: 80"]
-    Q2["containerPort: 80"]
-end
-
-%% Time Pod
-subgraph TimePod["Time Pod"]
-    T1["containerPort: 80"]
-end
-
-%% Connections
-U --&gt; NP --&gt; FE
-FE --&gt; QS
-FE --&gt; TS
-QS --&gt; Q1
-QS --&gt; Q2
-TS --&gt; T1
-
-%% Styling
-classDef user fill:#f0f8ff,stroke:#4169e1,stroke-width:2px;
-classDef service fill:#fffacd,stroke:#daa520,stroke-width:2px;
-classDef pod fill:#f0fff0,stroke:#2e8b57,stroke-width:2px;
-class U user
-class Node,Services service
-class Frontend,QuotePods,TimePod pod
-</code></pre> </details> <hr> <h2 id="kubernetes-networking-theory">Kubernetes Networking Theory</h2> <details class="details details--default" data-variant="default"><summary>Review: NAT</summary> <ul> <li>Network Address Translation (NAT) is a technique where a network device (typically a router or firewall) rewrites the source or destination IP address of packets as they pass through.</li> <li>Why it exists: <ul> <li>IPv4 has a limited address space: NAT lets many internal devices share a single public IP.</li> <li>Provides a layer of isolation/security by hiding internal addresses.</li> </ul> </li> <li>Types of NAT: <ul> <li>SNAT (Source NAT): Rewrites the source IP of outbound traffic (e.g., your laptop 192.168.1.10 to public IP 203.0.113.5).</li> <li>DNAT (Destination NAT): Rewrites the destination IP of inbound traffic (e.g., packets to 203.0.113.5 to 192.168.1.10).</li> </ul> </li> <li>PAT (Port Address Translation, aka <code class="language-plaintext highlighter-rouge">masquerading</code>): Multiple devices share one public IP by mapping connections to different ports.</li> <li>In Kubernetes context: <ul> <li>Kube-proxy may use NAT (via iptables/ipvs) to redirect Service ClusterIP to Pod IP.</li> <li>The Kubernetes networking model tries to minimize NAT inside the cluster: every Pod gets a unique, routable IP so pods can talk directly, no hidden rewrites. NAT is mostly used only at the cluster boundary (e.g., NodePort, LoadBalancer, egress to the Internet).</li> </ul> </li> </ul> <pre><code class="language-mermaid">flowchart LR
-subgraph Private["Private Network (LAN)"]
-    A["Pod / Host&lt;br/&gt;192.168.1.10"]
-    B["Pod / Host&lt;br/&gt;192.168.1.11"]
-end
-
-subgraph Router["Router / NAT Device"]
-    N1["Source NAT (SNAT)&lt;br/&gt;Change source 192.168.x.x → 203.0.113.5"]
-    N2["Destination NAT (DNAT)&lt;br/&gt;Change destination 203.0.113.5 → 192.168.1.10"]
-end
-
-subgraph Internet["Public Internet"]
-    S["Public Server&lt;br/&gt;198.51.100.20"]
-end
-
-%% Outbound
-A --&gt;|"Outbound packet&lt;br/&gt;Src=192.168.1.10, Dst=198.51.100.20"| N1
-N1 --&gt;|"Translated packet&lt;br/&gt;Src=203.0.113.5, Dst=198.51.100.20"| S
-
-%% Inbound
-S --&gt;|"Inbound packet&lt;br/&gt;Dst=203.0.113.5"| N2
-N2 --&gt;|"Translated packet&lt;br/&gt;Dst=192.168.1.10"| A
-
-%% Styling
-classDef private fill:#f0fff0,stroke:#2e8b57,stroke-width:2px;
-classDef nat fill:#fffacd,stroke:#daa520,stroke-width:2px;
-classDef internet fill:#f0f8ff,stroke:#4169e1,stroke-width:2px;
-class Private private
-class Router nat
-class Internet internet
-</code></pre> </details> <details class="details details--default" data-variant="default"><summary>The Four Networking Requirements</summary> <ul> <li>NAT: Network Address Translation</li> <li> <a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model" rel="external nofollow noopener" target="_blank">Per K8s design</a>, Kubernetes assumes a flat, non-NATted network between all entities: <ul> <li>All pods can communicate with all other pods without NAT.</li> <li>All nodes can communicate with all pods without NAT.</li> <li>Pod IPs are the same inside and outside the pod. (No masquerading from the pod’s perspective).</li> <li>Services (ClusterIP, NodePort, LoadBalancer) are implemented via virtual IPs and iptables/ipvs rules that redirect traffic to backing pods.</li> </ul> </li> <li>This model makes things simple at the app level: each pod just gets an IP and DNS name, no special networking code.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>How Services Work Under the Hood</summary> <ul> <li>ClusterIP: The kube-proxy component sets up iptables or ipvs rules to redirect traffic from the service’s virtual IP to one of the pod IPs behind it.</li> <li>NodePort: Kube-proxy additionally opens a port (30000–32767) on each node, then DNATs traffic to the service ClusterIP.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Container Networking Interface (CNI)</summary> <ul> <li>Kubernetes itself does not implement networking.</li> <li>It relies on CNI plugins to configure pod networking.</li> <li>CNI is a specification: containers call CNI when they’re created, and CNI sets up network interfaces, IP assignment, and routing. <ul> <li>kubelet launches a pod and calls the configured CNI plugin.</li> <li>The plugin sets up a veth pair (virtual Ethernet) to connect the pod’s network namespace to the host.</li> <li>IP address is assigned (via IPAM plugin or cluster-wide allocator).</li> <li>Routes and bridges are created to connect pod-to-pod and pod-to-node traffic.</li> </ul> </li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Popular CNI Implementations</summary> <ul> <li>Flannel: Simple overlay network (VXLAN), flat layer-3 fabric.</li> <li>Calico: Pure layer-3 networking with BGP; supports network policies.</li> <li>Cilium: Uses eBPF for dataplane efficiency and fine-grained security.</li> <li>Weave Net: Simple mesh overlay, encrypted by default.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Suggested Readings</summary> <ul> <li><a href="https://github.com/containernetworking/cni" rel="external nofollow noopener" target="_blank">The CNI Spec (Container Network Interface, CNCF project)</a></li> </ul> </details> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js" integrity="sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js" integrity="sha256-1rA678n2xEx7x4cTZ5x4wpUCj6kUMZEZ5cxLSVSFWxw=" crossorigin="anonymous"></script> <script defer src="/assets/js/mermaid-setup.js?38ca0a0126f7328d2d9a46bad640931f" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+<span class="k">for </span>f <span class="k">in</span> /proc/sys/net/ipv4/conf/cali<span class="k">*</span>/proxy_arp<span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2"> = </span><span class="si">$(</span><span class="nb">cat</span> <span class="s2">"</span><span class="nv">$f</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span>
+<span class="k">done</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Packet capture is especially useful:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>tcpdump <span class="nt">-nni</span> &lt;cali-interface&gt; <span class="s1">'arp or icmp or tcp port 80'</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Healthy proxy-ARP behavior looks like:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>ARP Request who-has 169.254.1.1 tell 10.42.0.x
+ARP Reply   169.254.1.1 is-at ee:ee:ee:ee:ee:ee
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Failure 3: Canal cannot initialize because it needs the Service network</summary> <p>Another failure occurred before the CNI was initialized. The Canal <code class="language-plaintext highlighter-rouge">install-cni</code> init container reported:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>Unable to create token for CNI kubeconfig
+Post "https://10.43.0.1:443/...":
+dial tcp 10.43.0.1:443: connect: network is unreachable
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>This is a bootstrap dependency:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td> <td class="rouge-code"><pre>install-cni needs Kubernetes API
+        |
+        v
+tries Kubernetes Service IP 10.43.0.1
+        |
+        v
+Service networking is not usable yet
+        |
+        v
+CNI cannot finish initializing
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect this type of failure with:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> kube-system get pods <span class="nt">-o</span> wide
+kubectl <span class="nt">-n</span> kube-system describe pod &lt;rke2-canal-pod&gt;
+kubectl <span class="nt">-n</span> kube-system logs &lt;rke2-canal-pod&gt; <span class="nt">-c</span> install-cni <span class="nt">--previous</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>In the FABRIC RKE2 provisioning used for this course, the bootstrap can be made deterministic by pointing Canal at the Kubernetes API through the known dataplane server address rather than relying on the Service ClusterIP during initialization.</p> <p>The general lesson is:</p> <blockquote> <p>A component may fail not because its final network design is wrong, but because it needs that network before the network itself has finished bootstrapping.</p> </blockquote> </details> <details class="details details--default" data-variant="default"><summary>Failure 4: Resource checks can become stale</summary> <p>FABRIC resources are shared and dynamic. A site can appear to have enough cores when checked, but reservation can still fail moments later:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>Insufficient resources : [core]
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>This is a classic check-then-use race. A resource check is useful, but <code class="language-plaintext highlighter-rouge">slice.submit()</code> must still be treated as an operation that can fail.</p> <p>For automated site testing:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> <td class="rouge-code"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="nb">slice</span><span class="p">.</span><span class="nf">submit</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">if</span> <span class="sh">"</span><span class="s">Insufficient resources</span><span class="sh">"</span> <span class="ow">in</span> <span class="nf">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">siteName</span><span class="si">}</span><span class="s">: insufficient resources, skipping</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">siteName</span><span class="si">}</span><span class="s">: submission failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">continue</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Keep infrastructure availability separate from Kubernetes compatibility:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>PASS      -&gt; slice launched and RKE2/network test succeeded
+SKIPPED   -&gt; FABRIC lacked resources
+FAIL      -&gt; slice launched but Kubernetes/network test failed
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <hr> <h2 id="kubernetes-networking-theory">Kubernetes Networking Theory</h2> <details class="details details--default" data-variant="default"><summary>Review: NAT</summary> <p>Network Address Translation rewrites network-layer addressing as packets cross a boundary.</p> <p>Common forms:</p> <ul> <li> <strong>SNAT</strong>: change the source address.</li> <li> <strong>DNAT</strong>: change the destination address.</li> <li> <strong>PAT / masquerading</strong>: combine address and port translation so multiple clients can share an address.</li> </ul> <p>Example:</p> <pre><code class="language-mermaid">flowchart LR
+    A["Host\n192.168.1.10"] --&gt;|"Src=192.168.1.10"| SNAT["SNAT / masquerade"]
+    SNAT --&gt;|"Src=203.0.113.5"| S["Internet server"]
+    S --&gt;|"Dst=203.0.113.5"| DNAT["Connection tracking / reverse translation"]
+    DNAT --&gt;|"Dst=192.168.1.10"| A
+</code></pre> <p>In Kubernetes, NAT commonly appears in Service and egress handling. The Pod networking model itself aims to make Pod addresses directly meaningful within the cluster rather than placing every Pod behind a separate NAT boundary.</p> </details> <details class="details details--default" data-variant="default"><summary>The Kubernetes Network Model</summary> <p>At a conceptual level, Kubernetes expects:</p> <ul> <li>Pods can communicate with other Pods across nodes.</li> <li>Nodes can communicate with Pods.</li> <li>A Pod sees its own IP as the same IP other cluster participants use to address it.</li> <li>Services provide stable virtual identities in front of changing Pod endpoints.</li> </ul> <p>That model allows application developers to think in terms of:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>frontend -&gt; backend-svc
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>rather than:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>frontend -&gt; discover Pod -&gt; inspect host -&gt; translate address -&gt; connect
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>How Services Work Under the Hood</summary> <p>A Service object does not normally create a process that listens on the ClusterIP.</p> <p>Instead:</p> <ol> <li>The Service selector identifies matching Pods.</li> <li>Kubernetes maintains EndpointSlices containing backend addresses.</li> <li>kube-proxy (or another implementation of Service routing) programs the node dataplane.</li> <li>Packets addressed to the Service are redirected to one of the endpoints.</li> </ol> <p>For a NodePort Service:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>NodeIP:30080
+      |
+      v
+Service virtual IP:80
+      |
+      v
+PodIP:targetPort
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Depending on the kube-proxy mode, rules may be implemented with iptables, nftables, or another dataplane mechanism.</p> <p>Inspect an iptables-based node with:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>iptables-save | <span class="nb">grep </span>KUBE-SERVICES
+<span class="nb">sudo </span>iptables-save | <span class="nb">grep </span>KUBE-NODEPORTS
+<span class="nb">sudo </span>iptables-save | <span class="nb">grep </span>30080
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Do not depend on <code class="language-plaintext highlighter-rouge">127.0.0.1:&lt;NodePort&gt;</code> as your primary NodePort test. Loopback NodePort support depends on kube-proxy mode and configuration. In this course, test the known FABRIC dataplane IP instead.</p> </details> <details class="details details--default" data-variant="default"><summary>Container Network Interface (CNI)</summary> <p>Kubernetes delegates Pod network setup to CNI plugins.</p> <p>When a Pod is created, the networking stack typically must:</p> <ol> <li>create a network namespace;</li> <li>create a veth pair;</li> <li>place one end in the Pod namespace;</li> <li>assign the Pod an IP address;</li> <li>install routes;</li> <li>connect the Pod to local and inter-node networking;</li> <li>remove that configuration when the Pod is deleted.</li> </ol> <p>A useful troubleshooting distinction is:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>Pod is Running
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>versus:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>Pod networking is actually functional
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>A container can be running while return routing, Service routing, or the overlay network is broken.</p> <p>If Pod deletion hangs with an error such as:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>KillPodSandboxError
+failed to destroy network for sandbox
+cni plugin not initialized
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>inspect CNI configuration and the CNI DaemonSet before assuming the workload itself is responsible.</p> </details> <details class="details details--default" data-variant="default"><summary>RKE2 Canal</summary> <p>For the RKE2 clusters used in this course, Canal combines:</p> <ul> <li>Flannel for the inter-node overlay;</li> <li>Calico for workload networking and policy.</li> </ul> <p>Useful commands:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> kube-system get pods <span class="nt">-o</span> wide
+ip <span class="nb">link</span> | <span class="nb">grep</span> <span class="nt">-E</span> <span class="s1">'cali|flannel'</span>
+ip route | <span class="nb">grep </span>10.42
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>On a healthy two-node example:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>node1 local Pod subnet:  10.42.0.0/24
+node2 local Pod subnet:  10.42.1.0/24
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Node1 may contain direct routes such as:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>10.42.0.10 dev caliXXXXXXXX scope link
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>and a remote route such as:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>10.42.1.0/24 via 10.42.1.0 dev flannel.1 onlink
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The two route types represent different pieces of the path:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>cali*      -&gt; local Pod attachment
+flannel.1  -&gt; remote Pod subnet over the overlay
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--default" data-variant="default"><summary>Popular CNI Implementations</summary> <ul> <li> <strong>Flannel</strong>: simple overlay networking, commonly VXLAN.</li> <li> <strong>Calico</strong>: routed networking and network policy; may use several dataplane modes depending on configuration.</li> <li> <strong>Cilium</strong>: eBPF-based networking, observability, and policy.</li> <li> <strong>Canal</strong>: combines Flannel networking with Calico policy/workload integration; this is the default CNI in RKE2.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>Suggested Readings</summary> <ul> <li><a href="https://kubernetes.io/docs/concepts/services-networking/service/" rel="external nofollow noopener" target="_blank">Kubernetes Services</a></li> <li><a href="https://kubernetes.io/docs/concepts/services-networking/" rel="external nofollow noopener" target="_blank">Kubernetes Networking Model</a></li> <li><a href="https://github.com/containernetworking/cni" rel="external nofollow noopener" target="_blank">Container Network Interface specification</a></li> <li><a href="https://docs.rke2.io/networking/basic_network_options" rel="external nofollow noopener" target="_blank">RKE2 Network Options</a></li> <li><a href="https://docs.rke2.io/known_issues" rel="external nofollow noopener" target="_blank">RKE2 Known Issues</a></li> <li><a href="https://docs.tigera.io/calico/latest/reference/faq" rel="external nofollow noopener" target="_blank">Calico FAQ: 169.254.1.1 and proxy ARP</a></li> </ul> </details> <hr> <h2 id="cleanup-and-review">Cleanup and Review</h2> <p>Delete the lab resources when finished:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl delete deployment backend quote <span class="nb">time </span>frontend <span class="nt">--ignore-not-found</span>
+kubectl delete service backend-svc backend-nodeport quote-svc time-svc frontend-svc <span class="nt">--ignore-not-found</span>
+kubectl delete pod curl-test nginx-node1 nginx-node2 <span class="nt">--ignore-not-found</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <h3 id="review-questions">Review questions</h3> <ol> <li>Why should an application normally call <code class="language-plaintext highlighter-rouge">backend-svc</code> instead of a backend Pod IP?</li> <li>What is the difference between <code class="language-plaintext highlighter-rouge">port</code>, <code class="language-plaintext highlighter-rouge">targetPort</code>, and <code class="language-plaintext highlighter-rouge">nodePort</code>?</li> <li>If <code class="language-plaintext highlighter-rouge">curl &lt;PodIP&gt;:80</code> works but <code class="language-plaintext highlighter-rouge">curl &lt;ClusterIP&gt;:80</code> fails, which layer should you investigate next?</li> <li>If a NodePort Service displays <code class="language-plaintext highlighter-rouge">80:30080/TCP</code>, which port should be used with the Pod IP? Which with the node IP?</li> <li>Why can <code class="language-plaintext highlighter-rouge">flannel.1</code> show <code class="language-plaintext highlighter-rouge">state UNKNOWN</code> without being broken?</li> <li>What did an MTU of <code class="language-plaintext highlighter-rouge">65486</code> reveal when Flannel accidentally selected loopback?</li> <li>Why does Calico use <code class="language-plaintext highlighter-rouge">169.254.1.1</code> inside Pods?</li> <li>Why can a CNI bootstrap failure involving <code class="language-plaintext highlighter-rouge">10.43.0.1</code> create a circular dependency?</li> <li>Why is a FABRIC resource check not a guarantee that <code class="language-plaintext highlighter-rouge">slice.submit()</code> will succeed?</li> <li>Why is direct Pod connectivity a better first networking test than immediately debugging NodePort?</li> </ol> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js" integrity="sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js" integrity="sha256-1rA678n2xEx7x4cTZ5x4wpUCj6kUMZEZ5cxLSVSFWxw=" crossorigin="anonymous"></script> <script defer src="/assets/js/mermaid-setup.js?38ca0a0126f7328d2d9a46bad640931f" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>
