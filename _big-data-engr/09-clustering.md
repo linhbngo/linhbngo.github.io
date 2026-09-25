@@ -101,7 +101,7 @@ lead to different distance measures.
         - Vector from origin to ...
         - Cosine distance. 
 
-- Review sequential implementation of these distance via the [distance-measurment notebook](https://colab.research.google.com/drive/1r0fxDR1hffHVyREEINLicoB5lNiIfYSQ?usp=sharing).
+- Review sequential implementation of these distance via the [distance-measurement notebook](https://colab.research.google.com/drive/1r0fxDR1hffHVyREEINLicoB5lNiIfYSQ?usp=sharing).
 {% enddetails %}
 ## Overview: methods of clustering
 
@@ -161,7 +161,7 @@ clustroid
 {% details Overview %}
 - Assumes `Euclidean` space/distance 
 - Pick `k`, the number of clusters. 
-- Initialize clsuters by picking on point per cluster. 
+- Initialize clusters by picking on point per cluster. 
     - Example: Pick one point at random, then  k-1 other points, 
     each as far away as possible from the previous points
 {% enddetails %}
@@ -182,7 +182,7 @@ clustroid
 to centroid, as `k` increases. 
 - Approach 1: sampling
     - Cluster a sample of the data using hierarchical clustering, to obtain `k` clusters.
-    - Pick a point from each clsuter (e.g. point closest to centroid)
+    - Pick a point from each cluster (e.g. point closest to centroid)
     - Sample fits in main memory.
 - Approach 2: Pick `dispersed` set of points
     - Pick first point at random
@@ -213,7 +213,7 @@ to centroid, as `k` increases.
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/08-clustering/kmean_many.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true alt="Too many" %}
 
-- Little improvement in avaerage distance
+- Little improvement in average distance
 
 {% enddetails %}
 {% enddetails %}

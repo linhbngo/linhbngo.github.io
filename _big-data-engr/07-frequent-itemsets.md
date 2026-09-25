@@ -176,7 +176,7 @@ fraction of baskets that contain j
     - B8: b,c
 - We have the following parameters:
     - Support threshold $s = 3$: We want frequent itemsets that appear at least three times or higher.
-    - Association rule confidence $c = 0.75$: We want association rules with confience threshold at least 0.75 or higher. 
+    - Association rule confidence $c = 0.75$: We want association rules with confidence threshold at least 0.75 or higher. 
 - Given the support threshold $s=3$, we have the following frequent itemsets: 
     - {b,m}, {b,c}, {c,m}, {c,j}, {m,c,b}
 - Based on these itemsets, we can generate the following rules:
@@ -307,7 +307,7 @@ pairs of items ${i_1, i_2}$.
 - The count of the pair of items {i, j} is c.
 - If integers and item ids are 4 bytes, we need approximately 
 12 bytes for pairs with count > 0
-- Plus some additional overhead for the hashtable
+- Plus some additional overhead for the hash table
 - **but only for pairs with count > 0**
 - Beats Approach 1 if less than 1/3 of possible pairs actually occur
 

@@ -37,12 +37,12 @@ This project is to be completed individually.
     - [Yelp Dataset](https://www.yelp.com/dataset) (3-6GB)
     - [Kaggle Datasets](https://www.kaggle.com/datasets?sizeStart=1024%2CMB) (filter for ones greater than 1024MB)
 
-## Core Data Science Querry
+## Core Data Science Query
 
 - From your selected dataset, identify a core data science query that would, **in your opinion**, bring added value to the dataset. 
-    - For example: From the Yelp's restaurant location dataset, one could ask which city blocks in the observerd metropolitan area has the highest 
+    - For example: From the Yelp's restaurant location dataset, one could ask which city blocks in the observed metropolitan area has the highest 
     density of restaurants. This information would help inform tourisms or entrepreneurs looking to open new restaurant. 
-- This selection process and the justification of your querry (what is the added value?) will form the core of the Introduction section of your Technical Report. 
+- This selection process and the justification of your query (what is the added value?) will form the core of the Introduction section of your Technical Report. 
 
 ## Code Development Task:
 
@@ -55,7 +55,7 @@ your selected dataset and query. For example, if it is text data, analysis like 
 For numerical data, statistical analysis are relevant. 
 - The raw data is definitely larger that what you need. You will need to trim down and create smaller dataset and/or combine multiple data sources. 
 - Write a narration describing how you implemented this task. The narration should not be as simple as *I did this, I did that ...*. 
-Rather, it should include extensive justification, especially regarding data manipulation activities. Why did you select the specific implementation that you did? How did the dataset (size, attributes, quirks, etc) influence your technical choices. It should also report the outcome of your data engineering activities (e.g. decsrie the resulting intermediate dataset). This narration will make up the Data Engineering sections of your Technical Report. 
+Rather, it should include extensive justification, especially regarding data manipulation activities. Why did you select the specific implementation that you did? How did the dataset (size, attributes, quirks, etc) influence your technical choices. It should also report the outcome of your data engineering activities (e.g. describe the resulting intermediate dataset). This narration will make up the Data Engineering sections of your Technical Report. 
 
 {% enddetails %}
 
@@ -83,7 +83,7 @@ The general requirements for the technical report are as follows:
     - Introduction and Motivation
         - Present the data
         - Why is this data set interesting to you
-    - Related work (academic citations on previous work that used this data or similar techniques). This could be done after Descriptive Analysi and Technical Analysis sections. 
+    - Related work (academic citations on previous work that used this data or similar techniques). This could be done after Descriptive Analysis and Technical Analysis sections. 
     - Data Engineering
     - Data Analytic
     - Conclusion
@@ -92,7 +92,7 @@ The general requirements for the technical report are as follows:
 ## Submissions requirements
 
 - All the source codes should be included in a zipped file called **project.zip**. 
-- A README file that describes the data acquistion process and running instruction for the project. 
+- A README file that describes the data acquisition process and running instruction for the project. 
 - The final technical report **in PDF format**. 
 
 Failure to adhere to details in this project description will result in points taken off. 
