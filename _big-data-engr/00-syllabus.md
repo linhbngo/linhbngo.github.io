@@ -84,6 +84,14 @@ programming libraries.
 maintain high quality computing systems that function effectively and reliably 
 in the emerging and future information infrastructure.
 
+### Data Science Minor Learning Objectives (DSPO):
+
+1. Apply computational thinking and statistical reasoning to solve problems in their field.
+2. Manage data and create visualizations to effectively interpret and communicate findings.
+3. Develop and evaluate predictive models to support data-driven decision making. 
+4. Utilize modern data science tools to conduct a complete data analysis process.
+
+
 ### ABET Objectives (APO):
 
 1. Analyze a complex computing problem and to apply principles of computing and 
@@ -113,12 +121,12 @@ Refer to the Undergraduate Catalog for description of NG (No Grade), W, & other 
 
 ### Assessments:
 
-| Assessment  | % of Final Grade | Course Objectives Assessed | Program Objectives Assessed | ABET Objectives |
-| ----------- | ---------------- | -------------------------- | --------------------------- | --------------- |
-| Assignments |       40%        |         1,2,3              |             1               |        1        |
-| Project     |       30%        |         1,2,3              |             1               |        2        |
-| Quiz        |       15%        |         1                  |             1               |        1        |
-| Final       |       15%        |         1,2,3              |             1               |        1        |
+| Assessment  | % of Final Grade | Course Objectives Assessed | Program Objectives Assessed | DSPO Assessed | ABET Objectives |
+| ----------- | ---------------- | -------------------------- | --------------------------- | ------------- |---------------- |
+| Assignments |       40%        |         1,2,3              |             1               |      1,2,3    |       1         |
+| Project     |       30%        |         1,2,3              |             1               |     1,2,3,4   |       1         |
+| Quiz        |       15%        |         1                  |             1               |        1      |       1         |
+| Final       |       15%        |         1,2,3              |             1               |        1      |       1         |
 
 
 ### Lateness Policy:
