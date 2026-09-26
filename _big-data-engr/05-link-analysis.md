@@ -17,12 +17,11 @@ typograms: true
 toc:
   - name: History
   - name: PageRank
-  - name: 'PageRank: the Google formulation'
+  - name: Google Formulation
   - name: 'Hands-on: Page Rank in Spark'
   - name: Hub and Authority
   - name: 'Hands-on: HITS'
 ---
-# Link Analysis
 
 ## History
 
@@ -62,88 +61,12 @@ the distribution/intensity of these links.
     - Are all incoming links equals?
         - Links from important pages count more. 
 
-```mermaid
-graph TD
-    B(("B(38.4)")):::bWide --> C(("C(34.3)")):::cWide
-    C --> B
-    D(("D(3.9)")):::dWide --> A(("A(3.3)")):::aWide
-    D --> B
-    E(("E(8.1)")):::eWide --> D
-    E --> B
-    E --> F(("F(3.9)")):::dWide
-    F --> B
-    F --> E
-    G(("1.6")):::wide5 --> B
-    H(("1.6")):::wide5 --> C
-    I(("1.6")):::wide5 --> B
-    I --> E
-    K(("1.6")):::wide5 --> B
-        
-    classDef aWide padding:10px
-    classDef bWide padding:38px
-    classDef cWide padding:34px
-    classDef aWide padding:10px
-    classDef eWide padding:15px
-    classDef wide5 padding: 5px
-
-    style A fill:#FFA500
-    style B fill:#00FFFF
-    style C fill:#8B8000
-    style D fill:#f198b3
-    style E fill:#ADEBB3
-    style F fill:#f198b3
-```
-
 - Each link's vote is proportional to the **importance** of its
 source page. 
 - If page *j* with importance $r_j$ has **n** outgoing links, then each outgoing link has $r_j$ votes. 
 - The **importance** of page *j* is the sum of the votes on its incoming links. 
 
-
-```mermaid
-graph TD
-    k((k)) -->|$$r_k/4$$| j((j))
-    i((i)) -->|$$r_i/3$$| j((j))
-    s1((" ")) --> i
-    i --> s2((" "))
-    i --> s3((" "))
-    s4((" ")) --> k
-    k --> s5((" "))
-    k --> s6((" "))
-    k --> s7((" "))
-    j -->|$$r_j/3$$| s8((" "))
-    j -->|$$r_j/3$$| s9((" "))
-    j -->|$$r_j/3$$| s10((" "))
-    s8 --> s81((" "))
-    s8 --> s82((" "))
-    s8 --> s83((" "))
-    s9 --> s91((" "))
-    s9 --> s92((" "))
-    s9 --> s93((" "))
-    s10 --> s101((" "))
-    s10 --> s102((" "))
-    s10 --> s103((" "))
-    style j fill:#FF0000
-    style i fill:#ADEBB3
-    style k fill:#ADEBB3
-    style s1 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s2 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s3 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s4 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s5 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s6 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s7 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s81 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s82 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s83 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s91 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s92 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s93 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s101 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s102 fill:#FFFFFF00, stroke:#FFFFFF00;
-    style s103 fill:#FFFFFF00, stroke:#FFFFFF00;
-
-```
+{% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/05-pagerank/04.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 $$
 r_j = \frac{r_i}{3} + \frac{r_k}{4}
@@ -508,9 +431,11 @@ $$
 {% enddetails %}
 - The final iteration results is the same as the results from the Gaussian approach in [Section 2.2](#the-flow-model)
 
----
 {% enddetails %}
-## PageRank: the Google formulation
+
+
+
+## Google Formulation
 
 {% details Scenarios %}
 
@@ -649,12 +574,11 @@ $$
 
 where $\left[ \frac{1 - \beta}{N}\right]_{N}$ is a vector with all $N$ entries have the same value $\frac{1-\beta}{N}$.
 
----
 {% enddetails %}
+
 ## Hands-on: Page Rank in Spark
 
-- If you have not already done so, run `git pull` to update the `big-data-engineering` repository.
-
+This hands-on should be done on a notebook 
 {% details Small example data %}
 
 - A small example data file is located in `link-analysis/data/small_graph.dat` and has the following format
@@ -753,16 +677,15 @@ while sum > 0.01:
     print(ranks.take(3))
 ``` 
 
----
 {% enddetails %}
-{% details Hollins dataset %}
 
-- Download [the Hollins dataset](https://www.cs.wcupa.edu/LNGO/data/hollins.dat) using wget
-- Hollins University web bot crawl in 2004. 
-- Which page is most important (internally). 
 
----
+{% details tip PageRank Colab Notebook}
+
+The link to the notebook can be found at [PageRank Colab]https://drive.google.com/file/d/15FcDnUk1b7PL1NZkV1r7WySy_MwqRzQP/view?usp=sharing)
+
 {% enddetails %}
+
 
 ## Hub and Authority
 
@@ -819,25 +742,27 @@ flowchart LR
 - The $L$ and $L^T$ matrices are:
 
 $$
-L = 
+L =
 \left[
-\begin{array}{ccccc}
-0 & 1 & 1 & 1 & 0 \\
-1 & 0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 0 & 1 \\
-0 & 1 & 1 & 0 & 0 \\
-0 & 0 & 0 & 0 & 0
+\begin{array}{c|ccccc}
+  & A & B & C & D & E \\ \hline
+A & 0 & 1 & 1 & 1 & 0 \\
+B & 1 & 0 & 0 & 1 & 0 \\
+C & 0 & 0 & 0 & 0 & 1 \\
+D & 0 & 1 & 1 & 0 & 0 \\
+E & 0 & 0 & 0 & 0 & 0
 \end{array}
 \right]
-\ \ \ \ \ \ \ \ \ 
+\qquad
 L^T =
 \left[
-\begin{array}{ccccc}
-0 & 1 & 0 & 0 & 0 \\
-1 & 0 & 0 & 1 & 0 \\
-1 & 0 & 0 & 1 & 0 \\
-1 & 1 & 0 & 0 & 0 \\
-0 & 0 & 1 & 0 & 0
+\begin{array}{c|ccccc}
+  & A & B & C & D & E \\ \hline
+A & 0 & 1 & 0 & 0 & 0 \\
+B & 1 & 0 & 0 & 1 & 0 \\
+C & 1 & 0 & 0 & 1 & 0 \\
+D & 1 & 1 & 0 & 0 & 0 \\
+E & 0 & 0 & 1 & 0 & 0
 \end{array}
 \right]
 $$
@@ -845,31 +770,37 @@ $$
 - If indices $0,1,2,3,4$ represent pages $A,B,C,D,E$ accordingly:
     - There is a link from B ($i=1$) to D ($j=3$), so $L_{13}=1$ 
 
+
     $$
+    L =
     \left[
-    \begin{array}{ccccc}
-    0 & 1 & 1 & 1 & 0 \\
-    1 & 0 & 0 & \textbf{1} & 0 \\
-    0 & 0 & 0 & 0 & 1 \\
-    0 & 1 & 1 & 0 & 0 \\
-    0 & 0 & 0 & 0 & 0
+    \begin{array}{c|ccccc}
+    & A & B & C & D & E \\ \hline
+    A & 0 & 1 & 1 & 1 & 0 \\
+    B & 1 & 0 & 0 & \textcolor{red}{\mathbf{1}} & 0 \\
+    C & 0 & 0 & 0 & 0 & 1 \\
+    D & 0 & 1 & 1 & 0 & 0 \\
+    E & 0 & 0 & 0 & 0 & 0
     \end{array}
     \right]
     $$
 
     - There is also a link from D ($j=3$) back to B($i=1$), so $L^T_{31}=1$
 
+
     $$
+    L^T =
     \left[
-    \begin{array}{ccccc}
-    0 & 1 & 0 & 0 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    1 & 0 & 0 & 1 & 0 \\
-    1 & \textbf{1} & 0 & 0 & 0 \\
-    0 & 0 & 1 & 0 & 0
+    \begin{array}{c|ccccc}
+      & A & B & C & D & E \\ \hline
+    A & 0 & 1 & 0 & 0 & 0 \\
+    B & 1 & 0 & 0 & 1 & 0 \\
+    C & 1 & 0 & 0 & 1 & 0 \\
+    D & 1 & \textcolor{red}{\mathbf{1}} & 0 & 0 & 0 \\
+    E & 0 & 0 & 1 & 0 & 0
     \end{array}
     \right]
-    $$  
+    $$
 
     - and so on ...
 {% enddetails %}
@@ -1158,8 +1089,8 @@ a = [0.2087,1,1,0.7913,0]
 \end{align}
 $$ 
 
----
 {% enddetails %}
+
 ## Hands-on: HITS
 
 {% details Example data %}
@@ -1176,8 +1107,17 @@ C E
 D C
 D B
 ```
-- Review the [sequential implementation of HITS](https://colab.research.google.com/drive/1pfoEjaCSY9dNeqmuSR4ur1fJIzWSbRFl?usp=sharing)
+
 {% enddetails %}
-{% details Redo Hollins data %}
-- Identify the pages with highest level of `hubbiness` in the Hollins site. 
+
+{% details tip Sequential HITS Colab Notebook}
+
+The link to the notebook can be found at [Sequential HITS Colab](https://colab.research.google.com/drive/1pfoEjaCSY9dNeqmuSR4ur1fJIzWSbRFl?usp=sharing)
+
+{% enddetails %}
+
+{% details tip HITS Colab Notebook}
+
+The link to the notebook can be found at [HITS Colab](https://drive.google.com/file/d/1cBMUxoszHBXfvnkZ_ChrOYX16eNGSAoR/view?usp=sharing)
+
 {% enddetails %}
