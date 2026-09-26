@@ -833,6 +833,7 @@ $$
 - Ommiting $\lambda$ and $\mu$ and you can see the same self-calculating structure emerges for $h$ and $a$ similar to how the rank vector $r$ was formalized in Page Rank. 
 - In this case, $h$ and $a$ will alternate their roles, with one being used to calculate the other. 
 {% enddetails %}
+
 {% details Computation implementation %}
 - Construct $L$
 - Generate $L^T$
@@ -1088,6 +1089,8 @@ h = [1,0.3583,0,0.7165,0] \\
 a = [0.2087,1,1,0.7913,0]
 \end{align}
 $$ 
+
+{% enddetails %}
 
 {% enddetails %}
 
