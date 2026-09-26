@@ -36,6 +36,7 @@ toc:
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/05-pagerank/02.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
+
 {% details Challenges for web search %}
 - Who to trust given the massive variety of information sources?
     - Trustworthy pages may point to each other. 
@@ -49,8 +50,8 @@ connections between nodes.
 - We can compute the importance of nodes in this graph based on 
 the distribution/intensity of these links. 
 
----
 {% enddetails %}
+
 ## PageRank
 
 {% details Initial formulation %}
@@ -72,6 +73,7 @@ $$
 r_j = \frac{r_i}{3} + \frac{r_k}{4}
 $$
 {% enddetails %}
+
 {% details The flow model %}
 <a id="the-flow-model"></a>
 
@@ -106,7 +108,7 @@ flowchart TD
     - Node $m$ receives one incoming link from node $a$:
         - $r_{m} = r_{a}/2$
 
-{% details General equation for rank calculation %}
+{% details note General equation for rank calculation %}
 
 - The above example demonstrates the idea of a general equation for calculating rank $r_{j}$ for page j:
 
@@ -126,6 +128,7 @@ $$r_j = \sum\limits_{i\rightarrow j}^{n} \frac{r_i}{d_i}$$
     - $r_{m} = 1/5$
 - **Does not scale to Internet-size!**
 {% enddetails %}
+
 {% details Matrix formulation %}
 <a id="matrix-formulation"></a>
 - Using the coefficients from the above flow equations, we can set up a stochastic adjacency matrix M
@@ -148,7 +151,7 @@ $$r_j = \sum\limits_{i=0}^{N-1} M_{ij}r_{j}$$
 
 $$r = M \cdot r$$
 
-{% details Visualization %}
+{% details note Visualization %}
 
 - Suppose page *i* has importance $r_{i}$ and has outgoing links
 to three other pages, including page *j*. 
@@ -156,7 +159,9 @@ to three other pages, including page *j*.
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/05-pagerank/09.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% enddetails %}
+
 {% details Example of matrix formulation %}
 <a id="example-of-matrix-formulation"></a>
 
@@ -241,6 +246,7 @@ m
 \right]
 $$
 {% enddetails %}
+
 {% details Power iteration %}
 - We want to find the page rank value *r*
 - Power method: an iterative scheme.  
@@ -250,6 +256,7 @@ $$
     - Iterate: $r^{(t+1)} = M\cdot r$
     - Stopping condition: $r^{(t+1)} -  r^{(t)} < some\ small\ positive\ error\ threshold\ e$.
 {% enddetails %}
+
 {% details Example of power iteration %}
 
 - Revisiting our flow equations from [Section 2.4](#example-of-matrix-formulation):
@@ -277,8 +284,8 @@ m
 $$
 
 {% enddetails %}
-{% details Iteration 1 %}
 
+{% details Iteration 1 %}
 
 $$
 \left[
@@ -313,10 +320,9 @@ m
 \right]
 $$
 
-
 {% enddetails %}
-{% details Iteration 2 %}
 
+{% details Iteration 2 %}
 
 $$
 \left[
@@ -351,10 +357,9 @@ m
 \right]
 $$
 
-
 {% enddetails %}
-{% details Iteration 3 %}
 
+{% details Iteration 3 %}
 
 $$
 \left[
@@ -390,10 +395,10 @@ m
 $$
 
 {% enddetails %}
+
 ...
 
 {% details Final iteration %}
-
 
 $$
 \left[
@@ -429,10 +434,10 @@ m
 $$
 
 {% enddetails %}
+
 - The final iteration results is the same as the results from the Gaussian approach in [Section 2.2](#the-flow-model)
 
 {% enddetails %}
-
 
 
 ## Google Formulation
@@ -440,7 +445,6 @@ $$
 {% details Scenarios %}
 
 - Recalling the equation from [section 2.3](#matrix-formulation):
-
 
 $$r_j = \sum\limits_{i=0}^{N-1} M_{ij}r_{j}$$
 
@@ -459,8 +463,7 @@ graph LR
   B -->A;
 ```
 
-{% details Solution %}
-
+{% details solution Solution %}
 
 $$
 \left[
@@ -477,21 +480,21 @@ r_b
 $$
 
 {% enddetails %}
+
 {% enddetails %}
+
 {% details Does it converge to what we want? %}
 
 - The `dead end` problem
 - Build the stochastic adjacency matrix for the following:
 graph and calculate the ranking for `a` and `b`.  
 
-
 ``` mermaid
 graph LR
   A((a)) --> B((b));
 ```
 
-{% details Solution %}
-
+{% details solution Solution %}
 
 $$
 \left[
@@ -509,7 +512,8 @@ $$
 
 {% enddetails %}
 {% enddetails %}
-{% details The solution: random teleport %}
+
+{% details Random teleport %}
 
 - At each time step, the random surfer has two options:
     - A probably of β to follow an out-going link at random. 
@@ -581,7 +585,7 @@ where $\left[ \frac{1 - \beta}{N}\right]_{N}$ is a vector with all $N$ entries h
 This hands-on should be done on a notebook 
 {% details Small example data %}
 
-- A small example data file is located in `link-analysis/data/small_graph.dat` and has the following format
+- A small example data file  and has the following format
     - Each line represents one link
     - On each line, the source (first) and the destination (second) are separated by a single space. 
 
@@ -612,7 +616,6 @@ print(links.take(10))
 ```
 
 - Setup initial weight
-
 
 ```python
 N = links.count()
@@ -680,7 +683,7 @@ while sum > 0.01:
 {% enddetails %}
 
 
-{% details tip PageRank Colab Notebook}
+{% details tip PageRank Colab Notebook %}
 
 The link to the notebook can be found at [PageRank Colab]https://drive.google.com/file/d/15FcDnUk1b7PL1NZkV1r7WySy_MwqRzQP/view?usp=sharing)
 
@@ -702,6 +705,7 @@ for each course.
     - If you want to find out what courses the department is offering, you need 
     the page with the course list first (`hub`).
 {% enddetails %}
+
 {% details Formalizing Hubbiness and Authority %}
 <a id="formalizing-hubbiness-and-authority"></a>
 - For a collection of pages (enumarated)
@@ -722,6 +726,7 @@ for each course.
         - $L^T_{ij} = 1$ if there is a link from page j to page i
         - $L^T_{ij} = 0$ if not
 {% enddetails %}
+
 {% details Example %}
 <a id="example"></a>
 
@@ -770,7 +775,6 @@ $$
 - If indices $0,1,2,3,4$ represent pages $A,B,C,D,E$ accordingly:
     - There is a link from B ($i=1$) to D ($j=3$), so $L_{13}=1$ 
 
-
     $$
     L =
     \left[
@@ -786,7 +790,6 @@ $$
     $$
 
     - There is also a link from D ($j=3$) back to B($i=1$), so $L^T_{31}=1$
-
 
     $$
     L^T =
@@ -804,6 +807,7 @@ $$
 
     - and so on ...
 {% enddetails %}
+
 {% details Formal equation %}
 - From [Section 5.2](#formalizing-hubbiness-and-authority), for a collection of pages (enumarated)
     - Two vectors: $h$ and $a$
@@ -963,6 +967,7 @@ $$
 
 
 {% enddetails %}
+
 {% details Iteration 1 %}
 
 - This is $h$ value from previous iteration:
@@ -1081,6 +1086,7 @@ a=
 $$
 
 {% enddetails %}
+
 - Final values:
 
 $$
@@ -1092,11 +1098,10 @@ $$
 
 {% enddetails %}
 
-{% enddetails %}
-
 ## Hands-on: HITS
 
 {% details Example data %}
+
 - Run the following in a cell to generate a data file. This data file represents the graph shown in [Section 5.3](#example)
 
 ```python
@@ -1113,13 +1118,13 @@ D B
 
 {% enddetails %}
 
-{% details tip Sequential HITS Colab Notebook}
+{% details tip Sequential HITS Colab Notebook %}
 
 The link to the notebook can be found at [Sequential HITS Colab](https://colab.research.google.com/drive/1pfoEjaCSY9dNeqmuSR4ur1fJIzWSbRFl?usp=sharing)
 
 {% enddetails %}
 
-{% details tip HITS Colab Notebook}
+{% details tip HITS Colab Notebook %}
 
 The link to the notebook can be found at [HITS Colab](https://drive.google.com/file/d/1cBMUxoszHBXfvnkZ_ChrOYX16eNGSAoR/view?usp=sharing)
 
