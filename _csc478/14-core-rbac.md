@@ -303,3 +303,31 @@ the system.
     - Role-permission assignments constraints (e.g., hire John Smith as contractor between Sep and Dec)
 - Supporting requirements must also be enabled to support temporal constraints. 
 {% enddetails %}
+
+{% details career RBAC work is identity engineering, not only YAML authoring %}
+
+In production, engineers translate job functions and workload identities into
+the smallest practical permission sets, then review how those permissions can
+combine through role bindings, inheritance, impersonation, or service-account
+tokens.
+
+The joint NSA and CISA
+[Kubernetes Hardening Guide](https://www.cisa.gov/news-events/alerts/2022/03/15/updated-kubernetes-hardening-guide)
+connects Kubernetes authorization to operational hardening, including
+least-privilege service accounts and restrictions on access to sensitive
+cluster resources.
+
+A professional RBAC review should document:
+
+- the subject and business purpose of each binding;
+- namespace versus cluster scope;
+- high-risk verbs such as `create`, `update`, `patch`, `delete`, `bind`,
+  `escalate`, and `impersonate`;
+- whether a workload needs an API token at all;
+- expiration or removal criteria for temporary access;
+- `kubectl auth can-i` evidence for both allowed and denied actions.
+
+The strongest design demonstrates not only what a user can do, but also what
+the user is intentionally prevented from doing.
+
+{% enddetails %}

@@ -257,3 +257,25 @@ distributed system.
 - Project-based cloud engineering
     - Will depend on projects that you worked on in CSC 468, Introduction to Cloud Computing
 - Cloud testbed: FABRIC
+
+{% details career Industry example: platform engineering beyond the demo %}
+
+Production Kubernetes adoption is usually an organizational change, not only
+a container migration. In the official
+[Ocado Kubernetes case study](https://kubernetes.io/case-studies/ocado/),
+the retailer moved from separate infrastructure tools toward a common
+Kubernetes API and supporting platform services for networking, monitoring,
+logging, and tracing. The migration began with one business-critical service
+before expanding to hundreds of engineers.
+
+That pattern reflects platform engineering work:
+
+- evaluate whether orchestration solves a real delivery or operations problem;
+- provide a supported path for application teams;
+- standardize deployment, observability, and recovery;
+- migrate incrementally and collect evidence before expanding.
+
+When discussing Kubernetes professionally, connect the control-plane
+architecture to the developer and operational outcomes it enables.
+
+{% enddetails %}

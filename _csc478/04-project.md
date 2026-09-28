@@ -182,5 +182,29 @@ Add persistent storage, verify data survives restarts, and deliver a clean demo.
 - Test early with kubectl port-forward and curl before wiring the full flow.
 - For grading reproducibility, ensure `kubectl delete -f . && kubectl apply -f .` cleanly reprovisions the stack.
 
+{% details career Present the project as an engineering case study %}
+
+Employers learn more from a small, well-evidenced system than from a large
+project that cannot be explained. Structure the final report and demo as a
+case study:
+
+1. State the user or operational problem.
+2. Identify your individual contribution.
+3. Show the architecture and one important tradeoff.
+4. Demonstrate deployment, failure recovery, and persistence with evidence.
+5. Explain one limitation and the next production improvement.
+
+The official
+[Ancestry Kubernetes case study](https://kubernetes.io/case-studies/ancestry/)
+describes a similar incremental approach: the company selected an important
+but manageable service as a pilot, established a repeatable process, and then
+used the results to support broader adoption.
+
+Keep manifests, test commands, diagrams, and measured results in the project
+repository. Do not claim scale, availability, or performance that you did not
+actually test.
+
+{% enddetails %}
+
 
 

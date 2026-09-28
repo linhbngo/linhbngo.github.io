@@ -45,6 +45,28 @@ kubectl delete svc nginx-demo
 
 {% enddetails %}
 
+{% details career Deployments connect development to release engineering %}
+
+In industry, creating a Deployment is part of a larger release process:
+building an immutable image, identifying its version, validating the manifest,
+rolling it out gradually, observing health, and rolling back when necessary.
+Google's
+[SRE chapter on release engineering](https://sre.google/sre-book/release-engineering/)
+emphasizes reproducible and automated releases rather than one-off
+“snowflake” procedures.
+
+Practice describing a release with operational evidence:
+
+- the exact image tag or digest deployed;
+- rollout status and revision history;
+- readiness behavior during replacement;
+- the command and criteria used to roll back;
+- proof that the Service continued selecting healthy Pods.
+
+These are common responsibilities for cloud, DevOps, platform, and SRE roles.
+
+{% enddetails %}
+
 ## Pods: Containers and Node Abstraction
 
 {% details What is a Pod? %}

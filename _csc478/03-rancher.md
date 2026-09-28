@@ -59,6 +59,30 @@ Envoy -->|Routes traffic| Containerd
 ```
 
 {% enddetails %}
+
+{% details career Operating a Kubernetes distribution is a lifecycle responsibility %}
+
+Installing RKE2 is only the beginning of platform ownership. Engineers also
+plan upgrades, test backups and restores, rotate certificates, review release
+notes, monitor etcd, and maintain consistent host configuration.
+
+The official
+[RKE2 CIS Hardening Guide](https://docs.rke2.io/security/hardening_guide)
+illustrates an important industry lesson: “hardened by default” does not mean
+“no operator action required.” Some benchmark controls require explicit
+profiles, host preparation, network policies, or Pod Security configuration.
+
+Useful professional evidence from this lab includes:
+
+- a reproducible installation procedure;
+- recorded RKE2 and Kubernetes versions;
+- validation output for nodes and system Pods;
+- a diagram of management, dataplane, and access paths;
+- a documented rollback or rebuild procedure.
+
+This is the difference between launching a cluster and operating a platform.
+
+{% enddetails %}
 ---
 
 ## Key Features

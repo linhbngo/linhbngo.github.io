@@ -139,6 +139,27 @@ Saturday and Sunday are each days.
 |       |                               | - |
 | 11/30 | Project Presentations         | - |
 
+{% details career Connecting course work to career readiness %}
+
+Cloud engineering roles combine technical operation with communication,
+critical thinking, teamwork, and continuous learning. These align with the
+[NACE Career Readiness Competencies](https://www.naceweb.org/career-readiness/competencies/career-readiness-defined),
+which are also used by employers and university career programs to describe
+workplace evidence.
+
+During the course, retain artifacts that demonstrate those competencies:
+
+- version-controlled Kubernetes manifests and meaningful commit history;
+- architecture diagrams that explain technical decisions;
+- terminal output or tests showing that a deployment worked;
+- a short incident note describing a failure, diagnosis, and correction;
+- a reflection identifying what you would change for production.
+
+In interviews, explain your contribution, constraints, decision, evidence, and
+lesson learned rather than simply listing Kubernetes as a skill.
+
+{% enddetails %}
+
 {% include courses/ai_policy.md %}
 
 {% include courses/policy.md %}

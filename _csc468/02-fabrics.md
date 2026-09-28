@@ -322,3 +322,26 @@ docker compose up
 
 
 {% enddetails %}
+
+{% details career FABRIC experience maps to infrastructure engineering %}
+
+Although FABRIC is a research testbed, its workflow develops industry-relevant
+skills: requesting constrained resources, automating provisioning, managing
+credentials, validating network paths, and cleaning up infrastructure after
+use. The
+[NSF publication describing FABRIC](https://par.nsf.gov/biblio/10132161-fabric-national-scaleprogrammable-experimentalnetwork-infrastructure)
+also shows how compute, storage, programmable networks, and specialized
+hardware are combined for distributed experimentation.
+
+Describe FABRIC work professionally as a reproducible experiment:
+
+- state the question or system behavior being tested;
+- version the notebook or FABlib script used to create the slice;
+- record sites, node types, components, and network services;
+- collect measurements and note environmental limitations;
+- document teardown so resources and credentials are not left exposed.
+
+Those habits transfer directly to cloud infrastructure, network automation,
+performance engineering, and SRE work.
+
+{% enddetails %}

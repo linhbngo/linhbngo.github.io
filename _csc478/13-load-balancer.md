@@ -286,6 +286,32 @@ observe what happens when a pod replica fails.
 
 
 {% enddetails %}
+
+{% details career Load balancing decisions express service objectives %}
+
+Production load balancing is not simply “spread requests evenly.” Engineers
+choose behavior based on latency, backend capacity, locality, failure
+handling, connection state, and whether the original client address must be
+preserved.
+
+Google's
+[SRE chapter on frontend load balancing](https://sre.google/sre-book/load-balancing-frontend/)
+describes multiple layers, including DNS and virtual IPs, and explains why
+proximity alone is insufficient: the selected location must also have capacity
+and healthy infrastructure.
+
+When evaluating the NodePort experiment, frame the result operationally:
+
+- `externalTrafficPolicy: Local` preserves local routing properties but nodes
+  without ready local endpoints cannot serve that traffic;
+- cluster-wide forwarding improves endpoint reachability but may add a
+  network hop and alter source-address behavior;
+- health checks and draining determine whether failures become user-visible.
+
+Explaining these tradeoffs is a common system-design interview and production
+review skill.
+
+{% enddetails %}
 ## References
 
 - [AWS: What is LoadBalancing](https://aws.amazon.com/what-is/load-balancing/)

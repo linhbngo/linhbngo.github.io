@@ -228,3 +228,29 @@ kubectl -n pv-lab delete pvc scratch-pvc --ignore-not-found
 kubectl delete pv pv-nfs-scratch --ignore-not-found
 kubectl delete ns pv-lab --ignore-not-found
 ```
+
+{% details career A storage lab becomes operational experience when failure is tested %}
+
+Creating a bound PVC proves configuration, but production storage work also
+requires failure and recovery evidence. The Kubernetes
+[PersistentVolume documentation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+notes that the PV lifecycle is independent of a Pod and that backend
+capabilities determine available access modes.
+
+A public
+[Kubernetes NFS failure report](https://github.com/kubernetes/kubernetes/issues/90593)
+shows why that distinction matters: when an NFS server became unavailable,
+broken mounts affected Pod lifecycle operations and kubelet behavior on client
+nodes. The PVC object alone could not make the backend healthy.
+
+For a portfolio or runbook, add:
+
+- proof that data survives Pod replacement;
+- the observed behavior when an NFS client node or server is unavailable;
+- reclaim-policy results after deleting the claim;
+- backup ownership and a tested restore procedure.
+
+These checks connect Kubernetes YAML to storage operations and incident
+response.
+
+{% enddetails %}

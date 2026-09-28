@@ -22,6 +22,32 @@ toc:
     - Code
 
 {% enddetails %}
+
+{% details career Cloud security failures cross technical layers %}
+
+Cloud incidents rarely fit into only one category. A vulnerable application,
+network exposure, workload identity, and excessive storage permissions can
+combine into one attack path.
+
+The U.S. Department of Justice's
+[Capital One case summary](https://www.justice.gov/usao-wdwa/united-states-v-paige-thompson)
+describes an intrusion through a misconfigured web application firewall that
+enabled unauthorized access to cloud-hosted data. The case is a useful reminder
+to evaluate the complete path from an externally reachable workload to its
+identity and permitted resources.
+
+In a Kubernetes security review, ask:
+
+- What can an attacker reach after compromising this container?
+- Does the Pod receive a service-account token it does not need?
+- Which API objects and external cloud resources can that identity access?
+- Do network and admission policies limit lateral movement?
+- Would audit logs reveal the access quickly enough to respond?
+
+Security engineers are expected to connect preventive controls with detection,
+incident response, and evidence—not merely produce a hardening checklist.
+
+{% enddetails %}
 {% details Cloud Data Center %}
 
 - Cloud Provider: Their hardware their policy

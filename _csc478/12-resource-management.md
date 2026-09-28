@@ -334,3 +334,28 @@ You can check a Pod’s QoS with:
 ```bash
 kubectl get pod cpu-mem-demo -o jsonpath='{.status.qosClass}'
 ```
+
+{% details career Resource management is capacity and reliability engineering %}
+
+Requests and limits affect scheduling, autoscaling, cost, and failure
+behavior. Platform engineers therefore compare configured requests with
+measured usage instead of choosing values once and forgetting them.
+
+In
+[OpenAI's account of scaling Kubernetes to 7,500 nodes](https://openai.com/index/scaling-kubernetes-to-7500-nodes/),
+the team describes low-priority “balloon” Deployments that reserve otherwise
+idle capacity while remaining immediately evictable for real workloads. The
+example shows that resource requests, priority, and autoscaling behavior are
+combined to meet workload and infrastructure goals.
+
+Useful evidence in a capacity review includes:
+
+- request, limit, and observed usage percentiles;
+- throttling, OOM kills, and eviction history;
+- pending-Pod reasons and unavailable resource types;
+- expected burst behavior and scaling delay;
+- the cost or reliability consequence of over- and under-allocation.
+
+This analysis is common in SRE, FinOps, and platform engineering work.
+
+{% enddetails %}

@@ -1013,3 +1013,28 @@ flannel.1  -> remote Pod subnet over the overlay
 - **Canal**: combines Flannel networking with Calico policy/workload integration; this is the default CNI in RKE2.
 
 {% enddetails %}
+
+{% details career Production networking work is structured troubleshooting %}
+
+Service incidents often arrive as a vague report—“the application is down”—
+but the cause may be the process, Pod readiness, selector, EndpointSlice, DNS,
+Service dataplane, CNI route, NetworkPolicy, or external load balancer.
+
+The official Kubernetes
+[Debug Services](https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/)
+guide follows the same layered approach used in this lecture: verify the
+Service, test DNS and IP connectivity, inspect EndpointSlices and Pods, and
+then examine the Service proxy implementation.
+
+During an incident, record:
+
+- the failing request and timestamp;
+- each layer tested and its result;
+- the first layer where expected behavior changes;
+- the mitigation and its risk;
+- the root cause and preventive follow-up.
+
+Being able to produce that evidence is more valuable professionally than
+memorizing a list of networking commands.
+
+{% enddetails %}
