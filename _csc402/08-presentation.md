@@ -31,6 +31,7 @@ typograms: true
     - If you are uncomfortable, take every opportunity to gain experience
 
 {% enddetails %}
+
 {% details Presentations in CSC402 %}
 
 - Two required presentations:
@@ -44,6 +45,7 @@ typograms: true
 - Course staff will evaluate and provide feedback on presentation contents and technique
 
 {% enddetails %}
+
 {% details Planning for presentations %}
 
 - Know your purpose, audience, and resources
@@ -67,15 +69,17 @@ typograms: true
     - Internet access?
 
 {% enddetails %}
+
 {% details Time management %}
 
-- CS402: 25 min for presentation, 10 min for questions
+- CS402: 20 min for presentation, 10 min for questions
     - Expect interruptions (presentation must serve the audience; 
     is not an end in itself)
 - Have an agenda that fulfils the presentation’s purpose
 - Rehearse your presentation on the clock!
 
 {% enddetails %}
+
 {% details Remote presentations %}
 
 - Good audio is essential
@@ -198,6 +202,7 @@ explicit about when they should be referenced
     - Why should the audience pay attention to this?
 
 {% enddetails %}
+
 {% details Looking ahead: CSC402 final presentation %}
 
 - Goals
@@ -217,6 +222,7 @@ explicit about when they should be referenced
 - Are you handing over a maintainable system?
 
 {% enddetails %}
+
 {% details Final presentation components %}
 
 - Demonstration of operational system
@@ -227,6 +233,6 @@ explicit about when they should be referenced
     - Honest summary of achievements and misses
     - Summary of what is being delivered
 - Time for discussion
-- Must fit within 45 min
+- Must fit within 25 min
     - Cannot walk through everything
 {% enddetails %}
