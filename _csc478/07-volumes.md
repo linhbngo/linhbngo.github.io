@@ -95,6 +95,14 @@ spec:
 - Use `kubectl exec` with additional `-c` flag to get into the `my-app-container` container. 
 - Confirm the content inside `/var/data/file.txt`. 
 
+```bash
+kubectl get pod emptydirpod -o jsonpath='{.spec.containers[*].name}'
+kubectl exec -it emptydirpod -c my-app-container -- sh
+cat /var/datafile.txt
+```
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/emptydirpod.png" max-width="50%" zoomable=true %}
+
 {% enddetails %}
 
 {% details Persistent volumes: hostPath %}
@@ -124,7 +132,7 @@ spec:
   volumes:
   - name: host-volume
     hostPath:
-      path: /home/YOUR_USER_NAME_HERE/hostpath
+      path: /home/ubuntu/hostpath
       type: DirectoryOrCreate
 ```
 
@@ -132,6 +140,17 @@ spec:
 - Once the Pod is ready, check the content inside the `~/hostpath/` directory.
 - Create another file inside `~/hostpath/` directory. 
 - Use `kubectl exec` to get into the pod and check the content of `/mnt/hostpath/` directory. 
+
+```bash
+kubectl exec -it hostpathpod -c my-app-container -- sh
+cat /mnt/hostpath/datafile.txt
+```
+
+- Is this file on `node1`? Which node is it on?
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nodepath-1.png" max-width="50%" zoomable=true %}
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nodepath-2.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
