@@ -98,7 +98,7 @@ spec:
 ```bash
 kubectl get pod emptydirpod -o jsonpath='{.spec.containers[*].name}'
 kubectl exec -it emptydirpod -c my-app-container -- sh
-cat /var/datafile.txt
+cat /var/data/file.txt
 ```
 
 {% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/emptydirpod.png" max-width="50%" zoomable=true %}
@@ -168,6 +168,7 @@ cat /mnt/hostpath/datafile.txt
 
 
 {% enddetails %}
+
 {% details Persistent Volume Claim (PVC) %}
 
 - User request for storage.
@@ -386,10 +387,9 @@ filesystem quotas, or the dynamic provisioner.
 
 {% enddetails %}
 
-{% details Access modes are scheduling contracts %}
+{% details Access modes %}
 
-Access modes describe supported attachment/mount patterns; they are not
-general filesystem permissions:
+Access modes describe supported attachment/mount patterns and should not be confused with general filesystem permissions
 
 - `ReadWriteOnce` (`RWO`): read/write from Pods on one node. Several Pods on
   that same node may still be able to mount it.
@@ -451,14 +451,13 @@ NGINX cache + customer uploads + database + logs -> one shared PVC
 
 A platform engineer should separate the data by lifecycle:
 
-- cache -> `emptyDir` because it can be rebuilt;
-- customer uploads -> object storage or an RWX filesystem with backup;
-- database -> database-appropriate block storage and database-aware backups;
-- application logs -> `stdout`/`stderr` and a centralized logging platform.
+- cache: `emptyDir` because it can be rebuilt;
+- customer uploads: object storage or an RWX filesystem with backup;
+- database: database-appropriate block storage and database-aware backups;
+- application logs: `stdout`/`stderr` and a centralized logging platform.
 
-The professional skill is not memorizing volume types. It is converting
-business requirements—durability, recovery time, concurrency, compliance,
-and cost—into different storage policies.
+It is important to be able to convert business requirements such as durability, recovery time, concurrency, compliance,
+and cost into different storage policies.
 
 {% enddetails %}
 

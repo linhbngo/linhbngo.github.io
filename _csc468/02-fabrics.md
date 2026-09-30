@@ -243,8 +243,8 @@ If you have a Windows machine, run the followings:
 
 ```bash
 git config --global core.autocrlf false
-git clone https://github.com/CSC468-WCU/fabric-examples.git
-cd fabric-examples
+git clone https://github.com/ngo-classes/fabric.git
+cd fabric
 ```
 
 {% enddetails %}
@@ -252,8 +252,7 @@ cd fabric-examples
 
 {% details Home Preparation %}
 
-- A home directory for `fabric` service account is available inside the `fabric-examples` directory. Everything inside this directory has been included `.gitginore` file inside this directory. This is to ensure that all credential information 
-are not accidentally pushed back upstream. 
+- A home directory for `fabric` service account is available inside the `fabric` directory. Everything inside this directory has been included `.gitginore` file inside this directory. This is to ensure that all credential information are not accidentally pushed back upstream. 
 - You will need to populate this home directory. 
 - Create two directories inside this `home` directory:
 
