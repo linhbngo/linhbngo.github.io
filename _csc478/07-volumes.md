@@ -441,12 +441,7 @@ use NFS, they should normally access it **through PVs and PVCs**.
 
 {% enddetails %}
 
-{% details Should the NFS server run inside Kubernetes? %}
-
-It can, but an ordinary NFS server Pod is rarely the best default. The answer
-depends on what stores the NFS server's own data.
-
-### Option 1: External NFS server with Kubernetes PVs
+{% details External NFS server with Kubernetes PVs %}
 
 ```text
 Application Pod -> PVC -> PV -> NFS server outside the cluster
@@ -455,79 +450,6 @@ Application Pod -> PVC -> PV -> NFS server outside the cluster
 This is usually the simplest choice when an organization already operates an
 NFS service. Kubernetes nodes are clients; the NFS server has an independent
 lifecycle, backup policy, export configuration, and failure domain.
-
-For this course environment, the existing `192.168.1.1:/opt/scratch` export
-fits this model. Keep the server external and represent its exports with
-PVs/PVCs. There is no benefit in deploying a second ad hoc NFS server Pod just
-to make the storage appear “more Kubernetes-native.”
-
-### Option 2: An NFS provisioner runs in Kubernetes
-
-An NFS CSI driver or NFS subdirectory external provisioner may run as
-Kubernetes controllers and node components:
-
-```text
-PVC -> in-cluster provisioner/CSI driver -> directory on external NFS server
-```
-
-The provisioner automates PV creation. It is **not necessarily the NFS
-server** and does not make the backend data live inside the cluster. This is a
-useful production pattern when many teams need dynamically provisioned RWX
-claims.
-
-### Option 3: The NFS server itself runs as a Pod
-
-```text
-Application Pods -> NFS Service -> NFS server Pod -> server's backing volume
-```
-
-This can be useful for a lab, edge deployment, or a deliberate storage
-appliance design. However, it adds a second storage layer and raises a
-bootstrap question: **what makes the NFS server's own volume durable?**
-
-- If it uses `emptyDir`, all exported data is ephemeral.
-- If it uses `hostPath` or a local PV, the server and data are tied to one
-  node. A node failure takes down the export.
-- If it uses a durable RWO block PVC, Kubernetes may move the NFS server to
-  another node, but clients experience downtime during detach, attach, and
-  server restart.
-- If it uses an RWX distributed filesystem underneath, re-exporting that
-  filesystem through NFS may be redundant unless a specific compatibility
-  requirement justifies it.
-
-A single NFS server Pod also becomes a throughput bottleneck and single point
-of service failure. A highly available in-cluster file service requires
-replication, failover, fencing, monitoring, and tested recovery—not merely a
-Deployment with several NFS replicas.
-
-{% enddetails %}
-
-{% details Recommended decision rule %}
-
-- Use a normal CSI-backed `RWO` PVC directly for a single-writer database or
-  application data when the cluster provides suitable block storage.
-- Use external or managed NFS through PV/PVC when several nodes need `RWX`
-  shared files.
-- Add an in-cluster NFS CSI driver/provisioner when dynamic creation of NFS
-  claims is needed; this does not require moving the NFS server into
-  Kubernetes.
-- Use a purpose-built distributed storage platform such as Ceph or Longhorn
-  only when the team is prepared to operate storage as part of the cluster.
-- Run a standalone NFS server Pod mainly for learning or when its backing
-  storage, availability model, and recovery process are explicitly designed.
-
-For the course cluster, the practical recommendation is:
-
-```text
-Existing external NFS
-        +
-Kubernetes PV/PVC abstraction
-        +
-Optional NFS CSI provisioner for dynamic claims
-```
-
-NFS remains useful for shared files. PV/PVC makes that NFS storage consumable
-in a Kubernetes-native way.
 
 {% enddetails %}
 
@@ -602,7 +524,14 @@ showmount -e 192.168.1.1
 nc -vz 192.168.1.1 2049
 ```
 
-Create `nfs-web-db.yaml`, adapting server and export path:
+The export directory must already exist on the NFS server and allow the
+workload to write to it. Create the namespace:
+
+```bash
+kubectl create namespace volume-demo --dry-run=client -o yaml | kubectl apply -f -
+```
+
+Create `nfs-web-db.yaml`, adapting the server address and export path:
 
 ```yaml
 apiVersion: v1
@@ -623,12 +552,12 @@ spec:
     - retrans=2
   nfs:
     server: 192.168.1.1
-    path: /opt/scratch/volume-demo
+    path: /opt/data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: web-db-nfs
+  name: web-db
   namespace: volume-demo
 spec:
   accessModes:
@@ -640,138 +569,22 @@ spec:
       storage: 1Gi
 ```
 
-Important details:
-
-- `storageClassName: ""` prevents accidental dynamic provisioning.
-- `volumeName` explicitly binds this claim to the intended static PV.
-- `Retain` preserves server data after claim deletion, but still requires an
-  administrative recovery procedure.
-- NFSv4 normally does not need the `nolock` option; locking is part of the
-  NFSv4 protocol.
-- The export directory must already exist and its UID/GID permissions must
-  permit the workload to write.
-
-{% enddetails %}
-
-{% details When NFS needs Pod node affinity %}
-
-NFS usually needs no PV `nodeAffinity` when all workers can mount the export.
-Use **Pod node affinity** when only a subset of nodes has:
-
-- routing to the storage network;
-- an NFS client package/kernel module;
-- firewall access to TCP 2049;
-- acceptable latency to the server;
-- authorization in the NFS export policy.
-
-Label eligible nodes:
+Create the PV and PVC, then verify that Kubernetes binds them:
 
 ```bash
-kubectl label node worker-a storage.example.com/nfs-client=true
-kubectl label node worker-b storage.example.com/nfs-client=true
+kubectl apply --dry-run=server -f nfs-web-db.yaml
+kubectl apply -f nfs-web-db.yaml
+kubectl get pv nfs-web-db
+kubectl -n volume-demo get pvc web-db
 ```
 
-Add a required rule to the Pod template:
-
-```yaml
-spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: storage.example.com/nfs-client
-                operator: In
-                values: ["true"]
-```
-
-`requiredDuringSchedulingIgnoredDuringExecution` is enforced when scheduling.
-If the node's label later changes, Kubernetes does not automatically evict the
-running Pod.
-
-Use a **preferred** rule when proximity is an optimization, not a hard
-requirement:
-
-```yaml
-spec:
-  affinity:
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          preference:
-            matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: In
-                values: ["storage-zone-a"]
-```
-
-Hard affinity can leave Pods `Pending` during failures. Prefer hard rules only
-for real reachability or correctness constraints.
+Both resources should report `Bound`. The PV maps Kubernetes storage to the
+NFS export, and the PVC gives the namespaced workload a stable way to request
+that PV. `Retain` keeps the files on the NFS server if the claim is deleted;
+recovering or deleting those files remains an administrator task.
 
 {% enddetails %}
 
-{% details PV node affinity for local storage %}
-
-PV `nodeAffinity` belongs on topology-bound storage such as a local disk:
-
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: local-db-pv
-spec:
-  capacity:
-    storage: 20Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
-  local:
-    path: /mnt/disks/db
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values: ["worker-a"]
-```
-
-The scheduler combines this PV constraint with the Pod's other requirements.
-Do not add this pattern to an NFS PV merely because the NFS server resides on
-`worker-a`; the NFS export is remote storage from the clients' perspective.
-
-{% enddetails %}
-
-{% details StorageClass topology and WaitForFirstConsumer %}
-
-Topology-aware storage systems often use:
-
-```yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: zonal-csi
-provisioner: example.csi.driver
-volumeBindingMode: WaitForFirstConsumer
-allowedTopologies:
-  - matchLabelExpressions:
-      - key: topology.kubernetes.io/zone
-        values:
-          - zone-a
-          - zone-b
-```
-
-`Immediate` binding may provision a zonal disk before the scheduler considers
-the Pod's node affinity and resource needs. `WaitForFirstConsumer` delays that
-decision so storage and Pod topology are selected together.
-
-Do not set `spec.nodeName` to force a Pod onto a node when testing delayed
-binding; doing so bypasses normal scheduler participation and can leave the
-PVC pending. Use node affinity or a node selector instead.
-
-{% enddetails %}
 
 {% details NFS concurrency and application correctness %}
 
@@ -792,6 +605,324 @@ database and expose a network protocol to clients.
 NFS is a strong fit for shared uploads, static assets, read-mostly data,
 build artifacts, and shared content—provided file-level concurrency is
 understood.
+
+{% enddetails %}
+
+
+## Hands-on Stateful Web Stack
+
+This lab combines several storage patterns in one Pod:
+
+- NGINX is the public web server.
+- A small Python HTTP service stores request counters in SQLite.
+- NGINX writes access and error logs to a Pod-scoped `emptyDir`.
+- SQLite is stored on a PVC and survives Pod replacement.
+
+The example intentionally uses one replica. SQLite is a local file database,
+not a multi-node database service. Scaling this Deployment to several replicas
+against the same database file would be an application design error even if
+the storage backend allowed RWX.
+
+Before starting, complete **Static NFS PV and PVC** above. Confirm that the
+`nfs-web-db` PV and the `volume-demo/web-db` PVC both report `Bound`.
+
+{% details info Step 1: Create application and NGINX configuration %}
+
+{% details tip What is a ConfigMap? %}
+
+A ConfigMap stores non-sensitive configuration separately from a container
+image. Pods can consume its key-value entries as environment variables or
+mounted files. In this lab, Kubernetes mounts the Python application, NGINX
+configuration as read-only files.
+
+{% enddetails %}
+
+Create `web-config.yaml`:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  namespace: volume-demo
+data:
+  app.py: |
+    import json
+    import os
+    import sqlite3
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+    DB = os.environ.get("DB_PATH", "/data/requests.db")
+
+    def initialize():
+        with sqlite3.connect(DB) as db:
+            db.execute("""
+                CREATE TABLE IF NOT EXISTS requests (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    path TEXT NOT NULL,
+                    requested_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            with sqlite3.connect(DB, timeout=10) as db:
+                db.execute("INSERT INTO requests(path) VALUES (?)", (self.path,))
+                count = db.execute(
+                    "SELECT COUNT(*) FROM requests"
+                ).fetchone()[0]
+
+            body = json.dumps({
+                "message": "hello from persistent storage",
+                "path": self.path,
+                "request_count": count
+            }).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, format, *args):
+            print(format % args, flush=True)
+
+    initialize()
+    ThreadingHTTPServer(("0.0.0.0", 8080), Handler).serve_forever()
+
+  nginx.conf: |
+    events {}
+    http {
+      log_format lab '$remote_addr - $remote_user [$time_local] '
+                     '"$request" $status $body_bytes_sent '
+                     'request_time=$request_time';
+      access_log /var/log/nginx/access.log lab;
+      error_log  /var/log/nginx/error.log notice;
+
+      server {
+        listen 80;
+        location / {
+          proxy_pass http://127.0.0.1:8080;
+          proxy_set_header Host $host;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+      }
+    }
+```
+
+The ConfigMap is mounted read-only. It carries configuration and source code,
+not mutable data.
+
+```bash
+kubectl apply --dry-run=server -f web-config.yaml
+kubectl apply -f web-config.yaml
+```
+
+{% enddetails %}
+
+{% details info Step 2: Deploy the web application %}
+
+Create `web-deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stateful-web
+  namespace: volume-demo
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: stateful-web
+  template:
+    metadata:
+      labels:
+        app: stateful-web
+    spec:
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+            - name: logs
+              mountPath: /var/log/nginx
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 5
+
+        - name: app
+          image: python:3.12-alpine
+          command: ["python", "/config/app.py"]
+          env:
+            - name: DB_PATH
+              value: /data/requests.db
+          volumeMounts:
+            - name: config
+              mountPath: /config
+              readOnly: true
+            - name: database
+              mountPath: /data
+
+      volumes:
+        - name: config
+          configMap:
+            name: web-config
+        - name: logs
+          emptyDir:
+            sizeLimit: 100Mi
+        - name: database
+          persistentVolumeClaim:
+            claimName: web-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateful-web
+  namespace: volume-demo
+spec:
+  type: NodePort
+  selector:
+    app: stateful-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+```
+
+`Recreate` prevents a rolling update from briefly running an old and a new Pod
+against the same SQLite file. It is a teaching safeguard, not a substitute for
+a production database.
+
+Apply and inspect:
+
+```bash
+kubectl apply --dry-run=server -f web-deployment.yaml
+kubectl apply -f web-deployment.yaml
+kubectl -n volume-demo rollout status deployment/stateful-web
+kubectl -n volume-demo get pod,pvc,svc -o wide
+```
+
+{% enddetails %}
+
+{% details info Step 3: Generate requests and inspect the storage paths %}
+
+Use port forwarding:
+
+```bash
+kubectl -n volume-demo port-forward service/stateful-web 8080:80
+```
+
+From another terminal:
+
+```bash
+for i in $(seq 1 20); do curl -s http://127.0.0.1:8080/demo; echo; done
+```
+
+Identify the Pod:
+
+```bash
+POD=$(kubectl -n volume-demo get pod -l app=stateful-web \
+  -o jsonpath='{.items[0].metadata.name}')
+```
+
+Inspect the NGINX logs stored in the `emptyDir`:
+
+```bash
+kubectl -n volume-demo exec "$POD" -c nginx -- \
+  ls -lh /var/log/nginx
+kubectl -n volume-demo exec "$POD" -c nginx -- \
+  tail /var/log/nginx/access.log
+```
+
+Inspect the persistent database:
+
+```bash
+kubectl -n volume-demo exec "$POD" -c app -- \
+  ls -lh /data
+kubectl -n volume-demo exec "$POD" -c app -- python -c \
+  'import sqlite3; db=sqlite3.connect("/data/requests.db"); print(db.execute("select count(*) from requests").fetchone())'
+```
+
+The log inspection shows data on ephemeral, Pod-scoped storage. The database
+inspection shows persistent data on the NFS-backed PVC.
+
+{% enddetails %}
+
+{% details info Step 4: Prove different lifecycle behavior %}
+
+Capture the database request count:
+
+```bash
+curl -s http://127.0.0.1:8080/before-delete
+kubectl -n volume-demo delete pod "$POD"
+kubectl -n volume-demo rollout status deployment/stateful-web
+```
+
+Reconnect port forwarding if necessary, then:
+
+```bash
+curl -s http://127.0.0.1:8080/after-delete
+```
+
+The count continues because the replacement Pod mounts the same PVC. Now
+inspect the new Pod's logs:
+
+```bash
+POD=$(kubectl -n volume-demo get pod -l app=stateful-web \
+  -o jsonpath='{.items[0].metadata.name}')
+kubectl -n volume-demo exec "$POD" -c nginx -- \
+  ls -lh /var/log/nginx
+```
+
+The old logs are gone because a replacement Pod receives a new `emptyDir`.
+
+{% enddetails %}
+
+{% details warning Security and production notes %}
+
+- Pin images by digest in controlled production environments.
+- Run containers as non-root when images and filesystem permissions permit.
+- Set CPU and memory requests/limits.
+- Back up the database independently of the PVC.
+- Do not place credentials in ConfigMaps.
+- A PVC is not a backup, and a replica is not a backup.
+- For multi-replica applications, use a database designed for network clients
+  such as PostgreSQL rather than a shared SQLite file.
+
+{% enddetails %}
+
+{% details career Turn this lab into portfolio evidence %}
+
+For a project report, internship discussion, or technical interview, document
+evidence rather than only stating that Kubernetes was used:
+
+1. Draw the request and storage path: client -> NGINX -> Python -> SQLite PVC.
+2. Explain why logs use `emptyDir` while the database uses a PVC.
+3. Show the request count before and after deleting the Pod.
+4. Show that the database survives while the old log files do not.
+5. Explain why `replicas: 1` and `strategy: Recreate` were selected.
+6. Propose a production evolution: centralized logs and a network database.
+
+A strong résumé bullet could be:
+
+> Built and tested a multi-container Kubernetes workload with Pod-scoped
+> `emptyDir` logging and NFS-backed persistent application data; verified their
+> different lifecycle behavior through controlled Pod replacement.
+
+Only claim measurements or outcomes that you actually collected.
 
 {% enddetails %}
 
@@ -937,425 +1068,5 @@ assumption.
 
 {% enddetails %}
 
-
-
-
-## Hands-on Stateful Web Stack
-
-This lab combines several storage patterns in one Pod:
-
-- NGINX is the public web server.
-- A small Python HTTP service stores request counters in SQLite.
-- NGINX writes access and error logs to a shared `emptyDir`.
-- A sidecar rotates those logs.
-- SQLite is stored on a PVC and survives Pod replacement.
-
-The example intentionally uses one replica. SQLite is a local file database,
-not a multi-node database service. Scaling this Deployment to several replicas
-against the same database file would be an application design error even if
-the storage backend allowed RWX.
-
-{% details info Step 1: Check storage and create the namespace %}
-
-Choose an available StorageClass:
-
-```bash
-kubectl get storageclass
-kubectl create namespace volume-demo
-```
-
-If the cluster has no dynamic StorageClass, first create the static NFS PV and
-PVC in the NFS section below, then use `claimName: web-db-nfs` in the
-Deployment.
-
-Create `web-pvc.yaml`. Replace `YOUR_STORAGE_CLASS` with a class from the
-previous command. If your cluster has a default StorageClass, the
-`storageClassName` line may be omitted.
-
-```yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: web-db
-  namespace: volume-demo
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: YOUR_STORAGE_CLASS
-  resources:
-    requests:
-      storage: 1Gi
-```
-
-Validate and apply:
-
-```bash
-kubectl apply --dry-run=server -f web-pvc.yaml
-kubectl apply -f web-pvc.yaml
-kubectl -n volume-demo get pvc web-db -w
-```
-
-The expected phase is `Bound`. If the class uses
-`volumeBindingMode: WaitForFirstConsumer`, the PVC may remain `Pending` until
-the Pod is created. That is expected because the scheduler has not selected a
-storage topology yet.
-
-{% enddetails %}
-
-{% details info Step 2: Create application and NGINX configuration %}
-
-Create `web-config.yaml`:
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: web-config
-  namespace: volume-demo
-data:
-  app.py: |
-    import json
-    import os
-    import sqlite3
-    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-
-    DB = os.environ.get("DB_PATH", "/data/requests.db")
-
-    def initialize():
-        with sqlite3.connect(DB) as db:
-            db.execute("""
-                CREATE TABLE IF NOT EXISTS requests (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    path TEXT NOT NULL,
-                    requested_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-                )
-            """)
-
-    class Handler(BaseHTTPRequestHandler):
-        def do_GET(self):
-            with sqlite3.connect(DB, timeout=10) as db:
-                db.execute("INSERT INTO requests(path) VALUES (?)", (self.path,))
-                count = db.execute(
-                    "SELECT COUNT(*) FROM requests"
-                ).fetchone()[0]
-
-            body = json.dumps({
-                "message": "hello from persistent storage",
-                "path": self.path,
-                "request_count": count
-            }).encode()
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
-
-        def log_message(self, format, *args):
-            print(format % args, flush=True)
-
-    initialize()
-    ThreadingHTTPServer(("0.0.0.0", 8080), Handler).serve_forever()
-
-  nginx.conf: |
-    events {}
-    http {
-      log_format lab '$remote_addr - $remote_user [$time_local] '
-                     '"$request" $status $body_bytes_sent '
-                     'request_time=$request_time';
-      access_log /var/log/nginx/access.log lab;
-      error_log  /var/log/nginx/error.log notice;
-
-      server {
-        listen 80;
-        location / {
-          proxy_pass http://127.0.0.1:8080;
-          proxy_set_header Host $host;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
-      }
-    }
-
-  logrotate.conf: |
-    /var/log/nginx/*.log {
-      su root root
-      size 10k
-      rotate 3
-      compress
-      missingok
-      notifempty
-      copytruncate
-    }
-```
-
-The ConfigMap is mounted read-only. It carries configuration and source code,
-not mutable data.
-
-```bash
-kubectl apply --dry-run=server -f web-config.yaml
-kubectl apply -f web-config.yaml
-```
-
-{% enddetails %}
-
-{% details info Step 3: Deploy web, database, and log rotation containers %}
-
-Create `web-deployment.yaml`:
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: stateful-web
-  namespace: volume-demo
-spec:
-  replicas: 1
-  strategy:
-    type: Recreate
-  selector:
-    matchLabels:
-      app: stateful-web
-  template:
-    metadata:
-      labels:
-        app: stateful-web
-    spec:
-      securityContext:
-        fsGroup: 2000
-      containers:
-        - name: nginx
-          image: nginx:1.27-alpine
-          ports:
-            - name: http
-              containerPort: 80
-          volumeMounts:
-            - name: config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
-            - name: logs
-              mountPath: /var/log/nginx
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 2
-            periodSeconds: 5
-
-        - name: app
-          image: python:3.12-alpine
-          command: ["python", "/config/app.py"]
-          env:
-            - name: DB_PATH
-              value: /data/requests.db
-          volumeMounts:
-            - name: config
-              mountPath: /config
-              readOnly: true
-            - name: database
-              mountPath: /data
-
-        - name: log-rotator
-          image: alpine:3.20
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              apk add --no-cache logrotate
-              while true; do
-                logrotate /config/logrotate.conf
-                sleep 15
-              done
-          volumeMounts:
-            - name: config
-              mountPath: /config
-              readOnly: true
-            - name: logs
-              mountPath: /var/log/nginx
-
-      volumes:
-        - name: config
-          configMap:
-            name: web-config
-        - name: logs
-          emptyDir:
-            sizeLimit: 100Mi
-        - name: database
-          persistentVolumeClaim:
-            claimName: web-db
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: stateful-web
-  namespace: volume-demo
-spec:
-  type: NodePort
-  selector:
-    app: stateful-web
-  ports:
-    - name: http
-      port: 80
-      targetPort: http
-```
-
-`Recreate` prevents a rolling update from briefly running an old and a new Pod
-against the same SQLite file. It is a teaching safeguard, not a substitute for
-a production database.
-
-Apply and inspect:
-
-```bash
-kubectl apply --dry-run=server -f web-deployment.yaml
-kubectl apply -f web-deployment.yaml
-kubectl -n volume-demo rollout status deployment/stateful-web
-kubectl -n volume-demo get pod,pvc,svc -o wide
-```
-
-{% enddetails %}
-
-{% details info Step 4: Generate requests and inspect all storage paths %}
-
-Use port forwarding:
-
-```bash
-kubectl -n volume-demo port-forward service/stateful-web 8080:80
-```
-
-From another terminal:
-
-```bash
-for i in $(seq 1 20); do curl -s http://127.0.0.1:8080/demo; echo; done
-```
-
-Identify the Pod:
-
-```bash
-POD=$(kubectl -n volume-demo get pod -l app=stateful-web \
-  -o jsonpath='{.items[0].metadata.name}')
-```
-
-Inspect NGINX logs from both containers that mount the same `emptyDir`:
-
-```bash
-kubectl -n volume-demo exec "$POD" -c nginx -- \
-  ls -lh /var/log/nginx
-kubectl -n volume-demo exec "$POD" -c log-rotator -- \
-  ls -lh /var/log/nginx
-kubectl -n volume-demo exec "$POD" -c nginx -- \
-  tail /var/log/nginx/access.log
-```
-
-Inspect the persistent database:
-
-```bash
-kubectl -n volume-demo exec "$POD" -c app -- \
-  ls -lh /data
-kubectl -n volume-demo exec "$POD" -c app -- python -c \
-  'import sqlite3; db=sqlite3.connect("/data/requests.db"); print(db.execute("select count(*) from requests").fetchone())'
-```
-
-The two log views show **intra-Pod sharing**. The database inspection shows
-the PVC mounted only in the application container.
-
-{% enddetails %}
-
-{% details info Step 5: Force and verify log rotation %}
-
-The rotator checks every 15 seconds and rotates after the active log reaches
-10 KiB. Generate enough traffic:
-
-```bash
-for i in $(seq 1 500); do curl -s http://127.0.0.1:8080/load >/dev/null; done
-sleep 20
-kubectl -n volume-demo exec "$POD" -c nginx -- \
-  ls -lh /var/log/nginx
-```
-
-Expected files include an active log and one or more archives:
-
-```text
-access.log
-access.log.1
-access.log.2.gz
-```
-
-This lab uses `copytruncate` because containers cannot signal each other by
-default. Production NGINX normally rotates by renaming the file and sending
-NGINX `USR1` so it reopens file descriptors. Another production pattern is to
-write application logs to `stdout`/`stderr` and let the container runtime and
-cluster logging agent handle rotation and shipping.
-
-Do not treat rotating a file as log durability. The `emptyDir` and every
-rotated file disappear when the Pod is deleted. Durable audit logs should be
-shipped to a remote logging system such as Loki, Elasticsearch, or a cloud
-logging service.
-
-{% enddetails %}
-
-{% details info Step 6: Prove different lifecycle behavior %}
-
-Capture the database request count:
-
-```bash
-curl -s http://127.0.0.1:8080/before-delete
-kubectl -n volume-demo delete pod "$POD"
-kubectl -n volume-demo rollout status deployment/stateful-web
-```
-
-Reconnect port forwarding if necessary, then:
-
-```bash
-curl -s http://127.0.0.1:8080/after-delete
-```
-
-The count continues because the replacement Pod mounts the same PVC. Now
-inspect the new Pod's logs:
-
-```bash
-POD=$(kubectl -n volume-demo get pod -l app=stateful-web \
-  -o jsonpath='{.items[0].metadata.name}')
-kubectl -n volume-demo exec "$POD" -c nginx -- \
-  ls -lh /var/log/nginx
-```
-
-The old logs are gone because a replacement Pod receives a new `emptyDir`.
-
-{% enddetails %}
-
-{% details warning Security and production notes %}
-
-- Pin images by digest in controlled production environments.
-- Avoid installing packages at container startup; build a dedicated log
-  rotator image.
-- Run containers as non-root when images and filesystem permissions permit.
-- Set CPU and memory requests/limits.
-- Back up the database independently of the PVC.
-- Do not place credentials in ConfigMaps.
-- A PVC is not a backup, and a replica is not a backup.
-- For multi-replica applications, use a database designed for network clients
-  such as PostgreSQL rather than a shared SQLite file.
-
-{% enddetails %}
-
-{% details career Turn this lab into portfolio evidence %}
-
-For a project report, internship discussion, or technical interview, document
-evidence rather than only stating that Kubernetes was used:
-
-1. Draw the request and storage path: client -> NGINX -> Python -> SQLite PVC.
-2. Explain why logs use `emptyDir` while the database uses a PVC.
-3. Show the request count before and after deleting the Pod.
-4. Show that the database survives while the old log files do not.
-5. Explain why `replicas: 1` and `strategy: Recreate` were selected.
-6. Propose a production evolution: centralized logs and a network database.
-
-A strong résumé bullet could be:
-
-> Built and tested a multi-container Kubernetes workload with shared
-> `emptyDir` logging, automated log rotation, and PVC-backed application data;
-> verified persistence behavior through controlled Pod replacement.
-
-Only claim measurements or outcomes that you actually collected.
-
-{% enddetails %}
 
 
