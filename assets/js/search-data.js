@@ -1290,8 +1290,8 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/07-volumes/";
-            },},{id: "csc478-kubernetes-pv-pvc-lab-with-google-drive",
-          title: 'Kubernetes PV/PVC Lab with Google Drive',
+            },},{id: "csc478-helm-packaging-kubernetes-deployment",
+          title: 'Helm: Packaging Kubernetes Deployment',
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/08-pv-lab/";
