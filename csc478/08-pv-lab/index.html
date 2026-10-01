@@ -1,8 +1,8 @@
-<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Kubernetes PV/PVC Hands-On Lab with NFS | Linh B. Ngo </title> <meta name="author" content="Linh B. Ngo"> <meta name="description" content="Learner, Researcher, Educator "> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.css" integrity="sha256-uRX+PiRTR4ysKFRCykT8HLuRCub26LgXJZym3Yeom1c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://linhbngo.github.io/csc478/08-pv-lab/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+<!DOCTYPE html> <html> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Kubernetes PV/PVC Lab with Google Drive | Linh B. Ngo </title> <meta name="author" content="Linh B. Ngo"> <meta name="description" content="Learner, Researcher, Educator "> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.css" integrity="sha256-uRX+PiRTR4ysKFRCykT8HLuRCub26LgXJZym3Yeom1c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://linhbngo.github.io/csc478/08-pv-lab/"> <script src="/assets/js/theme.js?a81d82887dd692e91686b43de4542f18"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
     initTheme();
   </script> <script defer src="/assets/js/quiz.js"></script> <script src="/assets/js/distillpub/template.v2.js"></script> <script src="/assets/js/distillpub/transforms.v2.js"></script> </head> <body> <d-front-matter> <script async type="text/json">
       {
-            "title": "Kubernetes PV/PVC Hands-On Lab with NFS",
+            "title": "Kubernetes PV/PVC Lab with Google Drive",
             "description": "",
             "published": "October 01, 2026",
             "authors": [
@@ -23,16 +23,81 @@
               ]
             }
           }
-    </script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Linh</span> B. Ngo </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">teaching </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/csc-workshops/">Workshops and Tutorials</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc112/"><strong>Programming &amp; Data Science (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc331/"><strong>Operating Systems (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc402/"><strong>Software Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc478/"><strong>Cloud Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc578/"><strong>Cloud Systems Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc117/">AI For All: Fundamentals of Intelligent Systems</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc574/">Tiny Machine Learning (tinyML) (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/big-data-engr/">Big Data Engineering (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc418-587/">CSC 418/587 (WI25)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc468/">Introduction to Cloud (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc231/">Computer Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc302/">Computer Security II (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc466/">Distributed and Parallel Computing (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc496/">iOS App Development (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc568/">Cloud Computing Fundamentals (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc-agentic-ai/">Agentic AI (dev)</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill lecture-layout"> <d-title> <h1>Kubernetes PV/PVC Hands-On Lab with NFS</h1> <p></p> </d-title> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div> <a href="#pre-check">Pre-Check</a> </div> <div> <a href="#create-a-namespace">Create a Namespace</a> </div> <div> <a href="#persistentvolume-pv">PersistentVolume (PV)</a> </div> <div> <a href="#persistentvolumeclaim-pvc">PersistentVolumeClaim (PVC)</a> </div> <div> <a href="#pod-with-pvc">Pod with PVC</a> </div> <div> <a href="#multi-pod-rwx-proof">Multi-Pod RWX Proof</a> </div> <div> <a href="#reclaim-policy-demo">Reclaim Policy Demo</a> </div> <div> <a href="#cleanup">Cleanup</a> </div> </nav> </d-contents> <h1 id="kubernetes-pvpvc-hands-on-lab-with-nfs">Kubernetes PV/PVC Hands-On Lab with NFS</h1> <p>This lab demonstrates how to replace an <code class="language-plaintext highlighter-rouge">emptyDir</code> volume with a <strong>PersistentVolume</strong> (PV) and <strong>PersistentVolumeClaim</strong> (PVC) backed by an NFS export.</p> <p>We will use the cluster’s NFS server (<code class="language-plaintext highlighter-rouge">192.168.1.1</code>) with exports under <code class="language-plaintext highlighter-rouge">/opt/{home,software,scratch}</code>. In this lab, we use <code class="language-plaintext highlighter-rouge">/opt/scratch</code>.</p> <hr> <h2 id="pre-check">Pre-Check</h2> <p>On the <strong>head node</strong>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    </script> </d-front-matter> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Linh</span> B. Ngo </a> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">cv </a> </li> <li class="nav-item dropdown "> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">teaching </a> <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> <a class="dropdown-item " href="/csc-workshops/">Workshops and Tutorials</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc112/"><strong>Programming &amp; Data Science (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc331/"><strong>Operating Systems (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc402/"><strong>Software Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc478/"><strong>Cloud Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc578/"><strong>Cloud Systems Engineering (FA26)</strong></a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc117/">AI For All: Fundamentals of Intelligent Systems</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc574/">Tiny Machine Learning (tinyML) (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/big-data-engr/">Big Data Engineering (SU26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc418-587/">CSC 418/587 (WI25)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc468/">Introduction to Cloud (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc231/">Computer Systems (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc302/">Computer Security II (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc466/">Distributed and Parallel Computing (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc496/">iOS App Development (dev)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc568/">Cloud Computing Fundamentals (SP26)</a> <div class="dropdown-divider"></div> <a class="dropdown-item " href="/csc-agentic-ai/">Agentic AI (dev)</a> </div> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="ti ti-search"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="ti ti-sun-moon" id="light-toggle-system"></i> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="post distill lecture-layout"> <d-title> <h1>Kubernetes PV/PVC Lab with Google Drive</h1> <p></p> </d-title> <d-article> <d-contents> <nav class="l-text figcaption"> <h3>Contents</h3> <div> <a href="#architecture-and-limitations">Architecture and Limitations</a> </div> <div> <a href="#prerequisites">Prerequisites</a> </div> <div> <a href="#google-drive-api-and-oauth-setup">Google Drive API and OAuth Setup</a> </div> <div> <a href="#generate-the-rclone-configuration">Generate the rclone Configuration</a> </div> <div> <a href="#install-the-rclone-csi-driver">Install the rclone CSI Driver</a> </div> <div> <a href="#create-the-namespace-and-secret">Create the Namespace and Secret</a> </div> <div> <a href="#persistentvolume-and-claim">PersistentVolume and Claim</a> </div> <div> <a href="#mount-and-test-the-volume">Mount and Test the Volume</a> </div> <div> <a href="#pod-replacement-and-reclaim-behavior">Pod Replacement and Reclaim Behavior</a> </div> <div> <a href="#troubleshooting">Troubleshooting</a> </div> <div> <a href="#cleanup-and-credential-revocation">Cleanup and Credential Revocation</a> </div> </nav> </d-contents> <h1 id="kubernetes-pvpvc-lab-with-google-drive">Kubernetes PV/PVC Lab with Google Drive</h1> <p>This lab exposes a folder in a throw-away Google Drive account as a Kubernetes PersistentVolume (PV). A PersistentVolumeClaim (PVC) binds to that PV, and multiple Pods mount the claim.</p> <p>Google Drive is not a native Kubernetes or POSIX filesystem. The lab uses the third-party <a href="https://github.com/veloxpack/csi-driver-rclone" rel="external nofollow noopener" target="_blank">Veloxpack rclone CSI driver</a>, which translates filesystem operations into Google Drive API calls.</p> <details class="details details--warning" data-variant="warning"><summary><span class="details-label">WARNING</span>Use only a throw-away account</summary> <p>The OAuth refresh token grants access to files authorized for this lab. A Kubernetes Secret is only base64-encoded unless the cluster is configured to encrypt Secrets at rest.</p> <ul> <li>Do not use a personal, school, or employer Google account.</li> <li>Do not place the OAuth client secret, token, <code class="language-plaintext highlighter-rouge">rclone.conf</code>, or Kubernetes Secret in Git.</li> <li>Delete the Kubernetes Secret and revoke Google access after the lab.</li> <li>Do not use this design for databases, confidential data, or production workloads.</li> </ul> </details> <h2 id="architecture-and-limitations">Architecture and Limitations</h2> <pre><code class="language-mermaid">flowchart LR
+    POD["Application Pods"] --&gt; PVC["PVC"]
+    PVC --&gt; PV["Static PV"]
+    PV --&gt; CSI["rclone CSI node plugin"]
+    CSI --&gt;|"FUSE + HTTPS"| API["Google Drive API"]
+    API --&gt; DRIVE["Throw-away Google Drive folder"]
+</code></pre> <p>The PV’s advertised capacity is metadata; Google Drive quota controls the actual available capacity. Google Drive also does not provide normal POSIX ownership, permissions, locking, atomic rename, or consistency guarantees. <code class="language-plaintext highlighter-rouge">ReadWriteMany</code> means that Kubernetes permits multiple mounts; it does not make concurrent writes to the same file safe.</p> <p>This lab is useful for learning PV/PVC and CSI concepts, but NFS, block storage, or a distributed filesystem is a better backend for ordinary Kubernetes application storage.</p> <h2 id="prerequisites">Prerequisites</h2> <p>You need:</p> <ul> <li>a throw-away Gmail account with no valuable files;</li> <li>cluster-admin access;</li> <li> <code class="language-plaintext highlighter-rouge">kubectl</code>, Helm 3, and <code class="language-plaintext highlighter-rouge">rclone</code> on an administrative workstation;</li> <li>Linux worker nodes with FUSE support;</li> <li>outbound HTTPS access from every worker node to Google APIs;</li> <li>access from the cluster to <code class="language-plaintext highlighter-rouge">ghcr.io</code> to pull the CSI driver images.</li> </ul> <details class="details details--warning" data-variant="warning"><summary><span class="details-label">WARNING</span>Confirm outbound access before starting</summary> <p>The rclone CSI node plugin must continuously reach Google OAuth and Drive API endpoints. Test from every worker node:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>showmount <span class="nt">-e</span> 192.168.1.1
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>On <strong>each Kubernetes node</strong>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+2
+</pre></td> <td class="rouge-code"><pre>curl <span class="nt">-I</span> https://oauth2.googleapis.com
+curl <span class="nt">-I</span> https://www.googleapis.com
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>An HTTP error response still proves network connectivity. DNS, timeout, or TLS errors must be fixed before this lab can work.</p> </details> <p>Check FUSE on every worker node:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>mount | egrep <span class="s1">'/opt/(home|software|scratch)'</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="create-a-namespace">Create a Namespace</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>modprobe fuse
+<span class="nb">ls</span> <span class="nt">-l</span> /dev/fuse
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If <code class="language-plaintext highlighter-rouge">/dev/fuse</code> is missing on Ubuntu:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl create ns pv-lab <span class="o">||</span> <span class="nb">true</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="persistentvolume-pv">PersistentVolume (PV)</h2> <p>Save the following manifest as <strong>pv-nfs-scratch.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> fuse3
+<span class="nb">sudo </span>modprobe fuse
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Check the administrative tools:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre>kubectl cluster-info
+helm version
+rclone version
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>If <code class="language-plaintext highlighter-rouge">rclone</code> is not installed on Ubuntu:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> rclone
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Use a current rclone release because Google’s OAuth requirements and the Drive backend change over time.</p> <h2 id="google-drive-api-and-oauth-setup">Google Drive API and OAuth Setup</h2> <p>Google Drive access uses an OAuth client ID, client secret, and user token. An API key alone is not sufficient.</p> <ol> <li>Sign in to the <a href="https://console.cloud.google.com/" rel="external nofollow noopener" target="_blank">Google Cloud Console</a> with the throw-away Gmail account.</li> <li>Create a project named <code class="language-plaintext highlighter-rouge">kubernetes-gdrive-lab</code>.</li> <li>Open <strong>APIs &amp; Services -&gt; Library</strong>, find <strong>Google Drive API</strong>, and select <strong>Enable</strong>.</li> <li>Open <strong>Google Auth Platform</strong>. Depending on the current console interface, these settings may appear under <strong>OAuth consent screen</strong>.</li> <li>Under <strong>Branding</strong>, enter an application name such as <code class="language-plaintext highlighter-rouge">rclone-pv-lab</code>, a support email, and a developer contact email.</li> <li>Under <strong>Audience</strong>, choose <strong>External</strong>, keep the app in <strong>Testing</strong>, and add the throw-away Gmail address as a test user.</li> <li>Under <strong>Data Access</strong>, add the <code class="language-plaintext highlighter-rouge">https://www.googleapis.com/auth/drive.file</code> scope. This limits the application to files it creates or opens rather than granting access to all Drive files.</li> <li>Open <strong>Clients</strong> or <strong>APIs &amp; Services -&gt; Credentials</strong>, select <strong>Create client -&gt; OAuth client ID</strong>, and choose <strong>Desktop app</strong>.</li> <li>Name it <code class="language-plaintext highlighter-rouge">rclone-desktop</code> and create it.</li> <li>Copy the client ID and client secret to a temporary password manager entry. Do not create an API key or service-account key for this lab.</li> </ol> <p>An External application left in Testing may issue refresh tokens that expire after seven days. That is acceptable for this short-lived lab; repeat the authorization if the token expires.</p> <h2 id="generate-the-rclone-configuration">Generate the rclone Configuration</h2> <p>Run the interactive configuration on a trusted workstation:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>rclone config
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Use these answers. Prompt wording and menu numbers can vary by rclone version:</p> <ol> <li>Create a new remote named <code class="language-plaintext highlighter-rouge">gdrive</code>.</li> <li>Select <strong>Google Drive</strong> as the storage backend.</li> <li>Enter the OAuth client ID and client secret created above.</li> <li>Select the <code class="language-plaintext highlighter-rouge">drive.file</code> scope.</li> <li>Leave the root folder ID blank.</li> <li>Leave the service-account credentials file blank.</li> <li>Decline advanced configuration.</li> <li>Authorize rclone in a browser using the throw-away Gmail account.</li> <li>If Google displays an unverified-app warning, continue only after confirming that the page names the OAuth project you created.</li> <li>Select <strong>My Drive</strong>, not a Shared Drive.</li> <li>Save the remote.</li> </ol> <p>If the workstation has no browser, answer <strong>No</strong> when rclone asks to open one. Follow its instructions to run <code class="language-plaintext highlighter-rouge">rclone authorize</code> on a separate machine with a browser, then paste the resulting token into the original session.</p> <p>Verify the remote and create a dedicated folder:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>rclone lsd gdrive:
+rclone <span class="nb">mkdir </span>gdrive:pv-lab
+rclone lsf gdrive:pv-lab
+rclone config file
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The final command prints the location of <code class="language-plaintext highlighter-rouge">rclone.conf</code>. The file contains the OAuth client secret and refresh token; do not display or commit it.</p> <h2 id="install-the-rclone-csi-driver">Install the rclone CSI Driver</h2> <details class="details details--warning" data-variant="warning"><summary><span class="details-label">WARNING</span>This is a cluster-wide administrative step</summary> <p>An instructor or cluster administrator should install the CSI driver once. Students sharing a cluster should not install separate copies.</p> </details> <p>Install the driver using its official OCI Helm chart:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>helm upgrade <span class="nt">--install</span> csi-rclone <span class="se">\</span>
+  oci://ghcr.io/veloxpack/charts/csi-driver-rclone <span class="se">\</span>
+  <span class="nt">--namespace</span> veloxpack <span class="se">\</span>
+  <span class="nt">--create-namespace</span> <span class="se">\</span>
+  <span class="nt">--wait</span> <span class="se">\</span>
+  <span class="nt">--timeout</span> 5m
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Verify the driver:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>helm list <span class="nt">-n</span> veloxpack
+kubectl get pods <span class="nt">-n</span> veloxpack <span class="se">\</span>
+  <span class="nt">-l</span> app.kubernetes.io/name<span class="o">=</span>csi-driver-rclone <span class="nt">-o</span> wide
+kubectl get csidriver rclone.csi.veloxpack.io
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The node component should run on every worker that may host a lab Pod.</p> <h2 id="create-the-namespace-and-secret">Create the Namespace and Secret</h2> <p>Create the namespace:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl create namespace pv-lab <span class="se">\</span>
+  <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-o</span> yaml | kubectl apply <span class="nt">-f</span> -
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Set <code class="language-plaintext highlighter-rouge">RCLONE_CONFIG</code> to the path printed by <code class="language-plaintext highlighter-rouge">rclone config file</code>, then create the Secret directly from that file:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -40,67 +105,17 @@
 5
 6
 7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolume</span>
-<span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">pv-nfs-scratch</span>
-<span class="na">spec</span><span class="pi">:</span>
-  <span class="na">capacity</span><span class="pi">:</span>
-    <span class="na">storage</span><span class="pi">:</span> <span class="s">1Gi</span>
-  <span class="na">accessModes</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">ReadWriteMany</span>
-  <span class="na">persistentVolumeReclaimPolicy</span><span class="pi">:</span> <span class="s">Retain</span>
-  <span class="na">mountOptions</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">nfsvers=4.2</span>
-    <span class="pi">-</span> <span class="s">nolock</span>
-  <span class="na">nfs</span><span class="pi">:</span>
-    <span class="na">server</span><span class="pi">:</span> <span class="s">192.168.1.1</span>
-    <span class="na">path</span><span class="pi">:</span> <span class="s">/opt/scratch</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply and check</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> <td class="rouge-code"><pre><span class="nv">RCLONE_CONFIG</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.config/rclone/rclone.conf"</span>
+
+kubectl <span class="nt">-n</span> pv-lab create secret generic gdrive-rclone <span class="se">\</span>
+  <span class="nt">--from-file</span><span class="o">=</span><span class="nv">configData</span><span class="o">=</span><span class="s2">"</span><span class="nv">$RCLONE_CONFIG</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">remote</span><span class="o">=</span>gdrive <span class="se">\</span>
+  <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">remotePath</span><span class="o">=</span>pv-lab <span class="se">\</span>
+  <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-o</span> yaml | kubectl apply <span class="nt">-f</span> -
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Confirm only that the expected keys exist. Do not print or decode their values:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pv-nfs-scratch.yaml
-kubectl get pv pv-nfs-scratch <span class="nt">-o</span> wide
-</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="persistentvolumeclaim-pvc">PersistentVolumeClaim (PVC)</h2> <p>Save the following manifest as <strong>pvc-scratch.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolumeClaim</span>
-<span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">scratch-pvc</span>
-  <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
-<span class="na">spec</span><span class="pi">:</span>
-  <span class="na">accessModes</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">ReadWriteMany</span>
-  <span class="na">resources</span><span class="pi">:</span>
-    <span class="na">requests</span><span class="pi">:</span>
-      <span class="na">storage</span><span class="pi">:</span> <span class="s">512Mi</span>
-  <span class="na">volumeName</span><span class="pi">:</span> <span class="s">pv-nfs-scratch</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply and test:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pvc-scratch.yaml
-kubectl <span class="nt">-n</span> pv-lab get pvc scratch-pvc <span class="nt">-o</span> wide
-</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="pod-with-pvc">Pod with PVC</h2> <p>This pod has two containers sharing the same PVC, just like the <code class="language-plaintext highlighter-rouge">emptyDir</code> example.</p> <p>Save as <strong>pod-pvc.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab describe secret gdrive-rclone
+</pre></td> </tr></tbody></table></code></pre></div></div> <h2 id="persistentvolume-and-claim">PersistentVolume and Claim</h2> <p>Create <code class="language-plaintext highlighter-rouge">gdrive-pv-pvc.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -125,43 +140,68 @@ kubectl <span class="nt">-n</span> pv-lab get pvc scratch-pvc <span class="nt">-
 22
 23
 24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
 </pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolume</span>
 <span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">pvc-pod</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">pv-google-drive</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">capacity</span><span class="pi">:</span>
+    <span class="na">storage</span><span class="pi">:</span> <span class="s">1Gi</span>
+  <span class="na">accessModes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">ReadWriteMany</span>
+  <span class="na">persistentVolumeReclaimPolicy</span><span class="pi">:</span> <span class="s">Retain</span>
+  <span class="na">storageClassName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="na">mountOptions</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">vfs-cache-mode=writes</span>
+    <span class="pi">-</span> <span class="s">vfs-write-back=2s</span>
+    <span class="pi">-</span> <span class="s">dir-cache-time=10s</span>
+  <span class="na">csi</span><span class="pi">:</span>
+    <span class="na">driver</span><span class="pi">:</span> <span class="s">rclone.csi.veloxpack.io</span>
+    <span class="na">volumeHandle</span><span class="pi">:</span> <span class="s">pv-lab-google-drive</span>
+    <span class="na">nodePublishSecretRef</span><span class="pi">:</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">gdrive-rclone</span>
+      <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
+    <span class="na">volumeAttributes</span><span class="pi">:</span>
+      <span class="na">remote</span><span class="pi">:</span> <span class="s">gdrive</span>
+      <span class="na">remotePath</span><span class="pi">:</span> <span class="s">pv-lab</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolumeClaim</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">gdrive-pvc</span>
   <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
 <span class="na">spec</span><span class="pi">:</span>
-  <span class="na">securityContext</span><span class="pi">:</span>
-    <span class="na">fsGroup</span><span class="pi">:</span> <span class="m">2000</span>
-  <span class="na">containers</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-app-container</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">nginx</span>
-    <span class="na">volumeMounts</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
-      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/data</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-sidecar-container</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">echo</span><span class="nv"> </span><span class="s">'hello</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">sidecar'</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">/shared/file.txt</span><span class="nv"> </span><span class="s">&amp;&amp;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">3600"</span><span class="pi">]</span>
-    <span class="na">volumeMounts</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
-      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/shared</span>
-  <span class="na">volumes</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
-    <span class="na">persistentVolumeClaim</span><span class="pi">:</span>
-      <span class="na">claimName</span><span class="pi">:</span> <span class="s">scratch-pvc</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pod-pvc.yaml
-kubectl <span class="nt">-n</span> pv-lab get pod pvc-pod <span class="nt">-o</span> wide
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+  <span class="na">accessModes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">ReadWriteMany</span>
+  <span class="na">storageClassName</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="na">volumeName</span><span class="pi">:</span> <span class="s">pv-google-drive</span>
+  <span class="na">resources</span><span class="pi">:</span>
+    <span class="na">requests</span><span class="pi">:</span>
+      <span class="na">storage</span><span class="pi">:</span> <span class="s">1Gi</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The empty <code class="language-plaintext highlighter-rouge">storageClassName</code> values keep this example statically bound to the PV instead of asking a default provisioner to create storage.</p> <p>Apply and inspect:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>pvc-pod <span class="nt">-c</span> my-sidecar-container <span class="nt">--</span> <span class="nb">cat</span> /shared/file.txt
-kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>pvc-pod <span class="nt">-c</span> my-app-container <span class="nt">--</span> <span class="nb">ls</span> <span class="nt">-l</span> /var/data
-<span class="nb">ls</span> /opt/scratch
-</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="multi-pod-rwx-proof">Multi-Pod RWX Proof</h2> <p>Deploy a second pod that appends to the same file.</p> <p>Save as <strong>pod-pvc-reader.yaml</strong>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+4
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> gdrive-pv-pvc.yaml
+kubectl apply <span class="nt">-f</span> gdrive-pv-pvc.yaml
+kubectl get pv pv-google-drive
+kubectl <span class="nt">-n</span> pv-lab get pvc gdrive-pvc
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Continue when both resources report <code class="language-plaintext highlighter-rouge">Bound</code>.</p> <h2 id="mount-and-test-the-volume">Mount and Test the Volume</h2> <p>Create <code class="language-plaintext highlighter-rouge">gdrive-pods.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -179,46 +219,169 @@ kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>pvc-pod <
 15
 16
 17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
 </pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
 <span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">pvc-pod-reader</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">gdrive-writer</span>
   <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
 <span class="na">spec</span><span class="pi">:</span>
   <span class="na">containers</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">tailer</span>
-    <span class="na">image</span><span class="pi">:</span> <span class="s">busybox</span>
-    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span><span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span><span class="s2">"</span><span class="s">while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">date</span><span class="nv"> </span><span class="s">&gt;&gt;</span><span class="nv"> </span><span class="s">/mnt/file.txt;</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">2;</span><span class="nv"> </span><span class="s">done"</span><span class="pi">]</span>
-    <span class="na">volumeMounts</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
-      <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/mnt</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shell</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox:1.36</span>
+      <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">sleep</span><span class="nv"> </span><span class="s">3600"</span><span class="pi">]</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">drive</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/drive</span>
   <span class="na">volumes</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-data</span>
-    <span class="na">persistentVolumeClaim</span><span class="pi">:</span>
-      <span class="na">claimName</span><span class="pi">:</span> <span class="s">scratch-pvc</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> pod-pvc-reader.yaml
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Check from the first pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>pvc-pod <span class="nt">-c</span> my-sidecar-container <span class="nt">--</span> <span class="nb">tail</span> <span class="nt">-f</span> /shared/file.txt
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>You should see timestamps being appended by the second pod.</p> <hr> <h2 id="reclaim-policy-demo">Reclaim Policy Demo</h2> <p>Delete the PVC:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab delete pvc scratch-pvc
-kubectl get pv pv-nfs-scratch <span class="nt">-o</span> yaml | egrep <span class="s1">'phase:|claimRef'</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>The PV enters <code class="language-plaintext highlighter-rouge">Released</code> phase, but the data <strong>remains</strong> on NFS (<code class="language-plaintext highlighter-rouge">/opt/scratch</code>).</p> <p>Clear the claim reference if you want to reuse the PV:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl patch pv pv-nfs-scratch <span class="nt">--type</span><span class="o">=</span>json <span class="nt">-p</span><span class="o">=</span><span class="s1">'[{"op":"remove","path":"/spec/claimRef"}]'</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <hr> <h2 id="cleanup">Cleanup</h2> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">drive</span>
+      <span class="na">persistentVolumeClaim</span><span class="pi">:</span>
+        <span class="na">claimName</span><span class="pi">:</span> <span class="s">gdrive-pvc</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Pod</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">gdrive-reader</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">pv-lab</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">containers</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shell</span>
+      <span class="na">image</span><span class="pi">:</span> <span class="s">busybox:1.36</span>
+      <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">sleep</span><span class="nv"> </span><span class="s">3600"</span><span class="pi">]</span>
+      <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">drive</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/drive</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">drive</span>
+      <span class="na">persistentVolumeClaim</span><span class="pi">:</span>
+        <span class="na">claimName</span><span class="pi">:</span> <span class="s">gdrive-pvc</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Apply the Pods and wait for both mounts:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab delete pod pvc-pod pvc-pod-reader <span class="nt">--ignore-not-found</span>
-kubectl <span class="nt">-n</span> pv-lab delete pvc scratch-pvc <span class="nt">--ignore-not-found</span>
-kubectl delete pv pv-nfs-scratch <span class="nt">--ignore-not-found</span>
-kubectl delete ns pv-lab <span class="nt">--ignore-not-found</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>A storage lab becomes operational experience when failure is tested</summary> <p>Creating a bound PVC proves configuration, but production storage work also requires failure and recovery evidence. The Kubernetes <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/" rel="external nofollow noopener" target="_blank">PersistentVolume documentation</a> notes that the PV lifecycle is independent of a Pod and that backend capabilities determine available access modes.</p> <p>A public <a href="https://github.com/kubernetes/kubernetes/issues/90593" rel="external nofollow noopener" target="_blank">Kubernetes NFS failure report</a> shows why that distinction matters: when an NFS server became unavailable, broken mounts affected Pod lifecycle operations and kubelet behavior on client nodes. The PVC object alone could not make the backend healthy.</p> <p>For a portfolio or runbook, add:</p> <ul> <li>proof that data survives Pod replacement;</li> <li>the observed behavior when an NFS client node or server is unavailable;</li> <li>reclaim-policy results after deleting the claim;</li> <li>backup ownership and a tested restore procedure.</li> </ul> <p>These checks connect Kubernetes YAML to storage operations and incident response.</p> </details> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">-f</span> gdrive-pods.yaml
+kubectl <span class="nt">-n</span> pv-lab <span class="nb">wait</span> <span class="nt">--for</span><span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready <span class="se">\</span>
+  pod/gdrive-writer pod/gdrive-reader <span class="nt">--timeout</span><span class="o">=</span>180s
+kubectl <span class="nt">-n</span> pv-lab get pods <span class="nt">-o</span> wide
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Write from one Pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>gdrive-writer <span class="nt">--</span> sh <span class="nt">-c</span> <span class="se">\</span>
+  <span class="s1">'date -Iseconds &gt; /drive/from-writer.txt'</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Allow time for VFS upload and directory-cache refresh, then read from the other Pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> <td class="rouge-code"><pre><span class="nb">sleep </span>15
+kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>gdrive-reader <span class="nt">--</span> <span class="se">\</span>
+  <span class="nb">cat</span> /drive/from-writer.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Write in the opposite direction:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>gdrive-reader <span class="nt">--</span> sh <span class="nt">-c</span> <span class="se">\</span>
+  <span class="s1">'echo "hello from the reader pod" &gt; /drive/from-reader.txt'</span>
+<span class="nb">sleep </span>15
+kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>gdrive-writer <span class="nt">--</span> <span class="nb">ls</span> <span class="nt">-l</span> /drive
+rclone lsf gdrive:pv-lab
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The two files should also appear in the <code class="language-plaintext highlighter-rouge">pv-lab</code> folder in the Google Drive web interface. Delays are expected because each mount has a VFS cache and Google Drive is remotely accessed through an API.</p> <h2 id="pod-replacement-and-reclaim-behavior">Pod Replacement and Reclaim Behavior</h2> <p>Delete and recreate the writer Pod:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab delete pod gdrive-writer
+kubectl apply <span class="nt">-f</span> gdrive-pods.yaml
+kubectl <span class="nt">-n</span> pv-lab <span class="nb">wait</span> <span class="nt">--for</span><span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready <span class="se">\</span>
+  pod/gdrive-writer <span class="nt">--timeout</span><span class="o">=</span>180s
+kubectl <span class="nt">-n</span> pv-lab <span class="nb">exec </span>gdrive-writer <span class="nt">--</span> <span class="se">\</span>
+  <span class="nb">cat</span> /drive/from-writer.txt
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The file survives because it resides in Google Drive, not in the deleted Pod.</p> <p>To observe reclaim behavior, first remove both Pods and then delete the claim:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab delete pod gdrive-writer gdrive-reader
+kubectl <span class="nt">-n</span> pv-lab delete pvc gdrive-pvc
+kubectl get pv pv-google-drive
+rclone lsf gdrive:pv-lab
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The static PV enters <code class="language-plaintext highlighter-rouge">Released</code>, while <code class="language-plaintext highlighter-rouge">Retain</code> leaves the Google Drive files unchanged. Deleting a Kubernetes PV object also does not delete this Drive folder.</p> <h2 id="troubleshooting">Troubleshooting</h2> <details class="details details--default" data-variant="default"><summary>Pod remains in ContainerCreating</summary> <p>Inspect the Pod and recent events:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab describe pod &lt;pod-name&gt;
+kubectl <span class="nt">-n</span> pv-lab get events <span class="nt">--sort-by</span><span class="o">=</span>.lastTimestamp
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Then inspect the CSI driver:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> <td class="rouge-code"><pre>kubectl get pods <span class="nt">-n</span> veloxpack <span class="nt">-o</span> wide
+kubectl logs <span class="nt">-n</span> veloxpack <span class="se">\</span>
+  <span class="nt">-l</span> app.kubernetes.io/name<span class="o">=</span>csi-driver-rclone <span class="se">\</span>
+  <span class="nt">--all-containers</span> <span class="nt">--tail</span><span class="o">=</span>100
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Common causes are missing <code class="language-plaintext highlighter-rouge">/dev/fuse</code>, blocked outbound HTTPS, an unavailable driver Pod on the selected node, or invalid OAuth credentials.</p> </details> <details class="details details--default" data-variant="default"><summary>OAuth token expired or was revoked</summary> <p>Reconnect the local rclone remote:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>rclone config reconnect gdrive:
+rclone lsf gdrive:pv-lab
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Recreate the Secret from the updated configuration:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab create secret generic gdrive-rclone <span class="se">\</span>
+  <span class="nt">--from-file</span><span class="o">=</span><span class="nv">configData</span><span class="o">=</span><span class="s2">"</span><span class="nv">$RCLONE_CONFIG</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">remote</span><span class="o">=</span>gdrive <span class="se">\</span>
+  <span class="nt">--from-literal</span><span class="o">=</span><span class="nv">remotePath</span><span class="o">=</span>pv-lab <span class="se">\</span>
+  <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-o</span> yaml | kubectl apply <span class="nt">-f</span> -
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Delete and recreate the lab Pods so the volume is mounted with the new token.</p> </details> <details class="details details--default" data-variant="default"><summary>Files are not immediately visible</summary> <p>Wait at least the configured <code class="language-plaintext highlighter-rouge">dir-cache-time</code>, close the writing process’s file descriptor, and check the backend directly:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>rclone lsf gdrive:pv-lab
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Google Drive and independent VFS mounts are not strongly consistent. This is one reason the backend is unsuitable for databases and lock-sensitive applications.</p> </details> <h2 id="cleanup-and-credential-revocation">Cleanup and Credential Revocation</h2> <p>Delete the Kubernetes workload and credentials:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> pv-lab delete pod <span class="se">\</span>
+  gdrive-writer gdrive-reader <span class="nt">--ignore-not-found</span>
+kubectl <span class="nt">-n</span> pv-lab delete pvc gdrive-pvc <span class="nt">--ignore-not-found</span>
+kubectl delete pv pv-google-drive <span class="nt">--ignore-not-found</span>
+kubectl <span class="nt">-n</span> pv-lab delete secret gdrive-rclone <span class="nt">--ignore-not-found</span>
+kubectl delete namespace pv-lab <span class="nt">--ignore-not-found</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Delete the remote folder only after confirming that it contains no needed data:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>rclone delete gdrive:pv-lab
+rclone <span class="nb">rmdir </span>gdrive:pv-lab
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Finally:</p> <ol> <li>Remove the <code class="language-plaintext highlighter-rouge">gdrive</code> remote with <code class="language-plaintext highlighter-rouge">rclone config</code>.</li> <li>Delete the local <code class="language-plaintext highlighter-rouge">rclone.conf</code> if it contains no other remotes.</li> <li>In the Google account’s security settings, revoke the lab application’s access.</li> <li>Delete the OAuth client or the entire Google Cloud project.</li> <li>Delete the throw-away Gmail account if it is no longer needed.</li> </ol> <p>Do not uninstall the cluster-wide CSI driver if other students are using it. An administrator may remove a dedicated installation with:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>helm uninstall csi-rclone <span class="nt">-n</span> veloxpack
+kubectl delete namespace veloxpack
+</pre></td> </tr></tbody></table></code></pre></div></div> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>What this lab demonstrates</summary> <p>This exercise shows more than writing a PV manifest:</p> <ul> <li>installing and validating a third-party CSI driver;</li> <li>using OAuth credentials without embedding them in a PV;</li> <li>distinguishing Kubernetes-declared capacity from backend-enforced quota;</li> <li>testing multi-Pod access, Pod replacement, and reclaim behavior;</li> <li>diagnosing failures across Kubernetes, FUSE, networking, OAuth, and a remote storage API.</li> </ul> <p>The main engineering conclusion is also important: making an API-backed object store look like a filesystem does not give it POSIX filesystem semantics. Backend behavior must match the application’s consistency, locking, performance, durability, and security requirements.</p> </details> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>
