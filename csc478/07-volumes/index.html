@@ -171,27 +171,10 @@ kubectl get storageclass <span class="se">\</span>
     BACKEND --&gt; NFS["NFS"]
     BACKEND --&gt; BLOCK["Block disk"]
     BACKEND --&gt; DIST["Distributed filesystem"]
-</code></pre> <p>Therefore, the decision is not <strong>NFS or PV/PVC</strong>. If Kubernetes applications use NFS, they should normally access it <strong>through PVs and PVCs</strong>.</p> </details> <details class="details details--default" data-variant="default"><summary>Should the NFS server run inside Kubernetes?</summary> <p>It can, but an ordinary NFS server Pod is rarely the best default. The answer depends on what stores the NFS server’s own data.</p> <h3 id="option-1-external-nfs-server-with-kubernetes-pvs">Option 1: External NFS server with Kubernetes PVs</h3> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</code></pre> <p>Therefore, the decision is not <strong>NFS or PV/PVC</strong>. If Kubernetes applications use NFS, they should normally access it <strong>through PVs and PVCs</strong>.</p> </details> <details class="details details--default" data-variant="default"><summary>External NFS server with Kubernetes PVs</summary> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>Application Pod -&gt; PVC -&gt; PV -&gt; NFS server outside the cluster
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>This is usually the simplest choice when an organization already operates an NFS service. Kubernetes nodes are clients; the NFS server has an independent lifecycle, backup policy, export configuration, and failure domain.</p> <p>For this course environment, the existing <code class="language-plaintext highlighter-rouge">192.168.1.1:/opt/scratch</code> export fits this model. Keep the server external and represent its exports with PVs/PVCs. There is no benefit in deploying a second ad hoc NFS server Pod just to make the storage appear “more Kubernetes-native.”</p> <h3 id="option-2-an-nfs-provisioner-runs-in-kubernetes">Option 2: An NFS provisioner runs in Kubernetes</h3> <p>An NFS CSI driver or NFS subdirectory external provisioner may run as Kubernetes controllers and node components:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>PVC -&gt; in-cluster provisioner/CSI driver -&gt; directory on external NFS server
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>The provisioner automates PV creation. It is <strong>not necessarily the NFS server</strong> and does not make the backend data live inside the cluster. This is a useful production pattern when many teams need dynamically provisioned RWX claims.</p> <h3 id="option-3-the-nfs-server-itself-runs-as-a-pod">Option 3: The NFS server itself runs as a Pod</h3> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>Application Pods -&gt; NFS Service -&gt; NFS server Pod -&gt; server's backing volume
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>This can be useful for a lab, edge deployment, or a deliberate storage appliance design. However, it adds a second storage layer and raises a bootstrap question: <strong>what makes the NFS server’s own volume durable?</strong></p> <ul> <li>If it uses <code class="language-plaintext highlighter-rouge">emptyDir</code>, all exported data is ephemeral.</li> <li>If it uses <code class="language-plaintext highlighter-rouge">hostPath</code> or a local PV, the server and data are tied to one node. A node failure takes down the export.</li> <li>If it uses a durable RWO block PVC, Kubernetes may move the NFS server to another node, but clients experience downtime during detach, attach, and server restart.</li> <li>If it uses an RWX distributed filesystem underneath, re-exporting that filesystem through NFS may be redundant unless a specific compatibility requirement justifies it.</li> </ul> <p>A single NFS server Pod also becomes a throughput bottleneck and single point of service failure. A highly available in-cluster file service requires replication, failover, fencing, monitoring, and tested recovery—not merely a Deployment with several NFS replicas.</p> </details> <details class="details details--default" data-variant="default"><summary>Recommended decision rule</summary> <ul> <li>Use a normal CSI-backed <code class="language-plaintext highlighter-rouge">RWO</code> PVC directly for a single-writer database or application data when the cluster provides suitable block storage.</li> <li>Use external or managed NFS through PV/PVC when several nodes need <code class="language-plaintext highlighter-rouge">RWX</code> shared files.</li> <li>Add an in-cluster NFS CSI driver/provisioner when dynamic creation of NFS claims is needed; this does not require moving the NFS server into Kubernetes.</li> <li>Use a purpose-built distributed storage platform such as Ceph or Longhorn only when the team is prepared to operate storage as part of the cluster.</li> <li>Run a standalone NFS server Pod mainly for learning or when its backing storage, availability model, and recovery process are explicitly designed.</li> </ul> <p>For the course cluster, the practical recommendation is:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td> <td class="rouge-code"><pre>Existing external NFS
-        +
-Kubernetes PV/PVC abstraction
-        +
-Optional NFS CSI provisioner for dynamic claims
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>NFS remains useful for shared files. PV/PVC makes that NFS storage consumable in a Kubernetes-native way.</p> </details> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>Industry example: a shared-upload migration</summary> <p>Consider a web application that originally stores customer uploads on each server’s local disk. After the application scales to several Pods, users occasionally cannot retrieve files because a later request reaches a different Pod.</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>This is usually the simplest choice when an organization already operates an NFS service. Kubernetes nodes are clients; the NFS server has an independent lifecycle, backup policy, export configuration, and failure domain.</p> </details> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>Industry example: a shared-upload migration</summary> <p>Consider a web application that originally stores customer uploads on each server’s local disk. After the application scales to several Pods, users occasionally cannot retrieve files because a later request reaches a different Pod.</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -220,7 +203,10 @@ Pod B --/
 2
 </pre></td> <td class="rouge-code"><pre>showmount <span class="nt">-e</span> 192.168.1.1
 nc <span class="nt">-vz</span> 192.168.1.1 2049
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Create <code class="language-plaintext highlighter-rouge">nfs-web-db.yaml</code>, adapting server and export path:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The export directory must already exist on the NFS server and allow the workload to write to it. Create the namespace:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl create namespace volume-demo <span class="nt">--dry-run</span><span class="o">=</span>client <span class="nt">-o</span> yaml | kubectl apply <span class="nt">-f</span> -
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Create <code class="language-plaintext highlighter-rouge">nfs-web-db.yaml</code>, adapting the server address and export path:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -272,12 +258,12 @@ nc <span class="nt">-vz</span> 192.168.1.1 2049
     <span class="pi">-</span> <span class="s">retrans=2</span>
   <span class="na">nfs</span><span class="pi">:</span>
     <span class="na">server</span><span class="pi">:</span> <span class="s">192.168.1.1</span>
-    <span class="na">path</span><span class="pi">:</span> <span class="s">/opt/scratch/volume-demo</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">/opt/data</span>
 <span class="nn">---</span>
 <span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolumeClaim</span>
 <span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">web-db-nfs</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">web-db</span>
   <span class="na">namespace</span><span class="pi">:</span> <span class="s">volume-demo</span>
 <span class="na">spec</span><span class="pi">:</span>
   <span class="na">accessModes</span><span class="pi">:</span>
@@ -287,203 +273,16 @@ nc <span class="nt">-vz</span> 192.168.1.1 2049
   <span class="na">resources</span><span class="pi">:</span>
     <span class="na">requests</span><span class="pi">:</span>
       <span class="na">storage</span><span class="pi">:</span> <span class="s">1Gi</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Important details:</p> <ul> <li> <code class="language-plaintext highlighter-rouge">storageClassName: ""</code> prevents accidental dynamic provisioning.</li> <li> <code class="language-plaintext highlighter-rouge">volumeName</code> explicitly binds this claim to the intended static PV.</li> <li> <code class="language-plaintext highlighter-rouge">Retain</code> preserves server data after claim deletion, but still requires an administrative recovery procedure.</li> <li>NFSv4 normally does not need the <code class="language-plaintext highlighter-rouge">nolock</code> option; locking is part of the NFSv4 protocol.</li> <li>The export directory must already exist and its UID/GID permissions must permit the workload to write.</li> </ul> </details> <details class="details details--default" data-variant="default"><summary>When NFS needs Pod node affinity</summary> <p>NFS usually needs no PV <code class="language-plaintext highlighter-rouge">nodeAffinity</code> when all workers can mount the export. Use <strong>Pod node affinity</strong> when only a subset of nodes has:</p> <ul> <li>routing to the storage network;</li> <li>an NFS client package/kernel module;</li> <li>firewall access to TCP 2049;</li> <li>acceptable latency to the server;</li> <li>authorization in the NFS export policy.</li> </ul> <p>Label eligible nodes:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl label node worker-a storage.example.com/nfs-client<span class="o">=</span><span class="nb">true
-</span>kubectl label node worker-b storage.example.com/nfs-client<span class="o">=</span><span class="nb">true</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Add a required rule to the Pod template:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Create the PV and PVC, then verify that Kubernetes binds them:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-5
-6
-7
-8
-9
-</pre></td> <td class="rouge-code"><pre><span class="na">spec</span><span class="pi">:</span>
-  <span class="na">affinity</span><span class="pi">:</span>
-    <span class="na">nodeAffinity</span><span class="pi">:</span>
-      <span class="na">requiredDuringSchedulingIgnoredDuringExecution</span><span class="pi">:</span>
-        <span class="na">nodeSelectorTerms</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="na">matchExpressions</span><span class="pi">:</span>
-              <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">storage.example.com/nfs-client</span>
-                <span class="na">operator</span><span class="pi">:</span> <span class="s">In</span>
-                <span class="na">values</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">true"</span><span class="pi">]</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p><code class="language-plaintext highlighter-rouge">requiredDuringSchedulingIgnoredDuringExecution</code> is enforced when scheduling. If the node’s label later changes, Kubernetes does not automatically evict the running Pod.</p> <p>Use a <strong>preferred</strong> rule when proximity is an optimization, not a hard requirement:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-</pre></td> <td class="rouge-code"><pre><span class="na">spec</span><span class="pi">:</span>
-  <span class="na">affinity</span><span class="pi">:</span>
-    <span class="na">nodeAffinity</span><span class="pi">:</span>
-      <span class="na">preferredDuringSchedulingIgnoredDuringExecution</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
-          <span class="na">preference</span><span class="pi">:</span>
-            <span class="na">matchExpressions</span><span class="pi">:</span>
-              <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">topology.kubernetes.io/zone</span>
-                <span class="na">operator</span><span class="pi">:</span> <span class="s">In</span>
-                <span class="na">values</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">storage-zone-a"</span><span class="pi">]</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Hard affinity can leave Pods <code class="language-plaintext highlighter-rouge">Pending</code> during failures. Prefer hard rules only for real reachability or correctness constraints.</p> </details> <details class="details details--default" data-variant="default"><summary>PV node affinity for local storage</summary> <p>PV <code class="language-plaintext highlighter-rouge">nodeAffinity</code> belongs on topology-bound storage such as a local disk:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolume</span>
-<span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">local-db-pv</span>
-<span class="na">spec</span><span class="pi">:</span>
-  <span class="na">capacity</span><span class="pi">:</span>
-    <span class="na">storage</span><span class="pi">:</span> <span class="s">20Gi</span>
-  <span class="na">volumeMode</span><span class="pi">:</span> <span class="s">Filesystem</span>
-  <span class="na">accessModes</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">ReadWriteOnce</span>
-  <span class="na">persistentVolumeReclaimPolicy</span><span class="pi">:</span> <span class="s">Retain</span>
-  <span class="na">storageClassName</span><span class="pi">:</span> <span class="s">local-storage</span>
-  <span class="na">local</span><span class="pi">:</span>
-    <span class="na">path</span><span class="pi">:</span> <span class="s">/mnt/disks/db</span>
-  <span class="na">nodeAffinity</span><span class="pi">:</span>
-    <span class="na">required</span><span class="pi">:</span>
-      <span class="na">nodeSelectorTerms</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="na">matchExpressions</span><span class="pi">:</span>
-            <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">kubernetes.io/hostname</span>
-              <span class="na">operator</span><span class="pi">:</span> <span class="s">In</span>
-              <span class="na">values</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">worker-a"</span><span class="pi">]</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>The scheduler combines this PV constraint with the Pod’s other requirements. Do not add this pattern to an NFS PV merely because the NFS server resides on <code class="language-plaintext highlighter-rouge">worker-a</code>; the NFS export is remote storage from the clients’ perspective.</p> </details> <details class="details details--default" data-variant="default"><summary>StorageClass topology and WaitForFirstConsumer</summary> <p>Topology-aware storage systems often use:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">storage.k8s.io/v1</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">StorageClass</span>
-<span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">zonal-csi</span>
-<span class="na">provisioner</span><span class="pi">:</span> <span class="s">example.csi.driver</span>
-<span class="na">volumeBindingMode</span><span class="pi">:</span> <span class="s">WaitForFirstConsumer</span>
-<span class="na">allowedTopologies</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="na">matchLabelExpressions</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">topology.kubernetes.io/zone</span>
-        <span class="na">values</span><span class="pi">:</span>
-          <span class="pi">-</span> <span class="s">zone-a</span>
-          <span class="pi">-</span> <span class="s">zone-b</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p><code class="language-plaintext highlighter-rouge">Immediate</code> binding may provision a zonal disk before the scheduler considers the Pod’s node affinity and resource needs. <code class="language-plaintext highlighter-rouge">WaitForFirstConsumer</code> delays that decision so storage and Pod topology are selected together.</p> <p>Do not set <code class="language-plaintext highlighter-rouge">spec.nodeName</code> to force a Pod onto a node when testing delayed binding; doing so bypasses normal scheduler participation and can leave the PVC pending. Use node affinity or a node selector instead.</p> </details> <details class="details details--default" data-variant="default"><summary>NFS concurrency and application correctness</summary> <p>NFS commonly supports RWX, but RWX answers only “can these nodes mount this filesystem?” It does not answer:</p> <ul> <li>Does the application use correct file locking?</li> <li>Are rename and cache semantics acceptable?</li> <li>Can multiple replicas safely modify the same files?</li> <li>Is latency acceptable for fsync-heavy databases?</li> <li>Does the server provide snapshots, quotas, and backups?</li> </ul> <p>SQLite over NFS can have locking and latency problems and should not be used as a multi-replica database architecture. PostgreSQL, MySQL, and similar systems should normally own their data directory on storage supported by the database and expose a network protocol to clients.</p> <p>NFS is a strong fit for shared uploads, static assets, read-mostly data, build artifacts, and shared content—provided file-level concurrency is understood.</p> </details> <h2 id="operations-and-troubleshooting">Operations and Troubleshooting</h2> <details class="details details--default" data-variant="default"><summary>A layered diagnostic workflow</summary> <p>Start with Kubernetes objects:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> volume-demo get pod,pvc
-kubectl get pv
-kubectl get storageclass
-kubectl <span class="nt">-n</span> volume-demo describe pod &lt;pod-name&gt;
-kubectl <span class="nt">-n</span> volume-demo describe pvc &lt;claim-name&gt;
-kubectl get events <span class="nt">-A</span> <span class="nt">--sort-by</span><span class="o">=</span>.lastTimestamp
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Interpret common states:</p> <ul> <li>PVC <code class="language-plaintext highlighter-rouge">Pending</code>: no compatible PV, provisioner failure, or delayed binding waiting for a consumer.</li> <li>Pod <code class="language-plaintext highlighter-rouge">Pending</code>: scheduler cannot satisfy node, resource, taint, or volume topology constraints.</li> <li>Pod <code class="language-plaintext highlighter-rouge">ContainerCreating</code>: scheduled, but image pull, mount, CNI, or runtime setup is incomplete.</li> <li> <code class="language-plaintext highlighter-rouge">FailedMount</code>: kubelet could not mount or prepare the volume.</li> <li> <code class="language-plaintext highlighter-rouge">Multi-Attach error</code>: a block volume is still attached elsewhere or its access mode conflicts with placement.</li> </ul> <p>Then inspect the exact event message instead of repeatedly deleting the Pod.</p> </details> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>What an on-call storage incident looks like</summary> <p>A common alert is “application unavailable after rescheduling.” An effective on-call engineer builds a timeline and narrows the failure layer:</p> <ol> <li>The scheduler placed the replacement Pod on another node.</li> <li>The PVC remained <code class="language-plaintext highlighter-rouge">Bound</code>.</li> <li>The Pod stayed in <code class="language-plaintext highlighter-rouge">ContainerCreating</code>.</li> <li>Events reported <code class="language-plaintext highlighter-rouge">FailedMount</code>.</li> <li>The new node could not reach TCP 2049 or lacked an NFS mount helper.</li> </ol> <p>The immediate mitigation might be restoring network access or scheduling onto an eligible node. Follow-up work should remove the hidden dependency:</p> <ul> <li>label and test NFS-capable nodes;</li> <li>use affinity only when the constraint is real;</li> <li>monitor mount failures and server capacity;</li> <li>standardize node configuration;</li> <li>write and rehearse a recovery runbook.</li> </ul> <p>In incident reports and interviews, clearly distinguish <strong>symptom</strong>, <strong>root cause</strong>, <strong>mitigation</strong>, and <strong>preventive action</strong>.</p> <p>A public <a href="https://github.com/kubernetes/kubernetes/issues/90593" rel="external nofollow noopener" target="_blank">Kubernetes issue about a failed NFS share</a> describes this failure pattern: after the NFS server died, Pods remained stuck and kubelet operations on affected nodes blocked around broken mounts. It is a useful example of why an incident that begins as a storage outage can also look like a Pod-lifecycle or node-health problem.</p> </details> <details class="details details--default" data-variant="default"><summary>Binding checklist</summary> <p>A PVC and PV must agree on:</p> <ul> <li>requested capacity;</li> <li>compatible access modes;</li> <li> <code class="language-plaintext highlighter-rouge">volumeMode</code> (<code class="language-plaintext highlighter-rouge">Filesystem</code> or <code class="language-plaintext highlighter-rouge">Block</code>);</li> <li>StorageClass name;</li> <li>label selector, if the PVC has one;</li> <li>availability—the PV cannot already be bound elsewhere.</li> </ul> <p>Useful queries:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> volume-demo get pvc web-db <span class="nt">-o</span> yaml
-kubectl get pv <span class="nt">-o</span> custom-columns<span class="o">=</span>NAME:.metadata.name,STATUS:.status.phase,CLAIM:.spec.claimRef.namespace/.spec.claimRef.name,CLASS:.spec.storageClassName,MODES:.spec.accessModes,STORAGE:.spec.capacity.storage
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Avoid manually setting <code class="language-plaintext highlighter-rouge">claimRef</code> unless intentionally managing static pre-binding. Let the PV controller bind ordinary claims.</p> </details> <details class="details details--default" data-variant="default"><summary>NFS mount checklist</summary> <p>From every eligible worker:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td> <td class="rouge-code"><pre>getent hosts 192.168.1.1
-nc <span class="nt">-vz</span> 192.168.1.1 2049
-showmount <span class="nt">-e</span> 192.168.1.1
-<span class="nb">sudo mkdir</span> <span class="nt">-p</span> /mnt/nfs-test
-<span class="nb">sudo </span>mount <span class="nt">-t</span> nfs <span class="nt">-o</span> <span class="nv">nfsvers</span><span class="o">=</span>4.2 192.168.1.1:/opt/scratch /mnt/nfs-test
-<span class="nb">touch</span> /mnt/nfs-test/kubernetes-write-test
-<span class="nb">sudo </span>umount /mnt/nfs-test
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Check kubelet events and logs when manual mounting succeeds but Pod mounting does not:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl describe pod &lt;pod-name&gt;
-<span class="nb">sudo </span>journalctl <span class="nt">-u</span> rke2-agent <span class="nt">--since</span> <span class="s2">"15 minutes ago"</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Depending on the distribution, kubelet may run under another unit. Common causes include missing NFS client helpers, export restrictions, DNS failure, root squashing, UID/GID mismatch, and blocked TCP 2049.</p> </details> <details class="details details--default" data-variant="default"><summary>Data protection and cleanup</summary> <p>Before deleting claims, inspect reclaim behavior:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl get pv <span class="se">\</span>
-  <span class="nt">-o</span> custom-columns<span class="o">=</span>NAME:.metadata.name,RECLAIM:.spec.persistentVolumeReclaimPolicy,CLAIM:.spec.claimRef.namespace/.spec.claimRef.name
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Cleanup for the web lab:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td> <td class="rouge-code"><pre>kubectl delete namespace volume-demo
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Deleting the namespace deletes namespaced PVCs. What happens to backing storage depends on each PV’s reclaim policy:</p> <ul> <li> <code class="language-plaintext highlighter-rouge">Delete</code>: the provisioner normally deletes the storage asset.</li> <li> <code class="language-plaintext highlighter-rouge">Retain</code>: data remains and requires manual administrative recovery or disposal.</li> </ul> <p>Always test restoration. A backup that has never been restored is only an assumption.</p> </details> <h2 id="hands-on-stateful-web-stack">Hands-on Stateful Web Stack</h2> <p>This lab combines several storage patterns in one Pod:</p> <ul> <li>NGINX is the public web server.</li> <li>A small Python HTTP service stores request counters in SQLite.</li> <li>NGINX writes access and error logs to a shared <code class="language-plaintext highlighter-rouge">emptyDir</code>.</li> <li>A sidecar rotates those logs.</li> <li>SQLite is stored on a PVC and survives Pod replacement.</li> </ul> <p>The example intentionally uses one replica. SQLite is a local file database, not a multi-node database service. Scaling this Deployment to several replicas against the same database file would be an application design error even if the storage backend allowed RWX.</p> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 1: Check storage and create the namespace</summary> <p>Choose an available StorageClass:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td> <td class="rouge-code"><pre>kubectl get storageclass
-kubectl create namespace volume-demo
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>If the cluster has no dynamic StorageClass, first create the static NFS PV and PVC in the NFS section below, then use <code class="language-plaintext highlighter-rouge">claimName: web-db-nfs</code> in the Deployment.</p> <p>Create <code class="language-plaintext highlighter-rouge">web-pvc.yaml</code>. Replace <code class="language-plaintext highlighter-rouge">YOUR_STORAGE_CLASS</code> with a class from the previous command. If your cluster has a default StorageClass, the <code class="language-plaintext highlighter-rouge">storageClassName</code> line may be omitted.</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">PersistentVolumeClaim</span>
-<span class="na">metadata</span><span class="pi">:</span>
-  <span class="na">name</span><span class="pi">:</span> <span class="s">web-db</span>
-  <span class="na">namespace</span><span class="pi">:</span> <span class="s">volume-demo</span>
-<span class="na">spec</span><span class="pi">:</span>
-  <span class="na">accessModes</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">ReadWriteOnce</span>
-  <span class="na">storageClassName</span><span class="pi">:</span> <span class="s">YOUR_STORAGE_CLASS</span>
-  <span class="na">resources</span><span class="pi">:</span>
-    <span class="na">requests</span><span class="pi">:</span>
-      <span class="na">storage</span><span class="pi">:</span> <span class="s">1Gi</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Validate and apply:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> web-pvc.yaml
-kubectl apply <span class="nt">-f</span> web-pvc.yaml
-kubectl <span class="nt">-n</span> volume-demo get pvc web-db <span class="nt">-w</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>The expected phase is <code class="language-plaintext highlighter-rouge">Bound</code>. If the class uses <code class="language-plaintext highlighter-rouge">volumeBindingMode: WaitForFirstConsumer</code>, the PVC may remain <code class="language-plaintext highlighter-rouge">Pending</code> until the Pod is created. That is expected because the scheduler has not selected a storage topology yet.</p> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 2: Create application and NGINX configuration</summary> <p>Create <code class="language-plaintext highlighter-rouge">web-config.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> nfs-web-db.yaml
+kubectl apply <span class="nt">-f</span> nfs-web-db.yaml
+kubectl get pv nfs-web-db
+kubectl <span class="nt">-n</span> volume-demo get pvc web-db
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Both resources should report <code class="language-plaintext highlighter-rouge">Bound</code>. The PV maps Kubernetes storage to the NFS export, and the PVC gives the namespaced workload a stable way to request that PV. <code class="language-plaintext highlighter-rouge">Retain</code> keeps the files on the NFS server if the claim is deleted; recovering or deleting those files remains an administrator task.</p> </details> <details class="details details--default" data-variant="default"><summary>NFS concurrency and application correctness</summary> <p>NFS commonly supports RWX, but RWX answers only “can these nodes mount this filesystem?” It does not answer:</p> <ul> <li>Does the application use correct file locking?</li> <li>Are rename and cache semantics acceptable?</li> <li>Can multiple replicas safely modify the same files?</li> <li>Is latency acceptable for fsync-heavy databases?</li> <li>Does the server provide snapshots, quotas, and backups?</li> </ul> <p>SQLite over NFS can have locking and latency problems and should not be used as a multi-replica database architecture. PostgreSQL, MySQL, and similar systems should normally own their data directory on storage supported by the database and expose a network protocol to clients.</p> <p>NFS is a strong fit for shared uploads, static assets, read-mostly data, build artifacts, and shared content—provided file-level concurrency is understood.</p> </details> <h2 id="hands-on-stateful-web-stack">Hands-on Stateful Web Stack</h2> <p>This lab combines several storage patterns in one Pod:</p> <ul> <li>NGINX is the public web server.</li> <li>A small Python HTTP service stores request counters in SQLite.</li> <li>NGINX writes access and error logs to a Pod-scoped <code class="language-plaintext highlighter-rouge">emptyDir</code>.</li> <li>SQLite is stored on a PVC and survives Pod replacement.</li> </ul> <p>The example intentionally uses one replica. SQLite is a local file database, not a multi-node database service. Scaling this Deployment to several replicas against the same database file would be an application design error even if the storage backend allowed RWX.</p> <p>Before starting, complete <strong>Static NFS PV and PVC</strong> above. Confirm that the <code class="language-plaintext highlighter-rouge">nfs-web-db</code> PV and the <code class="language-plaintext highlighter-rouge">volume-demo/web-db</code> PVC both report <code class="language-plaintext highlighter-rouge">Bound</code>.</p> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 1: Create application and NGINX configuration</summary> <details class="details details--tip" data-variant="tip"><summary><span class="details-label">TIP</span>What is a ConfigMap?</summary> <p>A ConfigMap stores non-sensitive configuration separately from a container image. Pods can consume its key-value entries as environment variables or mounted files. In this lab, Kubernetes mounts the Python application, NGINX configuration as read-only files.</p> </details> <p>Create <code class="language-plaintext highlighter-rouge">web-config.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -551,17 +350,6 @@ kubectl <span class="nt">-n</span> volume-demo get pvc web-db <span class="nt">-
 65
 66
 67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
 </pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
 <span class="na">metadata</span><span class="pi">:</span>
@@ -629,23 +417,12 @@ kubectl <span class="nt">-n</span> volume-demo get pvc web-db <span class="nt">-
         <span class="s">}</span>
       <span class="s">}</span>
     <span class="s">}</span>
-
-  <span class="na">logrotate.conf</span><span class="pi">:</span> <span class="pi">|</span>
-    <span class="s">/var/log/nginx/*.log {</span>
-      <span class="s">su root root</span>
-      <span class="s">size 10k</span>
-      <span class="s">rotate 3</span>
-      <span class="s">compress</span>
-      <span class="s">missingok</span>
-      <span class="s">notifempty</span>
-      <span class="s">copytruncate</span>
-    <span class="s">}</span>
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>The ConfigMap is mounted read-only. It carries configuration and source code, not mutable data.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td> <td class="rouge-code"><pre>kubectl apply <span class="nt">--dry-run</span><span class="o">=</span>server <span class="nt">-f</span> web-config.yaml
 kubectl apply <span class="nt">-f</span> web-config.yaml
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 3: Deploy web, database, and log rotation containers</summary> <p>Create <code class="language-plaintext highlighter-rouge">web-deployment.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 2: Deploy the web application</summary> <p>Create <code class="language-plaintext highlighter-rouge">web-deployment.yaml</code>:</p> <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -722,23 +499,6 @@ kubectl apply <span class="nt">-f</span> web-config.yaml
 74
 75
 76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
 </pre></td> <td class="rouge-code"><pre><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
 <span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
 <span class="na">metadata</span><span class="pi">:</span>
@@ -791,23 +551,6 @@ kubectl apply <span class="nt">-f</span> web-config.yaml
             <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">database</span>
               <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/data</span>
 
-        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">log-rotator</span>
-          <span class="na">image</span><span class="pi">:</span> <span class="s">alpine:3.20</span>
-          <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/bin/sh"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-c"</span><span class="pi">]</span>
-          <span class="na">args</span><span class="pi">:</span>
-            <span class="pi">-</span> <span class="pi">|</span>
-              <span class="s">apk add --no-cache logrotate</span>
-              <span class="s">while true; do</span>
-                <span class="s">logrotate /config/logrotate.conf</span>
-                <span class="s">sleep 15</span>
-              <span class="s">done</span>
-          <span class="na">volumeMounts</span><span class="pi">:</span>
-            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config</span>
-              <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/config</span>
-              <span class="na">readOnly</span><span class="pi">:</span> <span class="kc">true</span>
-            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">logs</span>
-              <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/var/log/nginx</span>
-
       <span class="na">volumes</span><span class="pi">:</span>
         <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">config</span>
           <span class="na">configMap</span><span class="pi">:</span>
@@ -841,7 +584,7 @@ kubectl apply <span class="nt">-f</span> web-config.yaml
 kubectl apply <span class="nt">-f</span> web-deployment.yaml
 kubectl <span class="nt">-n</span> volume-demo rollout status deployment/stateful-web
 kubectl <span class="nt">-n</span> volume-demo get pod,pvc,svc <span class="nt">-o</span> wide
-</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 4: Generate requests and inspect all storage paths</summary> <p>Use port forwarding:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 3: Generate requests and inspect the storage paths</summary> <p>Use port forwarding:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> volume-demo port-forward service/stateful-web 8080:80
 </pre></td> </tr></tbody></table></code></pre></div></div> <p>From another terminal:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
@@ -852,16 +595,12 @@ kubectl <span class="nt">-n</span> volume-demo get pod,pvc,svc <span class="nt">
 2
 </pre></td> <td class="rouge-code"><pre><span class="nv">POD</span><span class="o">=</span><span class="si">$(</span>kubectl <span class="nt">-n</span> volume-demo get pod <span class="nt">-l</span> <span class="nv">app</span><span class="o">=</span>stateful-web <span class="se">\</span>
   <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span><span class="si">)</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect NGINX logs from both containers that mount the same <code class="language-plaintext highlighter-rouge">emptyDir</code>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Inspect the NGINX logs stored in the <code class="language-plaintext highlighter-rouge">emptyDir</code>:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-5
-6
 </pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> volume-demo <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$POD</span><span class="s2">"</span> <span class="nt">-c</span> nginx <span class="nt">--</span> <span class="se">\</span>
-  <span class="nb">ls</span> <span class="nt">-lh</span> /var/log/nginx
-kubectl <span class="nt">-n</span> volume-demo <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$POD</span><span class="s2">"</span> <span class="nt">-c</span> log-rotator <span class="nt">--</span> <span class="se">\</span>
   <span class="nb">ls</span> <span class="nt">-lh</span> /var/log/nginx
 kubectl <span class="nt">-n</span> volume-demo <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$POD</span><span class="s2">"</span> <span class="nt">-c</span> nginx <span class="nt">--</span> <span class="se">\</span>
   <span class="nb">tail</span> /var/log/nginx/access.log
@@ -874,23 +613,7 @@ kubectl <span class="nt">-n</span> volume-demo <span class="nb">exec</span> <spa
   <span class="nb">ls</span> <span class="nt">-lh</span> /data
 kubectl <span class="nt">-n</span> volume-demo <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$POD</span><span class="s2">"</span> <span class="nt">-c</span> app <span class="nt">--</span> python <span class="nt">-c</span> <span class="se">\</span>
   <span class="s1">'import sqlite3; db=sqlite3.connect("/data/requests.db"); print(db.execute("select count(*) from requests").fetchone())'</span>
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>The two log views show <strong>intra-Pod sharing</strong>. The database inspection shows the PVC mounted only in the application container.</p> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 5: Force and verify log rotation</summary> <p>The rotator checks every 15 seconds and rotates after the active log reaches 10 KiB. Generate enough traffic:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td> <td class="rouge-code"><pre><span class="k">for </span>i <span class="k">in</span> <span class="si">$(</span><span class="nb">seq </span>1 500<span class="si">)</span><span class="p">;</span> <span class="k">do </span>curl <span class="nt">-s</span> http://127.0.0.1:8080/load <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">done
-</span><span class="nb">sleep </span>20
-kubectl <span class="nt">-n</span> volume-demo <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$POD</span><span class="s2">"</span> <span class="nt">-c</span> nginx <span class="nt">--</span> <span class="se">\</span>
-  <span class="nb">ls</span> <span class="nt">-lh</span> /var/log/nginx
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>Expected files include an active log and one or more archives:</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
-<td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td> <td class="rouge-code"><pre>access.log
-access.log.1
-access.log.2.gz
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>This lab uses <code class="language-plaintext highlighter-rouge">copytruncate</code> because containers cannot signal each other by default. Production NGINX normally rotates by renaming the file and sending NGINX <code class="language-plaintext highlighter-rouge">USR1</code> so it reopens file descriptors. Another production pattern is to write application logs to <code class="language-plaintext highlighter-rouge">stdout</code>/<code class="language-plaintext highlighter-rouge">stderr</code> and let the container runtime and cluster logging agent handle rotation and shipping.</p> <p>Do not treat rotating a file as log durability. The <code class="language-plaintext highlighter-rouge">emptyDir</code> and every rotated file disappear when the Pod is deleted. Durable audit logs should be shipped to a remote logging system such as Loki, Elasticsearch, or a cloud logging service.</p> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 6: Prove different lifecycle behavior</summary> <p>Capture the database request count:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The log inspection shows data on ephemeral, Pod-scoped storage. The database inspection shows persistent data on the NFS-backed PVC.</p> </details> <details class="details details--info" data-variant="info"><summary><span class="details-label">INFO</span>Step 4: Prove different lifecycle behavior</summary> <p>Capture the database request count:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
@@ -909,6 +632,52 @@ kubectl <span class="nt">-n</span> volume-demo rollout status deployment/statefu
   <span class="nt">-o</span> <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span><span class="si">)</span>
 kubectl <span class="nt">-n</span> volume-demo <span class="nb">exec</span> <span class="s2">"</span><span class="nv">$POD</span><span class="s2">"</span> <span class="nt">-c</span> nginx <span class="nt">--</span> <span class="se">\</span>
   <span class="nb">ls</span> <span class="nt">-lh</span> /var/log/nginx
-</pre></td> </tr></tbody></table></code></pre></div></div> <p>The old logs are gone because a replacement Pod receives a new <code class="language-plaintext highlighter-rouge">emptyDir</code>.</p> </details> <details class="details details--warning" data-variant="warning"><summary><span class="details-label">WARNING</span>Security and production notes</summary> <ul> <li>Pin images by digest in controlled production environments.</li> <li>Avoid installing packages at container startup; build a dedicated log rotator image.</li> <li>Run containers as non-root when images and filesystem permissions permit.</li> <li>Set CPU and memory requests/limits.</li> <li>Back up the database independently of the PVC.</li> <li>Do not place credentials in ConfigMaps.</li> <li>A PVC is not a backup, and a replica is not a backup.</li> <li>For multi-replica applications, use a database designed for network clients such as PostgreSQL rather than a shared SQLite file.</li> </ul> </details> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>Turn this lab into portfolio evidence</summary> <p>For a project report, internship discussion, or technical interview, document evidence rather than only stating that Kubernetes was used:</p> <ol> <li>Draw the request and storage path: client -&gt; NGINX -&gt; Python -&gt; SQLite PVC.</li> <li>Explain why logs use <code class="language-plaintext highlighter-rouge">emptyDir</code> while the database uses a PVC.</li> <li>Show the request count before and after deleting the Pod.</li> <li>Show that the database survives while the old log files do not.</li> <li>Explain why <code class="language-plaintext highlighter-rouge">replicas: 1</code> and <code class="language-plaintext highlighter-rouge">strategy: Recreate</code> were selected.</li> <li>Propose a production evolution: centralized logs and a network database.</li> </ol> <p>A strong résumé bullet could be:</p> <blockquote> <p>Built and tested a multi-container Kubernetes workload with shared <code class="language-plaintext highlighter-rouge">emptyDir</code> logging, automated log rotation, and PVC-backed application data; verified persistence behavior through controlled Pod replacement.</p> </blockquote> <p>Only claim measurements or outcomes that you actually collected.</p> </details> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js" integrity="sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js" integrity="sha256-1rA678n2xEx7x4cTZ5x4wpUCj6kUMZEZ5cxLSVSFWxw=" crossorigin="anonymous"></script> <script defer src="/assets/js/mermaid-setup.js?38ca0a0126f7328d2d9a46bad640931f" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>The old logs are gone because a replacement Pod receives a new <code class="language-plaintext highlighter-rouge">emptyDir</code>.</p> </details> <details class="details details--warning" data-variant="warning"><summary><span class="details-label">WARNING</span>Security and production notes</summary> <ul> <li>Pin images by digest in controlled production environments.</li> <li>Run containers as non-root when images and filesystem permissions permit.</li> <li>Set CPU and memory requests/limits.</li> <li>Back up the database independently of the PVC.</li> <li>Do not place credentials in ConfigMaps.</li> <li>A PVC is not a backup, and a replica is not a backup.</li> <li>For multi-replica applications, use a database designed for network clients such as PostgreSQL rather than a shared SQLite file.</li> </ul> </details> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>Turn this lab into portfolio evidence</summary> <p>For a project report, internship discussion, or technical interview, document evidence rather than only stating that Kubernetes was used:</p> <ol> <li>Draw the request and storage path: client -&gt; NGINX -&gt; Python -&gt; SQLite PVC.</li> <li>Explain why logs use <code class="language-plaintext highlighter-rouge">emptyDir</code> while the database uses a PVC.</li> <li>Show the request count before and after deleting the Pod.</li> <li>Show that the database survives while the old log files do not.</li> <li>Explain why <code class="language-plaintext highlighter-rouge">replicas: 1</code> and <code class="language-plaintext highlighter-rouge">strategy: Recreate</code> were selected.</li> <li>Propose a production evolution: centralized logs and a network database.</li> </ol> <p>A strong résumé bullet could be:</p> <blockquote> <p>Built and tested a multi-container Kubernetes workload with Pod-scoped <code class="language-plaintext highlighter-rouge">emptyDir</code> logging and NFS-backed persistent application data; verified their different lifecycle behavior through controlled Pod replacement.</p> </blockquote> <p>Only claim measurements or outcomes that you actually collected.</p> </details> <h2 id="operations-and-troubleshooting">Operations and Troubleshooting</h2> <details class="details details--default" data-variant="default"><summary>A layered diagnostic workflow</summary> <p>Start with Kubernetes objects:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> volume-demo get pod,pvc
+kubectl get pv
+kubectl get storageclass
+kubectl <span class="nt">-n</span> volume-demo describe pod &lt;pod-name&gt;
+kubectl <span class="nt">-n</span> volume-demo describe pvc &lt;claim-name&gt;
+kubectl get events <span class="nt">-A</span> <span class="nt">--sort-by</span><span class="o">=</span>.lastTimestamp
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Interpret common states:</p> <ul> <li>PVC <code class="language-plaintext highlighter-rouge">Pending</code>: no compatible PV, provisioner failure, or delayed binding waiting for a consumer.</li> <li>Pod <code class="language-plaintext highlighter-rouge">Pending</code>: scheduler cannot satisfy node, resource, taint, or volume topology constraints.</li> <li>Pod <code class="language-plaintext highlighter-rouge">ContainerCreating</code>: scheduled, but image pull, mount, CNI, or runtime setup is incomplete.</li> <li> <code class="language-plaintext highlighter-rouge">FailedMount</code>: kubelet could not mount or prepare the volume.</li> <li> <code class="language-plaintext highlighter-rouge">Multi-Attach error</code>: a block volume is still attached elsewhere or its access mode conflicts with placement.</li> </ul> <p>Then inspect the exact event message instead of repeatedly deleting the Pod.</p> </details> <details class="details details--career" data-variant="career"><summary><span class="details-label">CAREER</span>What an on-call storage incident looks like</summary> <p>A common alert is “application unavailable after rescheduling.” An effective on-call engineer builds a timeline and narrows the failure layer:</p> <ol> <li>The scheduler placed the replacement Pod on another node.</li> <li>The PVC remained <code class="language-plaintext highlighter-rouge">Bound</code>.</li> <li>The Pod stayed in <code class="language-plaintext highlighter-rouge">ContainerCreating</code>.</li> <li>Events reported <code class="language-plaintext highlighter-rouge">FailedMount</code>.</li> <li>The new node could not reach TCP 2049 or lacked an NFS mount helper.</li> </ol> <p>The immediate mitigation might be restoring network access or scheduling onto an eligible node. Follow-up work should remove the hidden dependency:</p> <ul> <li>label and test NFS-capable nodes;</li> <li>use affinity only when the constraint is real;</li> <li>monitor mount failures and server capacity;</li> <li>standardize node configuration;</li> <li>write and rehearse a recovery runbook.</li> </ul> <p>In incident reports and interviews, clearly distinguish <strong>symptom</strong>, <strong>root cause</strong>, <strong>mitigation</strong>, and <strong>preventive action</strong>.</p> <p>A public <a href="https://github.com/kubernetes/kubernetes/issues/90593" rel="external nofollow noopener" target="_blank">Kubernetes issue about a failed NFS share</a> describes this failure pattern: after the NFS server died, Pods remained stuck and kubelet operations on affected nodes blocked around broken mounts. It is a useful example of why an incident that begins as a storage outage can also look like a Pod-lifecycle or node-health problem.</p> </details> <details class="details details--default" data-variant="default"><summary>Binding checklist</summary> <p>A PVC and PV must agree on:</p> <ul> <li>requested capacity;</li> <li>compatible access modes;</li> <li> <code class="language-plaintext highlighter-rouge">volumeMode</code> (<code class="language-plaintext highlighter-rouge">Filesystem</code> or <code class="language-plaintext highlighter-rouge">Block</code>);</li> <li>StorageClass name;</li> <li>label selector, if the PVC has one;</li> <li>availability—the PV cannot already be bound elsewhere.</li> </ul> <p>Useful queries:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl <span class="nt">-n</span> volume-demo get pvc web-db <span class="nt">-o</span> yaml
+kubectl get pv <span class="nt">-o</span> custom-columns<span class="o">=</span>NAME:.metadata.name,STATUS:.status.phase,CLAIM:.spec.claimRef.namespace/.spec.claimRef.name,CLASS:.spec.storageClassName,MODES:.spec.accessModes,STORAGE:.spec.capacity.storage
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Avoid manually setting <code class="language-plaintext highlighter-rouge">claimRef</code> unless intentionally managing static pre-binding. Let the PV controller bind ordinary claims.</p> </details> <details class="details details--default" data-variant="default"><summary>NFS mount checklist</summary> <p>From every eligible worker:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> <td class="rouge-code"><pre>getent hosts 192.168.1.1
+nc <span class="nt">-vz</span> 192.168.1.1 2049
+showmount <span class="nt">-e</span> 192.168.1.1
+<span class="nb">sudo mkdir</span> <span class="nt">-p</span> /mnt/nfs-test
+<span class="nb">sudo </span>mount <span class="nt">-t</span> nfs <span class="nt">-o</span> <span class="nv">nfsvers</span><span class="o">=</span>4.2 192.168.1.1:/opt/scratch /mnt/nfs-test
+<span class="nb">touch</span> /mnt/nfs-test/kubernetes-write-test
+<span class="nb">sudo </span>umount /mnt/nfs-test
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Check kubelet events and logs when manual mounting succeeds but Pod mounting does not:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl describe pod &lt;pod-name&gt;
+<span class="nb">sudo </span>journalctl <span class="nt">-u</span> rke2-agent <span class="nt">--since</span> <span class="s2">"15 minutes ago"</span>
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Depending on the distribution, kubelet may run under another unit. Common causes include missing NFS client helpers, export restrictions, DNS failure, root squashing, UID/GID mismatch, and blocked TCP 2049.</p> </details> <details class="details details--default" data-variant="default"><summary>Data protection and cleanup</summary> <p>Before deleting claims, inspect reclaim behavior:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> <td class="rouge-code"><pre>kubectl get pv <span class="se">\</span>
+  <span class="nt">-o</span> custom-columns<span class="o">=</span>NAME:.metadata.name,RECLAIM:.spec.persistentVolumeReclaimPolicy,CLAIM:.spec.claimRef.namespace/.spec.claimRef.name
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Cleanup for the web lab:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> <td class="rouge-code"><pre>kubectl delete namespace volume-demo
+</pre></td> </tr></tbody></table></code></pre></div></div> <p>Deleting the namespace deletes namespaced PVCs. What happens to backing storage depends on each PV’s reclaim policy:</p> <ul> <li> <code class="language-plaintext highlighter-rouge">Delete</code>: the provisioner normally deletes the storage asset.</li> <li> <code class="language-plaintext highlighter-rouge">Retain</code>: data remains and requires manual administrative recovery or disposal.</li> </ul> <p>Always test restoration. A backup that has never been restored is only an assumption.</p> </details> </d-article> <d-appendix> <d-footnote-list></d-footnote-list> <d-citation-list></d-citation-list> </d-appendix> <d-bibliography src="/assets/bibliography/"></d-bibliography> <d-article> <br> <br> </d-article> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Linh B. Ngo. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script src="/assets/js/distillpub/overrides.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10.7.0/dist/mermaid.min.js" integrity="sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js" integrity="sha256-1rA678n2xEx7x4cTZ5x4wpUCj6kUMZEZ5cxLSVSFWxw=" crossorigin="anonymous"></script> <script defer src="/assets/js/mermaid-setup.js?38ca0a0126f7328d2d9a46bad640931f" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script defer src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.4/dist/bootstrap-table.min.js" integrity="sha256-4rppopQE9POKfukn2kEvhJ9Um25Cf6+IDVkARD0xh78=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?e0514a05c5c95ac1a93a8dfd5249b92e"></script> <script defer src="/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DD93CY3RCQ"></script> <script defer src="/assets/js/google-analytics-setup.js"></script> <script defer src="/assets/js/progress-bar.js?2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>
     addBackToTop();
   </script> <script type="module" src="/assets/js/search/ninja-keys.min.js?a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?6f508d74becd347268a7f822bca7309d"></script> </body> </html>
