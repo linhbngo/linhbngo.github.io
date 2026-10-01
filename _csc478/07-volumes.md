@@ -146,9 +146,9 @@ cat /mnt/hostpath/datafile.txt
 
 - Is this file on `node1`? Which node is it on?
 
-{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nodepath-1.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/hostpath-1.png" max-width="50%" zoomable=true %}
 
-{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nodepath-2.png" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/hostpath-2.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -516,15 +516,25 @@ network storage and creates an unnecessary single-node scheduling constraint.
 {% details Static NFS PV and PVC %}
 
 Before using NFS, verify every eligible worker can resolve and reach the
-server, and has the required NFS client support:
+server, and has the required NFS client support. 
+
+SSH into each of the nodes and run the followings:
 
 ```bash
 showmount -e 192.168.1.1
 nc -vz 192.168.1.1 2049
 ```
 
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nfs-validate-node1.png" max-width="50%" zoomable=true %}
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nfs-validate-node2.png" max-width="50%" zoomable=true %}
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nfs-validate-node3.png" max-width="50%" zoomable=true %}
+
 The export directory must already exist on the NFS server and allow the
-workload to write to it. Create the namespace:
+workload to write to it. Go back to `node1` and run the followings:
+
+Create the namespace:
 
 ```bash
 kubectl create namespace volume-demo --dry-run=client -o yaml | kubectl apply -f -
@@ -575,12 +585,15 @@ kubectl apply --dry-run=server -f nfs-web-db.yaml
 kubectl apply -f nfs-web-db.yaml
 kubectl get pv nfs-web-db
 kubectl -n volume-demo get pvc web-db
+kubectl describe -n volume-demo pv nfs-web-db
 ```
 
 Both resources should report `Bound`. The PV maps Kubernetes storage to the
 NFS export, and the PVC gives the namespaced workload a stable way to request
 that PV. `Retain` keeps the files on the NFS server if the claim is deleted;
 recovering or deleting those files remains an administrator task.
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/nfs-pv.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
 
@@ -633,6 +646,8 @@ A ConfigMap stores non-sensitive configuration separately from a container
 image. Pods can consume its key-value entries as environment variables or
 mounted files. In this lab, Kubernetes mounts the Python application, NGINX
 configuration as read-only files.
+
+**ConfigMap allows us to change application configuration without modifying or rebuilding the container image.**
 
 {% enddetails %}
 
@@ -708,8 +723,7 @@ data:
     }
 ```
 
-The ConfigMap is mounted read-only. It carries configuration and source code,
-not mutable data.
+The ConfigMap is mounted read-only. It carries configuration and source code. 
 
 ```bash
 kubectl apply --dry-run=server -f web-config.yaml
@@ -812,51 +826,55 @@ kubectl apply --dry-run=server -f web-deployment.yaml
 kubectl apply -f web-deployment.yaml
 kubectl -n volume-demo rollout status deployment/stateful-web
 kubectl -n volume-demo get pod,pvc,svc -o wide
+kubectl -n volume-demo describe pod stateful-web
 ```
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/web-pvc.png" max-width="50%" zoomable=true %}
+
 
 {% enddetails %}
 
 {% details info Step 3: Generate requests and inspect the storage paths %}
 
-Use port forwarding:
+Open another terminal, ssh to `node1`, and run the following port forwarding.
 
 ```bash
 kubectl -n volume-demo port-forward service/stateful-web 8080:80
 ```
 
-From another terminal:
+From the original terminal:
 
 ```bash
 for i in $(seq 1 20); do curl -s http://127.0.0.1:8080/demo; echo; done
 ```
 
-Identify the Pod:
+Store the identity of the Pod into an environment variable called `POD` for later use:
 
 ```bash
-POD=$(kubectl -n volume-demo get pod -l app=stateful-web \
-  -o jsonpath='{.items[0].metadata.name}')
+POD=$(kubectl -n volume-demo get pod -l app=stateful-web -o jsonpath='{.items[0].metadata.name}')
 ```
 
 Inspect the NGINX logs stored in the `emptyDir`:
 
 ```bash
-kubectl -n volume-demo exec "$POD" -c nginx -- \
-  ls -lh /var/log/nginx
-kubectl -n volume-demo exec "$POD" -c nginx -- \
-  tail /var/log/nginx/access.log
+kubectl -n volume-demo exec "$POD" -c nginx -- ls -lh /var/log/nginx
+kubectl -n volume-demo exec "$POD" -c nginx -- tail /var/log/nginx/access.log
 ```
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/request-1.png" max-width="50%" zoomable=true %}
+
 
 Inspect the persistent database:
 
 ```bash
-kubectl -n volume-demo exec "$POD" -c app -- \
-  ls -lh /data
-kubectl -n volume-demo exec "$POD" -c app -- python -c \
-  'import sqlite3; db=sqlite3.connect("/data/requests.db"); print(db.execute("select count(*) from requests").fetchone())'
+kubectl -n volume-demo exec "$POD" -c app -- ls -lh /data
+kubectl -n volume-demo exec "$POD" -c app -- python -c 'import sqlite3; db=sqlite3.connect("/data/requests.db"); print(db.execute("select count(*) from requests").fetchone())'
 ```
 
-The log inspection shows data on ephemeral, Pod-scoped storage. The database
-inspection shows persistent data on the NFS-backed PVC.
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/request-2.png" max-width="50%" zoomable=true %}
+
+- The log inspection shows data on ephemeral, Pod-scoped storage. 
+- The database inspection shows persistent data on the NFS-backed PVC.
 
 {% enddetails %}
 
@@ -880,11 +898,12 @@ The count continues because the replacement Pod mounts the same PVC. Now
 inspect the new Pod's logs:
 
 ```bash
-POD=$(kubectl -n volume-demo get pod -l app=stateful-web \
-  -o jsonpath='{.items[0].metadata.name}')
-kubectl -n volume-demo exec "$POD" -c nginx -- \
-  ls -lh /var/log/nginx
+POD=$(kubectl -n volume-demo get pod -l app=stateful-web  -o jsonpath='{.items[0].metadata.name}')
+kubectl -n volume-demo exec "$POD" -c nginx -- ls -lh /var/log/nginx
 ```
+
+{% include figure.liquid path="assets/img/courses/csc478/persistent-volumes/delete-1.png" max-width="50%" zoomable=true %}
+
 
 The old logs are gone because a replacement Pod receives a new `emptyDir`.
 
