@@ -11,10 +11,9 @@ toc:
   - name: "Kubernetes Volumes: The Basics"
   - name: Persistent Volumes and Claims
   - name: Volume Selection and Lifecycle
-  - name: Hands-on Stateful Web Stack
   - name: NFS and Storage Affinity
+  - name: Hands-on Stateful Web Stack
   - name: Operations and Troubleshooting
-  - name: Review Questions
 ---
 
 ## Motivation & Problem Setup
