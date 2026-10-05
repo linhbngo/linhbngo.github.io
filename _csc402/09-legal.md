@@ -22,34 +22,8 @@ toc:
   - name: Software licensing
   - name: Patents and trade secrets
   - name: Professionalism & Ethics
-  - name: Examples
 ---
 
-# Licensing and Legal Considerations
-
----
-
-## Logistics
-
-- Last day of the course: Thursday December 4th 
-- Final presentation periods:
-    - November 20 (2 presentation spots) - Do you want to do November 25?
-    - December 4th (2 presentation spots)
-    - December 2nd (2 presentation spots)
-    - Attendance: Mandatory for ALL member, whether your team presents or not. 
-- Capstone Showcase
-    - Friday December 5th, 9:30AM - 12:00PM
-    - Sikes Theater
-
----
-
-## Marketing
-
-Write a short paragraph describes the project that your team is working on. Feel free to name-drop/mention the client company, 
-or explicitly mention `legacy project` aspects of your project. I will be using these paragraphs to send an invite to the Dean, 
-other students in the depatrment, the Career Development Center (and asks them to invite vendors). 
-
-___
 
 ## Legal context
 
@@ -60,6 +34,17 @@ ___
 I am not a lawyer, (`IANAL`); this is not legal advice
 
 {% enddetails %}
+
+{% details warning Scope and currency %}
+
+This lecture is primarily a US-oriented overview, checked against official
+sources in October 2026. Privacy, employment, contract, and intellectual
+property rules vary by jurisdiction and change over time. The linked primary
+or agency sources are starting points, not substitutes for advice about a
+specific situation.
+
+{% enddetails %}
+
 - Law is not code or pure logic
     - Definitions are ambiguous
     - Implications may be inconsistent
@@ -84,20 +69,24 @@ counsel – take advantage of them
 
 {% details danger Details %}
 
-- Do not use AI tools to interpret or apply the law.
+- Do not rely on an AI tool as legal authority or as a substitute for qualified
+  counsel. It can omit controlling law, invent citations, or apply the wrong
+  jurisdiction. Verify primary sources and obtain legal review for decisions
+  with real consequences.
 - Law is not code: it cannot be parsed, reasoned about, or `debugged` by logic alone. The legal system is complex, 
 inconsistent, and deeply human.
 
 {% enddetails %}
 {% enddetails %}
+
 {% details Jurisdiction %}
 
-- The United States follows Common Law, composed of:
-    - Statues (bills) passed by Congress
-    and states
-    - Regulations issued by government
-    - Precedents (judgements) made by
-    courts
+- United States law comes from several sources:
+    - federal and state constitutions;
+    - statutes enacted by Congress and state legislatures;
+    - regulations issued by agencies under delegated authority;
+    - treaties and local law; and
+    - judicial decisions, including precedent in common-law adjudication.
 - Federal law and state laws, each with their own multi-layered
 court systems
 - International law is complex and
@@ -111,20 +100,39 @@ dynamic, especially regarding Internet services
     jurisdiction over the service.
 
 {% enddetails %}
+
 {% details Computing-specific laws %}
 
-- Computer Fraud and Abuse Act (1986)
-    - Explicitly prohibits unauthorized access of computing systems
-- Digital Millenium Copyright Act (DMCA, 1998)
-    - Prohibits circumvention of access control to copyrighted works
-- Limits liability of service providers for actions by their users
-- General Data Protection Regulation (GDPR, 2016), 
-- California Consumer Privacy Act
-(2020)
-    - Restricts use of personal data – requires consent or legitimate interest
-    - Browser cookies qualify as personal data
+- [Computer Fraud and Abuse Act](https://www.justice.gov/jm/jm-9-48000-computer-fraud)
+  (CFAA, 1986)
+    - Criminalizes specified conduct involving access to protected computers
+      "without authorization" or by "exceeding authorized access."
+    - After *Van Buren v. United States* (2021), merely misusing information one
+      was entitled to access is not automatically an
+      "exceeds authorized access" offense. Authorization remains a
+      fact- and jurisdiction-sensitive question.
+- [Digital Millennium Copyright Act](https://copyright.gov/dmca/) (DMCA, 1998)
+    - Section 1201 generally prohibits circumvention of technological access
+      controls and trafficking in circumvention tools, subject to permanent
+      and periodically renewed exemptions.
+    - Separately, Section 512 limits copyright-infringement liability for
+      qualifying online service providers that satisfy applicable safe-harbor
+      conditions; it is not blanket immunity for users' actions.
+- [General Data Protection Regulation](https://commission.europa.eu/law/law-topic/data-protection/legal-framework-eu-data-protection_en)
+  (GDPR): entered into force in 2016 and has applied since May 25, 2018.
+- [California Consumer Privacy Act](https://oag.ca.gov/privacy/ccpa) (CCPA):
+  effective January 1, 2020, and substantially amended by the California
+  Privacy Rights Act (CPRA), whose principal provisions took effect January 1,
+  2023.
+    - GDPR processing requires an applicable lawful basis. Consent and
+      legitimate interests are only two of six Article 6 bases.
+    - Online identifiers such as cookie IDs can be personal data. Whether a
+      cookie requires consent also depends on the EU ePrivacy rules; strictly
+      necessary cookies are treated differently from advertising or tracking
+      cookies.
 
 {% enddetails %}
+
 {% details Other laws affecting software %}
 
 - Contracts
@@ -135,7 +143,7 @@ dynamic, especially regarding Internet services
 - Privacy
 
 {% enddetails %}
----
+
 
 ## Software licensing
 
@@ -144,44 +152,67 @@ dynamic, especially regarding Internet services
 - Broad international consensus thanks to Berne Convention
 - Applies to "expression of ideas"
     - Originally literary and artistic works
-- Established automatically when work is created
-    - Initially held by creator except for `work for hire`
+- Established automatically when an original work is fixed in a tangible medium; registration is not required for copyright to exist in the US, although registration provides important enforcement benefits
+    - Initially held by the author except for a qualifying `work made for hire`
+      or a valid transfer
 - Can be transferred
 - Rights can be licensed
 - Holder has exclusive right to:
     - Reproduce
-    - Use as basis for derived works
+    - Prepare derivative works
     - Distribute
-    - Exhibit in public
+    - Publicly perform or display categories of protected works
     - License rights to others
 - Exceptions
-    - First sale: objects containing
-    copyrighted work can be resold
-    - Fair use: limited use is allowed
-    without permission for special
-    purposes (review, quotation)
+    - First sale: the owner of a lawfully made copy can generally dispose of
+      that particular copy; this does not transfer copyright and has
+      software-specific limitations
+    - Fair use: a context-specific, four-factor defense, not automatic
+      permission. Criticism, comment, news reporting, teaching, scholarship,
+      and research are illustrative purposes, not guaranteed safe categories.
+
+See the
+[U.S. Copyright Office overview](https://copyright.gov/what-is-copyright/).
 
 {% enddetails %}
+
 {% details Joint authorship %}
 
-- Each coauthor can independently exercise their copyright rights
-(including licensing to third parties) without permission of other
-coauthors
-- But by default, coauthors must share all profits equally with one
-another
-- CSC 402 project contributions probably qualify as joint authorship
-    - But is also protected by FERPA
+- A joint work requires two or more authors to intend that their
+  copyrightable contributions be merged into inseparable or interdependent
+  parts of one work. Working in the same repository does not by itself settle
+  joint authorship.
+- A joint owner can generally grant a nonexclusive license without the other
+  owners' permission, but must account to co-owners for their share of
+  licensing revenue. Exclusive licenses ordinarily require all owners.
+- Ownership shares are generally equal absent an agreement, even when the
+  contributions differ, but project agreements and jurisdiction matter.
+- CSC 402 projects may be joint works, collective works, or separately owned
+  contributions depending on intent and the facts. Use a written project
+  agreement rather than assuming.
+- FERPA is separate from copyright. It restricts an educational institution's
+  disclosure of education records; it does not determine copyright ownership
+  or generally prevent a student from publishing their own work. Identifiable
+  work maintained by the institution may still be an education record.
 
 {% enddetails %}
 {% details Work for hire %}
 
-- When working for an employer, you often assign all patent and
-copyright rights to them
-    - Will need employer's permission before contributing to open-source projects
+- In US copyright law, work created by an employee within the scope of
+  employment is generally a **work made for hire**, making the employer the
+  initial author and owner. Employment agreements also commonly assign patent
+  rights and rights in work outside that rule.
+    - You may need the employer's permission before contributing to an
+      open-source project, especially when the contribution relates to your
+      work, uses employer resources, or falls within an invention-assignment
+      agreement. Check the agreement and company policy.
     - Can be negotiated at time of employment
     - Can ask for a copyright disclaimer to protect against future claims
-- If doing freelance work, must have a contract with the client that
-declares ownership of copyright
+- A freelancer ordinarily owns copyright initially. A commissioned work is a
+  work made for hire only if it falls within a statutory category and the
+  parties sign an express written agreement. Otherwise, ownership can be
+  transferred only through a signed writing; a contract should clearly state
+  ownership and license rights.
 - If you do not hold the copyright, you need explicit permission to copy
 or use software, even if you wrote it yourself (retaining a backup for
 personal use is not automatically allowed)
@@ -189,13 +220,12 @@ personal use is not automatically allowed)
 {% enddetails %}
 {% details Contract and copyright law %}
 
-- Most commercial software
-licenses fall under contract law
-    - Software is not purchased for
-    ownership; it is licensed for use
-    - End User License Agreements
-    (EULAs) are an alternative to
-    signed contracts
+- Commercial software transactions often combine copyright and contract law.
+    - Many products license software rather than transferring ownership, but
+      the legal characterization depends on the transaction and jurisdiction.
+    - End User License Agreements (EULAs), including clickwrap agreements, are
+      contracts when enforceable; they are not an alternative to contract law.
+      Enforceability depends on adequate notice and assent.
 - Contracts also govern software
 development work
     - Who will own copyright
@@ -207,9 +237,10 @@ leverage copyright law
 {% enddetails %}
 {% details Open-source software licenses %}
 
-- "Free as in beer" (gratis)
-    - Users do not need to pay money
-    to use the program
+- "Free as in beer" means **gratis**, but zero price is not a requirement of
+  open source. The
+  [Open Source Definition](https://opensource.org/osd) permits selling
+  open-source software and prohibits the license from restricting resale.
 - "Free as in speech" (libre)
     - Users of software should be
     guaranteed freedoms, such as:
@@ -234,22 +265,23 @@ leverage copyright law
 {% enddetails %}
 {% details Copyleft %}
 
-- If copyleft-licensed software is modified and redistributed, then
-the redistributed software must be under the same (or a compatible) license
-    - In particular, source code must be
-    made available
-    - Not a concern for internal use – if
-    software is not released to the
-    public, source code may remain
-    private
-- Epitomized by the GNU General
-Public License (GPL)
-    - The GPL considers linking (both
-    static and dynamic) to constitute a
-    "derived work"
+- Copyleft obligations depend on the specific license, what constitutes the
+  covered work, and whether a triggering event such as conveying/distributing
+  it occurs. Strong copyleft licenses commonly require recipients to receive
+  corresponding source and the applicable license rights.
+    - Ordinary internal use does not trigger the GPL's source-distribution
+      obligations, although transfer to another legal entity can. The AGPL has
+      an additional network-interaction provision.
+- Epitomized by the GNU General Public License (GPL)
+    - The Free Software Foundation takes the position that static or dynamic
+      linking generally creates one combined program. Whether a particular
+      boundary creates a derivative work is fact-specific and not conclusively
+      resolved for every architecture.
 - Other examples:
-    - Mozilla Public License 
-    - Creative Commons Share-Alike
+    - Mozilla Public License (file-level copyleft)
+    - Creative Commons ShareAlike licenses are copyleft-like licenses for
+      creative works, but
+      [Creative Commons recommends against using CC licenses for software](https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software).
 
 {% enddetails %}
 {% details GPL variations %}
@@ -257,18 +289,20 @@ Public License (GPL)
 - Lesser GPL (LGPL)
     - Applications linking to an LGPL
     library do not have to be
-    distributed under the same license
+    distributed under the same license, but distribution still carries
+    LGPL-specific notice, source, and relinking or reverse-engineering
+    obligations
     - Wording is C-centric
 - GPL with classpath exception
-    - Also removes virality, but more
-    language-agnostic
+    - Permits specified independent modules to link to the covered library
+      without subjecting the entire resulting executable to the GPL
     - Intended for runtime support and
     standard libraries
 - Affero GPL (AGPL)
-    - Providing network services linked
-    with AGPL software requires
-    making the server's source code
-    available
+    - If a modified AGPL-covered program supports remote network interaction,
+      Section 13 requires offering those remote users its Corresponding Source.
+      It does not require publishing every component on the server merely
+      because the components run on the same machine.
 
 {% enddetails %}
 {% details Other constraints %}
@@ -277,12 +311,13 @@ Public License (GPL)
     - In original BSD license; not
     scalable
 - Patent rights
-    - Recipients of the software are
-    granted rights to applicable
-    patents as required for running
-    the software
-- Patent rights revoked if you
-claim patent infringement
+    - Some modern licenses expressly grant recipients rights under patent
+      claims controlled by contributors; the scope and conditions vary by
+      license. Do not assume that a copyright license grants every patent right
+      needed to use the software.
+- Some licenses, including Apache-2.0 and GPLv3, contain patent-retaliation or
+  termination provisions triggered by specified patent claims; this is not a
+  universal feature of every open-source license.
 - Trademarks and non-
 endorsement
     - May not be necessary to state
@@ -297,14 +332,16 @@ warranty
 {% details Licensing contributions %}
 
 - "Inbound=outbound"
-    - Contributions to an open-source project are implicitly licensed under that
-    project's LICENSE at the time of commit (explicit on GitHub)
+    - Contributions accepted by an open-source project are commonly licensed
+      under that project's license. GitHub's Terms of Service expressly use
+      this default unless a separate agreement applies.
     - Copyright is held by contributors
 - Contributor License Agreements
     - Assert contributors' right and intent to contribute
     - Potentially assign copyright to project stewardship
     - Potentially grant project steward right to relicense/dual license
-    - Must be signed before any contribution can be accepted
+    - Some projects require a CLA before accepting a contribution; many do
+      not. Follow the project's contribution policy.
 - Developer Certificate of Origin
     - Lightweight agreement acknowledged in commit message ("Signed-Off-By:")
 
@@ -314,9 +351,10 @@ warranty
 - Add a LICENSE file to the root of your repository
 - Add a copyright and license notice header to every file
     - Not always required; see license documentation for recommendation
-- Track licenses of dependencies, contributions with SPDX identifiers
-    - Facilitates assembling a "software bill of materials" (licenses and copyrights of
-    all included components)
+- Track licenses of dependencies and contributions with SPDX identifiers
+    - Facilitates license compliance and assembling a software bill of
+      materials (SBOM). An SBOM is primarily an inventory of components and
+      relationships; it can include license and copyright metadata.
     - When creating a software product, you must have documented rights to use
     everything from which it was derived
 
@@ -332,7 +370,10 @@ during session 1 or 2
 - Internal projects must agree on how contributions should be licensed
     - Option 1: Agree to publish under inbound=outbound (can share on public GitHub,
     include in portfolio, contribute upstream)
-    - Option 2: Treat as coursework. Cannot publish if students are identifiable
+    - Option 2: Treat as private coursework. The institution should not publish
+      identifiable student work without consent or another applicable FERPA
+      exception; students can consent to publication or publish work they have
+      the rights to publish.
 
 {% enddetails %}
 {% details Resources %}
@@ -342,31 +383,36 @@ during session 1 or 2
 - https://www.gnu.org/licenses/license-list.html (biased, but thorough)
 
 {% enddetails %}
----
 
 ## Patents and trade secrets
 
 {% details Patents %}
 
-- Defines rights of inventors
-    - Applies to ideas (whereas Copyright applies to an expression of ideas)
-- Should be non-obvious, novel, and useful
+- Grants an inventor or assignee a time-limited right over the invention
+  defined by the patent's claims. Patents do not protect abstract ideas as
+  such; eligible subject matter and adequate disclosure are also required.
+- A US utility-patent claim generally must be useful, novel, and non-obvious
 - Patent rights
     - Exclude others from
-    making, using, selling, or
+    making, using, offering to sell, selling, or
     importing the invention
 - Must submit an application to
 be granted a patent
     - Public disclosure in exchange
     for exclusive rights
-    - Patents last 20 years from filing
-    date
+    - US utility and plant patents generally can last up to 20 years from the
+      earliest qualifying nonprovisional filing date, subject to maintenance
+      fees and possible adjustments or extensions. US design patents filed on
+      or after May 13, 2015 generally last 15 years from grant.
 - Once granted, patent validity can
 be challenged in court
     - Extremely expensive; high burden
     of proof
     - Most patent disagreements are
     settled out of court
+
+See the USPTO's
+[Patent essentials](https://www.uspto.gov/patents/basics/essentials).
 
 {% enddetails %}
 {% details Software patents %}
@@ -388,9 +434,9 @@ be challenged in court
         - Can harass smaller competitors
         - Used as defense against other large
         companies
-    - Patent trolls – business model is to
-    collect unenforced patents and
-    threaten litigation
+    - "Patent troll" is a pejorative term commonly used for a
+      non-practicing entity whose business model emphasizes acquiring patents
+      and asserting them for settlements or licensing revenue
         - Often harass smaller companies and
         end users
         - Large companies may pursue
@@ -405,41 +451,41 @@ litigation, consult a lawyer
     - Alternative to Huffman coding in
     JPEG format
     - Reduces file size by up to 25%
-    - Covered by IBM patents until 2010
-    - Very few JPEG libraries support
-    arithmetic coding; not used on
-    Internet
-- H.264 (MPEG-4 AVC)
-    - MPEG LA maintains patent pool
-    for most (but not all) required
-    patents – over 6000
-    - Patents cover not just encoding
-    and decoding, but also
-    transmission
-    - Cisco provides a free binary codec
-    for which they pay licensing fees
-        - But rebuilding it from source would
-        require you to pay your own fees
+    - Historically encumbered by patents, including IBM patents that expired
+      by approximately 2010
+    - Support remains much less common than Huffman-coded baseline JPEG, so it
+      is rarely used for interoperable web images
+- H.264/AVC (MPEG-4 Part 10)
+    - [Via Licensing Alliance](https://www.via-la.com/licensing-programs/avc-h-264/)
+      now administers the AVC/H.264 pool formerly administered under the
+      MPEG LA name. 
+    - Patents cover not just encoding and decoding, but also transmission
+    - Cisco's OpenH264 arrangement covers pool royalties for Cisco-distributed
+      binaries only under the
+      [binary license's conditions](https://www.openh264.org/BINARY_LICENSE.txt).
+      Building or distributing the BSD-licensed source yourself does not
+      receive Cisco's patent coverage, and pool coverage does not guarantee
+      rights under every possible third-party patent.
 
 {% enddetails %}
 {% details Trade secrets %}
 
-- Companies can protect confidential
-business information
-- Owner must make reasonable
-effort to maintain secrecy
-- Employees may not disclose trade
-secrets, competitors may not use
-secrets obtained via extraordinary
-means
-    - Leaks do not invalidate trade secrets
-    - Protections never expire
+- Companies can protect confidential business information
+- Owner must make reasonable effort to maintain secrecy
+- Employees may not disclose trade secrets, competitors may not use secrets obtained via improper means
+    - A limited disclosure under a duty of confidentiality may preserve
+      secrecy, but public disclosure can destroy trade-secret status.
+    - Protection can continue indefinitely only while all required elements,
+      including secrecy and reasonable protective efforts, continue to exist.
 - Non-disclosure agreements (NDAs)
     - Legal agreement to not disclose trade
     secrets
     - Common precondition for
     employment or even interviewing
     - But still read carefully
+
+See the
+[USPTO trade-secret overview](https://www.uspto.gov/ip-policy/trade-secret-policy).
 
 {% enddetails %}
 {% details Export law %}
@@ -451,9 +497,14 @@ means
 - Intent: prevent export of goods and information that could assist
 adversaries in harming national interests
     - Applies to many aerospace technologies
-    - Formerly applied to cryptography
-        - Unintended consequence: compatibility with "export grade" cryptography makes services
-        very insecure
+    - Cryptography remains subject to US export controls. Many products can be
+      exported under License Exception ENC after applicable classification,
+      notification, and reporting, while destination, end-user, and end-use
+      restrictions still apply. See the
+      [Bureau of Industry and Security encryption guidance](https://media.bis.gov/learn-support/encryption-controls).
+    - Historical "export-grade" cryptography weakened deployed protocols and
+      later enabled attacks; today's rules are less restrictive but have not
+      disappeared.
 - Penalties are harsh and apply to employees as well as companies
 
 {% enddetails %}
@@ -473,16 +524,28 @@ consider private
 {% details Common privacy regulations %}
 
 - FERPA
-    - Protects educational records of students
+    - Gives parents and eligible students rights concerning education records
+      maintained by covered educational institutions and generally limits
+      institutional disclosure without consent, subject to exceptions
     - Grades should be private to individuals
-    - Enrollment, work should be private to classroom
-- HIPPA
-    - Protects medical information
-    - Often need special tiers of third-party services (e.g. AWS, Zoom) to be
-    compliant
+    - Enrollment status may be designated as directory information after
+      required notice and an opportunity to opt out; identifiable student work
+      may be an education record. 
+- HIPAA
+    - Applies to covered health plans, health care clearinghouses, certain
+      health care providers, and their business associates—not to every app or
+      company that handles health-related data.
+    - A vendor that creates, receives, maintains, or transmits protected health
+      information for a covered entity generally needs an appropriate business
+      associate agreement (BAA). Buying a vendor's higher service tier alone
+      does not make the customer's system compliant.
+
+See the official
+[FERPA guidance](https://studentprivacy.ed.gov/ferpa) and
+[HIPAA covered-entity guidance](https://www.hhs.gov/hipaa/for-professionals/covered-entities/index.html).
 
 {% enddetails %}
----
+
 
 ## Professionalism & Ethics
     
@@ -491,14 +554,16 @@ consider private
 - AKA "coordinated vulnerability disclosure"
 - Coordinate timing of announcement with vendor
     - Give them time to patch products, prepare press response
-    - Upper bound on timing to hasten vendor action (typ. 90 days)
+    - Establish a disclosure deadline appropriate to severity and policy.
+      Ninety days is one well-known policy, and actively exploited vulnerabilities may justify much shorter timing.
 - For open-source projects, look for security policy (SECURITY.md)
     - Contact Vulnerability Management Team or owner
     - Do not post details to public mailing lists, chat rooms
-- May be assigned placeholder CVE to coordinate efforts without
-disclosing details
+- A CVE Record may remain `RESERVED` while remediation and disclosure are
+  coordinated; the identifier alone does not disclose technical details
 
 {% enddetails %}
+
 {% details Which of these development efforts would you be comfortable contributing to? %}
 
 - Drug marketing campaign
@@ -510,6 +575,7 @@ disclosing details
 - Bitcoin mining
 
 {% enddetails %}
+
 {% details Ethics %}
 
 - Software can harm society beyond physical injury
@@ -521,6 +587,7 @@ wider impact
     - Amplification: One day's work can affect millions of people, consume millions of hours
 
 {% enddetails %}
+
 {% details Diversity %}
 
 - Wider impact => more diverse user base
@@ -548,7 +615,13 @@ societal (not to mention reputational) harm
     - Look beyond direct “bottom line” impact
 
 {% enddetails %}
-{% details ACM Code of ethics and professional practice %}
+
+{% details Joint ACM/IEEE-CS Software Engineering Code of Ethics %}
+
+The following are the eight short principles from version 5.2 of the
+[Software Engineering Code of Ethics and Professional Practice](https://www.acm.org/code-of-ethics/software-engineering-code),
+jointly approved by ACM and IEEE-CS. This is distinct from the broader ACM
+Code of Ethics and Professional Conduct.
 
 1. PUBLIC – Software engineers shall act consistently with the public interest.
 2. CLIENT AND EMPLOYER – Software engineers shall act in a manner that is in the best interests
@@ -565,68 +638,4 @@ consistent with the public interest.
 8. SELF – Software engineers shall participate in lifelong learning regarding the practice of their
 profession and shall promote an ethical approach to the practice of the profession.
 
-{% enddetails %}
----
-
-## Examples
-
-{% details Causes of poor outcomes %}
-
-- Normalization of risk
-    - Space Shuttle Columbia
-- Over-constrained compute resources
-    - Numerous space systems
-- Over-trust in inherited components
-    - Ariane 5
-- Discounting cost of “inert” or “extra” components
-- Changing circumstances
-- Poor client-dev understanding
-
-{% enddetails %}
-{% details Ask for help %}
-
-- University team given government funds to build high-performance
-gateway
-- Promising young developer hired, assigned task
-- Task too difficult, but he hid his problems for months
-- Project cancelled, nothing delivered
-    - Don’t try to maintain a reputation at expense of project
-    - Asking for help is expected, helps team grow
-    - Leaders must monitor new employees more closely
-
-{% enddetails %}
-{% details Know when to cancel %}
-
-- Senior management (without consulting technical staff) decides to
-replace administrative software with COTS solution
-    - Adopted schedule and budget from vendor’s marketing (hopelessly
-    optimistic)
-- Staff became dispirited; many left, including CIO
-- What should new CIO do?
-    - Analyze situation, provide visibility to leadership
-    - Identify work worth continuing
-    - Cancel remainder of project
-
-{% enddetails %}
-{% details Know when to start over %}
-
-- University working on a joint project with a company to develop new
-system software
-- After two years, junior developer convinced university leader that
-technical approach was wrong
-- University decided to start over, company decided to keep going
-- Both finished around same time, university version was superior
-- The best time to refactor is before the system is first deployed
-
-{% enddetails %}
-{% details Conclusions %}
-
-- Software engineering is bigger than programming"
-    - More stakeholders
-    - Collaborative development
-    - Quality has a cost
-- Successful projects involve tradeoffs, communication
-    - Different projects warrant different approaches
-    - Big projects are possible
-- With planning & teamwork, can accomplish far more than solo
 {% enddetails %}
