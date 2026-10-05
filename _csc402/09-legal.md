@@ -361,12 +361,7 @@ warranty
 {% enddetails %}
 {% details Licensing CSC 402 projects %}
 
-- External projects should have signed a license agreement with their client
-during session 1 or 2
-    - Must at least grant comprehensive usage license (including permission to create and
-    use derived works) to client
-    - May transfer copyright to client
-    - Agreement must be in writing and signed by all contributors
+- External projects relinquish all IPs to the clients
 - Internal projects must agree on how contributions should be licensed
     - Option 1: Agree to publish under inbound=outbound (can share on public GitHub,
     include in portfolio, contribute upstream)
