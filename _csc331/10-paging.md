@@ -7,15 +7,12 @@ title: "Memory virtualization mechanism: paging and tlb"
 toc:
   - name: What is paging?
   - name: Page Table
-  - name: Multi-level page tablescco
+  - name: Multi-level page tables
   - name: Translation Lookaside Buffer
   - name: Demand paging
   - name: Matrix multiplication
 ---
 
-# Memory virtualization mechanism: paging and tlb
-
----
 
 ## What is paging?
 
@@ -32,8 +29,8 @@ toc:
 {% include figure.liquid path="assets/img/courses/csc331/paging/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details After allocation %}
 
+{% details After allocation %}
 
 - For allocation management, the OS keeps a list of free (fixed-size) pages.
     - This is much simpler than trying to maintain a list of variable-size memory regions
@@ -44,8 +41,8 @@ physical memory space.
 {% include figure.liquid path="assets/img/courses/csc331/paging/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details What data structure is needed? %}
 
+{% details What data structure is needed? %}
 
 - Page Table: Mapping from virtual page number to physical page frame
     - VP0 - PF3
@@ -57,8 +54,8 @@ physical memory space.
 {% include figure.liquid path="assets/img/courses/csc331/paging/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details Address translation with paging %}
 
+{% details Address translation with paging %}
 
 - To translate a virtual address, we need:
     - Virtual page number (VPN)
@@ -80,6 +77,7 @@ physical memory space.
 {% include figure.liquid path="assets/img/courses/csc331/paging/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details New questions! %}
 
 
@@ -89,12 +87,10 @@ physical memory space.
 - Does paging slow down the system?
 
 {% enddetails %}
----
 
 ## Page Table
 
 {% details Contents of a page table entry (PTE) for 32-bit x86 %}
-
 
 - `PFN`: 20 bits for physical page frame number (page size 4K)
 - `P`: present bit, whether this page is on memory or on disk (swapped)
@@ -106,10 +102,9 @@ physical memory space.
 
 {% include figure.liquid path="assets/img/courses/csc331/paging/05.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details Size of page table 32-bit x86 %}
 
+{% details Size of page table 32-bit x86 %}
 
 - Typical page size is 4KB (run `getconf PAGESIZE` in your VM to observe this)
 - Size of address space: 4GB
@@ -122,6 +117,7 @@ physical memory space.
 - **This is too big**
 
 {% enddetails %}
+
 {% details How can we reduce the size of the page table? %}
 
 - Bigger pages. 
@@ -129,8 +125,8 @@ physical memory space.
 - Multi-level page tables
 
 {% enddetails %}
-{% details Bigger pages %}
 
+{% details Bigger pages %}
 
 - Let the page size be 16K instead of 4K
     - 4GB address space
@@ -146,8 +142,8 @@ physical memory space.
     - This is internal fragmentation
 
 {% enddetails %}
-{% details Hybrid %}
 
+{% details Hybrid %}
 
 - Separate page tables for stack, heap, and code.
 - For each page table, use base/bound register to keep the physical address 
@@ -159,9 +155,8 @@ of the page table.
     - External fragmentation
 
 {% enddetails %}
----
 
-## Multi-level page tablescco
+## Multi-level page tables
 
 {% details Overview %}
 
@@ -171,6 +166,7 @@ of the page table at all (reduce memory space).
 - A new structure called **page directory** is needed to keep track of pages' validity
 
 {% enddetails %}
+
 {% details Multi-level page tables %}
 
 - Two-level table
@@ -183,8 +179,8 @@ the entry points to (via the PFN) is valid.
 {% include figure.liquid path="assets/img/courses/csc331/paging/06.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details Advantages %}
 
+{% details Advantages %}
 
 - Only allocates page-table space in proportion to the amount of address 
 spaces being used.
@@ -193,8 +189,8 @@ the page, making it easier to manage memory (think pointer to memory space versu
 contiguous memory location).
 
 {% enddetails %}
-{% details Cost %}
 
+{% details Cost %}
 
 - `Space` versus `Time`: To reduce space, increased access translation steps are needed: 
 one for the page directory and one for the PTE itself. 
@@ -208,7 +204,6 @@ page-table look up.
     - Translation Look Aside Buffer (aka TLB, aka address translation cache, aka cache)
 
 {% enddetails %}
----
 
 ## Translation Lookaside Buffer
 
@@ -223,35 +218,34 @@ page-table look up.
 - A successful lookup in TLB is called a TLB hit, otherwise it is a TLB miss
 
 {% enddetails %}
+
 {% details What is in TLB? %}
 
-
-- Lookup entries: VPN -PFN plus some other bits
+- Lookup entries: VPN-PFN plus some other bits
 - A TLB typically has 32, 64, or 128 entries
 
 {% include figure.liquid path="assets/img/courses/csc331/paging/07.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details First issue with TLB %}
 
+{% details First issue with TLB %}
 
 - Context switch invalidates all entries in TLB. Why?
     - Because the VPN stored in a TLB entry is for **current** process, which becomes 
     meaningless when switched to another process.
     - Could lead to wrong translation if not careful.
 - Possible solutions:
-  - Simply flush the the TLB on context switch, i.e., set all valid bits to 0.
-      - Safe, but inefficient.
-      - Think of two Processes A and B that frequently context switch between 
-      each other. 
-  - Add Address Space Identifier (ASID) to TLB entry
-      - It’s basically PID, but shorter (e.g., 8 bits instead of 32 bits)
-      - Avoids wrong translation without having to flush all entries
+    - Simply flush the the TLB on context switch, i.e., set all valid bits to 0.
+        - Safe, but inefficient.
+        - Think of two Processes A and B that frequently context switch between 
+        each other. 
+    - Add Address Space Identifier (ASID) to TLB entry
+        - It’s basically PID, but shorter (e.g., 8 bits instead of 32 bits)
+        - Avoids wrong translation without having to flush all entries
 
 {% enddetails %}
-{% details Second issue with TLB %}
 
+{% details Second issue with TLB %}
 
 - Replacement policy
 - When TLB is full, and we want to add a new entry to it, we will have to 
@@ -259,8 +253,8 @@ evict an existing entry.
 - Which one to evict?
 
 {% enddetails %}
-{% details TLB and locality %}
 
+{% details TLB and locality %}
 
 - Processes only use a handful of pages at a time.
 - A TLB with 64 entries can map 64 * 4K = 192KB of memory, which usually. 
@@ -269,8 +263,8 @@ covers most of the frequently accessed memory by a process within certain time s
 - Caching is an important idea, use it when possible.
 
 {% enddetails %}
-{% details Hands on: memory access %}
 
+{% details Hands on: memory access %}
 
 - Create two vertical terminal panels on the Code browser.
 - In the left panel, create `memory_access_v1.c` with the following contents:
@@ -305,7 +299,6 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-
 **Questions**
 
 - Which is faster?
@@ -329,9 +322,9 @@ time ./memory_access_v2
 
 {% include figure.liquid path="assets/img/courses/csc331/paging/08.png" max-width="50%" zoomable=true %}
 
+{% enddetails %}
+{% enddetails %}
 
-{% enddetails %}
-{% enddetails %}
 ## Demand paging
 
 {% details Overview %}
@@ -347,8 +340,8 @@ time ./memory_access_v2
 - This mechanism is called demand paging. 
 
 {% enddetails %}
-{% details Demand paging %}
 
+{% details Demand paging %}
 
 - Swap space: a reserved space on hard disk for moving pages back and forth
     - Linux/Unix: a separate disk partition 
@@ -363,10 +356,9 @@ are updated.
 
 {% include figure.liquid path="assets/img/courses/csc331/paging/05.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details Demand paging control flow %}
 
+{% details Demand paging control flow %}
 
 - If the page is in memory, keep going. 
 - If the page is to be evicted, the OS sets `P` to 0, moves the page to swap space, 
@@ -378,8 +370,8 @@ page fault.
 - The trap returns to the process, and the page will be available for the process. 
 
 {% enddetails %}
-{% details Dirty bit %}
 
+{% details Dirty bit %}
 
 - If the page has been not been modified (`dirty` == 0) since it was loaded from swap, 
 nothing will need to be written to disk when the page is evicted again. 
@@ -389,10 +381,9 @@ is evicted.
 - Issue:
     - When we have to evict a page to disk, which one should we choose?
 
-
 {% enddetails %}
-{% details Replacement algorithms %}
 
+{% details Replacement algorithms %}
 
 - Reduce fault/miss rate by selecting the best victim to evict. 
 - Unrealistic assumption: we know the **whole** memory reference trace of the 
@@ -405,10 +396,9 @@ program, including the **future** ones at any point in time.
     - Belady's algorithm serves as the benchmark to see **how close** other algorithms are to 
     being perfect!
 
-
 {% enddetails %}
-{% details We predict the future based on patterns ... %}
 
+{% details We predict the future based on patterns ... %}
 
 - `Locality`: the patterns in computer programs’ behaviors. 
 - `Spatial locality`: If an address A is accessed, then addresses A - 1 and A + 1 
@@ -419,8 +409,8 @@ be accessed again in the future T + Δt.
 when designing computing systems. 
 
 {% enddetails %}
-{% details Example policies %}
 
+{% details Example policies %}
 
 - FIFO: 
     - Good: oldest page is unlikely to be used again.
@@ -434,6 +424,7 @@ when designing computing systems.
     - Not very easy to implement. 
 
 {% enddetails %}
+
 ## Matrix multiplication
 
 {% details Question: Details %}
@@ -443,22 +434,20 @@ when designing computing systems.
 
 {% include figure.liquid path="assets/img/courses/csc331/paging/09.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details Hands on: matrix multiplication %}
 
+{% details Hands on: matrix multiplication %}
 
 - In the left panel, create `matrix_compare.c` with 
 the following contents:
 
 <script src="https://gist.github.com/linhbngo/d2f3a0b28b73a3f48c751410c6c91fd6.js?file=matrix_compare.c"></script>
 
-
 {% details Questions %}
-
 
 - Which matrix multiplication function (`matrix_mul_v1` or `matrix_mul_v2`) represents
 which multiplication approach from the question?
+
 - Compile and run `matrix_compare.c`:
 
 ```bash

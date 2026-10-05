@@ -16,8 +16,6 @@ tikzjax: true
 typograms: true
 
 toc:
-  - name: Logistics
-  - name: Marketing
   - name: Legal context
   - name: Software licensing
   - name: Patents and trade secrets
