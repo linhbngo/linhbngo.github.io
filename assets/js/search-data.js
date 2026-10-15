@@ -149,15 +149,15 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-tbd",
+            },{id: "post-on-the-other-side-of-the-classroom",
         
-          title: "TBD",
+          title: "On the Other Side of the Classroom",
         
-        description: "Knowledge and Skills, Why Not Both",
+        description: "Taking an undergraduate course after 20 years is fun",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2026/ai-revisit/";
+            window.location.href = "/blog/2026/be-a-student/";
           
         },
       },{id: "post-embracing-chaos-lessons-from-four-semesters-of-capstone-projects",
