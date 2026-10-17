@@ -21,7 +21,6 @@ toc:
   - name: 'Minhashing: Jaccard Similarity'
   - name: Locality-sensitive-hashing (LSH)
 ---
-# Locality Sensitive Hashing
 
 ## Overview
 
@@ -41,6 +40,7 @@ toc:
         - Application: Cluster articles by `same story`: topic modeling, 
         trend identification.
 {% enddetails %}
+
 {% details Problem statement %}
 - Given: High dimensional data points $x_1, x_2, ...$
     - For example: Image is a long vector of pixel colors
@@ -60,6 +60,7 @@ some distance threshold $d(x_i,x_j) \leq s$
 - Naïve solution would take $O(N^2)$ where N is the number of data points
 - This can be done in $O(N)$!!!
 {% enddetails %}
+
 {% details Motivation from frequent itemsets %}
 - A-Priori:
     - First pass: Find frequent singletons. For a pair to be a frequent pair candidate, 
@@ -79,8 +80,8 @@ some distance threshold $d(x_i,x_j) \leq s$
     - Benefits: Instead of $O(N^2)$ comparisons, we need $O(N)$ comparisons to 
     find similar documents
 
---- 
 {% enddetails %}
+
 ## Finding Similar Items
 
 {% details Distance measures %}
@@ -99,6 +100,7 @@ intersection divided by the size of their union.
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/06-locality/02.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 {% enddetails %}
+
 {% details Three essential techniques for similar documents %}
 - Shingling : convert documents, emails, etc., to sets.
 - Minhashing : convert large sets to short signatures, while preserving 
@@ -108,10 +110,9 @@ similar.
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/06-locality/01.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
----
 {% enddetails %}
-## Shingling
 
+## Shingling
 
 {% details Shingles %}
 - Documents as high-dimensional data
@@ -134,6 +135,7 @@ k-shingles
     - Idea: Two documents could (rarely) appear to have shingles in common, 
     when in fact only the hash-values were shared
 - Example: 
+
     - k=2; document D1= abcab
     - Set of 2-shingles: S(D1) = {ab, bc, ca}
     - Select a random hash function $h$ such that 
@@ -150,6 +152,7 @@ k-shingles
 
     - Therefore, the hash of the shingles: h(D1) = {1, 5, 7}
 {% enddetails %}
+
 {% details Similarity metrics for shingles %}
 - Document $D_i$ is a set of its k-shingles $C_i=S(D_i)$
 - If we collect all unique k-shingles from all documents, each document can be represent as a 0/1 vector in the space of the k-shingles
@@ -188,8 +191,10 @@ progress    & 0  & 0  & 1 \\
 $$
 
 {% enddetails %}
+
 - A natural similarity measure is the `Jaccard similarity`
 {% enddetails %}
+
 {% details Motivation for Minhash/LSH %}
 - Documents that are intuitively similar will have many shingles in common.
     - k = 5 is ok for short documents
@@ -203,6 +208,7 @@ similarities for every pair of docs
 
 ---
 {% enddetails %}
+
 ## Minhashing: Jaccard Similarity
 
 {% details Encoding sets as bit vectors %}
@@ -227,7 +233,9 @@ the value of `1`.
 - This gives you another way to calculate similarity: column similarity = Jaccard similarity. 
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/06-locality/03.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
+
 {% enddetails %}
+
 {% details Finding similar columns %}
 - Naïve approach:
     - Signatures of columns: small summaries of columns
@@ -377,8 +385,10 @@ $$
         - Resulting signature is 2
 - Resulting signature set for this permutation is {1,2,1,2}
 
-    {% enddetails %}
-    - The resulting signature matrix is:
+
+{% enddetails %}
+
+- The resulting signature matrix is:
 
     $$
     \left[
@@ -392,6 +402,7 @@ $$
     $$
         
 {% enddetails %}
+
 {% details Minhashing: surprising property %}
 - The probability (over **all** permutations of the rows) that $h(C_1) = h(C_2)$ is the same 
 as $Sim(C_1, C_2)$.
@@ -452,8 +463,8 @@ as $Sim(C_1, C_2)$.
         - Maintain a variable M(i,c) which will maintain the smallest value
         value of $h_i(r)$ for which column *c* has 1 in row *r*.
 
----
 {% enddetails %}
+
 ## Locality-sensitive-hashing (LSH)
 
 {% details Overview %}
@@ -466,6 +477,7 @@ elements  where similarity must be evaluated.
     `candidate pair` if and only if their signatures agree in at least fraction `t`
     of the rows. 
 {% enddetails %}
+
 {% details LSH %}
 - Big idea: hash columns of signature matrix M several times and arrange that
 only similar columns are likely to hash to the same bucket. 
@@ -481,6 +493,7 @@ band.
 - Fine tune `b` and `r`. 
 - We will not go into the math here ...
 {% enddetails %}
+
 {% details Hands on LSH %}
 - Download the set of inaugural speeches from https://www.cs.wcupa.edu/lngo/data/inaugural_speeches.zip. 
 {% enddetails %}

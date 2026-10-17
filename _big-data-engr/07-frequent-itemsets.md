@@ -16,13 +16,12 @@ tikzjax: true
 typograms: true
 toc:
   - name: Association rule discovery
-  - name: Definition of a frequent itemsets.
+  - name: Definition of a frequent itemsets
   - name: Finding frequent itemsets
-  - name: A-Priori algorithm.
-  - name: PCY (Park-Chen-Yu) Algorithm
-  - name: 'SON: Savasere-Omiecinski-Navathe'
+  - name: A-Priori 
+  - name: PCY
+  - name: SON
 ---
-# Frequent Itemsets
 
 
 ## Association rule discovery
@@ -37,6 +36,7 @@ among items
 - Example:
     - If someone buys diaper and milk, then he/she is likely to buy beer
 {% enddetails %}
+
 {% details The market-basket model %}
 
 - Describe a common form of many-to-many relationship between two kinds of objects. 
@@ -49,6 +49,7 @@ among items
     - People who bought {x,y,z} tend to buy {v,w}
     - Amazon's recommendation
 {% enddetails %}
+
 {% details Example applications %}
 
 - Baskets = sets of products someone bought in one trip to the store; Items = products
@@ -64,8 +65,8 @@ among items
     side-effects
     - But requires extension: Absence of an item needs to be observed as well as presence
 
----
 {% enddetails %}
+
 ## Definition of a frequent itemsets.
 
 {% details Definition %}
@@ -98,6 +99,7 @@ among items
     - Pair {b,c} appears 4 times in baskets: B1, B6, B7, B8
     - Pair {c,j} appears 3 times in baskets: B4, B6, B7
 {% enddetails %}
+
 {% details Association rules %}
 
 - `If-then` rules about the contents of baskets. 
@@ -120,6 +122,7 @@ among items
         - Out of these four baskets, two baskets also contain $c$: B1, B6
         - The confidence of this association rule is: $C = \frac{2}{4} = 0.5$
 {% enddetails %}
+
 {% details Interesting association rules %}
 
 - Not all high-confidence rules are interesting
@@ -140,10 +143,11 @@ fraction of baskets that contain j
         - B7: c,b,j
         - B8: b,c
     - An association rule: ${m,b} \rightarrow c$ has confidence $C = \frac{2}{4} = 0.5$
-    - Since item $c$ apepars in 5 out of the total 8 baskets, fraction of baskets that contains $c$ is $\frac{5}/{8} = 0.625$.
-    - Association rule interest is: $|0.5-5/8| = 0.125$
+    - Since item $c$ apepars in 5 out of the total 8 baskets, fraction of baskets that contains $c$ is $\frac{5}{8} = 0.625$.
+    - Association rule interest is: $\|0.5-\frac{5}{8}\| = 0.125$
         - This association rule is not very interesting!
 {% enddetails %}
+
 {% details Finding association rules %}
 
 - Problem: Find all association rules with support greater than **s** and confidence greater than **c**.
@@ -164,6 +168,7 @@ fraction of baskets that contain j
             - Can generate **bigger** rules from smaller ones! 
     - Output the rules above the confidence threshold
 {% enddetails %}
+
 {% details Example %}
 - Given the following baskets:
     - B1: m,c,b
@@ -181,75 +186,83 @@ fraction of baskets that contain j
     - {b,m}, {b,c}, {c,m}, {c,j}, {m,c,b}
 - Based on these itemsets, we can generate the following rules:
     
-    {% details $b \rightarrow m$ %}
+{% details $b \rightarrow m$ %}
 
 - Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
 - Out of these baskets, 4 of them contains $m$: B1, B3, B5, B6
 - Confidence $C = \frac{4}{6} = 0.6667$
 - This is below confidence threshold
 
-    {% enddetails %}
-    {% details $m \rightarrow b$ %}
+{% enddetails %}
+
+{% details $m \rightarrow b$ %}
 
 - Item $m$ appears in 5 baskets: B1, B2, B3, B5, B6
 - Out of these baskets, 4 of them contains $b$: B1, B3, B5, B6
 - Confidence $C = \frac{4}{5} = 0.8$
 - Basket fraction of $b$ is $\frac{6}{8} = 0.75$
-- Interest = $$|0.8-0.75| = 0.05$ (not very interesting!)
+- Interest = $\|0.8-0.75\| = 0.05$ (not very interesting!)
 
-    {% enddetails %}
-    {% details $b \rightarrow c$ %}
+{% enddetails %}
+
+{% details $b \rightarrow c$ %}
 
 - Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
 - Out of these baskets, 4 of them contains $c$: B1, B6, B7, B8
 - Confidence $C = \frac{4}{6} = 0.6667$
 - Basket fraction of $c$ is $\frac{4}{8} = 0.5$
-- Interest = $$|0.6667-0.5| = 0.1667$ (not very interesting!)
+- Interest = $\|0.6667-0.5\| = 0.1667$ (not very interesting!)
 
-    {% enddetails %}
-    {% details $c \rightarrow b$ %}
+{% enddetails %}
+
+{% details $c \rightarrow b$ %}
 
 - Item $c$ appears in 5 baskets: B1, B4, B6, B7, B8
 - Out of these baskets, 4 of them contains $b$: B1, B6, B7, B8
 - Confidence $C = \frac{4}{5} = 0.8$
 - Basket fraction of $b$ is $\frac{6}{8} = 0.75$
-- Interest = $$|0.8-0.75| = 0.15$ (not very interesting!)
+- Interest = $\|0.8-0.75\| = 0.15$ (not very interesting!)
 
-    {% enddetails %}
-    {% details $b \rightarrow c,m$ %}
+{% enddetails %}
+
+{% details $b \rightarrow c,m$ %}
 
 - Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
 - Out of these baskets, 2 of them contains both $c$ and $m$: B1, B6
 - Confidence $C = \frac{2}{6} = 0.3333$
 - Basket fraction of the pair $m$ and $c$ is $\frac{2}{8} = 0.25$
-- Interest = $$|0.3333-0.25| = 0.08$ (not very interesting!)x
+- Interest = $\|0.3333-0.25\| = 0.08$ (not very interesting!)x
 
-    {% enddetails %}
-    {% details $b,c \rightarrow m$ %}
+{% enddetails %}
+
+{% details $b,c \rightarrow m$ %}
 
 - Pair $b$ and $c$ appears in 4 baskets: B1, B6, B7, B8
 - Out of these baskets, 2 of them contains $m$: B1, B6
 - Confidence $C = \frac{2}{4} = 0.5$
 - Basket fraction of $m$ is $\frac{5}{8} = 0.625$
-- Interest = $$|0.5-0.625| = 0.125$ (not very interesting!)
+- Interest = $\|0.5-0.625\| = 0.125$ (not very interesting!)
 
-    {% enddetails %}
-    {% details $b,m \rightarrow c$ %}
+{% enddetails %}
+
+{% details $b,m \rightarrow c$ %}
 
 - Item $b$ and $m$ appears in 4 baskets: B1, B3, B5, B6
 - Out of these baskets, 2 of them contains $m$: B1, B6
 - Confidence $C = \frac{2}{4} = 0.5$
 - Basket fraction of $c$ is $\frac{4}{8} = 0.5$
-- Interest = $$|0.5-0.5| = 0$ (not very interesting!)
+- Interest = $\|0.5-0.5\| = 0$ (not very interesting!)
 
-    {% enddetails %}
+{% enddetails %}
+
 - Exercise: Identify whether the remaining association rules of {c,m}, {c,j}, and {m,c,b} meet the confidence threshold. If they do, identify if they are interesting!
 
----
 {% enddetails %}
+
 ## Finding frequent itemsets
 
 {% details Computation model %}
+
 - Back to finding frequent itemsets
 - Typically, data is kept in flat files rather than in a database system:
     - Stored on disk
@@ -258,6 +271,7 @@ fraction of baskets that contain j
         - Expand baskets into pairs, triples, etc. as you read baskets
         - Use k nested loops to generate all sets of size k
 {% enddetails %}
+
 {% details Computational cost %}
 - The true cost of mining disk-resident data is usually the number of disk I/Os
 - In practice, association-rule algorithms read the data in passes: all baskets read in each pass.
@@ -312,8 +326,9 @@ pairs of items ${i_1, i_2}$.
 - Beats Approach 1 if less than 1/3 of possible pairs actually occur
 
 {% enddetails %}
----
+
 {% enddetails %}
+
 ## A-Priori algorithm.
 
 {% details Overview %}
@@ -352,8 +367,8 @@ found to be `frequent`.
 - Confirm that the output matches with the example in [Section 2.2](#example-of-frequent-itemsets).
 - Question: How to turn this sequential implementation into the mapreduce programming paradigm for Spark (See [Section 6](#son-savasere-omiecinski-navathe))?
 
----
 {% enddetails %}
+
 ## PCY (Park-Chen-Yu) Algorithm
 
 {% details Observation %}
@@ -409,8 +424,8 @@ pair consists of 2 frequent items)
 
 {% include figure.liquid loading="eager" path="assets/img/courses/big-data-engr/07-frequent-items/pcy.png" class="img-fluid rounded z-depth-1 mx-auto d-block" max-width="50%" zoomable=true %}
 
----
 {% enddetails %}
+
 ## SON: Savasere-Omiecinski-Navathe
 
 {% details Overview %}
