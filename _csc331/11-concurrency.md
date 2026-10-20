@@ -4,23 +4,17 @@ pretty_table: true
 collection: csc331
 title: "Introduction to concurrency using threads"
 toc:
-  - name: "Review: process calls fork()"
-  - name: "Review: process context switch"
-  - name: "Example: web server"
-  - name: "Thread: a new abstraction for running processes"
-  - name: "Thread: state of a single thread"
-  - name: "Example: web server using thread"
-  - name: "API: POSIX threads (pthreads)"
+  - name: "Review"
+  - name: "Thread"
   - name: "Hands on: say hello to my little threads ..."
   - name: The problem with threads
   - name: Challenge
 ---
 
-# Introduction to concurrency using threads
 
----
+## Review 
 
-## Review: process calls fork()
+{% details info process calls fork() %}
 
 - New PCB (process control block) and address space.
 - New address space is a copy of the entire contents of the parent's 
@@ -28,9 +22,10 @@ address space (up to fork).
 - Resources (file pointers) that point to parent’s resources.
 - **In general, time consuming.**
 
----
+{% enddetails %}
 
-## Review: process context switch
+
+{% details info process context switch %}
 
 - Save A's registers to A's kernel stack.
 - Save A's registers to A's PCB.
@@ -39,9 +34,10 @@ address space (up to fork).
 - Restore B's registers from B's kernel stack.
 - **In general, time consuming.**
 
----
+{% enddetails %}
 
-## Example: web server
+
+{% details Example: A web server %}
 
 - A process listens to requests.
 - When a new request comes in, a child process is created to 
@@ -61,9 +57,12 @@ while (1) {
 }
 ```
 
----
+{% enddetails %}
 
-## Thread: a new abstraction for running processes
+
+## Thread 
+
+{% details A new abstraction for running processes %}
 
 - A normal process is a running program with a single point of execution, 
 i.e, a single PC (program counter).
@@ -74,9 +73,9 @@ i.e, a single PC (program counter).
 
 {% include figure.liquid path="assets/img/courses/csc331/10-concurrency/01.png" max-width="50%" zoomable=true %}
 
----
+{% enddetails %}
 
-## Thread: state of a single thread
+{% details State of a single thread %}
 
 - Each thread has its own PC.
 - Each thread has its own private set of registers for computation.
@@ -85,9 +84,10 @@ i.e, a single PC (program counter).
 - Context switching is similar to that of processes, except for:
     - Thread context-switching keep the same address space (i.e., no need to switch out the page table).
 
----
+{% enddetails %}
 
-## Example: web server using thread
+
+{% details Example: Web server using thread %}
 
 ```c
 int global_counter = 0;
@@ -105,9 +105,10 @@ handle_request(int sock) {
 }
 ```
 
----
+{% enddetails %}
 
-## API: POSIX threads (pthreads)
+
+{% details API: POSIX threads (pthreads) %}
 
 - Standardized C language thread programming API.
 - `pthreads` specifies the interface of using threads, but not how threads 
@@ -119,7 +120,7 @@ are implemented in OS.
 - [pthread_create](http://man7.org/linux/man-pages/man3/pthread_create.3.html)
 - [pthread_join](http://man7.org/linux/man-pages/man3/pthread_join.3.html)
 
----
+{% enddetails %}
 
 ## Hands on: say hello to my little threads ...
 
@@ -144,11 +145,10 @@ gcc -o thread_hello thread_hello.c -lpthread
 
 {% include figure.liquid path="assets/img/courses/csc331/10-concurrency/02.png" max-width="50%" zoomable=true %}
 
----
 
 ## The problem with threads
 
-{% details Edward Lee (2006). The Problem with Threads. Computer 39(5). %}
+{% details danger Edward Lee (2006). The Problem with Threads. Computer 39(5). %}
 
 From a fundamental perspective, threads are seriously flawed 
 as a computation model because they are wildly nondeterministic... 
@@ -162,7 +162,6 @@ By this definition, we in fact require that programmers of multithreaded
 systems be insane. Were they sane, they could not understand their programs.
 
 {% enddetails %}
----
 
 ## Challenge
 
