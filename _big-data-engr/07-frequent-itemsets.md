@@ -175,7 +175,7 @@ fraction of baskets that contain j
     - B2: m,p,j
     - B3: m,b
     - B4: c,j
-    - B5: m,p,b
+    - B5: m,p,b,c
     - B6: m,c,b,j
     - B7: c,b,j
     - B8: b,c
@@ -228,7 +228,7 @@ fraction of baskets that contain j
 {% details $b \rightarrow c,m$ %}
 
 - Item $b$ appears in 6 baskets: B1, B3, B5, B6, B7, B8
-- Out of these baskets, 2 of them contains both $c$ and $m$: B1, B6
+- Out of these baskets, 3 of them contains both $c$ and $m$: B1, B5, B6
 - Confidence $C = \frac{2}{6} = 0.3333$
 - Basket fraction of the pair $m$ and $c$ is $\frac{2}{8} = 0.25$
 - Interest = $\|0.3333-0.25\| = 0.08$ (not very interesting!)x
@@ -238,7 +238,7 @@ fraction of baskets that contain j
 {% details $b,c \rightarrow m$ %}
 
 - Pair $b$ and $c$ appears in 4 baskets: B1, B6, B7, B8
-- Out of these baskets, 2 of them contains $m$: B1, B6
+- Out of these baskets, 2 of them contains $m$: B1, B5, B6
 - Confidence $C = \frac{2}{4} = 0.5$
 - Basket fraction of $m$ is $\frac{5}{8} = 0.625$
 - Interest = $\|0.5-0.625\| = 0.125$ (not very interesting!)
@@ -248,7 +248,7 @@ fraction of baskets that contain j
 {% details $b,m \rightarrow c$ %}
 
 - Item $b$ and $m$ appears in 4 baskets: B1, B3, B5, B6
-- Out of these baskets, 2 of them contains $m$: B1, B6
+- Out of these baskets, 2 of them contains $m$: B1, B5, B6
 - Confidence $C = \frac{2}{4} = 0.5$
 - Basket fraction of $c$ is $\frac{4}{8} = 0.5$
 - Interest = $\|0.5-0.5\| = 0$ (not very interesting!)
