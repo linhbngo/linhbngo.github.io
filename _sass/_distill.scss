@@ -297,3 +297,165 @@ d-appendix {
     padding-top: 0;
   }
 }
+
+/* Two side-by-side code frames. Each frame scrolls on both axes.
+   Height is the whole frame, including the title:
+   <div class="code-pair" style="--code-frame-height: 16rem"> */
+.post.distill.lecture-layout {
+  d-article > .code-pair {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .code-pair {
+    display: flex;
+    gap: 0.75rem;
+    align-items: stretch;
+    margin: 0.5rem 0 1rem;
+    min-width: 0;
+    max-width: 100%;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
+  }
+
+  .code-frame {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    height: var(--code-frame-height, 16rem);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 6px;
+    background: var(--global-code-bg-color);
+    overflow: hidden;
+
+    @media (max-width: 767px) {
+      width: 100%;
+      flex-basis: auto;
+    }
+  }
+
+  .code-frame-title {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0.35rem 0.75rem;
+    border-bottom: 1px solid var(--global-divider-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.4;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .code-frame-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    scrollbar-width: auto;
+    scrollbar-color: var(--global-text-color-light) var(--global-code-bg-color);
+
+    &::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--global-text-color-light);
+      border-radius: 6px;
+      border: 2px solid var(--global-code-bg-color);
+    }
+
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-corner {
+      background: var(--global-code-bg-color);
+    }
+
+    .copy {
+      display: none;
+    }
+
+    .highlighter-rouge,
+    .highlight,
+    .code-display-wrapper,
+    pre,
+    code,
+    table.rouge-table {
+      max-width: none;
+      overflow: visible;
+      margin: 0;
+      background: transparent;
+    }
+
+    .highlighter-rouge,
+    .highlight,
+    .code-display-wrapper,
+    pre:not(.lineno),
+    table.rouge-table,
+    td.rouge-code pre {
+      width: max-content;
+      min-width: 100%;
+    }
+
+    pre.lineno {
+      width: auto;
+      min-width: 0;
+    }
+
+    pre,
+    code {
+      white-space: pre;
+      word-wrap: normal;
+      overflow-wrap: normal;
+    }
+
+    table.rouge-table,
+    td.rouge-gutter,
+    td.rouge-code {
+      border: 0;
+      padding: 0;
+      vertical-align: top;
+    }
+
+    td.rouge-gutter {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      padding-right: 0.75rem;
+      background-color: var(--global-bg-color);
+      background-image: linear-gradient(var(--global-code-bg-color), var(--global-code-bg-color));
+    }
+
+    table:not(.rouge-table) {
+      width: max-content;
+      min-width: 100%;
+      margin: 0;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+
+      th,
+      td {
+        border: 1px solid var(--global-divider-color);
+        padding: 0.15rem 0.45rem;
+        white-space: nowrap;
+        background: transparent;
+        font-size: inherit;
+      }
+
+      th {
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: var(--global-bg-color);
+        background-image: linear-gradient(var(--global-code-bg-color), var(--global-code-bg-color));
+      }
+    }
+  }
+}

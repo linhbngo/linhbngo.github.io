@@ -11,7 +11,6 @@ toc:
   - name: Challenge
 ---
 
-
 ## Review 
 
 {% details info process calls fork() %}
