@@ -457,7 +457,7 @@ threads.
 {% enddetails %}
 
 
-{%d details warning Vanilla (not thread-safe) %}
+{% details warning Vanilla (not thread-safe) %}
 
 <div class="code-pair" style="--code-frame-height: 16rem">
 <div class="code-frame">
