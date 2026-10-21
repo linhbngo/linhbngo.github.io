@@ -4,7 +4,7 @@ module Jekyll
   module Tags
     class DetailsTag < Liquid::Block
 
-      VARIANTS = %w[default note tip warning info success danger challenge solution question comm critical career tech].freeze
+      VARIANTS = %w[default note tip warning info success danger challenge solution question example comm critical career tech].freeze
 
       ALIASES = {
         "challenges" => "challenge"
@@ -21,6 +21,7 @@ module Jekyll
         "challenge" => "CHALLENGE",
         "solution"  => "SOLUTION",
         "question"  => "QUESTION",
+        "example"   => "EXAMPLE",
         "comm"      => "COMMUNICATION",
         "critical"  => "CRITICAL THINKING",
         "career"    => "CAREER",

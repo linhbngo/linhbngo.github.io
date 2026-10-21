@@ -334,7 +334,7 @@ int main(void) {
 }
 ```
 
-{% details success Observations}
+{% details success Observations %}
 
 - For both threads:
     - `&global_value` should be the same;
@@ -584,7 +584,7 @@ main adds partial results
 {% enddetails %}
 
 
-{% details example Example 7: Parallel sum without locks %}
+{% details example Parallel sum without locks %}
 
 Create `parallel_sum.c`:
 
@@ -793,10 +793,12 @@ T3: 3, 7, 11, ...
 
 {% enddetails %}
 
+
 {% details question %}
 - Which version is easier to reason about?
 - Which might have better memory locality?
 {% enddetails %}
 
-{% enddetails %}
 
+
+{% enddetails %}

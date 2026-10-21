@@ -19,9 +19,9 @@ The renderer emits (non-default variants include a visible label so the type is 
 </details>
 ```
 
-Known variant names: `default`, `note`, `tip`, `warning`, `info`, `success`, `danger`, `challenge`, `solution`, `question`, `comm`, `critical`, `career`, `tech`.
+Known variant names: `default`, `note`, `tip`, `warning`, `info`, `success`, `danger`, `challenge`, `solution`, `question`, `example`, `comm`, `critical`, `career`, `tech`.
 
-Palettes below are the **live** values as of 21 August 2026. They meet WCAG 2.2 AA for summary and body text in both themes (`python3 scripts/check_contrast.py`). See `ACCESSIBILITY.md` §7.
+Palettes below are the **live** values as of 21 October 2026. They meet WCAG 2.2 AA for summary and body text in both themes (`python3 scripts/check_contrast.py`). See `ACCESSIBILITY.md` §7. `example` was added on that date; the other variants are unchanged from 21 August 2026.
 
 ---
 
@@ -281,6 +281,35 @@ Label: **Question**. Hue: **yellow**.
 
 ---
 
+### `example`
+
+A worked walkthrough, a sample session, or a concrete illustration. Olive, so it stays off the purple default, the indigo communication block, the green solution block, and the gold question block.
+
+```liquid
+{% details example Hands-on: preparing shell and data %}
+- SSH into a Linux environment.
+- Run the commands below to prepare the environment.
+{% enddetails %}
+```
+
+Label: **Example**. Hue: **olive**.
+
+| Theme | Summary | Background | Border |
+|---|---|---|---|
+| Light | `#3f4c1a` | `#f4f6e8` | `#4d5c22` |
+| Dark | `#d9e3a8` | `#1e2414` | `#b6c46a` |
+
+| Pair | Ratio | WCAG |
+|---|---|---|
+| Light summary | 8.49:1 | AAA |
+| Light body | 19.19:1 | AAA |
+| Light border on white | 7.32:1 | AAA (UI) |
+| Dark summary | 11.77:1 | AAA |
+| Dark body | 13.01:1 | AAA |
+| Dark border on `#1c1c1d` | 9.00:1 | AAA (UI) |
+
+---
+
 ## NACE competency variants
 
 These four map to [NACE Career Readiness](https://www.naceweb.org/career-readiness/competencies/career-readiness-defined) competencies. Palettes stay on distinct axes from the semantic set (indigo, umber, wine, slate — not warning-yellow, info-blue, success-green, danger-red, or tip-cyan).
@@ -397,6 +426,7 @@ Label: **Technology**. Hue: **slate**.
 | `challenge` | Challenge | `#9a3412` | `#ffd8a8` | `#fdba74` | `#3a1a08` | AA / AAA |
 | `solution` | Solution | `#14532d` | `#f0fdf4` | `#86efac` | `#16351f` | AAA |
 | `question` | Question | `#854d0e` | `#fefce8` | `#fde047` | `#292006` | AA / AAA |
+| `example` | Example | `#3f4c1a` | `#f4f6e8` | `#d9e3a8` | `#1e2414` | AAA |
 | `comm` | Communication | `#3730a3` | `#eef2ff` | `#c7d2fe` | `#1c2038` | AAA |
 | `critical` | Critical thinking | `#7c2d12` | `#fff7ed` | `#fed7aa` | `#2a1d14` | AAA |
 | `career` | Career | `#831843` | `#fdf2f8` | `#fbcfe8` | `#2a1522` | AAA |
@@ -408,6 +438,6 @@ Label: **Technology**. Hue: **slate**.
 
 1. The variant word must be the **first token** and must match the list above exactly (lowercase). `{% details Communication ... %}` is not `comm`; it becomes a default block whose caption starts with “Communication”.
 2. The plugin already prefixes a text label. You do not need to repeat “Warning:” in the caption unless you want it in the title twice.
-3. Nested `details` are allowed (workshops often nest `solution` inside `challenge` or `question`). There is no `example` variant; that name currently renders as `default`.
+3. Nested `details` are allowed (workshops often nest `solution` inside `challenge` or `question`). `{% details example ... %}` uses the olive example variant.
 4. Styles apply site-wide via `_details.scss`. Distill articles additionally place the block on the text grid column.
 5. After changing a hex in `_themes.scss`, run `python3 scripts/check_contrast.py`.
