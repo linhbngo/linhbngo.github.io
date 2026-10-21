@@ -910,6 +910,11 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/11-concurrency/";
+            },},{id: "csc331-thread-programming-learning-to-think-concurrently",
+          title: 'Thread Programming: Learning to Think Concurrently',
+          description: "",
+          section: "Csc331",handler: () => {
+              window.location.href = "/csc331/11b-thread-programming/";
             },},{id: "csc331-lock-and-condition-variables",
           title: 'Lock and Condition Variables',
           description: "",
