@@ -132,6 +132,9 @@ kubectl -n rke2-monitoring wait --for=condition=Ready pod/resource-observer --ti
 kubectl -n rke2-monitoring get pod resource-observer -o wide
 ```
 
+{% include figure.liquid path="assets/img/courses/csc478/resource-observation/launch-observer.png" max-width="50%" zoomable=true %}
+
+
 The containers provide three different behaviors:
 
 - `web` provides a low-usage application container;
@@ -227,18 +230,11 @@ Metrics Server collects them, and `kubectl top` displays them:
 kubectl top pod resource-observer -n rke2-monitoring --containers
 ```
 
-Illustrative output:
+{% include figure.liquid path="assets/img/courses/csc478/resource-observation/current-usage.png" max-width="50%" zoomable=true %}
 
-```text
-POD                 NAME            CPU(cores)   MEMORY(bytes)
-resource-observer   web             1m           8Mi
-resource-observer   cpu-worker      198m         1Mi
-resource-observer   memory-holder   1m           49Mi
-```
-
-Your values will differ. The expected pattern is that `cpu-worker` uses the
-most CPU and `memory-holder` uses the most memory. Metrics Server does not
-preserve earlier samples.
+- Actual values from the hands-on will differ. 
+- The expected pattern is that `cpu-worker` uses the most CPU and `memory-holder` uses the most memory. 
+- Metrics Server does not preserve earlier samples.
 
 {% enddetails %}
 
@@ -334,7 +330,8 @@ Server can remain `Pending` until an eligible agent node is added.
 Always inspect the actual scheduling event:
 
 ```bash
-kubectl -n kube-system describe pod -l app.kubernetes.io/name=metrics-server
+kubectl -n kube-system describe pod -l app.kubernetes.io/name=rke2-metrics-server
+kubectl -n kube-system get pods -l app.kubernetes.io/name=rke2-metrics-server -o wide
 ```
 
 {% enddetails %}
@@ -344,7 +341,7 @@ kubectl -n kube-system describe pod -l app.kubernetes.io/name=metrics-server
 {% details Step 1: Record the cluster versions %}
 
 Resource metrics behavior depends on the RKE2, Kubernetes, and Metrics Server
-versions. Record them before troubleshooting.
+versions. 
 
 ```bash
 kubectl version
@@ -359,7 +356,7 @@ kubectl -n kube-system get deployment rke2-metrics-server -o jsonpath='{.spec.te
 ```bash
 kubectl -n kube-system get addons.k3s.cattle.io | grep metrics
 kubectl -n kube-system get deployment rke2-metrics-server
-kubectl -n kube-system get pods -l app.kubernetes.io/name=metrics-server -o wide
+kubectl -n kube-system get pods -l app.kubernetes.io/name=rke2-metrics-server -o wide
 ```
 
 The expected state is:
@@ -369,13 +366,16 @@ The expected state is:
 - the Pod is `Running` and ready;
 - the Pod has been scheduled on a node.
 
-If the label query returns no Pod, inspect the Deployment's selector instead of
-guessing:
+{% details warning %}
+
+If the label query returns no Pod, inspect the Deployment's selector:
 
 ```bash
 kubectl -n kube-system get deployment rke2-metrics-server -o jsonpath='{.spec.selector.matchLabels}{"\n"}'
 kubectl -n kube-system get pods --show-labels | grep metrics-server
 ```
+
+{% enddetails %}
 
 {% enddetails %}
 
@@ -389,24 +389,17 @@ kubectl api-versions | grep metrics.k8s.io
 Inspect the registered APIService:
 
 ```bash
-kubectl describe apiservice $(kubectl get apiservice -o name | grep metrics.k8s.io | head -n 1)
+kubectl describe $(kubectl get apiservice -o name | grep metrics.k8s.io | head -n 1)
 ```
 
 Look for an `Available` condition with status `True`.
+
+{% include figure.liquid path="assets/img/courses/csc478/resource-observation/apiservice.png" max-width="50%" zoomable=true %}
 
 Query API discovery directly:
 
 ```bash
 kubectl get --raw /apis/metrics.k8s.io/
-```
-
-This tests the API path without relying on the formatting performed by
-`kubectl top`.
-
-Confirm that the running hands-on Pod has metrics:
-
-```bash
-kubectl top pod resource-observer -n rke2-monitoring --containers
 ```
 
 {% enddetails %}
@@ -416,18 +409,6 @@ kubectl top pod resource-observer -n rke2-monitoring --containers
 ```bash
 kubectl -n kube-system logs deployment/rke2-metrics-server --tail=100
 ```
-
-Common failure categories include:
-
-- the Metrics API has not finished registering;
-- Metrics Server cannot reach a kubelet;
-- a kubelet certificate cannot be validated;
-- node addressing selects an unreachable address;
-- a firewall blocks the path;
-- the Pod is unschedulable or repeatedly restarting.
-
-Record the exact message. Avoid applying broad insecure TLS workarounds before
-identifying the certificate or addressing problem.
 
 {% enddetails %}
 
@@ -444,12 +425,14 @@ kubectl top pods -A --sort-by=cpu
 kubectl top pods -A --sort-by=memory
 ```
 
-Questions:
+{% details question %}
 
 1. Which node reports the greatest CPU usage?
 2. Which system Pod reports the greatest memory usage?
 3. Does one number alone prove that either resource is overloaded?
 4. What additional capacity or historical evidence would be needed?
+
+{% enddetails %}
 
 {% enddetails %}
 
@@ -465,9 +448,10 @@ kubectl get nodes -o custom-columns='NAME:.metadata.name,CPU:.status.capacity.cp
 `allocatable` is the resource amount available for Pods after Kubernetes
 accounts for resources reserved for the node and system.
 
-Do not calculate production headroom from a single `kubectl top` sample.
-Capacity planning normally uses historical percentiles, workload growth, and
-failure scenarios.
+{% details career %}
+- Do not calculate production headroom from a single `kubectl top` sample.
+- Capacity planning normally uses historical percentiles, workload growth, and failure scenarios.
+{% enddetails %}
 
 {% enddetails %}
 
@@ -544,22 +528,6 @@ Interpret the results:
 
 {% enddetails %}
 
-{% details Step 5: Observe CPU limiting without overclaiming %}
-
-The `cpu-worker` has a `200m` CPU limit and continuously asks for CPU time.
-Its observed usage should remain near the configured boundary, subject to
-measurement windows and node conditions.
-
-```bash
-kubectl top pod resource-observer -n rke2-monitoring --containers
-```
-
-This is evidence that usage is bounded, but `kubectl top` does **not** directly
-report a throttling counter. To prove CPU throttling, use cgroup statistics or
-a monitoring system that collects metrics such as throttled CFS periods.
-
-{% enddetails %}
-
 ## Diagnose Memory Failure
 
 {% details Step 1: Create a Pod that exceeds its memory limit %}
@@ -606,6 +574,9 @@ kubectl -n rke2-monitoring get pod memory-failure -w
 
 Exit the watch with `Ctrl-C` after the container terminates.
 
+
+{% include figure.liquid path="assets/img/courses/csc478/resource-observation/memory-failure-1.png" max-width="50%" zoomable=true %}
+
 {% enddetails %}
 
 {% details Step 2: Build an evidence chain %}
@@ -615,7 +586,6 @@ Inspect status and events:
 ```bash
 kubectl -n rke2-monitoring describe pod memory-failure
 kubectl -n rke2-monitoring get pod memory-failure -o jsonpath='{.status.containerStatuses[0].state.terminated.reason}{"\n"}'
-kubectl -n rke2-monitoring get events --sort-by=.lastTimestamp
 ```
 
 Attempt to inspect current metrics:
@@ -633,30 +603,6 @@ sample. This demonstrates an important limitation:
 The Pod's termination reason and events are the stronger evidence here.
 Historical monitoring would make it possible to correlate memory growth with
 the termination.
-
-{% enddetails %}
-
-{% details Step 3: Explain, do not merely label, the failure %}
-
-A complete diagnosis includes:
-
-1. the configured memory limit;
-2. the attempted allocation;
-3. the observed termination reason;
-4. the restart policy;
-5. why `kubectl top` may not retain a sample;
-6. a proposed correction.
-
-Possible corrections depend on the cause:
-
-- reduce or bound the application's memory behavior;
-- process data in smaller chunks;
-- correct a memory leak;
-- raise the request and limit based on measured evidence;
-- add historical monitoring and an alert before the limit is reached.
-
-Simply increasing the limit can postpone a leak and move the failure to the
-node level.
 
 {% enddetails %}
 
@@ -694,7 +640,7 @@ Locate:
 - CPU usage;
 - memory usage.
 
-`kubectl top` is a convenient client for these API data, not the collector.
+`kubectl top` is a convenient client for these API data, but it is not the collector.
 
 {% enddetails %}
 
@@ -723,20 +669,17 @@ The runtime view and `kubectl top` may differ because:
   inspection;
 - display units and aggregation differ.
 
-Agreement in broad behavior is more meaningful than exact equality between
-two asynchronous samples.
-
 {% enddetails %}
 
 {% details Inspect node processes safely %}
 
-On the node hosting `resource-observer`:
+Find the node hosting `resource-observer`:
 
 ```bash
 kubectl -n rke2-monitoring get pod resource-observer -o wide
 ```
 
-Then, on that node:
+SSH to that node and run:
 
 ```bash
 sudo systemd-cgtop
