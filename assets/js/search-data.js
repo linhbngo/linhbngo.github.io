@@ -1300,6 +1300,11 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/08-pv-lab/";
+            },},{id: "csc478-resource-observation",
+          title: 'Resource Observation',
+          description: "",
+          section: "Csc478",handler: () => {
+              window.location.href = "/csc478/09-resource-observation/";
             },},{id: "csc478-resource-units-and-management-in-kubernetes",
           title: 'Resource Units and Management in Kubernetes',
           description: "",
