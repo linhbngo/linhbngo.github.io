@@ -56,6 +56,12 @@ ninja.data = [
     {%- for post in site.posts -%}
       {
         {%- assign title = post.title | escape | strip -%}
+        {%- capture tags -%}
+          {%- for tag in post.tags -%}
+            {%- unless forloop.first -%}, {% endunless -%}{{ tag | remove: "," }}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign tags = tags | escape | strip -%}
         id: "post-{{ title | slugify }}",
         {% if post.redirect == blank %}
           title: "{{ title | truncatewords: 13 }}",
@@ -64,7 +70,7 @@ ninja.data = [
         {% else %}
           title: "{{ title | truncatewords: 13 }}",
         {% endif %}
-        description: "{{ post.description | strip_html | strip_newlines | escape | strip }}",
+        description: "{{ post.description | strip_html | strip_newlines | escape | strip }}{% if tags != blank %} · Tags: {{ tags }}{% endif %}",
         section: "Posts",
         handler: () => {
           {% if post.redirect == blank %}

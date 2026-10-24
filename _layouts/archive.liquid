@@ -10,7 +10,7 @@ layout: default
       <h1 class="post-title"><i class="fa-solid fa-calendar fa-sm"></i> {{ page.date | date: '%Y' }}</h1>
       <p class="post-description">an archive of {{ page.collection_name }} from this year</p>
     {% elsif page.type == 'tags' %}
-      <h1 class="post-title"><i class="fa-solid fa-hashtag fa-sm"></i> {{ page.title }}</h1>
+      <h1 class="post-title"><i class="fa-solid fa-hashtag fa-sm"></i> {{ page.title | remove: ',' | strip }}</h1>
       <p class="post-description">an archive of {{ page.collection_name }} with this tag</p>
     {% endif %}
   </header>
@@ -18,7 +18,25 @@ layout: default
   <article class="archive">
     <div class="table-responsive">
       <table class="table table-sm table-borderless">
-        {% for document in page.documents %}
+        {% if page.type == 'tags' %}
+          {% assign documents = site.posts %}
+          {% assign archive_slug = page.title | slugify %}
+        {% else %}
+          {% assign documents = page.documents %}
+        {% endif %}
+        {% for document in documents %}
+          {% assign include_document = true %}
+          {% if page.type == 'tags' %}
+            {% assign include_document = false %}
+            {% for tag in document.tags %}
+              {% assign tag_slug = tag | slugify %}
+              {% if tag_slug == archive_slug %}
+                {% assign include_document = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if include_document %}
           <tr>
             <th scope="row">{{ document.date | date: '%b %d, %Y' }}</th>
             <td>
@@ -31,6 +49,7 @@ layout: default
               {% endif %}
             </td>
           </tr>
+          {% endif %}
         {% endfor %}
       </table>
     </div>

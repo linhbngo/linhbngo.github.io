@@ -3,7 +3,7 @@ layout: post
 title: "Keeping up with the Rising Bar through Experiential Learning"
 date: 2025-12-16 12:00:00
 description: Knowledge and Skills, Why Not Both 
-tags: experiential-learning, cs-education
+tags: cs-education, experiential-learning
 categories: non-technical
 hidden: false
 ---
