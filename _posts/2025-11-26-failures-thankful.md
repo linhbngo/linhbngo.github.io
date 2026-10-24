@@ -3,7 +3,7 @@ layout: post
 title: "Thankful for Failures"
 date: 2025-11-26 12:00:00
 description: Catchy title ain't it? 
-tags: philosphy, fails, computer science education
+tags: philosphy, fails, , cs-education
 categories: non-technical
 hidden: false
 ---

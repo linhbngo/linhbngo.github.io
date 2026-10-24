@@ -3,7 +3,7 @@ layout: post
 title: "Pork Rib Congee versus Beef Stew: The Facets of Simplicity"
 date: 2026-04-30 12:00:00
 description: What does simplicity really mean?
-tags: cooking, pedagogy
+tags: cooking, pedagogy, cs-education
 categories: non-technical
 hidden: false
 ---

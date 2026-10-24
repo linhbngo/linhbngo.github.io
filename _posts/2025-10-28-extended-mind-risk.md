@@ -3,8 +3,8 @@ layout: post
 title: "Beware the Zone of Cognitive Overreach"
 date: 2025-10-28 12:00:00
 description: AI can help you learn, and too much AI can hamper your learning. 
-tags: learning, teaching, AI
-categories: non-technical
+tags: learning, teaching, AI, cs-education
+categories: non-technical,
 hidden: false
 ---
 

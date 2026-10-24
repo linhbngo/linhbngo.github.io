@@ -3,7 +3,7 @@ layout: post
 title: The Software Jobs Aren't Gone, They Have Only Moved
 date: 2025-05-02 22:00:00
 description: Where have all the jobs gone?
-tags: jobs
+tags: jobs,  cs-education
 categories: non-technical
 thumbnail: assets/img/blogs/2025-05-02/jobs01.jpg
 ---

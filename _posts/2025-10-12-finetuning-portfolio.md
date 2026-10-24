@@ -3,7 +3,7 @@ layout: post
 title: "Relearning How to Be Seen: Fine-tuning a Portfolio that Grows with Technology"
 date: 2025-10-12 10:00:00
 description: How can one improve their portfolio's visibility in this age
-tags: learning, writing, AI
+tags: learning, writing, AI, cs-education
 categories: non-technical
 hidden: false
 ---

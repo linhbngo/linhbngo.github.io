@@ -3,7 +3,7 @@ layout: post
 title: "My Teaching Philosophy"
 date: 2025-11-20 12:00:00
 description: The formation of my teaching philosophy. 
-tags: philosophy, teaching, equitable
+tags: philosophy, teaching, equitable, cs-education
 categories: non-technical
 hidden: false
 ---

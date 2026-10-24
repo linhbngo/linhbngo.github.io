@@ -3,7 +3,7 @@ layout: post
 title: Being well-versed in AI
 date: 2025-09-22 20:15:00
 description: What does it mean to be well-versed in AI
-tags: AI, learning
+tags: AI, learning, cs-education
 categories: non-technical
 hidden: false
 ---

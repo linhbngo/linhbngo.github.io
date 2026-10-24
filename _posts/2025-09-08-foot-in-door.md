@@ -3,7 +3,7 @@ layout: post
 title: "YARRR: Yet Another Rejection, Resilient Required"
 date: 2025-09-08 22:00:00
 description: Another career break-in strategy
-tags: jobs
+tags: jobs,  cs-education
 categories: non-technical
 ---
 
