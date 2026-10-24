@@ -3,7 +3,7 @@ layout: post
 title: "On the Other Side of the Classroom"
 date: 2026-10-14 12:00:00
 description: Taking an undergraduate course after 20 years is fun
-tags: cs-education, psychology, interdisicplinary
+tags: cs-education, psychology, interdisciplinary
 categories: non-technical
 hidden: false
 ---
