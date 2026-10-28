@@ -8,7 +8,6 @@ mermaid:
   zoomable: true
 toc:
   - name: From Observation to Control
-  - name: Resource Units
   - name: Requests, Limits, and Slack
   - name: Namespaces, Quotas, and Defaults
   - name: Hardware Labels and Specialized Nodes
@@ -17,16 +16,15 @@ toc:
   - name: What Google and Amazon Implemented
 ---
 
-
-
-
 ## From Observation to Control
 
-Lecture 2 introduced Borg's jobs, tasks, cells, and the idea that Kubernetes schedules Pods selected by labels. Lecture 3 established that RKE2 runs containerd, and lecture 5 established that the kubelet asks that runtime to start containers. Lecture 9 then showed the measurement side of the same stack: cgroup counters, the CRI, the kubelet, and Metrics Server.
+{% details info Overview %}
 
-This lecture is the control side. A resource request is a number in a Pod spec. The claim to explain is how that number becomes a scheduling decision, and how a limit becomes a Linux kernel enforcement action, on the RKE2 cluster used in this course.
+- One of Pod's specifications (`spec`) is a resource request. 
+  - This value can influence scheduling decision, 
+- On the other hands, resource limits can become a Linux kernel enforcement action.
 
-Three separate decisions are involved:
+Three separate decisions are involved in this process
 
 | Decision | Question | Component that answers it |
 | --- | --- | --- |
@@ -34,31 +32,38 @@ Three separate decisions are involved:
 | Admission | Is this namespace allowed to ask? | API server, using ResourceQuota and LimitRange |
 | Enforcement | What happens if the container uses more? | Linux, programmed by the kubelet through the CRI |
 
-Lecture 9's four values stay in force. Requests and limits are configuration. Current and historical usage are measurements. Changing a request because of one `kubectl top` sample confuses those two categories.
+{% enddetails %}
 
-## Resource Units
+{% details info Resource Units %}
 
-Kubernetes inherited Borg's resource vector: CPU and memory are requested in fine units, and a Pod may also request devices that only some machines have.
+Kubernetes inherited Borg's resource vector: 
+
+- CPU and memory are requested in fine units.
+- Pod may also request devices that only some machines have.
+
+{% enddetails %}
 
 {% details CPU %}
 
 - **1 CPU** is one Kubernetes CPU unit, corresponding to one hyperthread of allocatable capacity on the node.
-- The API writes fractional CPU in millicores: `500m` is half a core, `1000m` is one core.
-- CPU is **compressible**. The kernel can slow a container down by giving it fewer slices of time. The process keeps running.
-
-Borg measured CPU in milli-cores for the same reason. A core there was a hyperthread, normalized across machine types, because a cell mixed fast and slow processors. The unit was already an abstraction over heterogeneous hardware.
+- The API writes fractional CPU in **millicores**: `500m` is half a core, `1000m` is one core.
+- CPU is **compressible**:
+  - The kernel can slow a container down by giving it fewer slices of time even thought the process keeps running.
+- Borg measured CPU in milli-cores for the same reason. 
+  - This is an abstraction over heterogeneous hardware.
 
 {% enddetails %}
 
 {% details Memory %}
 
-Memory is measured in bytes.
-
+- Memory is measured in bytes.
 - SI suffixes (`k`, `M`, `G`) are powers of 10.
 - Binary suffixes (`Ki`, `Mi`, `Gi`) are powers of 2.
-- `256Mi` is 256 × 2²⁰ bytes. `1Gi` is 2³⁰ bytes.
-
-Memory is **incompressible**. Reclaiming it means discarding the contents of pages. Past a hard limit, the kernel terminates a process in that cgroup. Kubernetes reports that termination as `OOMKilled`. Lecture 9 produced that outcome by allocating past a memory limit. The mechanism was the kernel memory controller.
+  - `256Mi` is $256 x 2^20$ bytes. 
+  - `1Gi` is $2^30$ bytes.
+- Memory is **incompressible**. 
+  - Reclaiming memory means discarding the contents of pages. 
+  - Once a hard limit is reached, the kernel terminates a process in that cgroup (`OOMKilled`, as shown in the previous lecture)
 
 {% enddetails %}
 
@@ -70,12 +75,16 @@ Memory is **incompressible**. Reclaiming it means discarding the contents of pag
 | Huge pages | `hugepages-2Mi: 128Mi` | Pre-reserved large pages |
 | Extended resource | `nvidia.com/gpu: 1` | A device the node has advertised |
 
-CPU and memory limits become cgroup controllers. Ephemeral-storage limits are enforced by the kubelet, which watches disk usage and evicts the Pod. Extended resources are enforced by exclusive allocation: the device plugin hands the device to one container, and the scheduler refuses to hand the same device out twice.
+- CPU and memory limits become cgroup controllers. 
+- Ephemeral-storage limits are enforced by the kubelet, which watches disk usage and evicts the Pod. 
+- Extended resources are enforced by exclusive allocation done by the device plugin. 
 
 {% enddetails %}
 
 
 ## Requests, Limits, and Slack
+
+{% details info Overview %}
 
 Every container can declare a **request** and a **limit** for each resource it uses.
 
@@ -89,47 +98,61 @@ resources:
     memory: "512Mi"
 ```
 
-The two numbers answer different questions.
-
 - The **request** is what the scheduler subtracts from the node's allocatable capacity. It is also the container's relative weight when the CPU is contended.
-- The **limit** is the hard ceiling the runtime installs. For CPU, exceeding it causes throttling. For memory, exceeding it causes an OOM kill.
-- The gap between usage and the limit is **slack**. Slack is capacity the container is allowed to burst into, and capacity the cluster cannot safely give to someone else unless that someone can be evicted.
+- The **limit** is the hard ceiling the runtime installs. 
+  - For CPU, exceeding it causes throttling. 
+  - For memory, exceeding it causes an OOM kill.
+- The gap between usage and the limit is **slack**. 
+  - Slack is capacity the container is allowed to burst into, and capacity the cluster cannot safely give to someone else unless that someone can be evicted.
+- *This is different from typical supercomputing schedulers*:
+  - Exceeding requests = allocation killed
 
-A container may use more CPU or memory than it requested whenever the node has spare capacity. The request is a guaranteed floor in the scheduler's accounting. The limit is the ceiling. Between them, the container is borrowing.
-
-Borg originally used the limit both to admit the job against quota and to test whether a machine had room. Users asked for more than they used, because exceeding RAM killed the task and exceeding CPU throttled it. Borg then estimated a lower **reservation** from observed usage and packed other work into the difference. Kubernetes makes that split explicit: the request is the reservation, and the limit is the ceiling. The scheduler packs requests. The kernel enforces limits.
-
-{% details Why the gap matters at fleet scale %}
-
-Google's Autopilot paper (EuroSys 2020) measures slack as the difference between the limit and actual usage. Across their comparison, manually chosen limits left about 46% slack. Autopilot, which sets CPU and memory limits from historical usage, brought slack to about 23%, and reduced the number of jobs severely affected by OOM kills by about 10×. At the time of the paper, jobs under Autopilot accounted for over 48% of fleet-wide resource usage.
-
-The result explains the caution in lecture 9. An OOM or a throttle is visible to the operator, while wasted slack stays quiet, so people pad their limits. Closing the gap safely takes a history of usage. In Kubernetes the same split appears as two controllers: the Horizontal Pod Autoscaler changes replica count from current metrics, and the Vertical Pod Autoscaler recommends requests from history. RKE2 packages Metrics Server, which HPA reads. A vertical recommender is a separate add-on.
-
-{% enddetails %}
-
-{% details career Capacity work is a comparison, repeated %}
-
-Requests and limits determine where a Pod can run, how it fails, and what the cluster appears to cost. Platform and SRE work treats them as a hypothesis to be checked against usage.
-
-In [OpenAI's account of scaling Kubernetes to 7,500 nodes](https://openai.com/index/scaling-kubernetes-to-7500-nodes/), low-priority "balloon" Deployments occupied otherwise idle capacity and remained immediately evictable when real work arrived. That is slack, held by a workload the scheduler is allowed to throw away. Borg did the same thing with batch tasks that were willing to use reclaimed memory and be sacrificed when a latency-sensitive task needed it back.
-
-Evidence for a capacity decision includes:
-
-- request, limit, and usage percentiles over a real time range;
-- throttling, OOM kills, and eviction history;
-- pending Pods, and which resource or hardware constraint left them pending;
-- the burst the service actually needs, and how quickly it must scale;
-- the reliability and cost of allocating too much or too little.
+{% details career %}
+- Google Borg originally used the limit both to admit the job against quota and to test whether a machine had available resources. 
+  - This led to users asked for more than they used, because exceeding RAM killed the task and exceeding CPU throttled it. 
+- Borg then estimated a lower **reservation** from observed usage and packed other work into the difference. 
+- Kubernetes makes that `difference` explicit: 
+  - the request is the reservation, serviced by the scheduler, and 
+  - the limit is the ceiling, enforced by the Linux kernel.
 
 {% enddetails %}
 
----
+{% enddetails %}
+
+{% details The gap: request versus limit %}
+
+[Google's Autopilot paper (EuroSys 2020)](https://research.google/pubs/autopilot-workload-autoscaling-at-google-scale/) measures slack as the difference between the limit and actual usage. Across their comparison, manually chosen limits left about 46% slack. Autopilot, which sets CPU and memory limits from historical usage, brought slack to about 23%, and reduced the number of jobs severely affected by OOM kills by about 10×. At the time of the paper, jobs under Autopilot accounted for over 48% of fleet-wide resource usage.
+
+- In practice, an OOM or a throttle is visible to the job's owner, while wasted slack stays quiet
+  - Therefore, users will always pad their limits. 
+  - Closing the gap safely takes a history of usage. 
+- In Kubernetes the same split appears as two controllers: 
+  - the Horizontal Pod Autoscaler changes replica count from current metrics, and 
+  - the Vertical Pod Autoscaler recommends requests from history. 
+
+{% enddetails %}
+
+{% details career Capacity Planning in Industry %}
+
+- Requests and limits determine where a Pod can run, how it fails, and what the cluster appears to cost. 
+- In [OpenAI's account of scaling Kubernetes to 7,500 nodes](https://openai.com/index/scaling-kubernetes-to-7500-nodes/), low-priority "balloon" Deployments occupied otherwise idle capacity and remained immediately evictable when real work arrived. That is slack, held by a workload the scheduler is allowed to throw away. 
+- Borg did the same thing with batch tasks that were willing to use reclaimed memory and be sacrificed when a latency-sensitive task needed it back.
+- Evidence for a capacity decision includes:
+  - request, limit, and usage percentiles over a real time range;
+  - throttling, OOM kills, and eviction history;
+  - pending Pods, and which resource or hardware constraint left them pending;
+  - the burst the service actually needs, and how quickly it must scale;
+  - the reliability and cost of allocating too much or too little.
+{% enddetails %}
+
 
 ## Namespaces, Quotas, and Defaults
 
-A namespace is the scope in which a team shares a cluster. It is an API boundary. CPU and memory isolation between containers still happens in the kernel, on whatever node the Pod lands on.
+{% details Namespace %}
 
-Kubernetes creates a few namespaces for its own machinery:
+- A namespace is the scope in which a team shares a cluster (API boundary). 
+
+Kubernetes creates a few namespaces for its own infrastructure:
 
 | Namespace | Role |
 | --- | --- |
@@ -138,9 +161,16 @@ Kubernetes creates a few namespaces for its own machinery:
 | `kube-public` | Objects intended to be readable cluster-wide |
 | `kube-node-lease` | Node heartbeats |
 
-{% details ResourceQuota is an admission decision %}
+{% enddetails %}
 
-A ResourceQuota caps aggregate consumption in one namespace: total CPU and memory requests, total limits, number of Pods, and counts of other object types. It can also cap extended resources, so one namespace cannot take every GPU the cluster has advertised.
+{% details ResourceQuota%}
+
+- A ResourceQuota caps aggregate consumption in one namespace: 
+  - total CPU and memory requests 
+  - total CPU and memory limits, 
+  - number of Pods, and 
+  - counts of other object types. 
+- It can also cap extended resources.
 
 ```yaml
 apiVersion: v1
@@ -158,13 +188,16 @@ spec:
     requests.nvidia.com/gpu: "1"
 ```
 
-The API server checks the quota before it stores the object. A Deployment that would push the namespace over its request total is rejected, and no scheduler and no cgroup are involved. This is the same idea as Borg's admission quota: priority decides who wins a fight for a machine, and quota decides whether the user was allowed to ask.
+- The API server checks the quota before it stores the object. 
+  - A Deployment that would push the namespace over its request total is rejected
 
 {% enddetails %}
 
-{% details LimitRange keeps BestEffort from being an accident %}
+{% details BestEffort and LimitRange %}
 
-A container that declares neither requests nor limits is BestEffort. It is scheduled as if it needed nothing, and it is the first to be evicted when the node is under pressure. A LimitRange gives a namespace a default request, a default limit, a minimum, and a maximum, applied by admission to containers that omit the fields.
+- A container that declares neither requests nor limits is `BestEffort`. 
+  - It is scheduled as if it needed nothing, and it is the first to be evicted when the node is under pressure. 
+- A `LimitRange` gives a namespace a default request, a default limit, a minimum, and a maximum, applied by admission to containers that omit the fields.
 
 ```yaml
 apiVersion: v1
@@ -188,11 +221,13 @@ spec:
       cpu: "4"
 ```
 
-`maxLimitRequestRatio` caps slack directly: the limit may be at most four times the request. Admission is filling in or rejecting an API object. Enforcement still waits until a kubelet programs a cgroup.
+`maxLimitRequestRatio` caps slack directly: 
+  - the limit may be at most four times the request. 
+- This impacts Admission of new jobs. 
+- Actual enforcement still waits until a kubelet programs a cgroup.
 
 {% enddetails %}
 
----
 
 ## Hardware Labels and Specialized Nodes
 
