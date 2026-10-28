@@ -22,8 +22,6 @@ toc:
   - name: 'Improvement on BFR: CURE'
   - name: Clustering on Spark
 ---
-# Clustering
-
 
 ## Overview
 
@@ -154,7 +152,6 @@ clustroid
 - Priority queue: $O(N^2logN)$
 
     {% enddetails %}
----
 
 ## K-means clustering
 
@@ -217,7 +214,7 @@ to centroid, as `k` increases.
 
 {% enddetails %}
 {% enddetails %}
----
+
 {% enddetails %}
 ## K-means on big data: BFR (Bradley-Fayyad-Reina)
 
@@ -322,7 +319,6 @@ BFR suggests two approaches
 - Many alternatives: Treat dimensions differently, consider density
 
 {% enddetails %}
----
  
 {% enddetails %}
 ## Improvement on BFR: CURE
@@ -351,8 +347,8 @@ BFR suggests two approaches
     2. Place it in the “closest cluster”
         - Normal definition of “closest”: Find the closest representative to p and assign it to representative’s cluster
 
----
 {% enddetails %}
+
 ## Clustering on Spark
 
 - [Libraries for major clustering techniques](https://spark.apache.org/docs/latest/ml-clustering.html) 
