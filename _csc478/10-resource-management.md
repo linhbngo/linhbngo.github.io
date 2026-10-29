@@ -339,8 +339,8 @@ No preemption of production tasks to avoid preemption cascades.
   - QoS comes from the resource fields, 
   - priority is an explicit ranking. 
 
-- Guaranteed: the service needs predictable latency and the operator is willing to pay for the ceiling at all times, 
-- Burstable: the service is usually small and sometimes spikes. 
-- BestEffort: when the spec says nothing, to be used with LimitRange exists.
+- `Guaranteed`: the service needs predictable latency and the operator is willing to pay for the ceiling at all times, 
+- `Burstable`: the service is usually small and sometimes spikes. 
+- `BestEffort`: when the spec says nothing, to be used with LimitRange exists.
 
 {% enddetails %}
