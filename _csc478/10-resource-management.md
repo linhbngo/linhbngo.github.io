@@ -58,7 +58,7 @@ Kubernetes inherited Borg's resource vector:
 - Memory is measured in bytes.
 - SI suffixes (`k`, `M`, `G`) are powers of 10.
 - Binary suffixes (`Ki`, `Mi`, `Gi`) are powers of 2.
-  - `256Mi` is $256 \mul 2^{20}$ bytes. 
+  - `256Mi` is $256 \times 2^{20}$ bytes. 
   - `1Gi` is $2^{30}$ bytes.
 - Memory is **incompressible**. 
   - Reclaiming memory means discarding the contents of pages. 
