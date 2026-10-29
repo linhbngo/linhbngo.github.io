@@ -231,17 +231,65 @@ spec:
 
 ## Hardware Labels and Specialized Nodes
 
-Borg cells were heterogeneous. Machines differed in CPU, RAM, disk, network, processor type, and in capabilities such as an external IP address or flash storage. A job carried **constraints** on machine attributes. Hard constraints were requirements. Soft constraints were preferences. The scheduler hid that heterogeneity by placing each task on a machine whose attributes and free resources matched.
+{% details Borg concept %}
 
-Kubernetes splits the same idea into three mechanisms. They answer different questions, and using one where another is required is a common reason a Pod stays `Pending` or lands on hardware it wastes.
+- Aim to support a variety of data center (`cells`) with heterogeneous hardware configurations. 
+- Users specify `job constraints` that can be used by the scheduler to match against machines' attributes and resource availability. 
 
-| Mechanism | What it says | Scheduler behavior |
-| --- | --- | --- |
-| Node label | This node has a property | `nodeSelector` and required affinity accept or reject the node. Preferred affinity scores it. |
-| Extended resource | This node has *N* of a device left | The request is subtracted from allocatable capacity. Request and limit must be equal; these resources are not overcommitted. |
-| Taint | This node refuses Pods that do not tolerate it | The Pod is filtered out unless its toleration matches. |
+{% enddetails %}
 
-Lecture 9 already used the third mechanism. In an HA layout, server nodes are tainted so ordinary Pods stay off the control plane, and Metrics Server stays `Pending` until a node tolerates that taint. A GPU node uses the same tool for a different purpose: keep ordinary web Pods off scarce hardware.
+{% details Kubernetes concepts %}
+
+{% details question %}
+
+How do Kubernetes describe hardware attributes and resource availability?
+
+{% enddetails %}
+
+- Core node status, nodes' `Labels`, extended resources, and taints are not three interchangeable ways to
+describe hardware. 
+- They help breaking the main question into three different smaller questions:
+
+| Signal | Question it answers | Producer | Workload-side API |
+| --- | --- | --- | --- |
+| Node label | What property or location does this node have? | kubelet, cloud controller, Node Feature Discovery, or an administrator | `nodeSelector` or node affinity |
+| Extended resource | How many indivisible units are healthy and allocatable? | Usually a device plugin through the kubelet | Container `resources.requests` and `resources.limits` |
+| Node taint | Which Pods should be repelled from this node? | RKE2 registration or an administrator | Pod toleration |
+
+A specialized node commonly uses all three because a label does not reserve a
+device, a device request does not keep unrelated Pods away, and a toleration
+does not attract a Pod to the node.
+
+These are the core hardware signals, but they are not the complete scheduling
+API:
+
+- ordinary CPU, memory, ephemeral-storage, and huge-page requests first filter
+  nodes by remaining allocatable capacity;
+- Pod affinity and anti-affinity place a Pod relative to other labeled Pods;
+- topology-spread constraints distribute replicas across node-label domains
+  such as zones or hostnames;
+- priority and preemption decide which lower-priority workload may be displaced
+  when eligible nodes are full;
+- `nodeName` bypasses normal scheduler placement and should be reserved for
+  exceptional administrative use;
+- scheduler profiles and plugins can add organization-specific filtering and
+  scoring;
+- [Dynamic Resource Allocation (DRA)](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/)
+  provides `DeviceClass`,
+  `ResourceClaim`, and `ResourceSlice` APIs for attribute-aware and shareable
+  devices. It complements or replaces simple integer extended-resource
+  requests on Kubernetes versions and device drivers that support it.
+
+The next three details blocks follow the data flow:
+
+1. **Labels the node already carries** explains properties published during
+   normal node registration.
+2. **Labels that describe discovered hardware** explains add-ons that discover
+   features and advertise consumable devices.
+3. **How workload YAML consumes node signals** shows how a Pod combines
+   selection, toleration, and reservation.
+
+{% enddetails %}
 
 {% details Labels the node already carries %}
 
@@ -261,6 +309,22 @@ The kubelet and, on a cloud provider, the cloud controller, publish stable label
 
 On the FABRIC clusters used in this course there is no EC2-style cloud controller writing `instance-type`. The kubelet still advertises CPU, memory, pods, and ephemeral storage from the Linux host, which is why a 4-vCPU VM reports `capacity.cpu` of 4. Anything more specific — a GPU, a SmartNIC, a particular CPU feature — appears only after something on the node publishes it.
 
+Inspect the source-of-truth Node objects rather than assuming that every
+cluster has the same labels:
+
+```bash
+kubectl get nodes --show-labels
+kubectl get node <node-name> -o jsonpath='{.metadata.labels}'
+kubectl describe node <node-name>
+```
+
+Labels are metadata, not capacity. An administrator can label a node
+`course.example.com/accelerator=nvidia` even when no GPU exists, so labels
+should describe facts maintained by trusted automation. For isolation
+decisions, use a DNS-qualified key and, when appropriate, a prefix protected
+by the `NodeRestriction` admission plugin so a compromised kubelet cannot
+award itself a sensitive placement label.
+
 {% enddetails %}
 
 {% details Labels that describe discovered hardware %}
@@ -277,15 +341,53 @@ These labels are properties. `pci-10de.present=true` says a GPU is attached. The
 
 A device plugin is a daemon on the node. It registers with the kubelet, lists healthy devices, and, when a Pod is about to start, returns the device nodes to pass into the container. The kubelet adds the count to `status.capacity` and `status.allocatable`. From then on the scheduler treats `nvidia.com/gpu: 1` like a request for one indivisible unit of capacity.
 
-The usual pattern for scarce hardware combines all three mechanisms:
+The producer chain is therefore:
 
-1. a feature label or extended resource so the Pod can require the device;
-2. a taint such as `nvidia.com/gpu=true:NoSchedule` so Pods that do not tolerate it stay on general-purpose nodes;
-3. a quota so one namespace cannot consume every device in the cluster.
+```mermaid
+flowchart LR
+  NFD["Node Feature Discovery"] -->|"property labels"| NODE["Node object"]
+  DP["Vendor device plugin"] -->|"healthy device count"| KL["kubelet"]
+  KL -->|"status.capacity and status.allocatable"| NODE
+  NODE --> SCH["scheduler cache"]
+  SCH --> POD["eligible Pod placement"]
+  KL -->|"Allocate: devices, mounts, CDI names"| RUN["container runtime"]
+```
+
+Node Feature Discovery does not allocate the GPU. The device plugin does not
+decide which user is entitled to it. The scheduler reserves the advertised
+integer, and the kubelet asks the plugin to make the selected device available
+to the container.
+
+For current drivers, DRA is a richer alternative. A driver publishes
+`ResourceSlice` objects containing device attributes and node accessibility;
+an administrator defines a `DeviceClass`; and a workload references a
+`ResourceClaim` or `ResourceClaimTemplate`. The scheduler chooses a matching
+device and a node together. Check the RKE2 Kubernetes version and vendor
+driver documentation before using DRA; older course clusters may expose the
+same device only through `nvidia.com/gpu`.
+
+The usual policy for scarce hardware has four layers:
+
+1. a discovery label describes the model, feature, or location;
+2. an extended-resource request or DRA claim reserves a concrete device;
+3. a taint such as `course.example.com/accelerator=nvidia:NoSchedule` keeps
+   ordinary Pods off the specialized node;
+4. a `ResourceQuota` limits how many devices one namespace may consume.
+
+The first three affect placement or allocation. Quota is different: the API
+server rejects an excessive request before the scheduler sees it.
+
+For physical devices, install the vendor's device plugin or DRA driver as a
+cluster add-on, normally a DaemonSet. Manually adding a GPU label is not a
+substitute. Kubernetes also permits an administrator to PATCH a custom
+extended resource into the Node `status` subresource, but that only creates a
+schedulable counter; it does not arrange device nodes, drivers, mounts, or
+container access. Device plugins are the correct mechanism for real GPUs,
+FPGAs, SmartNICs, and similar hardware.
 
 {% enddetails %}
 
-{% details Required and preferred placement %}
+{% details How workload YAML consumes node signals %}
 
 A `nodeSelector` is a hard constraint, the Borg hard attribute:
 
@@ -317,6 +419,195 @@ affinity:
 ```
 
 The long field names record a real limit. Affinity is evaluated when the Pod is scheduled. If a label later changes, Kubernetes does not automatically move the running Pod. Placement is a decision about the moment the scheduler binds the Pod to a node.
+
+A complete workload for a tainted GPU node combines the three core signals:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpu-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpu-demo
+  template:
+    metadata:
+      labels:
+        app: gpu-demo
+    spec:
+      # Attract the Pod only to nodes with this trusted property.
+      nodeSelector:
+        course.example.com/accelerator: nvidia
+
+      # Permit this Pod onto nodes protected by the matching taint.
+      tolerations:
+        - key: course.example.com/accelerator
+          operator: Equal
+          value: nvidia
+          effect: NoSchedule
+
+      containers:
+        - name: shell
+          image: ubuntu:24.04
+          command: ["sleep", "infinity"]
+          resources:
+            requests:
+              cpu: "500m"
+              memory: 512Mi
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "1"
+              memory: 1Gi
+              nvidia.com/gpu: "1"
+```
+
+Read each field independently:
+
+- `nodeSelector` filters by a property but reserves nothing.
+- The toleration permits placement but does not require the tainted node.
+- `nvidia.com/gpu: 1` reserves one advertised device and causes the kubelet to
+  call its device plugin. Extended resources are integer-valued, cannot be
+  overcommitted, and have equal request and limit.
+- CPU and memory still participate in ordinary capacity filtering and runtime
+  enforcement.
+
+Topology-spread constraints and Pod anti-affinity solve a different problem:
+they distribute replicas relative to other Pods across labeled topology
+domains. They do not discover or allocate hardware. For example, a Deployment
+can spread replicas across hostnames after all hardware and resource filters
+have already selected the eligible nodes:
+
+```yaml
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app: gpu-demo
+```
+
+{% enddetails %}
+
+{% details info Configure a specialized node when RKE2 first registers %}
+
+RKE2 configuration is YAML, but it is not a Kubernetes manifest. It is a
+host-local file read by the `rke2-agent` or `rke2-server` systemd service.
+RKE2 documents these as
+[`node-label` and `node-taint` registration options](https://docs.rke2.io/advanced#node-labels-and-taints).
+Place node-specific configuration in `/etc/rancher/rke2/config.yaml` before
+the node first joins the cluster.
+
+On a GPU worker, merge the following fields into the existing agent
+configuration:
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+server: https://CONTROL-PLANE:9345
+token: "REPLACE_WITH_CLUSTER_JOIN_TOKEN"
+
+node-label:
+  - "course.example.com/accelerator=nvidia"
+  - "course.example.com/hardware-class=gpu"
+
+node-taint:
+  - "course.example.com/accelerator=nvidia:NoSchedule"
+```
+
+Then start the worker:
+
+```bash
+sudo systemctl enable --now rke2-agent
+```
+
+A schedulable RKE2 server uses the same `node-label` and `node-taint` keys in
+its local config, but its service is `rke2-server`.
+
+The host must already have the required kernel and vendor drivers. After the
+Kubernetes API is available, the cluster administrator installs Node Feature
+Discovery and the vendor device plugin or DRA driver as cluster add-ons. Those
+add-ons publish discovered labels and allocatable devices; RKE2's
+`node-label` setting should contain only administrator-owned, stable policy
+labels.
+
+Verify all four layers:
+
+```bash
+kubectl get nodes \
+  -L course.example.com/accelerator,course.example.com/hardware-class
+kubectl describe node <gpu-node>
+kubectl get pods -A -o wide
+```
+
+RKE2's `node-label` and `node-taint` options are registration-time settings.
+Changing the file and restarting RKE2 does not update an already registered
+Node. Use the Kubernetes API for a live Node, and keep the RKE2 file aligned so
+the intended metadata returns if the Node is deleted and registered again.
+
+{% enddetails %}
+
+{% details Change an existing Node with kubectl or a Node manifest %}
+
+For a Node that has already joined, the direct commands are:
+
+```bash
+kubectl label node <gpu-node> \
+  course.example.com/accelerator=nvidia \
+  course.example.com/hardware-class=gpu \
+  --overwrite
+
+kubectl taint node <gpu-node> \
+  course.example.com/accelerator=nvidia:NoSchedule
+```
+
+`NoSchedule` blocks new non-tolerating Pods but does not evict Pods already
+running there. If the node is being repurposed, cordon and drain it first:
+
+```bash
+kubectl cordon <gpu-node>
+kubectl drain <gpu-node> --ignore-daemonsets --delete-emptydir-data
+# Apply labels, taints, host drivers, and device add-ons.
+kubectl uncordon <gpu-node>
+```
+
+Automation can apply administrator-owned metadata with a narrow Node
+manifest. Create `gpu-node-metadata.yaml`:
+
+```yaml
+apiVersion: v1
+kind: Node
+metadata:
+  name: REPLACE_WITH_GPU_NODE_NAME
+  labels:
+    course.example.com/accelerator: nvidia
+    course.example.com/hardware-class: gpu
+spec:
+  taints:
+    - key: course.example.com/accelerator
+      value: nvidia
+      effect: NoSchedule
+```
+
+Apply it with a dedicated server-side field manager:
+
+```bash
+kubectl apply --server-side \
+  --field-manager=specialized-node-policy \
+  -f gpu-node-metadata.yaml
+```
+
+Do not export a complete Node object, edit it, and apply it back. `status`,
+addresses, leases, conditions, capacity, and many system labels are maintained
+by the kubelet or controllers. Keep the manifest limited to custom labels and
+taints that the administrator owns.
+
+An extended resource is not configured in this Node manifest. It belongs in
+the Node `status` subresource and should normally be published by a device
+plugin or DRA driver. Likewise, the workload's selector, toleration, and
+resource request belong in the Deployment or Pod manifest, not in the RKE2
+host configuration.
 
 {% enddetails %}
 
