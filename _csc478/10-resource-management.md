@@ -246,9 +246,19 @@ How do Kubernetes describe hardware attributes and resource availability?
 
 {% enddetails %}
 
-- Core node status, nodes' `Labels`, extended resources, and taints are not three interchangeable ways to
-describe hardware. 
-- They help breaking the main question into three different smaller questions:
+When matching workloads to infrastructure, Kubernetes evaluates a spectrum of hardware signals. These signals are not interchangeable, and they are split across different parts of the node API depending on how they are measured and consumed:
+
+- Core Resources (Node Status): 
+  - Ordinary CPU, memory, ephemeral-storage, and huge-page requests live natively in node.status. 
+  - The scheduler uses these metrics to filter nodes based on remaining allocatable capacity.
+• Dynamic Resource Allocation (DRA): 
+  - For complex, modern hardware accelerators, 
+  - Provides `DeviceClass`, `ResourceClaim`, and `ResourceSlice APIs`. Stable since Kubernetes v1.35, 
+  DRA supports advanced Common Expression Language (CEL) attribute filtering, device sharing, and per-workload configurations. 
+  - Replaces or complements legacy device plugins on supported drivers.
+
+To target specific machines, specialized nodes break the scheduling problem down into three smaller 
+questions using a combination of labels, extended resources, and taints:
 
 | Signal | Question it answers | Producer | Workload-side API |
 | --- | --- | --- | --- |
@@ -256,15 +266,13 @@ describe hardware.
 | Extended resource | How many indivisible units are healthy and allocatable? | Usually a device plugin through the kubelet | Container `resources.requests` and `resources.limits` |
 | Node taint | Which Pods should be repelled from this node? | RKE2 registration or an administrator | Pod toleration |
 
-A specialized node commonly uses all three because a label does not reserve a
-device, a device request does not keep unrelated Pods away, and a toleration
-does not attract a Pod to the node.
+A specialized node commonly uses all three:
 
-These are the core hardware signals, but they are not the complete scheduling
-API:
+- Labels by themselves don't provide specifics on the devices (need Extended resource)
+- Device requests cannot support the exclusion of non-device job requests (need Taint)
 
-- ordinary CPU, memory, ephemeral-storage, and huge-page requests first filter
-  nodes by remaining allocatable capacity;
+While the above form the baseline hardware signals, the complete scheduling API also factors in operational constraints:
+
 - Pod affinity and anti-affinity place a Pod relative to other labeled Pods;
 - topology-spread constraints distribute replicas across node-label domains
   such as zones or hostnames;
@@ -274,11 +282,6 @@ API:
   exceptional administrative use;
 - scheduler profiles and plugins can add organization-specific filtering and
   scoring;
-- [Dynamic Resource Allocation (DRA)](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/)
-  provides `DeviceClass`,
-  `ResourceClaim`, and `ResourceSlice` APIs for attribute-aware and shareable
-  devices. It complements or replaces simple integer extended-resource
-  requests on Kubernetes versions and device drivers that support it.
 
 The next three details blocks follow the data flow:
 
