@@ -149,11 +149,22 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-on-the-other-side-of-the-classroom",
+            },{id: "post-ai-and-education-a-hard-topic",
+        
+          title: "AI and Education: A Hard Topic",
+        
+        description: "It is difficult playing catch up with AI · Tags: cs-education, artificial-intelligence",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/ai-education/";
+          
+        },
+      },{id: "post-on-the-other-side-of-the-classroom",
         
           title: "On the Other Side of the Classroom",
         
-        description: "Taking an undergraduate course after 20 years is fun",
+        description: "Taking an undergraduate course after 20 years is fun · Tags: cs-education, psychology, interdisciplinary",
         section: "Posts",
         handler: () => {
           
@@ -164,7 +175,7 @@ ninja.data = [{
         
           title: "Embracing Chaos: Lessons From Four Semesters of Capstone Projects",
         
-        description: "Learning through the productive chaos in software engineering capstones.",
+        description: "Learning through the productive chaos in software engineering capstones. · Tags: capstone, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -175,7 +186,7 @@ ninja.data = [{
         
           title: "The Academic Advisor as Fiduciary",
         
-        description: "",
+        description: " · Tags: advising, student, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -186,7 +197,7 @@ ninja.data = [{
         
           title: "My Mother",
         
-        description: "",
+        description: " · Tags: family, mother",
         section: "Posts",
         handler: () => {
           
@@ -197,7 +208,7 @@ ninja.data = [{
         
           title: "My Father",
         
-        description: "",
+        description: " · Tags: family, father",
         section: "Posts",
         handler: () => {
           
@@ -208,7 +219,7 @@ ninja.data = [{
         
           title: "Just Do It",
         
-        description: "Close your eyes and take the first step.",
+        description: "Close your eyes and take the first step. · Tags: learning, llm, technical",
         section: "Posts",
         handler: () => {
           
@@ -219,7 +230,7 @@ ninja.data = [{
         
           title: "Ankle Weight for the Mind: Migration to Lazyvim",
         
-        description: "Do you even lift?",
+        description: "Do you even lift? · Tags: learning, vim, terminal",
         section: "Posts",
         handler: () => {
           
@@ -230,7 +241,7 @@ ninja.data = [{
         
           title: "A Good Engineering Habit: Knowing When To Stop",
         
-        description: "... and when to rollback.",
+        description: "... and when to rollback. · Tags: engineering, simplicity, best-practice",
         section: "Posts",
         handler: () => {
           
@@ -241,7 +252,7 @@ ninja.data = [{
         
           title: "Modern CS: The Age of Minors and Certificates",
         
-        description: "",
+        description: " · Tags: cs-education, minors, certificates",
         section: "Posts",
         handler: () => {
           
@@ -252,7 +263,7 @@ ninja.data = [{
         
           title: "Unvibe the Vibe: Learning by Deconstruction in the Age of AI",
         
-        description: "In an era of AI-generated code, learning by deconstruction rather than construction helps us make sense of what we produce.",
+        description: "In an era of AI-generated code, learning by deconstruction rather than construction helps us make sense of what we produce. · Tags: cs-education, vibe-coding, deconstruction, judgment",
         section: "Posts",
         handler: () => {
           
@@ -263,7 +274,7 @@ ninja.data = [{
         
           title: "Pork Rib Congee versus Beef Stew: The Facets of Simplicity",
         
-        description: "What does simplicity really mean?",
+        description: "What does simplicity really mean? · Tags: cooking, pedagogy, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -274,7 +285,7 @@ ninja.data = [{
         
           title: "The Consequence Gap",
         
-        description: "Why do students internalize soft skills in capstone but not in earlier courses?",
+        description: "Why do students internalize soft skills in capstone but not in earlier courses? · Tags: cs-education, capstone, soft-skills",
         section: "Posts",
         handler: () => {
           
@@ -285,7 +296,7 @@ ninja.data = [{
         
           title: "The Hidden Obligations of Teaching",
         
-        description: "As knowledge becomes abundant, the professor’s work shifts from gatekeeping content to designing structured variance for learning.",
+        description: "As knowledge becomes abundant, the professor’s work shifts from gatekeeping content to designing structured variance for learning. · Tags: cs-education, teaching, obligations",
         section: "Posts",
         handler: () => {
           
@@ -296,7 +307,7 @@ ninja.data = [{
         
           title: "Redefining Rigor: From Selecting Talent to Developing Students in Computer Science",
         
-        description: "How teaching and learning operate through different levels of assumptions",
+        description: "How teaching and learning operate through different levels of assumptions · Tags: cs-education, learning, assumptions",
         section: "Posts",
         handler: () => {
           
@@ -307,7 +318,7 @@ ninja.data = [{
         
           title: "Bring Engineering Thinking to What We Do",
         
-        description: "Carrying an engineering mindset with you",
+        description: "Carrying an engineering mindset with you · Tags: memory, measurement, engineering, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -318,7 +329,7 @@ ninja.data = [{
         
           title: "Experiencing Productivity Scaling Up",
         
-        description: "Using AI support to scale up actions",
+        description: "Using AI support to scale up actions · Tags: ai, cursor, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -329,7 +340,7 @@ ninja.data = [{
         
           title: "The cats in my life",
         
-        description: "This is a special ordered essay by my daughter",
+        description: "This is a special ordered essay by my daughter · Tags: cat, more-cat, we-love-cat",
         section: "Posts",
         handler: () => {
           
@@ -340,7 +351,7 @@ ninja.data = [{
         
           title: "Beyond the Digital Sandbox: Why CS Needs to Get Physical",
         
-        description: "Reflecting on the Unitree gala performance and why regional universities must reintegrate hardware and embodied computing into the CS curriculum.",
+        description: "Reflecting on the Unitree gala performance and why regional universities must reintegrate hardware and embodied computing into the CS curriculum. · Tags: cs-education, robotic, learning",
         section: "Posts",
         handler: () => {
           
@@ -351,7 +362,7 @@ ninja.data = [{
         
           title: "Why Should I Write?",
         
-        description: "What motivates me to write? Do I really like writing?",
+        description: "What motivates me to write? Do I really like writing? · Tags: writing, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -362,7 +373,7 @@ ninja.data = [{
         
           title: "Where to Begin: The Gartner Hype Cycle",
         
-        description: "How to start the learning process",
+        description: "How to start the learning process · Tags: cs-education, robotic, ai, learning, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -373,7 +384,7 @@ ninja.data = [{
         
           title: "A Game Evolution: From Arena to Journey",
         
-        description: "A personal perspective on the evolution of a game",
+        description: "A personal perspective on the evolution of a game · Tags: gaming, mobile",
         section: "Posts",
         handler: () => {
           
@@ -384,7 +395,7 @@ ninja.data = [{
         
           title: "New Year Reflection: Learning from GPT",
         
-        description: "How AI usage changes my habits",
+        description: "How AI usage changes my habits · Tags: learning, ai-usage",
         section: "Posts",
         handler: () => {
           
@@ -395,7 +406,7 @@ ninja.data = [{
         
           title: "Learning from non-technical writings",
         
-        description: "Do we really have to start with textbooks?",
+        description: "Do we really have to start with textbooks? · Tags: learning, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -406,7 +417,7 @@ ninja.data = [{
         
           title: "Research: The Art of Throwing Cakes at The Wall",
         
-        description: "Iteration, mess, and the expectation that something will stick",
+        description: "Iteration, mess, and the expectation that something will stick · Tags: research, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -417,7 +428,7 @@ ninja.data = [{
         
           title: "Keeping up with the Rising Bar through Experiential Learning",
         
-        description: "Knowledge and Skills, Why Not Both",
+        description: "Knowledge and Skills, Why Not Both · Tags: cs-education, experiential-learning",
         section: "Posts",
         handler: () => {
           
@@ -428,7 +439,7 @@ ninja.data = [{
         
           title: "Thankful for Failures",
         
-        description: "Catchy title ain&#39;t it?",
+        description: "Catchy title ain&#39;t it? · Tags: philosphy, fails, , cs-education",
         section: "Posts",
         handler: () => {
           
@@ -439,7 +450,7 @@ ninja.data = [{
         
           title: "My Teaching Philosophy",
         
-        description: "The formation of my teaching philosophy.",
+        description: "The formation of my teaching philosophy. · Tags: philosophy, teaching, equitable, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -450,7 +461,7 @@ ninja.data = [{
         
           title: "Beware the Zone of Cognitive Overreach",
         
-        description: "AI can help you learn, and too much AI can hamper your learning.",
+        description: "AI can help you learn, and too much AI can hamper your learning. · Tags: learning, teaching, AI, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -461,7 +472,7 @@ ninja.data = [{
         
           title: "Relearning How to Be Seen: Fine-tuning a Portfolio that Grows with Technology",
         
-        description: "How can one improve their portfolio&#39;s visibility in this age",
+        description: "How can one improve their portfolio&#39;s visibility in this age · Tags: learning, writing, AI, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -472,7 +483,7 @@ ninja.data = [{
         
           title: "Richard Sutton, LLMs, and the Extended Brain",
         
-        description: "",
+        description: " · Tags: AI, cognition, philosophy, education",
         section: "Posts",
         handler: () => {
           
@@ -483,7 +494,7 @@ ninja.data = [{
         
           title: "Being well-versed in AI",
         
-        description: "What does it mean to be well-versed in AI",
+        description: "What does it mean to be well-versed in AI · Tags: AI, learning, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -494,7 +505,7 @@ ninja.data = [{
         
           title: "YARRR: Yet Another Rejection, Resilient Required",
         
-        description: "Another career break-in strategy",
+        description: "Another career break-in strategy · Tags: jobs, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -505,7 +516,7 @@ ninja.data = [{
         
           title: "Entry Level Positions of the Future",
         
-        description: "Another view on entry level positions for CS",
+        description: "Another view on entry level positions for CS · Tags: jobs, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -516,7 +527,7 @@ ninja.data = [{
         
           title: "One Ring to Bring Them All",
         
-        description: "A common containerized infrastructure across CS courses",
+        description: "A common containerized infrastructure across CS courses · Tags: containerization, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -527,7 +538,7 @@ ninja.data = [{
         
           title: "The Software Jobs Aren&#39;t Gone, They Have Only Moved",
         
-        description: "Where have all the jobs gone?",
+        description: "Where have all the jobs gone? · Tags: jobs, cs-education",
         section: "Posts",
         handler: () => {
           
@@ -538,7 +549,7 @@ ninja.data = [{
         
           title: "Trying out Ollama locally",
         
-        description: "Set up and try out ollama locally",
+        description: "Set up and try out ollama locally · Tags: hands-on, infrastructure",
         section: "Posts",
         handler: () => {
           
@@ -1309,7 +1320,7 @@ ninja.data = [{
           title: 'Resource Units and Management in Kubernetes',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/12-resource-management/";
+              window.location.href = "/csc478/10-resource-management/";
             },},{id: "csc478-loadbalancer-and-ingress",
           title: 'LoadBalancer and Ingress',
           description: "",
