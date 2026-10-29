@@ -1,5 +1,5 @@
 # Local Jekyll/al-folio toolchain isolated in a conda env.
-# Ruby version aligned with .github/workflows/deploy.yml (3.3.5).
+# Ruby 3.3 series, aligned with .github/workflows/deploy.yml (ruby-version: "3.3").
 # System deps aligned with Dockerfile / devcontainer (ImageMagick, Node, nbconvert).
 #
 # Supported platforms: macOS, Linux, WSL2 on Windows.
