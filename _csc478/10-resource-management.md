@@ -616,24 +616,9 @@ host configuration.
 
 Allocatable capacity is the number the scheduler uses. It is capacity minus what the node reserves for the operating system and for Kubernetes itself (kubelet, containerd, the CNI agent). Lecture 9 distinguished `capacity` from `allocatable`. A node that looks half idle in `kubectl top` can still refuse a Pod, because free space for scheduling is allocatable capacity minus requests already admitted. A recent usage sample describes the past window. The scheduler accounts for reservations.
 
----
-
 ## How Enforcement Reaches Linux
 
 RKE2 enforces a Pod limit by handing a number to Linux, which already implements the resource controller. Kubernetes contributes the translation from a Pod spec into that number. RKE2 contributes the runtime wired to the translation.
-
-```mermaid
-flowchart TB
-  Spec["Pod spec<br/>requests, limits, affinity"] --> Adm["API server admission<br/>LimitRange, ResourceQuota"]
-  Adm --> Sched["kube-scheduler<br/>filter nodes, reserve requests"]
-  Status["Node status<br/>capacity, allocatable, labels"] --> Sched
-  Sched --> KL["kubelet on the chosen node"]
-  KL --> CRI["CRI call to containerd"]
-  CRI --> OCI["OCI runtime: runc"]
-  OCI --> Kernel["Linux cgroups and namespaces"]
-  Plugin["Device plugin"] --> Status
-  Plugin --> KL
-```
 
 {% details The contract at each hop %}
 
@@ -658,9 +643,9 @@ On a course node, RKE2 starts containerd and the kubelet and points the kubelet 
 
 Lecture 9 used that socket with `crictl`. The `k3s` path is historical; RKE2 inherited the layout. The socket is the CRI endpoint, in the `k8s.io` containerd namespace.
 
-RKE2 runs under systemd and configures kubelet and runc with the **systemd cgroup driver**, so both use the hierarchy systemd owns. If those two disagreed, the kubelet and the runtime would maintain two views of the same machine, and node stability under memory pressure would suffer. Keeping them aligned is part of what "the distribution" is for.
+RKE2 runs under systemd and configures kubelet and runc with the **systemd cgroup driver**, so both use the hierarchy systemd owns. 
 
-containerd transports the CRI request and supervises the shim. runc applies the limit. SELinux, which lecture 3 noted is on by default in RKE2, is a mandatory-access-control boundary beside this path. It confines what a process may open. CPU time is assigned by the cgroup controllers.
+containerd transports the CRI request and supervises the shim. runc applies the limit. SELinux, on by default in RKE2, is a mandatory-access-control boundary beside this path. It confines what a process may open. CPU time is assigned by the cgroup controllers.
 
 {% enddetails %}
 
@@ -701,8 +686,6 @@ Google's CPI² system (EuroSys 2013) treated a rise in cycles per instruction, r
 
 {% enddetails %}
 
----
-
 ## Quality of Service and Contention
 
 Kubernetes derives a QoS class from the relationship between requests and limits. The class selects a cgroup parent and an OOM score. It is the cluster's version of Borg's split between latency-sensitive and batch work.
@@ -713,7 +696,7 @@ Kubernetes derives a QoS class from the relationship between requests and limits
 | Burstable | Some request is set, and some limit is higher than its request | Weight comes from the request. Burst is allowed up to the limit, then throttle or OOM. Evicted before Guaranteed Pods once it exceeds its request. |
 | BestEffort | No container sets a request or a limit | Uses only slack. `oom_score_adj` 1000. Evicted first. |
 
-Three different components can be the one that stops a container, and they fire for different reasons.
+Three different components can be the one that stops a container:
 
 | Actor | Trigger | What the container experiences |
 | --- | --- | --- |
@@ -724,8 +707,6 @@ Three different components can be the one that stops a container, and they fire 
 Borg organized priority into bands — monitoring, production, batch, best-effort — and refused to let production tasks preempt each other, specifically to avoid preemption cascades. Kubernetes expresses priority with a PriorityClass. Pods in the same priority do not preempt one another. A higher class may preempt a lower one. QoS and priority are different axes: QoS comes from the resource fields, priority is an explicit ranking. The OpenAI balloon Deployments sit at low priority so they lose the preemption and eviction decisions, while still holding the idle machines.
 
 Guaranteed is the right class when the service needs predictable latency and the operator is willing to pay for the ceiling at all times, because the request equals the limit and slack inside that Pod is zero. Burstable is the right class when the service is usually small and sometimes spikes. BestEffort is what remains when the spec says nothing, which is why a LimitRange exists.
-
----
 
 ## What Google and Amazon Implemented
 
