@@ -262,21 +262,72 @@ int main(int argc, char *argv[]) {
 
 {% enddetails %}
 
-## The dining philosophers
+## The Dining Philosophers
 
-- It’s Dijkstra again. 
-    - There are five philosophers seating around a table. 
-    - Between each pair of philosophers there is a single fork (five forks total).
-    - Philosophers alternate between thinking and eating (need fork). 
-    - Two forks are needed to eat (one to the left and one to the right). 
-    - How to schedule fork grabbing pattern so that no one starves?
+{% details Problem Definition %}
+- There are five philosophers seating around a table. 
+- Between each pair of philosophers there is a single fork (five forks total).
+- Philosophers alternate between thinking and eating (need fork). 
+- Two forks are needed to eat (one to the left and one to the right). 
+- How to schedule fork grabbing pattern so that no one starves?
+
 
 {% include figure.liquid path="assets/img/courses/csc331/semaphores/08.png" max-width="50%" zoomable=true %}
 
+{% endetails %}
 
-## Solutions
+{% details success Solutions %}
 
 - Which one works?
 
+```c
+int left(int p) { return p; }
+int right(int p) { return (p + 1) % 5; }
+```
+
+</div>
+</div>
+</div>
+
+<div class="code-pair" style="--code-frame-height: 16rem">
+<div class="code-frame">
+<div class="code-frame-title">Version 1</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+void getforks() {
+    sem_wait(forks[right(p)]);
+    sem_wait(forks[right(p)]);
+}
+
+void putforks() {
+    sem_post(forks[left(p)]);
+    sem_post(forks[right(p)]);
+}
+```
+
+</div>
+</div>
+<div class="code-frame">
+<div class="code-frame-title">Version 2</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+void getforks() {
+    sem_wait(forks[left(p)]);
+    sem_wait(forks[right(p)]);
+}
+
+void putforks() {
+    sem_post(forks[left(p)]);
+    sem_post(forks[right(p)]);
+}
+```
+
+</div>
+</div>
+</div>
+
 {% include figure.liquid path="assets/img/courses/csc331/semaphores/09.png" max-width="50%" zoomable=true %}
 
+{% enddetails %}
