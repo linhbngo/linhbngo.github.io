@@ -237,7 +237,68 @@ int main(int argc, char *argv[]) {
 - What is currently missing from this implementation?
     - Mutual exclusion
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/05.png" max-width="50%" zoomable=true %}
+<div class="code-pair" style="--code-frame-height: 32rem">
+<div class="code-frame">
+<div class="code-frame-title">Buffer</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+int buffer[MAX];
+int fill = 0;
+int use = 0;
+
+void put(int value) {
+    buffer[fill] = value;       // Line F1
+    fill = (fill + 1) % MAX;    // Line F2
+}
+
+int get() {
+    int tmp = buffer[use];       // Line G1
+    use = (use + 1) % MAX;       // Line G2
+    return tmp;
+}
+```
+
+</div>
+</div>
+<div class="code-frame">
+<div class="code-frame-title">Producer and consumer</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+sem_t empty;
+sem_t full;
+
+void *producer(void *arg) {
+    int i;
+    for (i = 0; i < loops; i++) {
+        sem_wait(&empty);        // Line P1
+        put(i);                  // Line P2
+        sem_post(&full);         // Line P3
+    }
+}
+
+void *consumer(void *arg) {
+    int i, tmp = 0;
+    while (tmp != -1) {
+        sem_wait(&full);         // Line C1
+        tmp = get();             // Line C2
+        sem_post(&empty);        // Line C3
+        printf("%d\n", tmp);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    // ...
+    sem_init(&empty, 0, MAX); // MAX buffers are empty to begin with...
+    sem_init(&full, 0, 0);    // ... and 0 are full
+    // ...
+}
+```
+
+</div>
+</div>
+</div>
 
 {% enddetails %}
 
@@ -248,7 +309,74 @@ int main(int argc, char *argv[]) {
     - Consumer runs first, then wait on `full` (but still holding `mutex`). 
     - Producer sees negative mutex, decreases it further, then goes to sleep. 
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/06.png" max-width="50%" zoomable=true %}
+<div class="code-pair" style="--code-frame-height: 35rem">
+<div class="code-frame">
+<div class="code-frame-title">Buffer</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+int buffer[MAX];
+int fill = 0;
+int use = 0;
+
+void put(int value) {
+    buffer[fill] = value;       // Line F1
+    fill = (fill + 1) % MAX;    // Line F2
+}
+
+int get() {
+    int tmp = buffer[use];       // Line G1
+    use = (use + 1) % MAX;       // Line G2
+    return tmp;
+}
+```
+
+</div>
+</div>
+<div class="code-frame">
+<div class="code-frame-title">Producer and consumer</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+sem_t empty;
+sem_t full;
+sem_t mutex;
+
+void *producer(void *arg) {
+    int i;
+    for (i = 0; i < loops; i++) {
+        sem_wait(&mutex);        // Line P0 (NEW LINE)
+        sem_wait(&empty);        // Line P1
+        put(i);                  // Line P2
+        sem_post(&full);         // Line P3
+        sem_post(&mutex);        // Line P4 (NEW LINE)
+    }
+}
+
+void *consumer(void *arg) {
+    int i;
+    for (i = 0; i < loops; i++) {
+        sem_wait(&mutex);        // Line C0 (NEW LINE)
+        sem_wait(&full);         // Line C1
+        int tmp = get();         // Line C2
+        sem_post(&empty);        // Line C3
+        sem_post(&mutex);        // Line C4 (NEW LINE)
+        printf("%d\n", tmp);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    // ...
+    sem_init(&empty, 0, MAX); // MAX buffers are empty to begin with...
+    sem_init(&full, 0, 0);    // ... and 0 are full
+    sem_init(&mutex, 0, 1);   // mutex=1 because it is a lock (NEW LINE)
+    // ...
+}
+```
+
+</div>
+</div>
+</div>
 
 {% enddetails %}
 
@@ -258,7 +386,75 @@ int main(int argc, char *argv[]) {
     - `full` and `empty` are for producers and consumers to wait on one another. 
     - `mutex` for producers and consumers to wait among each group. 
 
-{% include figure.liquid path="assets/img/courses/csc331/semaphores/07.png" max-width="50%" zoomable=true %}
+<div class="code-pair" style="--code-frame-height: 35rem">
+<div class="code-frame">
+<div class="code-frame-title">Buffer</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+int buffer[MAX];
+int fill = 0;
+int use = 0;
+
+void put(int value) {
+    buffer[fill] = value;       // Line F1
+    fill = (fill + 1) % MAX;    // Line F2
+}
+
+int get() {
+    int tmp = buffer[use];       // Line G1
+    use = (use + 1) % MAX;       // Line G2
+    return tmp;
+}
+```
+
+</div>
+</div>
+<div class="code-frame">
+<div class="code-frame-title">Producer and consumer</div>
+<div class="code-frame-body" markdown="block">
+
+```c
+sem_t empty;
+sem_t full;
+sem_t mutex;
+
+void *producer(void *arg) {
+    int i;
+    for (i = 0; i < loops; i++) {
+        sem_wait(&empty);        // Line P1
+        sem_wait(&mutex);        // Line P1.5 (MOVED MUTEX HERE...)
+        put(i);                  // Line P2
+        sem_post(&mutex);        // Line P2.5 (... AND HERE)
+        sem_post(&full);         // Line P3
+    }
+}
+
+void *consumer(void *arg) {
+    int i;
+    for (i = 0; i < loops; i++) {
+        sem_wait(&full);         // Line C1
+        sem_wait(&mutex);        // Line C1.5 (MOVED MUTEX HERE...)
+        int tmp = get();         // Line C2
+        sem_post(&mutex);        // Line C2.5 (... AND HERE)
+        sem_post(&empty);        // Line C3
+        printf("%d\n", tmp);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    // ...
+    sem_init(&empty, 0, MAX); // MAX buffers are empty to begin with...
+    sem_init(&full, 0, 0);    // ... and 0 are full
+    sem_init(&mutex, 0, 1);   // mutex=1 because it is a lock
+    // ...
+}
+```
+
+</div>
+</div>
+</div>
+
 
 {% enddetails %}
 
