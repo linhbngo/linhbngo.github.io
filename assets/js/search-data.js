@@ -1316,11 +1316,11 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/10-resource-management/";
-            },},{id: "csc478-loadbalancer-and-ingress",
-          title: 'LoadBalancer and Ingress',
+            },},{id: "csc478-load-balancing-services-and-ingress",
+          title: 'Load Balancing, Services, and Ingress',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/13-load-balancer/";
+              window.location.href = "/csc478/11-load-balancer/";
             },},{id: "csc478-rbac-model-taxonomy",
           title: 'RBAC Model Taxonomy',
           description: "",
