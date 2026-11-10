@@ -936,31 +936,26 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/13-semaphores/";
-            },},{id: "csc331-i-o-and-disks-disk-scheduling",
-          title: 'I/O and Disks: Disk Scheduling',
-          description: "",
-          section: "Csc331",handler: () => {
-              window.location.href = "/csc331/14-io-disk-scheduling/";
             },},{id: "csc331-introduction-to-file-systems",
           title: 'Introduction to file systems',
           description: "",
           section: "Csc331",handler: () => {
-              window.location.href = "/csc331/15-file-systems/";
+              window.location.href = "/csc331/14-file-systems/";
             },},{id: "csc331-crash-consistency-fsck-and-journaling",
           title: 'Crash consistency: fsck and journaling',
           description: "",
           section: "Csc331",handler: () => {
-              window.location.href = "/csc331/16-crash-consistency-fsck-journaling/";
+              window.location.href = "/csc331/15-crash-consistency-fsck-journaling/";
             },},{id: "csc331-micro-versus-monolithnic-kernels-minix-and-linux",
           title: 'Micro versus monolithnic kernels: Minix and Linux',
           description: "",
           section: "Csc331",handler: () => {
-              window.location.href = "/csc331/17-minix/";
+              window.location.href = "/csc331/16-minix/";
             },},{id: "csc331-a-gentle-introduction-to-ros",
           title: 'A Gentle Introduction to ROS',
           description: "",
           section: "Csc331",handler: () => {
-              window.location.href = "/csc331/18-ros/";
+              window.location.href = "/csc331/17-ros/";
             },},{id: "csc402-syllabus",
           title: 'Syllabus',
           description: "",
