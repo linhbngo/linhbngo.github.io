@@ -375,23 +375,13 @@ print(type(distance))
 {% enddetails %}
 ## 3. Analyzing Patient Data
 
-{% details Abstract: Objectives %}
-
-- Explain what a library is and what libraries are used for.
-- Import a Python library and use the functions it contains.
-- Read tabular data from a file into a program.
-- Select individual values and subsections from data.
-- Perform operations on arrays of data.
-```
-{% enddetails %}
-
-{% details Questions %}
+{% details question %}
 
 - How can I process tabular data files in Python?
 
 {% enddetails %}
 
-{% details Scenario: A Miracle Arthiritis Inflamation Cure %}
+{% details Scenario: A Miracle Arthritis Inflammation Cure %}
 
 Our imaginary colleague **Dr. Maverick** has invented a new miracle drug that promises to
 cure arthritis inflammation flare-ups after only 3 weeks since initially taking the
@@ -410,9 +400,10 @@ To see how effective the treatment is we would like to:
 1. Calculate the average inflammation per day across all patients.
 2. Plot the result to discuss and share with colleagues.
 
-{% include figure.liquid path="assets/img/courses/workshops/python_programming/02-numpy/lesson-overview.svg" alt="3-step flowchart shows inflammation data records for patients moving to the Analysis stepwhere a heat map of provided data is generated moving to the Conclusion step that asks thequestion, How does the medication affect patients?" max-width="50%" zoomable=true %}
+{% include figure.liquid path="assets/img/courses/workshops/python_programming/02-numpy/lesson-overview.svg" alt="3-step flowchart shows inflammation data records for patients moving to the Analysis step where a heat map of provided data is generated moving to the Conclusion step that asks the question, How does the medication affect patients?" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details note Data Format %}
 
 The data sets are stored in **comma-separated values** (CSV) format:
@@ -434,13 +425,13 @@ given day.
 For example, value "6" at row 3 column 7 of the data set above means that the third
 patient was experiencing inflammation six times on the seventh day of the clinical study.
 
-
 Words are useful, but what's more useful are the sentences and stories we build with them.
 Similarly, while a lot of powerful, general tools are built into Python,
 specialized tools built up from these basic units live in **libraries**.
 that can be called upon when needed.
 
 {% enddetails %}
+
 {% details note Loading data into Python %}
 
 To begin processing the clinical trial inflammation data, we need to load it into Python.
@@ -482,10 +473,6 @@ belongs to the `numpy` library.
 The dot notation in Python is used most of all as an object attribute/property specifier or for invoking 
 its method. `object.property` will give you the object.property value,
 `object_name.method()` will invoke on object\_name method.
-
-As an example, John Smith is the John that belongs to the Smith family.
-We could use the dot notation to write his name `smith.john`,
-just as `loadtxt` is a function that belongs to the `numpy` library.
 
 `numpy.loadtxt` has two **parameters**: the name of the file
 we want to read and the **delimiter** that separates values
@@ -540,6 +527,7 @@ The output tells us that `data` currently refers to an N-dimensional array, the 
 are their daily inflammation measurements.
 
 {% enddetails %}
+
 {% details note Data Type %}
 
 A Numpy array contains one or more elements of the same type. The `type` function will only tell you that
@@ -596,8 +584,12 @@ middle value in data: 16.0
 ```
 
 The expression `data[29, 19]` accesses the element at row 30, column 20. While this expression may
-not surprise you, `data[0, 0]` might. Programming languages like Fortran, MATLAB and R start counting at 1
-because that's what human beings have done for thousands of years. Languages in the C family (including C++, Java, Perl, and Python) 
+not surprise you, `data[0, 0]` might. 
+
+Programming languages like Fortran, MATLAB and R start counting at 1
+because that's what human beings have done for thousands of years. 
+
+Languages in the C family (including C++, Java, Perl, and Python) 
 count from 0 because it represents an offset from the first value in the array (the second
 value is offset by one index from the first value). This is closer to the way
 that computers represent arrays (if you are interested in the historical reasons behind counting indices from zero, you can read
@@ -609,6 +601,7 @@ the index is how many steps we have to take from the start to get the item we wa
 {% include figure.liquid path="assets/img/courses/workshops/python_programming/02-numpy/python-zero-index.svg" alt="data is a 3 by 3 numpy array containing row 0: \['A', 'B', 'C'\], row 1: \['D', 'E', 'F'\], androw 2: \['G', 'H', 'I'\]. Starting in the upper left hand corner, data\[0, 0\] = 'A', data\[0, 1\] = 'B',data\[0, 2\] = 'C', data\[1, 0\] = 'D', data\[1, 1\] = 'E', data\[1, 2\] = 'F', data\[2, 0\] = 'G',data\[2, 1\] = 'H', and data\[2, 2\] = 'I', in the bottom right hand corner." max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details warning In the Corner %}
 
 What may also surprise you is that when Python displays an array,
@@ -736,6 +729,7 @@ standard deviation: 4.61383319712
 ```
 
 {% enddetails %}
+
 {% details note Mystery Functions in IPython %}
 
 
@@ -831,6 +825,7 @@ print(numpy.mean(data, axis=1))
 which is the average inflammation per patient across all days.
 
 {% enddetails %}
+
 {% details Challenge 1: Slicing Strings %}
 
 
@@ -903,12 +898,10 @@ last three characters: one
 last three characters: hi
 ```
 
-
-
 {% enddetails %}
 {% enddetails %}
+
 {% details Challenge 2: Thin Slices %}
-
 
 The expression `element[3:3]` produces an **empty string**, i.e., a string that contains no characters.
 If `data` holds our array of patient data, what does `data[3:3, 4:4]` produce? What about `data[3:3, :]`?
@@ -1132,9 +1125,9 @@ array([ 12.,  14.,  11.,  13.,  11.,  13.,  10.,  12.,  10.,  10.,  10.,
 - Use `# some kind of explanation` to add comments to programs.
 - Use `numpy.mean(array)`, `numpy.amax(array)`, and `numpy.amin(array)` to calculate simple statistics.
 - Use `numpy.mean(array, axis=0)` or `numpy.mean(array, axis=1)` to calculate statistics across the specified axis.
-```
 
 {% enddetails %}
+
 ## 4. Visualizing Tabular Data
 
 {% details Abstract: Objectives %}
