@@ -11,10 +11,6 @@ toc:
   - name: Journaling
 ---
 
-# Crash consistency: fsck and journaling
-
----
-
 ## Persistence
 
 {% details Overview %}

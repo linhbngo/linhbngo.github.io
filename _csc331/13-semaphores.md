@@ -234,8 +234,10 @@ int main(int argc, char *argv[]) {
 - What is the risk if MAX > 1 and there are multiple producers/consumers?
     - Race condition: two producers produce at the same time or two consumers
   consume at the same time. 
-- What is currently missing from this implementation?
-    - Mutual exclusion
+
+{% details question What is currently missing from this implemntation? %}
+Mutual exclusion
+{% enddetails %}
 
 <div class="code-pair" style="--code-frame-height: 32rem">
 <div class="code-frame">

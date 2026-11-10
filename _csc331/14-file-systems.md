@@ -10,11 +10,7 @@ toc:
   - name: File operations
   - name: Implementations of file systems
   - name: Mental model of a file system
-  - name: 6 Multi-level index with indirect pointers
----
-
-# Introduction to file systems
-
+  - name: Multi-level index with indirect pointers
 ---
 
 ## File systems
@@ -34,6 +30,7 @@ toc:
 - Easy-to-use user interface
 
 {% enddetails %}
+
 {% details Files and directories %}
 
 - It’s all illusion!
@@ -44,7 +41,6 @@ can easily be accessed through virtual addresses.
 which can be accessed using some easy-to-use APIs (ls, rm, cp …).
 
 {% enddetails %}
----
 
 ## Abstraction: files and directories
 
@@ -61,6 +57,7 @@ or video, it just makes sure to store all bytes in a file **persistently**.
 {% include figure.liquid path="assets/img/courses/csc331/file-system/01.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details Abstraction: files and directories %}
 
 - Directory
@@ -73,7 +70,6 @@ or video, it just makes sure to store all bytes in a file **persistently**.
 {% include figure.liquid path="assets/img/courses/csc331/file-system/02.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
----
 
 ## File operations
 
@@ -91,6 +87,7 @@ or video, it just makes sure to store all bytes in a file **persistently**.
     `2` for stderr)
 
 {% enddetails %}
+
 {% details read %}
 
 - **read**: `ssize_t read(int fd, void *buf, size_t count)`
@@ -102,6 +99,7 @@ or video, it just makes sure to store all bytes in a file **persistently**.
     is an error. 
 
 {% enddetails %}
+
 {% details write %}
 
 - **write**: `ssize_t write(int fd, const void *buf, size_t count)`
@@ -113,6 +111,7 @@ or video, it just makes sure to store all bytes in a file **persistently**.
     is an error.  
 
 {% enddetails %}
+
 {% details Non-sequential read/write: lseek %}
 
 - `read()` and `write()` only do sequential read/write, there is no way to specify a 
@@ -131,7 +130,7 @@ offset according to how many bytes are read/written
         - if `whence` is `SEEK_END`, the current offset is set to `size_of_file + offset` bytes
 
 {% enddetails %}
----
+
 
 ## Implementations of file systems
 
@@ -150,14 +149,15 @@ offset according to how many bytes are read/written
 {% include figure.liquid path="assets/img/courses/csc331/file-system/04.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details How to implement a simple file system? %}
+
+{% details question How to implement a simple file system? %}
 
 - What structures are needed on the disk? 
 - What do they need to track? 
 - How are they accessed?
 
 {% enddetails %}
----
+
 
 ## Mental model of a file system
 
@@ -175,8 +175,8 @@ of course!).
 {% include figure.liquid path="assets/img/courses/csc331/file-system/05.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details Overall organization %}
 
+{% details Overall organization %}
 
 - The whole disk is divided into **fixed-sized blocks**.
 - Block size: 4KB
@@ -185,10 +185,9 @@ of course!).
 
 {% include figure.liquid path="assets/img/courses/csc331/file-system/06.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details Data region %}
 
+{% details Data region %}
 
 - Most of the disk should be used to actually store user data, while leaving a little space for storing 
 other things like metadata
@@ -197,8 +196,8 @@ other things like metadata
 {% include figure.liquid path="assets/img/courses/csc331/file-system/07.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details Metadata: inode table %}
 
+{% details Metadata: inode table %}
 
 - The FS need to track information about each file. 
 - In VSFS, we keep the info of each file in a struct called inode. And we use 5 blocks for storing all the inodes.
@@ -206,10 +205,9 @@ other things like metadata
 
 {% include figure.liquid path="assets/img/courses/csc331/file-system/08.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
-{% details Allocation structure %}
 
+{% details Allocation structure %}
 
 - For both data region and inode region, we need to keep track of which blocks are being used and which blocks are free. 
 - We use a data structure called bitmap for this purpose, which is just a sequence of bits, and each bit indicates whether one block is free (0) or in-use (1).
@@ -218,8 +216,8 @@ other things like metadata
 {% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
-{% details Superblock %}
 
+{% details Superblock %}
 
 - Superblock contains information about this particular file system, e.g., 
     - What type of file system it is (“VSFS” indicated by a magic number)
@@ -232,13 +230,14 @@ then attach the volume to the file system tree with proper settings.
 {% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details Example implementations %}
 
 - [xv6 file system](https://github.com/mit-pdos/xv6-public/blob/master/fs.h)
 - [Linux ext2](https://github.com/torvalds/linux/blob/master/fs/ext2/ext2.h)
 
-
 {% enddetails %}
+
 {% details Reading a file with inode number 32 %}
 
 - From superblock we know
@@ -250,8 +249,8 @@ So we have the inode, but which blocks have the data?
 
 {% include figure.liquid path="assets/img/courses/csc331/file-system/09.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
+
 {% details Data structure: the inode %}
 
 - Short for index node
@@ -263,9 +262,8 @@ to calculate where on the disk the corresponding inode is located.
 {% include figure.liquid path="assets/img/courses/csc331/file-system/10.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
----
 
-## 6 Multi-level index with indirect pointers
+## Multi-level index with indirect pointers
 
 {% details Overview %}
 
@@ -284,6 +282,7 @@ idea of indirect pointer.
 {% include figure.liquid path="assets/img/courses/csc331/file-system/11.png" max-width="50%" zoomable=true %}
 
 {% enddetails %}
+
 {% details Reasoning %}
 
 - Why use an imbalanced tree like this? Why not a different approach? 
@@ -296,8 +295,8 @@ time they find certain “truths” that hold across the decades.
 
     {% include figure.liquid path="assets/img/courses/csc331/file-system/12.png" max-width="50%" zoomable=true %}
 
-
 {% enddetails %}
+
 {% details Another approach: extent-based %}
 
 - An extent is a disk pointer plus a length (in blocks), i.e., it allocates a 
@@ -309,6 +308,7 @@ per file, and file allocation is more compact.
 - Adopted by ext4, HFS+, NTFS, XFS.
 
 {% enddetails %}
+
 {% details Yet anther approach: linked-based %}
 
 - Instead of having pointers to all blocks, the inode just has one pointer pointing to 
@@ -318,6 +318,5 @@ allocation table which is indexed by address of data block, so finding a block c
 - This is the FAT file system, used by Windows before NTFS.
 
 {% include figure.liquid path="assets/img/courses/csc331/file-system/13.png" max-width="50%" zoomable=true %}
-
 
 {% enddetails %}
