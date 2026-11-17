@@ -15,42 +15,13 @@ chart:
 tikzjax: true
 typograms: true
 
-
-# Optionally, you can add a table of contents to your post.
-# NOTES:
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - we may want to automate TOC generation in the future using
-#     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
   - name: 1. Course Overview
-    # if a section has subsections, you can add them as follows:
-    # subsections:
-    #   - name: Example Child Subsection 1
-    #   - name: Example Child Subsection 2
   - name: 2. Setup Computing Environment
   - name: 3. Setup Testing Environment
   - name: 4. Introduction to HTML
   - name: 5. Introduction to CSS
   - name: 6. Quiz Information
-  
-# Below is an example of injecting additional post-specific styles.
-# If you use this post as a template, delete this _styles block.
-_styles: >
-  .fake-img {
-    background: #bbb;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
-  }
-  .fake-img p {
-    font-family: monospace;
-    color: white;
-    text-align: left;
-    margin: 12px 0;
-    text-align: center;
-    font-size: 16px;
-  }
 ---
 
 {% details Learning Objectives %}
@@ -93,8 +64,6 @@ the accessing of collections (i.e., tables in a relational database).
 Finally, we will introduce the concept of RESTful Web Service API and the development of an 
 End Point and a web client to consume the web services. In the remaining part of this document, 
 we will also describe detailed learning activities for learning the web development skills.
-
----
 
 > You need to purchase a copy of the e-book entitled **Get Programming with Node.js**, Manning, 2019 asap by the second day of the class. If you don’t, you will get lost and will not understand where we are and what we are talking about. You may download the Source Code for the textbook here. Please try to use 7-Zip to unzip the compressed file. 
 {: .block-tip}

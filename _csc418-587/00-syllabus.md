@@ -15,19 +15,8 @@ chart:
 tikzjax: true
 typograms: true
 
-
-# Optionally, you can add a table of contents to your post.
-# NOTES:
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - we may want to automate TOC generation in the future using
-#     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
   - name: Course Information
-    # if a section has subsections, you can add them as follows:
-    # subsections:
-    #   - name: Example Child Subsection 1
-    #   - name: Example Child Subsection 2
   - name: Required Materials
   - name: Prerequisites
   - name: Course Description
@@ -55,8 +44,6 @@ _styles: >
     font-size: 16px;
   }
 ---
-
-# Modern Web Applications Using Server-Side Technologies 
 
 {% include courses/instructor_info_summer.md %}
 
