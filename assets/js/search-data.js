@@ -946,8 +946,8 @@ ninja.data = [{
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/15-crash-consistency-fsck-journaling/";
-            },},{id: "csc331-micro-versus-monolithnic-kernels-minix-and-linux",
-          title: 'Micro versus monolithnic kernels: Minix and Linux',
+            },},{id: "csc331-microkernels-versus-monolithic-kernels-minix-linux-and-robotics",
+          title: 'Microkernels versus monolithic kernels: MINIX, Linux, and robotics',
           description: "",
           section: "Csc331",handler: () => {
               window.location.href = "/csc331/16-minix/";
@@ -1321,11 +1321,11 @@ ninja.data = [{
           description: "",
           section: "Csc478",handler: () => {
               window.location.href = "/csc478/11-load-balancer/";
-            },},{id: "csc478-rbac-model-taxonomy",
-          title: 'RBAC Model Taxonomy',
+            },},{id: "csc478-rbac-from-the-nist-model-to-rke2",
+          title: 'RBAC: from the NIST model to RKE2',
           description: "",
           section: "Csc478",handler: () => {
-              window.location.href = "/csc478/14-core-rbac/";
+              window.location.href = "/csc478/12-core-rbac/";
             },},{id: "csc478-cloud-security",
           title: 'Cloud Security',
           description: "",
