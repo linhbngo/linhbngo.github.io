@@ -176,7 +176,6 @@ toc:
       may support more hardware and applications, regardless of architectural
       elegance.
 
----
 
 ## Why kernel design matters for robots
 
@@ -190,8 +189,7 @@ toc:
   isolated ROS nodes resembles a multiserver design, but it does not turn the
   underlying Linux kernel into a microkernel.
 - ROS 1 relied on a central ROS Master for naming and discovery. ROS 2 normally
-  uses DDS/RTPS with distributed discovery and configurable quality of service.
-  Its ROS Middleware (RMW) interface also allows multiple middleware
+  uses DDS (Data Distribution Service)/RTPS (Real Time Publish/Subscribe) with distributed discovery and configurable quality of service. Its ROS Middleware (RMW) interface also allows multiple middleware
   implementations.
 - **micro-ROS is not a microkernel.** It brings ROS 2 concepts to
   microcontrollers, commonly on FreeRTOS, Zephyr, or NuttX. A lightweight
