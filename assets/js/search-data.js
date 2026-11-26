@@ -157,7 +157,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2026/discovery-application/";
+            window.location.href = "/blog/2026/raising-bar/";
           
         },
       },{id: "post-ai-and-education-a-hard-topic",
