@@ -149,7 +149,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/csc-agentic-ai/";
               },
-            },{id: "post-ai-and-education-a-hard-topic",
+            },{id: "post-raising-the-bar-within-the-same-four-years",
+        
+          title: "Raising the Bar Within the Same Four Years",
+        
+        description: "In the AI era, how can we help students do more with what we already teach? · Tags: cs-education, artificial-intelligence",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/discovery-application/";
+          
+        },
+      },{id: "post-ai-and-education-a-hard-topic",
         
           title: "AI and Education: A Hard Topic",
         
