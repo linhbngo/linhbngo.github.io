@@ -109,6 +109,7 @@ toc:
   inactive, and active, so a system can bring up sensing before control.
 
 {% enddetails %}
+
 {% details Topics %}
 
 - A topic is a named, typed channel. Publishers send messages; subscribers
@@ -216,7 +217,7 @@ toc:
     - **History.** Keep the last *N* samples, or keep all samples subject to
       resource limits. *N* is the queue depth. The default depth is 10.
     - **Reliability.** Reliable delivery retries lost samples. Best effort
-      may drop them. Camera and lidar streams often use best effort.
+      may drop them. Camera and Lidar streams often use best effort.
     - **Durability.** Volatile data exists only while it is in flight.
       Transient local means the publisher keeps samples for a subscriber that
       joins later. A map is a typical transient-local topic; this is the ROS 2
